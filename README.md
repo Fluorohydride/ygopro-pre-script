@@ -8,7 +8,7 @@ Repository intended to store all the relevant information for adding pre-release
 
 * `sets.md` will contain a list of the currently unreleased packs/sets next to the 6 digit ID prefix that the cards will use. Example for Breaker of Shadow: `700907XXX`.
  
-* Scripts Folder contains all the `.lua` files for pre-release files, following the typical YGOPro convention. If any bugs are found, you can make submit an Issue about it or commit the proper fixes.
+* Scripts Folder contains all the `.lua` files for pre-release vards, following the typical YGOPro convention. If any bugs are found, you can make submit an Issue about it or commit the proper fixes. You may add credit for a card you made, if you wish.
 
 * `strings.conf` file is used to register the setcodes of pre-release cards that require one that doesn't already exist (they are at the bottom). You may choose any legal value for the setcode, though a 2 digit one is preferable; if possible, try to pick the one that will be the final setcode on release (increases by 1 each new archetype, in order of release). Determining a setcode will be on a first-come first-sever basis, whoever makes the cards first gets to pick it and it will not change until release. Every contributor is responsible for making sure their scripts and SQL conform to the setcode indicated in this file.
 **Remember the standard is to use the japanese archetype name**.
