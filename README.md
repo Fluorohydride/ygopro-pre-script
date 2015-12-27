@@ -4,7 +4,7 @@ Repository intended to store all the relevant information for adding pre-release
 
 * For fairness, we'll use a modified version of the YGOHack and Devpro placeholder ID setting. We will use the unique prefix "700" at the start of each ID. Followed by the 3-digit booster pack Order Number (can be found on wikia), followed by their 3-digit set numbers, as listed below the artwork. The resulting IDs will be 9 digits, easily grouped together and in proper order when sorted alphabetically. If the Order Number value isn't provided (like in structure decks), use any number between 100 and 500, which should be consistent among all cards in the same set.
 
-* Sets.txt will contian a list of the currently unreleased packs/sets next to the 6 digit ID prefix that the cards will use. Example for Breaker of Shadow: 700907XX.
+* Sets.txt will contain a list of the currently unreleased packs/sets next to the 6 digit ID prefix that the cards will use. Example for Breaker of Shadow: 700907XX.
  
 * Scripts Folder contains all the .lua files for pre-release files, following the typical YGOPro convention. If any bugs are found, you can make submit an Issue about it or commit the proper fixes.
 
