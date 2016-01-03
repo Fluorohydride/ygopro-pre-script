@@ -1,0 +1,4 @@
+-- Shining Victories
+--68, Deskbot Base
+INSERT OR REPLACE INTO "texts" VALUES ("700908068","Deskbot Base","All ""Deskbot"" monsters on the field gain 500 ATK and DEF. Once per turn: You can reveal any number of ""Deskbot"" cards in your hand and shuffle them into the Deck, then draw cards equal to the number of cards you shuffled into the Deck. You can banish 9 ""Deskbot"" cards with different names from your side of the field and/or Graveyard, except ""Deskbot Base""; shuffle all cards from your opponent's hand, field, and Graveyard into the Deck.","","","","","","","","","","","","","","","","");
+INSERT OR REPLACE INTO "datas" VALUES ("700908068","3","0","0","524290","0","0","0","0","0","1056768");
