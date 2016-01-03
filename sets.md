@@ -1,2 +1,2 @@
 
-- Shining Victories: "´700908XXX´"
+- Shining Victories: "`700908XXX`"
