@@ -1,4 +1,5 @@
 --虚竜魔王アモルファクターP
+--Script by mercury233
 function c700908044.initial_effect(c)
 	c:EnableReviveLimit()
 	--skip
