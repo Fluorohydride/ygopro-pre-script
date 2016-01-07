@@ -28,7 +28,7 @@ function c700908002.filter1(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function c700908002.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c700908002.filter1(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c700908002.filter1(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c700908002.filter1,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c700908002.filter1,tp,LOCATION_MZONE,0,1,1,nil)
@@ -65,7 +65,7 @@ function c700908002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c700908002.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
