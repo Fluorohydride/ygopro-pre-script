@@ -24,7 +24,7 @@ function c700908005.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c700908005.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
+	return not re:GetHandler():IsImmuneToEffect(e) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function c700908005.actcon(e)
 	local c=Duel.GetAttacker()
