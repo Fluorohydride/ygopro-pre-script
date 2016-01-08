@@ -1,7 +1,7 @@
 --浮幽さくら
 --Floating Ghost & Cherry Blossom
 --Script by mercury233
-function c700908040.initial_effect(c)
+function c62015408.initial_effect(c)
 	--remove
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -9,20 +9,20 @@ function c700908040.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,0x1c0)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(c700908040.condition)
-	e1:SetCost(c700908040.cost)
-	e1:SetOperation(c700908040.operation)
+	e1:SetCondition(c62015408.condition)
+	e1:SetCost(c62015408.cost)
+	e1:SetOperation(c62015408.operation)
 	c:RegisterEffect(e1)
 end
-function c700908040.condition(e,tp,eg,ep,ev,re,r,rp)
+function c62015408.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 		and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_EXTRA,0,1,nil)
 end
-function c700908040.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c62015408.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_DISCARD)
 end
-function c700908040.operation(e,tp,eg,ep,ev,re,r,rp)
+function c62015408.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local sg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_EXTRA,0,1,1,nil)
 	if sg:GetCount()>0 then

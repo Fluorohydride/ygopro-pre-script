@@ -1,7 +1,7 @@
 --アモルファージ・ガストル
---Amorphage Plest
+--Amorphage Gastr
 --Script by mercury233
-function c700908026.initial_effect(c)
+function c34522216.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--flip
@@ -9,7 +9,7 @@ function c700908026.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_FLIP)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetOperation(c700908026.flipop)
+	e1:SetOperation(c34522216.flipop)
 	c:RegisterEffect(e1)
 	--maintain
 	local e2=Effect.CreateEffect(c)
@@ -18,8 +18,8 @@ function c700908026.initial_effect(c)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e2:SetCondition(c700908026.descon)
-	e2:SetOperation(c700908026.desop)
+	e2:SetCondition(c34522216.descon)
+	e2:SetOperation(c34522216.desop)
 	c:RegisterEffect(e2)
 	--spsummon limit
 	local e3=Effect.CreateEffect(c)
@@ -28,7 +28,7 @@ function c700908026.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e3:SetTargetRange(1,1)
-	e3:SetTarget(c700908026.sumlimit)
+	e3:SetTarget(c34522216.sumlimit)
 	c:RegisterEffect(e3)
 	--act limit
 	local e4=Effect.CreateEffect(c)
@@ -37,27 +37,27 @@ function c700908026.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetRange(LOCATION_PZONE)
 	e4:SetTargetRange(1,1)
-	e4:SetCondition(c700908026.limcon)
-	e4:SetValue(c700908026.limval)
+	e4:SetCondition(c34522216.limcon)
+	e4:SetValue(c34522216.limval)
 	c:RegisterEffect(e4)
 end
-function c700908026.flipop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(700908026,RESET_EVENT+0x1fe0000,0,1)
+function c34522216.flipop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(34522216,RESET_EVENT+0x1fe0000,0,1)
 end
-function c700908026.cfilter(c)
+function c34522216.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1374)
 end
-function c700908026.limcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c700908026.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+function c34522216.limcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c34522216.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
-function c700908026.limval(e,re,rp)
+function c34522216.limval(e,re,rp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_TRAP) and not rc:IsSetCard(0x1374) and not rc:IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_MONSTER) and not rc:IsSetCard(0x1374) and not rc:IsImmuneToEffect(e)
 end
-function c700908026.descon(e,tp,eg,ep,ev,re,r,rp)
+function c34522216.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
-function c700908026.desop(e,tp,eg,ep,ev,re,r,rp)
+function c34522216.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_CARD,0,c:GetCode())
 	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,500) then
@@ -65,7 +65,7 @@ function c700908026.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Release(g,REASON_RULE)
 	else Duel.Destroy(c,REASON_RULE) end
 end
-function c700908026.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
+function c34522216.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x1374)
-	and (e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM or e:GetHandler():GetFlagEffect(700908026)~=0)
+	and (e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM or e:GetHandler():GetFlagEffect(34522216)~=0)
 end

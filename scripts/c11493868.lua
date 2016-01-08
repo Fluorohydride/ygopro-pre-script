@@ -1,7 +1,7 @@
 --フォルテッシモ
 --Fortissimo
 --Script by mercury233
-function c700908057.initial_effect(c)
+function c11493868.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -9,38 +9,38 @@ function c700908057.initial_effect(c)
 	c:RegisterEffect(e1)
 	--atkup
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(700908057,0))
+	e2:SetDescription(aux.Stringid(11493868,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
-	e2:SetTarget(c700908057.atktg)
-	e2:SetOperation(c700908057.atkop)
+	e2:SetTarget(c11493868.atktg)
+	e2:SetOperation(c11493868.atkop)
 	c:RegisterEffect(e2)
 	--fusion
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(700908057,1))
+	e3:SetDescription(aux.Stringid(11493868,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetHintTiming(0,0x1e0)
-	e3:SetCost(c700908057.cost)
-	e3:SetTarget(c700908057.target)
-	e3:SetOperation(c700908057.activate)
+	e3:SetCost(c11493868.cost)
+	e3:SetTarget(c11493868.target)
+	e3:SetOperation(c11493868.activate)
 	c:RegisterEffect(e3)
 end
-function c700908057.atkfilter(c)
+function c11493868.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9b)
 end
-function c700908057.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c700908057.atkfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c700908057.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
+function c11493868.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c11493868.atkfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c11493868.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,c700908057.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c11493868.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,g,1,0,800)
 end
-function c700908057.atkop(e,tp,eg,ep,ev,re,r,rp)
+function c11493868.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
@@ -52,39 +52,39 @@ function c700908057.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function c700908057.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c11493868.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
-function c700908057.filter1(c,e)
+function c11493868.filter1(c,e)
 	return c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
 end
-function c700908057.filter2(c,e,tp,m,f,chkf)
+function c11493868.filter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x9b) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
-function c700908057.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c11493868.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 		local mg1=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil)
-		local res=Duel.IsExistingMatchingCard(c700908057.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
+		local res=Duel.IsExistingMatchingCard(c11493868.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
 				local fgroup=ce:GetTarget()
 				local mg2=fgroup(ce,e,tp)
 				local mf=ce:GetValue()
-				res=Duel.IsExistingMatchingCard(c700908057.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,chkf)
+				res=Duel.IsExistingMatchingCard(c11493868.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,chkf)
 			end
 		end
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function c700908057.activate(e,tp,eg,ep,ev,re,r,rp)
+function c11493868.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
-	local mg1=Duel.GetMatchingGroup(c700908057.filter1,tp,LOCATION_MZONE,0,nil,e)
-	local sg1=Duel.GetMatchingGroup(c700908057.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
+	local mg1=Duel.GetMatchingGroup(c11493868.filter1,tp,LOCATION_MZONE,0,nil,e)
+	local sg1=Duel.GetMatchingGroup(c11493868.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	local mg2=nil
 	local sg2=nil
 	local ce=Duel.GetChainMaterial(tp)
@@ -92,7 +92,7 @@ function c700908057.activate(e,tp,eg,ep,ev,re,r,rp)
 		local fgroup=ce:GetTarget()
 		mg2=fgroup(ce,e,tp)
 		local mf=ce:GetValue()
-		sg2=Duel.GetMatchingGroup(c700908057.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
+		sg2=Duel.GetMatchingGroup(c11493868.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
 	end
 	if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
 		local sg=sg1:Clone()
