@@ -67,7 +67,7 @@ function c700908062.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c700908062.spfilter(c,e,tp,mg)
 	return c:IsCode(5844) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
-		and mg:Filter(Card.IsCanBeRitualMaterial,c,c):CheckWithSumGreater(Card.GetRitualLevel,8,c)
+		and mg:Filter(Card.IsCanBeRitualMaterial,c,c):CheckWithSumEqual(Card.GetRitualLevel,8,1,99,c)
 end
 function c700908062.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -83,7 +83,7 @@ function c700908062.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		local mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local mat=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,8,tc)
+		local mat=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,8,1,99,tc)
 		tc:SetMaterial(mat)
 		Duel.ReleaseRitualMaterial(mat)
 		Duel.BreakEffect()
