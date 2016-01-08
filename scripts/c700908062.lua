@@ -61,9 +61,6 @@ end
 function c700908062.ritual_filter(c)
 	return c:IsCode()
 end
-function c700908062.cfilter(c,att)
-	return c:IsAttribute(att) and c:IsAbleToRemoveAsCost()
-end
 function c700908062.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
