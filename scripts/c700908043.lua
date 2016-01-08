@@ -1,4 +1,5 @@
 --サイコロプス
+--Diceclops
 --Script by mercury233
 function c700908043.initial_effect(c)
 	--dice

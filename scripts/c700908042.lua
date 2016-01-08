@@ -1,4 +1,5 @@
 --ブンボーグ009
+--Deskbot 009
 --Script by mercury233
 function c700908042.initial_effect(c)
 	--atkup

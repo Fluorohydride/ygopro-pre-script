@@ -1,4 +1,5 @@
 --RR－アベンジ・ヴァルチャー
+--Raidraptor - Avenge Vulture
 --Script by mercury233
 function c700908014.initial_effect(c)
 	--spsummon

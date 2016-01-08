@@ -1,4 +1,5 @@
 --浮幽さくら
+--Floating Ghost & Cherry Blossom
 --Script by mercury233
 function c700908040.initial_effect(c)
 	--remove

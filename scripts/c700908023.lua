@@ -1,4 +1,5 @@
 --竜魔王レクターP
+--Rector Pendulum, the Dracoverlord
 --Script by mercury233
 function c700908023.initial_effect(c)
 	--pendulum summon

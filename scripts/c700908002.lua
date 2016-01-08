@@ -1,4 +1,5 @@
 --EMオオヤヤドカリ
+--Performapal Landlord Hermit Crab
 --Script by mercury233
 function c700908002.initial_effect(c)
 	--pendulum summon

@@ -1,3 +1,4 @@
+--ブンボーグ・ベース
 --Deskbot Base
 function c700908068.initial_effect(c)
 	--Activate

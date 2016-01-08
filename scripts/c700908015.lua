@@ -1,4 +1,5 @@
 --RR－ペイン・レイニアス
+--Raidraptor - Pain Lanius
 --Script by mercury233
 function c700908015.initial_effect(c)
 	--spsummon

@@ -1,4 +1,5 @@
 --アモルファージ・ルクス
+--Amorphage Lux
 --Script by mercury233
 function c700908025.initial_effect(c)
 	--pendulum summon

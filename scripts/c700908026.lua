@@ -1,4 +1,5 @@
 --アモルファージ・ガストル
+--Amorphage Plest
 --Script by mercury233
 function c700908026.initial_effect(c)
 	--pendulum summon

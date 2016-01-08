@@ -1,4 +1,5 @@
 --EMホタルクス
+--Performapal Fireflux
 --Script by mercury233
 function c700908005.initial_effect(c)
 	--pendulum summon

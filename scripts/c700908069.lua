@@ -1,4 +1,5 @@
 --無念の手札
+--Regretful Cards
 function c700908069.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

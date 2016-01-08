@@ -1,4 +1,5 @@
 --アモルファスP
+--Amorphous Persona
 --Script by mercury233
 function c700908062.initial_effect(c)
 	--Activate

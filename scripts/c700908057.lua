@@ -1,4 +1,5 @@
 --フォルテッシモ
+--Fortissimo
 --Script by mercury233
 function c700908057.initial_effect(c)
 	--Activate
