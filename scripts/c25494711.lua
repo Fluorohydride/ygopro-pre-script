@@ -81,10 +81,10 @@ end
 function c25494711.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsOnField() and c:IsFaceup()
-		and Duel.IsExistingMatchingCard(c25494711.repfilter,tp,LOCATION_ONFIELD,0,1,c) end
+		and Duel.IsExistingMatchingCard(c25494711.repfilter,tp,LOCATION_MZONE,0,1,c) end
 	if Duel.SelectYesNo(tp,521) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local g=Duel.SelectMatchingCard(tp,c25494711.repfilter,tp,LOCATION_ONFIELD,0,1,1,c)
+		local g=Duel.SelectMatchingCard(tp,c25494711.repfilter,tp,LOCATION_MZONE,0,1,1,c)
 		Duel.SetTargetCard(g)
 		g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
 		return true
