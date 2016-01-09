@@ -45,12 +45,12 @@ function c47598941.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_DESTROYED,true)
 	if res
-		and e:GetHandler():GetFlagEffect(47598941)==0
+		and Duel.GetFlagEffect(tp,47598941)==0
 		and Duel.IsExistingMatchingCard(c47598941.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
 		and (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7))
 		and teg:IsExists(c47598941.cfilter,1,nil,tp)
 		and Duel.SelectYesNo(tp,94) then
-		e:GetHandler():RegisterFlagEffect(47598941,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,47598941,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function c47598941.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -58,14 +58,14 @@ function c47598941.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c47598941.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e)
-		and e:GetHandler():GetFlagEffect(47598941)==0
+		and Duel.GetFlagEffect(tp,47598941)==0
 		and (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7))
 		and Duel.IsExistingMatchingCard(c47598941.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
-	e:GetHandler():RegisterFlagEffect(47598941,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,47598941,RESET_PHASE+PHASE_END,0,1)
 end
 function c47598941.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or c:GetFlagEffect(47598941)==0 then return end
+	if not c:IsRelateToEffect(e) or Duel.GetFlagEffect(tp,47598941)==0 then return end
 	if not (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,c47598941.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
