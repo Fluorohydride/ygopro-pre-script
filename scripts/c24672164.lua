@@ -40,24 +40,24 @@ function c24672164.fscon(e,g,gc,chkf)
 		return false 
 	end
 	if gc then 
-		local g1=g:Filter(Card.IsSetCard,nil,0x9b)
+		local g1=g:Filter(Card.IsFusionSetCard,nil,0x9b)
 		if not g1:IsContains(gc) then g1:AddCard(gc) end
 		local c1=g1:GetCount()
-		local c2=g1:FilterCount(Card.IsSetCard,nil,0x109b)
+		local c2=g1:FilterCount(Card.IsFusionSetCard,nil,0x109b)
 		return gc:IsSetCard(0x9b) and c1>=2 and c2>0
 	end
-	local g1=g:Filter(Card.IsSetCard,nil,0x9b)
+	local g1=g:Filter(Card.IsFusionSetCard,nil,0x9b)
 	local c1=g1:GetCount()
-	local c2=g1:FilterCount(Card.IsSetCard,nil,0x109b)
+	local c2=g1:FilterCount(Card.IsFusionSetCard,nil,0x109b)
 	if chkf~=PLAYER_NONE and not ag:IsExists(aux.FConditionCheckF,1,nil,chkf) then return false end
 	return c1>=2 and c2>0
 end
 function c24672164.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
 	if gc then 
-		local g1=eg:Filter(Card.IsSetCard,nil,0x9b)
+		local g1=eg:Filter(Card.IsFusionSetCard,nil,0x9b)
 		local mg=Group.CreateGroup()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-		local tc=g1:FilterSelect(tp,Card.IsSetCard,1,1,nil,0x109b):GetFirst()
+		local tc=g1:FilterSelect(tp,Card.IsFusionSetCard,1,1,nil,0x109b):GetFirst()
 		mg:AddCard(tc)
 		if g1:IsContains(tc) then g1:RemoveCard(tc) end
 		mg:AddCard(gc)
@@ -68,17 +68,16 @@ function c24672164.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
 		Duel.SetFusionMaterial(mg)
 		return
 	end
-	local g1=eg:Filter(Card.IsSetCard,nil,0x9b)
+	local g1=eg:Filter(Card.IsFusionSetCard,nil,0x9b)
 	local mg=Group.CreateGroup()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local tc=g1:FilterSelect(tp,Card.IsSetCard,1,1,nil,0x109b):GetFirst()
+	local tc=g1:FilterSelect(tp,Card.IsFusionSetCard,1,1,nil,0x109b):GetFirst()
 	mg:AddCard(tc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 	local fg2=g1:Select(tp,1,63,tc)
 	mg:Merge(fg2)
 	Duel.SetFusionMaterial(mg)
 end
-
 function c24672164.matcheck(e,c)
 	local ct=c:GetMaterialCount()
 	local ae=Effect.CreateEffect(c)
