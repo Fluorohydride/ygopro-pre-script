@@ -1,4 +1,4 @@
---Scripted by Eerie Code
+--月光舞豹姫
 --Moon-Light Panther Dancer
 function c97165977.initial_effect(c)
 	--fusion material
@@ -39,9 +39,8 @@ function c97165977.initial_effect(c)
 	e4:SetOperation(c97165977.atkop)
 	c:RegisterEffect(e4)
 end
-
 function c97165977.mat_filter(c)
-	return c:IsSetCard(0xe1) or c:IsSetCard(0x209)
+	return c:IsSetCard(0xdf)
 end
 
 function c97165977.splimit(e,se,sp,st)
@@ -58,78 +57,46 @@ end
 function c97165977.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		local e0=Effect.CreateEffect(c)
-		e0:SetType(EFFECT_TYPE_SINGLE)
-		e0:SetCode(EFFECT_EXTRA_ATTACK)
-		e0:SetValue(9999)
-		e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e0:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+RESET_END)
-		c:RegisterEffect(e0)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_DAMAGE_STEP_END)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetOperation(c97165977.unop)
-		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+RESET_END)
-		c:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetCode(EVENT_DAMAGE_CALCULATING)
-		e3:SetCondition(c97165977.indescon)
-		e3:SetOperation(c97165977.indesop)
-		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+RESET_END)
-		c:RegisterEffect(e3)
-		local e4=Effect.CreateEffect(c)
-		e4:SetType(EFFECT_TYPE_FIELD)
-		e4:SetRange(LOCATION_MZONE)
-		e4:SetTargetRange(0,LOCATION_MZONE)
-		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE)
-		e4:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
-		e4:SetTarget(c97165977.valtg)
-		e4:SetValue(c97165977.vala)
-		e4:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+RESET_END)
-		c:RegisterEffect(e4)
-	end
-end
-function c97165977.unop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	if c:GetFlagEffect(7949)==0 then
+		--indestructible
 		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+RESET_BATTLE)
-		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(7949,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE,0,1)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetCode(EFFECT_DESTROY_REPLACE)
+		e1:SetRange(LOCATION_SZONE)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetTarget(c97165977.reptg)
+		e1:SetValue(c97165977.repval)
+		Duel.RegisterEffect(e1,tp)
+		local g=Group.CreateGroup()
+		g:KeepAlive()
+		e1:SetLabelObject(g)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_ATTACK_ALL)
+		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e2:SetValue(2)
+		c:RegisterEffect(e2)
 	end
-	if bc then
-		if bc:GetFlagEffect(97165977)>0 then
-			bc:RegisterFlagEffect(24550676,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE,0,1)
-		else
-			bc:RegisterFlagEffect(97165977,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE,0,1)
-		end
+end
+function c97165977.repfilter(c,tp)
+	return c:IsFaceup() and c:IsControler(1-tp) and c:IsLocation(LOCATION_MZONE)
+		and c:IsReason(REASON_BATTLE) and c:GetFlagEffect(c97165977_indestructible)==0
+end
+function c97165977.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return eg:IsExists(c97165977.repfilter,1,nil,tp) end
+	local g=eg:Filter(c97165977.repfilter,nil,tp)
+	local tc=g:GetFirst()
+	while tc do
+		tc:RegisterFlagEffect(c97165977_indestructible,RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END,0,1)
+		tc=g:GetNext()
 	end
+	e:GetLabelObject():Clear()
+	e:GetLabelObject():Merge(g)
+	return true
 end
-function c97165977.valtg(e,c)
-	return c:GetFlagEffect(24550676)>0
-end
-function c97165977.vala(e,c)
-	return c==e:GetHandler()
-end
-function c97165977.indescon(e,tp,eg,ep,ev,re,r,rp)
-	local bc=e:GetHandler():GetBattleTarget()
-	return bc and bc:GetFlagEffect(97165977)==0
-end
-function c97165977.indesop(e,tp,eg,ep,ev,re,r,rp)
-	local bc=e:GetHandler():GetBattleTarget()
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
-	bc:RegisterEffect(e1,true)
+function c97165977.repval(e,c)
+	local g=e:GetLabelObject()
+	return g:IsContains(c)
 end
 function c97165977.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

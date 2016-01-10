@@ -1,85 +1,64 @@
+--アモルファージ・キャヴム
 --Amorphage Cavum
---By: HelixReactor
 function c33300669.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
-	--Activate
+	--flip
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_FLIP)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetOperation(c33300669.flipop)
 	c:RegisterEffect(e1)
-	--Maintenance cost
+	--maintain
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_RELEASE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCountLimit(1)
+	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetCondition(c33300669.descon)
 	e2:SetOperation(c33300669.desop)
 	c:RegisterEffect(e2)
-	--Chain Limit
+	--spsummon limit
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_CHAINING)
-	e3:SetRange(LOCATION_PZONE)
-	e3:SetCondition(c33300669.chaincon)
-	e3:SetOperation(c33300669.chainop)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e3:SetTargetRange(1,1)
+	e3:SetTarget(c33300669.sumlimit)
 	c:RegisterEffect(e3)
-	--SP Limit
+	--act limit
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_FLIP)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e4:SetOperation(c33300669.flagop)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e4:SetCode(EVENT_CHAINING)
+	e4:SetRange(LOCATION_PZONE)
+	e4:SetOperation(c33300669.chainop)
 	c:RegisterEffect(e4)
-	local e5=e4:Clone()
-	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e5:SetCondition(c33300669.flagcon)
-	c:RegisterEffect(e5)
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e6:SetTargetRange(1,1)
-	e6:SetCondition(c33300669.spcon)
-	e6:SetTarget(c33300669.splimit)
-	c:RegisterEffect(e6)
+end
+function c33300669.flipop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(33300669,RESET_EVENT+0x1fe0000,0,1)
+end
+function c33300669.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0xe0)
+end
+function c33300669.chainop(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.IsExistingMatchingCard(c33300669.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) then return false end
+	Duel.SetChainLimit(aux.FALSE)
 end
 function c33300669.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function c33300669.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local con=Duel.CheckReleaseGroup(tp,nil,1,nil)
-	local op=false
-	if con then op=Duel.SelectYesNo(tp,aux.Stringid(33300669,0)) end
-	if op then
-		local g=Duel.SelectReleaseGroup(tp,Card.IsReleasableByEffect,1,1,nil)
-		Duel.Release(g,REASON_EFFECT)
-	else
-		Duel.Destroy(c,REASON_EFFECT)
-	end
+	Duel.Hint(HINT_CARD,0,c:GetCode())
+	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,aux.Stringid(33300669,0)) then
+		local g=Duel.SelectReleaseGroup(tp,Card.IsReleasableByEffect,1,1,c)
+		Duel.Release(g,REASON_RULE)
+	else Duel.Destroy(c,REASON_RULE) end
 end
-function c33300669.chainfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1d1)
-end
-function c33300669.chaincon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c33300669.chainfilter,tp,LOCATION_ONFIELD,0,1,nil)
-end
-function c33300669.chainop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetChainLimit(aux.FALSE)
-end
-function c33300669.flagcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM
-end
-function c33300669.flagop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(33300669,RESET_EVENT+0x1fe0000,0,1)
-end
-function c33300669.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(33300669)~=0
-end
-function c33300669.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x1d1)
+function c33300669.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0xe0)
+	and (e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM or e:GetHandler():GetFlagEffect(33300669)~=0)
 end

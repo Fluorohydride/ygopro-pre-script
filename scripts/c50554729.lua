@@ -1,18 +1,18 @@
+--アモルファージ・インフェクション
 --Amorphage Infection
---By: HelixReactor
 function c50554729.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Stats up
+	--atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(c50554729.stg)
+	e2:SetTarget(c50554729.filter)
 	e2:SetValue(c50554729.value)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -34,14 +34,11 @@ function c50554729.initial_effect(c)
 	e5:SetCode(EVENT_DESTROYED)
 	c:RegisterEffect(e5)
 end
-function c50554729.stg(e,c)
-	return c:IsSetCard(0x1d1) 
-end
-function c50554729.stfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1d1) 
+function c50554729.filter(e,c)
+	return c:IsSetCard(0xe0) and c:IsFaceup()
 end
 function c50554729.value(e,c)
-	return Duel.GetMatchingGroupCount(c50554729.stfilter,c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*100
+	return Duel.GetMatchingGroupCount(c50554729.filter,c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*100
 end
 function c50554729.confilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsReason(REASON_BATTLE+REASON_EFFECT+REASON_RELEASE)
@@ -51,7 +48,7 @@ function c50554729.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c50554729.confilter,1,nil,tp)
 end
 function c50554729.thfilter(c)
-	return c:IsSetCard(0x1d1) and c:IsAbleToHand()
+	return c:IsSetCard(0xe0) and c:IsAbleToHand()
 end
 function c50554729.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c50554729.thfilter,tp,LOCATION_DECK,0,1,nil) end

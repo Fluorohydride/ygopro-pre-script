@@ -1,5 +1,6 @@
---Scripted by Eerie Code
+--光虫基盤
 --Bug Matrix
+--Scripted by Eerie Code
 function c86643777.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -30,7 +31,6 @@ function c86643777.initial_effect(c)
 	e4:SetOperation(c86643777.operation)
 	c:RegisterEffect(e4)
 end
-
 function c86643777.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsRace(RACE_INSECT)
 end

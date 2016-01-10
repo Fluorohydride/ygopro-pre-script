@@ -1,5 +1,6 @@
---Scripted by Eerie Code
+--修禅僧 ゲンドウ
 --Gendo the Master Monk
+--Scripted by Eerie Code
 function c99000107.initial_effect(c)
 	--Cannot activate
 	local e6=Effect.CreateEffect(c)

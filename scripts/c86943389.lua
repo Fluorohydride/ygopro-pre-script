@@ -1,4 +1,4 @@
---Scripted by Eerie Code
+--HSR快刀乱破ズール
 --Hi-Speedroid Puzzle
 function c86943389.initial_effect(c)
 	--synchro summon
@@ -7,33 +7,32 @@ function c86943389.initial_effect(c)
 	--Double ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(86943389,0))
-	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BATTLE_START)
 	e1:SetCondition(c86943389.atkcon)
 	e1:SetOperation(c86943389.atkop)
 	c:RegisterEffect(e1)
 	--to grave
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCondition(c86943389.regcon)
+	e2:SetOperation(c86943389.regop)
+	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetCondition(c86943389.regcon)
-	e3:SetOperation(c86943389.regop)
+	e3:SetDescription(aux.Stringid(86943389,1))
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_PHASE+PHASE_END)
+	e3:SetCountLimit(1)
+	e3:SetRange(LOCATION_GRAVE)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetCondition(c86943389.thcon)
+	e3:SetTarget(c86943389.thtg)
+	e3:SetOperation(c86943389.thop)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(86943389,1))
-	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_PHASE+PHASE_END)
-	e4:SetCountLimit(1)
-	e4:SetRange(LOCATION_GRAVE)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetCondition(c86943389.thcon)
-	e4:SetTarget(c86943389.thtg)
-	e4:SetOperation(c86943389.thop)
-	c:RegisterEffect(e4)
 end
-
 function c86943389.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
@@ -46,11 +45,10 @@ function c86943389.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(c:GetBaseAttack()*2)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+RESET_DAMAGE)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE_CAL)
 		c:RegisterEffect(e1)
 	end
 end
-
 function c86943389.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO 
 end

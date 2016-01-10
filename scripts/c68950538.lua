@@ -1,5 +1,6 @@
---Scripted by Eerie Code
+--電子光虫－センチビット
 --Digital Bug - Centibit
+--Scripted by Eerie Code
 function c68950538.initial_effect(c)
 	--xyzlimit
 	local e0=Effect.CreateEffect(c)
@@ -27,12 +28,10 @@ function c68950538.initial_effect(c)
 	e2:SetOperation(c68950538.efop)
 	c:RegisterEffect(e2)
 end
-
 function c68950538.xyzlimit(e,c)
 	if not c then return false end
 	return not c:IsRace(RACE_INSECT)
 end
-
 function c68950538.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return not c:IsStatus(STATUS_CONTINUOUS_POS) and c:IsPosition(POS_FACEUP_DEFENCE) and c:IsPreviousPosition(POS_FACEUP_ATTACK)
@@ -51,7 +50,6 @@ function c68950538.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENCE)
 	end
 end
-
 function c68950538.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_XYZ
 end
@@ -74,7 +72,6 @@ function c68950538.efop(e,tp,eg,ep,ev,re,r,rp)
 		rc:RegisterEffect(e2,true)
 	end
 end
-
 function c68950538.atkfilter(e,c)
 	return c:IsPosition(POS_DEFENCE)
 end

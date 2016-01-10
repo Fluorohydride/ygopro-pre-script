@@ -1,5 +1,6 @@
---Scripted by Eerie Code
+--電子光虫－ウェブソルダー
 --Digital Bug - Websolder
+--Scripted by Eerie Code
 function c94344242.initial_effect(c)
 	--xyzlimit
 	local e0=Effect.CreateEffect(c)
@@ -27,12 +28,10 @@ function c94344242.initial_effect(c)
 	e2:SetOperation(c94344242.efop)
 	c:RegisterEffect(e2)
 end
-
 function c94344242.xyzlimit(e,c)
 	if not c then return false end
 	return not c:IsRace(RACE_INSECT)
 end
-
 function c94344242.spfil(c,e,tp)
 	return c:GetLevel()==3 and c:IsRace(RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -53,7 +52,6 @@ function c94344242.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENCE)
 	end
 end
-
 function c94344242.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_XYZ
 end

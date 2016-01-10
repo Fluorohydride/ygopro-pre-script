@@ -1,6 +1,5 @@
---ＥＭオッドアイズ・ライトフェニックス
+--EMオッドアイズ・ライトフェニックス
 --Performapal Odd-Eyes Light Phoenix
---Script by dest
 function c59762399.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
@@ -30,7 +29,6 @@ function c59762399.initial_effect(c)
 	e2:SetOperation(c59762399.atkop)
 	c:RegisterEffect(e2)
 end
-
 function c59762399.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	local seq=e:GetHandler():GetSequence()
@@ -39,22 +37,21 @@ end
 function c59762399.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local seq=c:GetSequence()
-	local sc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sc:IsDestructable()
+	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsDestructable()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetTargetCard(sc)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c59762399.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+	local seq=c:GetSequence()
+	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
+	if tc and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function c59762399.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
@@ -62,14 +59,15 @@ function c59762399.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
-function c59762399.filter(c)
+function c59762399.atkfilter(c)
 	return c:IsSetCard(0x9f) and c:IsFaceup()
 end
 function c59762399.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c59762399.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c59762399.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c59762399.atkfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c59762399.atkfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c59762399.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c59762399.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,g,1,0,0)
 end
 function c59762399.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -77,6 +75,7 @@ function c59762399.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetValue(1000)
 	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e1)

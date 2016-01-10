@@ -1,5 +1,6 @@
---Scripted by Eerie Code
+--電子光虫－コアベージ
 --Digital Bug - Corebage
+--Scripted by Eerie Code
 function c58600555.initial_effect(c)
 	c:EnableReviveLimit()
 	--xyz summon
@@ -35,7 +36,6 @@ function c58600555.initial_effect(c)
 	e3:SetOperation(c58600555.operation)
 	c:RegisterEffect(e3)
 end
-
 c58600555.xyz_count=2
 function c58600555.ovfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and (c:GetRank()==3 or c:GetRank()==4) and c:IsRace(RACE_INSECT) and c:IsCanBeXyzMaterial(xyzc)
@@ -81,7 +81,6 @@ function c58600555.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)
 		end
 	end
 end
-
 function c58600555.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -101,8 +100,6 @@ function c58600555.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 	end
 end
-
-
 function c58600555.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,1,nil,RACE_INSECT) end
 end

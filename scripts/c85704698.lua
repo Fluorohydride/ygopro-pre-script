@@ -1,4 +1,4 @@
---Scripted by Eerie Code
+--リサイコロ
 --Re-Dice
 function c85704698.initial_effect(c)
 	--Special Summon
@@ -21,7 +21,6 @@ function c85704698.initial_effect(c)
 	e2:SetOperation(c85704698.synop)
 	c:RegisterEffect(e2)
 end
-
 function c85704698.spfil(c,e,tp)
 	return c:IsSetCard(0x2016) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -58,7 +57,6 @@ function c85704698.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e3)
 	end
 end
-
 function c85704698.syncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)

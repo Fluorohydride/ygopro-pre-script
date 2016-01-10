@@ -1,6 +1,5 @@
 --アモルファージ・ルクス
 --Amorphage Lux
---Script by mercury233
 function c70917315.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
@@ -60,7 +59,7 @@ end
 function c70917315.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_CARD,0,c:GetCode())
-	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,500) then
+	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,aux.Stringid(70917315,0)) then
 		local g=Duel.SelectReleaseGroup(tp,Card.IsReleasableByEffect,1,1,c)
 		Duel.Release(g,REASON_RULE)
 	else Duel.Destroy(c,REASON_RULE) end

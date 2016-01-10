@@ -1,3 +1,4 @@
+--クリスタルウィング・シンクロ・ドラゴン
 --Crystal Wing Synchro Dragon
 --ygohack137-13790811
 function c50954680.initial_effect(c)

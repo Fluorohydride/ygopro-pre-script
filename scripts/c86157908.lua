@@ -1,3 +1,4 @@
+--EMオッドアイズ・ユニコーン
 --Performapal Odd-Eyes Unicorn
 --ygohack137-13790815
 function c86157908.initial_effect(c)
@@ -16,7 +17,6 @@ function c86157908.initial_effect(c)
 	e2:SetOperation(c86157908.atkop)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(59975920,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)

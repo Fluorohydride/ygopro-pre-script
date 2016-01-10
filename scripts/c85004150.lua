@@ -38,7 +38,6 @@ function c85004150.mfilter2(c,xyzc)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and (c:GetRank()==6 or c:GetRank()==5) and c:IsRace(RACE_INSECT) and c:IsCanBeXyzMaterial(xyzc)
 	and c:CheckRemoveOverlayCard(tp,2,REASON_COST)
 end
-
 function c85004150.xyzcon(e,c)
 	if c==nil then return true end
 	return Duel.IsExistingMatchingCard(c85004150.mfilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
@@ -49,8 +48,6 @@ function c85004150.xyzop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:SetMaterial(g)
 	Duel.Overlay(c,g)
 end
-
-
 function c85004150.atkfilter(c)
 	return c:IsFaceup() and c:IsDestructable()
 end
@@ -76,4 +73,3 @@ function c85004150.atkop(e,tp,eg,ep,ev,re,r,rp)
 		else Duel.Destroy(tg,REASON_EFFECT) end
 	end
 end
-
