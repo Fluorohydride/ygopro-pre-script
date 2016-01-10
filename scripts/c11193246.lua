@@ -1,4 +1,5 @@
 --月光輪廻舞踊
+--Lunalight Reincarnation Dance
 --Script by mercury233
 function c11193246.initial_effect(c)
 	--Activate

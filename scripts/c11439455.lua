@@ -1,5 +1,5 @@
 --月光蒼猫
---Moon-Light Blue Cat
+--Lunalight Blue Cat
 --Scripted by Eerie Code
 function c11439455.initial_effect(c)
 	--atk up
@@ -25,7 +25,6 @@ function c11439455.initial_effect(c)
 	e3:SetOperation(c11439455.spop2)
 	c:RegisterEffect(e3)
 end
-
 function c11439455.atkfil(c)
 	return c:IsFaceup() and c:IsSetCard(0xdf) and not c:IsCode(11439455) and c:IsAttackAbove(0)
 end
@@ -50,7 +49,6 @@ end
 function c11439455.value(e,c)
 	return c:GetBaseAttack()*2
 end
-
 function c11439455.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end

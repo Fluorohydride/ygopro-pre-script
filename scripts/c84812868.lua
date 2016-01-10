@@ -1,4 +1,5 @@
 --月光白兎
+--Lunalight White Rabbit
 --Script by mercury233
 function c84812868.initial_effect(c)
 	--spsummon

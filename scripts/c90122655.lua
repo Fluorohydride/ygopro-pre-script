@@ -1,4 +1,5 @@
 --天魔大帝
+--The Great Mara Monarch
 --Script by mercury233
 function c90122655.initial_effect(c)
 	--act limit

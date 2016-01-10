@@ -1,4 +1,5 @@
 --月光虎
+--Lunalight Tiger
 --Script by mercury233
 function c83190280.initial_effect(c)
 	--pendulum summon

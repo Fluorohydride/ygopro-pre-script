@@ -1,3 +1,4 @@
+--電子光虫－ライノセバス
 --Digital Bug Rhinocebus
 --ygohack137-13790812
 function c85004150.initial_effect(c)

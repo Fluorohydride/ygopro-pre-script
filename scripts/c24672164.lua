@@ -35,7 +35,6 @@ function c24672164.initial_effect(c)
 	e4:SetOperation(c24672164.thop)
 	c:RegisterEffect(e4)
 end
-
 function c24672164.fscon(e,g,gc,chkf)
 	if g==nil then 
 		return false 
@@ -89,7 +88,6 @@ function c24672164.matcheck(e,c)
 	ae:SetReset(RESET_EVENT+0xff0000)
 	c:RegisterEffect(ae)
 end
-
 function c24672164.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_MZONE) and bit.band(c:GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION 

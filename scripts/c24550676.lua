@@ -4,7 +4,7 @@
 function c24550676.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,97165977,c24550676.mat_filter,2,false,false)
+	aux.AddFusionProcCodeFun(c,97165977,aux.FilterBoolFunction(Card.IsFusionSetCard,0xdf),2,false,false)
 	--spsummon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -41,9 +41,6 @@ function c24550676.initial_effect(c)
 	e4:SetTarget(c24550676.target)
 	e4:SetOperation(c24550676.operation)
 	c:RegisterEffect(e4)
-end
-function c24550676.mat_filter(c)
-	return c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER)
 end
 function c24550676.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION

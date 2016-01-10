@@ -46,16 +46,6 @@ end
 function c6283472.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(6283472,RESET_EVENT+0x1fe0000,0,1)
 end
-function c6283472.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe0)
-end
-function c6283472.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c6283472.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
-end
-function c6283472.damval(e,re,val,r,rp,rc)
-	if bit.band(r,REASON_EFFECT)~=0 then return 0 end
-	return val
-end
 function c6283472.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
@@ -70,4 +60,14 @@ end
 function c6283472.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0xe0)
 	and (e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM or e:GetHandler():GetFlagEffect(6283472)~=0)
+end
+function c6283472.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0xe0)
+end
+function c6283472.damcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c6283472.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+end
+function c6283472.damval(e,re,val,r,rp,rc)
+	if bit.band(r,REASON_EFFECT)~=0 then return 0 end
+	return val
 end

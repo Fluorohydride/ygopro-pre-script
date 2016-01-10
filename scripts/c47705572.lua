@@ -1,4 +1,5 @@
 --月光狼
+--Lunalight Wolf
 --Script by mercury233
 function c47705572.initial_effect(c)
 	--pendulum summon

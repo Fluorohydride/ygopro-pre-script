@@ -86,7 +86,6 @@ end
 function c50371210.ftarget(e,c)
 	return e:GetHandler():GetEquipTarget()~=c
 end
-
 function c50371210.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0xdd)-1
 end

@@ -1,4 +1,5 @@
 --月光黒羊
+--Lunalight Black Sheep
 --Script by mercury233
 function c11317977.initial_effect(c)
 	--tohand

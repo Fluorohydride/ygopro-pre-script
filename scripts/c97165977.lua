@@ -3,7 +3,7 @@
 function c97165977.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,51777272,c97165977.mat_filter,1,false,false)
+	aux.AddFusionProcCodeFun(c,51777272,aux.FilterBoolFunction(Card.IsFusionSetCard,0xdf),1,false,false)
 	--spsummon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -39,18 +39,12 @@ function c97165977.initial_effect(c)
 	e4:SetOperation(c97165977.atkop)
 	c:RegisterEffect(e4)
 end
-function c97165977.mat_filter(c)
-	return c:IsSetCard(0xdf)
-end
-
 function c97165977.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
-
 function c97165977.tgvalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
-
 function c97165977.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1
 end
