@@ -1,5 +1,6 @@
---Scripted by Eerie Code
+--電子光虫－コクーンデンサ
 --Digital Bug - Cocoondensor
+--Scripted by Eerie Code
 function c32465539.initial_effect(c)
 	--xyzlimit
 	local e0=Effect.CreateEffect(c)
@@ -28,12 +29,10 @@ function c32465539.initial_effect(c)
 	e2:SetOperation(c32465539.efop)
 	c:RegisterEffect(e2)
 end
-
 function c32465539.xyzlimit(e,c)
 	if not c then return false end
 	return not c:IsRace(RACE_INSECT)
 end
-
 function c32465539.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
 end
@@ -58,7 +57,6 @@ function c32465539.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENCE)
 	end
 end
-
 function c32465539.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_XYZ
 end
@@ -83,7 +81,6 @@ function c32465539.efop(e,tp,eg,ep,ev,re,r,rp)
 		rc:RegisterEffect(e2,true)
 	end
 end
-
 function c32465539.aclimit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e)
 end

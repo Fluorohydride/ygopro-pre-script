@@ -1,5 +1,6 @@
---Scripted by Eerie Code
+--電子光虫－スカラジエータ
 --Digital Bug - Scaradiator
+--Scripted by Eerie Code
 function c12615446.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,c12615446.matfil,3,2,nil,nil,5)
@@ -27,7 +28,6 @@ function c12615446.initial_effect(c)
 	e2:SetOperation(c12615446.xyzop)
 	c:RegisterEffect(e2)
 end
-
 function c12615446.matfil(c)
 	return c:IsRace(RACE_INSECT) and c:IsAttribute(ATTRIBUTE_LIGHT)
 end
@@ -67,7 +67,6 @@ function c12615446.posop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function c12615446.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()

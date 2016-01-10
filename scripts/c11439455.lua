@@ -1,6 +1,8 @@
---Scripted by Eerie Code
+--月光蒼猫
 --Moon-Light Blue Cat
+--Scripted by Eerie Code
 function c11439455.initial_effect(c)
+	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(11439455,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -25,7 +27,7 @@ function c11439455.initial_effect(c)
 end
 
 function c11439455.atkfil(c)
-	return c:IsFaceup() and (c:IsSetCard(0xe1) or c:IsSetCard(0x209)) and not c:IsCode(11439455) and c:IsAttackAbove(0)
+	return c:IsFaceup() and c:IsSetCard(0xdf) and not c:IsCode(11439455) and c:IsAttackAbove(0)
 end
 function c11439455.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c11439455.atkfil(chkc) end
@@ -53,7 +55,7 @@ function c11439455.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c11439455.spfilter(c,e,tp)
-	return (c:IsSetCard(0xe1) or c:IsSetCard(0x209)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xdf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c11439455.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

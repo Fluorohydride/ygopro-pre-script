@@ -1,5 +1,6 @@
---Scripted by Eerie Code
+--月光舞獅子姫
 --Moon-Light Lio Dancer
+--Scripted by Eerie Code
 function c24550676.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
@@ -41,19 +42,15 @@ function c24550676.initial_effect(c)
 	e4:SetOperation(c24550676.operation)
 	c:RegisterEffect(e4)
 end
-
 function c24550676.mat_filter(c)
 	return c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER)
 end
-
 function c24550676.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
-
 function c24550676.tgvalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
-
 function c24550676.condition(e,tp,eg,ep,ev,re,r,rp)
 	local atg=Duel.GetAttackTarget()
 	return Duel.GetAttacker()==e:GetHandler() and atg

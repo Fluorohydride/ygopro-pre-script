@@ -1,5 +1,6 @@
+--フレンドリーファイア
 --Friendly Fire
---By: HelixReactor
+--Script by mercury233
 function c46253216.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -13,15 +14,21 @@ function c46253216.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c46253216.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp
+	return ep~=tp
+end
+function c46253216.filter(c,rc)
+	return c~=rc and c:IsDestructable()
 end
 function c46253216.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsDestructable() and chkc~=re:GetHandler() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsDestructable,tp,0,LOCATION_ONFIELD,1,re:GetHandler()) end
-	Duel.SelectTarget(tp,Card.IsDestructable,tp,0,LOCATION_ONFIELD,1,1,re:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+	if chkc then return chkc:IsOnField() and c46253216.filter(chkc,re:GetHandler()) and chkc~=e:GetHandler() end
+	if chk==0 then return Duel.IsExistingTarget(c46253216.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler(),re:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,c46253216.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler(),re:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c46253216.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then Duel.Destroy(tc,REASON_EFFECT) end
+	if tc:IsRelateToEffect(e) then
+		Duel.Destroy(tc,REASON_EFFECT)
+	end
 end

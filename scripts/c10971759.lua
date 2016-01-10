@@ -1,5 +1,6 @@
---Scripted by Eerie Code
+光虫異変
 --Bug Emergency
+--Scripted by Eerie Code-6974
 function c10971759.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -24,7 +25,6 @@ function c10971759.initial_effect(c)
 	e2:SetOperation(c10971759.operation)
 	c:RegisterEffect(e2)
 end
-
 function c10971759.spfil(c,e,tp)
 	return c:GetLevel()==3 and c:IsRace(RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -54,7 +54,6 @@ function c10971759.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-
 function c10971759.cfilter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:GetRank()~=3 and c:IsAbleToRemoveAsCost()
 end
