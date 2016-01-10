@@ -7,7 +7,7 @@ function c47598941.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DESTROY,TIMING_DESTROY)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetTarget(c47598941.target1)
 	e1:SetOperation(c47598941.operation)
 	c:RegisterEffect(e1)
@@ -36,7 +36,7 @@ function c47598941.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c47598941.filter(c,e,tp)
-	return c:IsSetCard(0x1374) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
+	return c:IsSetCard(0xe0) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function c47598941.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_SZONE) and (c:GetPreviousSequence()==6 or c:GetPreviousSequence()==7) and c:GetPreviousControler()==tp
@@ -75,10 +75,10 @@ function c47598941.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c47598941.atktg(e,c)
-	return c:IsFaceup() and not c:IsSetCard(0x1374)
+	return c:IsFaceup() and not c:IsSetCard(0xe0)
 end
 function c47598941.vfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1374)
+	return c:IsFaceup() and c:IsSetCard(0xe0)
 end
 function c47598941.atkval(e)
 	return Duel.GetMatchingGroupCount(c47598941.vfilter,e:GetOwnerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*-100

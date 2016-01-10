@@ -44,10 +44,10 @@ function c32687071.desop(e,tp,eg,ep,ev,re,r,rp)
 	else Duel.Destroy(c,REASON_RULE) end
 end
 function c32687071.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x1374)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0xe0)
 end
 function c32687071.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1374)
+	return c:IsFaceup() and c:IsSetCard(0xe0)
 end
 function c32687071.limcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c32687071.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

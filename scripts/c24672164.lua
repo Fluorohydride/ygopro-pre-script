@@ -1,5 +1,6 @@
---Scripted by Eerie Code
+--幻奏の華歌聖ブルーム・プリマ
 --Bloom Prima the Melodious Choir
+--Scripted by Eerie Code
 function c24672164.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

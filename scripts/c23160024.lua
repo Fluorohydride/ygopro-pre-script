@@ -13,7 +13,7 @@ function c23160024.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1374))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe0))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -41,7 +41,7 @@ function c23160024.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c23160024.cfilter(c,tp)
-	return c:IsSetCard(0x1374) and c:IsReason(REASON_RELEASE) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+	return c:IsSetCard(0xe0) and c:IsReason(REASON_RELEASE) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function c23160024.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(23160024)<2 and eg:IsExists(c23160024.cfilter,1,nil,tp)
@@ -66,7 +66,7 @@ function c23160024.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c23160024.spfilter(c,e,tp,mg)
-	return c:IsCode(5844) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
+	return c:IsCode(98287529) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 		and mg:Filter(Card.IsCanBeRitualMaterial,c,c):CheckWithSumEqual(Card.GetRitualLevel,8,1,99,c)
 end
 function c23160024.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

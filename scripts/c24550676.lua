@@ -3,7 +3,7 @@
 function c24550676.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,6947,c24550676.mat_filter,2,false,false)
+	aux.AddFusionProcCodeFun(c,97165977,c24550676.mat_filter,2,false,false)
 	--spsummon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -43,7 +43,7 @@ function c24550676.initial_effect(c)
 end
 
 function c24550676.mat_filter(c)
-	return c:IsSetCard(0xe1) or c:IsSetCard(0x209)
+	return c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER)
 end
 
 function c24550676.splimit(e,se,sp,st)

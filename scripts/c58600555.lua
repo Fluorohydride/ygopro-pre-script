@@ -64,7 +64,7 @@ function c58600555.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)
 		local ct=-ft
 		local b1=Duel.CheckXyzMaterial(c,c58600555.ovfilter2,5,2,2,og)
 		local b2=ct<1 and Duel.IsExistingMatchingCard(c58600555.ovfilter,tp,LOCATION_MZONE,0,1,nil,tp,c)
-		if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(6957,0))) then
+		if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(58600555,2))) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 			local mg=Duel.SelectMatchingCard(tp,c58600555.ovfilter,tp,LOCATION_MZONE,0,1,1,nil,tp,c)
 			mg:GetFirst():RemoveOverlayCard(tp,2,2,REASON_COST)
@@ -75,7 +75,7 @@ function c58600555.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)
 			c:SetMaterial(mg)
 			Duel.Overlay(c,mg)
 		else
-			local mg=Duel.SelectXyzMaterial(tp,c,c58600555.ovfilter2,7,2,2)
+			local mg=Duel.SelectXyzMaterial(tp,c,c58600555.ovfilter2,5,2,2)
 			c:SetMaterial(mg)
 			Duel.Overlay(c,mg)
 		end

@@ -1,3 +1,4 @@
+--白き霊龍
 --White Spirit Dragon
 --By: HelixReactor
 function c45467446.initial_effect(c)

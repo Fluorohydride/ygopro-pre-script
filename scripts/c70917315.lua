@@ -45,14 +45,14 @@ function c70917315.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(70917315,RESET_EVENT+0x1fe0000,0,1)
 end
 function c70917315.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1374)
+	return c:IsFaceup() and c:IsSetCard(0xe0)
 end
 function c70917315.limcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c70917315.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c70917315.limval(e,re,rp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_SPELL) and not rc:IsSetCard(0x1374) and not rc:IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_SPELL) and not rc:IsSetCard(0xe0) and not rc:IsImmuneToEffect(e)
 end
 function c70917315.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
@@ -66,6 +66,6 @@ function c70917315.desop(e,tp,eg,ep,ev,re,r,rp)
 	else Duel.Destroy(c,REASON_RULE) end
 end
 function c70917315.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x1374)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0xe0)
 	and (e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM or e:GetHandler():GetFlagEffect(70917315)~=0)
 end

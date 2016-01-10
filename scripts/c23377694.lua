@@ -66,7 +66,7 @@ function c23377694.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c23377694.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

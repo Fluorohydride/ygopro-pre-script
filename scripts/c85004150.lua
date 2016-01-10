@@ -1,4 +1,5 @@
 --Digital Bug Rhinocebus
+--ygohack137-13790812
 function c85004150.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,c85004150.mfilter,7,2,nil,nil,5,nil)
@@ -25,10 +26,10 @@ function c85004150.initial_effect(c)
 	e2:SetTarget(c85004150.atktg)
 	e2:SetOperation(c85004150.atkop)
 	c:RegisterEffect(e2)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_PIERCE)
-	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_PIERCE)
+	c:RegisterEffect(e3)
 end
 function c85004150.mfilter(c)
 	return c:IsRace(RACE_INSECT) and c:IsAttribute(ATTRIBUTE_LIGHT)

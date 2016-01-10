@@ -1,3 +1,4 @@
+--青き眼の賢士
 --Sage Knight with Eyes of Blue
 --By: HelixReactor
 function c8240199.initial_effect(c)
@@ -22,7 +23,7 @@ function c8240199.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c8240199.thfilter(c)
-	return c:IsType(TYPE_TUNER) and c:IsAttribute(ATTRIBUTE_LIGHT) and not c:IsCode(8240199) and c:IsAbleToHand()
+	return c:IsType(TYPE_TUNER) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetLevel()==1 and not c:IsCode(8240199) and c:IsAbleToHand()
 end
 function c8240199.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c8240199.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -40,18 +41,18 @@ function c8240199.gvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
-function c8240199.gvfilter(c)
+function c8240199.gvfilter(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToGrave()
+		and Duel.IsExistingMatchingCard(c8240199.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 end
 function c8240199.spfilter(c,e,tp)
-	return c:IsSetCard(0xd8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xdd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c8240199.gvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c8240199.gvfilter(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(c8240199.gvfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(c8240199.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c8240199.gvfilter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c8240199.gvfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c8240199.gvfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c8240199.gvfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,0)
 end
 function c8240199.gvop(e,tp,eg,ep,ev,re,r,rp)

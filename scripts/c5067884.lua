@@ -1,13 +1,9 @@
+--ダイナミスト・スピノス
 --Dinomist Spinos
 --By: HelixReactor
 function c5067884.initial_effect(c)
 	--pendulum summon
-	aux.AddPendulumProcedure(c)
-	--Activate
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e1)
+	aux.EnablePendulumAttribute(c)
 	--destroy replace
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -27,7 +23,7 @@ function c5067884.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c5067884.xfilter(c,tp)
-	return c:IsFaceup() and (c:IsControler(tp) and c:IsSetCard(0x1e71) and c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT))
+	return c:IsFaceup() and (c:IsControler(tp) and c:IsSetCard(0xd8) and c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT))
 end
 function c5067884.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not eg:IsContains(e:GetHandler())
@@ -42,14 +38,14 @@ function c5067884.repop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c5067884.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsSetCard,1,c,0x1e71) end
-	local rg=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,c,0x1e71)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsSetCard,1,c,0xd8) end
+	local rg=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,c,0xd8)
 	Duel.Release(rg,REASON_COST)
 end
 function c5067884.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local con1=c:GetFlagEffect(5067884)==0
-	local con2=c:GetFlagEffect(72001825)==0
+	local con2=c:GetFlagEffect(50678841)==0
 	if chk==0 then return con1 or con2 end
 	local op
 	if con1 and con2 then
@@ -76,7 +72,7 @@ function c5067884.atkop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	elseif op==1 then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
-			c:RegisterFlagEffect(72001825,RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END,0,0)
+			c:RegisterFlagEffect(50678841,RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END,0,0)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_EXTRA_ATTACK)
