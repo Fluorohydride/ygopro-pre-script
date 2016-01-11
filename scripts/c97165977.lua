@@ -74,14 +74,14 @@ function c97165977.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c97165977.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(1-tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsReason(REASON_BATTLE) and c:GetFlagEffect(c97165977_indestructible)==0
+		and c:IsReason(REASON_BATTLE) and c:GetFlagEffect(97165977)==0
 end
 function c97165977.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c97165977.repfilter,1,nil,tp) end
 	local g=eg:Filter(c97165977.repfilter,nil,tp)
 	local tc=g:GetFirst()
 	while tc do
-		tc:RegisterFlagEffect(c97165977_indestructible,RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(97165977,RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END,0,1)
 		tc=g:GetNext()
 	end
 	e:GetLabelObject():Clear()
