@@ -1,4 +1,4 @@
---Steel Cavalry of Dinon 
+--Steel Cavalry of Dinon
 -- By ChibiNya
 function c2396042.initial_effect(c)
 	aux.EnablePendulumAttribute(c)

@@ -1,4 +1,4 @@
---Disrupted Kaiju Dream
+--Interrupted Kaiju Slumber
 --Scripted by Eerie Code
 function c99330325.initial_effect(c)
 	--Activate

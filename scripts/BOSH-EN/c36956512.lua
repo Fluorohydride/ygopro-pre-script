@@ -1,4 +1,4 @@
---Gadarla, the Mysterious Dust Kaiju
+--Gadarla, the Mystery Dust Kaiju
 --Scripted by Eerie Code
 function c36956512.initial_effect(c)
 	c:SetUniqueOnField(1,0,20000000)
