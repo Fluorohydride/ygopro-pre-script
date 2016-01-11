@@ -92,14 +92,14 @@ function c700302023.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c700302023.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,13718204,0,0x4011,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,700302123,0,0x4011,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c700302023.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if not (e:GetHandler():IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,13718204,0,0x4011,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT)) then return end
-	local token=Duel.CreateToken(tp,13718204)
+	if not (e:GetHandler():IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,700302123,0,0x4011,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT)) then return end
+	local token=Duel.CreateToken(tp,700302123)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 end
 
