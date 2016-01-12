@@ -1,4 +1,4 @@
-﻿--月光紅狐
+--月光紅狐
 --Lunalight Crimson Fox
 --Scripted by Eerie Code
 function c700200112.initial_effect(c)
