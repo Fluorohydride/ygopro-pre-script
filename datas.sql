@@ -24,7 +24,7 @@ INSERT OR REPLACE INTO "datas" VALUES ("100302001","1","0","0","33","2800","2800
 ----巨竜の聖騎士/Paladin of Felgrand
 INSERT OR REPLACE INTO "datas" VALUES ("100302002","1","0","0","33","1700","300","4","1","16","0");
 ----巨竜の守護騎士/Guardian of Felgrand
-INSERT OR REPLACE INTO "datas" VALUES ("100302003","1","0","0","33","500","500","4","1","16","0");
+INSERT OR REPLACE INTO "datas" VALUES ("100302003","1","0","82","33","500","500","4","1","16","0");
 ----巨神竜の遺跡/Ruins of the Great Divine Dragon
 INSERT OR REPLACE INTO "datas" VALUES ("100302023","1","0","0","131074","0","0","0","0","0","0");
 ----復活の福音/Gospel of Revival
