@@ -1,5 +1,5 @@
 --巨竜の守護騎士
---
+--Guardian of Felgrand
 --Script by mercury233
 function c100302003.initial_effect(c)
 	--equip
