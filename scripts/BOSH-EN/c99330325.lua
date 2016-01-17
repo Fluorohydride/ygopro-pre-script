@@ -53,11 +53,11 @@ function c99330325.activate(e,tp,eg,ep,ev,re,r,rp)
 	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(99330325,0))
-		local g1=Duel.SelectMatchingCard(tp,c99330325.filter3,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+		local g1=Duel.SelectMatchingCard(tp,c99330325.filter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		if g1:GetCount()==0 then return end
 		local tc1=g1:GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(99330325,1))
-		local g2=Duel.SelectMatchingCard(tp,c99330325.filter4,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc1:GetCode())
+		local g2=Duel.SelectMatchingCard(tp,c99330325.filter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc1:GetCode())
 		if g2:GetCount()==0 then return end
 		local tc2=g2:GetFirst()
 		Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,POS_FACEUP_ATTACK)
