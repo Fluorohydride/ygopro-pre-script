@@ -19,6 +19,8 @@ INSERT OR REPLACE INTO "datas" VALUES ("100201003","1","0","0","33","800","600",
 INSERT OR REPLACE INTO "datas" VALUES ("100202002","1","0","544866532","33","2100","700","4","1","1","262400");
 
 --SR02
+----アークブレイブドラゴン/Arkbrave Dragon
+INSERT OR REPLACE INTO "datas" VALUES ("100302000","1","0","0","33","2400","2000","7","8192","16","0");
 ----巨神竜フェルグラント/Felgrand, the Great Divine Dragon
 INSERT OR REPLACE INTO "datas" VALUES ("100302001","1","0","0","33","2800","2800","8","8192","16","0");
 ----巨竜の聖騎士/Paladin of Felgrand
