@@ -75,7 +75,20 @@ function c99330325.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e4=e3:Clone()
 		tc2:RegisterEffect(e4)
 		Duel.SpecialSummonComplete()
+		local e5=Effect.CreateEffect(e:GetHandler())
+		e5:SetType(EFFECT_TYPE_FIELD)
+		e5:SetCode(EFFECT_CANNOT_EP)
+		e5:SetRange(LOCATION_MZONE)
+		e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e5:SetTargetRange(1,0)
+		e5:SetCondition(c99330325.becon)
+		tc1:RegisterEffect(e5)
+		local e6=e5:Clone()
+		tc2:RegisterEffect(e6)
 	end
+end
+function c99330325.becon(e)
+	return e:GetHandler():IsAttackable()
 end
 function c99330325.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
