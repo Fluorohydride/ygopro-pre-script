@@ -24,7 +24,7 @@ function c100201003.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100201003.cfilter(c)
-	return c:IsCode(38033121) or c:IsCode(43892408) or c:IsCode(90960358)
+	return c:IsSetCard(0xe1) and not c:IsCode(100201003)
 end
 function c100201003.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100201003.cfilter,1,nil) end
