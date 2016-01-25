@@ -12,11 +12,11 @@ INSERT OR REPLACE INTO "datas" VALUES ("100201001","1","0","0","33","0","0","8",
 ----暗黒騎士ガイアロード/Lord Gaia The Fierce Knight
 INSERT OR REPLACE INTO "datas" VALUES ("100201002","1","0","189","33","2300","2100","7","1","1","0");
 ----レモン・マジシャン・ガール/Lemon Magician Girl
-INSERT OR REPLACE INTO "datas" VALUES ("100201003","1","0","225","33","800","600","2","2","16","0");
+INSERT OR REPLACE INTO "datas" VALUES ("100201003","1","0","8354","33","800","600","2","2","16","0");
 
 --MVPL-JP
 ----エルフの聖剣士/Sacred Celtic Guard
-INSERT OR REPLACE INTO "datas" VALUES ("100202002","1","0","544866530","33","2100","700","4","1","1","262400");
+INSERT OR REPLACE INTO "datas" VALUES ("100202002","1","0","544866529","33","2100","700","4","1","1","262400");
 
 --SR02
 ----アークブレイブドラゴン/Arkbrave Dragon
