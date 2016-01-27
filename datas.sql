@@ -3,8 +3,6 @@
 INSERT OR REPLACE INTO "datas" VALUES ("100200103","1","0","0","33","2500","0","8","524288","32","262144");
 ----ギャラクシー・ワーム/Galaxy Worm
 INSERT OR REPLACE INTO "datas" VALUES ("100200104","1","0","4063355","33","1200","1000","3","2048","16","262144");
-----月光紅狐/Lunalight Crimson Fox
-INSERT OR REPLACE INTO "datas" VALUES ("100200112","1","0","223","33","1800","600","4","32768","32","0");
 
 --MVPC-JP
 ----破滅竜ガンドラＸ/Gandora X the Dragon of Destruction
