@@ -48,8 +48,11 @@ function c100302001.thop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(atk*100)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetReset(RESET_EVENT+0x1ff0000)
 			c:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_UPDATE_DEFENCE)
+			c:RegisterEffect(e2)
 		end
 	end
 end
