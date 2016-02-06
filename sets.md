@@ -1,4 +1,5 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Yu-Gi-Oh! The Dark Side of Dimensions promotional cards (MVPC-JP) : `100201XXX`
 - Yu-Gi-Oh! The Dark Side of Dimensions Duel Set (MVPL-JP) : `100202XXX`
+- Duelist Festival 2016 - Promotion Pack (DF16-JP) : `100203XXX`
 - Structure Deck R: Revival of the Great Divine Dragon (SR02-JP) : `100302XXX`
