@@ -5,6 +5,7 @@ INSERT OR REPLACE INTO "datas" VALUES ("100200103","1","0","0","33","2500","0","
 INSERT OR REPLACE INTO "datas" VALUES ("100200104","1","0","4063355","33","1200","1000","3","2048","16","262144");
 ----創世の竜騎士/Dragon Knight of Creation
 INSERT OR REPLACE INTO "datas" VALUES ("100200113","1","0","0","33","1800","600","4","8192","16","0");
+
 --MVPC-JP
 ----破滅竜ガンドラＸ/Gandora X the Dragon of Destruction
 INSERT OR REPLACE INTO "datas" VALUES ("100201001","1","0","0","33","0","0","8","8192","32","4202498");
@@ -22,3 +23,9 @@ INSERT OR REPLACE INTO "datas" VALUES ("100202002","1","0","544866529","33","210
 INSERT OR REPLACE INTO "datas" VALUES ("100203000","1","0","0","161","2400","2000","8","4","16","0");
 ----原初の叫喚/Primal Cry
 INSERT OR REPLACE INTO "datas" VALUES ("100203010","1","0","0","130","0","0","0","0","0","0");
+
+--ST16-JP
+----ＥＭスライハンド・マジシャン/Performapal Slyhand Magician
+INSERT OR REPLACE INTO "datas" VALUES ("100316001","1","0","159","33","2500","2000","7","2","16","0");
+----ＥＭドラマチックシアター/Performapal Dramatic Theater
+INSERT OR REPLACE INTO "datas" VALUES ("100316099","1","0","159","524290","0","0","0","0","0","0");
