@@ -39,7 +39,7 @@ function c100203011.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if e:GetLabel()==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
-	local op=Duel.SelectOption(tp,70,71,72)
+	local op=Duel.SelectOption(1-tp,70,71,72)
 	Duel.ConfirmDecktop(tp,1)
 	local g=Duel.GetDecktopGroup(tp,1)
 	local tc=g:GetFirst()
