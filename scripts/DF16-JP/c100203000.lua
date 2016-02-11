@@ -20,14 +20,13 @@ function c100203000.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_RELEASE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1)
 	e2:SetCondition(c100203000.thcon)
 	e2:SetTarget(c100203000.thtg)
 	e2:SetOperation(c100203000.thop)
 	c:RegisterEffect(e2)
 end
-
 function c100203000.cfilter(c,tp)
 	return c:IsLevelAbove(1) and not c:IsPublic() and Duel.IsExistingTarget(c100203000.lvfil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetLevel())
 end
@@ -44,7 +43,7 @@ function c100203000.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lv=cg:GetFirst():GetLevel()
 	e:SetLabel(lv)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c6112.lvfil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,lv)
+	Duel.SelectTarget(tp,c100203000.lvfil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,lv)
 end
 function c100203000.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -58,7 +57,6 @@ function c100203000.lvop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-
 function c100203000.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100203000.thfilter2,1,e:GetHandler(),tp,r)
 end
