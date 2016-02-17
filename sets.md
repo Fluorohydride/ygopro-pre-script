@@ -4,3 +4,4 @@
 - Duelist Festival 2016 - Promotion Pack (DF16-JP) : `100203XXX`
 - Structure Deck R: Revival of the Great Divine Dragon (SR02-JP) : `100302XXX`
 - Starter Deck 2016 (ST16-JP) : `100316XXX`
+- THE DARK ILLUSION (TDIL-JP) : `100909XXX`
