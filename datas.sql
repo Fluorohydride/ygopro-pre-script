@@ -27,5 +27,11 @@ INSERT OR REPLACE INTO "datas" VALUES ("100203010","1","0","0","130","0","0","0"
 --ST16-JP
 ----ＥＭスライハンド・マジシャン/Performapal Slyhand Magician
 INSERT OR REPLACE INTO "datas" VALUES ("100316001","1","0","159","33","2500","2000","7","2","16","0");
+----ＥＭキングベアー/Performapal King Bear
+INSERT OR REPLACE INTO "datas" VALUES ("100316002","1","0","159","16777249","2200","1000","117899270","32768","1","0");
+----ＥＭブランコブラ/Performapal Swing Cobra
+INSERT OR REPLACE INTO "datas" VALUES ("100316003","1","0","159","16777249","300","1800","33685508","524288","1","0");
+----ＥＭインコーラス/Performapal Parakhorus
+INSERT OR REPLACE INTO "datas" VALUES ("100316005","1","0","159","16777249","500","500","33685507","512","8","0");
 ----ＥＭドラマチックシアター/Performapal Dramatic Theater
 INSERT OR REPLACE INTO "datas" VALUES ("100316099","1","0","159","524290","0","0","0","0","0","0");

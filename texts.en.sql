@@ -17,4 +17,19 @@ INSERT OR REPLACE INTO "texts" VALUES ("100203010","Primal Cry","This card is us
 
 --ST16-JP
 INSERT OR REPLACE INTO "texts" VALUES ("100316001","Performapal Slyhand Magician","You can Special Summon this card (from your hand) by Tributing 1 ""Performapal"" monster that is not a Pendulum Monster. Once per turn: You can discard 1 card, then target 1 face-up card on the field; destroy it.","","","","","","","","","","","","","","","","");
+INSERT OR REPLACE INTO "texts" VALUES ("100316002","Performapal King Bear","[Pendulum Effect]
+During the End Phase, if this card was activated this turn: You can destroy this card, and if you do, add to your hand, 1 Level 7 or higher monster among the face-up Pendulum Monsters in your Extra Deck and the monsters in your Graveyard.
+
+[Monster Effect]
+This Attack Position card cannot be destroyed by Spell/Trap effects. This card gains 100 ATK for each ""Performapal"" card you control during your Battle Phase only."," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ");
+INSERT OR REPLACE INTO "texts" VALUES ("100316003","Performapal Swing Cobra","[Pendulum Effect]
+Once per turn, when a monster you control inflicts battle damage to your opponent: You can send the top card of your opponent's Deck to the Graveyard.
+
+[Monster Effect]
+This card can attack your opponent directly. If this card attacks, it is changed to Defense Position at the end of the Battle Phase."," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ");
+INSERT INTO "texts" VALUES ("100316005","Performapal Parakhorus","[Pendulum Effect]
+Once per turn, if you have a ""Performapal"", ""Magician"", or ""Odd-Eyes"" card in your other Pendulum Zone, except ""Performapal Parakhorus"": You can make this card's Pendulum Scale become 7 until the end of this turn.
+
+[Monster Effect]
+If this card is destroyed by battle: You can Special Summon 1 ""Performapal"" monster that is not a Pendulum Monster from your Deck."," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ");
 INSERT OR REPLACE INTO "texts" VALUES ("100316099","Performapal Dramatic Theater","All monsters you control gain 200 ATK for every different Type among the monsters you control. Once per turn, if there are 4 different Types among the ""Performapal"" monsters you control: You can Special Summon 1 ""Odd-Eyes"" monster from your hand, Deck, or Graveyard.","","","","","","","","","","","","","","","","");
