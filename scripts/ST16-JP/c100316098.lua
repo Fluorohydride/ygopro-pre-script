@@ -59,7 +59,7 @@ end
 function c100316098.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)~=0 then
+	if c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)~=0 and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)
 	end
 end
@@ -69,7 +69,8 @@ function c100316098.spcfil(c)
 end
 function c100316098.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return eg:IsExists(c100316098.spcfil,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return eg:IsExists(c100316098.spcfil,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c100316098.spop(e,tp,eg,ep,ev,re,r,rp)

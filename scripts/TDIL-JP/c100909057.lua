@@ -27,6 +27,7 @@ function c100909057.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+c100909058.dark_magician_list=true
 function c100909057.filter(c)
 	return ((c.dark_magician_list or c:IsCode(13604200) or c:IsCode(2314238) or c:IsCode(48680970) or c:IsCode(63391643) or c:IsCode(67227834) or c:IsCode(68334074) or c:IsCode(69542930) or c:IsCode(75190122) or c:IsCode(87210505) or c:IsCode(99789342)) or c:IsCode(46986414)) and c:IsAbleToHand()
 end
@@ -34,7 +35,8 @@ function c100909057.activate(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return end
 	local g=Duel.GetDecktopGroup(tp,3)
 	Duel.ConfirmCards(tp,g)
-	if g:IsExists(c100909057.filter,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(100909057,0)) then
+	if g:IsExists(c100909057.filter,1,nil) and e:GetHandler():IsRelateToEffect(e)
+		and Duel.SelectYesNo(tp,aux.Stringid(100909057,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:FilterSelect(tp,c100909057.filter,1,1,nil)
 		Duel.DisableShuffleCheck()
@@ -59,7 +61,7 @@ function c100909057.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100909057.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end

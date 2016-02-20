@@ -31,7 +31,7 @@ function c100316031.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=tg:GetFirst()
 	while tc do
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		Duel.ChangePosition(tc,POSITION_FACEDOWN_DEFENCE)
+		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENCE)
 	end
 	tc=tg:GetNext()
 	end

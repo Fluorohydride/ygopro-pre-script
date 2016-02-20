@@ -23,7 +23,7 @@ end
 function c100316005.sccon(e,tp,eg,ep,ev,re,r,rp)
 	local seq=e:GetHandler():GetSequence()
 	local tc=Duel.GetFieldCard(e:GetHandlerPlayer(),LOCATION_SZONE,13-seq)
-	return tc and (tc:IsSetCard(0x98) or tc:IsSetCard(0x99) or tc:IsSetCard(0x9f)) and not tc:IsCode(100315005)
+	return tc and (tc:IsSetCard(0x98) or tc:IsSetCard(0x99) or tc:IsSetCard(0x9f)) and not tc:IsCode(100316005)
 end
 function c100316005.scop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

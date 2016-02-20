@@ -4,16 +4,17 @@
 function c100909058.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TODECK)
+	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,100909058)
+	e1:SetCountLimit(1,100909058+EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(c100909058.cost)
 	e1:SetTarget(c100909058.target)
 	e1:SetOperation(c100909058.activate)
 	c:RegisterEffect(e1)
 end
+c100909058.dark_magician_list=true
 function c100909058.cfilter(c)
 	return c:IsRace(RACE_SPELLCASTER)
 end
