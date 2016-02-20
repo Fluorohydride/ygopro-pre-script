@@ -27,7 +27,7 @@ function c100909057.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-c100909058.dark_magician_list=true
+c100909057.dark_magician_list=true
 function c100909057.filter(c)
 	return ((c.dark_magician_list or c:IsCode(13604200) or c:IsCode(2314238) or c:IsCode(48680970) or c:IsCode(63391643) or c:IsCode(67227834) or c:IsCode(68334074) or c:IsCode(69542930) or c:IsCode(75190122) or c:IsCode(87210505) or c:IsCode(99789342)) or c:IsCode(46986414)) and c:IsAbleToHand()
 end
