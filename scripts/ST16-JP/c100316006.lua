@@ -15,7 +15,7 @@ function c100316006.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100316006.thfilter(c)
-	return c:IsSetCard(0x9f) and not c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsSetCard(0x9f) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c100316006.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100316006.thfilter,tp,LOCATION_DECK,0,1,nil) end
