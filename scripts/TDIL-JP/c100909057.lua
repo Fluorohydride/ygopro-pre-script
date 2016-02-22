@@ -3,11 +3,13 @@
 --Script by dest
 --e1 needs updated files from https://github.com/Fluorohydride/ygopro-scripts/pull/273 in order to work
 function c100909057.initial_effect(c)
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100909057)
+	e1:SetTarget(c100909057.target)
 	e1:SetOperation(c100909057.activate)
 	c:RegisterEffect(e1)
 	--remove
@@ -28,15 +30,18 @@ function c100909057.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 c100909057.dark_magician_list=true
+function c100909057.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>2 end
+end
 function c100909057.filter(c)
 	return ((c.dark_magician_list or c:IsCode(13604200) or c:IsCode(2314238) or c:IsCode(48680970) or c:IsCode(63391643) or c:IsCode(67227834) or c:IsCode(68334074) or c:IsCode(69542930) or c:IsCode(75190122) or c:IsCode(87210505) or c:IsCode(99789342)) or c:IsCode(46986414)) and c:IsAbleToHand()
 end
 function c100909057.activate(e,tp,eg,ep,ev,re,r,rp,chk)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return end
 	local g=Duel.GetDecktopGroup(tp,3)
 	Duel.ConfirmCards(tp,g)
-	if g:IsExists(c100909057.filter,1,nil) and e:GetHandler():IsRelateToEffect(e)
-		and Duel.SelectYesNo(tp,aux.Stringid(100909057,0)) then
+	if g:IsExists(c100909057.filter,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(100909057,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:FilterSelect(tp,c100909057.filter,1,1,nil)
 		Duel.DisableShuffleCheck()
@@ -60,8 +65,9 @@ function c100909057.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c100909057.rmop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
