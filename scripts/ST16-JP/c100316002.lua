@@ -73,9 +73,9 @@ function c100316002.indesval(e,re,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function c100316002.atkcon(e)
-	local ph = Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer() == e:GetHandler():GetControler()
-		and (ph == PHASE_BATTLE or ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL)
+	local ph=Duel.GetCurrentPhase()
+	local tp=Duel.GetTurnPlayer()
+	return tp==e:GetHandler():GetControler() and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function c100316002.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9f)

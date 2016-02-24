@@ -38,7 +38,7 @@ function c100909052.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100909052.handcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and e:GetHandler():GetOverlayCount()~=0
+	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer() and e:GetHandler():GetOverlayCount()~=0
 end
 function c100909052.costtg(e,te,tp)
 	return te:GetHandler():IsLocation(LOCATION_HAND) and te:GetHandler():IsType(TYPE_SPELL+TYPE_TRAP)
