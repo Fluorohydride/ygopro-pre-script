@@ -18,7 +18,7 @@ function c100202002.initial_effect(c)
 	e2:SetTarget(c100202002.sptg)
 	e2:SetOperation(c100202002.spop)
 	c:RegisterEffect(e2)
-	--remove
+	--draw
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetDescription(aux.Stringid(100202002,1))
@@ -52,7 +52,7 @@ function c100202002.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c100202002.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()~=nil
+	return ep~=tp and Duel.GetAttacker()==e:GetHandler()
 end
 function c100202002.drfil(c)
 	return c:IsFaceup() and c:IsSetCard(0xe1)
