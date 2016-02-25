@@ -59,7 +59,8 @@ function c100909103.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(c100909103.spfilter2,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
 	local max=1
 	if Duel.IsExistingMatchingCard(c100909103.cfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
-		and not Duel.IsPlayerAffectedByEffect(tp,59822133) then
+		and not Duel.IsPlayerAffectedByEffect(tp,59822133)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=2 then
 		max=2
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
