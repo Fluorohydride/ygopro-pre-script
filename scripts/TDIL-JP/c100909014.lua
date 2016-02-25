@@ -1,4 +1,4 @@
--- レッド・ウルフ 
+--レッド・ウルフ 
 --Red Wolf
 --Script by Kone
 function c100909014.initial_effect(c)
