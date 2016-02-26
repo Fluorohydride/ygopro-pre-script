@@ -1,6 +1,6 @@
 --EMボットアイズ・リザード
 --Performapal Bot-Eyes Lizard
---ygohavck137-13790916
+--ygohack137-13790916
 function c100909101.initial_effect(c)
 	--tograve
 	local e1=Effect.CreateEffect(c)
