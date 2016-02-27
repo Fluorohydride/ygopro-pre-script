@@ -1,5 +1,5 @@
 --チューニングガム
---Tunung Gum
+--Tuning Gum
 --Script by nekrozar
 function c100909040.initial_effect(c)
 	--tuner
