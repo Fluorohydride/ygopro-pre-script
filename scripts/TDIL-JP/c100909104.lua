@@ -21,7 +21,7 @@ function c100909104.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetValue(LOCATION_REMOVED)
-	e2:SetTarget(c100909104.target)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xd8))
 	c:RegisterEffect(e2)
 end
 function c100909104.tfilter(c,tp)
@@ -39,7 +39,4 @@ function c100909104.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	end
-end
-function c100909104.target(e,c)
-	return c:IsSetCard(0xd8)
 end

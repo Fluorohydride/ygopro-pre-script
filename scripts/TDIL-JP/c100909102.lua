@@ -11,8 +11,10 @@ function c100909102.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(c100909102.spcon)
 	c:RegisterEffect(e1)
+	--token
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DAMAGE)
+	e2:SetDescription(aux.Stringid(100909102,0))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCondition(c100909102.tkncon)
@@ -21,6 +23,7 @@ function c100909102.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100909102,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -35,17 +38,18 @@ function c100909102.spcon(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
-
 function c100909102.tkncon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function c100909102.tkntg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,100909199,0,0x4011,0,0,1,RACE_WINDBEAST,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function c100909102.tknop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,100909199,0,0x4011,0,0,1,RACE_WINDBEAST,ATTRIBUTE_DARK) then
 		for i=1,2 do
@@ -53,23 +57,21 @@ function c100909102.tknop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UNRELEASABLE_NONSUM)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 			e1:SetValue(1)
 			e1:SetReset(RESET_EVENT+0x1fe0000)
 			token:RegisterEffect(e1,true)
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
-			token:RegisterEffect(e1,true)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
+			token:RegisterEffect(e2,true)
+			local e3=e2:Clone()
+			e3:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+			token:RegisterEffect(e3,true)
 		end
 		Duel.SpecialSummonComplete()
 	end
 end
-
 function c100909102.cfilter(c)
 	return c:IsFaceup() and not c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost()
 end
@@ -104,13 +106,13 @@ function c100909102.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100909102.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ADD_TYPE)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(TYPE_TUNER)
 		tc:RegisterEffect(e1)
+		Duel.SpecialSummonComplete()
 	end
 end
