@@ -29,42 +29,47 @@ function c100202002.initial_effect(c)
 	e3:SetTarget(c100202002.drtg)
 	e3:SetOperation(c100202002.drop)
 	c:RegisterEffect(e3)
+	--add setcode
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e4:SetCode(EFFECT_ADD_SETCODE)
+	e4:SetValue(0xe1)
+	c:RegisterEffect(e4)
 end
-
 function c100202002.atcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)>=1
 end
-
-function c100202002.spfil(c,e,tp)
+function c100202002.spfilter(c,e,tp)
 	return c:IsSetCard(0xe1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100202002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c100202002.spfil,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c100202002.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c100202002.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c100202002.spfil,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c100202002.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function c100202002.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttacker()==e:GetHandler()
 end
-function c100202002.drfil(c)
+function c100202002.drfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe1)
 end
 function c100202002.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	local ct=Duel.GetMatchingGroupCount(c100202002.drfilter,tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return ct>0 and Duel.IsPlayerCanDraw(tp,ct) end
 	Duel.SetTargetPlayer(tp)
-	local ct=Duel.GetMatchingGroupCount(c100202002.drfil,tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
 end
 function c100202002.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local d=Duel.GetMatchingGroupCount(c100202002.drfil,tp,LOCATION_MZONE,0,nil)
+	local d=Duel.GetMatchingGroupCount(c100202002.drfilter,tp,LOCATION_MZONE,0,nil)
 	Duel.Draw(p,d,REASON_EFFECT)
 end

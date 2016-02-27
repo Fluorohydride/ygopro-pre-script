@@ -11,13 +11,13 @@ function c100909061.initial_effect(c)
 	e1:SetTarget(c100909061.target)
 	e1:SetOperation(c100909061.activate)
 	c:RegisterEffect(e1)
-	--salvage
+	--draw
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e2:SetDescription(aux.Stringid(100909061,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,100909061+EFFECT_COUNT_CODE_OATH)
+	e2:SetCountLimit(1,100909061)
 	e2:SetTarget(c100909061.tdtg)
 	e2:SetOperation(c100909061.tdop)
 	c:RegisterEffect(e2)
@@ -96,7 +96,7 @@ function c100909061.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100909061.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,0,REASON_EFFECT)~=0 then
+	if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,0,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_DECK) then
 		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

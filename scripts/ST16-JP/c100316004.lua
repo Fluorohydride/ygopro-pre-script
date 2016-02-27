@@ -1,4 +1,4 @@
---ＥＭモモンカーペット
+--EMモモンカーペット
 --Performapal Carpet Momonga
 --Script by dest
 function c100316004.initial_effect(c)
@@ -27,7 +27,6 @@ function c100316004.initial_effect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e3:SetCountLimit(1,100316004)
 	e3:SetTarget(c100316004.target)
 	e3:SetOperation(c100316004.operation)
 	c:RegisterEffect(e3)

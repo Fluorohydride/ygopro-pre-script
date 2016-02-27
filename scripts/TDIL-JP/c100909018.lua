@@ -18,16 +18,24 @@ function c100909018.initial_effect(c)
 	c:RegisterEffect(e1)
 	--spsummon (self)
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100909018,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
-	e2:SetRange(LOCATION_GRAVE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_CHAINING)
-	e2:SetCountLimit(1,100909118)
-	e2:SetCondition(c100909018.condition2)
-	e2:SetTarget(c100909018.target2)
-	e2:SetOperation(c100909018.operation2)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetOperation(aux.chainreg)
 	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100909018,1))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_CHAIN_SOLVING)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetRange(LOCATION_GRAVE)
+	e3:SetCountLimit(1,100909118)
+	e3:SetCondition(c100909018.condition2)
+	e3:SetTarget(c100909018.target2)
+	e3:SetOperation(c100909018.operation2)
+	c:RegisterEffect(e3)
 end
 function c100909018.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
@@ -48,7 +56,7 @@ function c100909018.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c100909018.operation1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100909018.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
@@ -56,13 +64,12 @@ function c100909018.operation1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100909018.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and ep==tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return Duel.GetTurnPlayer()~=tp and rp==tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and e:GetHandler():GetFlagEffect(1)>0
 end
 function c100909018.target2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsStatus(STATUS_CHAINING)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100909018.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
