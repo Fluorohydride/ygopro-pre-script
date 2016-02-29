@@ -74,8 +74,7 @@ function c100909040.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or g:GetCount()~=1 then return false end
 	local tc=g:GetFirst()
-	return tc:IsControler(tp) and tc:IsFaceup() and tc:IsType(TYPE_SYNCHRO) and tc:IsLocation(LOCATION_MZONE)
-		and Duel.IsChainNegatable(ev)
+	return c100909040.cfilter(tc,tp) and Duel.IsChainNegatable(ev)
 end
 function c100909040.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
