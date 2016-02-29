@@ -73,6 +73,7 @@ function c100909040.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or g:GetCount()~=1 then return false end
+	local tc=g:GetFirst()
 	return tc:IsControler(tp) and tc:IsFaceup() and tc:IsType(TYPE_SYNCHRO) and tc:IsLocation(LOCATION_MZONE)
 		and Duel.IsChainNegatable(ev)
 end
