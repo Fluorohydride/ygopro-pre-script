@@ -69,7 +69,7 @@ function c100909048.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
 end
 function c100909048.spfilter(c,e,tp)
-	return c:IsSetCard(0x1033) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(0x1033) or c:IsCode(100909048) or c:IsCode(16051717) or c:IsCode(23338098) or c:IsCode(70456282)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100909048.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100909048.spfilter(chkc,e,tp) end
