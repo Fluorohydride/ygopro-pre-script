@@ -58,7 +58,7 @@ function c100909107.dircon(e)
 		and not Duel.IsExistingMatchingCard(c100909107.cfilter2,tp,0,LOCATION_MZONE,1,nil)
 end
 function c100909107.costfilter(c)
-	return (c:IsType(TYPE_TOON) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x62))) and c:IsDiscardable()
+	return c:IsSetCard(0x62) and c:IsDiscardable()
 end
 function c100909107.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100909107.costfilter,tp,LOCATION_HAND,0,1,nil) end
