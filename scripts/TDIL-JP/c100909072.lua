@@ -46,7 +46,7 @@ function c100909072.filter(c,lv,e,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100909072.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100909072.filter(chkc,teg:GetLevel(),e,tp) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100909072.filter(chkc,teg:GetFirst():GetLevel(),e,tp) end
 	if chk==0 then return true end
 	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS,true)
 	if res and teg:IsExists(c100909072.cfilter,1,nil,e,tp)
@@ -54,7 +54,7 @@ function c100909072.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.SelectYesNo(tp,94) then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectTarget(tp,c100909072.filter,tp,LOCATION_GRAVE,0,1,1,nil,teg:GetLevel(),e,tp)
+		local g=Duel.SelectTarget(tp,c100909072.filter,tp,LOCATION_GRAVE,0,1,1,nil,teg:GetFirst():GetLevel(),e,tp)
 		e:GetHandler():RegisterFlagEffect(100909072,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	else
@@ -66,11 +66,11 @@ function c100909072.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RegisterFlagEffect(100909072,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c100909072.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100909072.filter(chkc,eg:GetLevel(),e,tp) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100909072.filter(chkc,eg:GetFirst():GetLevel(),e,tp) end
 	if chk==0 then return eg:IsExists(c100909072.cfilter,1,nil,e,tp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c100909072.filter,tp,LOCATION_GRAVE,0,1,1,nil,eg:GetLevel(),e,tp)
+	local g=Duel.SelectTarget(tp,c100909072.filter,tp,LOCATION_GRAVE,0,1,1,nil,eg:GetFirst():GetLevel(),e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c100909072.activate(e,tp,eg,ep,ev,re,r,rp)
