@@ -57,7 +57,7 @@ function c100200114.regop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100200114.penfilter(c)
-	return c:IsSetCard(0x99) and c:IsType(TYPE_PENDULUM) and not c:IsCode(100200114) and not c:IsForbidden()
+	return c:IsSetCard(0x99) and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and not c:IsCode(100200114) and not c:IsForbidden()
 end
 function c100200114.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(100200114)~=0
