@@ -42,7 +42,7 @@ function c100200114.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100200114.regfilter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsFaceup() and c:IsSetCard(0x99)
+	return c:IsType(TYPE_PENDULUM) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsSetCard(0x99)
 end
 function c100200114.regop1(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or eg:GetCount()~=1
