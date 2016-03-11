@@ -68,7 +68,7 @@ function c100909041.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100909041.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100909041.thfilter,tp,LOCATION_GRAVE,0,nil)
-	local sg=g:GetMaxGroup(Card.GetLevel)
+	local sg=g:GetMinGroup(Card.GetLevel)
 	if sg:GetCount()>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		sg=sg:Select(tp,1,1,nil)
