@@ -10,7 +10,6 @@ function c100909041.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetCountLimit(1)
-	e1:SetCondition(c100909041.ddcon)
 	e1:SetCost(c100909041.ddcost)
 	e1:SetTarget(c100909041.ddtg)
 	e1:SetOperation(c100909041.ddop)
@@ -26,9 +25,6 @@ function c100909041.initial_effect(c)
 	e2:SetTarget(c100909041.thtg)
 	e2:SetOperation(c100909041.thop)
 	c:RegisterEffect(e2)
-end
-function c100909041.ddcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
 end
 function c100909041.ddcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
