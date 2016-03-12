@@ -20,8 +20,8 @@ function c100909033.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100909033.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=5
-    if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-    ft=math.min(ft,Duel.GetLocationCount(tp,LOCATION_MZONE))
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+	ft=math.min(ft,Duel.GetLocationCount(tp,LOCATION_MZONE))
 	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,100909198,0,0x4011,0,0,1,RACE_ZOMBIE,ATTRIBUTE_DARK) then return end
 	repeat
 		local token=Duel.CreateToken(tp,100909198)
