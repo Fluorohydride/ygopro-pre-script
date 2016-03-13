@@ -31,6 +31,7 @@ function c100204104.initial_effect(c)
 end
 function c100204104.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsChainNegatable(ev) and (aux.damcon1(e,tp,eg,ep,ev,re,r,rp) or aux.damcon1(e,1-tp,eg,ep,ev,re,r,rp))
+		and re:IsActiveType(TYPE_MONSTER) and ep~=tp
 end
 function c100204104.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
