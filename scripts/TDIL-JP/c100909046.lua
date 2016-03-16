@@ -74,7 +74,7 @@ function c100909046.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function c100909046.matfilter1(c,syncard)
-	return c:IsType(TYPE_PENDULUM) and c:IsNotTuner() and c:IsFaceup() and c:IsCanBeSynchroMaterial(syncard)
+	return c:IsType(TYPE_PENDULUM) and c:GetSummonType()==SUMMON_TYPE_PENDULUM and c:IsNotTuner() and c:IsFaceup() and c:IsCanBeSynchroMaterial(syncard)
 end
 function c100909046.matfilter2(c,syncard)
 	return c:IsNotTuner() and c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSynchroMaterial(syncard)
