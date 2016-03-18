@@ -73,8 +73,8 @@ function c100201003.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
-		local a=Duel.GetAttacker()
-		if a and a:IsAttackable() and a:IsFaceup() and not a:IsImmuneToEffect(e) and not at:IsStatus(STATUS_ATTACK_CANCELED) then
+		local at=Duel.GetAttacker()
+		if at and at:IsAttackable() and at:IsFaceup() and not at:IsImmuneToEffect(e) and not at:IsStatus(STATUS_ATTACK_CANCELED) then
 			Duel.BreakEffect()
 			Duel.ChangeAttackTarget(tc)
 			local e3=Effect.CreateEffect(c)
