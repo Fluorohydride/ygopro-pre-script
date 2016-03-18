@@ -2,8 +2,15 @@
 --Red Dragon Archfiend Tyrant
 --ygohack137-13790927
 function c100909050.initial_effect(c)
-	--synchro summon
 	c:EnableReviveLimit()
+	--cannot special summon
+	local e0=Effect.CreateEffect(c)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(aux.synlimit)
+	c:RegisterEffect(e0)
+	--synchro summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -13,6 +20,7 @@ function c100909050.initial_effect(c)
 	e1:SetOperation(c100909050.synop)
 	e1:SetValue(SUMMON_TYPE_SYNCHRO)
 	c:RegisterEffect(e1)
+	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
