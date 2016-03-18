@@ -54,7 +54,7 @@ function c100207016.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetMatchingGroup(c100207016.atkfilter,tp,LOCATION_MZONE,0,nil)
 	local g=Duel.GetMatchingGroup(c100207016.atkfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
 	if tg:GetCount()>0 and g:GetCount()>0 then
-		local d=g:GetCount()*300
+		local d=g:GetClassCount(Card.GetCode)*300
 		local sc=tg:GetFirst()
 		while sc do
 			local e1=Effect.CreateEffect(e:GetHandler())
