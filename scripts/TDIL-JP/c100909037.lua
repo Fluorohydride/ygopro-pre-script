@@ -33,6 +33,11 @@ end
 function c100909037.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
-		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
+		local c=e:GetHandler()
+		if not c:IsRelateToEffect(e) then return end
+		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then
+			Duel.SendtoGrave(c,REASON_RULE)
+		end
 	end
 end

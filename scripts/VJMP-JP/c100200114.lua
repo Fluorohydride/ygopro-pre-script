@@ -70,14 +70,16 @@ function c100200114.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100200114.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local g=Duel.SelectMatchingCard(tp,c100200114.penfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 		local tc=g:GetFirst()
 		if tc then
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		end
+	elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then
+		Duel.SendtoGrave(c,REASON_RULE)
 	end
 end
 function c100200114.disfilter(c)
