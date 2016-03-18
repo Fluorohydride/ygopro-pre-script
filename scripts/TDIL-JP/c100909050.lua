@@ -18,10 +18,9 @@ function c100909050.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100909050)
-	e2:SetCost(c100909050.descost)
-	e2:SetCondition(c100909050.sumcon)
-	e2:SetTarget(c100909050.target)
-	e2:SetOperation(c100909050.operation)
+	e2:SetCondition(c100909050.descon)
+	e2:SetTarget(c100909050.destg)
+	e2:SetOperation(c100909050.desop)
 	c:RegisterEffect(e2)
 	--negate
 	local e3=Effect.CreateEffect(c)
@@ -59,16 +58,21 @@ function c100909050.synfilter2(c,syncard,lv,g2,g4,f1,tuner1)
 	if f1 and not f1(c) then return false end
 	if f2 and not f2(tuner1) then return false end
 	if (tuner1:IsHasEffect(EFFECT_HAND_SYNCHRO) and not c:IsLocation(LOCATION_HAND)) or c:IsHasEffect(EFFECT_HAND_SYNCHRO) then
-		return g4:IsExists(c100909050.synfilter3,1,nil,syncard,lv-tlv,f1,f2)
+		return g4:IsExists(c100909050.synfilter3,1,nil,syncard,lv-tlv,f1,f2,g2)
 	else
-		return g2:IsExists(c100909050.synfilter3,1,nil,syncard,lv-tlv,f1,f2)
+		return g2:CheckWithSumEqual(Card.GetSynchroLevel,lv-tlv,1,62,syncard)
 	end
 end
-function c100909050.synfilter3(c,syncard,lv,f1,f2)
+function c100909050.synfilter3(c,syncard,lv,f1,f2,g2)
+	if not (not f1 or f1(c)) and not (not f2 or f2(c)) then return false end
 	local mlv=c:GetSynchroLevel(syncard)
-	local lv1=bit.band(mlv,0xffff)
-	local lv2=bit.rshift(mlv,16)
-	return (lv1==lv or lv2==lv) and (not f1 or f1(c)) and (not f2 or f2(c))
+	local slv=lv-mlv
+	if slv<0 then return false end
+	if slv==0 then
+		return true
+	else
+		return g2:CheckWithSumEqual(Card.GetSynchroLevel,slv,1,61,syncard)
+	end
 end
 function c100909050.syncon(e,c,tuner,mg)
 	if c==nil then return true end
@@ -145,9 +149,15 @@ function c100909050.synop(e,tp,eg,ep,ev,re,r,rp,c,tuner,mg)
 		local m3=nil
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 		if tuner2:IsHasEffect(EFFECT_HAND_SYNCHRO) then
-			m3=g4:FilterSelect(tp,c100909050.synfilter3,1,1,nil,c,lv-lv1-lv2,f1,f2)
+			m3=g4:FilterSelect(tp,c100909050.synfilter3,1,1,nil,c,lv-lv1-lv2,f1,f2,g2)
+			local lv3=m3:GetFirst():GetSynchroLevel(c)
+			if lv-lv1-lv2-lv3>0 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
+				local m4=g2:SelectWithSumEqual(tp,Card.GetSynchroLevel,lv-lv1-lv2-lv3,1,61,c)
+				g:Merge(m4)
+			end
 		else
-			m3=g2:FilterSelect(tp,c100909050.synfilter3,1,1,nil,c,lv-lv1-lv2,f1,f2)
+			m3=g2:SelectWithSumEqual(tp,Card.GetSynchroLevel,lv-lv1-lv2,1,62,c)
 		end
 		g:Merge(m3)
 	else
@@ -180,25 +190,37 @@ function c100909050.synop(e,tp,eg,ep,ev,re,r,rp,c,tuner,mg)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 		if (tuner1:IsHasEffect(EFFECT_HAND_SYNCHRO) and not tuner2:IsLocation(LOCATION_HAND))
 			or tuner2:IsHasEffect(EFFECT_HAND_SYNCHRO) then
-			m3=g4:FilterSelect(tp,c100909050.synfilter3,1,1,nil,c,lv-lv1-lv2,f1,f2)
+			m3=g4:FilterSelect(tp,c100909050.synfilter3,1,1,nil,c,lv-lv1-lv2,f1,f2,g2)
+			local lv3=m3:GetFirst():GetSynchroLevel(c)
+			if lv-lv1-lv2-lv3>0 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
+				local m4=g2:SelectWithSumEqual(tp,Card.GetSynchroLevel,lv-lv1-lv2-lv3,1,61,c)
+				g:Merge(m4)
+			end
 		else
-			m3=g2:FilterSelect(tp,c100909050.synfilter3,1,1,nil,c,lv-lv1-lv2,f1,f2)
+			m3=g2:SelectWithSumEqual(tp,Card.GetSynchroLevel,lv-lv1-lv2,1,63,c)
 		end
 		g:Merge(m3)
 	end
 	c:SetMaterial(g)
 	Duel.SendtoGrave(g,REASON_MATERIAL+REASON_SYNCHRO)
 end
-
-function c100909050.sumcon(e,tp,eg,ep,ev,re,r,rp)
+function c100909050.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1
 end
-function c100909050.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+function c100909050.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
+	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+end
+function c100909050.desop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+	if g:GetCount()>0 then
+		Duel.Destroy(g,REASON_EFFECT)
+	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(c100909050.ftarget)
 	e1:SetLabel(e:GetHandler():GetFieldID())
@@ -208,20 +230,10 @@ end
 function c100909050.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
-function c100909050.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
-	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
-end
-function c100909050.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
-	Duel.Destroy(g,REASON_EFFECT)
-end
-
-
 function c100909050.discon(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-	 and Duel.IsChainNegatable(ev) and Duel.GetCurrentPhase()==PHASE_BATTLE
+		and Duel.IsChainNegatable(ev) and (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
 end
 function c100909050.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -238,7 +250,7 @@ function c100909050.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+0x1ff0000)
 		e1:SetValue(500)
 		c:RegisterEffect(e1)
 	end
