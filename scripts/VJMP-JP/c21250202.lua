@@ -1,7 +1,7 @@
 --オッドアイズ・ペルソナ・ドラゴン
 --Odd-Eyes Persona Dragon
 --Script by mercury233
-function c100200114.initial_effect(c)
+function c21250202.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--spsummon reg
@@ -9,13 +9,13 @@ function c100200114.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EVENT_BECOME_TARGET)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetOperation(c100200114.regop1)
+	e1:SetOperation(c21250202.regop1)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetCode(EVENT_CHAIN_SOLVED)
 	e2:SetRange(LOCATION_PZONE)
-	e2:SetOperation(c100200114.regop2)
+	e2:SetOperation(c21250202.regop2)
 	c:RegisterEffect(e2)
 	e2:SetLabelObject(e1)
 	--spsummon
@@ -25,9 +25,9 @@ function c100200114.initial_effect(c)
 	e3:SetRange(LOCATION_PZONE)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetCountLimit(1)
-	e3:SetCondition(c100200114.spcon)
-	e3:SetTarget(c100200114.sptg)
-	e3:SetOperation(c100200114.spop)
+	e3:SetCondition(c21250202.spcon)
+	e3:SetTarget(c21250202.sptg)
+	e3:SetOperation(c21250202.spop)
 	c:RegisterEffect(e3)
 	--disable
 	local e4=Effect.CreateEffect(c)
@@ -37,41 +37,41 @@ function c100200114.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCountLimit(1)
-	e4:SetTarget(c100200114.distg)
-	e4:SetOperation(c100200114.disop)
+	e4:SetTarget(c21250202.distg)
+	e4:SetOperation(c21250202.disop)
 	c:RegisterEffect(e4)
 end
-function c100200114.regfilter(c)
+function c21250202.regfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsSetCard(0x99)
 end
-function c100200114.regop1(e,tp,eg,ep,ev,re,r,rp)
+function c21250202.regop1(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or eg:GetCount()~=1
-		or not eg:IsExists(c100200114.regfilter,1,nil) then
+		or not eg:IsExists(c21250202.regfilter,1,nil) then
 		e:SetLabelObject(nil)
 	else e:SetLabelObject(re) end
 end
-function c100200114.regop2(e,tp,eg,ep,ev,re,r,rp)
+function c21250202.regop2(e,tp,eg,ep,ev,re,r,rp)
 	local pe=e:GetLabelObject():GetLabelObject()
 	if pe and pe==re then
-		e:GetHandler():RegisterFlagEffect(100200114,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(21250202,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 	end
 end
-function c100200114.penfilter(c)
-	return c:IsSetCard(0x99) and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and not c:IsCode(100200114) and not c:IsForbidden()
+function c21250202.penfilter(c)
+	return c:IsSetCard(0x99) and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and not c:IsCode(21250202) and not c:IsForbidden()
 end
-function c100200114.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(100200114)~=0
+function c21250202.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetFlagEffect(21250202)~=0
 end
-function c100200114.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c21250202.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function c100200114.spop(e,tp,eg,ep,ev,re,r,rp)
+function c21250202.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local g=Duel.SelectMatchingCard(tp,c100200114.penfilter,tp,LOCATION_EXTRA,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c21250202.penfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 		local tc=g:GetFirst()
 		if tc then
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
@@ -80,17 +80,17 @@ function c100200114.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(c,REASON_RULE)
 	end
 end
-function c100200114.disfilter(c)
+function c21250202.disfilter(c)
 	return c:IsFaceup() and c:GetSummonLocation()==LOCATION_EXTRA and not c:IsDisabled()
 end
-function c100200114.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100200114.disfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100200114.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+function c21250202.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c21250202.disfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c21250202.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c100200114.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c21250202.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
-function c100200114.disop(e,tp,eg,ep,ev,re,r,rp)
+function c21250202.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
