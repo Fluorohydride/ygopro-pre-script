@@ -178,7 +178,7 @@ function c100909046.indop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100909046.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
-	return a and a:IsRelateToBattle() and a:IsType(TYPE_PENDULUM)
+	return a and a:IsRelateToBattle() and a:IsType(TYPE_PENDULUM) and a:IsControler(tp)
 end
 function c100909046.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

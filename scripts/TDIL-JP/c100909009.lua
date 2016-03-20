@@ -8,7 +8,6 @@ function c100909009.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetCountLimit(1,100909009)
@@ -28,6 +27,8 @@ function c100909009.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_CHAIN_NEGATED)
 	e3:SetRange(LOCATION_HAND)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetCondition(c100909009.spcon2)
 	e3:SetTarget(c100909009.sptg)
 	e3:SetOperation(c100909009.spop)
 	c:RegisterEffect(e3)
@@ -61,6 +62,9 @@ function c100909009.penop(e,tp,eg,ep,ev,re,r,rp)
 	if b1 and e:GetHandler():IsRelateToEffect(e) then
 		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
+end
+function c100909009.spcon2(e,tp,eg,ep,ev,re,r,rp)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function c100909009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
