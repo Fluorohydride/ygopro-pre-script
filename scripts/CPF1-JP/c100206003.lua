@@ -15,6 +15,7 @@ function c100206003.initial_effect(c)
 	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100206003,0))
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
@@ -25,6 +26,7 @@ function c100206003.initial_effect(c)
 	--lp recover
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100206003,1))
+	e4:SetCategory(CATEGORY_RECOVER)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_GRAVE)
@@ -49,8 +51,8 @@ end
 function c100206003.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100206003.thfilter,tp,LOCATION_DECK,0,1,nil)
 		and e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
-		and Duel.IsExistingTarget(c100206003.filter,tp,LOCATION_MZONE,0,1,nil) end
-	local g=Duel.SelectTarget(tp,c100206003.filter,tp,LOCATION_MZONE,0,1,1,nil)
+		and Duel.IsExistingTarget(c100206003.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	local g=Duel.SelectTarget(tp,c100206003.filter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100206003.thop(e,tp,eg,ep,ev,re,r,rp)

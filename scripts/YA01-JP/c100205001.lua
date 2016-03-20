@@ -6,7 +6,7 @@ function c100205001.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--damage
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetDescription(aux.Stringid(100205001,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BATTLE_DAMAGE)
@@ -29,13 +29,13 @@ function c100205001.initial_effect(c)
 end
 function c100205001.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM
+		and Duel.GetAttacker()==e:GetHandler()
 end
 function c100205001.damfilter(c)
 	return c:IsFaceup() and (c:GetSequence()==6 or c:GetSequence()==7) and c:IsSetCard(0x99)
 end
 function c100205001.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(c100205001.damfilter,tp,LOCATION_SZONE,0,nil)
-	Debug.Message(ct)
 	if chk==0 then return ct>0 end
 	Duel.SetTargetParam(ct*1200)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*1200)
