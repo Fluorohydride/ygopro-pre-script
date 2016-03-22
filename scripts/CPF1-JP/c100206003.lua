@@ -46,7 +46,7 @@ function c100206003.filter(c)
 	return c:IsSetCard(0x9f) and c:IsPosition(POS_FACEUP_ATTACK) and c:IsAttackBelow(1000)
 end
 function c100206003.thfilter(c)
-	return c:IsSetCard(0x99) and c:IsAbleToHand()
+	return c:IsSetCard(0x99) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100206003.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100206003.thfilter,tp,LOCATION_DECK,0,1,nil)
