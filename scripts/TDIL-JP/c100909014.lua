@@ -24,17 +24,19 @@ function c100909014.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100909014.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
 		local atk=c:GetAttack()
-		if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetValue(atk/2)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
-			c:RegisterEffect(e1,true)
-		end
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetValue(atk/2)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
+		c:RegisterEffect(e1,true)
 		Duel.SpecialSummonComplete()
+	elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+		Duel.SendtoGrave(c,REASON_RULE)
 	end
 end
