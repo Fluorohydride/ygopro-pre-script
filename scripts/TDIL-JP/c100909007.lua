@@ -1,4 +1,4 @@
---ＥＭラディッシュ・ホース
+--EMラディッシュ・ホース
 --Performapal Radish Horse
 --Script by dest
 function c100909007.initial_effect(c)

@@ -1,4 +1,4 @@
---ＢＦ－逆巻のトルネード
+--BF－逆巻のトルネード
 --Blackwing - Tornado the Raging Squall
 --Script by Kone
 function c100909012.initial_effect(c)
@@ -45,7 +45,7 @@ function c100909012.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e2,true)
-    end
+	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
