@@ -46,8 +46,13 @@ function c100909052.handcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100909052.costtg(e,te,tp)
 	local tc=te:GetHandler()
-	return tc:IsLocation(LOCATION_HAND) and tc:IsType(TYPE_SPELL+TYPE_TRAP)
-		and tc:GetEffectCount(EFFECT_QP_ACT_IN_NTPHAND)<=tc:GetEffectCount(100909052) and tc:GetEffectCount(EFFECT_TRAP_ACT_IN_HAND)<=tc:GetEffectCount(100909052)
+	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
+		and tc:IsLocation(LOCATION_HAND) and tc:GetEffectCount(100909052)>0
+		and (
+			(tc:GetEffectCount(EFFECT_QP_ACT_IN_NTPHAND)<=tc:GetEffectCount(100909052) and tc:IsType(TYPE_SPELL+TYPE_QUICKPLAY))
+			or 
+			(tc:GetEffectCount(EFFECT_TRAP_ACT_IN_HAND)<=tc:GetEffectCount(100909052) and tc:IsType(TYPE_TRAP))
+		)
 end
 function c100909052.costchk(e,te_or_c,tp)
 	return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT)
