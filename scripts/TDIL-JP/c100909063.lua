@@ -29,10 +29,11 @@ function c100909063.initial_effect(c)
 	c:RegisterEffect(e3)
 	--to hand
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e4:SetDescription(aux.Stringid(100909063,2))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_TO_GRAVE)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetCondition(c100909063.thcon)
 	e4:SetTarget(c100909063.thtg)
 	e4:SetOperation(c100909063.thop)
@@ -64,7 +65,7 @@ function c100909063.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 	end
 end
-function c100909063.thfilter(c,e,tp)
+function c100909063.thfilter(c)
 	return c:IsSetCard(0xe4) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100909063.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -76,7 +77,6 @@ function c100909063.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100909063.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100909063.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
