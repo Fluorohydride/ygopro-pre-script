@@ -59,7 +59,7 @@ function c100909029.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100909029.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	if chk==0 then return tc and tc:IsFaceup() and tc:IsAbleToGrave()
+	if chk==0 then return tc and tc:IsFaceup() and tc:IsAbleToGrave() and tc:IsCanBeEffectTarget(e)
 		and Duel.IsExistingMatchingCard(c100909029.filter,tp,LOCATION_DECK,0,1,nil,tp,tc:GetCode()) end
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,tc,1,0,0)
