@@ -14,7 +14,7 @@ function c100909108.cfilter(c)
 	return c:IsFaceup() and c:IsCode(46986414,38033121)
 end
 function c100909108.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100909108.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
+	return Duel.IsExistingMatchingCard(c100909108.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
 end
 function c100909108.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)
