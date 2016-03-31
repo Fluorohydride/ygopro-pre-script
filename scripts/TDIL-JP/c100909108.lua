@@ -14,13 +14,13 @@ function c100909108.cfilter(c)
 	return c:IsFaceup() and c:IsCode(46986414,38033121)
 end
 function c100909108.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100909108.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
+	return Duel.IsExistingMatchingCard(c100909108.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
 end
 function c100909108.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function c100909108.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100909108.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
+	local g=Duel.GetMatchingGroup(c100909108.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
 	local ct=g:GetCount()
 	if ct>=1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
