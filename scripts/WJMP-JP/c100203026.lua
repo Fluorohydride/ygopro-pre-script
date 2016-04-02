@@ -48,7 +48,7 @@ function c100203026.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
 		if not tc:IsReason(REASON_RETURN) then
-			c100203026[tc:GetPreviousControler()]=true
+			c100203026[tc:GetControler()]=true
 		end
 		tc=eg:GetNext()
 	end
