@@ -24,9 +24,38 @@ function c100203026.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP)
 	e3:SetCountLimit(1)
-	e3:SetCondition(c75944053.condition)
-	e3:SetOperation(c75944053.operation)
+	e3:SetCondition(c100203026.condition)
+	e3:SetTarget(c100203026.target)
+	e3:SetOperation(c100203026.operation)
 	c:RegisterEffect(e3)
+	if not c100203026.global_check then
+		c100203026.global_check=true
+		c100203026[0]=false
+		c100203026[1]=false
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_TO_GRAVE)
+		ge1:SetOperation(c100203026.checkop)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=Effect.CreateEffect(c)
+		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+		ge2:SetOperation(c100203026.clear)
+		Duel.RegisterEffect(ge2,0)
+	end
+end
+function c100203026.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=eg:GetFirst()
+	while tc do
+		if not tc:IsReason(REASON_RETURN) then
+			c100203026[tc:GetPreviousControler()]=true
+		end
+		tc=eg:GetNext()
+	end
+end
+function c100203026.clear(e,tp,eg,ep,ev,re,r,rp)
+	c100203026[0]=false
+	c100203026[1]=false
 end
 function c100203026.tgfilter(c)
 	return c:IsSetCard(0xe5) and c:IsAbleToGrave()
@@ -42,13 +71,11 @@ function c100203026.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-function c100203026.gfilter(c,tid)
-	return c:IsType(TYPE_MONSTER) and c:GetTurnID()==tid and not c:IsReason(REASON_RETURN)
-end
 function c100203026.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tid=Duel.GetTurnCount()
-	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
-		and Duel.IsExistingMatchingCard(c100203026.gfilter,tp,LOCATION_GRAVE,0,1,nil,tid)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+end
+function c100203026.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return c100203026[tp] end
 end
 function c100203026.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
