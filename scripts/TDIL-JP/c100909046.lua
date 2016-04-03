@@ -86,6 +86,7 @@ function c100909046.synfilter(c,syncard,lv,g2)
 end
 function c100909046.syncon(e,c,tuner,mg)
 	if c==nil then return true end
+	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 	local tp=c:GetControler()
 	local minct=2
 	local g1=nil
