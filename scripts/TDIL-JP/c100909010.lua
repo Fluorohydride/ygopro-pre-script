@@ -6,12 +6,11 @@ function c100909010.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--tohand
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(101009100,0))
+	e1:SetDescription(aux.Stringid(100909010,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetCountLimit(1)
-	e1:SetCondition(c100909010.thcon)
+	e1:SetCountLimit(1,100909110)
 	e1:SetTarget(c100909010.thtg)
 	e1:SetOperation(c100909010.thop)
 	c:RegisterEffect(e1)
@@ -47,7 +46,7 @@ function c100909010.desfilter(c)
 	return (c:GetSequence()==6 or c:GetSequence()==7) and c:IsSetCard(0xaf) and c:IsDestructable()
 end
 function c100909010.spfilter(c,e,tp)
-	return c:IsSetCard(0x10af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x10af) and c:GetLevel()==8 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100909010.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c100909010.desfilter(chkc) end
@@ -79,6 +78,7 @@ function c100909010.desop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e2)
 		end
+		Duel.SpecialSummonComplete()
 	end
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetType(EFFECT_TYPE_FIELD)
