@@ -1,7 +1,6 @@
 --魔神王の禁断契約書
 --Forbidden Dark Contract with the Swamp King
 --Script by nekrozar
---not fully implemented
 function c100909056.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -89,15 +88,19 @@ end
 function c100909056.spfilter2(c,e)
 	return c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
 end
-function c100909056.spfilter3(c,e,tp,m,ec,f,chkf)
+function c100909056.spfilter3(c,e,tp,m,g,f,chkf)
 	return c:IsType(TYPE_FUSION) and c:IsRace(RACE_FIEND) and (not f or f(c))
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,ec,chkf)
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and g:IsExists(c100909056.spfilter4,1,nil,m,c,chkf)
+end
+function c100909056.spfilter4(c,m,fusc,chkf)
+	return fusc:CheckFusionMaterial(m,c,chkf)
 end
 function c100909056.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local g=e:GetLabelObject():GetFirst()
+		local g=e:GetLabelObject()
+		if g:GetCount()==0 then return false end
 		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
-		local mg1=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_HAND+LOCATION_MZONE,0,g)
+		local mg1=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 		local res=Duel.IsExistingMatchingCard(c100909056.spfilter3,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,g,nil,chkf)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
@@ -115,9 +118,11 @@ end
 function c100909056.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=e:GetLabelObject():GetFirst()
+	local g=e:GetLabelObject():Filter(Card.IsControler,nil,tp)
+	g:Remove(Card.IsImmuneToEffect,nil,e)
+	if g:GetCount()==0 then return false end
 	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
-	local mg1=Duel.GetMatchingGroup(c100909056.spfilter2,tp,LOCATION_HAND+LOCATION_MZONE,0,g,e)
+	local mg1=Duel.GetMatchingGroup(c100909056.spfilter2,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,e)
 	local sg1=Duel.GetMatchingGroup(c100909056.spfilter3,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,g,nil,chkf)
 	local mg2=nil
 	local sg2=nil
@@ -135,12 +140,16 @@ function c100909056.spop2(e,tp,eg,ep,ev,re,r,rp)
 		local tg=sg:Select(tp,1,1,nil)
 		local tc=tg:GetFirst()
 		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
-			local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,g,chkf)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+			local ec=g:FilterSelect(tp,c100909056.spfilter4,1,1,nil,mg1,tc,chkf):GetFirst()
+			local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,ec,chkf)
 			tc:SetMaterial(mat1)
 			Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 			Duel.BreakEffect()
 			Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
 		else
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+			local ec=g:FilterSelect(tp,c100909056.spfilter4,1,1,nil,mg2,tc,chkf):GetFirst()
 			local mat2=Duel.SelectFusionMaterial(tp,tc,mg2,ec,chkf)
 			local fop=ce:GetOperation()
 			fop(ce,e,tp,tc,mat2)
