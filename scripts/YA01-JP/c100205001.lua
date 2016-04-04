@@ -47,15 +47,14 @@ end
 function c100205001.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local seq=e:GetHandler():GetSequence()
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
-	if tc and tc:IsSetCard(0x99) then
-		local a=Duel.GetAttacker()
-		local d=Duel.GetAttackTarget()
-		if d and a:GetControler()~=d:GetControler() then
-			if a:IsControler(tp) and a:IsFaceup() then e:SetLabelObject(a)
-			elseif d:IsFaceup() then e:SetLabelObject(d)
-			else return false end
-			return true
+	if not tc or not tc:IsSetCard(0x99) then return end
+	local a=Duel.GetAttacker()
+	local d=Duel.GetAttackTarget()
+	if d and a:GetControler()~=d:GetControler() then
+		if a:IsControler(tp) and a:IsFaceup() then e:SetLabelObject(a)
+		elseif d:IsFaceup() then e:SetLabelObject(d)
 		else return false end
+		return true
 	else return false end
 end
 function c100205001.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -66,7 +65,7 @@ end
 function c100205001.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
