@@ -16,13 +16,13 @@ function c100909066.initial_effect(c)
 end
 function c100909066.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetDecktopGroup(tp,10)
-	if chk==0 then return g:FilterCount(Card.IsAbleToRemove,nil)==10
-		and Duel.IsPlayerCanDraw(tp,2) end
+	if chk==0 then return g:FilterCount(Card.IsAbleToRemove,nil)==10 end
 	Duel.DisableShuffleCheck()
 	Duel.Remove(g,POS_FACEDOWN,REASON_COST)
 end
 function c100909066.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2)
+		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=12 end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
