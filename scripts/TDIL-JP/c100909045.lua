@@ -4,8 +4,5 @@
 function c100909045.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0xe2),c100909045.matfilter,2,2,true)
-end
-function c100909045.matfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:GetAttack()<=3000
+	aux.AddFusionProcFunFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0xe2),aux.FilterBoolFunction(Card.IsAttackBelow,3000),2,2,true)
 end
