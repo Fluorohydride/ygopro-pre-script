@@ -3,7 +3,7 @@
 --Script by nekrozar
 function c100206023.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,2,5)
+	aux.AddXyzProcedure(c,nil,2,2,nil,nil,5)
 	c:EnableReviveLimit()
 	--negate
 	local e1=Effect.CreateEffect(c)
@@ -28,14 +28,18 @@ function c100206023.initial_effect(c)
 	c:RegisterEffect(e2)
 	--cannnot activate
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetTargetRange(1,1)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e3:SetCondition(c100206023.actcon)
 	e3:SetValue(c100206023.aclimit)
-	e3:SetLabelObject(e1)
 	c:RegisterEffect(e3)
+end
+function c100206023.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c100206023.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() and chkc~=e:GetHandler() end
@@ -49,15 +53,21 @@ function c100206023.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
-		e:SetLabelObject(tc)
 	end
 end
 function c100206023.distg(e,c)
 	return e:GetHandler():IsHasCardTarget(c)
 end
 function c100206023.actcon(e)
-	return e:GetHandler():GetFirstCardTarget()~=nil
+	return e:GetHandler():GetCardTargetCount()>0
 end
 function c100206023.aclimit(e,re,tp)
-	return re:GetHandler():IsCode(e:GetLabelObject()) and not re:GetHandler():IsImmuneToEffect(e)
+	local g=e:GetHandler():GetCardTarget()
+	local cg={}
+	local tc=g:GetFirst()
+	while tc do
+		table.insert(cg,tc:GetCode())
+		tc=g:GetNext()
+	end
+	return re:GetHandler():IsCode(table.unpack(cg)) and not re:GetHandler():IsImmuneToEffect(e)
 end
