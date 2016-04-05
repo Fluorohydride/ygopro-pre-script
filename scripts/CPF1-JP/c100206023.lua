@@ -3,7 +3,7 @@
 --Script by nekrozar
 function c100206023.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,2,2)
+	aux.AddXyzProcedure(c,nil,2,5)
 	c:EnableReviveLimit()
 	--negate
 	local e1=Effect.CreateEffect(c)
