@@ -7,6 +7,7 @@ function c100909108.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(c100909108.condition)
+	e1:SetTarget(c100909108.target)
 	e1:SetOperation(c100909108.activate)
 	c:RegisterEffect(e1)
 end
@@ -19,6 +20,13 @@ function c100909108.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100909108.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)
+end
+function c100909108.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		local ct=Duel.GetMatchingGroupCount(c100909108.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
+		if ct>=3 then return Duel.IsExistingMatchingCard(c100909108.filter,tp,LOCATION_MZONE,0,1,nil) end
+		return Duel.IsExistingMatchingCard(c100909108.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	end
 end
 function c100909108.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100909108.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)

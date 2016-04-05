@@ -4,17 +4,23 @@
 function c100909070.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_ATKCHANGE)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetCondition(c100909070.condition)
+	e1:SetTarget(c100909070.target)
 	e1:SetOperation(c100909070.activate)
 	c:RegisterEffect(e1)
 end
 function c100909070.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-	return tc:IsSetCard(0x1045) and tc:IsRelateToBattle() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return tc and tc:IsSetCard(0x1045) and tc:IsRelateToBattle()
+end
+function c100909070.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100909070,0,0x1011,0,0,1,RACE_FIEND,ATTRIBUTE_FIRE) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100909070.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
@@ -25,7 +31,6 @@ function c100909070.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(1)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		tc:RegisterEffect(e1)
-	
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0

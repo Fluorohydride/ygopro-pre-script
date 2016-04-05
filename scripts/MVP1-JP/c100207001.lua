@@ -8,8 +8,8 @@ function c100207001.initial_effect(c)
 	--chain attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCountLimit(2)
 	e1:SetCode(EVENT_DAMAGE_STEP_END)
+	e1:SetCountLimit(2,100207001)
 	e1:SetCondition(c100207001.atcon)
 	e1:SetCost(c100207001.atcost)
 	e1:SetOperation(c100207001.atop)
@@ -32,8 +32,8 @@ function c100207001.costfilter(c)
 end
 function c100207001.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c==Duel.GetAttacker() and c:IsChainAttackable(3)
-		and c:GetSummonType()==SUMMON_TYPE_FUSION
+	return bit.band(c:GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
+		and Duel.GetAttacker()==c and c:IsChainAttackable(0,false)
 		and not Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_ONFIELD,0,1,c)
 end
 function c100207001.atcost(e,tp,eg,ep,ev,re,r,rp,chk)

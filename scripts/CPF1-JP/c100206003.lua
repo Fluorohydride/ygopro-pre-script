@@ -2,42 +2,43 @@
 --Performance Corn
 --Script by mercury233
 function c100206003.initial_effect(c)
-	--summon reg
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetOperation(c100206003.spreg)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e2)
 	--to hand
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100206003,0))
-	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1)
-	e3:SetCondition(c100206003.thcon)
-	e3:SetTarget(c100206003.thtg)
-	e3:SetOperation(c100206003.thop)
-	c:RegisterEffect(e3)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100206003,0))
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
+	e1:SetCondition(c100206003.thcon)
+	e1:SetTarget(c100206003.thtg)
+	e1:SetOperation(c100206003.thop)
+	c:RegisterEffect(e1)
 	--lp recover
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(100206003,1))
-	e4:SetCategory(CATEGORY_RECOVER)
-	e4:SetType(EFFECT_TYPE_QUICK_O)
-	e4:SetCode(EVENT_FREE_CHAIN)
-	e4:SetRange(LOCATION_GRAVE)
-	e4:SetCondition(c100206003.lpcon)
-	e4:SetCost(c100206003.lpcost)
-	e4:SetTarget(c100206003.lptg)
-	e4:SetOperation(c100206003.lpop)
-	c:RegisterEffect(e4)
-end
-function c100206003.spreg(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(100206003,RESET_EVENT+0x1ec0000+RESET_PHASE+PHASE_END,0,1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100206003,1))
+	e2:SetCategory(CATEGORY_RECOVER)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCondition(c100206003.lpcon)
+	e2:SetCost(c100206003.lpcost)
+	e2:SetTarget(c100206003.lptg)
+	e2:SetOperation(c100206003.lpop)
+	c:RegisterEffect(e2)
+		if not c100206003.global_check then
+		c100206003.global_check=true
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_SUMMON_SUCCESS)
+		ge1:SetLabel(100206003)
+		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		ge1:SetOperation(aux.sumreg)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=ge1:Clone()
+		ge2:SetCode(EVENT_SPSUMMON_SUCCESS)
+		ge2:SetLabel(100206003)
+		Duel.RegisterEffect(ge2,0)
+	end
 end
 function c100206003.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(100206003)~=0
@@ -58,19 +59,17 @@ end
 function c100206003.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not (c:IsRelateToEffect(e) and c:IsPosition(POS_FACEUP_ATTACK)
-			and tc:IsRelateToEffect(e) and tc:IsPosition(POS_FACEUP_ATTACK)) then return end
-	Duel.ChangePosition(c,POS_FACEUP_DEFENCE)
-	Duel.ChangePosition(tc,POS_FACEUP_DEFENCE)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100206003.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.ChangePosition(Group.FromCards(c,tc),POS_FACEUP_DEFENCE)==2 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g=Duel.SelectMatchingCard(tp,c100206003.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+		if g:GetCount()>0 then
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g)
+		end
 	end
 end
 function c100206003.cfilter(c)
-	return c:IsSetCard(0x9f) and c:IsAbleToRemoveAsCost() and not c:IsCode(100206003)
+	return c:IsSetCard(0x9f) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and not c:IsCode(100206003)
 end
 function c100206003.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp

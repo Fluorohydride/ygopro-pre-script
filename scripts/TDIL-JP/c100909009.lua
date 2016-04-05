@@ -15,27 +15,27 @@ function c100909009.initial_effect(c)
 	e1:SetTarget(c100909009.sptg)
 	e1:SetOperation(c100909009.spop)
 	c:RegisterEffect(e1)
+	--special summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BATTLE_DESTROYED)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCode(EVENT_CHAIN_NEGATED)
+	e2:SetRange(LOCATION_HAND)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetTarget(c100909009.pentg)
-	e2:SetOperation(c100909009.penop)
+	e2:SetCondition(c100909009.spcon2)
+	e2:SetTarget(c100909009.sptg)
+	e2:SetOperation(c100909009.spop)
 	c:RegisterEffect(e2)
+	--pendulum set
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_CHAIN_NEGATED)
-	e3:SetRange(LOCATION_HAND)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCondition(c100909009.spcon2)
-	e3:SetTarget(c100909009.sptg)
-	e3:SetOperation(c100909009.spop)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_BATTLE_DESTROYED)
+	e3:SetTarget(c100909009.pentg)
+	e3:SetOperation(c100909009.penop)
 	c:RegisterEffect(e3)
 end
 function c100909009.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
-		and c:IsReason(REASON_EFFECT)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
 end
 function c100909009.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100909009.cfilter,1,nil,tp)
@@ -54,12 +54,10 @@ function c100909009.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100909009.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)
-	if chk==0 then return b1 end
+	if chk==0 then return Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7) end
 end
 function c100909009.penop(e,tp,eg,ep,ev,re,r,rp)
-	local b1=Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)
-	if b1 and e:GetHandler():IsRelateToEffect(e) then
+	if e:GetHandler():IsRelateToEffect(e) and (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)) then
 		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
 end

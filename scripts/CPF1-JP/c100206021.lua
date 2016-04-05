@@ -45,14 +45,8 @@ function c100206021.initial_effect(c)
 	e4:SetTarget(c100206021.sptg)
 	e4:SetOperation(c100206021.spop)
 	c:RegisterEffect(e4)
-	if not c100206021.xyz_filter then
-		c100206021.xyz_filter=function(mc)
-			return mc:IsType(TYPE_XYZ) and mc:IsSetCard(0x48) and mc:IsCanBeXyzMaterial(c)
-		end
-	end
 end
 c100206021.xyz_number=100
-c100206021.xyz_count=2
 function c100206021.mfilter(c,xyzc)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and c:IsCanBeXyzMaterial(xyzc)
 end
@@ -111,7 +105,7 @@ function c100206021.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c100206021.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetRank()>0
 end
 function c100206021.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100206021.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -128,15 +122,11 @@ function c100206021.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(atk*1000)
 			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 			c:RegisterEffect(e1)
-			local e2=e1:Clone()
-			e2:SetCode(EFFECT_UPDATE_DEFENCE)
-			c:RegisterEffect(e2)
 		end
 	end
 end
 function c100206021.descon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return not c:IsReason(REASON_BATTLE)
+	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function c100206021.setfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
@@ -147,6 +137,7 @@ function c100206021.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(c100206021.setfilter,tp,LOCATION_GRAVE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c100206021.setfilter,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,2,PLAYER_ALL,LOCATION_GRAVE)
 end
 function c100206021.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -156,10 +147,13 @@ function c100206021.desop(e,tp,eg,ep,ev,re,r,rp)
 		local g1=Duel.SelectMatchingCard(tp,c100206021.setfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SET)
 		local g2=Duel.SelectMatchingCard(1-tp,c100206021.setfilter,1-tp,LOCATION_GRAVE,0,1,1,nil)
-		Duel.SSet(tp,g1)
-		Duel.ConfirmCards(1-tp,g1)
-		Duel.SSet(1-tp,g2)
-		Duel.ConfirmCards(tp,g2)
+		local tc1=g1:GetFirst()
+		local tc2=g2:GetFirst()
+		if tc1:IsHasEffect(EFFECT_NECRO_VALLEY) or tc2:IsHasEffect(EFFECT_NECRO_VALLEY) then return end
+		Duel.SSet(tp,tc1)
+		Duel.ConfirmCards(1-tp,tc1)
+		Duel.SSet(1-tp,tc2)
+		Duel.ConfirmCards(tp,tc2)
 	end
 end
 function c100206021.spfilter(c)

@@ -1,4 +1,4 @@
---Ａ ＢＦ－神立のオニマル
+--A BF－神立のオニマル
 --Assault Blackwing - Onimaru the Divine Swell
 --Script by dest
 function c100909049.initial_effect(c)
@@ -70,7 +70,7 @@ function c100909049.tnop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function c100909049.lvfilter(c,lv)
-	return c:IsSetCard(0x33) and c:GetLevel()~=lv
+	return c:IsSetCard(0x33) and c:GetLevel()>0 and c:GetLevel()~=lv
 end
 function c100909049.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100909049.lvfilter(chkc,e:GetHandler():GetLevel()) end
@@ -95,7 +95,8 @@ function c100909049.mfilter(c)
 end
 function c100909049.condtion(e)
 	local c=e:GetHandler()
+	local mg=c:GetMaterial()
 	local ph=Duel.GetCurrentPhase()
-	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL)
-		and Duel.GetAttacker()==c and not c:GetMaterial():IsExists(c100909049.mfilter,1,nil)
+	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) and bit.band(c:GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO
+		and Duel.GetAttacker()==c and mg:GetCount()>0 and not mg:IsExists(c100909049.mfilter,1,nil)
 end

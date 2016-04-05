@@ -47,7 +47,7 @@ function c100909103.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100909103.spfilter2(c,e,tp)
-	return c:IsSetCard(0xd9) and not c:IsCode(100909103) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(0xd9) and not c:IsCode(100909103) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100909103.cfilter(c)
 	return c:IsFaceup() and c:IsCode(40005099)

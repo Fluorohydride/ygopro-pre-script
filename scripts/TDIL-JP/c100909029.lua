@@ -16,6 +16,7 @@ function c100909029.initial_effect(c)
 	c:RegisterEffect(e1)
 	--field
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100909029,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
@@ -39,8 +40,8 @@ function c100909029.desfilter(c)
 	return c:IsFacedown() and c:IsDestructable()
 end
 function c100909029.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and c100909029.filter2(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(c100909029.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsOnField() and c100909029.desfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100909029.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,c100909029.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
@@ -57,8 +58,9 @@ end
 function c100909029.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
-function c100909029.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100909029.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	if chkc then return false end
 	if chk==0 then return tc and tc:IsFaceup() and tc:IsSetCard(0xe4) and tc:IsAbleToGrave() and tc:IsCanBeEffectTarget(e)
 		and Duel.IsExistingMatchingCard(c100909029.filter,tp,LOCATION_DECK,0,1,nil,tp,tc:GetCode()) end
 	Duel.SetTargetCard(tc)
@@ -66,7 +68,7 @@ function c100909029.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100909029.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoGrave(tc,nil,0,REASON_EFFECT)~=0 then
+	if tc:IsRelateToEffect(e) and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local g=Duel.SelectMatchingCard(tp,c100909029.filter,tp,LOCATION_DECK,0,1,1,nil,tp,tc:GetCode())
 		if g:GetCount()>0 then

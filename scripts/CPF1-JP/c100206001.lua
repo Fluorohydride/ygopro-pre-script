@@ -79,14 +79,15 @@ function c100206001.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c100206001.penop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,c100206001.desfilter,tp,LOCATION_SZONE,0,1,1,nil)
-	local tc=g:GetFirst()
-	if not tc then return end
-	Duel.HintSelection(g)
-	if Duel.Destroy(g,REASON_EFFECT)~=0 then
+	if g:GetCount()>0 then
+		Duel.HintSelection(g)
+		if Duel.Destroy(g,REASON_EFFECT)==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local g=Duel.SelectMatchingCard(tp,c100206001.penfilter,tp,LOCATION_EXTRA,0,1,1,nil)
-		local tc=g:GetFirst()
+		local sg=Duel.SelectMatchingCard(tp,c100206001.penfilter,tp,LOCATION_EXTRA,0,1,1,nil)
+		local tc=sg:GetFirst()
 		if tc then
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		end

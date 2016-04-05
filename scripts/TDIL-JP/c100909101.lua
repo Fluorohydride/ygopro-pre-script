@@ -30,7 +30,7 @@ function c100909101.copycon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(100909101)>0
 end
 function c100909101.costfilter(c)
-	return c:IsSetCard(0x99) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x99) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c100909101.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100909101.costfilter,tp,LOCATION_DECK,0,1,nil) end

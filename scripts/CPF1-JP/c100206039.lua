@@ -20,7 +20,7 @@ function c100206039.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(c100206039.target)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe3))
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--cannot be target
@@ -42,6 +42,7 @@ function c100206039.initial_effect(c)
 	c:RegisterEffect(e4)
 	--ep effects
 	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(100206039,1))
 	e5:SetCategory(CATEGORY_DISABLE)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_PHASE+PHASE_END)
@@ -51,9 +52,6 @@ function c100206039.initial_effect(c)
 	e5:SetTarget(c100206039.eptg)
 	e5:SetOperation(c100206039.epop)
 	c:RegisterEffect(e5)
-end
-function c100206039.target(e,c)
-	return c:IsSetCard(0xe3)
 end
 function c100206039.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and r==REASON_RULE
@@ -76,9 +74,13 @@ function c100206039.eptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local op=0
 	Duel.Hint(HINT_SELECTMSG,tp,550)
-	if aux.disfilter1(c) then
-		op=Duel.SelectOption(tp,aux.Stringid(100206039,1),aux.Stringid(100206039,2))
-	else op=Duel.SelectOption(tp,aux.Stringid(100206039,1))
+	if aux.disfilter1(c) then op=Duel.SelectOption(tp,aux.Stringid(100206039,1),aux.Stringid(100206039,2))
+	else op=Duel.SelectOption(tp,aux.Stringid(100206039,1)) end
+	if op==0 then
+		e:SetCategory(0)
+	else
+		e:SetCategory(CATEGORY_DISABLE)
+		Duel.SetOperationInfo(0,CATEGORY_DISABLE,c,1,0,0)
 	end
 	e:SetLabel(op)
 end
@@ -90,16 +92,18 @@ function c100206039.epop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_SKIP_DP)
 		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_END,3)
+		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
 		Duel.RegisterEffect(e1,tp)
 	else
+		Duel.NegateRelatedChain(c,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY,2)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		e2:SetValue(RESET_TURN_SET)
 		c:RegisterEffect(e2)
 	end
 end
