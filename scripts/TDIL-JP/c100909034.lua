@@ -40,7 +40,7 @@ function c100909034.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100909034.spfilter(c)
-	return c:IsRace(RACE_ROCK) and c:IsAbleToRemoveAsCost()
+	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToRemoveAsCost()
 end
 function c100909034.spcon(e,c)
 	if c==nil then return true end
