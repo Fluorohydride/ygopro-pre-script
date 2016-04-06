@@ -18,6 +18,7 @@ function c100909111.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,0x1e0)
+	e2:SetCost(c100909111.cost)
 	e2:SetTarget(c100909111.target2)
 	e2:SetOperation(c100909111.operation)
 	c:RegisterEffect(e2)
@@ -122,6 +123,7 @@ function c100909111.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function c100909111.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100909111.cfilter,tp,LOCATION_GRAVE,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c100909111.cfilter,tp,LOCATION_GRAVE,0,2,2,nil)
