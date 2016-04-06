@@ -156,6 +156,8 @@ function c100909111.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	if chk==0 then return e:GetHandler():GetFlagEffect(100909111)==0
 		and (b1 or b2 or b3) end
+	b2=Duel.IsExistingTarget(c100909111.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	local ops={}
 	local opval={}
 	local off=1
