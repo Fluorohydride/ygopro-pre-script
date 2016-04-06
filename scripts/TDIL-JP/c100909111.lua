@@ -52,7 +52,7 @@ function c100909111.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	local b3=Duel.IsExistingTarget(c100909111.tdfilter,tp,LOCATION_GRAVE,0,1,nil)
 		and Duel.IsPlayerCanDraw(tp,1)
-	if b2 and not (b1 or b3) then
+	if b2 and not (b1 and b3) then
 		b2=Duel.IsExistingTarget(c100909111.tspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	end
 	if Duel.IsExistingMatchingCard(c100909111.cfilter,tp,LOCATION_GRAVE,0,2,nil)
@@ -151,7 +151,7 @@ function c100909111.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	local b3=Duel.IsExistingTarget(c100909111.tdfilter,tp,LOCATION_GRAVE,0,1,nil)
 		and Duel.IsPlayerCanDraw(tp,1)
-	if b2 and not (b1 or b3) then
+	if b2 and not (b1 and b3) then
 		b2=Duel.IsExistingTarget(c100909111.tspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	end
 	if chk==0 then return e:GetHandler():GetFlagEffect(100909111)==0
