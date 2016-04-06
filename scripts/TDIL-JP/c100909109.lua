@@ -56,7 +56,7 @@ function c100909109.tdop(e,tp,eg,ep,ev,re,r,rp)
 			sc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENCE)
-			tc:RegisterEffect(e2)
+			sc:RegisterEffect(e2)
 			sc=g:GetNext()
 		end
 	end
