@@ -39,7 +39,7 @@ function c100909069.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100909069.filter3,tp,LOCATION_MZONE,LOCATION_MZONE,tc1,tc2)
 	if g:GetCount()>0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
 		local dg=Duel.GetOperatedGroup()
-		if dg:FilterCount(Card.IsControler,nil,tp)>0 then Duel.Damage(tp,dam,REASON_EFFECT) end
-		if dg:FilterCount(Card.IsControler,nil,1-tp)>0 then Duel.Damage(1-tp,dam,REASON_EFFECT) end
+		if dg:IsExists(aux.FilterEqualFunction(Card.GetPreviousControler,tp),1,nil) then Duel.Damage(tp,dam,REASON_EFFECT) end
+		if dg:IsExists(aux.FilterEqualFunction(Card.GetPreviousControler,1-tp),1,nil) then Duel.Damage(1-tp,dam,REASON_EFFECT) end
 	end
 end

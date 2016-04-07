@@ -1,4 +1,4 @@
---ＥＭバブルドッグ
+--EMバブルドッグ
 --Performapal Bubbulldog
 --Scripted by Eerie Code
 function c100909006.initial_effect(c)
@@ -21,7 +21,6 @@ function c100909006.initial_effect(c)
 	e3:SetOperation(c100909006.op)
 	c:RegisterEffect(e3)
 end
-
 function c100909006.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and not c:IsType(TYPE_PENDULUM) and c:GetSummonLocation()==LOCATION_EXTRA and not c:IsReason(REASON_REPLACE)
@@ -36,13 +35,11 @@ end
 function c100909006.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
 end
-
 function c100909006.con(e,tp,eg,ep,ev,re,r,rp)
-  local c=e:GetHandler()
-  return c:IsPreviousLocation(LOCATION_EXTRA)
+	return e:GetHandler():IsPreviousLocation(LOCATION_EXTRA)
 end
 function c100909006.op(e,tp,eg,ep,ev,re,r,rp)
-  local e2=Effect.CreateEffect(e:GetHandler())
+	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetTargetRange(LOCATION_MZONE,0)
