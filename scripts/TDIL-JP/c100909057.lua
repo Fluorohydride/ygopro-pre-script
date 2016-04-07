@@ -1,7 +1,6 @@
 --黒の魔導陣
 --Dark Magic Circle
 --Script by dest
---e1 needs updated files from https://github.com/Fluorohydride/ygopro-scripts/pull/273 in order to work
 function c100909057.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

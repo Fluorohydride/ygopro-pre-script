@@ -1,5 +1,5 @@
 --超カバーカーニバル
---Hyper Hippo Carnival
+--Super Hippo Carnival
 --Script by nekrozar
 function c100909053.initial_effect(c)
 	--Activate

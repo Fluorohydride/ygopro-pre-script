@@ -1,5 +1,5 @@
 --トラミッド・スフィンクス
---Tigermid Sphinx
+--Tramid Sphinx
 --Script by nekrozar
 function c100909030.initial_effect(c)
 	c:EnableUnsummonable()

@@ -1,24 +1,23 @@
---ＥＭゴムゴムートン
+--EMゴムゴムートン
 --Performapal Rubber Mutton
 --Scripted by Eerie Code
 function c100909005.initial_effect(c)
-  aux.EnablePendulumAttribute(c)
-  --P.Zone
-  local e1=Effect.CreateEffect(c)
-  e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-  e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-  e1:SetCountLimit(1)
-  e1:SetRange(LOCATION_PZONE)
-  e1:SetCondition(c100909005.con)
-  e1:SetTarget(c100909005.tg)
-  e1:SetOperation(c100909005.op)
-  c:RegisterEffect(e1)
-  --M.Zone
-  local e2=e1:Clone()
-  e2:SetRange(LOCATION_MZONE)
-  c:RegisterEffect(e2)
+	aux.EnablePendulumAttribute(c)
+	--P.Zone
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e1:SetCountLimit(1)
+	e1:SetRange(LOCATION_PZONE)
+	e1:SetCondition(c100909005.con)
+	e1:SetTarget(c100909005.tg)
+	e1:SetOperation(c100909005.op)
+	c:RegisterEffect(e1)
+	--M.Zone
+	local e2=e1:Clone()
+	e2:SetRange(LOCATION_MZONE)
+	c:RegisterEffect(e2)
 end
-
 function c100909005.con(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
