@@ -35,7 +35,7 @@ function c100909038.initial_effect(c)
 end
 function c100909038.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS) and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0
-		and Duel.GetCurrentPhase()==PHASE_MAIN1
+		and Duel.GetCurrentPhase()==PHASE_MAIN1 and Duel.GetTurnPlayer()==tp
 end
 function c100909038.valcon(e,re,r,rp)
 	return bit.band(r,REASON_BATTLE)~=0
@@ -44,7 +44,7 @@ function c100909038.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp 
 		and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)>=Duel.GetActivityCount(tp,ACTIVITY_ATTACK)
 end
-function c100909038.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c100909038.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp 
 		and Duel.GetActivityCount(1-tp,ACTIVITY_SPSUMMON)>=Duel.GetActivityCount(1-tp,ACTIVITY_ATTACK)
 end
