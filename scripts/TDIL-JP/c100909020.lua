@@ -1,5 +1,5 @@
 --真竜剣士マスターP
---
+--Master Peace, the True Dracoslayer
 --Script by mercury233
 function c100909020.initial_effect(c)
 	c:EnableReviveLimit()
@@ -37,23 +37,20 @@ function c100909020.initial_effect(c)
 	e3:SetOperation(c100909020.operation)
 	c:RegisterEffect(e3)
 end
-function c100909020.rmfilter(c,set)
-	return c:IsSetCard(set) and c:IsAbleToRemoveAsCost()
-end
 function c100909020.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-		and Duel.IsExistingMatchingCard(c100909020.rmfilter,tp,LOCATION_MZONE,0,1,nil,0xc7)
-		and Duel.IsExistingMatchingCard(c100909020.rmfilter,tp,LOCATION_MZONE,0,1,nil,0xda)
+		and Duel.CheckReleaseGroup(tp,Card.IsSetCard,1,nil,0xc7)
+		and Duel.CheckReleaseGroup(tp,Card.IsSetCard,1,nil,0xda)
 end
 function c100909020.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectMatchingCard(tp,c100909020.rmfilter,tp,LOCATION_MZONE,0,1,1,nil,0xc7)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,c100909020.rmfilter,tp,LOCATION_MZONE,0,1,1,nil,0xda)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g1=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,nil,0xc7)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g2=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,nil,0xda)
 	g1:Merge(g2)
-	Duel.Remove(g1,POS_FACEUP,REASON_COST)
+	Duel.Release(g1,REASON_COST)
 end
 function c100909020.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
