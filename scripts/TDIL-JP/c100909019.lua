@@ -1,7 +1,6 @@
 --マジシャンズ・ロッド
 --Magician's Rod
 --Script by dest
---e1 needs updated files from https://github.com/Fluorohydride/ygopro-scripts/pull/273 in order to work
 function c100909019.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
