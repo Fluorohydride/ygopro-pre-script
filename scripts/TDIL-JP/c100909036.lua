@@ -123,7 +123,7 @@ function c100909036.spop(e,tp,eg,ep,ev,re,r,rp)
 		elseif ft2<=0 and gc1>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			sg=sg1:Select(tp,1,1,nil)
-		elseif (gc1>0 and ft1>0) or (gc2>0 and ft2>0)
+		elseif (gc1>0 and ft1>0) or (gc2>0 and ft2>0) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			sg=rg:FilterSelect(tp,c100909036.spfilter,1,1,nil,e,tp)
 		end
