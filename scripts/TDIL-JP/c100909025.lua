@@ -69,6 +69,7 @@ function c100909025.spop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 			and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 			Duel.SendtoGrave(c,REASON_RULE)
+			return
 		end
 		local g=Duel.GetMatchingGroup(c100909025.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil,tp)
 		if g1:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_FIRE)==2 and g:GetCount()>0
