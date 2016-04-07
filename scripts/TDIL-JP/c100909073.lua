@@ -2,7 +2,6 @@
 --Metalphosis Combination
 --Script by nekrozar
 function c100909073.initial_effect(c)
-	Duel.EnableGlobalFlag(GLOBALFLAG_DELAYED_QUICKEFFECT)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100909073,0))
