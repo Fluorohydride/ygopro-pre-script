@@ -34,8 +34,8 @@ function c100909038.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100909038.splimit(e,se,sp,st)
-	return se:IsHasType(EFFECT_TYPE_ACTIONS) and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0
-		and Duel.GetCurrentPhase()==PHASE_MAIN1 and Duel.GetTurnPlayer()==tp
+	return se:IsHasType(EFFECT_TYPE_ACTIONS) and Duel.GetActivityCount(e:GetHandlerPlayer(),ACTIVITY_SPSUMMON)==0
+		and Duel.GetCurrentPhase()==PHASE_MAIN1 and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function c100909038.valcon(e,re,r,rp)
 	return bit.band(r,REASON_BATTLE)~=0
