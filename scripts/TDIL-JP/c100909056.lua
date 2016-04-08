@@ -18,9 +18,6 @@ function c100909056.initial_effect(c)
 	e2:SetTarget(c100909056.sptg1)
 	e2:SetOperation(c100909056.spop1)
 	c:RegisterEffect(e2)
-	local sg=Group.CreateGroup()
-	sg:KeepAlive()
-	e2:SetLabelObject(sg)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100909056,1))
@@ -30,7 +27,6 @@ function c100909056.initial_effect(c)
 	e3:SetCountLimit(1)
 	e3:SetTarget(c100909056.sptg2)
 	e3:SetOperation(c100909056.spop2)
-	e3:SetLabelObject(sg)
 	c:RegisterEffect(e3)
 	--damage
 	local e4=Effect.CreateEffect(c)
@@ -75,15 +71,9 @@ function c100909056.spop1(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e2,true)
-		Duel.SpecialSummonComplete()
-		local sg=e:GetLabelObject()
-		if c:GetFlagEffect(100909056)==0 then
-			sg:Clear()
-			c:RegisterFlagEffect(100909056,RESET_EVENT+0x1fe0000,0,1)
-		end
-		sg:AddCard(tc)
-		tc:CreateRelation(c,RESET_EVENT+0x1fe0000)
+		c:SetCardTarget(tc)
 	end
+	Duel.SpecialSummonComplete()
 end
 function c100909056.spfilter2(c,e)
 	return c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
@@ -97,7 +87,7 @@ function c100909056.spfilter4(c,m,fusc,chkf)
 end
 function c100909056.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local g=e:GetLabelObject()
+		local g=e:GetHandler():GetCardTarget():Filter(Card.IsControler,nil,tp)
 		if g:GetCount()==0 then return false end
 		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 		local mg1=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
@@ -118,7 +108,7 @@ end
 function c100909056.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=e:GetLabelObject():Filter(Card.IsControler,nil,tp)
+	local g=c:GetCardTarget():Filter(Card.IsControler,nil,tp)
 	g:Remove(Card.IsImmuneToEffect,nil,e)
 	if g:GetCount()==0 then return false end
 	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
