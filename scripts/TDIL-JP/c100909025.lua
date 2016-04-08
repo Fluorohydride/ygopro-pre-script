@@ -24,7 +24,7 @@ function c100909025.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100909025.desfilter(c,tc)
-	return c~=tc and ((c:IsLocation(LOCATION_MZONE) and c:IsFaceup()) or c:IsLocation(LOCATION_HAND)) and c:IsDestructable()
+	return c~=tc and c:IsType(TYPE_MONSTER) and ((c:IsLocation(LOCATION_MZONE) and c:IsFaceup()) or c:IsLocation(LOCATION_HAND)) and c:IsDestructable()
 end
 function c100909025.desfilter2(c,tc)
 	return c100909025.desfilter(c,tc) and c:IsAttribute(ATTRIBUTE_FIRE)
@@ -33,18 +33,15 @@ function c100909025.rmfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove(tp)
 end
 function c100909025.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=e:GetHandler()
-	local g1=Duel.GetMatchingGroup(c100909025.desfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,tc)
-	local g2=Duel.GetMatchingGroup(c100909025.desfilter2,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,tc)
-	local g3=Duel.GetMatchingGroup(c100909025.desfilter2,tp,LOCATION_MZONE,0,nil,tc)
-	local b=0
-	if g3:GetCount()>0 then b=1 end
+	local c=e:GetHandler()
+	local g1=Duel.GetMatchingGroup(c100909025.desfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,c)
+	local g2=Duel.GetMatchingGroup(c100909025.desfilter2,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and g1:GetCount()>=2 and g2:GetCount()>=1
-		and g2:GetCount()>=ft-1+b end
+		and (ft>0 or Duel.IsExistingMatchingCard(c100909025.desfilter,tp,LOCATION_MZONE,0,1,nil,c)) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c100909025.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c100909025.sptg(e,tp,eg,ep,ev,re,r,rp,0) then return end
