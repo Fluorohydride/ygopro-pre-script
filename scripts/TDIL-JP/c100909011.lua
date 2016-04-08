@@ -1,4 +1,4 @@
---ＤＤ魔導賢者ニコラ
+--DD魔導賢者ニコラ
 --D/D Savant Nikola
 --Scripted by Eerie Code
 function c100909011.initial_effect(c)
@@ -37,26 +37,24 @@ function c100909011.initial_effect(c)
 	e6:SetOperation(c100909011.thop)
 	c:RegisterEffect(e6)
 end
-
 function c100909011.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsSetCard(0xaf) and bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
-
-function c100909011.atkcfil(c)
-	return c:IsSetCard(0x10af) and c:IsDiscardable()
+function c100909011.atkcfilter(c)
+	return c:IsSetCard(0x10af) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 end
 function c100909011.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100909011.atkcfil,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c100909011.atkcfil,1,1,REASON_COST+REASON_DISCARD)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100909011.atkcfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,c100909011.atkcfilter,1,1,REASON_COST+REASON_DISCARD)
 end
-function c100909011.atkfil(c)
+function c100909011.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsLevelBelow(6)
 end
 function c100909011.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100909011.atkfil(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100909011.atkfil,tp,LOCATION_MZONE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100909011.atkfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100909011.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c100909011.atkfil,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c100909011.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c100909011.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -74,24 +72,23 @@ function c100909011.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-
 function c100909011.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_SZONE) and (c:GetPreviousSequence()==6 or c:GetPreviousSequence()==7)
 end
-function c100909011.thfil1(c)
+function c100909011.thfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x10af) and c:IsAbleToHand()
 end
-function c100909011.thfil2(c)
+function c100909011.thfilter2(c)
 	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function c100909011.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100909011.thfil1(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100909011.thfil1,tp,LOCATION_MZONE,0,1,nil) 
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100909011.thfilter1(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100909011.thfilter1,tp,LOCATION_MZONE,0,1,nil) 
 		and (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7))
-		and Duel.IsExistingMatchingCard(c100909011.thfil2,tp,LOCATION_EXTRA,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c100909011.thfilter2,tp,LOCATION_EXTRA,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,c100909011.thfil1,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100909011.thfilter1,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c100909011.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -100,12 +97,18 @@ function c100909011.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CheckLocation(tp,LOCATION_SZONE,7) then ct=ct+1 end
 	if ct==0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
+	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
+		and tc:IsLocation(LOCATION_HAND) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local g=Duel.SelectMatchingCard(tp,c100909011.thfil2,tp,LOCATION_EXTRA,0,1,ct,nil)
+		local g=Duel.SelectMatchingCard(tp,c100909011.thfilter2,tp,LOCATION_EXTRA,0,1,ct,nil)
 		local pc=g:GetFirst()
 		while pc do
 			Duel.MoveToField(pc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_CANNOT_TRIGGER)
+			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			pc:RegisterEffect(e1)
 			pc=g:GetNext()
 		end
 	end

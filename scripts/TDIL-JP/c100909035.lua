@@ -39,12 +39,9 @@ function c100909035.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100909035.condition(e,tp,eg,ep,ev,re,r,rp)
-	if rp~=tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
-		local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-		return tg:IsContains(e:GetHandler()) and e:GetHandler():IsFacedown()
-	else 
-		return false 
-	end
+	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	return tg:IsContains(e:GetHandler()) and e:GetHandler():IsFacedown()
 end
 function c100909035.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -55,7 +52,6 @@ function c100909035.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
 end
 function c100909035.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
@@ -63,10 +59,10 @@ function c100909035.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100909035.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler(),tp)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
 end
 function c100909035.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler(),tp)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	Duel.Remove(g,POP_FACEUP,REASON_EFFECT)
 end

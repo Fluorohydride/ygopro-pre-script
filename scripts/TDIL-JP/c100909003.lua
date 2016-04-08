@@ -50,12 +50,12 @@ end
 function c100909003.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
-function c100909003.dmfil(c)
+function c100909003.dmfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function c100909003.dmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100909003.dmfil,tp,LOCATION_EXTRA,0,1,nil) end
-	local dam=Duel.GetMatchingGroupCount(c100909003.dmfil,tp,LOCATION_EXTRA,0,nil)*300
+	if chk==0 then return Duel.IsExistingMatchingCard(c100909003.dmfilter,tp,LOCATION_EXTRA,0,1,nil) end
+	local dam=Duel.GetMatchingGroupCount(c100909003.dmfilter,tp,LOCATION_EXTRA,0,nil)*300
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(dam)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
@@ -63,7 +63,7 @@ end
 function c100909003.dmop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local d=Duel.GetMatchingGroupCount(c100909003.dmfil,tp,LOCATION_EXTRA,0,nil,26293219)*300
+	local d=Duel.GetMatchingGroupCount(c100909003.dmfilter,tp,LOCATION_EXTRA,0,nil)*300
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function c100909003.descost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -72,14 +72,14 @@ function c100909003.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_EXTRA,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function c100909003.desfil(c)
+function c100909003.desfilter(c)
 	return (c:GetSequence()==6 or c:GetSequence()==7) and c:IsDestructable()
 end
 function c100909003.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_SZONE) and c100909003.desfil(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100909003.desfil,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_SZONE) and c100909003.desfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100909003.desfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c100909003.desfil,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100909003.desfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,300)
 end

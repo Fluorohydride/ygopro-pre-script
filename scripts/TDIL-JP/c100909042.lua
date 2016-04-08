@@ -43,26 +43,28 @@ function c100909042.posop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENCE)
 	end
 end
-function c100909042.cfilter(c,tp)
-	return c:IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,6,c)
-end
 function c100909042.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct=-ft+1
 	if chk==0 then
 		if ft<=0 then
-			return Duel.IsExistingMatchingCard(c100909042.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler(),tp)
+			return Duel.IsExistingMatchingCard(c100909042.cfilter,tp,LOCATION_MZONE,0,ct,e:GetHandler())
+				and Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,7,e:GetHandler())
 		else
 			return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,7,e:GetHandler())
 		end
 	end
 	local g=nil
 	if ft<=0 then
+		local sg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,e:GetHandler())
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		g=Duel.SelectMatchingCard(tp,c100909042.cfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler(),tp)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g1=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,6,6,g:GetFirst())
-		g:Merge(g1)
+		g=sg:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
+		if ct<7 then
+			sg:Sub(g)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+			local g1=sg:Select(tp,7-ct,7-ct,nil)
+			g:Merge(g1)
+		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,7,7,e:GetHandler())

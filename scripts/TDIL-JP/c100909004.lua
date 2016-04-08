@@ -49,12 +49,12 @@ end
 function c100909004.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
-function c100909004.spcfil(c)
-	return c:IsSetCard(0x9f) and c:IsDiscardable()
+function c100909004.spcfilter(c)
+	return c:IsSetCard(0x9f) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 end
 function c100909004.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100909004.spcfil,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c100909004.spcfil,1,1,REASON_COST+REASON_DISCARD)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100909004.spcfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,c100909004.spcfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c100909004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

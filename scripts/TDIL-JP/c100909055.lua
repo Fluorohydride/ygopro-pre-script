@@ -13,7 +13,7 @@ function c100909055.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(c100909055.settg)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_FUSION))
 	e2:SetCode(EFFECT_ADD_SETCODE)
 	e2:SetValue(0xad)
 	c:RegisterEffect(e2)
@@ -37,9 +37,6 @@ function c100909055.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,c100909055.cfilter,tp,LOCATION_EXTRA,0,2,2,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function c100909055.settg(e,c)
-	return c:IsType(TYPE_FUSION)
-end
 function c100909055.filter(c)
 	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and c:IsAbleToExtra()
 end
@@ -52,6 +49,7 @@ function c100909055.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100909055.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
-	Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+	if tc:IsRelateToEffect(e) then
+		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+	end
 end
