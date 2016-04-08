@@ -25,7 +25,7 @@ function c100909072.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100909072.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetPreviousControler()==tp
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100909072.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100909072.cfilter,1,nil,tp)
