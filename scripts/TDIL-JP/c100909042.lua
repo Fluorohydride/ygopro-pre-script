@@ -48,7 +48,7 @@ function c100909042.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=-ft+1
 	if chk==0 then
 		if ft<=0 then
-			return Duel.IsExistingMatchingCard(c100909042.cfilter,tp,LOCATION_MZONE,0,ct,e:GetHandler())
+			return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE,0,ct,e:GetHandler())
 				and Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,7,e:GetHandler())
 		else
 			return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,7,e:GetHandler())
