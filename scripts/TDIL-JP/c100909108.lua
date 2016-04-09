@@ -27,7 +27,7 @@ end
 function c100909108.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local ct=Duel.GetMatchingGroupCount(c100909108.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
-		if ct<=1 then return Duel.IsExistingMatchingCard(c100909108.filter,tp,LOCATION_MZONE,0,1,nil) end
+		if ct<=1 then return Duel.IsExistingMatchingCard(c100909108.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 		return true
 	end
 end
