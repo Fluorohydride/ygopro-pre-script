@@ -1,6 +1,4 @@
 --キング・スカーレット
---King Scarlet
---ygohack137-13790930
 function c60433216.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

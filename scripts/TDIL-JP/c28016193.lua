@@ -1,6 +1,4 @@
 --メタルフォーゼ・オリハルク
---Metalphosis Orihulk
---Script by mercury233
 function c28016193.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

@@ -1,6 +1,4 @@
 --強欲で貪欲な壺
---Pot of Cupidity
---Script by nekrozar
 function c35261759.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

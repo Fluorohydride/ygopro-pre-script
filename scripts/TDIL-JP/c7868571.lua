@@ -1,6 +1,4 @@
 --メタルフォーゼ・シルバード
---Metalphosis Silvbird
---Script by nekrozar
 function c7868571.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

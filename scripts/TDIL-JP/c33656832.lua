@@ -1,6 +1,4 @@
 --曲芸の魔術師
---Acrobat Magician
---ygohack137-13790925
 function c33656832.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

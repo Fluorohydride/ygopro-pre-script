@@ -1,6 +1,4 @@
 --底なし落とし穴
---Endless Trap Hole
---Script by mercury233
 function c69599136.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

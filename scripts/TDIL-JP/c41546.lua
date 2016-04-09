@@ -1,6 +1,4 @@
 --DD魔導賢者トーマス
---D/D Savant Thomas
---Script by nekrozar
 function c41546.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

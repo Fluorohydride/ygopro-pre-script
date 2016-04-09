@@ -1,6 +1,4 @@
 --ペンデュラム・ホール
---Pendulum Hole
---Script by nekrozar
 function c68477598.initial_effect(c)
 	--Activate(summon)
 	local e1=Effect.CreateEffect(c)

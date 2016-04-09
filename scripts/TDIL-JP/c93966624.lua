@@ -1,6 +1,4 @@
 --マジック・ストライダー
---Spell Strider
---Script by nekrozar
 function c93966624.initial_effect(c)
 	--remove
 	local e1=Effect.CreateEffect(c)

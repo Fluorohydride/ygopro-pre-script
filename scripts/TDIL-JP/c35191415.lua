@@ -1,6 +1,4 @@
 --マジシャン・オブ・ブラック・イリュージョン
---Magician of Black Illusion
---Script by dest
 function c35191415.initial_effect(c)
 	--change name
 	local e1=Effect.CreateEffect(c)

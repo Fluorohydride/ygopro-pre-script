@@ -1,6 +1,4 @@
 --コズミック・サイクロン
---Cosmic Cyclone
---Script by nekrozar
 function c8267140.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

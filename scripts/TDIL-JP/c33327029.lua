@@ -1,6 +1,4 @@
 --メタルフォーゼ・カウンター
---Metalphosis Counter
---Script by mercury233
 function c33327029.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

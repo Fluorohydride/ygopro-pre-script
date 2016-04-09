@@ -1,6 +1,4 @@
 --メタルフォーゼ・ヴォルフレイム
---Metalphosis Volflame
---Script by mercury233
 function c69351984.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

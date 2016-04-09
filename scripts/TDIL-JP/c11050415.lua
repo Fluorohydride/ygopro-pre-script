@@ -1,6 +1,4 @@
 --超カバーカーニバル
---Super Hippo Carnival
---Script by nekrozar
 function c11050415.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

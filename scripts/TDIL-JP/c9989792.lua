@@ -1,6 +1,4 @@
 --トラミッド・フォートレス
---Tramid Fortress
---Script by nekrozar
 function c9989792.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

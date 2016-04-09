@@ -1,6 +1,4 @@
 --メタルフォーゼ・カーディナル
---Metalphosis Cardinal
---Script by mercury233
 function c54401832.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

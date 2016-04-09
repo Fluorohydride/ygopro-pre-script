@@ -1,6 +1,4 @@
 --錬装融合
---Metalphosis Fusion
---Script by mercury233
 function c73594093.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --古代遺跡の目覚め
---Tramid Palse
---Script by nekrozar
 function c96100333.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

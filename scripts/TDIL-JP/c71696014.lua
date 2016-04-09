@@ -1,6 +1,4 @@
 --マジシャンズ・ローブ
---Magician's Robe
---Script by dest
 function c71696014.initial_effect(c)
 	--spsummon (DM)
 	local e1=Effect.CreateEffect(c)

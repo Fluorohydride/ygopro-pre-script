@@ -1,6 +1,4 @@
 --魔神王の禁断契約書
---Forbidden Dark Contract with the Swamp King
---Script by nekrozar
 function c10833828.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

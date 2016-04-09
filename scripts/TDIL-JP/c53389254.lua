@@ -1,6 +1,4 @@
 --A BF－五月雨のソハヤ
---Assault Blackwing - Sohaya the Early Summer Rain
---Script by nekrozar
 function c53389254.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

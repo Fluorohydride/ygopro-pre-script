@@ -1,6 +1,4 @@
 --真竜剣士マスターP
---Master Peace, the True Dracoslayer
---Script by mercury233
 function c34079868.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon condition

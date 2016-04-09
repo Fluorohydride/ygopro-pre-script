@@ -1,6 +1,4 @@
 --メタルフォーゼ・コンビネーション
---Metalphosis Combination
---Script by nekrozar
 function c69711728.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --妖精伝姫－シラユキ
---Fairy Tail - Shirayuki
---Script by nekrozar
 function c55623480.initial_effect(c)
 	--position
 	local e1=Effect.CreateEffect(c)

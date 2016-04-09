@@ -1,6 +1,4 @@
 --EMライフ・ソードマン
---Performapal Life Swordmaster
---ygohack137-13790926
 function c7268133.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

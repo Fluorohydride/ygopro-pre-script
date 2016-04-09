@@ -1,6 +1,4 @@
 --虚空の黒魔導師
---Ebon Void Magician
---Script by dest
 function c85551711.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER),7,2)

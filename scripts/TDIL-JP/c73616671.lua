@@ -1,6 +1,4 @@
 --イリュージョン・マジック
---Illusion Magic
---ygohack137-13790911
 function c73616671.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

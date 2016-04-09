@@ -1,6 +1,4 @@
 --黒竜の忍者
---Black Dragon Ninja
---Script by dest
 function c56562619.initial_effect(c)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)

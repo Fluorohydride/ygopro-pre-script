@@ -1,6 +1,4 @@
 --月光香
---Lunalight Perfume
---ygohack137-13790915
 function c48444114.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

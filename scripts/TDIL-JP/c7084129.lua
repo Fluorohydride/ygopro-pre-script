@@ -1,6 +1,4 @@
 --マジシャンズ・ロッド
---Magician's Rod
---Script by dest
 function c7084129.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)

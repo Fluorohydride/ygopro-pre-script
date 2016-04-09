@@ -1,6 +1,4 @@
 --EMラディッシュ・ホース
---Performapal Radish Horse
---Script by dest
 function c71863024.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

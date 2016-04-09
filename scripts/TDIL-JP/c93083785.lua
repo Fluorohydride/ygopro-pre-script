@@ -1,6 +1,4 @@
 --早すぎた帰還
---Premature Return
---Script by nekrozar
 function c93083785.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --検問
---Examination
---Script by nekrozar
 function c94861297.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

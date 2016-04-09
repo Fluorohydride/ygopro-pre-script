@@ -1,6 +1,4 @@
 --EMボットアイズ・リザード
---Performapal Bot-Eyes Lizard
---ygohack137-13790916
 function c72708264.initial_effect(c)
 	--copy
 	local e1=Effect.CreateEffect(c)

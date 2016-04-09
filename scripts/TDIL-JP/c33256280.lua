@@ -1,6 +1,4 @@
 --メタルフォーゼ・ゴルドライバー
---Metalphosis Goldriver
---Script by mercury233
 function c33256280.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

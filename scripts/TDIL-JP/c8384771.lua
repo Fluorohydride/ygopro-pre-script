@@ -1,6 +1,4 @@
 --EMゴムゴムートン
---Performapal Rubber Mutton
---Scripted by Eerie Code
 function c8384771.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--P.Zone

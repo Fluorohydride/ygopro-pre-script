@@ -1,6 +1,4 @@
 --DD魔導賢者ニコラ
---D/D Savant Nikola
---Scripted by Eerie Code
 function c46035545.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--splimit

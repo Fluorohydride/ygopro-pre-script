@@ -1,6 +1,4 @@
 --BF－朧影のゴウフウ
---Blackwing - Gofu the Hazy Shadow
---ygohack137-13790914
 function c9929398.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon

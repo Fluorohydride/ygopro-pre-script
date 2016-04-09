@@ -1,6 +1,4 @@
 --トラミッド・ハンター
---Tramid Hunter
---Script by nekrozar
 function c95923441.initial_effect(c)
 	--extra summon
 	local e1=Effect.CreateEffect(c)

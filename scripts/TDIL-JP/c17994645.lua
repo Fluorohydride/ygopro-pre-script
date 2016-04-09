@@ -1,6 +1,4 @@
 --A BF－雨隠れのサヨ
---Assault Blackwing - Sayo the Hidden Rain
---Script by mercury233
 function c17994645.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure2(c,nil,aux.NonTuner(nil))

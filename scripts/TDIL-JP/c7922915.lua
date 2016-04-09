@@ -1,6 +1,4 @@
 --マジシャンズ・ナビゲート
---Magician Navigate
---ygohack137-13790912
 function c7922915.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

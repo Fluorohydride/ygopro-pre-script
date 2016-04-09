@@ -1,6 +1,4 @@
 --レッド・ミラー
---Red Mirror
---ygohack137-13790929
 function c8706701.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)

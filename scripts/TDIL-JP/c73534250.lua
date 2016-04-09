@@ -1,6 +1,4 @@
 --BF－逆巻のトルネード
---Blackwing - Tornado the Raging Squall
---Script by Kone
 function c73534250.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

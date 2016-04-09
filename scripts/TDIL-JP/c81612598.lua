@@ -1,6 +1,4 @@
 --メタルフォーゼ・アダマンテ
---Metalphosis Adamante
---Script by nekrozar
 function c81612598.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

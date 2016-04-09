@@ -1,6 +1,4 @@
 --黒魔導強化
---Magic Expand
---Script by nekrozar
 function c111280.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

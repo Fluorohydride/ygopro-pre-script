@@ -1,6 +1,4 @@
 --融合死円舞曲
---Fusion Doom Waltz
---Script by mercury233
 function c34449261.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

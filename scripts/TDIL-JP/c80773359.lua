@@ -1,6 +1,4 @@
 --A BF－神立のオニマル
---Assault Blackwing - Onimaru the Divine Swell
---Script by dest
 function c80773359.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

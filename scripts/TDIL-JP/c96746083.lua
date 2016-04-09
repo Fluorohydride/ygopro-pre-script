@@ -1,6 +1,4 @@
 --真竜皇アグニマズドV
---Agnimazd Vanisher, the True Dracoemperor
---Script by mercury233
 function c96746083.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

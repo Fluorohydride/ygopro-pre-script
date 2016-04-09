@@ -1,6 +1,4 @@
 --放電ムスタンガン
---Electrifying Mustangun
---Script by dest
 function c29951323.initial_effect(c)
 	c:EnableUnsummonable()
 	--splimit

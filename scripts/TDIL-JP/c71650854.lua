@@ -1,6 +1,4 @@
 --半魔導帯域
---Semi Spell Zone
---Script by dest
 function c71650854.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

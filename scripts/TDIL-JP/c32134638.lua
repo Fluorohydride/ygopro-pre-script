@@ -1,6 +1,4 @@
 --ダイナミスト・アンキロス
---Dinomist Ankylos
---Script by mercury233
 function c32134638.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

@@ -1,6 +1,4 @@
 --チューニングガム
---Tuning Gum
---Script by nekrozar
 function c82744076.initial_effect(c)
 	--tuner
 	local e1=Effect.CreateEffect(c)

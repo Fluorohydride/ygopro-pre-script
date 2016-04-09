@@ -1,6 +1,4 @@
 --トゥーン・ブラック・マジシャン
---Toon Dark Magician
---Script by nekrozar
 function c21296502.initial_effect(c)
 	--cannot attack
 	local e1=Effect.CreateEffect(c)

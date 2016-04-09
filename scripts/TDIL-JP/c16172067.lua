@@ -1,6 +1,4 @@
 --レッド・デーモンズ・ドラゴン・タイラント
---Red Dragon Archfiend Tyrant
---ygohack137-13790927
 function c16172067.initial_effect(c)
 	c:EnableReviveLimit()
 	--cannot special summon

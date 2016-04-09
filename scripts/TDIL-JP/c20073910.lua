@@ -1,6 +1,4 @@
 --天照大神
---Amaterasu
---Script by mercury233
 function c20073910.initial_effect(c)
 	--spirit
 	aux.EnableSpiritReturn(c,EVENT_FLIP)

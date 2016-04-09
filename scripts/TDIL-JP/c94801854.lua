@@ -1,6 +1,4 @@
 --不知火の隠者
---Shiranui Sage
---Script by mercury233
 function c94801854.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

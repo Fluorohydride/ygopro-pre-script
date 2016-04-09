@@ -1,6 +1,4 @@
 --トラミッド・ダンサー
---Tramid Dancer
---Script by nekrozar
 function c69529337.initial_effect(c)
 	--to deck
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --EMバブルドッグ
---Performapal Bubbulldog
---Scripted by Eerie Code
 function c34379489.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

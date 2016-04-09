@@ -1,6 +1,4 @@
 --トラミッド・クルーザー
---Tramid Cruiser
---Script by mercury233
 function c45383307.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --EMバリアバルーンバク
---Performapal Barrier Balloon Baku
---Scripted by Eerie Code
 function c71985676.initial_effect(c)
 	--Damage to 0
 	local e1=Effect.CreateEffect(c)

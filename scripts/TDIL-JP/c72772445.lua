@@ -1,6 +1,4 @@
 --トラミッド・キングゴレム
---Tramid King Golem
---Script by mercury233
 function c72772445.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --破壊剣の追憶
---Destruction Sword Reminiscence
---Script by mercury233
 function c32104431.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --黒の魔導陣
---Dark Magic Circle
---Script by dest
 function c47222536.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

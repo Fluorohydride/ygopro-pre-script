@@ -1,6 +1,4 @@
 --EMエクストラ・シューター
---Performapal Extra Shooter
---Scripted by Eerie Code
 function c45591967.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--Damage

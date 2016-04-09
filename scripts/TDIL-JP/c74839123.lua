@@ -1,6 +1,4 @@
 --デストーイ・サンクチュアリ
---Frightfur Sanctuary
---Script by mercury233
 function c74839123.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

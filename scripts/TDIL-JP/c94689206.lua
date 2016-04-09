@@ -1,6 +1,4 @@
 --ブロックドラゴン
---Block Dragon
---Script by nekrozar
 function c94689206.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon condition

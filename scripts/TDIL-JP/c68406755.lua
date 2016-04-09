@@ -1,6 +1,4 @@
 --トラミッド・スフィンクス
---Tramid Sphinx
---Script by nekrozar
 function c68406755.initial_effect(c)
 	c:EnableUnsummonable()
 	--spsummon condition

@@ -1,6 +1,4 @@
 --メタルフォーゼ・スティエレン
---Metalphosis Steeleren
---Script by mercury233
 function c60473572.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

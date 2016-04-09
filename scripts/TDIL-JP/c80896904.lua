@@ -1,6 +1,4 @@
 --涅槃の超魔導剣士
---Nirvana High Paladin
---Script by nekrozar
 function c80896904.initial_effect(c)
 	c:EnableReviveLimit()
 	--pendulum summon
