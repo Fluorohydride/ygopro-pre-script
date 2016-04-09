@@ -31,7 +31,7 @@ function c100909072.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100909072.cfilter,1,nil,tp)
 end
 function c100909072.filter(c,e,tp)
-	return c:IsSetCard(0xe2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xe1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100909072.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -51,7 +51,7 @@ function c100909072.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c100909072.thfilter(c)
-	return c:IsSetCard(0xe2) and c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsSetCard(0xe1) and c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c100909072.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100909072.thfilter,tp,LOCATION_EXTRA,0,1,nil) end

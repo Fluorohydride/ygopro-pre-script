@@ -19,7 +19,7 @@ function c100909021.desfilter(c)
 	return c:IsFaceup() and c:IsDestructable()
 end
 function c100909021.filter(c)
-	return c:IsSetCard(0xe2) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0xe1) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function c100909021.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c100909021.desfilter(chkc) and chkc~=e:GetHandler() end

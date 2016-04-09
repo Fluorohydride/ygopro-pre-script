@@ -40,7 +40,7 @@ function c100909073.cfilter(c,e,tp)
 		and Duel.IsExistingTarget(c100909073.filter,tp,LOCATION_GRAVE,0,1,nil,c:GetLevel(),e,tp)
 end
 function c100909073.filter(c,lv,e,tp)
-	return c:GetLevel()>0 and c:GetLevel()<lv and c:IsSetCard(0xe2)
+	return c:GetLevel()>0 and c:GetLevel()<lv and c:IsSetCard(0xe1)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100909073.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -67,7 +67,7 @@ function c100909073.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100909073.thfilter(c)
-	return c:IsSetCard(0xe2) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xe1) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100909073.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100909073.thfilter,tp,LOCATION_DECK,0,1,nil) end

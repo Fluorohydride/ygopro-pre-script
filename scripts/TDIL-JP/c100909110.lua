@@ -22,7 +22,7 @@ function c100909110.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe4))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe2))
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 	--to hand
@@ -43,7 +43,7 @@ function c100909110.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousSequence()==5 and c:IsPreviousPosition(POS_FACEUP)
 end
 function c100909110.thfilter(c)
-	return c:IsSetCard(0xe4) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xe2) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100909110.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100909110.thfilter(chkc) end

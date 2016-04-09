@@ -45,11 +45,11 @@ function c100909030.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c100909030.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0xe4)
+	return se:GetHandler():IsSetCard(0xe2)
 end
 function c100909030.spfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and c:IsSetCard(0xe4) and not c:IsCode(100909030)
+		and c:IsSetCard(0xe2) and not c:IsCode(100909030)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c100909030.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -69,7 +69,7 @@ function c100909030.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100909030.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe4)
+	return c:IsFaceup() and c:IsSetCard(0xe2)
 end
 function c100909030.con(e)
 	return Duel.IsExistingMatchingCard(c100909030.cfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,e:GetHandler())
