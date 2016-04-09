@@ -6,6 +6,8 @@ function c100909108.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCondition(c100909108.condition)
 	e1:SetTarget(c100909108.target)
 	e1:SetOperation(c100909108.activate)
@@ -16,7 +18,8 @@ function c100909108.cfilter(c)
 	return c:IsFaceup() and c:IsCode(46986414,38033121)
 end
 function c100909108.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100909108.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
+	local ct=Duel.GetMatchingGroupCount(c100909108.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	return ct>0 and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function c100909108.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)
@@ -24,8 +27,8 @@ end
 function c100909108.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local ct=Duel.GetMatchingGroupCount(c100909108.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
-		if ct>=3 then return Duel.IsExistingMatchingCard(c100909108.filter,tp,LOCATION_MZONE,0,1,nil) end
-		return Duel.IsExistingMatchingCard(c100909108.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		if ct<=1 then return Duel.IsExistingMatchingCard(c100909108.filter,tp,LOCATION_MZONE,0,1,nil) end
+		return true
 	end
 end
 function c100909108.activate(e,tp,eg,ep,ev,re,r,rp)

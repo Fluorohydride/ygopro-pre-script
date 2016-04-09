@@ -23,8 +23,7 @@ function c100909080.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.ConfirmCards(tp,g)
 		local tg=g:Filter(Card.IsType,nil,TYPE_MONSTER)
-		if tg:GetCount()>0 then
-			Duel.NegateAttack()
+		if tg:GetCount()>0 and Duel.NegateAttack() then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 			local hg=tg:Select(tp,1,1,nil)

@@ -53,6 +53,12 @@ function c100909046.initial_effect(c)
 	e5:SetTarget(c100909046.thtg)
 	e5:SetOperation(c100909046.thop)
 	c:RegisterEffect(e5)
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_MATERIAL_CHECK)
+	e0:SetValue(c100909046.valcheck)
+	e0:SetLabelObject(e5)
+	c:RegisterEffect(e0)
 	--lp
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(100909046,4))
@@ -197,7 +203,8 @@ function c100909046.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100909046.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO+0x10
+	return (e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO and e:GetLabel()==1)
+		or e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO+0x10
 end
 function c100909046.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsAbleToHand() end
@@ -211,6 +218,17 @@ function c100909046.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
+	end
+end
+function c100909046.mfilter(c)
+	return c:IsType(TYPE_TUNER) and c:IsType(TYPE_PENDULUM) and c:GetSummonType()==SUMMON_TYPE_PENDULUM
+end
+function c100909046.valcheck(e,c)
+	local g=c:GetMaterial()
+	if g:IsExists(c100909046.mfilter,1,nil) then
+		e:GetLabelObject():SetLabel(1)
+	else
+		e:GetLabelObject():SetLabel(0)
 	end
 end
 function c100909046.lpop(e,tp,eg,ep,ev,re,r,rp)
