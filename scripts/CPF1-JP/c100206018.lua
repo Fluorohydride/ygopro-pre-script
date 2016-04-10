@@ -40,6 +40,7 @@ function c100206018.initial_effect(c)
 	c:RegisterEffect(e4)
 	--atk up
 	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(100206018,1))
 	e5:SetCategory(CATEGORY_ATKCHANGE)
 	e5:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
 	e5:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
@@ -48,7 +49,7 @@ function c100206018.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c100206018.cfilter(c)
-	return c:IsFaceup() and c:GetCounter(0x96)>=10
+	return c:IsFaceup() and c:GetCounter(0x38)==10
 end
 function c100206018.spcon(e,c)
 	if c==nil then return true end
@@ -68,7 +69,7 @@ function c100206018.countcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RegisterEffect(e1)
 end
 function c100206018.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER+TYPE_NORMAL) and c:GetLevel()==1
+	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:GetLevel()==1
 end
 function c100206018.counttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100206018.filter(chkc) end
@@ -79,7 +80,7 @@ end
 function c100206018.countop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		tc:AddCounter(0x96,1)
+		tc:AddCounter(0x38,1)
 	end
 end
 function c100206018.efilter(e,te)
