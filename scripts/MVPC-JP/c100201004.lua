@@ -20,7 +20,7 @@ function c100201004.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
+	e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e2:SetCondition(c100201004.atkcon)
 	e2:SetValue(c100201004.atkval)
 	c:RegisterEffect(e2)
@@ -62,7 +62,7 @@ function c100201004.atkcon(e)
 	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) and bc and bc:IsAttribute(ATTRIBUTE_DARK)
 end
 function c100201004.atkval(e,c)
-	return e:GetHandler():GetAttack()
+	return e:GetHandler():GetAttack()*2
 end
 function c100201004.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
