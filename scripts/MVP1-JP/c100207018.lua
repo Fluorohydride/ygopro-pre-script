@@ -44,7 +44,7 @@ function c100207018.spop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c100207018.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c100207018.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
 function c100207018.spfilter2(c,e,tp)
