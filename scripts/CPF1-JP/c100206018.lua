@@ -41,7 +41,7 @@ function c100206018.initial_effect(c)
 	--atk up
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(100206018,1))
-	e5:SetCategory(CATEGORY_ATKCHANGE)
+	e5:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e5:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
 	e5:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e5:SetCondition(c100206018.atkcon)
@@ -98,9 +98,12 @@ function c100206018.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToBattle() and c:IsFaceup() and bc:IsRelateToBattle() and bc:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
 		e1:SetValue(val)
 		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_SET_DEFENCE_FINAL)
+		c:RegisterEffect(e2)
 	end
 end
