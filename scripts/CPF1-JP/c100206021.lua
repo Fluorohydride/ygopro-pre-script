@@ -1,4 +1,4 @@
---Ｎｏ．１００ ヌメロン・ドラゴン
+--No.100 ヌメロン・ドラゴン
 --Number 100: Numeron Dragon
 --Script by dest
 function c100206021.initial_effect(c)
@@ -120,7 +120,7 @@ function c100206021.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(atk*1000)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+			e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 			c:RegisterEffect(e1)
 		end
 	end

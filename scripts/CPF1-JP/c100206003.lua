@@ -6,6 +6,7 @@ function c100206003.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100206003,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -44,7 +45,7 @@ function c100206003.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(100206003)~=0
 end
 function c100206003.filter(c)
-	return c:IsSetCard(0x9f) and c:IsPosition(POS_FACEUP_ATTACK) and c:IsAttackBelow(1000)
+	return c:IsFaceup() and c:IsSetCard(0x9f) and c:IsPosition(POS_FACEUP_ATTACK) and c:IsAttackBelow(1000)
 end
 function c100206003.thfilter(c)
 	return c:IsSetCard(0x99) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
