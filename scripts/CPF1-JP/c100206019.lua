@@ -23,7 +23,7 @@ function c100206019.atlimit(e,c)
 	return c~=e:GetHandler()
 end
 function c100206019.deffilter(c)
-	return c:GetBaseDefence()>=0 and c:IsPositions(POS_FACEUP_DEFENCE)
+	return c:GetBaseDefence()>=0 and c:IsPosition(POS_FACEUP_DEFENCE)
 end
 function c100206019.defval(e,c)
 	local g=Duel.GetMatchingGroup(c100206019.deffilter,c:GetControler(),LOCATION_MZONE,0,c)
