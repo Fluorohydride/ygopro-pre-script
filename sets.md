@@ -1,11 +1,14 @@
-- V Jump promotional cards (VJMP-JP) : `100200XXX`
-- Yu-Gi-Oh! The Dark Side of Dimensions promotional cards (MVPC-JP) : `100201XXX`
-- Yu-Gi-Oh! The Dark Side of Dimensions Duel Set (MVPL-JP) : `100202XXX`
-- Duelist Festival 2016 - Promotion Pack (DF16-JP) : `100203XXX`
-- Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- Yu-Gi-Oh! ARC-V Volume 1 promotional card (YA01-JP) : `100205XXX`
-- Collectors Pack: Duelist of Radiance Version (CPF1-JP) : `100206XXX`
-- Yu-Gi-Oh! The Dark Side of Dimensions Movie Pack (MVP1-JP) : `100207XXX`
-- Structure Deck R: Revival of the Great Divine Dragon (SR02-JP) : `100302XXX`
-- Starter Deck 2016 (ST16-JP) : `100316XXX`
-- THE DARK ILLUSION (TDIL-JP) : `100909XXX`
+- V Jump promotional cards (VJMP-JP) : `100200XXX`  
+- Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
+- **April 21, 2016** : Yu-Gi-Oh! The Dark Side of Dimensions Duel Set (MVPL-JP) : `100202XXX`  
+- **April 23, 2016** : Yu-Gi-Oh! The Dark Side of Dimensions promotional cards (MVPC-JP) : `100201XXX`  
+- **April 23, 2016** : Yu-Gi-Oh! The Dark Side of Dimensions Movie Pack (MVP1-JP) : `100207XXX`  
+- **May 14, 2016**  : Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`  
+- **June 4, 2016** : Duelist Pack: Pharaoh's Memories (DP17-JP) :  
+- **June 18, 2016**  : Structure Deck: Yugi Muto (SDMY-JP) :  
+- **June 18, 2016**  : Structure Deck: Seto Kaiba (SDKS-JP) :  
+- ~~Duelist Festival 2016 - Promotion Pack (DF16-JP) : `100203XXX`~~  
+- ~~Yu-Gi-Oh! ARC-V Volume 1 promotional card (YA01-JP) : `100205XXX`~~  
+- ~~Structure Deck R: Revival of the Great Divine Dragon (SR02-JP) : `100302XXX`~~  
+- ~~Starter Deck 2016 (ST16-JP) : `100316XXX`~~  
+- ~~THE DARK ILLUSION (TDIL-JP) : `100909XXX`~~  
