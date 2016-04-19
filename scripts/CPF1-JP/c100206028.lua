@@ -27,7 +27,7 @@ end
 function c100206028.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
-		Duel.IsExistingMatchingCard(c100206028.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
+		Duel.IsExistingMatchingCard(c100206028.cfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c100206028.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
