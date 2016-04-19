@@ -41,14 +41,14 @@ function c100301004.spcon(e,c)
 	local tp=c:GetControler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=-ft+1
-	local mg=Duel.GetMatchingGroup(c100301004.sprfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
+	local mg=Duel.GetMatchingGroup(c100301004.sprfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	return mg:GetClassCount(Card.GetCode)==3
 		and mg:Filter(Card.IsLocation,nil,LOCATION_MZONE):GetClassCount(Card.GetCode)>=ct
 end
 function c100301004.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=-ft+1
-	local mg=Duel.GetMatchingGroup(c100301004.sprfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
+	local mg=Duel.GetMatchingGroup(c100301004.sprfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	local g=Group.CreateGroup()
 	for i=1,3 do
 		local tc=nil
