@@ -1,4 +1,5 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`  
+- Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
 - **April 21, 2016** : Yu-Gi-Oh! The Dark Side of Dimensions Duel Set (MVPL-JP) : `100202XXX`  
 - **April 23, 2016** : Yu-Gi-Oh! The Dark Side of Dimensions promotional cards (MVPC-JP) : `100201XXX`  
