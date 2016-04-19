@@ -34,7 +34,7 @@ function c100206029.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100206029.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)
@@ -43,32 +43,35 @@ function c100206029.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and not Duel.GetControl(tc,tp) then
-		if not tc:IsImmuneToEffect(e) and tc:IsAbleToChangeControler() then
-			Duel.Destroy(tc,REASON_EFFECT)
+	if tc:IsRelateToEffect(e) then
+		if not Duel.GetControl(tc,tp,PHASE_END,1) then
+			if not tc:IsImmuneToEffect(e) and tc:IsAbleToChangeControler() then
+				Duel.Destroy(tc,REASON_EFFECT)
+			end
 			return
 		end
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_DISABLE_EFFECT)
-		e3:SetReset(RESET_EVENT+0x1fe0000)
+		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_SINGLE)
-		e4:SetCode(EFFECT_SET_ATTACK)
+		e4:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e4:SetValue(3000)
-		e4:SetReset(RESET_EVENT+0x1fe0000)
+		e4:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e4)
 		local e5=Effect.CreateEffect(c)
 		e5:SetType(EFFECT_TYPE_SINGLE)
 		e5:SetCode(EFFECT_CHANGE_CODE)
 		e5:SetValue(100206029)
-		e5:SetReset(RESET_EVENT+0x1fe0000)
+		e5:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e5)
 	end
 end
