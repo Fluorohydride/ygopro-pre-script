@@ -51,5 +51,5 @@ function c100207100.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler()
 end
 function c100207100.aclimit(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsActiveType(TYPE_MONSTER)
+	return (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsActiveType(TYPE_MONSTER)) and not re:GetHandler():IsImmuneToEffect(e)
 end
