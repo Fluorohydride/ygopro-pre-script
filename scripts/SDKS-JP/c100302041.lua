@@ -45,10 +45,10 @@ function c100302041.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetHintTiming(0,0x1e0)
-	e4:SetCondition(c100301001.spcon)
-	e4:SetCost(c100301001.spcost)
-	e4:SetTarget(c100301001.sptg)
-	e4:SetOperation(c100301001.spop)
+	e4:SetCondition(c100302041.spcon2)
+	e4:SetCost(c100302041.spcost2)
+	e4:SetTarget(c100302041.sptg2)
+	e4:SetOperation(c100302041.spop2)
 	c:RegisterEffect(e4)
 end
 function c100302041.splimit(e,se,sp,st)
@@ -119,20 +119,20 @@ function c100302041.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
-function c100301001.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c100302041.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
-function c100301001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100302041.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
-function c100301001.spfilter2(c,e,tp)
+function c100302041.spfilter2(c,e,tp)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)
 		and c:IsType(TYPE_UNION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100301001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c100301001.spfilter2,tp,LOCATION_REMOVED,0,nil,e,tp)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>2
+function c100302041.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=Duel.GetMatchingGroup(c100302041.spfilter2,tp,LOCATION_REMOVED,0,nil,e,tp)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and g:GetClassCount(Card.GetCode)>2
 		and not Duel.IsPlayerAffectedByEffect(tp,59822133) end
 	local sg=Group.CreateGroup()
@@ -145,7 +145,7 @@ function c100301001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,3,tp,LOCATION_REMOVED)
 end
-function c100301001.spop(e,tp,eg,ep,ev,re,r,rp)
+function c100302041.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<3 or Duel.IsPlayerAffectedByEffect(tp,59822133)
