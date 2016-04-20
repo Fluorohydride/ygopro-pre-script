@@ -90,7 +90,7 @@ function c100417001.spcon2(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100417001.filter(c,e,tp)
-	return (c:IsSetCard(0x1e7) or c:IsCode(1995985,74388798,37267041)) and not c:IsCode(100417001)
+	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x1e7) or c:IsCode(1995985,74388798,37267041)) and not c:IsCode(100417001)
 		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100417001.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
