@@ -79,7 +79,7 @@ function c100301004.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end
 function c100301004.costfilter(c)
-	return (c:IsSetCard(2066) or c:IsCode(99785935,39256679,11549357)) and c:IsLevelBelow(4) and c:IsAbleToRemoveAsCost()
+	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x2066) or c:IsCode(99785935,39256679,11549357)) and c:IsLevelBelow(4) and c:IsAbleToRemoveAsCost()
 end
 function c100301004.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100301004.costfilter,tp,LOCATION_GRAVE,0,1,nil) end
