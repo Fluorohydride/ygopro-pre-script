@@ -6,7 +6,6 @@ function c100207023.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1e0)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(c100207023.target)
 	c:RegisterEffect(e1)
@@ -60,7 +59,6 @@ function c100207023.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(re) and tc:IsFaceup() and tc:IsRelateToEffect(re) then
 		c:SetCardTarget(tc)
 	end
-	e:Reset()
 end
 function c100207023.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
