@@ -17,6 +17,7 @@ function c100207023.initial_effect(c)
 	e2:SetCode(EVENT_CHAIN_SOLVED)
 	e2:SetCondition(c100207023.tgcon)
 	e2:SetOperation(c100207023.tgop)
+	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 	--damage
 	local e5=Effect.CreateEffect(c)
@@ -51,7 +52,7 @@ function c100207023.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,c100207023.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c100207023.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler()==e:GetHandler()
+	return re==e:GetLabelObject()
 end
 function c100207023.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
