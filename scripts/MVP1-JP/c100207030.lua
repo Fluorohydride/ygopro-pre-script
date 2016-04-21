@@ -35,8 +35,9 @@ end
 function c100207030.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100207030.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100207030.filter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
-		Duel.IsPlayerCanSpecialSummonMonster(tp,100207030,0,0x21,0,0,4,RACE_MACHINE,ATTRIBUTE_EARTH) end
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100207030,0,0x21,0,0,4,RACE_MACHINE,ATTRIBUTE_EARTH) end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c100207030.filter,tp,LOCATION_MZONE,0,1,ft,nil)
@@ -57,7 +58,7 @@ function c100207030.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tg0:GetCount()<=0 or ft<=0 then return end
 	local tg=nil
 	if ft<tg0:GetCount() then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		tg=tg0:FilterSelect(tp,c100207030.filter,ft,ft,nil)
 	else
 		tg=tg0:Clone()

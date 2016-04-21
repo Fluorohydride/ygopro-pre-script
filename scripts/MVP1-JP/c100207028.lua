@@ -13,6 +13,7 @@ function c100207028.initial_effect(c)
 	e2:SetCode(EFFECT_CHANGE_DAMAGE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,0)
+	e2:SetCondition(c100207028.condition)
 	e2:SetValue(c100207028.val)
 	Duel.RegisterEffect(e2)
 	--spsummon
@@ -20,19 +21,20 @@ function c100207028.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetCondition(c100207028.spcon)
 	e3:SetTarget(c100207028.sptg)
 	e3:SetOperation(c100207028.spop)
 	c:RegisterEffect(e3)
 end
-function c100207028.filter(c)
+function c100207028.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER)
 end
+function c100207028.condition(e)
+	return Duel.IsExistingMatchingCard(c100207028.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+end
 function c100207028.val(e,re,dam,r,rp,rc)
-	if Duel.IsExistingMatchingCard(c100207028.filter,tp,LOCATION_MZONE,0,1,nil) then
-		return dam/2
-	else return dam end
+	return math.ceil(dam/2)
 end
 function c100207028.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

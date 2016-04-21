@@ -8,6 +8,7 @@ function c100207029.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE+TIMING_TOGRAVE)
+	e1:SetCondition(c100207029.condition)
 	e1:SetTarget(c100207029.target)
 	e1:SetOperation(c100207029.activate)
 	c:RegisterEffect(e1)	
@@ -40,12 +41,15 @@ function c100207029.clear(e,tp,eg,ep,ev,re,r,rp)
 	c100207029[0]=false
 	c100207029[1]=false
 end
+function c100207029.condition(e,tp,eg,ep,ev,re,r,rp)
+	return c100207029[0] and c100207029[1]
+end
 function c100207029.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function c100207029.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100207029.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end	
 	local g=Duel.GetMatchingGroup(c100207029.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
-	if chk==0 then return c100207029[0] and c100207029[1] and g:GetCount()>0 end	
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),tp,LOCATION_GRAVE)
 end
 function c100207029.spfilter(c,e,tp)
