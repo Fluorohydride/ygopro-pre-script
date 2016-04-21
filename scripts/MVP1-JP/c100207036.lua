@@ -92,7 +92,7 @@ function c100207036.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if tg:GetCount()==0 then return end
-	if not c:IsRelateToEffect(e) or not Duel.SendtoGrave(c,REASON_EFFECT)>0 then return end
+	if not (c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)>0) then return end
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) and tg:GetCount()>1 then
 			local tc=tg:Select(tp,1,1,nil)
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
