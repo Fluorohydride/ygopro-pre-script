@@ -27,13 +27,14 @@ end
 function c100207021.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(c100207021.filter,tp,0,LOCATION_MZONE,1,nil,tp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100207021.filter,tp,0,LOCATION_MZONE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100207021.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not (c:IsRelateToEffect(e) or tc:IsRelateToEffect(e) or tc:IsFaceup()) then return end
+	if not (c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
 	local atk=tc:GetAttack()
 	local def=tc:GetDefence()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
