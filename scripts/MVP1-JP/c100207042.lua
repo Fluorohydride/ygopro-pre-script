@@ -65,10 +65,11 @@ function c100207042.tgfilter(c,e)
 end
 function c100207042.countertg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetMatchingGroup(c100207042.tgfilter,tp,0,LOCATION_MZONE,nil,e)
-	if chk==0 then return tg:GetCount()>0
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() and tg:GetCount()>0
 		and Duel.IsExistingMatchingCard(c100207042.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c100207042.cfilter,tp,LOCATION_GRAVE,0,1,tg:GetCount(),nil)
+	g:AddCard(e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	Duel.SelectTarget(tp,c100207042.tgfilter,tp,0,LOCATION_MZONE,g:GetCount(),g:GetCount(),nil,e)
 end

@@ -78,7 +78,7 @@ function c100207041.lpop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100207041.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c100207041.thfilter(c)
 	return c:IsSetCard(0xe3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
