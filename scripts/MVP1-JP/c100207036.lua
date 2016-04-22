@@ -9,7 +9,7 @@ function c100207036.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--special summon
+	--spsummon rule
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -28,7 +28,7 @@ function c100207036.initial_effect(c)
 	e3:SetTarget(c100207036.damtg)
 	e3:SetOperation(c100207036.damop)
 	c:RegisterEffect(e3)
-	--
+	--special summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -75,8 +75,11 @@ function c100207036.spfil(c,e,tp)
   return c:IsCode(100207032) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100207036.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100207036.spfil(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(c100207036.spfil,tp,LOCATION_GRAVE,0,1,nil,e,tp) and e:GetHandler():IsAbleToGrave() end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(c100207036.spfil,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and c:IsAbleToGrave() and not c:IsLocation(LOCATION_GRAVE) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local lc=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if lc>2 then lc=2 end
