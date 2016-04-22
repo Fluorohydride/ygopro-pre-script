@@ -29,9 +29,9 @@ function c100207011.activate(e,tp,eg,ep,ev,re,r,rp)
 	local atk=Duel.GetLP(tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100207011,0,0x21,atk,0,4,RACE_WARRIOR,ATTRIBUTE_LIGHT) then return end
-	c:AddTrapMonsterAttribute(TYPE_EFFECT,ATTRIBUTE_LIGHT,RACE_WARRIOR,4,atk,0)
-	Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP_ATTACK)
-	c:TrapMonsterBlock()
+	c:AddMonsterAttribute(0,0,0,0,0)
+	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP_ATTACK)
+	c:TrapMonsterComplete(TYPE_EFFECT)
 	--damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100207011,0))
@@ -43,7 +43,8 @@ function c100207011.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(c100207011.damtg)
 	e1:SetOperation(c100207011.damop)
 	e1:SetReset(RESET_EVENT+0x17e0000)
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e1,true)
+	Duel.SpecialSummonComplete()
 	local at=Duel.GetAttacker()
 	if at and at:IsAttackable() and at:IsFaceup() and not at:IsImmuneToEffect(e) and not at:IsStatus(STATUS_ATTACK_CANCELED) then
 		Duel.BreakEffect()

@@ -52,9 +52,9 @@ function c100207030.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100207030,0,0x21,0,0,4,RACE_MACHINE,ATTRIBUTE_EARTH) then return end
-	c:AddTrapMonsterAttribute(TYPE_EFFECT,ATTRIBUTE_EARTH,RACE_MACHINE,4,0,0)
-	Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP_ATTACK)
-	c:TrapMonsterBlock()
+	c:AddMonsterAttribute(0,0,0,0,0)
+	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
+	c:TrapMonsterComplete(TYPE_EFFECT)
 	if tg0:GetCount()<=0 or ft<=0 then return end
 	local tg=nil
 	if ft<tg0:GetCount() then
@@ -75,7 +75,7 @@ function c100207030.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
 			e1:SetReset(RESET_EVENT+0x1fe0000)
 			e1:SetValue(c100207030.eqlimit)
-			tc:RegisterEffect(e1)
+			tc:RegisterEffect(e1,true)
 			if atk>0 then
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_EQUIP)
@@ -89,6 +89,7 @@ function c100207030.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.EquipComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function c100207030.eqlimit(e,c)
 	return e:GetOwner()==c

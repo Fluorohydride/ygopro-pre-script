@@ -39,7 +39,7 @@ function c100207021.activate(e,tp,eg,ep,ev,re,r,rp)
 	local def=tc:GetDefence()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100207021,0,0x21,atk,def,4,RACE_SPELLCASTER,ATTRIBUTE_DARK) then return end
-	c:AddTrapMonsterAttribute(TYPE_EFFECT,ATTRIBUTE_DARK,RACE_SPELLCASTER,4,atk,def)
+	c:AddMonsterAttribute(0,0,0,0,0)
 	if Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP_ATTACK) then
 		--damage
 		local e1=Effect.CreateEffect(c)
@@ -51,10 +51,10 @@ function c100207021.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(c100207021.damtg)
 		e1:SetOperation(c100207021.damop)
 		e1:SetReset(RESET_EVENT+0x17e0000)
-		c:RegisterEffect(e1)
+		c:RegisterEffect(e1,true)
 	end
+	c:TrapMonsterComplete(TYPE_EFFECT)
 	Duel.SpecialSummonComplete()
-	c:TrapMonsterBlock()
 end
 function c100207021.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
