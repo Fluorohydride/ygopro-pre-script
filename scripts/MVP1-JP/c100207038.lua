@@ -106,7 +106,7 @@ function c100207038.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0
 		and Duel.IsExistingMatchingCard(c100207038.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(100207038,0)) then
+		and Duel.SelectYesNo(tp,aux.Stringid(100207038,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=Duel.SelectMatchingCard(tp,c100207038.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 		if sg:GetCount()>0 and not sg:GetFirst():IsHasEffect(EFFECT_NECRO_VALLEY) then
