@@ -75,13 +75,13 @@ end
 function c100207035.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
-	local sg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if sg:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
-	if sg:GetCount()>ft then
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	if g:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
+	if g:GetCount()>ft then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		sg=sg:Select(tp,ft,ft,nil)
+		g=g:Select(tp,ft,ft,nil)
 	end
-	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0
+	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0
 		and Duel.IsExistingMatchingCard(c100207035.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(100207035,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
