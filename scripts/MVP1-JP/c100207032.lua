@@ -30,8 +30,9 @@ function c100207032.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100207032.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local bc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return bc and bc:IsFaceup() and bc:IsRelateToBattle() end
+	local c=e:GetHandler()
+	local bc=c:GetBattleTarget()
+	if chk==0 then return bc and bc:IsFaceup() and bc:IsRelateToBattle() and c:IsRelateToBattle() end
 end
 function c100207032.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

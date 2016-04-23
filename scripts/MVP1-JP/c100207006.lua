@@ -42,9 +42,7 @@ function c100207006.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,100) end
 	local g=Duel.GetMatchingGroup(c100207006.filter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	local tg=g:GetMaxGroup(Card.GetAttack)
-	local maxc=Duel.GetLP(tp)
-	local maxpay=tg:GetFirst():GetAttack()
-	if maxpay<maxc then maxc=maxpay end
+	local maxc=math.min(Duel.GetLP(tp),tg:GetFirst():GetAttack())
 	maxc=math.floor(maxc/100)*100
 	local t={}
 	for i=1,maxc/100 do
