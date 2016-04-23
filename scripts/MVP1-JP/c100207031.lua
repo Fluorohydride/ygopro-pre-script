@@ -20,6 +20,17 @@ function c100207031.initial_effect(c)
 	e2:SetTarget(c100207031.target2)
 	e2:SetOperation(c100207031.operation)
 	c:RegisterEffect(e2)
+	--cannot direct attack
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100207031,1))
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetHintTiming(0,TIMING_ATTACK)
+	e3:SetRange(LOCATION_GRAVE)
+	e3:SetCondition(c100207031.grcondition)
+	e3:SetCost(c100207031.grcost)
+	e3:SetOperation(c100207031.groperation)
+	c:RegisterEffect(e3)
 end
 function c100207031.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
@@ -44,4 +55,20 @@ end
 function c100207031.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(100207031)==0 or not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.NegateAttack()
+end
+function c100207031.grcondition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()~=tp and (Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE))
+end
+function c100207031.grcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+end
+function c100207031.groperation(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetAttacker() and Duel.GetAttackTarget()==nil then Duel.NegateAttack() end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+	e1:SetTargetRange(0,LOCATION_MZONE)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
