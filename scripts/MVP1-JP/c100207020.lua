@@ -17,13 +17,16 @@ end
 function c100207020.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_HAND,0,1,e:GetHandler(),TYPE_SPELL)
 		and Duel.IsExistingMatchingCard(c100207020.filter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100207020.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100207020,0))
 	local ag=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_HAND,0,1,1,nil,TYPE_SPELL)
-	if ag>0 then
+	if ag:GetCount()>0 then
 		Duel.SendtoHand(ag,1-tp,REASON_EFFECT)
 		Duel.ConfirmCards(tp,ag)
+		Duel.ShuffleHand(tp)
+		Duel.ShuffleHand(1-tp)
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c100207020.filter,tp,LOCATION_DECK,0,1,1,nil)
