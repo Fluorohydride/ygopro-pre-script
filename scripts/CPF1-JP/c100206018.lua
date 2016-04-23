@@ -49,7 +49,7 @@ function c100206018.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c100206018.cfilter(c)
-	return c:IsFaceup() and c:GetCounter(0x1038)==10
+	return c:IsFaceup() and c:GetCounter(0x1139)==10
 end
 function c100206018.spcon(e,c)
 	if c==nil then return true end
@@ -80,7 +80,7 @@ end
 function c100206018.countop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		tc:AddCounter(0x1038,1)
+		tc:AddCounter(0x1139,1)
 	end
 end
 function c100206018.efilter(e,te)

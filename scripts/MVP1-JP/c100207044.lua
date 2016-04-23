@@ -74,7 +74,7 @@ function c100207044.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		sc:RegisterEffect(e1)
 		--
-		sc:AddCounter(0x1039,1)
+		sc:AddCounter(0x1038,1)
 		--
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
