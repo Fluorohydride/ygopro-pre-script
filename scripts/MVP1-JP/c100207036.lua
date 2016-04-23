@@ -22,7 +22,7 @@ function c100207036.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCondition(c100207036.damcon)
 	e3:SetTarget(c100207036.damtg)
@@ -38,7 +38,6 @@ function c100207036.initial_effect(c)
 	e4:SetOperation(c100207036.spop2)
 	c:RegisterEffect(e4)
 end
-
 function c100207036.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe3) and c:IsAbleToGraveAsCost()
 end
@@ -56,7 +55,6 @@ function c100207036.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetReset(RESET_EVENT+0xff0000)
 	c:RegisterEffect(e1)
 end
-
 function c100207036.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
@@ -70,41 +68,41 @@ function c100207036.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
-
-function c100207036.spfil(c,e,tp)
+function c100207036.spfilter(c,e,tp)
   return c:IsCode(100207032) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100207036.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100207036.spfil(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c100207036.spfil,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100207036.spfilter(chkc,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+		and Duel.IsExistingTarget(c100207036.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and c:IsAbleToGrave() and not c:IsLocation(LOCATION_GRAVE) end
+	local ft=2
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+	ft=math.min(ft,Duel.GetLocationCount(tp,LOCATION_MZONE))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local lc=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if lc>2 then lc=2 end
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then lc=1 end
-	local g=Duel.SelectTarget(tp,c100207036.spfil,tp,LOCATION_GRAVE,0,1,lc,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c100207036.spfilter,tp,LOCATION_GRAVE,0,1,ft,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,g:GetCount(),0,0)
 end
-function c100207036.thfil(c)
+function c100207036.thfilter(c)
 	return c:IsCode(100207037) and c:IsAbleToHand()
 end
 function c100207036.spop2(e,tp,eg,ep,ev,re,r,rp)
-  local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if tg:GetCount()==0 then return end
-	if not (c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)>0) then return end
-		if Duel.IsPlayerAffectedByEffect(tp,59822133) and tg:GetCount()>1 then
-			local tc=tg:Select(tp,1,1,nil)
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-		else
-			Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
-		end
-	if Duel.IsExistingMatchingCard(c100207036.thfil,tp,LOCATION_DECK,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(100207036,0)) then
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) or Duel.SendtoGrave(c,REASON_EFFECT)==0 then return end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft<=0 then return end
+	local sg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	if sg:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
+	if sg:GetCount()>ft then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		sg=sg:Select(tp,ft,ft,nil)
+	end
+	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0
+		and Duel.IsExistingMatchingCard(c100207036.thfilter,tp,LOCATION_DECK,0,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(100207036,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,c100207036.thfil,tp,LOCATION_DECK,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c100207036.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		Duel.SendtoHand(g,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end

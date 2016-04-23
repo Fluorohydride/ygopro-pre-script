@@ -51,19 +51,15 @@ function c100207040.initial_effect(c)
 	e5:SetOperation(c100207040.damop)
 	c:RegisterEffect(e5)
 end
-
 function c100207040.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
-
 function c100207040.tgvalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
-
 function c100207040.hvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,math.ceil(Duel.GetLP(1-tp)/2))
 end
-
 function c100207040.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToBattle() and not e:GetHandler():IsHasEffect(EFFECT_EXTRA_ATTACK) end
 end
@@ -77,7 +73,6 @@ function c100207040.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE)
 	c:RegisterEffect(e1)
 end
-
 function c100207040.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT)~=0 and ep==tp
 end

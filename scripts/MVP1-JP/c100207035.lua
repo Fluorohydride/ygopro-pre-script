@@ -28,14 +28,13 @@ function c100207035.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetCondition(c100207035.spcon2)
 	e4:SetTarget(c100207035.sptg2)
 	e4:SetOperation(c100207035.spop2)
 	c:RegisterEffect(e4)
 end
-
 function c100207035.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe3) and c:IsAbleToGraveAsCost()
 end
@@ -53,40 +52,44 @@ function c100207035.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetReset(RESET_EVENT+0xff0000)
 	c:RegisterEffect(e1)
 end
-
 function c100207035.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
 end
-function c100207035.spfil(c,e,tp)
+function c100207035.spfilter(c,e,tp)
 	return c:IsSetCard(0xe3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100207035.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100207035.spfil(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(c100207035.spfil,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
-	local lc=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if lc>3 then lc=3 end
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then lc=1 end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100207035.spfilter(chkc,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(c100207035.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	local ft=3
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+	ft=math.min(ft,Duel.GetLocationCount(tp,LOCATION_MZONE))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c100207035.spfil,tp,LOCATION_GRAVE,0,1,lc,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c100207035.spfilter,tp,LOCATION_GRAVE,0,1,ft,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,g:GetCount(),0,0)
 end
-function c100207035.thfil(c)
+function c100207035.thfilter(c)
 	return c:IsSetCard(0xe3) and c:IsAbleToHand()
 end
 function c100207035.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if tg:GetCount()==0 then return end
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) and tg:GetCount()>1 then
-		local tc=tg:Select(tp,1,1,nil)
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-	else
-		Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft<=0 then return end
+	local sg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	if sg:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
+	if sg:GetCount()>ft then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		sg=sg:Select(tp,ft,ft,nil)
 	end
-	if Duel.IsExistingMatchingCard(c100207035.thfil,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(100207035,0)) then
+	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0
+		and Duel.IsExistingMatchingCard(c100207035.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(100207035,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,c100207035.thfil,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
-		Duel.SendtoHand(g,tp,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+		local sg=Duel.SelectMatchingCard(tp,c100207038.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+		if sg:GetCount()>0 and not sg:GetFirst():IsHasEffect(EFFECT_NECRO_VALLEY) then
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
+			Duel.ShuffleDeck(tp)
+		end
 	end
 end
