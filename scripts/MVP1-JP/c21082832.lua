@@ -29,7 +29,7 @@ function c21082832.mfilterf(c,tp,mg,rc)
 	else return false end
 end
 function c21082832.mfilter(c)
-	return (c:IsCode(46986414) or c:IsCode(89631139)) and c:IsAbleToRemove()
+	return c:IsCode(46986414,89631139) and c:IsAbleToRemove()
 end
 function c21082832.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

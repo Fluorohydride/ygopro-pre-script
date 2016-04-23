@@ -24,10 +24,6 @@ function c34325937.initial_effect(c)
 	e2:SetTarget(c34325937.sptg)
 	e2:SetOperation(c34325937.spop)
 	c:RegisterEffect(e2)
-	--local e3=e2:Clone()
-	--e3:SetCode(EVENT_DESTROYED)
-	--e3:SetCondition(c34325937.spcon2)
-	--c:RegisterEffect(e3)
 end
 function c34325937.filter1(c,e)
 	return c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
@@ -102,13 +98,6 @@ function c34325937.cfilter(c,tp)
 end
 function c34325937.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c34325937.cfilter,1,nil,tp)
-end
-function c34325937.cfilter2(c,tp)
-	return c:IsSetCard(0xe3) and c:IsReason(REASON_BATTLE) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousPosition(POS_FACEUP)
-end
-function c34325937.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c34325937.cfilter2,1,nil,tp)
 end
 function c34325937.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

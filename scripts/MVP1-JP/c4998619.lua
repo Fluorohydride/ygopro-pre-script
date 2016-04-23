@@ -85,7 +85,7 @@ function c4998619.spop2(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(c4998619.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(4998619,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=Duel.SelectMatchingCard(tp,c3775068.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+		local sg=Duel.SelectMatchingCard(tp,c4998619.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 		if sg:GetCount()>0 and not sg:GetFirst():IsHasEffect(EFFECT_NECRO_VALLEY) then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)

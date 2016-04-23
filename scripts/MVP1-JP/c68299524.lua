@@ -26,7 +26,7 @@ function c68299524.initial_effect(c)
 	c:RegisterEffect(e2)
 	--attack -1k
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100201004,2))
+	e3:SetDescription(aux.Stringid(68299524,2))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
