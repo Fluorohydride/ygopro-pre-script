@@ -1,6 +1,4 @@
 --ファイナル・ギアス
---Final Geas
---Script by dest
 function c16832845.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

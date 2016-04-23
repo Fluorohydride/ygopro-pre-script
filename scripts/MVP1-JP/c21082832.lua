@@ -1,6 +1,4 @@
 --カオス・フォーム
---Chaos Form
---Script by nekrozar
 function c21082832.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

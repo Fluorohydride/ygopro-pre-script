@@ -1,6 +1,4 @@
 --ディメンション・ガーディアン
---Dimension Guardian
---Script by nekrozar
 function c54175023.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

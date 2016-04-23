@@ -1,6 +1,4 @@
 --黒魔術のヴェール
---Dark Magic Veil
---Script by nekrozar
 function c82404868.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

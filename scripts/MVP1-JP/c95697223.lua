@@ -1,6 +1,4 @@
 --竜の闘志
---Dragon's Perseverance
---Script by dest
 function c95697223.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

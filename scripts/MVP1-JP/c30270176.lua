@@ -1,6 +1,4 @@
---暗黒方界神クリムソン・ノヴァ
---Crimson Nova, the Dark Cubic Deity
---Scripted by Eerie Code
+--暗黒方界神クリムゾン・ノヴァ
 function c30270176.initial_effect(c)
 	c:EnableReviveLimit()
 	--cannot special summon

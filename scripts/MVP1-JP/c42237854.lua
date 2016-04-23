@@ -1,6 +1,4 @@
 --機動要塞 メタル・ホールド
---Metalhold the Mobile Fortified Fortress
---Script by dest
 function c42237854.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

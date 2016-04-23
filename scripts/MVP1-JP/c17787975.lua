@@ -1,6 +1,4 @@
 --ディメンション・スフィンクス
---Dimension Sphinx
---Script by mercury233
 function c17787975.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

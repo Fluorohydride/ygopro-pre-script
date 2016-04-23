@@ -1,6 +1,4 @@
 --方界輪廻
---Houkai Reincarnation
---Script by mercury233
 function c71442223.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

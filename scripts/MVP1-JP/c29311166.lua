@@ -1,6 +1,4 @@
 --アサルトワイバーン
---Assault Wyvern
---Script by dest
 function c29311166.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --ベリー・マジシャン・ガール
---Berry Magician Girl
---Script by mercury233
 function c20747792.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)

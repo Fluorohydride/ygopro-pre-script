@@ -1,6 +1,4 @@
 --パンデミック・ドラゴン
---Pandemic Dragon
---Script by dest
 function c68299524.initial_effect(c)
 	--attack down
 	local e1=Effect.CreateEffect(c)

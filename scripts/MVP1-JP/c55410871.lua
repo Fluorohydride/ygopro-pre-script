@@ -1,6 +1,4 @@
 --ブルーアイズ・カオス・MAX・ドラゴン
---Blue-Eyes Chaos MAX Dragon
---Script by nekrozar
 function c55410871.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon condition

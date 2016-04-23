@@ -1,6 +1,4 @@
 --ディメンション・ミラージュ
---Dimension Mirage
---Script by mercury233
 function c80560728.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --キウイ・マジシャン・ガール
---Kiwi Magician Girl
---Script by mercury233
 function c82627406.initial_effect(c)
 	--atk up
 	local e1=Effect.CreateEffect(c)

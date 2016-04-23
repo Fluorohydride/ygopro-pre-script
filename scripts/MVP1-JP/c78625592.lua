@@ -1,6 +1,4 @@
 --光の護封霊剣
---Soul Swords of Revealing Light
---Script by nekrozar
 function c78625592.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

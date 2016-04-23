@@ -1,6 +1,4 @@
 --方界合神
---Houkai Combination
---Script by mercury233
 function c34325937.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

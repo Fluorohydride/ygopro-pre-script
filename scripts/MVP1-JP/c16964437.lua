@@ -1,6 +1,4 @@
 --ダーク・ホライズン
---Dark Horizon
---Script by nekrozar
 function c16964437.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

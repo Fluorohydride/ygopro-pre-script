@@ -1,6 +1,4 @@
 --方界超帝インディオラ・デス・ボルト
---Houkai Super Emperor Indiora Death Bolt
---Script by nekrozar
 function c3775068.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon condition

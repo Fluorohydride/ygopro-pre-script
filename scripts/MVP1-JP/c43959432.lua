@@ -1,6 +1,4 @@
 --メタモル・クレイ・フォートレス
---Metamor Clay Fortress
---Script by nekrozar
 function c43959432.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

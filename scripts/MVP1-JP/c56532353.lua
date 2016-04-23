@@ -1,6 +1,4 @@
 --真青眼の究極竜
---Neo Blue-Eyes Ultimate Dragon
---Script by mercury233
 function c56532353.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

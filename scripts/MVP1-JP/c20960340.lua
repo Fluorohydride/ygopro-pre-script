@@ -1,6 +1,4 @@
 --クリスタル・アバター
---Krystal Avatar
---Script by dest
 function c20960340.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

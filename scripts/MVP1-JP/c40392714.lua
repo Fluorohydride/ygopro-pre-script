@@ -1,6 +1,4 @@
 --方界帝ゲイラ・ガイル
---Geira Gale, the Cubic Emperor
---Scripted by Eerie Code
 function c40392714.initial_effect(c)
 	c:EnableReviveLimit()
 	--cannot special summon
@@ -69,7 +67,7 @@ function c40392714.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function c40392714.spfilter(c,e,tp)
-  return c:IsCode(15610297) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(15610297) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c40392714.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

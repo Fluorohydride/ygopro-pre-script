@@ -1,6 +1,4 @@
 --融爆
---Fusplosion
---Script by dest
 function c68077936.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

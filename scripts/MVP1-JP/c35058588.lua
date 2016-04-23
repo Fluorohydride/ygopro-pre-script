@@ -1,6 +1,4 @@
 --方界波動
---Houkai Aura
---Script by mercury233
 function c35058588.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(35058588,0))

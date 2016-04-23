@@ -1,6 +1,4 @@
 --アップル・マジシャン・ガール
---Apple Magician Girl
---Script by mercury233
 function c56132807.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

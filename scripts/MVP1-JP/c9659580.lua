@@ -1,6 +1,4 @@
 --方界業
---Houkai Karma
---Script by mercury233
 function c9659580.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

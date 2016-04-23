@@ -1,6 +1,4 @@
 --運命の発掘
---Unearthing Destiny
---Script by dest
 function c81782376.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

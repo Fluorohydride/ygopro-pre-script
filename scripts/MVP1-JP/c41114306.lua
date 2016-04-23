@@ -1,8 +1,6 @@
 --方界獣ダーク・ガネックス
---Dark Ganex, the Cubic Beast
---Scripted by Eerie Code
 function c41114306.initial_effect(c)
-  c:EnableReviveLimit()
+	c:EnableReviveLimit()
 	--cannot special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -47,7 +45,7 @@ function c41114306.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:RegisterEffect(e1)
 end
 function c41114306.spfilter(c,e,tp)
-  return c:IsCode(15610297) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(15610297) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c41114306.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c41114306.spfilter(chkc,e,tp) end

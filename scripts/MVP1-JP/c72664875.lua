@@ -1,6 +1,4 @@
 --暗黒方界邪神クリムソン・ノヴァ・トリニティ
---Crimson Nova Trinity, the Dark Cubic Wicked Deity
---Scripted by Eerie Code
 function c72664875.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

@@ -1,6 +1,4 @@
 --方界曼荼羅
---Houkai Mandala
---Script by mercury233
 function c8837932.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

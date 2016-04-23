@@ -1,6 +1,4 @@
 --ディープアイズ・ホワイト・ドラゴン
---Deep-Eyes White Dragon
---Script by dest
 function c22804410.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

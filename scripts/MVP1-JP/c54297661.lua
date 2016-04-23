@@ -1,6 +1,4 @@
 --ディメンション・リフレクター
---Dimension Reflector
---Script by dest
 function c54297661.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

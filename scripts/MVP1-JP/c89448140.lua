@@ -1,6 +1,4 @@
 --マジシャンズ・プロテクション
---Magician's Protection
---Script by dest
 function c89448140.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

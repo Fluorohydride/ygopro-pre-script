@@ -1,6 +1,4 @@
 --方界胤ヴィジャム
---Houkai Spawn Vijam
---Script by nekrozar
 function c15610297.initial_effect(c)
 	--cannot destroy
 	local e1=Effect.CreateEffect(c)
