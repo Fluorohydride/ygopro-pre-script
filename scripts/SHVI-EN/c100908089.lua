@@ -69,10 +69,11 @@ end
 function c100908089.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
+	if not (tc and tc:IsRelateToEffect(e) and c:IsRelateToEffect(e)) then return end
 	local cc=tc:GetControler()
 	local code=tc:GetCode()
 	local g=Duel.GetMatchingGroup(c100908089.chkfilter,tp,LOCATION_DECK,0,nil,e,tp,cc,code)
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 and g:GetCount()>0 then
+	if Duel.Destroy(tc,REASON_EFFECT)~=0 and g:GetCount()>0 then
 		Duel.BreakEffect()
 		g=Duel.GetMatchingGroup(c100908089.spfilter,tp,LOCATION_DECK,0,nil,e,tp,cc,code)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
