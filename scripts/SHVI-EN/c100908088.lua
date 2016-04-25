@@ -18,6 +18,7 @@ function c100908088.initial_effect(c)
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
+	e2:SetCost(c100908088.eqcost)
 	e2:SetTarget(c100908088.eqtg)
 	e2:SetOperation(c100908088.eqop)
 	c:RegisterEffect(e2)
@@ -38,6 +39,10 @@ function c100908088.spcon(e,c)
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100908087.cfilter,tp,0,LOCATION_MZONE,1,nil)
+end
+function c100908088.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,0x37,2,REASON_COST)
 end
 function c100908088.eqfilter(c)
 	return c:IsSetCard(0xd3) and c:IsType(TYPE_MONSTER)
@@ -70,7 +75,7 @@ function c100908088.eqlimit(e,c)
 	return e:GetOwner()==c
 end
 function c100908088.atkfilter(c)
-	return c:IsSetCard(0xd3) and c:IsType(TYPE_MONSTER) and c:GetFlagEffect(100908088)~=0
+	return c:IsSetCard(0xd3) and c:GetFlagEffect(100908088)~=0
 end
 function c100908088.atkval(e,c)
 	local g=e:GetHandler():GetEquipGroup():Filter(c100908088.atkfilter,nil)
