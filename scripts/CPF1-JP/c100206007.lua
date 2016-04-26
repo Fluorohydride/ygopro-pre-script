@@ -57,9 +57,13 @@ end
 function c100206007.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1
 end
+function c100206007.ncostfilter(c)
+	return not c:IsAbleToGraveAsCost()
+end
 function c100206007.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,e:GetHandler())
+	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
+	g:RemoveCard(e:GetHandler())
+	if chk==0 then return g:GetCount()>0 and not g:IsExists(c100206007.ncostfilter,1,nil) end
 	Duel.SendtoGrave(g,REASON_COST)
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
 	e:SetLabel(ct)
