@@ -64,7 +64,7 @@ function c100417003.efilter(e,re)
 end
 function c100417003.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c100417003.thfilter(c)
 	return (c:IsSetCard(0x1e7) or c:IsCode(1995985,74388798,37267041)) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

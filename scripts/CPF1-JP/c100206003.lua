@@ -50,7 +50,8 @@ end
 function c100206003.thfilter(c)
 	return c:IsSetCard(0x99) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
-function c100206003.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100206003.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100206003.filter(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.IsExistingMatchingCard(c100206003.thfilter,tp,LOCATION_DECK,0,1,nil)
 		and e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
 		and Duel.IsExistingTarget(c100206003.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end

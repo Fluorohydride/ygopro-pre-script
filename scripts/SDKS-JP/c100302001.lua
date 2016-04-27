@@ -106,7 +106,7 @@ function c100302001.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100302001.thfilter(c)
-	return c:IsType(TYPE_UNION) and c:IsAbleToHand() and not c:IsHasEffect(EFFECT_NECRO_VALLEY)
+	return c:IsType(TYPE_UNION) and c:IsAbleToHand()
 end
 function c100302001.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100302001.thfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
