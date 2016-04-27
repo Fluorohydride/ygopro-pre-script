@@ -52,15 +52,15 @@ function c100206020.indval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
 function c100206020.repfilter(c)
-	return not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
+	return c:GetSequence()<5 and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function c100206020.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsOnField() and c:IsFaceup()
-		and Duel.IsExistingMatchingCard(c100206020.repfilter,tp,LOCATION_MZONE,0,1,c) end
+		and Duel.IsExistingMatchingCard(c100206020.repfilter,tp,LOCATION_SZONE,0,1,c) end
 	if Duel.SelectYesNo(tp,aux.Stringid(100206020,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local g=Duel.SelectMatchingCard(tp,c100206020.repfilter,tp,LOCATION_MZONE,0,1,1,c)
+		local g=Duel.SelectMatchingCard(tp,c100206020.repfilter,tp,LOCATION_SZONE,0,1,1,c)
 		e:SetLabelObject(g:GetFirst())
 		Duel.HintSelection(g)
 		g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
