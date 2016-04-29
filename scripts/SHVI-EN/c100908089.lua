@@ -62,7 +62,7 @@ function c100908089.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100908089.filter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(c100908089.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c100908089.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100908089.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
