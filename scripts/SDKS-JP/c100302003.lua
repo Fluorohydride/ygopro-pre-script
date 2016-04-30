@@ -34,7 +34,6 @@ function c100302003.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_EQUIP)
 	e4:SetCode(EFFECT_IMMUNE_EFFECT)
-	e4:SetCondition(c100302003.uncon)
 	e4:SetValue(c100302003.efilter)
 	c:RegisterEffect(e4)
 	--spsummon
