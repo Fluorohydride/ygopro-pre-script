@@ -1,4 +1,4 @@
---Kozmo Fearful Lion
+--Kozmo Scaredy Lion
 --Script by dest
 function c86013171.initial_effect(c)
 	--spsummon
