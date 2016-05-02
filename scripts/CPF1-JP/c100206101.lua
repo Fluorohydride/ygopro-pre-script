@@ -64,9 +64,6 @@ function c100206101.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100206101.distg(e,c)
-	return c:IsLocation(LOCATION_MZONE) and c:IsControler(e:GetHandlerPlayer())
-end
 function c100206101.slevel(e,c)
 	return c:AssumeProperty(ASSUME_LEVEL,2)
 end
