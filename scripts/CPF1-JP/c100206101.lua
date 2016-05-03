@@ -22,11 +22,14 @@ function c100206101.initial_effect(c)
 	e2:SetTarget(c100206101.target)
 	e2:SetOperation(c100206101.operation)
 	c:RegisterEffect(e2)
-	--synchro level (effect incomplete)
+	--synchro level
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_SYNCHRO_CHECK)
-	e3:SetValue(c100206101.slevel)
+	e3:SetCode(EFFECT_SYNCHRO_MATERIAL_CUSTOM)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e3:SetTarget(c100206101.syntg)
+	e3:SetValue(1)
+	e3:SetOperation(c100206101.synop)
 	c:RegisterEffect(e3)
 end
 function c100206101.hspfilter(c)
@@ -64,6 +67,37 @@ function c100206101.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100206101.slevel(e,c)
-	return c:AssumeProperty(ASSUME_LEVEL,2)
+function c100206101.cardiansynlevel(c)
+	return 2
+end
+function c100206101.synfilter(c,syncard,tuner,f)
+	return c:IsFaceup() and c:IsNotTuner() and c:IsCanBeSynchroMaterial(syncard,tuner) and (f==nil or f(c))
+end
+function c100206101.syntg(e,syncard,f,minc,maxc)
+	local c=e:GetHandler()
+	local lv=syncard:GetLevel()-c:GetLevel()
+	local lv2=syncard:GetLevel()-2
+	if lv<=0 and lv2<=0 then return false end
+	local g=Duel.GetMatchingGroup(c100206101.synfilter,syncard:GetControler(),LOCATION_MZONE,LOCATION_MZONE,c,syncard,c,f)
+	local res=g:CheckWithSumEqual(Card.GetSynchroLevel,lv,minc,maxc,syncard)
+	local res2=g:CheckWithSumEqual(c100206101.cardiansynlevel,lv2,minc,maxc)
+	return res or res2
+end
+function c100206101.synop(e,tp,eg,ep,ev,re,r,rp,syncard,f,minc,maxc)
+	local c=e:GetHandler()
+	local lv=syncard:GetLevel()-c:GetLevel()
+	local lv2=syncard:GetLevel()-2
+	local g=Duel.GetMatchingGroup(c100206101.synfilter,syncard:GetControler(),LOCATION_MZONE,LOCATION_MZONE,c,syncard,c,f)
+	local res=g:CheckWithSumEqual(Card.GetSynchroLevel,lv,minc,maxc,syncard)
+	local res2=g:CheckWithSumEqual(c100206101.cardiansynlevel,lv2,minc,maxc)
+	local sg=nil
+	if (res2 and res and Duel.SelectYesNo(tp,aux.Stringid(100206101,2)))
+		or (res2 and not res) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
+		sg=g:SelectWithSumEqual(tp,c100206101.cardiansynlevel,lv2,minc,maxc)
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
+		sg=g:SelectWithSumEqual(tp,Card.GetSynchroLevel,lv,minc,maxc,syncard)
+	end
+	Duel.SetSynchroMaterial(sg)
 end
