@@ -76,7 +76,7 @@ end
 function c100206101.syntg(e,syncard,f,minc,maxc)
 	local c=e:GetHandler()
 	local lv=syncard:GetLevel()-c:GetLevel()
-	local lv2=syncard:GetLevel()-2
+	local lv2=syncard:GetLevel()-c100206101.cardiansynlevel(c)
 	if lv<=0 and lv2<=0 then return false end
 	local g=Duel.GetMatchingGroup(c100206101.synfilter,syncard:GetControler(),LOCATION_MZONE,LOCATION_MZONE,c,syncard,c,f)
 	local res=g:CheckWithSumEqual(Card.GetSynchroLevel,lv,minc,maxc,syncard)
@@ -86,7 +86,7 @@ end
 function c100206101.synop(e,tp,eg,ep,ev,re,r,rp,syncard,f,minc,maxc)
 	local c=e:GetHandler()
 	local lv=syncard:GetLevel()-c:GetLevel()
-	local lv2=syncard:GetLevel()-2
+	local lv2=syncard:GetLevel()-c100206101.cardiansynlevel(c)
 	local g=Duel.GetMatchingGroup(c100206101.synfilter,syncard:GetControler(),LOCATION_MZONE,LOCATION_MZONE,c,syncard,c,f)
 	local res=g:CheckWithSumEqual(Card.GetSynchroLevel,lv,minc,maxc,syncard)
 	local res2=g:CheckWithSumEqual(c100206101.cardiansynlevel,lv2,minc,maxc)
