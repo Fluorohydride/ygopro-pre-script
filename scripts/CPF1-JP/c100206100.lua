@@ -24,7 +24,10 @@ function c100206100.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c100206100.filter(c,e,tp)
-	return c:IsSetCard(0x48) and not c:IsCode(100206100)
+	local m=_G["c"..c:GetCode()]
+	if not m then return false end
+	local no=m.xyz_number
+	return no and no>=1 and no<=99 and c:IsSetCard(0x48)
 		and e:GetHandler():IsCanBeXyzMaterial(c)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
