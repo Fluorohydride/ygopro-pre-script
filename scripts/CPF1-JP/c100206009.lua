@@ -40,8 +40,8 @@ function c100206009.setfilter(c,typ)
 end
 function c100206009.setop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,555)
-	local op=Duel.SelectOption(tp,71,72)
+	Duel.Hint(HINT_SELECTMSG,1-tp,555)
+	local op=Duel.SelectOption(1-tp,71,72)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=nil
 	if op==0 then g=Duel.SelectMatchingCard(tp,c100206009.setfilter,tp,LOCATION_DECK,0,1,1,nil,TYPE_SPELL+TYPE_CONTINUOUS)
