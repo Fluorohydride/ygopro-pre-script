@@ -71,7 +71,7 @@ function c100206016.spfilter2(c,e,tp,lv)
 	return c:GetLevel()==lv and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_FAIRY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100206016.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100206016.spfilter2(chkc,e,tp,ct) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100206016.spfilter2(chkc,e,tp,e:GetLabel()) end
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
@@ -82,9 +82,10 @@ function c100206016.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100206016.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	local lv=g:GetFirst():GetLevel()
+	e:SetLabel(lv)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local tg=Duel.SelectMatchingCard(tp,c100206016.cfilter2,tp,LOCATION_GRAVE,0,lv,lv,nil)
-	local ct=Duel.SendtoDeck(tg,nil,2,REASON_COST)
+	Duel.SendtoDeck(tg,nil,2,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c100206016.spop(e,tp,eg,ep,ev,re,r,rp)
