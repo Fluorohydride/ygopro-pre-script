@@ -24,7 +24,7 @@ function c100206035.initial_effect(c)
 	c:RegisterEffect(e2)
 	--draw(battle)
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_DAMAGE)
+	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
@@ -59,10 +59,11 @@ function c100206035.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		Duel.BreakEffect()
-		if ft>0 and tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0x1e5)
-			and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-			and Duel.SelectYesNo(tp,aux.Stringid(100206035,1)) then
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		if ft>0 and tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0x1e5) then
+			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+				and Duel.SelectYesNo(tp,aux.Stringid(100206035,1)) then
+				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+			end
 		else
 			Duel.SendtoGrave(tc,REASON_EFFECT)
 		end
