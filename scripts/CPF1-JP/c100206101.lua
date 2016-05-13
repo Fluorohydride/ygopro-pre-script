@@ -51,9 +51,8 @@ function c100206101.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100206101.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	local g=Duel.GetDecktopGroup(tp,1)
-	local tc=g:GetFirst()
-	if tc and Duel.Draw(p,d,REASON_EFFECT)~=0 then
+	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
+		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		Duel.BreakEffect()
@@ -64,6 +63,7 @@ function c100206101.operation(e,tp,eg,ep,ev,re,r,rp)
 		else
 			Duel.SendtoGrave(tc,REASON_EFFECT)
 		end
+		Duel.ShuffleHand(tp)
 	end
 end
 function c100206101.cardiansynlevel(c)
