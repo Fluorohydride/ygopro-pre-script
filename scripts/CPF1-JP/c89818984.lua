@@ -32,7 +32,7 @@ function c89818984.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c89818984.hspfilter(c)
-	return c:IsSetCard(0x1e5) and c:GetLevel()==11 and not c:IsCode(89818984)
+	return c:IsSetCard(0xe6) and c:GetLevel()==11 and not c:IsCode(89818984)
 end
 function c89818984.hspcon(e,c)
 	if c==nil then return true end
@@ -55,7 +55,7 @@ function c89818984.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
-		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0x1e5) then
+		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
 			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 				and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 				and Duel.SelectYesNo(tp,aux.Stringid(89818984,1)) then

@@ -16,7 +16,7 @@ function c78785392.initial_effect(c)
 	Duel.AddCustomActivityCounter(78785392,ACTIVITY_SPSUMMON,c78785392.counterfilter)
 end
 function c78785392.counterfilter(c)
-	return c:IsSetCard(0x1e5)
+	return c:IsSetCard(0xe6)
 end
 function c78785392.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(78785392,tp,ACTIVITY_SUMMON)==0
@@ -34,10 +34,10 @@ function c78785392.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e2,tp)
 end
 function c78785392.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x1e5)
+	return not c:IsSetCard(0xe6)
 end
 function c78785392.filter(c,e,tp)
-	return c:GetAttack()==100 and c:IsSetCard(0x1e5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetAttack()==100 and c:IsSetCard(0xe6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c78785392.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)

@@ -33,7 +33,7 @@ function c81752019.drop1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)==0 then return end
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
-	if not (tc:IsSetCard(0x1e5) and tc:IsType(TYPE_MONSTER)) then
+	if not (tc:IsSetCard(0xe6) and tc:IsType(TYPE_MONSTER)) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
 	Duel.ShuffleHand(tp)
