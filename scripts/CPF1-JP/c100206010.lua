@@ -16,8 +16,9 @@ function c100206010.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
 end
 function c100206010.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil)
-		or Duel.IsExistingMatchingCard(c100206010.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0
+		and (Duel.IsExistingMatchingCard(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil)
+		or Duel.IsExistingMatchingCard(c100206010.desfilter,tp,0,LOCATION_ONFIELD,1,nil)) end
 	Duel.Hint(HINT_SELECTMSG,tp,564)
 	local ac=Duel.AnnounceCard(tp)
 	Duel.SetTargetParam(ac)
@@ -31,11 +32,11 @@ function c100206010.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tg=g:Filter(Card.IsCode,nil,ac)
 		local g1=Duel.GetMatchingGroup(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,nil)
 		local g2=Duel.GetMatchingGroup(c100206010.desfilter,tp,0,LOCATION_ONFIELD,nil)
-		if tg:GetCount()>0 and (g1 or g2) then
-			Duel.BreakEffect()
-			if g1 and g2 then
+		if tg:GetCount()>0 and (g1:GetCount()>0 or g2:GetCount()>0) then
+			local op=0
+			if g1:GetCount()>0 and g2:GetCount()>0 then
 				op=Duel.SelectOption(tp,aux.Stringid(100206010,1),aux.Stringid(100206010,2))
-			elseif g1 then
+			elseif g1:GetCount()>0 then
 				op=Duel.SelectOption(tp,aux.Stringid(100206010,1))
 			else
 				op=Duel.SelectOption(tp,aux.Stringid(100206010,2))+1
@@ -53,15 +54,17 @@ function c100206010.operation(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 				local g=g2:Select(tp,1,1,nil)
 				local tc=g:GetFirst()
-				if not tc then return end
-				Duel.HintSelection(g)
-				if Duel.Destroy(g,REASON_EFFECT)~=0 and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
-					and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK)
-					and tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:IsSSetable()
-					and Duel.SelectYesNo(tp,aux.Stringid(100206010,3)) then
-					Duel.BreakEffect()
-					Duel.SSet(tp,tc)
-					Duel.ConfirmCards(1-tp,tc)
+				if tc then
+					Duel.HintSelection(g)
+					if Duel.Destroy(g,REASON_EFFECT)~=0
+						and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
+						and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK)
+						and tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:IsSSetable()
+						and Duel.SelectYesNo(tp,aux.Stringid(100206010,3)) then
+						Duel.BreakEffect()
+						Duel.SSet(tp,tc)
+						Duel.ConfirmCards(1-tp,tc)
+					end
 				end
 			end
 		end
