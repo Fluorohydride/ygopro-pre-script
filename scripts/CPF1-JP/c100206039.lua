@@ -42,7 +42,6 @@ function c100206039.initial_effect(c)
 	c:RegisterEffect(e4)
 	--ep effects
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(100206039,1))
 	e5:SetCategory(CATEGORY_DISABLE)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_PHASE+PHASE_END)
@@ -94,7 +93,8 @@ function c100206039.epop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(1,0)
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
 		Duel.RegisterEffect(e1,tp)
-	elseif c:IsRelateToEffect(e) then
+	elseif c:IsFaceup() and c:IsRelateToEffect(e) then
+		Duel.NegateRelatedChain(c,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
