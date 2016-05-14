@@ -54,10 +54,10 @@ function c100206101.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		Duel.BreakEffect()
-		if ft>0 and tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0x1e5) then
+		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0x1e5) then
 			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+				and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 				and Duel.SelectYesNo(tp,aux.Stringid(100206101,1)) then
 				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 			end
