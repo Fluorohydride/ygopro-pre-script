@@ -55,7 +55,7 @@ function c100206010.operation(e,tp,eg,ep,ev,re,r,rp)
 				local tc=g:GetFirst()
 				if not tc then return end
 				Duel.HintSelection(g)
-				if Duel.Destroy(g,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+				if Duel.Destroy(g,REASON_EFFECT)~=0 and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
 					and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK)
 					and tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:IsSSetable()
 					and Duel.SelectYesNo(tp,aux.Stringid(100206010,3)) then

@@ -132,10 +132,8 @@ function c100206021.setfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function c100206021.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDestructable,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if chk==0 then return g:GetCount()>0
-		and Duel.IsExistingMatchingCard(c100206021.setfilter,tp,LOCATION_GRAVE,0,1,nil)
-		and Duel.IsExistingMatchingCard(c100206021.setfilter,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,2,PLAYER_ALL,LOCATION_GRAVE)
 end

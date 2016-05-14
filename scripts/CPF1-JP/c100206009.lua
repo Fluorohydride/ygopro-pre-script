@@ -32,10 +32,14 @@ function c100206009.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_ADVANCE
 		and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end
-function c100206009.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+function c100206009.setfilter1(c)
+	return c:IsType(TYPE_CONTINUOUS) and c:IsSSetable()
 end
-function c100206009.setfilter(c,typ)
+function c100206009.settg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingMatchingCard(c100206003.setfilter1,tp,LOCATION_DECK,0,1,nil) end
+end
+function c100206009.setfilter2(c,typ)
 	return c:GetType()==typ and c:IsSSetable()
 end
 function c100206009.setop(e,tp,eg,ep,ev,re,r,rp)
@@ -44,8 +48,8 @@ function c100206009.setop(e,tp,eg,ep,ev,re,r,rp)
 	local op=Duel.SelectOption(1-tp,71,72)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=nil
-	if op==0 then g=Duel.SelectMatchingCard(tp,c100206009.setfilter,tp,LOCATION_DECK,0,1,1,nil,TYPE_SPELL+TYPE_CONTINUOUS)
-	else g=Duel.SelectMatchingCard(tp,c100206009.setfilter,tp,LOCATION_DECK,0,1,1,nil,TYPE_TRAP+TYPE_CONTINUOUS) end
+	if op==0 then g=Duel.SelectMatchingCard(tp,c100206009.setfilter2,tp,LOCATION_DECK,0,1,1,nil,TYPE_SPELL+TYPE_CONTINUOUS)
+	else g=Duel.SelectMatchingCard(tp,c100206009.setfilter2,tp,LOCATION_DECK,0,1,1,nil,TYPE_TRAP+TYPE_CONTINUOUS) end
 	if g:GetCount()>0 then
 		Duel.SSet(tp,g:GetFirst())
 		Duel.ConfirmCards(1-tp,g)
