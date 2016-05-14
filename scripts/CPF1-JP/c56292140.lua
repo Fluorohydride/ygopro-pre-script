@@ -2,8 +2,8 @@
 --Number 51: Finish Hold the Amazing
 --Script by nekrozar
 function c56292140.initial_effect(c)
-	c:EnableCounterPermit(0x140)
-	c:SetCounterLimit(0x140,3)
+	c:EnableCounterPermit(0x40)
+	c:SetCounterLimit(0x40,3)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,3,3)
 	c:EnableReviveLimit()
@@ -43,15 +43,15 @@ function c56292140.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c56292140.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x140)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x40)
 end
 function c56292140.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(0x140,1)
+		e:GetHandler():AddCounter(0x40,1)
 	end
 end
 function c56292140.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetBattledGroupCount()>0 and e:GetHandler():GetCounter(0x140)==3
+	return e:GetHandler():GetBattledGroupCount()>0 and e:GetHandler():GetCounter(0x40)==3
 end
 function c56292140.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDestructable,tp,0,LOCATION_ONFIELD,1,nil) end

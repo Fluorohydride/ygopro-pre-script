@@ -26,7 +26,7 @@ function c33103459.initial_effect(c)
 	e2:SetTarget(c33103459.lptg)
 	e2:SetOperation(c33103459.lpop)
 	c:RegisterEffect(e2)
-		if not c33103459.global_check then
+	if not c33103459.global_check then
 		c33103459.global_check=true
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

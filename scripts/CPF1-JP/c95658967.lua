@@ -25,7 +25,7 @@ function c95658967.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCountLimit(1,100206116)
+	e3:SetCountLimit(1,95658968)
 	e3:SetCost(c95658967.spcost)
 	e3:SetTarget(c95658967.sptg)
 	e3:SetOperation(c95658967.spop)
@@ -40,7 +40,7 @@ function c95658967.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c95658967.thfilter(c)
 	return ((c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_LIGHT)) or c:IsType(TYPE_SPELL))
-		and c:IsType(TYPE_RITUAL)  and c:IsAbleToHand()
+		and c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
 end
 function c95658967.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c95658967.thfilter,tp,LOCATION_DECK,0,1,nil) end

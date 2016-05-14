@@ -80,11 +80,11 @@ function c7714344.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(c7714344.damval)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,100206102,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,7714345,RESET_PHASE+PHASE_END,0,1)
 end
 function c7714344.damval(e,re,val,r,rp,rc)
 	local tp=e:GetHandlerPlayer()
-	if Duel.GetFlagEffect(tp,100206102)==0 or bit.band(r,REASON_BATTLE)==0 then return val end
-	Duel.ResetFlagEffect(tp,100206102)
+	if Duel.GetFlagEffect(tp,7714345)==0 or bit.band(r,REASON_BATTLE)==0 then return val end
+	Duel.ResetFlagEffect(tp,7714345)
 	return 0
 end
