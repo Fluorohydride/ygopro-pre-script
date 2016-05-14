@@ -1,6 +1,4 @@
 --花札衛－桐に鳳凰－
---Cardian - Kiri ni Houou
---Script by mercury233
 function c16802689.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon from hand

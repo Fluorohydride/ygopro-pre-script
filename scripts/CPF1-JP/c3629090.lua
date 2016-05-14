@@ -1,6 +1,4 @@
 --サイバー・エンジェル－韋駄天－
---Cyber Angel - Idaten
---Script by nekrozar
 function c3629090.initial_effect(c)
 	c:EnableReviveLimit()
 	--to hand

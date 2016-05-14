@@ -1,6 +1,4 @@
 --EMコン
---Performapal Corn
---Script by mercury233
 function c33103459.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)

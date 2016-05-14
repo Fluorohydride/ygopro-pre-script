@@ -1,6 +1,4 @@
 --眠れる巨人ズシン
---Zushin the Sleeping Giant
---Script by dest
 function c67547370.initial_effect(c)
 	c:EnableReviveLimit()
 	--cannot special summon

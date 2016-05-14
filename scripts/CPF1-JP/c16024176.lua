@@ -1,6 +1,4 @@
 --花札衛－松に鶴－
---Cardian - Matsu ni Tsuru
---Script by mercury233
 function c16024176.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon from hand

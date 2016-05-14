@@ -1,6 +1,4 @@
 --レッド・ノヴァ
---Red Nova
---Script by dest
 function c21142671.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

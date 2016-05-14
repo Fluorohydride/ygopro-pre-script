@@ -1,6 +1,4 @@
 --No.98 絶望皇ホープレス
---Number 98: Dystopia
---Script by nekrozar
 function c55470553.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,4,2)

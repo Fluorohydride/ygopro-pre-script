@@ -1,6 +1,4 @@
 --花合わせ
---Hana Awase
---Script by nekrozar
 function c78785392.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

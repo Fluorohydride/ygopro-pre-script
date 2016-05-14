@@ -1,6 +1,4 @@
 --No.78 ナンバーズ・アーカイブ
---Number 78: Number Archive
---Script by dest
 function c29085954.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,1,2)

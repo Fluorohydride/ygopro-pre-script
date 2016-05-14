@@ -1,6 +1,4 @@
 --No.51 怪腕のフィニッシュ・ホールド
---Number 51: Finish Hold the Amazing
---Script by nekrozar
 function c56292140.initial_effect(c)
 	c:EnableCounterPermit(0x40)
 	c:SetCounterLimit(0x40,3)

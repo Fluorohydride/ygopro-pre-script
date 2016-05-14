@@ -1,6 +1,4 @@
 --花札衛－桐－
---Cardian - Kiri
---Script by mercury233
 function c80630522.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

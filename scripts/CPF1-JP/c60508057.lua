@@ -1,6 +1,4 @@
 --RR－ナパーム・ドラゴニアス
---Raidraptor - Napalm Dragonius
---Script by nekrozar
 function c60508057.initial_effect(c)
 	--damage
 	local e1=Effect.CreateEffect(c)

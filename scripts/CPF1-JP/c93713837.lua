@@ -1,6 +1,4 @@
 --No.24 竜血鬼ドラギュラス
---Number 24: Dragon Nosferatu Dragulas
---Script by nekrozar
 function c93713837.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,6,2)

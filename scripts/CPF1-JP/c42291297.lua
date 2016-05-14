@@ -1,6 +1,4 @@
 --花札衛－雨四光－
---Cardian - Ameshikou
---Script by dest
 function c42291297.initial_effect(c)
 	c:EnableReviveLimit()
 	--synchro summon

@@ -1,6 +1,4 @@
 --サイバー・エンジェル－弁天－
---Cyber Angel - Benten
---Script by nekrozar
 function c77235086.initial_effect(c)
 	c:EnableReviveLimit()
 	--damage

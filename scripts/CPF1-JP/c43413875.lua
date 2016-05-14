@@ -1,6 +1,4 @@
 --花札衛－芒に月－
---Cardian - Susuki ni Tsuki
---Script by mercury233
 function c43413875.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon from hand

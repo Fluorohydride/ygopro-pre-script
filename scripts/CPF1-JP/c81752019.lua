@@ -1,6 +1,4 @@
 --花札衛－松－
---Cardian - Matsu
---Script by mercury233
 function c81752019.initial_effect(c)
 	--draw (summon)
 	local e1=Effect.CreateEffect(c)

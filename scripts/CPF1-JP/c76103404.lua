@@ -1,6 +1,4 @@
 --サイバー・プチ・エンジェル
---Cyber Petit Angel
---Script by nekrozar
 function c76103404.initial_effect(c)
 	--tohand
 	local e1=Effect.CreateEffect(c)

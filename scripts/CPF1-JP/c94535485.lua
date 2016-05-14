@@ -1,6 +1,4 @@
 --手をつなぐ魔人
---Hand-Holding Genie
---Script by nekrozar
 function c94535485.initial_effect(c)
 	--atk limit
 	local e1=Effect.CreateEffect(c)

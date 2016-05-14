@@ -1,6 +1,4 @@
 --花札衛－柳－
---Cardian - Yanagi
---Script by mercury233
 function c54135423.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

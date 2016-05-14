@@ -1,6 +1,4 @@
 --光波翼機
---Cipher Wing
---Script by nekrozar
 function c81974607.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

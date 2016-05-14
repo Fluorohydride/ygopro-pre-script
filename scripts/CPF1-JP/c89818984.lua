@@ -1,6 +1,4 @@
 --花札衛－柳に小野道風－
---Cardian - Yanagi ni Ono no Michikaze
---Script by dest
 function c89818984.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon from hand

@@ -1,6 +1,4 @@
 --花札衛－芒－
---Cardian - Susuki
---Script by mercury233
 function c17141718.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

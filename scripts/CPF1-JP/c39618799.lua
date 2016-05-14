@@ -1,6 +1,4 @@
 --サイバー・エンジェル－荼吉尼－
---Cyber Angel - Dakini
---Script by nekrozar
 function c39618799.initial_effect(c)
 	c:EnableReviveLimit()
 	--to grave

@@ -1,6 +1,4 @@
 --RR－ブレード・バーナー・ファルコン
---Raidraptor - Blade Burner Falcon
---Script by nekrozar
 function c96592102.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_WINDBEAST),4,2)

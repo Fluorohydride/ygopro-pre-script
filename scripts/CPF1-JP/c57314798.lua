@@ -1,6 +1,4 @@
 --No.100 ヌメロン・ドラゴン
---Number 100: Numeron Dragon
---Script by dest
 function c57314798.initial_effect(c)
 	c:EnableReviveLimit()
 	--xyz summon

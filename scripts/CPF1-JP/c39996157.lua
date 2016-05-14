@@ -1,6 +1,4 @@
 --機械天使の儀式
---Machine Angel Ritual
---Script by nekrozar
 function c39996157.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

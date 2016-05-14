@@ -1,5 +1,4 @@
 --The blazing MARS
---Script by nekrozar
 function c15033525.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
