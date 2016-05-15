@@ -129,7 +129,7 @@ function c100417010.dbop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterFlagEffect(94212438,RESET_EVENT+0x1fe0000,0,0)
 end
 function c100417010.efilter(e,te)
-	locah tc=te:GetHandler()
+	local tc=te:GetHandler()
 	return tc~=e:GetHandler() and tc:GetCode()~=94212438
 end
 function c100417010.dirfilter(c)
