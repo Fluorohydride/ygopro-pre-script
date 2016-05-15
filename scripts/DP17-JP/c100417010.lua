@@ -123,8 +123,10 @@ function c100417010.dbop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e9,true)
 		tc:RegisterFlagEffect(100417010,RESET_EVENT+0x47c0000,0,1)
 		Duel.SpecialSummonComplete()
+		if id==30170981 then Duel.Win(tp,0x15) end
 	elseif tc then
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		if id==30170981 then Duel.Win(tp,0x15) end
 	end
 	c:RegisterFlagEffect(94212438,RESET_EVENT+0x1fe0000,0,0)
 end
