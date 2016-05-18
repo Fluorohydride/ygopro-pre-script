@@ -59,6 +59,10 @@ function c100910054.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(sc,Group.FromCards(tc))
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
+		if c:IsRelateToEffect(e) then
+			c:CancelToGrave()
+			Duel.Overlay(sc,Group.FromCards(c))
+		end
 	end
 end
 function c100910054.matcost(e,tp,eg,ep,ev,re,r,rp,chk)
