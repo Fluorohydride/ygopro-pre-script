@@ -51,14 +51,18 @@ function c100910043.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(c100910043.aclimit)
 	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 	Duel.RegisterEffect(e1,tp)
-	local e2=e1:Clone()
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e2:SetTarget(c100910043.splimit)
+	e2:SetTargetRange(0,1)
+	e2:SetTarget(c100910043.sumlimit)
+	e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 	Duel.RegisterEffect(e2,tp)
 end
 function c100910043.aclimit(e,re,tp)
 	return re:GetActivateLocation()==LOCATION_GRAVE
 end
-function c100910043.splimit(e,c)
+function c100910043.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_GRAVE)
 end
