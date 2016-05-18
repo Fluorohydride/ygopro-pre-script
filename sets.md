@@ -4,6 +4,7 @@
 - **June 4, 2016** : Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`  
 - **June 18, 2016**  : Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`  
 - **June 18, 2016**  : Structure Deck: Seto Kaiba (SDKS-JP) : `100302XXX`  
+- **June 24, 2016** : Yu-Gi-Oh! Duel Monsters Anime Complete Guide: Millennium Memory promotional card (????-JP) :  
 - **July 9, 2016**  : INVASION OF VENOM (INOV-JP) : `100910XXX`  
 - ~~May 14, 2016  : Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~  
 - ~~Yu-Gi-Oh! The Dark Side of Dimensions Duel Set (MVPL-JP) : `100202XXX`~~  
