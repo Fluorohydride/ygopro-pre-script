@@ -8,6 +8,7 @@ function c100910008.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCondition(c100910008.condition)
 	e1:SetCost(c100910008.cost)
 	e1:SetTarget(c100910008.target)
 	e1:SetOperation(c100910008.operation)
@@ -20,6 +21,9 @@ function c100910008.initial_effect(c)
 	e2:SetCondition(c100910008.ccon)
 	e2:SetOperation(c100910008.cop)
 	c:RegisterEffect(e2)
+end
+function c100910008.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsAbleToEnterBP()
 end
 function c100910008.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

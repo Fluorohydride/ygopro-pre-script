@@ -79,7 +79,6 @@ function c100910056.activate(e,tp,eg,ep,ev,re,r,rp)
 		local og=Duel.GetOperatedGroup()
 		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
 		if ct>0 then
-			Duel.BreakEffect()
 			if Duel.GetLP(tp)>=ct*1000 then
 				Duel.SetLP(tp,Duel.GetLP(tp)-ct*1000)
 			else
