@@ -29,7 +29,7 @@ function c100910055.filter(c,e,tp)
 end
 function c100910055.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local g=Duel.GetMatchingGroup(c100910053.filter,tp,LOCATION_DECK,0,nil)
+		local g=Duel.GetMatchingGroup(c100910055.filter,tp,LOCATION_DECK,0,nil)
 		return g:GetClassCount(Card.GetCode)>=3
 	end
 end
@@ -50,7 +50,7 @@ function c100910055.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MoveSequence(tg,0)
 			tg=rg:GetNext()
 		end
-		Duel.SortDecktop(tp,tp,4)
+		Duel.SortDecktop(tp,tp,3)
 	end
 end
 function c100910055.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

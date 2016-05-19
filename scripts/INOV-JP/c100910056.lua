@@ -24,13 +24,14 @@ function c100910056.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100910056.filter(c,e,tp)
-	return and c:IsSetCard(0xe6) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(0xe6) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100910056.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100910056.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 end
 function c100910056.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.IsPlayerCanDiscardDeck(tp,3) then return end
 	local c=e:GetHandler()
 	Duel.ConfirmDecktop(tp,3)
 	local g=Duel.GetDecktopGroup(tp,3)
@@ -45,9 +46,10 @@ function c100910056.activate(e,tp,eg,ep,ev,re,r,rp)
 				sg=sg:Select(tp,ft,ft,nil)
 			end
 			g:Sub(sg)
-			local tc=g:GetFirst()
+			local tc=sg:GetFirst()
 			while tc do
 				if Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
+					sg:RemoveCard(tc)
 					if tc:GetLevel()>0 then
 						local e1=Effect.CreateEffect(c)
 						e1:SetType(EFFECT_TYPE_SINGLE)
@@ -67,12 +69,11 @@ function c100910056.activate(e,tp,eg,ep,ev,re,r,rp)
 					e3:SetReset(RESET_EVENT+0x1fe0000)
 					tc:RegisterEffect(e3)
 				end
-				tc=g:GetNext()
+				tc=sg:GetNext()
 			end
 			Duel.SpecialSummonComplete()
 		end
 		if sg:GetCount()>0 then
-			g:Sub(sg)
 			Duel.SendtoGrave(sg,REASON_EFFECT)
 		end
 		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
