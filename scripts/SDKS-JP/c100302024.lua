@@ -10,7 +10,7 @@ function c100302024.initial_effect(c)
 	e1:SetCountLimit(1,100302024+EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(c100302024.activate)
 	c:RegisterEffect(e1)
-	--add counter
+	--equip
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100302024,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
