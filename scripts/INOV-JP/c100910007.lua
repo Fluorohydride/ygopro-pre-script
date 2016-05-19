@@ -16,7 +16,7 @@ function c100910007.initial_effect(c)
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCondition(c100910007.eqcon)
+	e2:SetCondition(aux.bdocon)
 	e2:SetTarget(c100910007.eqtg)
 	e2:SetOperation(c100910007.eqop)
 	c:RegisterEffect(e2)
@@ -35,19 +35,15 @@ end
 function c100910007.atkval(e,c)
 	return Duel.GetCounter(0,1,1,0x1141)*200
 end
-function c100910007.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetHandler():GetBattleTarget()
-	e:SetLabelObject(tc)
-	return aux.bdocon(e,tp,eg,ep,ev,re,r,rp)
-end
 function c100910007.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
-	local tc=e:GetLabelObject()
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tc,1,0,0)
+	local bc=e:GetHandler():GetBattleTarget()
+	Duel.SetTargetCard(bc)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,bc,1,0,0)
 end
 function c100910007.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=e:GetLabelObject()
+	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) then
 		if not Duel.Equip(tp,tc,c,false) then return end
 		--Add Equip limit
