@@ -31,7 +31,6 @@ function c100910056.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(c100910056.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 end
 function c100910056.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerCanDiscardDeck(tp,3) then return end
 	local c=e:GetHandler()
 	Duel.ConfirmDecktop(tp,3)
 	local g=Duel.GetDecktopGroup(tp,3)
