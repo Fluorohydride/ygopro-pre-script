@@ -20,9 +20,14 @@ function c100417006.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100417006.etarget(e,c)
-	return c:GetOriginalRace()==RACE_MACHINE or c:GetOriginalRace()==RACE_ROCK
+	if c:GetOriginalRace()==RACE_MACHINE or c:GetOriginalRace()==RACE_ROCK then
+		e:SetLabelObject(c)
+		return true
+	else
+		return false
+	end
 end
 function c100417006.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner() --it don't work
+	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetLabelObject()
 		and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
