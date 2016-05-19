@@ -48,7 +48,6 @@ function c100910056.activate(e,tp,eg,ep,ev,re,r,rp)
 			local tc=sg:GetFirst()
 			while tc do
 				if Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
-					sg:RemoveCard(tc)
 					if tc:GetLevel()>0 then
 						local e1=Effect.CreateEffect(c)
 						e1:SetType(EFFECT_TYPE_SINGLE)
@@ -71,9 +70,6 @@ function c100910056.activate(e,tp,eg,ep,ev,re,r,rp)
 				tc=sg:GetNext()
 			end
 			Duel.SpecialSummonComplete()
-		end
-		if sg:GetCount()>0 then
-			Duel.SendtoGrave(sg,REASON_EFFECT)
 		end
 		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
 		local og=Duel.GetOperatedGroup()
