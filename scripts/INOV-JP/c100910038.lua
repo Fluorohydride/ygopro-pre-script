@@ -49,12 +49,12 @@ function c100910038.atkfilter(c)
 	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL and c:IsFaceup()
 end
 function c100910038.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100910038.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100910038.atkfilter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function c100910038.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectMatchingCard(tp,c100910038.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100910038.atkfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	local tc=g:GetFirst()
 	if tc and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local atk=tc:GetAttack()
@@ -120,7 +120,7 @@ function c100910038.rstop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100910038.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and bit.band(c:GetSummonType(),SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ
+	return c:IsPreviousLocation(LOCATION_MZONE) and bit.band(c:GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function c100910038.desfilter(c)
 	return c:IsDestructable() and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
