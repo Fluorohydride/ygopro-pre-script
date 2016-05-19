@@ -20,7 +20,7 @@ function c100910049.initial_effect(c)
 	--disable
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100910049,1))
-	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DISABLE)
+	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DISABLE+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)

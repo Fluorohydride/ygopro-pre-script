@@ -56,5 +56,5 @@ function c100417008.activate(e,tp,eg,ep,ev,re,r,rp)
 	else
 		Duel.ConfirmCards(tp,g)
 	end
-	Duel.ShuffleDeck(tp)
+	Duel.ShuffleDeck(1-tp)
 end

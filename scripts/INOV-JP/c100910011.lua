@@ -39,7 +39,7 @@ function c100910011.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100910011.cfilter(c,e,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
-		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousSetCard(0xe5)
+		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousSetCard(0xe5)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function c100910011.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
