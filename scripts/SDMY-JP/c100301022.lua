@@ -13,6 +13,8 @@ function c100301022.initial_effect(c)
 	e1:SetOperation(c100301022.activate)
 	c:RegisterEffect(e1)
 end
+c100301022.dark_magician_list=true
+c100301022.card_code_list={46986414,38033121}
 function c100301022.cfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
 end
@@ -23,7 +25,7 @@ function c100301022.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100301022.filter(c)
-	return (aux.IsCodeListed(c,46986414) or aux.IsCodeListed(c,38033121))
+	return c.dark_magician_list or (aux.IsCodeListed and (aux.IsCodeListed(c,46986414) or aux.IsCodeListed(c,38033121)))
 		and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(100301022) and c:IsAbleToHand()
 end
 function c100301022.target(e,tp,eg,ep,ev,re,r,rp,chk)

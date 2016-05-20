@@ -10,28 +10,45 @@ function c100200119.initial_effect(c)
 	e1:SetValue(0xad)
 	c:RegisterEffect(e1)
 	--fusion substitute
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_FUSION_SUBSTITUTE)
-	e2:SetCondition(c100200119.subcon)
-	c:RegisterEffect(e2)
-	--temp, make it can be substitute but can only be use to fusion Frightfur, and this effect can be turn on and off
-	--cannot be material
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
-	e3:SetValue(c100200119.templimit)
-	c:RegisterEffect(e3)
-	--toggle
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetOperation(c100200119.tempop)
-	c:RegisterEffect(e4)
+	if c:CheckFusionSubstitute then
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_FUSION_SUBSTITUTE)
+		e2:SetCondition(c100200119.subcon)
+		e2:SetValue(c100200119.subval)
+		c:RegisterEffect(e2)
+	else
+		--temp, make it can be substitute but can only be use to fusion Frightfur, and this effect can be turn on and off
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_FUSION_SUBSTITUTE)
+		e2:SetCondition(c100200119.tempsubcon)
+		c:RegisterEffect(e2)
+		--cannot be material
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e3:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
+		e3:SetValue(c100200119.templimit)
+		c:RegisterEffect(e3)
+		--toggle
+		local e4=Effect.CreateEffect(c)
+		e4:SetType(EFFECT_TYPE_IGNITION)
+		e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e4:SetRange(LOCATION_MZONE)
+		e4:SetOperation(c100200119.tempop)
+		c:RegisterEffect(e4)
+	end
 end
 function c100200119.subcon(e)
+	local c=e:GetHandler()
+	return c:IsLocation(LOCATION_MZONE)
+end
+function c100200119.subval(e,c)
+    return c:IsSetCard(0xad)
+end
+
+function c100200119.tempsubcon(e)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_MZONE) and c:GetFlagEffect(100200119)>0
 end
