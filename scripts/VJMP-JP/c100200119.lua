@@ -10,7 +10,7 @@ function c100200119.initial_effect(c)
 	e1:SetValue(0xad)
 	c:RegisterEffect(e1)
 	--fusion substitute
-	if c:CheckFusionSubstitute then
+	if Card.CheckFusionSubstitute then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_FUSION_SUBSTITUTE)
