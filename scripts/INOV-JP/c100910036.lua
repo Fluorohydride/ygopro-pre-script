@@ -61,7 +61,7 @@ function c100910036.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-tg:GetCount()>0
 end
 function c100910036.costfilter(c)
-	return bit.band(c:GetType(),0x81)==0x81 and c:IsAbleToDeck()
+	return bit.band(c:GetType(),0x81)==0x81 and c:IsAbleToDeckAsCost()
 end
 function c100910036.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100910036.costfilter,tp,LOCATION_GRAVE,0,1,nil) end
