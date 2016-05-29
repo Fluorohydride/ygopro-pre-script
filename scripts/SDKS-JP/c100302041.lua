@@ -133,7 +133,7 @@ function c100302041.spfilter2(c,e,tp)
 end
 function c100302041.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100302041.spfilter2,tp,LOCATION_REMOVED,0,nil,e,tp)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>2
 		and g:GetClassCount(Card.GetCode)>2
 		and not Duel.IsPlayerAffectedByEffect(tp,59822133) end
 	local sg=Group.CreateGroup()
