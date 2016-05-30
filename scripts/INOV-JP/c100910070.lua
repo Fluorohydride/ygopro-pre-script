@@ -44,6 +44,7 @@ function c100910070.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100910070.filter(c)
 	return c:GetSummonLocation()==LOCATION_HAND and c:IsAbleToHand()
+		and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
 end
 function c100910070.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100910070.filter,tp,0,LOCATION_MZONE,1,nil) end
