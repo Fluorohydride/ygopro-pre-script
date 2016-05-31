@@ -90,7 +90,7 @@ function c100417010.dbop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetValue(0)
 		tc:RegisterEffect(e4,true)
 		local e5=e1:Clone()
-		e5:SetCode(EFFECT_SET_BASE_DEFENCE)
+		e5:SetCode(EFFECT_SET_BASE_DEFENSE)
 		e5:SetValue(0)
 		tc:RegisterEffect(e5,true)
 		--recover cannot spsummon
