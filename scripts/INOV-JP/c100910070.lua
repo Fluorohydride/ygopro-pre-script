@@ -2,6 +2,7 @@
 --No Cheaters Allowed
 --Script by nekrozar
 function c100910070.initial_effect(c)
+	Duel.EnableGlobalFlag(GLOBALFLAG_SELF_TOGRAVE)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100910070,0))
