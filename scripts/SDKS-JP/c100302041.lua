@@ -13,8 +13,6 @@ function c100302041.initial_effect(c)
 	e1:SetValue(c100302041.splimit)
 	c:RegisterEffect(e1)
 	--special summon rule
-	--https://github.com/Fluorohydride/ygopro/issues/1678
-	--may has issue, I'll fix it later
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -55,53 +53,54 @@ end
 function c100302041.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
-function c100302041.spfilter(c,code)
-	return c:IsFusionCode(code) and c:IsAbleToRemoveAsCost()
+function c100302041.rmfilter(c)
+	return c:IsCanBeFusionMaterial() and c:IsAbleToRemoveAsCost()
+end
+function c100302041.rmfilter1(c,mg,ft)
+	local mg2=mg:Clone()
+	mg2:RemoveCard(c)
+	local ct=ft
+	if c:IsLocation(LOCATION_MZONE) then ct=ct+1 end
+	return c:IsFusionCode(100302001) and mg2:IsExists(c100302041.rmfilter2,1,nil,mg2,ct)
+end
+function c100302041.rmfilter2(c,mg,ft)
+	local mg2=mg:Clone()
+	mg2:RemoveCard(c)
+	local ct=ft
+	if c:IsLocation(LOCATION_MZONE) then ct=ct+1 end
+	return c:IsFusionCode(100302002) and mg2:IsExists(c100302041.rmfilter3,1,nil,ct)
+end
+function c100302041.rmfilter3(c,ft)
+	local ct=ft
+	if c:IsLocation(LOCATION_MZONE) then ct=ct+1 end
+	return c:IsFusionCode(100302003) and ct>0
 end
 function c100302041.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<-2 then return false end
-	local g1=Duel.GetMatchingGroup(c100302041.spfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,100302001)
-	local g2=Duel.GetMatchingGroup(c100302041.spfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,100302002)
-	local g3=Duel.GetMatchingGroup(c100302041.spfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,100302003)
-	if g1:GetCount()==0 or g2:GetCount()==0 or g3:GetCount()==0 then return false end
-	if ft>0 then return true end
-	local f1=g1:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0 and 1 or 0
-	local f2=g2:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0 and 1 or 0
-	local f3=g3:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0 and 1 or 0
-	if ft==-2 then return f1+f2+f3==3
-	elseif ft==-1 then return f1+f2+f3>=2
-	else return f1+f2+f3>=1 end
+	local mg=Duel.GetMatchingGroup(c100302041.rmfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	return mg:IsExists(c100302041.rmfilter1,1,nil,mg,ft)
 end
 function c100302041.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g1=Duel.GetMatchingGroup(c100302041.spfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,100302001)
-	local g2=Duel.GetMatchingGroup(c100302041.spfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,100302002)
-	local g3=Duel.GetMatchingGroup(c100302041.spfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,100302003)
+	local mg=Duel.GetMatchingGroup(c100302041.rmfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g1=mg:FilterSelect(tp,c100302041.rmfilter1,1,1,nil,mg,ft)
+	local tc1=g1:GetFirst()
+	mg:RemoveCard(tc1)
+	if tc1:IsLocation(LOCATION_MZONE) then ft=ft+1 end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g2=mg:FilterSelect(tp,c100302041.rmfilter2,1,1,nil,mg,ft)
+	local tc2=g2:GetFirst()
+	if tc2:IsLocation(LOCATION_MZONE) then ft=ft+1 end
+	mg:RemoveCard(tc2)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g3=mg:FilterSelect(tp,c100302041.rmfilter3,1,1,nil,ft)
 	g1:Merge(g2)
 	g1:Merge(g3)
-	local g=Group.CreateGroup()
-	local tc=nil
-	for i=1,3 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		if ft<=0 then
-			tc=g1:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE):GetFirst()
-		else
-			tc=g1:Select(tp,1,1,nil):GetFirst()
-		end
-		g:AddCard(tc)
-		if tc:IsFusionCode(100302001) then
-			g1:Remove(Card.IsFusionCode,nil,100302001)
-		elseif tc:IsFusionCode(100302002) then
-			g1:Remove(Card.IsFusionCode,nil,100302002)
-		elseif tc:IsFusionCode(100302003) then
-			g1:Remove(Card.IsFusionCode,nil,100302003)
-		end
-		ft=ft+1
-	end
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end
 function c100302041.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -127,13 +126,13 @@ function c100302041.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
-function c100302041.spfilter2(c,e,tp)
+function c100302041.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)
 		and c:IsType(TYPE_UNION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100302041.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c100302041.spfilter2,tp,LOCATION_REMOVED,0,nil,e,tp)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>2
+	local g=Duel.GetMatchingGroup(c100302041.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and g:GetClassCount(Card.GetCode)>2
 		and not Duel.IsPlayerAffectedByEffect(tp,59822133) end
 	local sg=Group.CreateGroup()
