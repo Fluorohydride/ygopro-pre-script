@@ -82,8 +82,9 @@ function c100299001.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100299001.adcon(e)
-	return (Duel.GetCurrentPhase()==PHASE_DAMAGE or Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL)
-		and e:GetHandler():GetBattleTarget()
+	local c=e:GetHandler()
+	return Duel.GetAttacker()==c and c:GetBattleTarget()
+		and (Duel.GetCurrentPhase()==PHASE_DAMAGE or Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL)
 end
 function c100299001.adtg(e,c)
 	return c==e:GetHandler():GetBattleTarget()
