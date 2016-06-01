@@ -54,7 +54,7 @@ function c100302041.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 function c100302041.rmfilter(c)
-	return c:IsAbleToRemoveAsCost()-- and c:IsCanBeFusionMaterial()
+	return c:IsAbleToRemoveAsCost() and c:IsCanBeFusionMaterial(nil,true)
 end
 function c100302041.rmfilter1(c,mg,ft)
 	local mg2=mg:Clone()
