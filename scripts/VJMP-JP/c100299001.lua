@@ -45,7 +45,6 @@ function c100299001.initial_effect(c)
 	c:RegisterEffect(e4)
 	local e5=e3:Clone()
 	e5:SetCode(EFFECT_SET_ATTACK_FINAL)
-	e5:SetProperty(EFFECT_FLAG_REPEAT+EFFECT_FLAG_DELAY)
 	e5:SetValue(c100299001.atkval)
 	c:RegisterEffect(e5)
 	--atk up
