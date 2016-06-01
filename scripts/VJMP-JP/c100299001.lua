@@ -1,0 +1,126 @@
+--蛇神ゲー
+--Divine Serpent Geh
+--Script by mercury233
+function c100299001.initial_effect(c)
+	c:EnableReviveLimit()
+	--connot special summon
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(aux.FALSE)
+	c:RegisterEffect(e0)
+	--special summon
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100299001,0))
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CHAIN_UNIQUE)
+	e1:SetCode(EVENT_DESTROYED)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetCondition(c100299001.spcon)
+	e1:SetCost(c100299001.spcost)
+	e1:SetTarget(c100299001.sptg)
+	e1:SetOperation(c100299001.spop)
+	c:RegisterEffect(e1)
+	--cannot be target
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetValue(aux.tgval)
+	c:RegisterEffect(e2)
+	--disable
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_BATTLE_START)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(c100299001.discon)
+	e3:SetOperation(c100299001.disop)
+	c:RegisterEffect(e3)
+	--atk
+	local e4=Effect.CreateEffect(c)
+	e4:SetCategory(CATEGORY_ATKCHANGE)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+	e4:SetCondition(c100299001.atkcon)
+	e4:SetTarget(c100299001.atktg)
+	e4:SetOperation(c100299001.atkop)
+	c:RegisterEffect(e4)
+end
+function c100299001.cfilter(c,tp)
+	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
+		and ((c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp))
+		or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
+end
+function c100299001.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c100299001.cfilter,1,nil,tp)
+end
+function c100299001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
+end
+function c100299001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,true) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+end
+function c100299001.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)~=0 then
+		c:CompleteProcedure()
+	end
+end
+function c100299001.discon(e)
+	local c=e:GetHandler()
+	return Duel.GetAttacker()==c and c:GetBattleTarget()~=nil
+end
+function c100299001.disop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local bc=c:GetBattleTarget()
+	if c:GetFlagEffect(100299001)==0 then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_DISABLE)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE)
+		bc:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		bc:RegisterEffect(e2)
+		local e3=e1:Clone()
+		e3:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e3:SetValue(math.ceil(bc:GetBaseAttack()/2))
+		bc:RegisterEffect(e3)
+		c:RegisterFlagEffect(100299001,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE,0,1)
+	end
+end
+function c100299001.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c==Duel.GetAttacker() or c==Duel.GetAttackTarget()
+end
+function c100299001.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then
+		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,c)
+		if g:GetCount()==0 then return false end
+		local g1,atk=g:GetMaxGroup(Card.GetBaseAttack)
+		return c:GetAttack()~=atk and c:GetFlagEffect(100299101)==0
+	end
+	c:RegisterFlagEffect(100299101,RESET_CHAIN,0,1)
+end
+function c100299001.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,c)
+	if g:GetCount()==0 then return end
+	local g1,atk=g:GetMaxGroup(Card.GetBaseAttack)
+	if c:IsRelateToEffect(e) and c:IsFaceup() and atk>0 then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetValue(atk)
+		c:RegisterEffect(e1)
+	end
+end
