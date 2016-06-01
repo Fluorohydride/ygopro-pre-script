@@ -8,7 +8,6 @@ function c100299001.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e0:SetValue(aux.FALSE)
 	c:RegisterEffect(e0)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -72,13 +71,17 @@ function c100299001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100299001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,true) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100299001.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)~=0 then
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 then
 		c:CompleteProcedure()
+	elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false) then
+		Duel.SendtoGrave(c,REASON_RULE)
 	end
 end
 function c100299001.adcon(e)
@@ -90,7 +93,7 @@ function c100299001.adtg(e,c)
 	return c==e:GetHandler():GetBattleTarget()
 end
 function c100299001.atkval(e,c)
-	return c:GetBaseAttack()/2
+	return math.ceil(c:GetBaseAttack()/2)
 end
 function c100299001.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
