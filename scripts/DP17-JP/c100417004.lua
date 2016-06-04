@@ -35,20 +35,21 @@ function c100417004.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(c100417004.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100417004.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp) and Duel.IsPlayerCanDraw(1-tp) end
-	local ht1=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	local ht2=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,6-ht1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,6-ht2)
+	local ct1=6-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+	local ct2=6-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
+	if chk==0 then return ct1>0 and Duel.IsPlayerCanDraw(tp,ct1)
+		and ct2>0 and Duel.IsPlayerCanDraw(1-tp,ct2) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,ct2)
 end
 function c100417004.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ht1=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	local ht2=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
-	if ht1<6 then
-		Duel.Draw(tp,6-ht1,REASON_EFFECT)
+	local ct1=6-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+	local ct2=6-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
+	if ct1>0 then
+		Duel.Draw(tp,ct1,REASON_EFFECT)
 	end
-	if ht2<6 then
-		Duel.Draw(1-tp,6-ht2,REASON_EFFECT)
+	if ct2>0 then
+		Duel.Draw(1-tp,ct2,REASON_EFFECT)
 	end
 end
 function c100417004.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -44,7 +44,7 @@ function c100417002.initial_effect(c)
 	e5:SetDescription(aux.Stringid(100417002,1))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetCode(EVENT_DESTROYED)
 	e5:SetCondition(c100417002.spcon2)
 	e5:SetTarget(c100417002.sptg2)
@@ -93,8 +93,7 @@ function c100417002.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100417002.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
+	if g:GetCount()>0 then
+		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 	end
 end

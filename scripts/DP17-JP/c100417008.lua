@@ -35,7 +35,7 @@ function c100417008.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,sg)
 		local b1=tc:IsAbleToHand()
 		local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and tc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,1-tp,true,false,POS_FACEUP_ATTACK,tp)
+			and tc:IsCanBeSpecialSummoned(e,0,1-tp,true,false,POS_FACEUP_ATTACK,tp)
 		local sel=0
 		if b1 and b2 then
 			Duel.Hint(HINT_SELECTMSG,1-tp,555)
