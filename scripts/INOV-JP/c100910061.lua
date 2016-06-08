@@ -1,6 +1,7 @@
 --イグナイト・ユナイト
 --Igknight Unite
 --Script by nekrozar
+--Fixed by DiabladeZat
 function c100910061.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -20,7 +21,7 @@ function c100910061.spfilter(c,e,tp)
 	return c:IsSetCard(0xc8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100910061.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsLocation(e:GetLabel()) and chkc:IsControler(tp) and c100910061.desfilter1(chkc) end
+	if chkc then return chkc:IsLocation(e:GetLabel()) and chkc:IsControler(tp) and chkc~=e:GetHandler() and c100910061.desfilter1(chkc) end
 	if chk==0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if ft<-1 then return false end
