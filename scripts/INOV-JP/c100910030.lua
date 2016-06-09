@@ -2,7 +2,7 @@
 --Graydle Slime Jr.
 --Script by nekrozar
 function c100910030.initial_effect(c)
-	--special summon
+	--special summon from grave
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100910030,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -12,7 +12,7 @@ function c100910030.initial_effect(c)
 	e1:SetTarget(c100910030.sptg1)
 	e1:SetOperation(c100910030.spop1)
 	c:RegisterEffect(e1)
-	--special summon
+	--special summon from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100910030,2))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -26,7 +26,7 @@ end
 function c100910030.spfilter1(c,e,tp)
 	return c:IsSetCard(0xd1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100910030.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c100910030.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100910030.spfilter1(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c100910030.spfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
@@ -37,7 +37,7 @@ end
 function c100910030.spfilter2(c,e,tp,lv)
 	return c:IsRace(RACE_AQUA) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100910030.spop(e,tp,eg,ep,ev,re,r,rp)
+function c100910030.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local g=Duel.GetMatchingGroup(c100910030.spfilter2,tp,LOCATION_HAND,0,nil,e,tp,tc:GetLevel())
@@ -61,7 +61,7 @@ end
 function c100910030.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_WATER)
 end
-function c100910030.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c100910030.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function c100910030.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
