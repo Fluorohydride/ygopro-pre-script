@@ -22,7 +22,7 @@ function c100910067.filter1(c,e,tp,lv)
 end
 function c100910067.filter2(c,tp,lv)
 	local rlv=lv-c:GetLevel()
-	return rlv>0 and c:IsType(TYPE_TUNER) and c:IsAbleToRemove()
+	return rlv==0 and c:IsType(TYPE_TUNER) and c:IsAbleToRemove()
 end
 function c100910067.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
