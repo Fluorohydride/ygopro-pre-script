@@ -39,19 +39,18 @@ function c100302024.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-function c100302024.tgfilter(c,e,tp)
+function c100302024.tgfilter(c,e,tp,chk)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)
-		and c:IsFaceup() and c:IsControler(tp) and c:IsCanBeEffectTarget(e)
-		and Duel.IsExistingTarget(c100302024.cfilter,tp,LOCATION_DECK,0,1,nil,c)
+		and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsControler(tp) and c:IsCanBeEffectTarget(e)
+		and (chk or Duel.IsExistingTarget(c100302024.cfilter,tp,LOCATION_DECK,0,1,nil,c))
 end
 function c100302024.cfilter(c,ec)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)
 		and c:IsType(TYPE_UNION) and c:CheckEquipTarget(ec) and not c:IsCode(ec:GetCode())
 end
 function c100302024.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsRace(RACE_MACHINE) and chkc:IsAttribute(ATTRIBUTE_LIGHT)
-		and chkc:IsType(TYPE_UNION) and chkc:IsFaceup() and chkc:IsControler(tp) end
-	local g=eg:Filter(c100302024.tgfilter,nil,e,tp)
+	if chkc then return c100302024.tgfilter(chkc,e,tp,true) end
+	local g=eg:Filter(c100302024.tgfilter,nil,e,tp,false)
 	if chk==0 then return g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	if g:GetCount()==1 then
 		Duel.SetTargetCard(g:GetFirst())
