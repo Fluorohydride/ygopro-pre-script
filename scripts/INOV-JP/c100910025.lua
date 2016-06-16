@@ -41,7 +41,7 @@ function c100910025.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 		local tg=Duel.GetMatchingGroup(c100910025.lvfilter,tp,LOCATION_MZONE,0,nil)
 		local tc=tg:GetFirst()
 		while tc do
-			if tc:GetLevel~=lv then
+			if tc:GetLevel()~=lv then
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_CHANGE_LEVEL)
