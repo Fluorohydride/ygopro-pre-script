@@ -33,15 +33,15 @@ end
 function c100910024.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100910024.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
-		if not g:GetFirst():IsLocation(LOCATION_GRAVE)
-			or not Duel.IsExistingMatchingCard(c100910024.thfilter,tp,LOCATION_DECK,0,1,nil) then return end
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local tg=Duel.SelectMatchingCard(tp,c100910024.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if tg:GetCount()>0 then
+	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0
+		and g:GetFirst():IsLocation(LOCATION_GRAVE) then
+		local sg=Duel.GetMatchingGroup(c100910024.thfilter,tp,LOCATION_DECK,0,nil)
+		if sg:GetCount()>0 then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local tg=sg:Select(tp,1,1,nil)
 			Duel.SendtoHand(tg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
+			Duel.ConfirmCards(1-tp,tg)
 		end
 	end
 end
