@@ -10,7 +10,7 @@ function c100405004.initial_effect(c)
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,100405004)
 	e1:SetTarget(c100405004.damtg)
 	e1:SetOperation(c100405004.damop)
@@ -32,18 +32,18 @@ end
 function c100405004.filter(c)
 	return c:IsSetCard(0xc008) and c:IsLevelBelow(4)
 end
-function c100405004.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100405004.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100405004.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100405004.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c100405004.filter,tp,LOCATION_GRAVE,0,1,1,nil)
-	local dam=g:GetFirst():GetAttack()
-	Duel.SetTargetPlayer(1-tp)
-	Duel.SetTargetParam(dam)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function c100405004.damop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Damage(p,d,REASON_EFFECT)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
+		Duel.Damage(1-tp,tc:GetAttack(),REASON_EFFECT)
+	end
 end
 function c100405004.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -65,7 +65,7 @@ function c100405004.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+0x1ff0000)
 		c:RegisterEffect(e1)
 	end
 end
