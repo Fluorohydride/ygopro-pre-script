@@ -45,9 +45,9 @@ function c100910100.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-function c100910100.repfilter(c,tp)
+function c100910100.repfilter(c,tp,e)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsType(TYPE_DUAL) and c:IsReason(REASON_EFFECT)
+		and c:IsType(TYPE_DUAL) and c:IsReason(REASON_EFFECT) and c:GetReasonCard()~=e:GetHandler()
 end
 function c100910100.desfilter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
@@ -55,9 +55,9 @@ function c100910100.desfilter(c,tp)
 end
 function c100910100.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100910100.desfilter,tp,LOCATION_ONFIELD,0,1,nil,tp)
-		and eg:IsExists(c100910100.repfilter,1,nil,tp) end
+		and eg:IsExists(c100910100.repfilter,1,nil,tp,e) end
 	if Duel.SelectYesNo(tp,aux.Stringid(100910100,1)) then
-		local g=eg:Filter(c100910100.repfilter,nil,tp)
+		local g=eg:Filter(c100910100.repfilter,nil,tp,e)
 		if g:GetCount()==1 then
 			e:SetLabelObject(g:GetFirst())
 		else
