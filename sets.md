@@ -6,7 +6,7 @@
 - **June 24, 2016** : Yu-Gi-Oh! Duel Monsters Anime Complete Guide: Millennium Memory promotional card (AGMM-JP) :  
 - **July 9, 2016**  : INVASION OF VENOM (INOV-JP) : `100910XXX`  
 - **July 21, 2016**  : 20th Rival Collection (VP16-JP) :  
-- **August 6, 2016**  : Booster SP: Destiny Soldiers (SPDS-JP) :  
+- **August 6, 2016**  : Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
 - ~~May 14, 2016  : Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~  
 - ~~Yu-Gi-Oh! The Dark Side of Dimensions Duel Set (MVPL-JP) : `100202XXX`~~  
 - ~~Yu-Gi-Oh! The Dark Side of Dimensions promotional cards (MVPC-JP) : `100201XXX`~~  
