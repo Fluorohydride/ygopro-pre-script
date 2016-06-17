@@ -58,6 +58,8 @@ function c100910059.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c100910059.desop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c100910059.rmfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	local tg=g:GetFirst()
@@ -66,7 +68,6 @@ function c100910059.desop(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsRelateToEffect(e) then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
-		local c=e:GetHandler()
 		local fid=c:GetFieldID()
 		tg:RegisterFlagEffect(100910059,RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1,fid)
 		local e1=Effect.CreateEffect(c)
