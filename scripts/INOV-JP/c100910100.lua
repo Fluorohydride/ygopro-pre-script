@@ -27,7 +27,7 @@ function c100910100.initial_effect(c)
 end
 function c100910100.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
-	if chk==0 then return tc:IsType(TYPE_DUAL) and not tc==e:GetHandler() end
+	if chk==0 then return tc:IsType(TYPE_DUAL) and tc~=e:GetHandler() end
 	Duel.SetTargetCard(tc)
 end
 function c100910100.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -47,7 +47,7 @@ function c100910100.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100910100.repfilter(c,tp,e)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsType(TYPE_DUAL) and c:IsReason(REASON_EFFECT) and c:GetReasonCard()~=e:GetHandler()
+		and c:IsType(TYPE_DUAL) and c:IsReason(REASON_EFFECT) and c:GetFlagEffect(100910100)==0
 end
 function c100910100.desfilter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
@@ -69,6 +69,7 @@ function c100910100.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local tg=Duel.SelectMatchingCard(tp,c100910100.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
 		Duel.HintSelection(tg)
 		Duel.SetTargetCard(tg)
+		tg:GetFirst():RegisterFlagEffect(100910100,RESET_EVENT+0x1fc0000+RESET_CHAIN,0,1)
 		tg:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
 		return true
 	else return false end

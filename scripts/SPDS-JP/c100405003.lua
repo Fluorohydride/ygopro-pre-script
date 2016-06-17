@@ -24,7 +24,7 @@ function c100405003.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 	--neg damage
-	local e1=Effect.CreateEffect(c)
+	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_TOHAND)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_CHAINING)
