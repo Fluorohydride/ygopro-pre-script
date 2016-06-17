@@ -27,12 +27,12 @@ function c100910100.initial_effect(c)
 end
 function c100910100.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
-	if chk==0 then return tc:IsControler(tp) and not tc==e:GetHandler() end
-	tc:CreateEffectRelation(e)
+	if chk==0 then return tc:IsType(TYPE_DUAL) and not tc==e:GetHandler() end
+	Duel.SetTargetCard(tc)
 end
 function c100910100.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=eg:GetFirst()
+	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
