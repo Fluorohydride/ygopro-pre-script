@@ -109,7 +109,7 @@ function c100910074.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(0)
 		end
 		Duel.RegisterEffect(e1,tp)
-		tc:RegisterFlagEffect(100910274,RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,ct)
+		tc:RegisterFlagEffect(100910274,RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,ct,fid)
 	end
 end
 function c100910074.retfilter(c,fid)
