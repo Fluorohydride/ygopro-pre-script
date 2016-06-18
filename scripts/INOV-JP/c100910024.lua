@@ -15,7 +15,7 @@ function c100910024.initial_effect(c)
 	e1:SetOperation(c100910024.tgop)
 	c:RegisterEffect(e1)
 end
-function c100910024.filter(c)
+function c100910024.filter(c,tp)
 	return c:IsType(TYPE_DUAL) and c:IsAbleToGrave()
 		and Duel.IsExistingMatchingCard(c100910024.thfilter,tp,LOCATION_DECK,0,1,c)
 end
@@ -26,7 +26,7 @@ function c100910024.thfilter(c)
 	return c:IsType(TYPE_DUAL) and c:IsAbleToHand()
 end
 function c100910024.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100910024.filter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100910024.filter,tp,LOCATION_DECK,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
