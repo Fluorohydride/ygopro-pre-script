@@ -36,6 +36,7 @@ function c100405003.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100405003.atlimit(e,c)
+	local tp=e:GetHandlerPlayer()
 	return c:IsControler(1-tp) and c:IsLevelAbove(6) and not c:IsImmuneToEffect(e)
 end
 function c100405003.thfilter(c)
