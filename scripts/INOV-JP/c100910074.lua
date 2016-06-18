@@ -116,7 +116,7 @@ function c100910074.retcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100910074.retop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc:IsForbidden() then 
+	if tc:IsForbidden() then
 		Duel.SendtoGrave(tc,REASON_RULE)
 	else
 		Duel.ReturnToField(tc)

@@ -61,6 +61,7 @@ function c100910073.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100910073.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
+		and aux.exccon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100910073.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
