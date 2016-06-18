@@ -123,5 +123,5 @@ function c100302003.spop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100302003.eqlimit(e,c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)
+	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)) or e:GetHandler():GetEquipTarget()==c
 end

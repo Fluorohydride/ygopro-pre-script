@@ -117,5 +117,5 @@ function c100302100.sumop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100302100.eqlimit(e,c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE)
+	return c:IsRace(RACE_MACHINE) or e:GetHandler():GetEquipTarget()==c
 end
