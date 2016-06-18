@@ -5,7 +5,8 @@
 - **June 18, 2016**  : Structure Deck: Seto Kaiba (SDKS-JP) : `100302XXX`  
 - **June 24, 2016** : Yu-Gi-Oh! Duel Monsters Anime Complete Guide: Millennium Memory promotional card (AGMM-JP) :  
 - **July 9, 2016**  : INVASION OF VENOM (INOV-JP) : `100910XXX`  
-- **July 21, 2016**  : 20th Rival Collection (VP16-JP) :  
+- **July 21, 2016**  : 20th Rival Collection (VP16-JP) :  `100208XXX`
+- **July 30, 2016**  : Jump Victory Carnival 2016 (VF16-JP) :  `100209XXX`
 - **August 6, 2016**  : Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
 - ~~May 14, 2016  : Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~  
 - ~~Yu-Gi-Oh! The Dark Side of Dimensions Duel Set (MVPL-JP) : `100202XXX`~~  
