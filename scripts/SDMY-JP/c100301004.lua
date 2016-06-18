@@ -33,6 +33,9 @@ function c100301004.initial_effect(c)
 	e3:SetOperation(c100301004.spop2)
 	c:RegisterEffect(e3)
 end
+function c100301004.cfilter(c)
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and IsAbleToRemoveAsCost()
+end
 function c100301004.sprfilter1(c,mg,ft)
 	local mg2=mg:Clone()
 	local ct=ft
@@ -56,11 +59,11 @@ function c100301004.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local mg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local mg=Duel.GetMatchingGroup(c100301004.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	return mg:IsExists(c100301004.sprfilter1,1,nil,mg,ft)
 end
 function c100301004.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local mg=Duel.GetMatchingGroup(c100301004.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=mg:FilterSelect(tp,c100301004.sprfilter1,1,1,nil,mg,ft)
