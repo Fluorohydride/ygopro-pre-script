@@ -91,13 +91,11 @@ function c100910074.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 		local ct=1
 		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then ct=2 end
-		local fid=c:GetFieldID()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 		e1:SetCountLimit(1)
-		e1:SetLabel(fid)
 		e1:SetLabelObject(tc)
 		e1:SetCondition(c100910074.retcon)
 		e1:SetOperation(c100910074.retop)
@@ -109,33 +107,19 @@ function c100910074.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(0)
 		end
 		Duel.RegisterEffect(e1,tp)
-		tc:RegisterFlagEffect(100910274,RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,ct,fid)
+		tc:RegisterFlagEffect(100910274,RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,ct)
 	end
-end
-function c100910074.retfilter(c,fid)
-	return c:GetFlagEffectLabel(100910274)==fid
 end
 function c100910074.retcon(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()~=tp or Duel.GetTurnCount()==e:GetValue() then return false end
-	local g=e:GetLabelObject()
-	if not g:IsExists(c100910074.retfilter,1,nil,e:GetLabel()) then
-		g:DeleteGroup()
-		e:Reset()
-		return false
-	else return true end
+	return e:GetLabelObject():GetFlagEffect(100910274)~=0
 end
 function c100910074.retop(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject()
-	local sg=g:Filter(c100910074.retfilter,nil,e:GetLabel())
-	g:DeleteGroup()
-	local tc=sg:GetFirst()
-	while tc do
-		if tc:IsForbidden() then 
-			Duel.SendtoGrave(tc,REASON_RULE)
-		else
-			Duel.ReturnToField(tc)
-		end
-		tc=sg:GetNext()
+	local tc=e:GetLabelObject()
+	if tc:IsForbidden() then 
+		Duel.SendtoGrave(tc,REASON_RULE)
+	else
+		Duel.ReturnToField(tc)
 	end
 end
 function c100910074.cfilter(c,tp)
