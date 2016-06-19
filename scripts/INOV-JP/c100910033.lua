@@ -59,9 +59,6 @@ end
 function c100910033.uncon(e)
 	return e:GetHandler():IsStatus(STATUS_UNION)
 end
-function c100910033.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)
-end
 function c100910033.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
