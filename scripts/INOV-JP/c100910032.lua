@@ -33,15 +33,17 @@ function c100910032.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsExistingMatchingCard(c100910032.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 	end
-	local g=Duel.DiscardHand(tp,c100910032.cfilter,1,1,REASON_COST+REASON_DISCARD,nil,e,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local g=Duel.SelectMatchingCard(tp,c100910032.cfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	e:SetLabelObject(g:GetFirst())
+	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c100910032.spop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=e:GetLabelObject()
+	local gc=e:GetLabelObject()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c100910032.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,sg:GetOriginalAttribute(),sg:GetOriginalLevel())
+	local g=Duel.SelectMatchingCard(tp,c100910032.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,gc:GetOriginalAttribute(),gc:GetOriginalLevel())
 	local tc=g:GetFirst()
 	if tc then
 		local spos=0
