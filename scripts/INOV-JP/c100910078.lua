@@ -18,9 +18,6 @@ function c100910078.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
 	Duel.SetTargetParam(Duel.SelectOption(tp,1057,1056,1063,1073,1074))
 end
-function c100910078.filter(c,ct)
-	return c:IsFaceup() and c:IsType(ct)
-end
 function c100910078.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local opt=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
@@ -48,25 +45,30 @@ function c100910078.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(c100910078.sumlimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	local g=Duel.GetMatchingGroup(c100910078.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,ct)
-	if g:GetCount()>0 then
-		local tc=g:GetFirst()
-		while tc do
-			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_DISABLE)
-			e2:SetReset(RESET_EVENT+0x1fe0000)
-			tc:RegisterEffect(e2)
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetCode(EFFECT_DISABLE_EFFECT)
-			e3:SetReset(RESET_EVENT+0x1fe0000)
-			tc:RegisterEffect(e3)
-			tc=g:GetNext()
-		end
-	end
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_DISABLE)
+	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e2:SetTarget(c100910078.distg)
+	e2:SetLabel(ct)
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e2,tp)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_CHAIN_SOLVING)
+	e3:SetOperation(c100910078.disop)
+	e3:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e3,tp)
 end
 function c100910078.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsType(e:GetLabel())
+end
+function c100910078.distg(e,c)
+	return c:IsType(e:GetLabel())
+end
+function c100910078.disop(e,tp,eg,ep,ev,re,r,rp)
+	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
+	if tl==LOCATION_MZONE and re:IsActiveType(e:GetLabel()) then
+		Duel.NegateEffect(ev)
+	end
 end
