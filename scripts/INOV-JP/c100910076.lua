@@ -11,13 +11,30 @@ function c100910076.initial_effect(c)
 	e1:SetTarget(c100910076.target)
 	e1:SetOperation(c100910076.activate)
 	c:RegisterEffect(e1)
-	--double tribute
+	--triple tribute
+	--[[
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_DOUBLE_TRIBUTE)
+	e2:SetCode()
 	e2:SetCondition(c100910076.dtcon)
 	e2:SetValue(c100910076.dtval)
 	c:RegisterEffect(e2)
+	]]--
+	--temp
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100910076,0))
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_LIMIT_SUMMON_PROC)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetTargetRange(LOCATION_HAND,0)
+	e3:SetCondition(c100910076.tmpcon)
+	e3:SetTarget(c100910076.tmptg)
+	e3:SetOperation(c100910076.tmpop)
+	e3:SetValue(SUMMON_TYPE_ADVANCE)
+	c:RegisterEffect(e3)
+	local e4=e3:Clone()
+	e4:SetCode(EFFECT_LIMIT_SET_PROC)
+	c:RegisterEffect(e4)
 end
 function c100910076.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
@@ -57,4 +74,22 @@ function c100910076.dtcon(e)
 end
 function c100910076.dtval(e,c)
 	return c:IsSetCard(0x10aa)
+end
+function c100910076.tmpfilter(c)
+	return c:IsCode(100910076) and c:IsReleasable() and c:GetSummonType()==SUMMON_TYPE_SPECIAL+1
+end
+function c100910076.tmpcon(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c100910076.tmpfilter,tp,LOCATION_MZONE,0,1,nil)
+end
+function c100910076.tmptg(e,c)
+	return c:IsSetCard(0x10aa) or c:IsCode(27279764,40061558)
+end
+function c100910076.tmpop(e,tp,eg,ep,ev,re,r,rp,c)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g=Duel.SelectMatchingCard(tp,c100910076.tmpfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	c:SetMaterial(g)
+	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 end
