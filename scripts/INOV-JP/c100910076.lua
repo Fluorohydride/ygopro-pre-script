@@ -39,7 +39,18 @@ function c100910076.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fc0000)
 		c:RegisterEffect(e1,true)
 		Duel.SpecialSummonComplete()
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e2:SetTargetRange(LOCATION_ONFIELD,0)
+		e2:SetTarget(c100910076.indtg)
+		e2:SetValue(1)
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e2,tp)
 	end
+end
+function c100910076.indtg(e,c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0xaa)
 end
 function c100910076.dtcon(e)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
