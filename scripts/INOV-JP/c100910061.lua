@@ -20,7 +20,7 @@ end
 function c100910061.spfilter(c,e,tp)
 	return c:IsSetCard(0xc8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100910061.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100910061.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(e:GetLabel()) and chkc:IsControler(tp) and chkc~=c and c100910061.desfilter1(chkc) end
 	if chk==0 then

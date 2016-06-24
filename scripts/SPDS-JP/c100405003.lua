@@ -26,7 +26,7 @@ function c100405003.initial_effect(c)
 	--neg damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_TOHAND)
-	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetType(EFFECT_TYPE_QUICK_F)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,100405103+EFFECT_COUNT_CODE_DUEL)

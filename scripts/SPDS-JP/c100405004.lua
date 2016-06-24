@@ -30,14 +30,14 @@ function c100405004.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100405004.filter(c)
-	return c:IsSetCard(0xc008) and c:IsLevelBelow(4)
+	return c:IsSetCard(0xc008) and c:IsLevelBelow(4) and c:GetAttack()>0
 end
 function c100405004.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100405004.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100405004.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100405004.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c100405004.filter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetFirst():GetAttack())
 end
 function c100405004.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
