@@ -20,4 +20,4 @@
 - ~~Starter Deck 2016 (ST16-JP) : `100316XXX`~~  
 - ~~Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`~~  
 - ~~THE DARK ILLUSION (TDIL-JP) : `100909XXX`~~  
-- ~~Yu-Gi-Oh! Duel Monsters Anime Complete Guide: Millennium Memory promotional card (AGMM-JP) : `100299001` ~~  
+- ~~Yu-Gi-Oh! Duel Monsters Anime Complete Guide: Millennium Memory promotional card (AGMM-JP) : `100299001`~~  
