@@ -85,13 +85,14 @@ function c100910052.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100910052.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	Duel.NegateActivation(ev)
+	if not Duel.NegateActivation(ev) then return end
 	if rc:IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)~=0 and not rc:IsLocation(LOCATION_HAND+LOCATION_DECK) then
 		if rc:IsType(TYPE_MONSTER) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and rc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			and rc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 			and Duel.SelectYesNo(tp,aux.Stringid(100910052,3)) then
 			Duel.BreakEffect()
 			Duel.SpecialSummon(rc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
+			Duel.ConfirmCards(1-tp,rc)
 		elseif (rc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
 			and rc:IsSSetable() and Duel.SelectYesNo(tp,aux.Stringid(100910052,4)) then
 			Duel.BreakEffect()
