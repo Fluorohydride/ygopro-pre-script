@@ -91,7 +91,7 @@ function c100910052.negop(e,tp,eg,ep,ev,re,r,rp)
 			and rc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 			and Duel.SelectYesNo(tp,aux.Stringid(100910052,3)) then
 			Duel.BreakEffect()
-			Duel.SpecialSummon(rc,0,tp,tp,false,false,POS_FACEUP)
+			Duel.SpecialSummon(rc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 		elseif (rc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
 			and rc:IsSSetable() and Duel.SelectYesNo(tp,aux.Stringid(100910052,4)) then
 			Duel.BreakEffect()
