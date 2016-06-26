@@ -1,4 +1,5 @@
 --真紅眼の凶星竜－メテオ・ドラゴン
+--Red-Eyes Meteor Dragon
 --Script by nekrozar
 function c100910028.initial_effect(c)
 	aux.EnableDualAttribute(c)

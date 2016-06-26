@@ -1,4 +1,5 @@
 --竜星の九支
+--Nine Branches of the Yang Zing
 --Script by nekrozar
 function c100910101.initial_effect(c)
 	--Activate
