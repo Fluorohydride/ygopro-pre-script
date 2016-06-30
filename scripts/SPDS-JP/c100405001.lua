@@ -23,7 +23,7 @@ function c100405001.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100405001.filter(c,e,tp,atk)
-	return c:IsSetCard(0xc008) and c:GetAttack()<=atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xc008) and c:IsAttackBelow(atk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100405001.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local atk=e:GetHandler():GetAttack()
