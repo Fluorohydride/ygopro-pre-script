@@ -2,6 +2,9 @@
 --Denglong, Origin of the Yang Zing
 --Script by nekrozar
 function c100910048.initial_effect(c)
+	--synchro summon
+	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
+	c:EnableReviveLimit()
 	c:SetSPSummonOnce(100910048)
 	--search
 	local e1=Effect.CreateEffect(c)
