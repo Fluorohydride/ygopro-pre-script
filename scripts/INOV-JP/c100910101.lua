@@ -34,12 +34,13 @@ function c100910101.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 	if ec:IsRelateToEffect(re) then
 		ec:CancelToGrave()
-		local g=Duel.GetMatchingGroup(c100910101.desfilter,tp,LOCATION_ONFIELD,0,e:GetHandler())
-		if Duel.SendtoDeck(ec,nil,2,REASON_EFFECT)~=0 and ec:IsLocation(LOCATION_DECK+LOCATION_EXTRA)
-			and g:GetCount()>0 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local sg=g:Select(tp,1,1,nil)
-			Duel.Destroy(sg,REASON_EFFECT)
+		if Duel.SendtoDeck(ec,nil,2,REASON_EFFECT)~=0 and ec:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+			local g=Duel.GetMatchingGroup(c100910101.desfilter,tp,LOCATION_ONFIELD,0,e:GetHandler())
+			if g:GetCount()>0 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+				local sg=g:Select(tp,1,1,nil)
+				Duel.Destroy(sg,REASON_EFFECT)
+			end
 		end
 	end
 end
