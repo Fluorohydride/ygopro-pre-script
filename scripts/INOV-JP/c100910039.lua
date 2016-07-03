@@ -1,11 +1,19 @@
 --フルメタルフォーゼ・アルカエスト
 --Fullmetalfoes Alkahest
 --Script by nekrozar
---Effect is not fully implemented
+--TEMP fusion material effect by mercury233
+--The other Metalfoes fusion monster scripts need to be changed
+--Cards like Super Polymerization still have some issue
 function c100910039.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0xe1),aux.FilterBoolFunction(Card.IsType,TYPE_NORMAL),true)
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_FUSION_MATERIAL)
+	e0:SetCondition(c100910039.fscon)
+	e0:SetOperation(c100910039.fsop)
+	c:RegisterEffect(e0)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -18,6 +26,7 @@ function c100910039.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100910039,0))
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetHintTiming(0,0x1e0)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
@@ -26,6 +35,71 @@ function c100910039.initial_effect(c)
 	e2:SetTarget(c100910039.eqtg)
 	e2:SetOperation(c100910039.eqop)
 	c:RegisterEffect(e2)
+end
+function c100910039.filter1(c)
+	return c:IsFusionSetCard(0xe1)
+end
+function c100910039.filter2(c)
+	return c:IsType(TYPE_NORMAL)
+end
+function c100910039.exfilter(c)
+	return c:IsHasEffect(100910039)
+end
+function c100910039.fscon(e,g,gc,chkfnf)
+	if g==nil then return true end
+	local f1=c100910039.filter1
+	local f2=c100910039.filter2
+	local chkf=bit.band(chkfnf,0xff)
+	local exg=Duel.GetMatchingGroup(c100910039.exfilter,tp,LOCATION_SZONE,0,nil)
+	exg:Merge(g)
+	local mg=exg:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler(),true)
+	if gc then
+		if not gc:IsCanBeFusionMaterial(e:GetHandler(),true) then return false end
+		return (f1(gc) and mg:IsExists(f2,1,gc))
+			or (f2(gc) and mg:IsExists(f1,1,gc)) end
+	local g1=Group.CreateGroup() local g2=Group.CreateGroup() local fs=false
+	local tc=mg:GetFirst()
+	while tc do
+		if f1(tc) then g1:AddCard(tc) if aux.FConditionCheckF(tc,chkf) then fs=true end end
+		if f2(tc) then g2:AddCard(tc) if aux.FConditionCheckF(tc,chkf) then fs=true end end
+		tc=mg:GetNext()
+	end
+	if chkf~=PLAYER_NONE then
+		return fs and g1:IsExists(aux.FConditionFilterF2,1,nil,g2)
+	else return g1:IsExists(aux.FConditionFilterF2,1,nil,g2) end
+end
+function c100910039.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
+	local f1=c100910039.filter1
+	local f2=c100910039.filter2
+	local chkf=bit.band(chkfnf,0xff)
+	local exg=Duel.GetMatchingGroup(c100910039.exfilter,tp,LOCATION_SZONE,0,nil)
+	exg:Merge(eg)
+	local g=exg:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler(),true)
+	if gc then
+		local sg=Group.CreateGroup()
+		if f1(gc) then sg:Merge(g:Filter(f2,gc)) end
+		if f2(gc) then sg:Merge(g:Filter(f1,gc)) end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+		local g1=sg:Select(tp,1,1,nil)
+		Duel.SetFusionMaterial(g1)
+		return
+	end
+	local sg=g:Filter(aux.FConditionFilterF2c,nil,f1,f2)
+	local g1=nil
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+	if chkf~=PLAYER_NONE then
+		g1=sg:FilterSelect(tp,aux.FConditionCheckF,1,1,nil,chkf)
+	else g1=sg:Select(tp,1,1,nil) end
+	local tc1=g1:GetFirst()
+	sg:RemoveCard(tc1)
+	local b1=f1(tc1)
+	local b2=f2(tc1)
+	if b1 and not b2 then sg:Remove(aux.FConditionFilterF2r,nil,f1,f2) end
+	if b2 and not b1 then sg:Remove(aux.FConditionFilterF2r,nil,f2,f1) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+	local g2=sg:Select(tp,1,1,nil)
+	g1:Merge(g2)
+	Duel.SetFusionMaterial(g1)
 end
 function c100910039.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
@@ -64,7 +138,12 @@ function c100910039.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(c100910039.eqlimit)
 		e2:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e2)
-		tc:RegisterFlagEffect(100910039,RESET_EVENT+0x1fe0000,0,1)
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetCode(100910039)
+		e3:SetReset(RESET_EVENT+0x1fe0000)
+		tc:RegisterEffect(e3)
 	else Duel.SendtoGrave(tc,REASON_EFFECT) end
 end
 function c100910039.eqlimit(e,c)
