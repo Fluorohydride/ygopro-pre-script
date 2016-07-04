@@ -50,7 +50,7 @@ function c100910039.fscon(e,g,gc,chkfnf)
 	local f1=c100910039.filter1
 	local f2=c100910039.filter2
 	local chkf=bit.band(chkfnf,0xff)
-	local exg=Duel.GetMatchingGroup(c100910039.exfilter,tp,LOCATION_SZONE,0,nil)
+	local exg=Duel.GetMatchingGroup(c100910039.exfilter,e:GetHandlerPlayer(),LOCATION_SZONE,0,nil)
 	exg:Merge(g)
 	local mg=exg:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler(),true)
 	if gc then
