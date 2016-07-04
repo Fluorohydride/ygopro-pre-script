@@ -35,6 +35,14 @@ function c100910039.initial_effect(c)
 	e2:SetTarget(c100910039.eqtg)
 	e2:SetOperation(c100910039.eqop)
 	c:RegisterEffect(e2)
+	--equip fusion material
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
+	e3:SetCode(100910039)
+	e3:SetTarget(c100910039.mattg)
+	c:RegisterEffect(e3)
 end
 function c100910039.filter1(c)
 	return c:IsFusionSetCard(0xe1)
@@ -138,14 +146,11 @@ function c100910039.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(c100910039.eqlimit)
 		e2:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e3:SetCode(100910039)
-		e3:SetReset(RESET_EVENT+0x1fe0000)
-		tc:RegisterEffect(e3)
 	else Duel.SendtoGrave(tc,REASON_EFFECT) end
 end
 function c100910039.eqlimit(e,c)
 	return e:GetOwner()==c
+end
+function c100910039.mattg(e,c)
+	return c:GetEquipTarget()==e:GetHandler()
 end
