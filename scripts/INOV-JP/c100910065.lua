@@ -16,6 +16,9 @@ end
 function c100910065.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
+function c100910065.sfilter(c,tp)
+	return c:IsLocation(LOCATION_DECK) and c:IsControler(tp)
+end
 function c100910065.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and c100910065.filter(chkc) end
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
@@ -30,7 +33,8 @@ function c100910065.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 then return end
 	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
-	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
+	if g:IsExists(c100910065.sfilter,1,nil,tp) then Duel.ShuffleDeck(tp) end
+	if g:IsExists(c100910065.sfilter,1,nil,1-tp) then Duel.ShuffleDeck(1-tp) end
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
 	if ct==3 then
 		Duel.BreakEffect()
