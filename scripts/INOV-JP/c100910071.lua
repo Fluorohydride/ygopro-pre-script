@@ -77,7 +77,7 @@ function c100910071.lvop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
 			e1:SetValue(gc:GetLevel())
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
 			tc:RegisterEffect(e1)
 		end
 	end
