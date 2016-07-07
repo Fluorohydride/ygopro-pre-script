@@ -28,12 +28,13 @@ function c100910050.initial_effect(c)
 	--cannot be effect target
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_CANNOT_SELECT_EFFECT_TARGET)
-	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(0,0xff)
+	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetCondition(c100910050.con)
-	e3:SetValue(c100910050.tglimit)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_DUAL))
+	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
 	--to grave
 	local e4=Effect.CreateEffect(c)
@@ -73,9 +74,6 @@ function c100910050.con(e)
 end
 function c100910050.atlimit(e,c)
 	return c:IsFaceup() and c:IsType(TYPE_DUAL)
-end
-function c100910050.tglimit(e,re,c)
-	return c:IsControler(e:GetHandlerPlayer()) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsType(TYPE_DUAL)
 end
 function c100910050.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsType,1,nil,TYPE_DUAL)
