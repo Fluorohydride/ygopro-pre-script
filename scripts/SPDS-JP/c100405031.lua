@@ -26,7 +26,7 @@ function c100405031.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100405031.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1ef) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+	return c:IsFaceup() and (c:IsSetCard(0x1ef) or c:IsCode(67316075,57579381,47664723,85771019,11260714,40921744,55690251)) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function c100405031.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() and eg:IsExists(c100405031.repfilter,1,nil,tp) end
@@ -43,7 +43,7 @@ function c100405031.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function c100405031.cpfilter(c)
-	return c:IsSetCard(0x1ef) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
+	return (c:IsSetCard(0x1ef) or c:IsCode(67316075,57579381,47664723,85771019,11260714,40921744,55690251)) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
 end
 function c100405031.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
