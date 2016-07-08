@@ -1,5 +1,5 @@
 --創星の因子
---
+--Genesis Tellarknight
 --Script by mercury233
 function c100910062.initial_effect(c)
 	--Activate
