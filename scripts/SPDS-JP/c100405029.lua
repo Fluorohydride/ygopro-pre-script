@@ -46,7 +46,7 @@ function c100405029.ctfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
 function c100405029.spfilter(c,e,tp)
-	return c:IsSetCard(0x1ef) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(0x1ef) or c:IsCode(67316075,57579381,47664723,85771019,11260714,40921744,55690251)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100405029.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -67,7 +67,7 @@ function c100405029.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100405029.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1ef)
+	return c:IsFaceup() and (c:IsSetCard(0x1ef) or c:IsCode(67316075,57579381,47664723,85771019,11260714,40921744,55690251))
 end
 function c100405029.tgcon(e)
 	return Duel.IsExistingMatchingCard(c100405029.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
@@ -79,20 +79,14 @@ function c100405029.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,ct*1000)
 end
 function c100405029.disop(e,tp,eg,ep,ev,re,r,rp)
-	local ct1=Duel.GetMatchingGroupCount(c100405029.cfilter,tp,LOCATION_MZONE,0,nil)
+	local ct1=Duel.GetMatchingGroupCount(c100405029.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if ct1>0 then
 		if Duel.DiscardDeck(tp,ct1,REASON_EFFECT)~=0 then
-			local lc=0
 			local og=Duel.GetOperatedGroup()
 			local ct2=og:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
-			local c=og:GetFirst()
-			while c do
-				if c:IsSetCard(0x1ef) then
-					lc=lc+500
-				end
-				c=og:GetNext()
+			if ct2>0 then
+				Duel.Recover(tp,ct2*500,REASON_EFFECT)
 			end
-			Duel.Recover(tp,lc,REASON_EFFECT)
 		end
 	end
 end
