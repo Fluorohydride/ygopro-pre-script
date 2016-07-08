@@ -78,12 +78,15 @@ function c100405029.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,ct)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,ct*1000)
 end
+function c100405029.ctfilter2(c)
+	return c:IsLocation(LOCATION_GRAVE) and (c:IsSetCard(0x1ef) or c:IsCode(67316075,57579381,47664723,85771019,11260714,40921744,55690251))
+end
 function c100405029.disop(e,tp,eg,ep,ev,re,r,rp)
 	local ct1=Duel.GetMatchingGroupCount(c100405029.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if ct1>0 then
 		if Duel.DiscardDeck(tp,ct1,REASON_EFFECT)~=0 then
 			local og=Duel.GetOperatedGroup()
-			local ct2=og:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
+			local ct2=og:FilterCount(c100405029.ctfilter2,nil)
 			if ct2>0 then
 				Duel.Recover(tp,ct2*500,REASON_EFFECT)
 			end
