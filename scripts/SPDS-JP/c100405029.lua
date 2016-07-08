@@ -81,7 +81,7 @@ end
 function c100405029.disop(e,tp,eg,ep,ev,re,r,rp)
 	local ct1=Duel.GetMatchingGroupCount(c100405029.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if ct1>0 then
-		if Duel.DiscardDeck(1-tp,ct1,REASON_EFFECT)~=0 then
+		if Duel.DiscardDeck(tp,ct1,REASON_EFFECT)~=0 then
 			local og=Duel.GetOperatedGroup()
 			local ct2=og:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
 			if ct2>0 then
