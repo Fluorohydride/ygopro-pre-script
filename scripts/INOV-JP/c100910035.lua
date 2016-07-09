@@ -28,7 +28,7 @@ function c100910035.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100910035.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100910035.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c100910035.spop(e,tp,eg,ep,ev,re,r,rp)

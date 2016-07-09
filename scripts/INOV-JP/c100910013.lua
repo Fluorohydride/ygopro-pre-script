@@ -40,19 +40,23 @@ function c100910013.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
+function c100910013.desfilter(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
+end
 function c100910013.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
-		Duel.BreakEffect()
 		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
-			local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_SZONE,nil)
+			local g=Duel.GetMatchingGroup(c100910013.desfilter,tp,0,LOCATION_ONFIELD,nil)
 			if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100910013,1)) then
+				Duel.BreakEffect()
 				local sg=g:Select(tp,1,1,nil)
 				Duel.Destroy(sg,REASON_EFFECT)
 			end
 		else
+			Duel.BreakEffect()
 			Duel.SendtoGrave(tc,REASON_EFFECT)
 		end
 		Duel.ShuffleHand(tp)

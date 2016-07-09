@@ -29,8 +29,8 @@ end
 function c100910021.desfilter2(c,tc)
 	return c100910021.desfilter(c,tc) and c:IsAttribute(ATTRIBUTE_WATER)
 end
-function c100910021.rmfilter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemove(tp)
+function c100910021.rmfilter(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemove()
 end
 function c100910021.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -68,10 +68,10 @@ function c100910021.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(c,REASON_RULE)
 			return
 		end
-		local g=Duel.GetMatchingGroup(c100910021.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,nil,tp)
+		local g=Duel.GetMatchingGroup(c100910021.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
 		if g1:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER)==2 and g:GetCount()>0
 			and Duel.SelectYesNo(tp,aux.Stringid(100910021,1)) then
-			local g=Duel.SelectMatchingCard(tp,c100910021.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,2,nil,tp)
+			local g=Duel.SelectMatchingCard(tp,c100910021.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,2,nil)
 			Duel.HintSelection(g)
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end

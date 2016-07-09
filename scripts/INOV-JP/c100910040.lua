@@ -13,7 +13,7 @@ function c100910040.initial_effect(c)
 	c:RegisterEffect(e1)
 	--return
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TODECK)
+	e2:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)

@@ -53,10 +53,10 @@ function c100910014.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
-		Duel.BreakEffect()
 		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
 			local ct=Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)
 			if ct<3 then return end
+			Duel.BreakEffect()
 			local g=Duel.GetDecktopGroup(1-tp,3)
 			Duel.ConfirmCards(tp,g)
 			local opt=Duel.SelectOption(tp,aux.Stringid(100910014,1),aux.Stringid(100910014,2))
@@ -68,6 +68,7 @@ function c100910014.operation(e,tp,eg,ep,ev,re,r,rp)
 				end
 			end
 		else
+			Duel.BreakEffect()
 			Duel.SendtoGrave(tc,REASON_EFFECT)
 		end
 		Duel.ShuffleHand(tp)
@@ -97,7 +98,7 @@ function c100910014.synop(e,tp,eg,ep,ev,re,r,rp,syncard,f,minc,maxc)
 	local res=g:CheckWithSumEqual(Card.GetSynchroLevel,lv,minc,maxc,syncard)
 	local res2=g:CheckWithSumEqual(c100910014.cardiansynlevel,lv2,minc,maxc)
 	local sg=nil
-	if (res2 and res and Duel.SelectYesNo(tp,aux.Stringid(89818984,2)))
+	if (res2 and res and Duel.SelectYesNo(tp,aux.Stringid(100910014,2)))
 		or (res2 and not res) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 		sg=g:SelectWithSumEqual(tp,c100910014.cardiansynlevel,lv2,minc,maxc)

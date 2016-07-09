@@ -1,4 +1,4 @@
---ＥＭシール・イール
+--EMシール・イール
 --Performapal Seal Eel
 --Scripted by Eerie Code
 function c100910004.initial_effect(c)
@@ -18,7 +18,7 @@ function c100910004.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100910004,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CANNOT_NEGATE+EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetTarget(c100910004.lcktg)
 	e2:SetOperation(c100910004.lckop)
 	c:RegisterEffect(e2)
@@ -26,21 +26,19 @@ function c100910004.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-
-function c100910004.disfil(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
-end
 function c100910004.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100910004.disfil(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100910004.disfil,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and aux.disfilter1(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c100910004.disfil,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function c100910004.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -53,12 +51,12 @@ function c100910004.disop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-
 function c100910004.lcktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(1-tp) and chkc:IsFacedown() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFacedown,tp,0,LOCATION_SZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWN)
 	Duel.SelectTarget(tp,Card.IsFacedown,tp,0,LOCATION_SZONE,1,1,nil)
+	Duel.SetChainLimit(aux.FALSE)
 end
 function c100910004.lckop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

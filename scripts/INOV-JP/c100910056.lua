@@ -27,11 +27,13 @@ function c100910056.filter(c,e,tp)
 	return c:IsSetCard(0xe6) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100910056.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,30459350)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100910056.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 end
 function c100910056.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if Duel.IsPlayerAffectedByEffect(tp,30459350) then return end
 	Duel.ConfirmDecktop(tp,3)
 	local g=Duel.GetDecktopGroup(tp,3)
 	local sg=g:Filter(c100910056.filter,nil,e,tp)

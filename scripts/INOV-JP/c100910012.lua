@@ -45,14 +45,15 @@ function c100910012.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
-		Duel.BreakEffect()
 		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
 			local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_MZONE,nil)
 			if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100910012,1)) then
+				Duel.BreakEffect()
 				local sg=g:Select(tp,1,1,nil)
 				Duel.Destroy(sg,REASON_EFFECT)
 			end
 		else
+			Duel.BreakEffect()
 			Duel.SendtoGrave(tc,REASON_EFFECT)
 		end
 		Duel.ShuffleHand(tp)
