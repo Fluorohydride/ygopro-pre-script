@@ -54,6 +54,7 @@ function c100909084.cfilter(c,tp)
 end
 function c100909084.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100909084.cfilter,1,nil,tp)
+		and not Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100909084.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
