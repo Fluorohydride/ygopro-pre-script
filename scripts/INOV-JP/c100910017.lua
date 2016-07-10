@@ -29,7 +29,7 @@ function c100910017.desfilter(c)
 	return c:IsFaceup() and c:IsDestructable()
 end
 function c100910017.spfilter1(c,e,tp)
-	return c:IsSetCard(0x1eb) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xea) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100910017.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(e:GetLabel()) and chkc:IsControler(tp) and c100910017.desfilter(chkc) end
@@ -74,7 +74,7 @@ function c100910017.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c100910017.spfilter2(c,e,tp)
-	return c:IsSetCard(0x1eb) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xea) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100910017.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

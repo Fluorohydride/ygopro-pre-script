@@ -14,7 +14,7 @@ function c100910057.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetValue(300)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1eb))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xea))
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -51,7 +51,7 @@ end
 function c100910057.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
-		if tc:IsSetCard(0x1eb) and bit.band(tc:GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO then
+		if tc:IsSetCard(0xea) and bit.band(tc:GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO then
 			local p=tc:GetSummonPlayer()
 			c100910057[p]=c100910057[p]+1
 		end

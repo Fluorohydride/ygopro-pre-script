@@ -27,7 +27,7 @@ function c100910020.desfilter(c)
 	return c:IsFaceup() and c:IsDestructable()
 end
 function c100910020.spfilter(c,e,tp)
-	return c:IsSetCard(0x1eb) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xea) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100910020.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(e:GetLabel()) and chkc:IsControler(tp) and c100910020.desfilter(chkc) end
@@ -73,13 +73,13 @@ function c100910020.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100910020.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,100910199,0x1eb,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_WATER) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100910199,0xea,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_WATER) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c100910020.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100910199,0x1eb,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_WATER) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100910199,0xea,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_WATER) then return end
 	local token=Duel.CreateToken(tp,100910199)
 	Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 	local e1=Effect.CreateEffect(e:GetHandler())

@@ -25,7 +25,7 @@ function c100910072.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100910072.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1eb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(0xea) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100910072.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and c100910072.filter(chkc,e,tp) end
@@ -54,7 +54,7 @@ function c100910072.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100910072.tgfilter(c,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0x1eb)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0xea)
 end
 function c100910072.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

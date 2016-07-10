@@ -29,7 +29,7 @@ function c100910019.desfilter(c)
 	return c:IsFaceup() and c:IsDestructable()
 end
 function c100910019.spfilter(c,e,tp)
-	return c:IsSetCard(0x1eb) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xea) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100910019.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(e:GetLabel()) and chkc:IsControler(tp) and c100910019.desfilter(chkc) end
@@ -74,7 +74,7 @@ function c100910019.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c100910019.thfilter(c)
-	return c:IsSetCard(0x1eb) and c:IsType(TYPE_MONSTER) and not c:IsCode(100910019) and c:IsAbleToHand()
+	return c:IsSetCard(0xea) and c:IsType(TYPE_MONSTER) and not c:IsCode(100910019) and c:IsAbleToHand()
 end
 function c100910019.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100910019.thfilter,tp,LOCATION_DECK,0,1,nil) end

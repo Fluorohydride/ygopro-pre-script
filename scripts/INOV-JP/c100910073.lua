@@ -26,7 +26,7 @@ function c100910073.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100910073.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1ec) and c:IsAbleToRemoveAsCost()
+	return c:IsFaceup() and c:IsSetCard(0xeb) and c:IsAbleToRemoveAsCost()
 end
 function c100910073.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100910073.cfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -35,11 +35,11 @@ function c100910073.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100910073.spfilter1(c,e,tp)
-	return c:IsSetCard(0x1ec) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xeb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(c100910073.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function c100910073.spfilter2(c,e,tp,code)
-	return c:IsSetCard(0x1ec) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xeb) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100910073.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)

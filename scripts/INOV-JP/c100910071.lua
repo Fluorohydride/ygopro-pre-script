@@ -25,7 +25,7 @@ function c100910071.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100910071.filter(c,e,tp)
-	return c:IsSetCard(0x1eb) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xea) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100910071.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
@@ -50,10 +50,10 @@ function c100910071.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100910071.lvfilter(c)
 	local lv=c:GetLevel()
-	return lv>0 and c:IsFaceup() and c:IsSetCard(0x1eb) and Duel.IsExistingMatchingCard(c100910071.tgfilter,tp,LOCATION_DECK,0,1,nil,lv)
+	return lv>0 and c:IsFaceup() and c:IsSetCard(0xea) and Duel.IsExistingMatchingCard(c100910071.tgfilter,tp,LOCATION_DECK,0,1,nil,lv)
 end
 function c100910071.tgfilter(c,lv)
-	return c:IsSetCard(0x1eb) and c:GetLevel()~=lv and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0xea) and c:GetLevel()~=lv and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function c100910071.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
