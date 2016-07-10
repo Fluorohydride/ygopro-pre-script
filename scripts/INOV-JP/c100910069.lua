@@ -16,7 +16,8 @@ function c100910069.filter(c)
 end
 function c100910069.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c100910069.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100910069.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
+		and Duel.IsExistingTarget(c100910069.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100910069.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
