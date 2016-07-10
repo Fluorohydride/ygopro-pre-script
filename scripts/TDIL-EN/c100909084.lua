@@ -50,7 +50,7 @@ function c100909084.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100909084.cfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsPosition(POS_FACEDOWN_DEFENSE) and c:IsControler(tp)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsFacedown() and c:IsControler(tp)
 end
 function c100909084.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100909084.cfilter,1,nil,tp)
