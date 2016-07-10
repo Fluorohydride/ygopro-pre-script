@@ -17,7 +17,7 @@ function c81612598.filter2(c)
 	return c:IsAttackBelow(2500)
 end
 function c81612598.exfilter(c)
-	return c:IsHasEffect(100910039)
+	return c:IsHasEffect(77693536)
 end
 function c81612598.fscon(e,g,gc,chkfnf)
 	if g==nil then return true end
