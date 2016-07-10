@@ -1,6 +1,4 @@
 --光波双顎機
---Cipher Twin Raptor
---Script by nekrozar
 function c21999001.initial_effect(c)
 	--special summon from hand
 	local e1=Effect.CreateEffect(c)

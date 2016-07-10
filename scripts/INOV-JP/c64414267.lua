@@ -1,6 +1,4 @@
 --煉獄の騎士 ヴァトライムス
---Tellarknight Vatraemus
---Script by nekrozar
 function c64414267.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x9c),4,2)

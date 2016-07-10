@@ -1,6 +1,4 @@
 --イカサマ御法度
---No Cheaters Allowed
---Script by nekrozar
 function c26781870.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_SELF_TOGRAVE)
 	--Activate

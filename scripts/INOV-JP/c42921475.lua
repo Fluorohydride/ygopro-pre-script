@@ -1,6 +1,4 @@
 --妖精伝姫－ターリア
---Fairy Tail - Talia
---Script by mercury233
 function c42921475.initial_effect(c)
 	--flip
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --パンドラの宝具箱
---Pandora's Treasure Box
---Script by nekrozar
 function c15936370.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

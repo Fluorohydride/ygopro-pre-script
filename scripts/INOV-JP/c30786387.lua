@@ -1,6 +1,4 @@
 --花積み
---Hanazumi
---Script by nekrozar
 function c30786387.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --EMシール・イール
---Performapal Seal Eel
---Scripted by Eerie Code
 function c33833230.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--Negate effect

@@ -1,6 +1,4 @@
 --アメイジング・ペンデュラム
---Amazing Pendulum
---Script by nekrozar
 function c37803970.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

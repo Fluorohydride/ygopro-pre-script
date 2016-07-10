@@ -1,6 +1,4 @@
 --超重武者装留チュウサイ
---Superheavy Samurai Soul Arbitrator
---Script by mercury233
 function c95500396.initial_effect(c)
 	--equip
 	local e1=Effect.CreateEffect(c)

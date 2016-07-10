@@ -1,6 +1,4 @@
 --クリストロン・エントリー
---Crystron Entry
---Script by nekrozar
 function c52176579.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

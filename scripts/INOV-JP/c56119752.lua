@@ -1,6 +1,4 @@
 --プレゼントカード
---Present Card
---Script by nekrozar
 function c56119752.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

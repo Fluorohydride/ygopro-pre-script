@@ -1,6 +1,4 @@
 --二重光波
---Double Cipher
---Script by mercury233
 function c63992027.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

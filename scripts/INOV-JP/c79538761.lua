@@ -1,6 +1,4 @@
 --トルクチューン・ギア
---Torque Tune Gear
---Script by nekrozar
 function c79538761.initial_effect(c)
 	--equip
 	local e1=Effect.CreateEffect(c)

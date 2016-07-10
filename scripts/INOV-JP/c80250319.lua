@@ -1,6 +1,4 @@
 --グレイドル・スライムJr.
---Graydle Slime Jr.
---Script by nekrozar
 function c80250319.initial_effect(c)
 	--special summon from grave
 	local e1=Effect.CreateEffect(c)

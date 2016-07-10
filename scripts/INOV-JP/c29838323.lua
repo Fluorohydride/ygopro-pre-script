@@ -1,6 +1,4 @@
 --水晶機巧－シストバーン
---Crystron Thystvern
---Script by nekrozar
 function c29838323.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

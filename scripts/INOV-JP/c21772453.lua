@@ -1,6 +1,4 @@
 --花札衛－紅葉に鹿－
---Cardian - Momiji ni Shika
---Script by dest
 function c21772453.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon from hand

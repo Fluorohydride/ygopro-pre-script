@@ -1,6 +1,4 @@
 --EMオールカバー・ヒッポ
---Performapal Allcover Hippo
---Scripted by Eerie Code
 function c91449532.initial_effect(c)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)

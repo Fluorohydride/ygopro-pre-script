@@ -1,6 +1,4 @@
 --PSYフレーム・マルチスレッダー
---PSY-Frame Multi-Threader
---Script by nekrozar
 function c43266605.initial_effect(c)
 	--change name
 	local e1=Effect.CreateEffect(c)

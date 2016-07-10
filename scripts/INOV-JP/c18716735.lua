@@ -1,6 +1,4 @@
 --レアメタルフォーゼ・ビスマギア
---
---Script by mercury233
 function c18716735.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

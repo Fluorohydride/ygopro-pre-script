@@ -1,6 +1,4 @@
 --サイバー・エンジェル－美朱濡－
---Cyber Angel - Vishnu
---Script by nekrozar
 function c78316184.initial_effect(c)
 	c:EnableReviveLimit()
 	--destroy

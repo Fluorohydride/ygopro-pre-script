@@ -1,6 +1,4 @@
 --真竜皇バハルストスF
---Bahrstos Fuhrer, the True Dracoruler
---Scripted by Eerie Code
 function c82321037.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

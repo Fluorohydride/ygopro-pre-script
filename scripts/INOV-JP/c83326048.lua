@@ -1,6 +1,4 @@
 --次元障壁
---Dimension Barrier
---Script by dest
 function c83326048.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

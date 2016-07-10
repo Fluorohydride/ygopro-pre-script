@@ -1,6 +1,4 @@
 --光波防輪
---Cipher Bit
---Script by mercury233
 function c99397762.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

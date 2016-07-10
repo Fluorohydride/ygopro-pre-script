@@ -1,7 +1,4 @@
 --イグナイト・ユナイト
---Igknight Unite
---Script by nekrozar
---Fixed by DiabladeZat
 function c38848158.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

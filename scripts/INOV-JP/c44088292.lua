@@ -1,6 +1,4 @@
 --進化合獣ダイオーキシン
---Advanced Chemical Beast Dyoxen
---Script by dest
 function c44088292.initial_effect(c)
 	aux.EnableDualAttribute(c)
 	--cannot disable summon

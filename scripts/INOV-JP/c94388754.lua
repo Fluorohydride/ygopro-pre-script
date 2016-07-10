@@ -1,6 +1,4 @@
 --花札衛－萩に猪－
---Cardian - Hagi ni Inoshishi
---Script by dest
 function c94388754.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon from hand

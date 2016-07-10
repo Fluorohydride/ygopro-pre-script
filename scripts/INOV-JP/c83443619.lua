@@ -1,6 +1,4 @@
 --水晶機巧－スモーガ－
---Crystron Smoger
---Script by nekrozar
 function c83443619.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

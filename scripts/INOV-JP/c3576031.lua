@@ -1,6 +1,4 @@
 --クリスタルP
---Krystal Potential
---Script by nekrozar
 function c3576031.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

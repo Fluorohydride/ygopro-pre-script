@@ -1,6 +1,4 @@
 --RUM－幻影騎士団ラウンチ 
---Rank-Up-Magic The Phantom Knights of Launch
---Script by nekrozar
 function c3298689.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

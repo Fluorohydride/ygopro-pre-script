@@ -1,6 +1,4 @@
 --化合電界
---Spark Field
---Script by nekrozar
 function c65959844.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

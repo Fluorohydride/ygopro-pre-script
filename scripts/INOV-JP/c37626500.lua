@@ -1,6 +1,4 @@
 --精霊の祝福
---Fairy's Blessing
---Script by nekrozar
 function c37626500.initial_effect(c)
 	aux.AddRitualProcEqual2(c,c37626500.ritual_filter)
 end

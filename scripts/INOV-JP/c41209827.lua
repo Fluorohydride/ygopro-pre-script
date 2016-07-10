@@ -1,6 +1,4 @@
 --スターヴ・ヴェノム・フュージョン・ドラゴン
---Starve Venom Fusion Dragon
---Script by nekrozar
 function c41209827.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

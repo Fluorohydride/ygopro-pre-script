@@ -1,6 +1,4 @@
 --水晶機巧－シトリィ
---Crystron Citri
---Script by nekrozar
 function c20050865.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

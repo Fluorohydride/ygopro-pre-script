@@ -1,6 +1,4 @@
 --化合獣カーボン・クラブ
---Chemical Beast Carbon Crab
---Script by dest
 function c81599449.initial_effect(c)
 	aux.EnableDualAttribute(c)
 	--to grave/search

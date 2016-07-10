@@ -1,6 +1,4 @@
 --捕食植物モーレイ・ネペンテス
---Predator Plant Moray Nepenthes
---Script by dest
 function c22011689.initial_effect(c)
 	--atk
 	local e1=Effect.CreateEffect(c)

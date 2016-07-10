@@ -1,6 +1,4 @@
 --源竜星－ボウテンコウ
---Denglong, Origin of the Yang Zing
---Script by nekrozar
 function c65536818.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

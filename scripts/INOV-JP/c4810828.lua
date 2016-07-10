@@ -1,6 +1,4 @@
 --古聖戴サウラヴィス
---Sauravis, the Crowned Ancient Sage
---Script by nekrozar
 function c4810828.initial_effect(c)
 	c:EnableReviveLimit()
 	--negate

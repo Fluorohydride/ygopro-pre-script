@@ -1,6 +1,4 @@
 --水晶機巧－クオン
---Crystron Quon
---Script by nekrozar
 function c93665266.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

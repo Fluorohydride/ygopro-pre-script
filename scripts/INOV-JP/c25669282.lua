@@ -1,6 +1,4 @@
 --完全燃焼
---Burn Out
---Script by nekrozar
 function c25669282.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

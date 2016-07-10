@@ -1,6 +1,4 @@
 --光波鏡騎士
---Cipher Mirror Knight
---Script by nekrozar
 function c58383100.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

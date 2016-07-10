@@ -1,6 +1,4 @@
 --「A」細胞組み換え装置
---"A" Cell Recombination Device
---Script by nekrozar
 function c91231901.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

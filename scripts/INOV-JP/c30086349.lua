@@ -1,6 +1,4 @@
 --流星竜メテオ・ブラック・ドラゴン
---Ryuuseiryuu Meteo Black Dragon
---Script by nekrozar
 function c30086349.initial_effect(c)
 	--fusion material
 	aux.AddFusionProcFun2(c,c30086349.mfilter1,c30086349.mfilter2,true)

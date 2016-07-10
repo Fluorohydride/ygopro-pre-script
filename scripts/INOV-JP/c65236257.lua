@@ -1,6 +1,4 @@
 --創星の因子
---Genesis Tellarknight
---Script by mercury233
 function c65236257.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

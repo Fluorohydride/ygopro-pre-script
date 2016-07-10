@@ -1,6 +1,4 @@
 --水晶機巧－クオンダム
---Crystron Quondam
---Script by nekrozar
 function c39964797.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

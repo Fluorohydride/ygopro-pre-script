@@ -1,6 +1,4 @@
 --化合獣オキシン・オックス
---Chemical Beast Oxine Ox
---Script by dest
 function c18993198.initial_effect(c)
 	aux.EnableDualAttribute(c)
 	--special summon

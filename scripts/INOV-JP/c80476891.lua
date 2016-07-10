@@ -1,6 +1,4 @@
 --進化合獣ヒュードラゴン
---Advanced Chemical Beast Hy Dragon
---Script by dest
 function c80476891.initial_effect(c)
 	aux.EnableDualAttribute(c)
 	--atkup

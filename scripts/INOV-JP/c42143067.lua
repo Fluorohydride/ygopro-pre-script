@@ -1,6 +1,4 @@
 --怒気土器
---Dokidoki
---Script by nekrozar
 function c42143067.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --EMチェーンジラフ
---Performapal Chain Giraffe
---Script by mercury233
 function c69228245.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

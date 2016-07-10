@@ -1,6 +1,4 @@
 --PSYフレーム・アクセラレーター
---PSY-Frame Accelerator
---Script by nekrozar
 function c51053997.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

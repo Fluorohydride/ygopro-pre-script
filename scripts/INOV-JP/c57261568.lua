@@ -1,6 +1,4 @@
 --花札衛－牡丹に蝶－
---Cardian - Botan ni Cho
---Script by dest
 function c57261568.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon from hand

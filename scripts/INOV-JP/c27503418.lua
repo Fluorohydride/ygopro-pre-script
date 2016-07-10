@@ -1,6 +1,4 @@
 --王者の調和
---King's Synchro
---Script by nekrozar
 function c27503418.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

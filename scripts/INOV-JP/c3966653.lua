@@ -1,6 +1,4 @@
 --花札衛－猪鹿蝶－
---Cardian - Inoshikacho
---Script by dest
 function c3966653.initial_effect(c)
 	c:EnableReviveLimit()
 	--synchro summon

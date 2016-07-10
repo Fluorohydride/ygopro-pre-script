@@ -1,6 +1,4 @@
 --クリストロン・インパクト
---Crystron Impact
---Script by nekrozar
 function c99274184.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

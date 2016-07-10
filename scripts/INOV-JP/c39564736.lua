@@ -1,5 +1,4 @@
 --重錬装融合
---Fullmetalfoes Fusion
 function c39564736.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

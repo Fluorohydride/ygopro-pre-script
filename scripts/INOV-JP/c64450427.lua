@@ -1,6 +1,4 @@
 --EMウィム・ウィッチ
---Performapal Whim Witch
---Script by nekrozar
 function c64450427.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

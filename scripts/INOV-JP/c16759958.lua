@@ -1,6 +1,4 @@
 --アロマセラフィ－アンゼリカ
---Aromaseraphy Angelica
---Script by nekrozar
 function c16759958.initial_effect(c)
 	--recover
 	local e1=Effect.CreateEffect(c)

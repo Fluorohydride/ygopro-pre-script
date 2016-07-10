@@ -1,6 +1,4 @@
 --アロマセラフィ－ローズマリー
---Aromaseraphy Rosemary
---Script by nekrozar
 function c38148100.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

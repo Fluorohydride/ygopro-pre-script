@@ -1,6 +1,4 @@
 --大欲な壺
---Pot of Avidity
---Script by nekrozar
 function c64014615.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

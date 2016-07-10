@@ -1,6 +1,4 @@
 --化合獣ハイドロン・ホーク
---Chemical Beast Hydron Hawk
---Script by dest
 function c55100740.initial_effect(c)
 	aux.EnableDualAttribute(c)
 	--special summon

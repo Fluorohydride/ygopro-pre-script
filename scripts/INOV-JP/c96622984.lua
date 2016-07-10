@@ -1,6 +1,4 @@
 --捕食植物フライ・ヘル
---Predator Plant Fly Hell
---Script by mercury233
 function c96622984.initial_effect(c)
 	--add counter
 	local e1=Effect.CreateEffect(c)

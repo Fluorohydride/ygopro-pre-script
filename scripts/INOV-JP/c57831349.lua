@@ -1,6 +1,4 @@
 --竜星の九支
---Nine Branches of the Yang Zing
---Script by nekrozar
 function c57831349.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

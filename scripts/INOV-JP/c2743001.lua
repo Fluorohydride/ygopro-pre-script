@@ -1,6 +1,4 @@
 --水晶機巧－フェニキシオン
---Crystron Phoenixion
---Script by nekrozar
 function c2743001.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_SYNCHRO),aux.NonTuner(Card.IsType,TYPE_SYNCHRO),1)
