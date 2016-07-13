@@ -62,7 +62,7 @@ function c100405018.chlimit(e,rp,tp)
 	return tp==rp and e:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function c100405018.cfilter(c)
-	return c:IsSetCard(0x21ed) and c:IsType(TYPE_SPELL) and c:IsSSetable(true)
+	return c:IsSetCard(0x21ed) and c:IsType(TYPE_SPELL) and c:IsSSetable()
 end
 function c100405018.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>-1

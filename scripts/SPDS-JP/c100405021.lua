@@ -98,7 +98,7 @@ function c100405021.setcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100405021.cfilter(c)
-	return c:IsSetCard(0x21ed) and c:IsType(TYPE_SPELL) and c:IsSSetable(true)
+	return c:IsSetCard(0x21ed) and c:IsType(TYPE_SPELL) and c:IsSSetable()
 end
 function c100405021.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>-1
