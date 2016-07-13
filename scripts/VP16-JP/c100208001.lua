@@ -16,9 +16,9 @@ function c100208001.initial_effect(c)
 	e1:SetCountLimit(1,100208001)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMING_END_PHASE)
 	e1:SetCondition(c100208001.atkcon)
-	e1:SetCost(c100208001.atcost)
-	e1:SetTarget(c100208001.attg)
-	e1:SetOperation(c100208001.atop)
+	e1:SetCost(c100208001.atkcost)
+	e1:SetTarget(c100208001.atktg)
+	e1:SetOperation(c100208001.atkop)
 	c:RegisterEffect(e1)
 end
 function c100208001.ffilter(c)
@@ -30,7 +30,7 @@ end
 function c100208001.tgfilter(c)
 	return c:IsSetCard(0xc008) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
-function c100208001.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100208001.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local exc
 	local g=Duel.GetMatchingGroup(c100208001.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
 	if g:GetCount()==1 then exc=g:GetFirst() end
