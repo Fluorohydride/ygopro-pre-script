@@ -11,6 +11,7 @@ function c100208004.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetRange(LOCATION_PZONE)
+	e1:SetCondition(c100208004.thcon)
 	e1:SetTarget(c100208004.thtg)
 	e1:SetOperation(c100208004.thop)
 	c:RegisterEffect(e1)
@@ -26,6 +27,12 @@ function c100208004.initial_effect(c)
 	e2:SetTarget(c100208004.sptg)
 	e2:SetOperation(c100208004.spop)
 	c:RegisterEffect(e2)
+end
+function c100208004.cfilter(c,tp)
+	return c:IsControler(tp) and c:GetSummonType()==SUMMON_TYPE_PENDULUM
+end
+function c100208004.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c100208004.cfilter,1,nil,tp)
 end
 function c100208004.thfilter(c)
 	local lv=c:GetLevel()
