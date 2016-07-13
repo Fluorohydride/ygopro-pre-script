@@ -25,16 +25,16 @@ function c100208003.initial_effect(c)
 	e2:SetOperation(c100208003.desop)
 	c:RegisterEffect(e2)
 	--special summon
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100208003,2))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetCondition(c14462257.condition)
-	e2:SetTarget(c14462257.target)
-	e2:SetOperation(c14462257.operation)
-	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100208003,2))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e3:SetCode(EVENT_TO_GRAVE)
+	e3:SetCondition(c14462257.condition)
+	e3:SetTarget(c14462257.target)
+	e3:SetOperation(c14462257.operation)
+	c:RegisterEffect(e3)
 end
 function c100208003.ovfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107b) and c:IsType(TYPE_XYZ) and c:GetRank()==8
@@ -42,9 +42,6 @@ end
 function c100208003.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
-function c100208003.desfilter(c)
-	return c:IsFaceup() and c:IsDestructable()
 end
 function c100208003.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsDestructable() end
@@ -61,7 +58,8 @@ function c100208003.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100208003.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and rp~=tp and (not c:IsReason(REASON_BATTLE) or c==Duel.GetAttackTarget())
+	return rp==1-tp and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:IsReason(REASON_DESTROY) and (not c:IsReason(REASON_BATTLE) or c==Duel.GetAttackTarget())
 		and bit.band(c:GetSummonType(),SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ
 end
 function c100208003.filter(c,e,tp)
@@ -78,6 +76,6 @@ end
 function c100208003.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
