@@ -50,7 +50,7 @@ function c100405021.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100405021.atkop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc:IsFaceup() and tc:IsRelateToBattle() then
+	if tc:IsFaceup() and tc:IsControler(1-tp) and tc:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

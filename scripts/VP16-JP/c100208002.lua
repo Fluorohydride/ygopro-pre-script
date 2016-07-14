@@ -49,7 +49,7 @@ function c100208002.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100208002.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not (c:IsType(TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON))	and c:IsLocation(LOCATION_EXTRA)
+	return not (c:IsType(TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON)) and c:IsLocation(LOCATION_EXTRA)
 end
 function c100208002.spfilter(c,e,tp)
 	return c:IsSetCard(0x57) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

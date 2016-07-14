@@ -31,7 +31,7 @@ function c100208001.tgfilter(c)
 	return c:IsSetCard(0xc008) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function c100208001.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local exc
+	local exc=nil
 	local g=Duel.GetMatchingGroup(c100208001.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
 	if g:GetCount()==1 then exc=g:GetFirst() end
 	if chk==0 then return g:GetCount()>0
@@ -53,12 +53,11 @@ end
 function c100208001.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100208001.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
-	local tc=g:GetFirst()
-	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
+	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 		local tg=Duel.GetMatchingGroup(c100208001.atfilter,tp,LOCATION_MZONE,0,nil)
 		if tg:GetCount()<=0 then return end
 		local sg=Duel.GetMatchingGroupCount(c100208001.cfilter,tp,LOCATION_GRAVE,0,nil)
-		tc=tg:GetFirst()
+		local tc=tg:GetFirst()
 		while tc do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
