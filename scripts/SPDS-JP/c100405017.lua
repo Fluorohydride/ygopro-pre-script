@@ -40,7 +40,7 @@ function c100405017.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100405017.atkfilter1(c,tp)
-	return c:IsSetCard(0x11ed) and Duel.IsExistingTarget(c100405017.tgfilter,tp,LOCATION_MZONE,0,1,c)
+	return c:IsSetCard(0x11ed) and Duel.IsExistingTarget(c100405017.atkfilter2,tp,LOCATION_MZONE,0,1,c)
 end
 function c100405017.atkfilter2(c)
 	return c:IsSetCard(0x11ed) and c:IsFaceup()
