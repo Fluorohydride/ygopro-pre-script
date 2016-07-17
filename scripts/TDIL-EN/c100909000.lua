@@ -27,7 +27,6 @@ function c100909000.initial_effect(c)
 	--set
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100909000,0))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_MZONE)

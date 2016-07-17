@@ -16,7 +16,7 @@ function c100405024.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCategory(CATEGORY_DRAW)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetCountLimit(1,100405924)
 	e2:SetCondition(c100405024.drcon)
@@ -35,7 +35,6 @@ function c100405024.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
 end
 function c100405024.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local rec=Duel.GetMatchingGroupCount(c100405024.filter1,tp,LOCATION_MZONE,0,nil)*500
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Recover(p,rec,REASON_EFFECT)

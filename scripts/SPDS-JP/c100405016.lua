@@ -20,6 +20,7 @@ function c100405016.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetCondition(c100405016.atkcon2)
 	e2:SetTarget(c100405016.atktg)
@@ -82,17 +83,19 @@ function c100405016.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100405016.cfilter(c)
-	return c:IsSetCard(0x21ed) and c:IsType(TYPE_SPELL) and c:IsSSetable(true)
+	return c:IsSetCard(0x21ed) and c:IsType(TYPE_SPELL) and c:IsSSetable()
 end
-function c100405016.settg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100405016.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100405016.cfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c100405016.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectTarget(tp,c100405016.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function c100405016.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+	if tc:IsRelateToEffect(e) and tc:IsSSetable() then
 		Duel.SSet(tp,tc)
 		Duel.ConfirmCards(1-tp,tc)
 	end
