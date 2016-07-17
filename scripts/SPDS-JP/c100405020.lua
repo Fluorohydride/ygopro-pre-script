@@ -50,7 +50,8 @@ function c100405020.penfilter(c)
 	return c:IsSetCard(0x11ed) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function c100405020.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100405020.penfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100405020.penfilter,tp,LOCATION_DECK,0,1,nil)
+		and (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)) end
 end
 function c100405020.penop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
