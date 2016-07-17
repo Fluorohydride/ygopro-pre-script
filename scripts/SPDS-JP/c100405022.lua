@@ -62,11 +62,11 @@ function c100405022.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(1,0)
-	e3:SetTarget(c100405020.splimit)
+	e3:SetTarget(c100405022.splimit)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
-function c100405020.splimit(e,c)
+function c100405022.splimit(e,c)
 	return not c:IsSetCard(0x11ed)
 end
 function c100405022.atkfilter(c)

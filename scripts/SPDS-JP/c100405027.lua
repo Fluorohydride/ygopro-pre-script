@@ -33,13 +33,14 @@ function c100405027.lmfilter(c)
 end
 function c100405027.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and c100405027.filter(chkc) end
-	if chk==0 then Duel.IsExistingMatchingCard(c100405027.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100405027.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(c100405027.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	local g=Duel.GetMatchingGroup(c100405027.cfilter,tp,LOCATION_MZONE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local sg=Duel.SelectTarget(tp,c100405027.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,sg:GetCount(),0,0)
-	if Duel.IsExistingMatchingCard(c100405027.lmfilter,tp,LOCATION_MZONE,0,1,nil)
+	if Duel.IsExistingMatchingCard(c100405027.lmfilter,tp,LOCATION_MZONE,0,1,nil) then
 		Duel.SetChainLimit(c100405027.chainlm)
 	end
 end
