@@ -108,7 +108,7 @@ function c100405021.setop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,c100405021.cfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 and tc:IsSSetable() then
+	if g:GetCount()>0 and g:GetFirst():IsSSetable() then
 		Duel.SSet(tp,g)
 		Duel.ConfirmCards(1-tp,g)
 	end
