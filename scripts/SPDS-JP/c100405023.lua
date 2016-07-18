@@ -1,6 +1,7 @@
 --魔界台本 「ファンタジー・マジック」
 --Abyss Script - Fantasy Magic
 --Script by dest
+--return to hand effect by mercury233
 function c100405023.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -34,29 +35,39 @@ end
 function c100405023.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
+		local g=Group.CreateGroup()
+		g:KeepAlive()
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetCategory(CATEGORY_TOHAND)
-		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_DAMAGE_STEP_END)
-		e1:SetCondition(c100405023.retcon)
-		e1:SetTarget(c100405023.rettg)
+		e1:SetLabelObject(g)
 		e1:SetOperation(c100405023.retop)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+		--
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_BATTLED)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e2:SetLabelObject(e1)
+		e2:SetOperation(c100405023.regop)
+		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e2)
 	end
 end
-function c100405023.retcon(e,tp,eg,ep,ev,re,r,rp)
-	local t=e:GetHandler():GetBattleTarget()
-	e:SetLabelObject(t)
-	return t and t:IsRelateToBattle()
-end
-function c100405023.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetLabelObject(),1,0,0)
-end
 function c100405023.retop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabelObject():IsRelateToBattle() then
-		Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
+	local g=e:GetLabelObject()
+	if g:GetCount()>0 then
+		local sg=g:Filter(Card.IsRelateToBattle,nil)
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+		g:Clear()
+	end
+end
+function c100405023.regop(e,tp,eg,ep,ev,re,r,rp)
+	local bc=e:GetHandler():GetBattleTarget()
+	if bc and not bc:IsStatus(STATUS_BATTLE_DESTROYED) then
+		local g=e:GetLabelObject():GetLabelObject()
+		g:AddCard(bc)
 	end
 end
 function c100405023.filter2(c)
