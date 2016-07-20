@@ -28,7 +28,7 @@ function c100405037.filter(c)
 end
 function c100405037.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100405037.filter,tp,0,LOCATION_MZONE,1,nil) end
-	e:SetCategory(CATEGORY_CONTROL)
+	Duel.SetOperationInfo(0,CATEGORY_CONTROL,nil,1,0,0)
 end
 function c100405037.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
