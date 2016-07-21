@@ -16,7 +16,7 @@ function c100200120.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100200120.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_BATTLE_STEP
+	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_BATTLE_STEP and Duel.GetCurrentChain()==0
 		and e:GetHandler():GetBattledGroupCount()>0
 end
 function c100200120.thfilter(c)
