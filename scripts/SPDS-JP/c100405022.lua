@@ -78,7 +78,7 @@ end
 function c100405022.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		local atkval=Duel.GetMatchingGroupCount(c100405022.atkfilter,tp,LOCATION_ONFIELD,0,nil)*100
+		local atkval=Duel.GetMatchingGroupCount(c100405022.atkfilter,tp,LOCATION_MZONE,0,nil)*100
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
