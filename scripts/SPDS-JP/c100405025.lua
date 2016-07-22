@@ -16,7 +16,7 @@ function c100405025.initial_effect(c)
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DESTROYED)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,100405025)
 	e2:SetCondition(c100405025.rmcon2)
 	e2:SetTarget(c100405025.rmtg2)
@@ -50,11 +50,10 @@ end
 function c100405025.rmop1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 	if g:GetCount()==0 then return end
-	local ct=3
-	if g:GetCount()<3 then ct=g:GetCount() end
+	local ct=math.min(3,g:GetCount())
 	Duel.Hint(HINT_CARD,0,100405025)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
-	local mg=g:FilterSelect(1-tp,Card.IsAbleToRemove,ct,ct,nil,tp)
+	local mg=g:FilterSelect(1-tp,Card.IsAbleToRemove,ct,ct,nil)
 	if mg:GetCount()>0 then
 		Duel.Remove(mg,POS_FACEUP,REASON_EFFECT)
 	end
@@ -66,7 +65,7 @@ function c100405025.rmcon2(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(c100405025.filter,tp,LOCATION_EXTRA,0,1,nil)
 end
 function c100405025.rmtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,0)
 end
 function c100405025.rmop2(e,tp,eg,ep,ev,re,r,rp)
@@ -74,7 +73,7 @@ function c100405025.rmop2(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()==0 then return end
 	Duel.ConfirmCards(tp,g)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local mg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil,tp)
+	local mg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil)
 	if mg:GetCount()>0 then
 		Duel.Remove(mg,POS_FACEUP,REASON_EFFECT)
 	end

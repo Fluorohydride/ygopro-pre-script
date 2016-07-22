@@ -13,7 +13,7 @@ function c100405026.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(c100405026.indtg)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x11ed))
 	e2:SetValue(c100405026.indct)
 	c:RegisterEffect(e2)
 	--cannot be target
@@ -37,9 +37,6 @@ function c100405026.initial_effect(c)
 	e4:SetTarget(c100405026.thtg)
 	e4:SetOperation(c100405026.thop)
 	c:RegisterEffect(e4)
-end
-function c100405026.indtg(e,c)
-	return c:IsSetCard(0x11ed)
 end
 function c100405026.indct(e,re,r,rp)
 	if bit.band(r,REASON_BATTLE)~=0 then
@@ -76,8 +73,8 @@ function c100405026.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(c100405026.filter,tp,LOCATION_EXTRA,0,1,nil)
 end
 function c100405026.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,nil)
-	if chk==0 then return g:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),0,0)
 end
 function c100405026.thop(e,tp,eg,ep,ev,re,r,rp)
