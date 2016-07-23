@@ -59,7 +59,7 @@ function c100405018.limop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(c100405018.chlimit)
 end
 function c100405018.chlimit(e,rp,tp)
-	return tp==rp and e:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return tp==rp or e:IsActiveType(TYPE_MONSTER)
 end
 function c100405018.cfilter(c)
 	return c:IsSetCard(0x21ed) and c:IsType(TYPE_SPELL) and c:IsSSetable()
