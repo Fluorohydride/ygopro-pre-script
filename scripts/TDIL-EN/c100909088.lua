@@ -82,11 +82,12 @@ function c100909088.thfilter(c)
 	return c:IsCode(100909086) and c:IsAbleToHand()
 end
 function c100909088.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(c100909088.cfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToRemoveAsCost()
+		and Duel.IsExistingMatchingCard(c100909088.cfilter,tp,LOCATION_GRAVE,0,1,c,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c100909088.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
-	g:AddCard(e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c100909088.cfilter,tp,LOCATION_GRAVE,0,1,1,c,tp)
+	g:AddCard(c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100909088.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
