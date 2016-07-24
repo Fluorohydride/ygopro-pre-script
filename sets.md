@@ -2,8 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`  
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
-- **July 9, 2016** : INVASION OF VENOM (INOV-JP) : `100910XXX`  
-- **July 21, 2016** : 20th Rival Collection (VP16-JP) : `100208XXX`  
 - **July 29, 2016** : Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 1 promotional card (XXXX-JP) : `100210XXX`  
 - **July 30, 2016** : Jump Victory Carnival 2016 (VF16-JP) : `100209XXX`  
 - **August 5, 2016** : The Dark Illusion (TDIL-EN) : `100909XXX`  
@@ -24,3 +22,5 @@
 - ~~Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`~~  
 - ~~THE DARK ILLUSION (TDIL-JP) : `100909XXX`~~  
 - ~~Yu-Gi-Oh! Duel Monsters Anime Complete Guide: Millennium Memory promotional card (AGMM-JP) : `100299001`~~  
+- ~~INVASION OF VENOM (INOV-JP) : `100910XXX`~~  
+- ~~20th Rival Collection (VP16-JP) : `100208XXX`~~  
