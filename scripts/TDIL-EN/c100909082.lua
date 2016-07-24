@@ -63,7 +63,7 @@ function c100909082.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local mg=Duel.GetMatchingGroup(Card.IsReleasableByEffect,tp,LOCATION_MZONE,0,c)
 	local g=mg:SelectWithSumGreater(tp,Card.GetOriginalLevel,tc:GetLevel()-c:GetOriginalLevel())
 	g:AddCard(c)
-	if g:GetCount()==2 and Duel.Release(g,REASON_EFFECT)~=0 then
+	if g:GetCount()>=2 and Duel.Release(g,REASON_EFFECT)~=0 then
 		local spos=0
 		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then spos=spos+POS_FACEUP_DEFENSE end
 		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN) then spos=spos+POS_FACEDOWN_DEFENSE end
