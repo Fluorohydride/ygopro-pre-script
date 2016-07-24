@@ -28,7 +28,7 @@ function c100405027.filter(c)
 	return c:IsFaceup() and c:IsDestructable()
 end
 function c100405027.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10ec)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(0x10ec)
 end
 function c100405027.lmfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsLevelAbove(7)
