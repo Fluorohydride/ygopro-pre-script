@@ -31,27 +31,25 @@ function c100909082.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	if chk==0 then return true end
 end
-function c100909082.costfilter(c,e,tp,mc)
-	local lv=c:GetLevel()-mc:GetLevel()
+function c100909082.costfilter(c,e,tp,mg,rlv)
+	local lv=c:GetLevel()-rlv
 	return lv>0 and c:IsSetCard(0x1f0) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN))
-		and Duel.CheckReleaseGroup(tp,c100909082.rfilter,1,mc,lv)
-end
-function c100909082.rfilter(c,lv)
-	return c:GetLevel()>=lv and c:IsReleasableByEffect()
+		and mg:CheckWithSumGreater(Card.GetOriginalLevel,lv)
 end
 function c100909082.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
+	local mg=Duel.GetMatchingGroup(Card.IsReleasableByEffect,tp,LOCATION_MZONE,0,c)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
 		return c:IsReleasableByEffect()
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-			and Duel.IsExistingMatchingCard(c100909082.costfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
+			and Duel.IsExistingMatchingCard(c100909082.costfilter,tp,LOCATION_DECK,0,1,nil,e,tp,mg,c:GetOriginalLevel())
 	end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100909082.costfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,c)
+	local g=Duel.SelectMatchingCard(tp,c100909082.costfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,mg,c:GetOriginalLevel())
 	local tc=g:GetFirst()
 	Duel.SendtoGrave(tc,REASON_COST)
 	Duel.SetTargetCard(tc)
@@ -59,10 +57,11 @@ function c100909082.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100909082.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<-1 then return end
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	local g=Duel.SelectReleaseGroup(tp,c100909082.rfilter,1,1,c,tc:GetLevel()-c:GetLevel())
+	local mg=Duel.GetMatchingGroup(Card.IsReleasableByEffect,tp,LOCATION_MZONE,0,c)
+	local g=mg:SelectWithSumGreater(tp,Card.GetOriginalLevel,tc:GetLevel()-c:GetOriginalLevel())
 	g:AddCard(c)
 	if g:GetCount()==2 and Duel.Release(g,REASON_EFFECT)~=0 then
 		local spos=0
