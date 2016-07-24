@@ -47,7 +47,7 @@ function c100405020.pencost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c100405020.penfilter(c)
-	return c:IsSetCard(0x11ed) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
+	return c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function c100405020.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100405020.penfilter,tp,LOCATION_DECK,0,1,nil)
@@ -79,7 +79,7 @@ function c100405020.penop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function c100405020.splimit(e,c)
-	return not c:IsSetCard(0x11ed)
+	return not c:IsSetCard(0x10ec)
 end
 function c100405020.aclimit(e,re,tp)
 	local c=re:GetHandler()

@@ -25,7 +25,7 @@ function c100405024.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100405024.filter1(c)
-	return c:IsSetCard(0x11ed) and c:IsFaceup()
+	return c:IsSetCard(0x10ec) and c:IsFaceup()
 end
 function c100405024.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rec=Duel.GetMatchingGroupCount(c100405024.filter1,tp,LOCATION_MZONE,0,nil)*500
@@ -40,7 +40,7 @@ function c100405024.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(p,rec,REASON_EFFECT)
 end
 function c100405024.filter2(c)
-	return c:IsSetCard(0x11ed) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(0x10ec) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function c100405024.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

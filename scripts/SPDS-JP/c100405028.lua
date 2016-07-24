@@ -15,10 +15,10 @@ end
 function c100405028.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=Duel.GetFieldCard(tp,LOCATION_SZONE,6)
 	local tc2=Duel.GetFieldCard(tp,LOCATION_SZONE,7)
-	return tc1 and tc1:IsSetCard(0x11ed) and tc2 and tc2:IsSetCard(0x11ed)
+	return tc1 and tc1:IsSetCard(0x10ec) and tc2 and tc2:IsSetCard(0x10ec)
 end
 function c100405028.filter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x11ed) and not c:IsForbidden()
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec) and not c:IsForbidden()
 end
 function c100405028.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

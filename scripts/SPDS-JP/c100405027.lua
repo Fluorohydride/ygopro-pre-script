@@ -28,10 +28,10 @@ function c100405027.filter(c)
 	return c:IsFaceup() and c:IsDestructable()
 end
 function c100405027.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11ed)
+	return c:IsFaceup() and c:IsSetCard(0x10ec)
 end
 function c100405027.lmfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11ed) and c:IsLevelAbove(7)
+	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsLevelAbove(7)
 end
 function c100405027.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and c100405027.filter(chkc) end
@@ -54,7 +54,7 @@ function c100405027.chainlm(e,rp,tp)
 	return tp==rp
 end
 function c100405027.filter2(c)
-	return c:IsSetCard(0x11ed) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(0x10ec) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function c100405027.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -63,7 +63,7 @@ function c100405027.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(c100405027.filter2,tp,LOCATION_EXTRA,0,1,nil)
 end
 function c100405027.thfilter(c)
-	return (c:IsSetCard(0x11ed) or (c:IsSetCard(0x21ed) and c:IsType(TYPE_SPELL))) and c:IsAbleToHand()
+	return (c:IsSetCard(0x10ec) or (c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL))) and c:IsAbleToHand()
 end
 function c100405027.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100405027.thfilter,tp,LOCATION_DECK,0,1,nil) end

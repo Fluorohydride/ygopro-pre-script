@@ -46,7 +46,7 @@ function c100405019.initial_effect(c)
 end
 function c100405019.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsSetCard(0x11ed) and not c:IsReason(REASON_REPLACE)
+		and c:IsSetCard(0x10ec) and not c:IsReason(REASON_REPLACE)
 end
 function c100405019.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c100405019.filter,1,nil,tp) and not e:GetHandler():IsStatus(STATUS_DESTROY_CONFIRMED) end
@@ -66,7 +66,7 @@ function c100405019.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (rp==1-tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)) or c:IsReason(REASON_BATTLE)
 end
 function c100405019.spfilter(c,e,tp)
-	return c:IsSetCard(0x11ed) and c:IsLevelBelow(4) and not c:IsCode(100405019) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x10ec) and c:IsLevelBelow(4) and not c:IsCode(100405019) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100405019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

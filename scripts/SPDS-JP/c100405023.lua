@@ -24,7 +24,7 @@ function c100405023.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100405023.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11ed)
+	return c:IsFaceup() and c:IsSetCard(0x10ec)
 end
 function c100405023.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100405023.filter(chkc) end
@@ -71,7 +71,7 @@ function c100405023.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100405023.filter2(c)
-	return c:IsSetCard(0x11ed) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(0x10ec) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function c100405023.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -40,8 +40,8 @@ function c100405016.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100405016.atkcost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsSetCard,1,nil,0x11ed) end
-	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,nil,0x11ed)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsSetCard,1,nil,0x10ec) end
+	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,nil,0x10ec)
 	e:SetLabel(g:GetFirst():GetBaseAttack())
 	Duel.Release(g,REASON_COST)
 end
@@ -64,7 +64,7 @@ function c100405016.atkop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100405016.atkfilter(c)
-	return c:IsSetCard(0x11ed) and c:IsFaceup()
+	return c:IsSetCard(0x10ec) and c:IsFaceup()
 end
 function c100405016.atkcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(c100405016.atkfilter,tp,LOCATION_MZONE,0,nil)>0
@@ -83,7 +83,7 @@ function c100405016.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100405016.cfilter(c)
-	return c:IsSetCard(0x21ed) and c:IsType(TYPE_SPELL) and c:IsSSetable()
+	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and c:IsSSetable()
 end
 function c100405016.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100405016.cfilter(chkc) end

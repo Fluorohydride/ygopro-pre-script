@@ -24,7 +24,7 @@ function c100405025.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100405025.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11ed)
+	return c:IsFaceup() and c:IsSetCard(0x10ec)
 end
 function c100405025.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100405025.filter(chkc) end

@@ -39,7 +39,7 @@ function c100405022.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local seq=e:GetHandler():GetSequence()
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
-	if chk==0 then return tc and tc:IsSetCard(0x11ed) and tc:IsCanBeEffectTarget(e) end
+	if chk==0 then return tc and tc:IsSetCard(0x10ec) and tc:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(tc)
 end
 function c100405022.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -67,10 +67,10 @@ function c100405022.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 function c100405022.splimit(e,c)
-	return not c:IsSetCard(0x11ed)
+	return not c:IsSetCard(0x10ec)
 end
 function c100405022.atkfilter(c)
-	return c:IsSetCard(0x11ed) and c:IsFaceup()
+	return c:IsSetCard(0x10ec) and c:IsFaceup()
 end
 function c100405022.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(c100405022.atkfilter,tp,LOCATION_ONFIELD,0,nil)>0
@@ -91,7 +91,7 @@ function c100405022.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
 function c100405022.filter(c)
-	return c:IsSetCard(0x11ed) and c:IsAbleToHand() and not c:IsCode(100405022)
+	return c:IsSetCard(0x10ec) and c:IsAbleToHand() and not c:IsCode(100405022)
 end
 function c100405022.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100405022.filter,tp,LOCATION_DECK,0,1,nil) end

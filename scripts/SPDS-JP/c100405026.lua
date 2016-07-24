@@ -13,7 +13,7 @@ function c100405026.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x11ed))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x10ec))
 	e2:SetValue(c100405026.indct)
 	c:RegisterEffect(e2)
 	--cannot be target
@@ -44,7 +44,7 @@ function c100405026.indct(e,re,r,rp)
 	else return 0 end
 end
 function c100405026.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11ed)
+	return c:IsFaceup() and c:IsSetCard(0x10ec)
 end
 function c100405026.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100405026.filter(chkc) end

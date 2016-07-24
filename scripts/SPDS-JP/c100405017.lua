@@ -41,10 +41,10 @@ function c100405017.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100405017.atkfilter1(c,tp)
-	return c:IsSetCard(0x11ed) and Duel.IsExistingTarget(c100405017.atkfilter2,tp,LOCATION_MZONE,0,1,c)
+	return c:IsSetCard(0x10ec) and Duel.IsExistingTarget(c100405017.atkfilter2,tp,LOCATION_MZONE,0,1,c)
 end
 function c100405017.atkfilter2(c)
-	return c:IsSetCard(0x11ed) and c:IsFaceup()
+	return c:IsSetCard(0x10ec) and c:IsFaceup()
 end
 function c100405017.atkcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100405017.atkfilter1,1,nil,tp) end

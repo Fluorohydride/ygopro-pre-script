@@ -60,7 +60,7 @@ function c100405021.atkop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100405021.thfilter(c,atk)
-	return c:IsFaceup() and c:IsSetCard(0x11ed) and c:IsType(TYPE_PENDULUM) and c:IsAttackBelow(atk) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsAttackBelow(atk) and c:IsAbleToHand()
 end
 function c100405021.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100405021.thfilter,tp,LOCATION_EXTRA,0,1,nil,ev) end
@@ -98,7 +98,7 @@ function c100405021.setcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100405021.cfilter(c)
-	return c:IsSetCard(0x21ed) and c:IsType(TYPE_SPELL) and c:IsSSetable()
+	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and c:IsSSetable()
 end
 function c100405021.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
