@@ -86,7 +86,7 @@ function c100405019.descon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_SZONE) and (c:GetPreviousSequence()==6 or c:GetPreviousSequence()==7)
 end
 function c100405019.desfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsDestructable()
+	return c:IsFaceup() and c:IsLevelBelow(4)
 end
 function c100405019.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100405019.desfilter(chkc) end

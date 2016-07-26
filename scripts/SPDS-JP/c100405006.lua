@@ -27,7 +27,7 @@ function c100405006.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100405006.desfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL) and c:IsDestructable()
+	return c:IsFaceup() and c:IsType(TYPE_SPELL)
 end
 function c100405006.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c100405006.desfilter(chkc) end

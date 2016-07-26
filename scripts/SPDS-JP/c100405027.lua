@@ -24,9 +24,6 @@ function c100405027.initial_effect(c)
 	e2:SetOperation(c100405027.thop)
 	c:RegisterEffect(e2)
 end
-function c100405027.filter(c)
-	return c:IsFaceup() and c:IsDestructable()
-end
 function c100405027.cfilter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(0x10ec)
 end
@@ -34,15 +31,15 @@ function c100405027.lmfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsLevelAbove(7)
 end
 function c100405027.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and c100405027.filter(chkc) end
+	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingMatchingCard(c100405027.cfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingTarget(c100405027.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	local g=Duel.GetMatchingGroup(c100405027.cfilter,tp,LOCATION_MZONE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local sg=Duel.SelectTarget(tp,c100405027.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
+	local sg=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,sg:GetCount(),0,0)
-	if Duel.IsExistingMatchingCard(c100405027.lmfilter,tp,LOCATION_MZONE,0,1,nil) then
+	if Duel.IsExistingMatchingCard(c100405027.lmfilter,tp,LOCATION_MZONE,0,1,nil) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		Duel.SetChainLimit(c100405027.chainlm)
 	end
 end
