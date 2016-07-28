@@ -2,7 +2,7 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`  
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
-- **July 29, 2016** : Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 1 promotional card (XXXX-JP) : `100210XXX`  
+- **July 29, 2016** : Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 1 promotional card (YS01-JP) : `100210XXX`  
 - **July 30, 2016** : Jump Victory Carnival 2016 (VF16-JP) : `100209XXX`  
 - **August 5, 2016** : The Dark Illusion (TDIL-EN) : `100909XXX`  
 - **August 6, 2016**  : Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`  
