@@ -14,7 +14,7 @@ function c100405037.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100405037.costfilter(c)
-	return (c:IsSetCard(0x1ef) or c:IsCode(67316075,57579381,47664723,85771019,11260714,40921744,55690251))
+	return c:IsSetCard(0xef)
 		and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()
 end
 function c100405037.cost(e,tp,eg,ep,ev,re,r,rp,chk)

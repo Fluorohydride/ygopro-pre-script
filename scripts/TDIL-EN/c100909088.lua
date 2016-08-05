@@ -54,7 +54,7 @@ function c100909088.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c100909088.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1f1)
+	return c:IsFaceup() and c:IsSetCard(0xee)
 end
 function c100909088.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100909088.atkfilter(chkc) end
@@ -75,7 +75,7 @@ function c100909088.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100909088.cfilter(c,tp)
-	return c:IsSetCard(0x1f1) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0xee) and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingTarget(c100909088.thfilter,tp,LOCATION_GRAVE,0,1,c)
 end
 function c100909088.thfilter(c)

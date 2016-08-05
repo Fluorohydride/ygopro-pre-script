@@ -14,7 +14,7 @@ function c100405036.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100405036.costfilter(c)
-	return (c:IsSetCard(0x1ef) or c:IsCode(67316075,57579381,47664723,85771019,11260714,40921744,55690251))
+	return c:IsSetCard(0xef)
 		and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end

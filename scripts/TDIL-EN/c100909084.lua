@@ -33,7 +33,7 @@ function c100909084.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100909084.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1f0) and c:IsDiscardable()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xed) and c:IsDiscardable()
 end
 function c100909084.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100909084.tgfilter,tp,LOCATION_HAND,0,1,nil)

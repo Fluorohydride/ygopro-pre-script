@@ -33,7 +33,7 @@ function c100909082.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100909082.costfilter(c,e,tp,mg,rlv)
 	local lv=c:GetLevel()-rlv
-	return lv>0 and c:IsSetCard(0x1f0) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return lv>0 and c:IsSetCard(0xed) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN))
 		and mg:CheckWithSumGreater(Card.GetOriginalLevel,lv)
 end
@@ -71,7 +71,7 @@ function c100909082.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100909082.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSetCard,1,nil,0x11f0)
+	return eg:IsExists(Card.IsSetCard,1,nil,0x10ed)
 end
 function c100909082.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

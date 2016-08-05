@@ -27,7 +27,7 @@ function c100909087.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100909087.thfilter(c)
-	return c:IsSetCard(0x11f1) and c:IsAbleToHand()
+	return c:IsSetCard(0x10ee) and c:IsAbleToHand()
 end
 function c100909087.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100909087.thfilter,tp,LOCATION_DECK,0,1,nil) end

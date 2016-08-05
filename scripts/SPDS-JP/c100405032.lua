@@ -27,7 +27,7 @@ function c100405032.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100405032.cfilter(c)
-	return (c:IsSetCard(0x1ef) or c:IsCode(67316075,57579381,47664723,85771019,11260714,40921744,55690251)) and c:IsDiscardable()
+	return c:IsSetCard(0xef) and c:IsDiscardable()
 end
 function c100405032.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100405032.cfilter,tp,LOCATION_HAND,0,2,e:GetHandler()) end
@@ -51,7 +51,7 @@ function c100405032.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function c100405032.cpfilter(c)
-	return (c:IsSetCard(0x1ef) or c:IsCode(67316075,57579381,47664723,85771019,11260714,40921744,55690251)) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsSetCard(0xef) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
 end
 function c100405032.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then

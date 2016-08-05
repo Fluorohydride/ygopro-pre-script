@@ -32,7 +32,7 @@ function c100909085.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100909085.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1f0) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xed) and c:IsAbleToHand()
 end
 function c100909085.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -45,7 +45,7 @@ function c100909085.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100909085.filter(c)
-	return c:IsSetCard(0x1f0) and c:IsFacedown() and c:IsDefensePos()
+	return c:IsSetCard(0xed) and c:IsFacedown() and c:IsDefensePos()
 end
 function c100909085.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100909085.filter,tp,LOCATION_MZONE,0,1,nil) end
