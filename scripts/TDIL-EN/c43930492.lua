@@ -1,5 +1,4 @@
 --Magical Something
---Script by mercury233
 function c43930492.initial_effect(c)
 	c:EnableCounterPermit(0x1)
 	--add counter

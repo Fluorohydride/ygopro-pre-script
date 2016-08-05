@@ -1,5 +1,4 @@
 --SPYRAL Super Agent
---Script by nekrozar
 function c41091257.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

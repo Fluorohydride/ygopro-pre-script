@@ -1,5 +1,4 @@
 --Subterror Behemoth Umastryx
---Script by nekrozar
 function c42713844.initial_effect(c)
 	--flip
 	local e1=Effect.CreateEffect(c)

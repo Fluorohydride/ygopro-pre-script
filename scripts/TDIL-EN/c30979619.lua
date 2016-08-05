@@ -1,5 +1,4 @@
 --SPYRAL GEAR - Big Red
---Script by nekrozar
 function c30979619.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

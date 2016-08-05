@@ -1,5 +1,4 @@
 --SPYRAL Quik-Fix
---Script by nekrozar
 function c78080961.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)

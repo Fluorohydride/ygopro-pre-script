@@ -1,5 +1,4 @@
 --The Hidden City
---Script by dest
 function c5697558.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

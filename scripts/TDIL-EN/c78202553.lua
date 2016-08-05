@@ -1,5 +1,4 @@
 --Subterror Behemoth Stalagmo
---Script by dest
 function c78202553.initial_effect(c)
 	--flip
 	local e1=Effect.CreateEffect(c)

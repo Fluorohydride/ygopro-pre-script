@@ -1,5 +1,4 @@
 --SPYRAL GEAR - Drone
---Script by nekrozar
 function c4474060.initial_effect(c)
 	--sort
 	local e1=Effect.CreateEffect(c)
