@@ -17,7 +17,6 @@ function c100405003.initial_effect(c)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,100405003+EFFECT_COUNT_CODE_DUEL)
-	e2:SetTarget(c100405003.regtg)
 	e2:SetOperation(c100405003.regop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -41,9 +40,6 @@ function c100405003.atlimit(e,c)
 end
 function c100405003.thfilter(c)
 	return c:IsSetCard(0x8) and c:IsAbleToHand()
-end
-function c100405003.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0x8) end
 end
 function c100405003.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

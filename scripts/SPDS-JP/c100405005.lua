@@ -28,6 +28,7 @@ function c100405005.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e3:SetCountLimit(1)
+	e3:SetCondition(c100405005.deckcon)
 	e3:SetCost(c100405005.deckcost)
 	e3:SetTarget(c100405005.decktg)
 	e3:SetOperation(c100405005.deckop)
@@ -66,12 +67,15 @@ function c100405005.disop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function c100405005.deckcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
+end
 function c100405005.cfilter(c)
 	return c:IsSetCard(0xc008) and c:IsAbleToRemoveAsCost()
 end
 function c100405005.deckcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetTurnPlayer()==tp and c:IsAbleToRemoveAsCost()
+	if chk==0 then return c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingMatchingCard(c100405005.cfilter,tp,LOCATION_GRAVE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c100405005.cfilter,tp,LOCATION_GRAVE,0,1,1,c)
