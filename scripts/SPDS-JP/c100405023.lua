@@ -16,7 +16,7 @@ function c100405023.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100405023,0))
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetCondition(c100405023.tdcon)
 	e2:SetTarget(c100405023.tdtg)
@@ -35,39 +35,25 @@ end
 function c100405023.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		local g=Group.CreateGroup()
-		g:KeepAlive()
+		tc:RegisterFlagEffect(100405023,RESET_EVENT+0x1220000+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100405023,0))
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_DAMAGE_STEP_END)
-		e1:SetLabelObject(g)
+		e1:SetLabelObject(tc)
+		e1:SetCondition(c100405023.retcon)
 		e1:SetOperation(c100405023.retop)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
-		--
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_BATTLED)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetLabelObject(e1)
-		e2:SetOperation(c100405023.regop)
-		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e2)
 	end
+end
+function c100405023.retcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetLabelObject():GetFlagEffect(100405023)~=0
 end
 function c100405023.retop(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject()
-	if g:GetCount()>0 then
-		local sg=g:Filter(Card.IsRelateToBattle,nil)
-		Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		g:Clear()
-	end
-end
-function c100405023.regop(e,tp,eg,ep,ev,re,r,rp)
-	local bc=e:GetHandler():GetBattleTarget()
-	if bc and not bc:IsStatus(STATUS_BATTLE_DESTROYED) then
-		local g=e:GetLabelObject():GetLabelObject()
-		g:AddCard(bc)
+	local tc=e:GetLabelObject()
+	local bc=tc:GetBattleTarget()
+	if bc and not bc:IsStatus(STATUS_BATTLE_DESTROYED) and bc:IsRelateToBattle() then
+		Duel.SendtoHand(bc,nil,REASON_EFFECT)
 	end
 end
 function c100405023.filter2(c)

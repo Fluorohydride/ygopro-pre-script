@@ -35,7 +35,7 @@ end
 function c100405025.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		tc:RegisterFlagEffect(100405025,RESET_EVENT+0x1220000+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100405025,0))
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -52,9 +52,8 @@ function c100405025.rmcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(tc) and tc:GetFlagEffect(100405025)~=0
 end
 function c100405025.rmop1(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
-	if g:GetCount()==0 then return end
-	local ct=math.min(3,g:GetCount())
+	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)
+	if ct<3 then return end
 	Duel.Hint(HINT_CARD,0,100405025)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
 	local mg=g:FilterSelect(1-tp,Card.IsAbleToRemove,ct,ct,nil)
