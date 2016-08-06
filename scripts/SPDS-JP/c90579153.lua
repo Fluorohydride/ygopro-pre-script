@@ -1,62 +1,62 @@
 --D-HERO ディストピアガイ
 --Destiny HERO - Dystopiaguy
 --Script by dest
-function c100405004.initial_effect(c)
+function c90579153.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0xc008),2,true)
 	--damage
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100405004,0))
+	e1:SetDescription(aux.Stringid(90579153,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e1:SetCountLimit(1,100405004)
-	e1:SetTarget(c100405004.damtg)
-	e1:SetOperation(c100405004.damop)
+	e1:SetCountLimit(1,90579153)
+	e1:SetTarget(c90579153.damtg)
+	e1:SetOperation(c90579153.damop)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100405004,1))
+	e2:SetDescription(aux.Stringid(90579153,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1,100405104)
-	e2:SetCondition(c100405004.descon)
-	e2:SetTarget(c100405004.destg)
-	e2:SetOperation(c100405004.desop)
+	e2:SetCountLimit(1,90579154)
+	e2:SetCondition(c90579153.descon)
+	e2:SetTarget(c90579153.destg)
+	e2:SetOperation(c90579153.desop)
 	c:RegisterEffect(e2)
 end
-function c100405004.filter(c)
+function c90579153.filter(c)
 	return c:IsSetCard(0xc008) and c:IsLevelBelow(4) and c:GetAttack()>0
 end
-function c100405004.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100405004.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100405004.filter,tp,LOCATION_GRAVE,0,1,nil) end
+function c90579153.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c90579153.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c90579153.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c100405004.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c90579153.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetFirst():GetAttack())
 end
-function c100405004.damop(e,tp,eg,ep,ev,re,r,rp)
+function c90579153.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Damage(1-tp,tc:GetAttack(),REASON_EFFECT)
 	end
 end
-function c100405004.descon(e,tp,eg,ep,ev,re,r,rp)
+function c90579153.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetAttack()~=c:GetBaseAttack()
 end
-function c100405004.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c90579153.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
-function c100405004.desop(e,tp,eg,ep,ev,re,r,rp)
+function c90579153.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then

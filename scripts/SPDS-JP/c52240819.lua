@@ -1,20 +1,20 @@
 --魔界劇団－デビル・ヒール
 --Abyss Actor - Evil Heel
 --Script by mercury233
-function c100405016.initial_effect(c)
+function c52240819.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--atk down (p zone)
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100405016,0))
+	e1:SetDescription(aux.Stringid(52240819,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(c100405016.atkcost1)
-	e1:SetTarget(c100405016.atktg)
-	e1:SetOperation(c100405016.atkop1)
+	e1:SetCost(c52240819.atkcost1)
+	e1:SetTarget(c52240819.atktg)
+	e1:SetOperation(c52240819.atkop1)
 	c:RegisterEffect(e1)
 	--atk down (summon)
 	local e2=Effect.CreateEffect(c)
@@ -22,9 +22,9 @@ function c100405016.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetCondition(c100405016.atkcon2)
-	e2:SetTarget(c100405016.atktg)
-	e2:SetOperation(c100405016.atkop2)
+	e2:SetCondition(c52240819.atkcon2)
+	e2:SetTarget(c52240819.atktg)
+	e2:SetOperation(c52240819.atkop2)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -35,23 +35,23 @@ function c100405016.initial_effect(c)
 	e4:SetCode(EVENT_BATTLE_DESTROYING)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCondition(aux.bdocon)
-	e4:SetTarget(c100405016.settg)
-	e4:SetOperation(c100405016.setop)
+	e4:SetTarget(c52240819.settg)
+	e4:SetOperation(c52240819.setop)
 	c:RegisterEffect(e4)
 end
-function c100405016.atkcost1(e,tp,eg,ep,ev,re,r,rp,chk)
+function c52240819.atkcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsSetCard,1,nil,0x10ec) end
 	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,nil,0x10ec)
 	e:SetLabel(g:GetFirst():GetBaseAttack())
 	Duel.Release(g,REASON_COST)
 end
-function c100405016.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c52240819.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 end
-function c100405016.atkop1(e,tp,eg,ep,ev,re,r,rp)
+function c52240819.atkop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
@@ -63,17 +63,17 @@ function c100405016.atkop1(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function c100405016.atkfilter(c)
+function c52240819.atkfilter(c)
 	return c:IsSetCard(0x10ec) and c:IsFaceup()
 end
-function c100405016.atkcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(c100405016.atkfilter,tp,LOCATION_MZONE,0,nil)>0
+function c52240819.atkcon2(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetMatchingGroupCount(c52240819.atkfilter,tp,LOCATION_MZONE,0,nil)>0
 end
-function c100405016.atkop2(e,tp,eg,ep,ev,re,r,rp)
+function c52240819.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local atkval=Duel.GetMatchingGroupCount(c100405016.atkfilter,tp,LOCATION_MZONE,0,nil)*1000
+		local atkval=Duel.GetMatchingGroupCount(c52240819.atkfilter,tp,LOCATION_MZONE,0,nil)*1000
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -82,18 +82,18 @@ function c100405016.atkop2(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function c100405016.cfilter(c)
+function c52240819.cfilter(c)
 	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and c:IsSSetable()
 end
-function c100405016.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100405016.cfilter(chkc) end
+function c52240819.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c52240819.cfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c100405016.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c52240819.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectTarget(tp,c100405016.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c52240819.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
-function c100405016.setop(e,tp,eg,ep,ev,re,r,rp)
+function c52240819.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsSSetable() then
 		Duel.SSet(tp,tc)

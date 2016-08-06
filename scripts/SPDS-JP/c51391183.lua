@@ -1,18 +1,18 @@
 --魔界劇団－ワイルド・ホープ
 --Abyss Actor - Wild Hope
 --Script by mercury233
-function c100405022.initial_effect(c)
+function c51391183.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--scale
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100405022,0))
+	e1:SetDescription(aux.Stringid(51391183,0))
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1)
-	e1:SetTarget(c100405022.target)
-	e1:SetOperation(c100405022.operation)
+	e1:SetTarget(c51391183.target)
+	e1:SetOperation(c51391183.operation)
 	c:RegisterEffect(e1)
 	--atk up
 	local e2=Effect.CreateEffect(c)
@@ -20,8 +20,8 @@ function c100405022.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(c100405022.atkcon)
-	e2:SetOperation(c100405022.atkop)
+	e2:SetCondition(c51391183.atkcon)
+	e2:SetOperation(c51391183.atkop)
 	c:RegisterEffect(e2)
 	--to hand
 	local e3=Effect.CreateEffect(c)
@@ -29,20 +29,20 @@ function c100405022.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_DESTROYED)
-	e3:SetCountLimit(1,100405022)
-	e3:SetCondition(c100405022.thcon)
-	e3:SetTarget(c100405022.thtg)
-	e3:SetOperation(c100405022.thop)
+	e3:SetCountLimit(1,51391183)
+	e3:SetCondition(c51391183.thcon)
+	e3:SetTarget(c51391183.thtg)
+	e3:SetOperation(c51391183.thop)
 	c:RegisterEffect(e3)
 end
-function c100405022.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c51391183.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local seq=e:GetHandler():GetSequence()
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
 	if chk==0 then return tc and tc:IsSetCard(0x10ec) and tc:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(tc)
 end
-function c100405022.operation(e,tp,eg,ep,ev,re,r,rp)
+function c51391183.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
@@ -62,23 +62,23 @@ function c100405022.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(1,0)
-	e3:SetTarget(c100405022.splimit)
+	e3:SetTarget(c51391183.splimit)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
-function c100405022.splimit(e,c)
+function c51391183.splimit(e,c)
 	return not c:IsSetCard(0x10ec)
 end
-function c100405022.atkfilter(c)
+function c51391183.atkfilter(c)
 	return c:IsSetCard(0x10ec) and c:IsFaceup()
 end
-function c100405022.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(c100405022.atkfilter,tp,LOCATION_ONFIELD,0,nil)>0
+function c51391183.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetMatchingGroupCount(c51391183.atkfilter,tp,LOCATION_ONFIELD,0,nil)>0
 end
-function c100405022.atkop(e,tp,eg,ep,ev,re,r,rp)
+function c51391183.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		local atkval=Duel.GetMatchingGroupCount(c100405022.atkfilter,tp,LOCATION_MZONE,0,nil)*100
+		local atkval=Duel.GetMatchingGroupCount(c51391183.atkfilter,tp,LOCATION_MZONE,0,nil)*100
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -87,19 +87,19 @@ function c100405022.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function c100405022.thcon(e,tp,eg,ep,ev,re,r,rp)
+function c51391183.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
-function c100405022.filter(c)
-	return c:IsSetCard(0x10ec) and c:IsAbleToHand() and not c:IsCode(100405022)
+function c51391183.filter(c)
+	return c:IsSetCard(0x10ec) and c:IsAbleToHand() and not c:IsCode(51391183)
 end
-function c100405022.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100405022.filter,tp,LOCATION_DECK,0,1,nil) end
+function c51391183.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c51391183.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function c100405022.thop(e,tp,eg,ep,ev,re,r,rp)
+function c51391183.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100405022.filter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c51391183.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
