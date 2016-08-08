@@ -55,12 +55,12 @@ end
 function c100200121.spfilter(c,e,tp)
 	return c:IsCode(75347539) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
-function c100200121.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100200121.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100200121.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
-function c100200121.spop2(e,tp,eg,ep,ev,re,r,rp)
+function c100200121.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100200121.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
