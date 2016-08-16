@@ -41,6 +41,7 @@ function c100911001.rctg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c100911001.rcfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function c100911001.rcop1(e,tp,eg,ep,ev,re,r,rp)
+	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
