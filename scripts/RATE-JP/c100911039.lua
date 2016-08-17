@@ -34,7 +34,7 @@ function c100911039.initial_effect(c)
 	e3:SetOperation(c100911039.rmop)
 	c:RegisterEffect(e3)
 end
-function c101180260.ffilter(c)
+function c100911039.ffilter(c)
 	return c:IsFusionSetCard(0x1f1) or c:IsFusionCode(16178681,72378329,1516510)
 end
 function c100911039.atkcon(e,tp,eg,ep,ev,re,r,rp)
