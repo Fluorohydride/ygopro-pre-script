@@ -68,7 +68,8 @@ function c100911001.rcop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100911001.efcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_FUSION+REASON_SYNCHRO+REASON_XYZ
+	return bit.band(r,REASON_FUSION+REASON_SYNCHRO+REASON_XYZ)~=0
+		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100911001.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
