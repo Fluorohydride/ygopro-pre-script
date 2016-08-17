@@ -27,8 +27,8 @@ function c100911008.cfilter2(c)
 	return c:IsFacedown() or not c:IsAttribute(ATTRIBUTE_WIND)
 end
 function c100911008.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100911008.cfilter,tp,LOCATION_MZONE,0,2,nil)
-		and not Duel.IsExistingMatchingCard(c100911008.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100911008.cfilter1,tp,LOCATION_MZONE,0,2,nil)
+		and not Duel.IsExistingMatchingCard(c100911008.cfilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100911008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
