@@ -6,7 +6,7 @@ function c100303002.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
-	e1:SetValue(c100303001.valcheck)
+	e1:SetValue(c100303002.valcheck)
 	c:RegisterEffect(e1)
 	--summon success
 	local e2=Effect.CreateEffect(c)
