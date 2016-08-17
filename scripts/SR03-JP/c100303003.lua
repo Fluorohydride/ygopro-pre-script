@@ -24,7 +24,7 @@ function c100303003.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100303003.thfilter(c)
-	return c:IsSetCard(0x51) and not c:IsCode(100303003) and c:IsAbleToHand()
+	return c:IsSetCard(0x7) and not c:IsCode(100303003) and c:IsAbleToHand()
 end
 function c100303003.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100303003.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -46,7 +46,7 @@ function c100303003.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SSET)
-	Duel.RegisterEffect(e1,tp)
+	Duel.RegisterEffect(e2,tp)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_CANNOT_TURN_SET)
 	Duel.RegisterEffect(e3,tp)
