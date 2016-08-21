@@ -88,16 +88,15 @@ end
 function c100911005.ddop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
 	Duel.DiscardDeck(tp,1,REASON_EFFECT)
-	local c=e:GetHandler()
-	local rc=c:GetReasonCard()
 	local tc=Duel.GetOperatedGroup():GetFirst()
-	if tc and rc:IsRelateToEffect(e) and rc:IsFaceup() and tc:IsSetCard(0x2016)
-		and tc:IsType(TYPE_MONSTER) and tc:IsLocation(LOCATION_GRAVE) then
+	local c=e:GetHandler()
+	local sync=c:GetReasonCard()
+	if tc and tc:IsSetCard(0x2016) and tc:IsType(TYPE_MONSTER) and tc:IsLocation(LOCATION_GRAVE) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
-		rc:RegisterEffect(e1)
+		sync:RegisterEffect(e1)
 	end
 end
