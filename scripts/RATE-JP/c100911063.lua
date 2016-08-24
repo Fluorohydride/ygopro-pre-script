@@ -1,5 +1,5 @@
 --超量必殺アルファンボール
---
+--Super Quantal Finisher Alphan Ball
 --Script by nekrozar
 function c100911063.initial_effect(c)
 	--Activate
