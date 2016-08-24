@@ -29,25 +29,26 @@ function c100911063.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100911063.cfilter,tp,LOCATION_MZONE,0,nil)
 	return g:GetClassCount(Card.GetCode)>=3
 end
+function c100911063.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,nil)
+		and Duel.IsPlayerCanSpecialSummon(1-tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)>0 end
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
+end
 function c100911063.spfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
-function c100911063.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
-end
 function c100911063.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
 	if Duel.SendtoDeck(g,nil,2,REASON_EFFECT)~=0
 		and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c100911063.spfilter,1-tp,LOCATION_EXTRA,0,1,nil,e,tp) then
+		and Duel.IsExistingMatchingCard(c100911063.spfilter,1-tp,LOCATION_EXTRA,0,1,nil,e,1-tp) then
 		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(1-tp,c100911063.spfilter,1-tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
+		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectMatchingCard(1-tp,c100911063.spfilter,1-tp,LOCATION_EXTRA,0,1,1,nil,e,1-tp)
 		local tc=g:GetFirst()
 		if tc then
-			Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
+			Duel.SpecialSummon(tc,0,1-tp,1-tp,true,false,POS_FACEUP)
 		end
 	end
 end
@@ -55,18 +56,19 @@ function c100911063.costfilter(c)
 	return c:IsCode(58753372) and c:IsAbleToRemoveAsCost()
 end
 function c100911063.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(c100911063.costfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToRemoveAsCost()
+		and Duel.IsExistingMatchingCard(c100911063.costfilter,tp,LOCATION_GRAVE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c100911063.costfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	g:AddCard(e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c100911063.costfilter,tp,LOCATION_GRAVE,0,1,1,c)
+	g:AddCard(c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100911063.actfilter(c,tp)
 	return c:IsCode(10424147) and c:GetActivateEffect():IsActivatable(tp)
 end
 function c100911063.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c97970833.actfilter,tp,LOCATION_DECK,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100911063.actfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 end
 function c100911063.actop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstMatchingCard(c100911063.actfilter,tp,LOCATION_DECK,0,nil,tp)
