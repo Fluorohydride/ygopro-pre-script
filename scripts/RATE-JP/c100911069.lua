@@ -15,7 +15,7 @@ function c100911069.initial_effect(c)
 		c100911069.global_check=true
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_LEAVE_FIELD_P)
+		ge1:SetCode(EVENT_TO_GRAVE)
 		ge1:SetOperation(c100911069.checkop)
 		Duel.RegisterEffect(ge1,tp)
 	end
