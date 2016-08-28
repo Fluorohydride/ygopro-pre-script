@@ -34,6 +34,7 @@ function c100911044.initial_effect(c)
 	e4:SetCondition(c100911044.spcon)
 	e4:SetTarget(c100911044.sptg)
 	e4:SetOperation(c100911044.spop)
+	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 end
 function c100911044.dircon(e,tp,eg,ep,ev,re,r,rp)
@@ -59,15 +60,22 @@ function c100911044.dirop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100911044.spreg(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if bit.band(r,REASON_EFFECT+REASON_DESTROY)~=REASON_EFFECT+REASON_DESTROY then return end
-	e:GetHandler():RegisterFlagEffect(100911044,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY,0,1)
+	if Duel.GetCurrentPhase()==PHASE_STANDBY then
+		e:SetLabel(Duel.GetTurnCount())
+		c:RegisterFlagEffect(100911044,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY,0,2)
+	else
+		e:SetLabel(0)
+		c:RegisterFlagEffect(100911044,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY,0,1)
+	end
 end
 function c100911044.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(100911044)>0
+	return e:GetLabelObject():GetLabel()~=Duel.GetTurnCount() and e:GetHandler():GetFlagEffect(100911044)>0
 end
 function c100911044.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
 	local c=e:GetHandler()
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	c:ResetFlagEffect(100911044)
 end
