@@ -26,12 +26,11 @@ function c100911021.initial_effect(c)
 	e2:SetOperation(c100911021.spop2)
 	c:RegisterEffect(e2)
 end
-function c100911020.cfilter(c)
 	return c:IsSetCard(0xea) and c:IsDiscardable()
 end
 function c100911021.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100911020.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c100911020.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100911021.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	Duel.DiscardHand(tp,c100911021.cfilter,1,1,REASON_COST+REASON_DISCARD,e:GetHandler())
 end
 function c100911021.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end

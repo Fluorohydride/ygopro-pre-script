@@ -69,5 +69,6 @@ function c100911020.scop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		tc:RegisterEffect(e2,true)
 		Duel.SynchroSummon(tp,sg:GetFirst(),nil,mg)
+		Duel.ShuffleDeck(tp)
 	end
 end
