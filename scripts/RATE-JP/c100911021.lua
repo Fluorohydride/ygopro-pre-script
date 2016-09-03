@@ -26,6 +26,7 @@ function c100911021.initial_effect(c)
 	e2:SetOperation(c100911021.spop2)
 	c:RegisterEffect(e2)
 end
+function c100911021.cfilter(c)
 	return c:IsSetCard(0xea) and c:IsDiscardable()
 end
 function c100911021.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
