@@ -5,7 +5,7 @@ function c100406014.initial_effect(c)
 	--tohand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100406014,0))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -46,7 +46,8 @@ function c100406014.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100406014.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and e:GetHandler():GetReasonCard():IsSetCard(0xad)
+	local c=e:GetHandler()
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and c:GetReasonCard():IsSetCard(0xad)
 end
 function c100406014.tgfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER)

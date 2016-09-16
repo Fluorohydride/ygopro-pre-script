@@ -26,7 +26,7 @@ end
 function c100911070.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c100911070.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	if chk==0 then return true end
-	if c100911070.spcon(e,tp,eg,ep,ev,re,r,rp) and c100911070.sptg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(100911070,0)) then
+	if c100911070.spcon(e,tp,eg,ep,ev,re,r,rp) and c100911070.sptg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,94) then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		e:SetOperation(c100911070.spop)

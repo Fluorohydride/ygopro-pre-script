@@ -44,18 +44,18 @@ function c100211001.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100211001.cfilter1(c)
-	return c:IsSetCard(0x2016) and c:IsType(TYPE_TUNER) and c:IsAbleToGraveAsCost()
-		and Duel.IsExistingMatchingCard(c100211001.cfilter2,tp,LOCATION_MZONE,0,1,nil,c:GetLevel())
+	return c:IsSetCard(0x2016) and c:IsType(TYPE_TUNER) and c:IsAbleToGraveAsCost() and c:IsLevelBelow(7)
+		and Duel.IsExistingMatchingCard(c100211001.cfilter2,tp,LOCATION_MZONE,0,1,c,c:GetLevel())
 end
 function c100211001.cfilter2(c,lv)
-	return c:IsNotTuner() and c:GetLevel()==7-lv and c:IsAbleToGraveAsCost()
+	return c:IsNotTuner() and c:GetLevel()==lv and c:IsAbleToGraveAsCost()
 end
 function c100211001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100211001.cfilter1,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=Duel.SelectMatchingCard(tp,c100211001.cfilter1,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(tp,c100211001.cfilter2,tp,LOCATION_MZONE,0,1,1,nil,g1:GetFirst():GetLevel())
+	local g2=Duel.SelectMatchingCard(tp,c100211001.cfilter2,tp,LOCATION_MZONE,0,1,1,g1:GetFirst(),g1:GetFirst():GetLevel())
 	g1:Merge(g2)
 	Duel.SendtoGrave(g1,REASON_COST)
 end
@@ -79,7 +79,7 @@ function c100211001.filter(c)
 	return c:GetSummonLocation()==LOCATION_EXTRA and not (c:GetAttack()==0 and c:IsDisabled())
 end
 function c100211001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100211001.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100211001.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100211001.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100211001.filter,tp,0,LOCATION_MZONE,1,1,nil)
@@ -106,6 +106,13 @@ function c100211001.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetValue(RESET_TURN_SET)
 		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
+		if tc:IsType(TYPE_TRAPMONSTER) then
+			local e4=Effect.CreateEffect(c)
+			e4:SetType(EFFECT_TYPE_SINGLE)
+			e4:SetCode(EFFECT_DISABLE_TRAPMONSTER)
+			e4:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			tc:RegisterEffect(e4)
+		end
 	end
 end
 function c100211001.pencon(e,tp,eg,ep,ev,re,r,rp)
