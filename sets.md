@@ -3,7 +3,9 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
 - **September 24, 2016**  : Structure Deck R: Machine Dragon Re-Volt (SR03-JP) : `100303XXX`  
+- **October 4, 2016**  : Yu-Gi-Oh! ARC-V Volume 2 promotional card (YA02-JP) : `100211XXX`  
 - **October 8, 2016**  : RAGING TEMPEST (RATE-JP) : `100911XXX`  
+- **November 12, 2016**  : Booster SP: Fusion Enforcers (SPFE-JP) : `100406XXX`  
 
 #Archived
 - ~~May 14, 2016  : Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~  
