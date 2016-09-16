@@ -46,7 +46,7 @@ function c100406014.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100406014.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and c:GetReasonCard():IsSetCard(0xad)
+	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and e:GetHandler():GetReasonCard():IsSetCard(0xad)
 end
 function c100406014.tgfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
