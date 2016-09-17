@@ -20,7 +20,7 @@ function c100911060.filter(c,e,tp,m1,m2,ft)
 	if ft>0 then
 		return mg:CheckWithSumGreater(Card.GetRitualLevel,c:GetLevel(),c)
 	else
-		return ft>-1 and mg:IsExists(c100911060.mfilterf,1,nil,tp,mg,c)
+		return mg:IsExists(c100911060.mfilterf,1,nil,tp,mg,c)
 	end
 end
 function c100911060.mfilterf(c,tp,mg,rc)
@@ -30,14 +30,14 @@ function c100911060.mfilterf(c,tp,mg,rc)
 	else return false end
 end
 function c100911060.mfilter(c)
-	return c:IsType(TYPE_SPIRIT+TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:IsType(TYPE_SPIRIT) and c:IsAbleToRemove()
 end
 function c100911060.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg1=Duel.GetRitualMaterial(tp)
 		local mg2=Duel.GetMatchingGroup(c100911060.mfilter,tp,LOCATION_GRAVE,0,nil)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		return Duel.IsExistingMatchingCard(c100911060.filter,tp,LOCATION_HAND,0,1,nil,e,tp,mg1,mg2,ft)
+		return ft>-1 and Duel.IsExistingMatchingCard(c100911060.filter,tp,LOCATION_HAND,0,1,nil,e,tp,mg1,mg2,ft)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end

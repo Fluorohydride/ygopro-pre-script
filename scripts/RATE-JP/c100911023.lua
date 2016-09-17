@@ -28,8 +28,11 @@ function c100911023.initial_effect(c)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+function c100911023.cfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_SPIRIT)
+end
 function c100911023.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler())
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c100911023.cfilter,1,nil)
 end
 function c100911023.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

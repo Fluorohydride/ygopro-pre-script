@@ -12,7 +12,7 @@ function c100911038.initial_effect(c)
 	c:RegisterEffect(e1)
 	--tohand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(78316184,0))
+	e2:SetDescription(aux.Stringid(100911038,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -46,7 +46,7 @@ function c100911038.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local sg=g:Select(tp,1,3,nil)
 	if Duel.SendtoHand(sg,nil,REASON_EFFECT)~=0 then
-		local tg=Duel.GetMatchingGroup(c100911038.spfilter,tp,0,LOCATION_MZONE,nil,e,tp)
+		local tg=Duel.GetMatchingGroup(c100911038.spfilter,tp,0,LOCATION_HAND,nil,e,tp)
 		if tg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100911038,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -86,7 +86,8 @@ end
 function c100911038.retop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and Duel.IsPlayerCanSpecialSummonMonster(tp,100911138,0,0x4011,1500,1500,4,RACE_WINDBEAST,ATTRIBUTE_WIND) then
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and Duel.IsPlayerCanSpecialSummonMonster(tp,100911138,0,0x4011,1500,1500,4,RACE_WINDBEAST,ATTRIBUTE_WIND)
+		and not Duel.IsPlayerAffectedByEffect(tp,59822133) then
 		for i=1,2 do
 			local token=Duel.CreateToken(tp,100911138)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)

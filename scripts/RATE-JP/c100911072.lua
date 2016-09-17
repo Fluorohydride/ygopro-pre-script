@@ -43,7 +43,7 @@ function c100911072.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(c100911072.cfilter,tp,0,LOCATION_GRAVE,nil)
 	if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) and tp~=Duel.GetTurnPlayer() and Duel.GetFlagEffect(tp,100911072)==0
-		and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100911072,0)) then
+		and g:GetCount()>0 and Duel.SelectYesNo(tp,94) then
 		Duel.RegisterFlagEffect(tp,100911072,RESET_PHASE+PHASE_END,0,1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local tg=g:Select(tp,1,1,nil)
@@ -74,7 +74,7 @@ function c100911072.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100911072.filter,1,nil,tp)
 end
 function c100911072.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
