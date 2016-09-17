@@ -41,12 +41,13 @@ function c100911072.cfilter(c)
 end
 function c100911072.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
+	local g=Duel.GetMatchingGroup(c100911072.cfilter,tp,0,LOCATION_GRAVE,nil)
 	if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) and tp~=Duel.GetTurnPlayer() and Duel.GetFlagEffect(tp,100911072)==0
-		and Duel.SelectYesNo(tp,aux.Stringid(100911072,0)) then
+		and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100911072,0)) then
 		Duel.RegisterFlagEffect(tp,100911072,RESET_PHASE+PHASE_END,0,1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,c100911072.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-		Duel.Remove(g,POS_FACEUP,REASON_COST)
+		local tg=g:Select(tp,1,1,nil)
+		Duel.Remove(tg,POS_FACEUP,REASON_COST)
 		e:SetOperation(c100911072.activate)
 	else
 		e:SetOperation(nil)
