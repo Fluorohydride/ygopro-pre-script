@@ -46,7 +46,7 @@ function c100911038.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local sg=g:Select(tp,1,3,nil)
 	if Duel.SendtoHand(sg,nil,REASON_EFFECT)~=0 then
-		local tg=Duel.GetMatchingGroup(c100911038.spfilter,tp,0,LOCATION_HAND,nil,e,tp)
+		local tg=Duel.GetMatchingGroup(c100911038.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 		if tg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100911038,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
