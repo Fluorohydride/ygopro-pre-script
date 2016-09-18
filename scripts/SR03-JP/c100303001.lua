@@ -80,7 +80,7 @@ function c100303001.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100303001.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker()==e:GetHandler()
+	return Duel.GetAttacker()==e:GetHandler() and e:GetHandler():IsRelateToBattle()
 end
 function c100303001.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
