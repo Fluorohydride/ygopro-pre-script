@@ -83,7 +83,6 @@ function c100911036.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0
 		and tc:IsRelateToEffect(e) then
-			Duel.GetControl(tc,tp)
-		end
+		Duel.GetControl(tc,tp)
 	end
 end
