@@ -80,10 +80,9 @@ function c100911036.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100911036.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) then
+	local tc=Duel.GetFirstTarget()
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0
+		and tc:IsRelateToEffect(e) then
 			Duel.GetControl(tc,tp)
 		end
 	end
