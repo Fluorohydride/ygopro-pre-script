@@ -71,9 +71,14 @@ function c100911074.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetOperation(nil)
 	end
 end
+function c100911074.cfilter(c)
+	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE) and c:IsAbleToRemoveAsCost()
+end
 function c100911074.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100911074.cfilter,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,c100911074.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100911074.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(100911074)==0 end
