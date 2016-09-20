@@ -86,12 +86,8 @@ end
 function c100303002.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) or (re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e))
 end
-function c100303002.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x7) and c:IsControler(tp)
-end
 function c100303002.actcon(e)
 	local tp=e:GetHandlerPlayer()
 	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
-	return (a and c100303002.cfilter(a,tp)) or (d and c100303002.cfilter(d,tp))
+	return a and a:IsSetCard(0x7) and a:IsControler(tp)
 end
