@@ -59,7 +59,7 @@ function c100911030.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100911030.retcon(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetLabelObject():GetFlagEffectLabel(100911030)==e:GetLabel() then
+	if not (e:GetLabelObject():GetFlagEffectLabel(100911030)==e:GetLabel()) then
 		e:Reset()
 		return false
 	else return true end
