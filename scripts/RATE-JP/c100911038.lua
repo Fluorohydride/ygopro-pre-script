@@ -75,9 +75,13 @@ function c100911038.retreg(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100911038.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		if e:IsHasType(EFFECT_TYPE_TRIGGER_F) then return true end
-		else return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+		if e:IsHasType(EFFECT_TYPE_TRIGGER_F) then
+			return true
+		else
+			return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+				and not Duel.IsPlayerAffectedByEffect(tp,59822133)
 				and Duel.IsPlayerCanSpecialSummonMonster(tp,100911138,0,0x4011,1500,1500,4,RACE_WINDBEAST,ATTRIBUTE_WIND)
+		end
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
@@ -86,8 +90,9 @@ end
 function c100911038.retop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and Duel.IsPlayerCanSpecialSummonMonster(tp,100911138,0,0x4011,1500,1500,4,RACE_WINDBEAST,ATTRIBUTE_WIND)
-		and not Duel.IsPlayerAffectedByEffect(tp,59822133) then
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+		and not Duel.IsPlayerAffectedByEffect(tp,59822133)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100911138,0,0x4011,1500,1500,4,RACE_WINDBEAST,ATTRIBUTE_WIND) then
 		for i=1,2 do
 			local token=Duel.CreateToken(tp,100911138)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
