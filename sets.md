@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`  
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
-- **September 24, 2016**  : Structure Deck R: Machine Dragon Re-Volt (SR03-JP) : `100303XXX`  
 - **October 4, 2016**  : Yu-Gi-Oh! ARC-V Volume 2 promotional card (YA02-JP) : `100211XXX`  
 - **October 8, 2016**  : RAGING TEMPEST (RATE-JP) : `100911XXX`  
 - **November 4, 2016**  : Invasion: Vengeance (INOV-EN) : `100910XXX`  
@@ -28,3 +27,4 @@
 - ~~Jump Victory Carnival 2016 (VF16-JP) : `100209XXX`~~  
 - ~~The Dark Illusion (TDIL-EN) : `100909XXX`~~  
 - ~~Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`~~  
+- ~~Structure Deck R: Machine Dragon Re-Volt (SR03-JP) : `100303XXX`~~  
