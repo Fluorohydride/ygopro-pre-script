@@ -28,10 +28,10 @@ end
 function c100911010.hspcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-1
-		and Duel.CheckReleaseGroup(c:GetControler(),c100911010.hspfilter,1,nil)
+		and Duel.CheckReleaseGroupEx(c:GetControler(),c100911010.hspfilter,1,c)
 end
 function c100911010.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(c:GetControler(),c100911010.hspfilter,1,1,nil)
+	local g=Duel.SelectReleaseGroupEx(c:GetControler(),c100911010.hspfilter,1,1,c)
 	Duel.Release(g,REASON_COST)
 	c:RegisterFlagEffect(0,RESET_EVENT+0x4fc0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100911010,0))
 end
