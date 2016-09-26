@@ -80,9 +80,9 @@ function c100911053.xyztg(e,tp,eg,ep,ev,re,r,rp,chk,c,og,min,max)
 	local g=nil
 	if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(100911053,0))) then
 		e:SetLabel(1)
-		Duel.RegisterFlagEffect(tp,100911053,RESET_PHASE+PHASE_END,0,1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 		g=mg:FilterSelect(tp,c100911053.ovfilter,1,1,nil,tp,c)
+		Duel.RegisterFlagEffect(tp,100911053,RESET_PHASE+PHASE_END,0,1)
 	else
 		e:SetLabel(0)
 		g=Duel.SelectXyzMaterial(tp,c,nil,4,4,4,og)
