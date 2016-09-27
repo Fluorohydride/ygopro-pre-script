@@ -27,6 +27,11 @@ function c100911054.initial_effect(c)
 	e3:SetTarget(c100911054.target)
 	e3:SetOperation(c100911054.operation)
 	c:RegisterEffect(e3)
+	--direct attack
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_DIRECT_ATTACK)
+	c:RegisterEffect(e4)
 end
 function c100911054.ovfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1f2) and not c:IsCode(100911054)
