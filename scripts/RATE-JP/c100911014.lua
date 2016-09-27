@@ -1,5 +1,5 @@
 --十二獣モルモラット
---Juunishishi Morumoratto
+--Juunishishi Molmorat
 --Script by mercury233
 --The "get effect" effect is temporary
 function c100911014.initial_effect(c)
@@ -42,8 +42,8 @@ function c100911014.checkop(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsType(TYPE_XYZ) and tc:GetOriginalRace()==RACE_BEASTWARRIOR
 			and tc:GetFlagEffect(100911014)==0 then
 			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 			e1:SetDescription(aux.Stringid(100911014,1))
+			e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 			e1:SetType(EFFECT_TYPE_IGNITION)
 			e1:SetCountLimit(1)
 			e1:SetRange(LOCATION_MZONE)
