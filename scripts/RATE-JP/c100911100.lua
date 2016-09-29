@@ -41,7 +41,7 @@ function c100911100.atfilter(c,atk)
 	return c:IsFaceup() and c:IsRace(RACE_BEASTWARRIOR) and c:GetAttack()>atk
 end
 function c100911100.atlimit(e,c)
-	return c:IsFaceup() and c:IsRace(RACE_BEASTWARRIOR) and Duel.IsExistingMatchingCard(c34822850.atfilter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetAttack())
+	return c:IsFaceup() and c:IsRace(RACE_BEASTWARRIOR) and Duel.IsExistingMatchingCard(c100911100.atfilter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetAttack())
 end
 function c100911100.repfilter(c,tp,e)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
