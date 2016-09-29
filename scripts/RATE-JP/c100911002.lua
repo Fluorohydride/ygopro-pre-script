@@ -27,7 +27,7 @@ function c100911002.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100911002.thfilter(c)
-	return c:IsSetCard(0x9f) c:IsAbleToHand()
+	return c:IsSetCard(0x9f) and c:IsAbleToHand()
 end
 function c100911002.thtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c100911002.thfilter(chkc) end
