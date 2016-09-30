@@ -7,7 +7,7 @@ function c100911025.initial_effect(c)
 	e1:SetDescription(aux.Stringid(100911025,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(c100911025.atkcon1)
@@ -29,7 +29,8 @@ function c100911025.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100911025.atkcon1(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	local ph=Duel.GetCurrentPhase()
+	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function c100911025.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
@@ -81,12 +82,13 @@ function c100911025.cfilter(c,att)
 	return c:IsAttribute(att) and c:IsAbleToRemoveAsCost()
 end
 function c100911025.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100911025.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),ATTRIBUTE_LIGHT)
-		and Duel.IsExistingMatchingCard(c100911025.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),ATTRIBUTE_DARK) end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(c100911025.cfilter,tp,LOCATION_GRAVE,0,1,c,ATTRIBUTE_LIGHT)
+		and Duel.IsExistingMatchingCard(c100911025.cfilter,tp,LOCATION_GRAVE,0,1,c,ATTRIBUTE_DARK) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectMatchingCard(tp,c100911025.cfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler(),ATTRIBUTE_LIGHT)
+	local g1=Duel.SelectMatchingCard(tp,c100911025.cfilter,tp,LOCATION_GRAVE,0,1,1,c,ATTRIBUTE_LIGHT)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,c100911025.cfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler(),ATTRIBUTE_DARK)
+	local g2=Duel.SelectMatchingCard(tp,c100911025.cfilter,tp,LOCATION_GRAVE,0,1,1,c,ATTRIBUTE_DARK)
 	g1:Merge(g2)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end
