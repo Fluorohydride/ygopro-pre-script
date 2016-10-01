@@ -64,6 +64,7 @@ function c100911052.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(c100911052.filter1,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(c100911052.filter2,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100911052,2))
 	Duel.SelectTarget(tp,c100911052.filter1,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100911052,3))

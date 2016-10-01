@@ -77,6 +77,7 @@ function c100911018.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100911018.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function c100911018.disop(e,tp,eg,ep,ev,re,r,rp)

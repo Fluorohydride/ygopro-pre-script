@@ -68,6 +68,7 @@ function c100911016.rmcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100911016.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetLabelObject():IsAbleToRemove() end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetLabelObject(),1,0,0)
 end
 function c100911016.rmop(e,tp,eg,ep,ev,re,r,rp)
