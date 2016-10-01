@@ -32,6 +32,7 @@ function c100911100.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EFFECT_DESTROY_REPLACE)
 	e5:SetRange(LOCATION_FZONE)
+	e5:SetCountLimit(1)
 	e5:SetTarget(c100911100.reptg)
 	e5:SetValue(c100911100.repval)
 	e5:SetOperation(c100911100.repop)
@@ -48,7 +49,7 @@ function c100911100.repfilter(c,tp,e)
 		and c:IsSetCard(0x1f2) and c:IsReason(REASON_EFFECT) and c:GetFlagEffect(100911100)==0
 end
 function c100911100.desfilter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE+LOCATION_HAND)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE+LOCATION_HAND) and c:IsType(TYPE_MONSTER)
 		and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function c100911100.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
