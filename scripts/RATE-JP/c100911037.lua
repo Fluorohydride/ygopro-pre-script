@@ -10,16 +10,16 @@ function c100911037.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetValue(aux.ritlimit)
 	c:RegisterEffect(e1)
-	--tohand
+	--to deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100911037,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(c100911037.thcon)
-	e2:SetTarget(c100911037.thtg)
-	e2:SetOperation(c100911037.thop)
+	e2:SetCondition(c100911037.tdcon)
+	e2:SetTarget(c100911037.tdtg)
+	e2:SetOperation(c100911037.tdop)
 	c:RegisterEffect(e2)
 	--return
 	local e3=Effect.CreateEffect(c)
@@ -29,26 +29,26 @@ function c100911037.initial_effect(c)
 	e3:SetOperation(c100911037.retreg)
 	c:RegisterEffect(e3)
 end
-function c100911037.thcon(e,tp,eg,ep,ev,re,r,rp)
+function c100911037.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL
 end
-function c100911037.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+function c100911037.tdfilter(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck()
 end
 function c100911037.spfilter(c,e,tp)
 	return c:IsType(TYPE_SPIRIT) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
-function c100911037.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100911037.thfilter,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
+function c100911037.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100911037.tdfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,0)
 end
-function c100911037.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100911037.thfilter,tp,0,LOCATION_ONFIELD,nil)
+function c100911037.tdop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(c100911037.tdfilter,tp,0,LOCATION_ONFIELD,nil)
 	if g:GetCount()<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=g:Select(tp,1,3,nil)
-	if Duel.SendtoHand(sg,nil,REASON_EFFECT)~=0 then
-		local tg=Duel.GetMatchingGroup(c100911037.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
+	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=0 then
+		local tg=Duel.GetMatchingGroup(c100911037.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 		if tg:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.SelectYesNo(tp,aux.Stringid(100911037,1)) then
 			Duel.BreakEffect()
