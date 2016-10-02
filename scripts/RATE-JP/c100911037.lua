@@ -49,7 +49,8 @@ function c100911037.thop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,1,3,nil)
 	if Duel.SendtoHand(sg,nil,REASON_EFFECT)~=0 then
 		local tg=Duel.GetMatchingGroup(c100911037.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
-		if tg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100911037,1)) then
+		if tg:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and Duel.SelectYesNo(tp,aux.Stringid(100911037,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local tc=tg:Select(tp,1,1,nil)
