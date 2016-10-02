@@ -77,5 +77,5 @@ function c100911027.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100911027.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100911027.tdfilter,tp,0x5e,0x5e,e:GetHandler())
-	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end
