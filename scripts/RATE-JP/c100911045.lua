@@ -76,18 +76,26 @@ function c100911045.discon(e,tp,eg,ep,ev,re,r,rp)
 	return (a and c100911045.cfilter(a,tp)) or (d and c100911045.cfilter(d,tp))
 end
 function c100911045.disop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetAttackTarget()
+	if not tc then return end
 	if c100911045.cfilter(tc,tp) then tc=Duel.GetAttacker() end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	c:CreateRelation(tc,RESET_EVENT+0x1fe0000)
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
+	e1:SetCondition(c100911045.discon2)
 	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE)
 	tc:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(e:GetHandler())
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
+	e2:SetCondition(c100911045.discon2)
 	e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE)
 	tc:RegisterEffect(e2)
+end
+function c100911045.discon(e)
+	return e:GetOwner():IsRelateToCard(e:GetHandler())
 end
 function c100911045.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
