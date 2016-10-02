@@ -11,9 +11,9 @@ function c100911060.initial_effect(c)
 	e1:SetOperation(c100911060.activate)
 	c:RegisterEffect(e1)
 end
-c100911060.fit_monster={100911038} --edit Esprit Lord - Himekujaku later!!!
+c100911060.fit_monster={100911037,100911038}
 function c100911060.filter(c,e,tp,m1,m2,ft)
-	if not c:IsCode(100911038) or bit.band(c:GetType(),0x81)~=0x81 --edit Esprit Lord - Himekujaku later!!!
+	if not c:IsCode(100911037,100911038) or bit.band(c:GetType(),0x81)~=0x81
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m1:Filter(Card.IsCanBeRitualMaterial,c,c)
 	mg:Merge(m2)
