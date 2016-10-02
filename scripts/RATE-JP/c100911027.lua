@@ -41,9 +41,6 @@ function c100911027.spcon(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,c:GetControler(),LOCATION_HAND+LOCATION_ONFIELD,0,c)
 	return g:GetClassCount(Card.GetCode)>=10 and (ft>0 or g:IsExists(Card.IsLocation,ct,nil,LOCATION_MZONE))
 end
-function c100911027.cfilter(c)
-	return c:IsFacedown() and c:IsLocation(LOCATION_ONFIELD)
-end
 function c100911027.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=-ft+1
@@ -63,7 +60,7 @@ function c100911027.spop(e,tp,eg,ep,ev,re,r,rp,c)
 		end
 		ct=ct-1
 	end
-	local cg=rg:Filter(c100911027.cfilter,nil)
+	local cg=rg:Filter(Card.IsFacedown,nil)
 	if cg:GetCount()>0 then
 		Duel.ConfirmCards(1-tp,cg)
 	end

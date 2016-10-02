@@ -45,8 +45,8 @@ function c100911033.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c100911033.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.SelectMatchingCard(tp,c100911033.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if tg:GetCount()>0 then
+	local tg=Duel.GetFirstMatchingCard(c100911033.tgfilter,tp,LOCATION_DECK,0,nil)
+	if tg then
 		Duel.SendtoGrave(tg,REASON_EFFECT)
 	end
 end
