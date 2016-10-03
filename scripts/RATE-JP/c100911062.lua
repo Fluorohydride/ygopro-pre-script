@@ -43,7 +43,7 @@ function c100911062.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local mg=Duel.GetMatchingGroup(c100911062.matfilter1,tp,LOCATION_HAND,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tg=Duel.SelectMatchingCard(tp,c100911062.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg)
+	local tg=Duel.SelectMatchingCard(tp,c100911062.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp,mg)
 	local tc1=tg:GetFirst()
 	if tc1 then
 		if tc1:IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.IsChainDisablable(0) then
