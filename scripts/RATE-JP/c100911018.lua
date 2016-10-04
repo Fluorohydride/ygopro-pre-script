@@ -66,7 +66,7 @@ end
 function c100911018.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,100911018)
-		and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
 		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainDisablable(ev)
 		and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 		and Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):IsContains(c)
