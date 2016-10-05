@@ -29,7 +29,7 @@ function c100910086.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCode(EVENT_DESTROYED)
+	e3:SetCode(EVENT_BATTLE_DESTROYED)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCondition(c100910086.thcon)
 	e3:SetCost(c100910086.thcost)
@@ -43,9 +43,9 @@ end
 function c100910086.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if not d or a:GetControler()==d:GetControler() then return end
-	if a:IsControler(tp) and a:IsFaceup() and a:IsCode(41091257) then e:SetLabelObject(d)
-	elseif d:IsFaceup() and d:IsCode(41091257) then e:SetLabelObject(a)
+	if not d or a:GetControler()==d:GetControler() or not d:IsFaceup() or not a:IsFaceup() then return end
+	if a:IsControler(tp) and a:IsCode(41091257) then e:SetLabelObject(d)
+	elseif d:IsControler(tp) and d:IsCode(41091257) then e:SetLabelObject(a)
 	else return false end
 	return true
 end
