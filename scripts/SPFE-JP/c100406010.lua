@@ -4,7 +4,7 @@
 function c100406010.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(c100406010.ffilter1,c100406010.ffilter2,true))
+	aux.AddFusionProcFun2(c,c100406010.ffilter1,c100406010.ffilter2,true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

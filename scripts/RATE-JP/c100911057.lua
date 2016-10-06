@@ -39,8 +39,9 @@ function c100911057.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100911057.milcon(e,tp,eg,ep,ev,re,r,rp)
+	if not re then return false end
 	local rc=re:GetHandler()
-	return e:GetHandler():IsReason(REASON_EFFECT) and re and rc:IsSetCard(0xe6) and rc:IsType(TYPE_MONSTER)
+	return e:GetHandler():IsReason(REASON_EFFECT) and rc:IsSetCard(0xe6) and rc:IsType(TYPE_MONSTER)
 end
 function c100911057.miltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4 end

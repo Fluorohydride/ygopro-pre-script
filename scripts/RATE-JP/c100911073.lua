@@ -27,7 +27,7 @@ function c100911073.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100911073.filter1,tp,LOCATION_DECK,0,nil)
 	if g:IsExists(c100911073.filter2,1,nil) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg1=g:FilterSelect(tp,1,1,nil)
+		local sg1=g:Select(tp,1,1,nil)
 		g:RemoveCard(sg1:GetFirst())
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg2=g:Select(tp,2,2,nil)
