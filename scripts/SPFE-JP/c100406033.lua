@@ -53,7 +53,7 @@ function c100406033.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c100406033.rmfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=Duel.SelectTarget(tp,c100406033.rmfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
-	local g2=Duel.GetMatchingGroup(c100406033.rmfilter2,tp,0,LOCATION_MZONE,nil,g:GetFirst():GetAttribute())
+	local g2=Duel.GetMatchingGroup(c100406033.rmfilter2,tp,0,LOCATION_MZONE,nil,g1:GetFirst():GetAttribute())
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g1,g1:GetCount(),0,0)
 end
