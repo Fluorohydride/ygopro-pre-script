@@ -30,6 +30,13 @@ end
 function c100911035.tgval(e,re,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
+function c100911035.costfilter(c)
+	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
+end
+function c100911035.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100911035.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	Duel.DiscardHand(tp,c100911035.costfilter,1,1,REASON_COST+REASON_DISCARD)
+end
 function c100911035.eqfilter(c,ec)
 	return c:IsType(TYPE_EQUIP) and c:CheckEquipTarget(ec)
 end
