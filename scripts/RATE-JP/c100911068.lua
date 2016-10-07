@@ -62,7 +62,8 @@ function c100911068.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100911068.cfilter,1,nil,tp)
 end
 function c100911068.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsSSetable() end
+	if chk==0 then return e:GetHandler():IsSSetable()
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function c100911068.setop(e,tp,eg,ep,ev,re,r,rp)

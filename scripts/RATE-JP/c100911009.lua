@@ -1,6 +1,7 @@
 --パラサイト・フュージョナー
 -- Parasite Fusioner
 --Script by nekrozar
+--Effect is not fully implemented
 function c100911009.initial_effect(c)
 	--cannot be material
 	local e1=Effect.CreateEffect(c)
