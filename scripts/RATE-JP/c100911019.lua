@@ -72,14 +72,19 @@ function c100911019.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,nil)
 		if rm and rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100911019,2)) then
+			Duel.ConfirmCards(tp,rg)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local tg1=rg:Select(tp,1,1,nil)
-			rg:Remove(Card.IsCode,nil,tg1:GetFirst():GetCode())
-			if rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100911019,3)) then
-				tg2=rg:Select(tp,1,1,nil)
-				tg1:Merge(tg2)
+			local sg=rg:Select(tp,1,1,nil)
+			local tg=rg:Filter(Card.IsCode,nil,sg:GetFirst():GetCode())
+			rg:Sub(tg)
+			local i=2
+			while i>0 and rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100911019,3)) do
+				sg=rg:Select(tp,1,1,nil)
+				tg:Merge(rg:Filter(Card.IsCode,nil,sg:GetFirst():GetCode()))
+				rg:Sub(tg)
+				i=i-1
 			end
-			Duel.Remove(tg1,POS_FACEUP,REASON_EFFECT)
+			Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 		end
 	end
 end

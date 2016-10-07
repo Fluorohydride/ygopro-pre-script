@@ -90,7 +90,7 @@ function c100406035.spop(e,tp,eg,ep,ev,re,r,rp)
 			if tc:IsSetCard(0x1f4) then
 				local mat1=Duel.SelectFusionMaterial(tp,tc,mg2,nil,chkf)
 				tc:SetMaterial(mat1)
-				local mat2=mat1:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
+				local mat2=mat1:Filter(Card.IsLocation,nil,LOCATION_MZONE+LOCATION_GRAVE)
 				mat1:Sub(mat2)
 				Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 				Duel.Remove(mat2,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
