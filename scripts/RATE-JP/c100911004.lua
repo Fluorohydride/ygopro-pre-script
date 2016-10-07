@@ -1,9 +1,9 @@
---ＥＭラフメイカー
+--EMラフメイカー
 --Performapal Laughmaker
 --Scripted by Eerie Code
 function c100911004.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
-	--
+	--recover
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100911004,0))
 	e1:SetCategory(CATEGORY_RECOVER)
@@ -15,7 +15,7 @@ function c100911004.initial_effect(c)
 	e1:SetTarget(c100911004.rctg)
 	e1:SetOperation(c100911004.rcop)
 	c:RegisterEffect(e1)
-	--
+	--atkup
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100911004,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -30,7 +30,7 @@ function c100911004.initial_effect(c)
 	e3:SetDescription(aux.Stringid(100911004,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_DESTROYED)
 	e3:SetCountLimit(1,100911004)
 	e3:SetCondition(c100911004.spcon)
@@ -38,12 +38,11 @@ function c100911004.initial_effect(c)
 	e3:SetOperation(c100911004.spop)
 	c:RegisterEffect(e3)
 end
-
-function c100911004.rcfil(c)
+function c100911004.rcfilter(c)
 	return c:IsFaceup() and c:GetAttack()>c:GetBaseAttack()
 end
 function c100911004.rccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100911004.rcfil,tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(c100911004.rcfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function c100911004.rctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -56,15 +55,14 @@ function c100911004.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Recover(p,d,REASON_EFFECT)
 end
-
 function c100911004.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return c100911004.rcfil(e:GetHandler()) or Duel.IsExistingMatchingCard(c100911004.rcfil,tp,0,LOCATION_MZONE,1,nil)
+	return c100911004.rcfilter(e:GetHandler()) or Duel.IsExistingMatchingCard(c100911004.rcfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function c100911004.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToBattle() or c:IsFacedown() then return end
-	local ct=Duel.GetMatchingGroupCount(c100911004.rcfil,tp,0,LOCATION_MZONE,nil)
-	if c100911004.rcfil(c) then ct=ct+1 end
+	local ct=Duel.GetMatchingGroupCount(c100911004.rcfilter,tp,0,LOCATION_MZONE,nil)
+	if c100911004.rcfilter(c) then ct=ct+1 end
 	if ct>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -74,7 +72,6 @@ function c100911004.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-
 function c100911004.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousAttackOnField()>c:GetBaseAttack()
@@ -89,7 +86,7 @@ function c100911004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c100911004.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
