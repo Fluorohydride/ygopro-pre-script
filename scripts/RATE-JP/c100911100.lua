@@ -13,7 +13,7 @@ function c100911100.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1f2))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xf1))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -46,7 +46,7 @@ function c100911100.atlimit(e,c)
 end
 function c100911100.repfilter(c,tp,e)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsSetCard(0x1f2) and c:IsReason(REASON_EFFECT) and c:GetFlagEffect(100911100)==0
+		and c:IsSetCard(0xf1) and c:IsReason(REASON_EFFECT) and c:GetFlagEffect(100911100)==0
 end
 function c100911100.desfilter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE+LOCATION_HAND) and c:IsType(TYPE_MONSTER)

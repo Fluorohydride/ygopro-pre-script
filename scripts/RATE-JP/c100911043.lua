@@ -31,7 +31,7 @@ function c100911043.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100911043.damfilter(c)
-	return c:IsSetCard(0x1f0) and c:GetAttack()>0
+	return c:IsSetCard(0xf0) and c:GetAttack()>0
 end
 function c100911043.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100911043.damfilter(chkc) end
@@ -51,7 +51,7 @@ function c100911043.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100911043.tgfilter(c,e,tp)
 	local lv=c:GetLevel()
-	return c:IsSetCard(0x1f0) and lv>0 and Duel.IsExistingMatchingCard(c100911043.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,lv)
+	return c:IsSetCard(0xf0) and lv>0 and Duel.IsExistingMatchingCard(c100911043.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,lv)
 end
 function c100911043.spfilter(c,e,tp,lv)
 	return c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

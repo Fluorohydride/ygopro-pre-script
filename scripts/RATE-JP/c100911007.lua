@@ -56,7 +56,7 @@ function c100911007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100911007.spfilter(c,e,tp)
-	return c:IsSetCard(0x1f0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xf0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100911007.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

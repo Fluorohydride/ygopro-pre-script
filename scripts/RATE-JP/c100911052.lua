@@ -30,21 +30,21 @@ function c100911052.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100911052.ovfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1f2) and not c:IsCode(100911052)
+	return c:IsFaceup() and c:IsSetCard(0xf1) and not c:IsCode(100911052)
 end
 function c100911052.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,100911052)==0 end
 	Duel.RegisterFlagEffect(tp,100911052,RESET_PHASE+PHASE_END,0,1)
 end
 function c100911052.atkfilter(c)
-	return c:IsSetCard(0x1f2) and c:GetAttack()>=0
+	return c:IsSetCard(0xf1) and c:GetAttack()>=0
 end
 function c100911052.atkval(e,c)
 	local g=e:GetHandler():GetOverlayGroup():Filter(c100911052.atkfilter,nil)
 	return g:GetSum(Card.GetAttack)
 end
 function c100911052.deffilter(c)
-	return c:IsSetCard(0x1f2) and c:GetDefense()>=0
+	return c:IsSetCard(0xf1) and c:GetDefense()>=0
 end
 function c100911052.defval(e,c)
 	local g=e:GetHandler():GetOverlayGroup():Filter(c100911052.deffilter,nil)
@@ -58,7 +58,7 @@ function c100911052.filter1(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 end
 function c100911052.filter2(c)
-	return c:IsSetCard(0x1f2) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xf1) and c:IsType(TYPE_MONSTER)
 end
 function c100911052.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return false end

@@ -27,7 +27,7 @@ function c100911017.initial_effect(c)
 	end
 end
 function c100911017.filter(c)
-	return c:IsSetCard(0x1f2) and c:IsDiscardable(REASON_EFFECT)
+	return c:IsSetCard(0xf1) and c:IsDiscardable(REASON_EFFECT)
 end
 function c100911017.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)

@@ -30,7 +30,7 @@ function c100911101.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100911101.spfilter(c,e,tp)
-	return c:IsSetCard(0x1f2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xf1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100911101.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(e:GetLabel()) and chkc:IsControler(tp) and chkc:IsFaceup() end
@@ -64,7 +64,7 @@ function c100911101.matcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(e:GetHandler():GetReason(),0x41)==0x41
 end
 function c100911101.matfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1f2) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(0xf1) and c:IsType(TYPE_XYZ)
 end
 function c100911101.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100911101.matfilter(chkc) end

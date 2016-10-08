@@ -25,10 +25,10 @@ function c100911102.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100911102.tgfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x1f2)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0xf1)
 end
 function c100911102.matfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1f2)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf1)
 end
 function c100911102.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c100911102.filter(chkc) end
@@ -53,7 +53,7 @@ function c100911102.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c100911102.drfilter(c)
-	return c:IsSetCard(0x1f2) and c:IsAbleToDeck()
+	return c:IsSetCard(0xf1) and c:IsAbleToDeck()
 end
 function c100911102.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

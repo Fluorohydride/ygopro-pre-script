@@ -33,21 +33,21 @@ function c100911053.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100911053.ovfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1f2) and not c:IsCode(100911053)
+	return c:IsFaceup() and c:IsSetCard(0xf1) and not c:IsCode(100911053)
 end
 function c100911053.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,100911053)==0 end
 	Duel.RegisterFlagEffect(tp,100911053,RESET_PHASE+PHASE_END,0,1)
 end
 function c100911053.atkfilter(c)
-	return c:IsSetCard(0x1f2) and c:GetAttack()>=0
+	return c:IsSetCard(0xf1) and c:GetAttack()>=0
 end
 function c100911053.atkval(e,c)
 	local g=e:GetHandler():GetOverlayGroup():Filter(c100911053.atkfilter,nil)
 	return g:GetSum(Card.GetAttack)
 end
 function c100911053.deffilter(c)
-	return c:IsSetCard(0x1f2) and c:GetDefense()>=0
+	return c:IsSetCard(0xf1) and c:GetDefense()>=0
 end
 function c100911053.defval(e,c)
 	local g=e:GetHandler():GetOverlayGroup():Filter(c100911053.deffilter,nil)

@@ -28,7 +28,7 @@ function c100911018.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
 function c100911018.spfilter(c,e,tp)
-	return c:IsSetCard(0x1f2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(100911018)
+	return c:IsSetCard(0xf1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(100911018)
 end
 function c100911018.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100911018.spfilter(chkc) end
