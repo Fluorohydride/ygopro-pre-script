@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c100911040.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,100911043,aux.FilterBoolFunction(Card.IsFusionSetCard,0xf0),1,true,true)
+	aux.AddFusionProcCodeFun(c,100911043,aux.FilterBoolFunction(Card.IsFusionSetCard,0x1f0),1,true,true)
 	--copy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100911040,0))
@@ -30,7 +30,7 @@ end
 function c100911040.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsType(TYPE_MONSTER) end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,TYPE_MONSTER) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,Card.IsType,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,TYPE_MONSTER)
 end
 function c100911040.cpop(e,tp,eg,ep,ev,re,r,rp)
@@ -80,7 +80,7 @@ function c100911040.spfilter1(c,e,tp)
 	return c:IsCode(100911043) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100911040.spfilter2(c,e,tp)
-	return c:IsSetCard(0xf0) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x1f0) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100911040.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
