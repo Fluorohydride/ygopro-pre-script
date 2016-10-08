@@ -13,19 +13,25 @@ function c100911079.initial_effect(c)
 	e1:SetOperation(c100911079.activate)
 	c:RegisterEffect(e1)
 end
+function c100911079.filter(c)
+	return not c:IsAbleToChangeControler()
+end
 function c100911079.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local g1=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,0,nil)
 	local g2=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return g1:GetCount()==g2:GetCount()
-		and g:IsExists(Card.IsAbleToChangeControler,1,nil) end
+		and g:FilterCount(c100911079.filter,nil)==0 end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,g:GetCount(),0,0)
+end
+function c100911079.filter2(c)
+	return not c:IsAbleToChangeControler() or not c:IsImmuneToEffect(e)
 end
 function c100911079.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local g1=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,0,nil)
 	local g2=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
-	if g1:GetCount()~=g2:GetCount() or not g:IsExists(Card.IsAbleToChangeControler,1,nil) then return end
+	if g1:GetCount()~=g2:GetCount() or g:FilterCount(c100911079.filter2,nil)>0 then return end
 	local sg1=g1:Filter(Card.IsAbleToChangeControler,nil)
 	local sg2=g2:Filter(Card.IsAbleToChangeControler,nil)
 	local n1=sg1:GetCount()

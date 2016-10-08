@@ -85,10 +85,14 @@ function c100911028.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	lvt[pc]=nil
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100911028,2))
 	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=cg:Select(tp,lv-1,lv-1,c)
-	rg:AddCard(c)
-	Duel.Remove(rg,POS_FACEUP,REASON_COST)
+	local rg1=Group.CreateGroup()
+	if lv>1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local rg2=cg:Select(tp,lv-1,lv-1,c)
+		rg1:Merge(rg2)
+	end
+	rg1:AddCard(c)
+	Duel.Remove(rg1,POS_FACEUP,REASON_COST)
 	Duel.SetTargetParam(lv)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
