@@ -46,7 +46,7 @@ function c100911028.immop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100911028.efilter(e,re)
-	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and te:IsActivated()
+	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActivated()
 end
 function c100911028.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
