@@ -75,13 +75,13 @@ function c100911019.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(tp,rg)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local sg=rg:Select(tp,1,1,nil)
-			local tg=rg:Filter(Card.IsCode,nil,sg:GetFirst():GetCode())
-			rg:Sub(tg)
+			local tg=sg:Clone()
+			rg:Sub(rg:Filter(Card.IsCode,nil,sg:GetFirst():GetCode()))
 			local i=2
 			while i>0 and rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100911019,3)) do
 				sg=rg:Select(tp,1,1,nil)
-				tg:Merge(rg:Filter(Card.IsCode,nil,sg:GetFirst():GetCode()))
-				rg:Sub(tg)
+				tg:Merge(sg)
+				rg:Sub(rg:Filter(Card.IsCode,nil,sg:GetFirst():GetCode()))
 				i=i-1
 			end
 			Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
