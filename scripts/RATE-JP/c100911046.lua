@@ -53,11 +53,13 @@ end
 function c100911046.synfilter(c,syncard,lv,g2)
 	local tlv=c:GetSynchroLevel(syncard)
 	if lv-tlv<=0 then return false end
+	g2:RemoveCard(c)
 	return g2:CheckWithSumEqual(Card.GetSynchroLevel,lv-tlv,2,63,syncard)
 end
 function c100911046.synfilter2(c,syncard,lv,g2)
 	local tlv=c:GetSynchroLevel(syncard)
 	if lv-tlv<=0 then return false end
+	g2:RemoveCard(c)
 	return g2:CheckWithSumEqual(Card.GetSynchroLevel,lv-tlv,1,63,syncard)
 end
 function c100911046.syncon(e,c,tuner,mg)
