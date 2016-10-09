@@ -59,11 +59,19 @@ function c100910088.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(c,REASON_EFFECT)
 	end
 end
+function c100910088.cfilter(c,tp)
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_EFFECT)
+end
 function c100910088.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local des=eg:GetFirst()
-	local rc=des:GetReasonCard()
-	return rc:IsSetCard(0xee) and rc:IsControler(tp) and 
-		((des:IsReason(REASON_BATTLE) and rc:IsRelateToBattle()) or des:IsReason(REASON_EFFECT))
+	if re then
+		local rc=re:GetHandler()
+		return eg:IsExists(c100910088.cfilter,1,nil,tp)
+			and rc and rc:IsSetCard(0xee) and rc:IsControler(tp) and re:IsActiveType(TYPE_MONSTER)
+	elseif des:IsReason(REASON_BATTLE) then
+		local rc=des:GetReasonCard()
+		return rc and rc:IsSetCard(0xee) and rc:IsControler(tp) and rc:IsRelateToBattle()
+	end
 end
 function c100910088.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
