@@ -39,7 +39,7 @@ function c100910087.thop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c100910087.thcon(e,tp,eg,ep,ev,re,r,rp)
+function c100910087.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100910087.thfilter2(c,tp)
@@ -49,17 +49,17 @@ end
 function c100910087.thfilter3(c)
 	return c:IsSetCard(0xee) and c:IsType(TYPE_MONSTER) and not c:IsCode(100910087) and c:IsAbleToHand()
 end
-function c100910087.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100910087.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100910087.thfilter2,tp,LOCATION_DECK,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function c100910087.thop(e,tp,eg,ep,ev,re,r,rp)
+function c100910087.thop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g1=Duel.SelectMatchingCard(tp,c100910087.thfilter2,tp,LOCATION_DECK,0,1,1,nil,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g2=Duel.SelectMatchingCard(tp,c100910087.thfilter3,tp,LOCATION_DECK,0,1,1,g1:GetFirst())
-	g1:Merge(g2)
-	if g1:GetCount()==2 then
+	if g1:GetCount()>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g2=Duel.SelectMatchingCard(tp,c100910087.thfilter3,tp,LOCATION_DECK,0,1,1,g1:GetFirst())
+		g1:Merge(g2)
 		Duel.SendtoHand(g1,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g1)
 	end
