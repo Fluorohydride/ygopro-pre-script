@@ -28,13 +28,14 @@ function c100910081.initial_effect(c)
 	e2:SetOperation(c100910081.thop)
 	c:RegisterEffect(e2)
 end
-function c100910081.cfilter(c)
+function c100910081.cfilter(c,tp)
 	return c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost()
+		and Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function c100910081.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100910081.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100910081.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c100910081.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100910081.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100910081.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -56,10 +57,10 @@ function c100910081.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetSummonType()==SUMMON_TYPE_SYNCHRO
 end
 function c100910081.thfilter(c)
-	return c:IsType(TYPE_TUNER) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsType(TYPE_TUNER) and c:IsAbleToHand()
 end
 function c100910081.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_REMOVED and c100910081.thfilter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and c100910081.thfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100910081.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c100910081.thfilter,tp,LOCATION_REMOVED,0,1,1,nil)
