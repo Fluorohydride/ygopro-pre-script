@@ -49,7 +49,7 @@ end
 function c100406003.ctfilter2(c,mc)
 	return c:IsFaceup() and c:IsLevelBelow(mc:GetLevel()) and c:IsControlerCanBeChanged()
 end
-function c100406003.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c100406003.cttg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100406003.ctfilter2(chkc,c) end
 	if chk==0 then return Duel.IsExistingTarget(c100406003.ctfilter2,tp,0,LOCATION_MZONE,1,nil,c) end
@@ -57,7 +57,7 @@ function c100406003.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c100406003.ctfilter2,tp,0,LOCATION_MZONE,1,1,nil,c)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end
-function c100406003.ctop(e,tp,eg,ep,ev,re,r,rp)
+function c100406003.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.GetControl(tc,tp,PHASE_END,1)
