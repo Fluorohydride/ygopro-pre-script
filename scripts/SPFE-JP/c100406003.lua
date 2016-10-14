@@ -40,11 +40,14 @@ function c100406003.ctop1(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetValue(1)
-		e1:SetCondition(c100406003.lvcon)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetCondition(c100406003.lvcon)
+		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 	end
+end
+function c100406003.lvcon(e)
+	return e:GetHandler():GetCounter(0x1041)>0
 end
 function c100406003.ctfilter2(c,mc)
 	return c:IsFaceup() and c:IsLevelBelow(mc:GetLevel()) and c:IsControlerCanBeChanged()
