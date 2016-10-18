@@ -4,8 +4,8 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
 - **November 4, 2016**  : Invasion: Vengeance (INOV-EN) : `100910XXX`  
 - **November 12, 2016**  : Booster SP: Fusion Enforcers (SPFE-JP) : `100406XXX`  
-- **November 26, 2016**  : Dimension Box Limited Edition (DBLE-JP) : `100407XXX`  
-- **December 17, 2016**  : 20th Anniversary Pack 1st Wave (20AP-JP) : `100408XXX`  
+- **November 26, 2016**  : Dimension Box Limited Edition (DBLE-JP) : `100212XXX`  
+- **December 17, 2016**  : 20th Anniversary Pack 1st Wave (20AP-JP) : `100213XXX`  
 - **December 23, 2016**  : Structure Deck: Pendulum Evolution (SD31-JP) : `100331XXX`  
 
 #Archived
