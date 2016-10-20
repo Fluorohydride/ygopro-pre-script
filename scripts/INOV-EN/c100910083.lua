@@ -37,11 +37,11 @@ function c100910083.filter(c)
 end
 function c100910083.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=Duel.GetMatchingGroupCount(c100910083.filter,tp,LOCATION_MZONE,0,nil)
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsFacedown() end
+	if chkc then return chkc:IsOnField() and chkc:IsFacedown() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFacedown,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,ct,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsFacedown,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,ct,ct,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,ct,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c100910083.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
