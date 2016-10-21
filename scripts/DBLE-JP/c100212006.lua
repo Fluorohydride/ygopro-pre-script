@@ -1,6 +1,7 @@
 --オスティナート
 --Ostinato
 --Script by nekrozar
+--Effect is not fully implemented
 function c100212006.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

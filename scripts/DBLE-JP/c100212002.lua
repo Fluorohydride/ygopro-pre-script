@@ -55,7 +55,8 @@ function c100212002.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
 end
 function c100212002.atkval(e,c)
-	return Duel.GetMatchingGroupCount(c100212002.atkfilter,c:GetControler(),LOCATION_EXTRA,0,nil)*100
+	local g=Duel.GetMatchingGroup(c100212002.atkfilter,c:GetControler(),LOCATION_EXTRA,0,nil)
+	return g:GetClassCount(Card.GetCode)*100
 end
 function c100212002.synfilter(c,syncard,tuner,f)
 	return c:IsFaceup() and c:IsNotTuner() and c:IsCanBeSynchroMaterial(syncard,tuner) and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM) and (f==nil or f(c))

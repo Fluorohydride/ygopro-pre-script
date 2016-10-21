@@ -39,7 +39,7 @@ function c100200123.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTargetRange(0,LOCATION_MZONE)
 	e4:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-	e1:SetValue(c100200123.atlimit)
+	e4:SetValue(c100200123.atlimit)
 	c:RegisterEffect(e4)
 end
 function c100200123.costfilter(c)
@@ -56,13 +56,11 @@ function c100200123.scop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local ct=e:GetLabel()
-	local sel
-	if c:GetLeftScale()-ct>0 then
-		sel=Duel.SelectOption(tp,aux.Stringid(100200123,1),aux.Stringid(100200123,2))
-	else
-		sel=Duel.SelectOption(tp,aux.Stringid(100200123,1))
-	end
+	local sel=Duel.SelectOption(tp,aux.Stringid(100200123,1),aux.Stringid(100200123,2))
 	if sel==1 then
+		if c:GetLeftScale()-ct>0 then
+			ct=c:GetLeftScale()-1
+		end
 		ct=ct*-1
 	end
 	local e1=Effect.CreateEffect(c)
