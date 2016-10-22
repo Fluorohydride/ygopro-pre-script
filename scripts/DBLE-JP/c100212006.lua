@@ -39,7 +39,7 @@ function c100212006.target(e,tp,eg,ep,ev,re,r,rp,chk)
 				local fgroup=ce:GetTarget()
 				local mg2=fgroup(ce,e,tp)
 				local mf=ce:GetValue()
-				res=mg2:IsExists(c100212006.filter1,1,nil,e,tp,mg2,f,chkf)
+				res=mg2:IsExists(c100212006.filter1,1,nil,e,tp,mg2,mf,chkf)
 			end
 		end
 		return res
