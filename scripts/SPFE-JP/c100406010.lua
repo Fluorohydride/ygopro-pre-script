@@ -93,7 +93,8 @@ function c100406010.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c100406010.rmfilter,tp,LOCATION_GRAVE,0,c)
 	if g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(100406010,2)) then
+		and c:IsLocation(LOCATION_GRAVE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.SelectYesNo(tp,aux.Stringid(100406010,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local rg=g:Select(tp,1,1,nil)
