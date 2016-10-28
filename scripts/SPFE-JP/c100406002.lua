@@ -22,22 +22,22 @@ function c100406002.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e2:SetCountLimit(1,100406102)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
-	e2:SetCondition(c100406001.atkcon)
-	e2:SetCost(c100406001.atkcost)
+	e2:SetCondition(c100406002.atkcon)
+	e2:SetCost(c100406002.atkcost)
 	e2:SetTarget(c100406002.atktg)
 	e2:SetOperation(c100406002.atkop)
 	c:RegisterEffect(e2)
 end
-function c100406001.rfilter(c)
+function c100406002.rfilter(c)
 	return c:GetCounter(0x1041)>0
 end
 function c100406002.hspcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-1
-		and Duel.CheckReleaseGroup(c:GetControler(),c100406001.rfilter,1,nil)
+		and Duel.CheckReleaseGroup(c:GetControler(),c100406002.rfilter,1,nil)
 end
 function c100406002.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(c:GetControler(),c100406001.rfilter,1,1,nil)
+	local g=Duel.SelectReleaseGroup(c:GetControler(),c100406002.rfilter,1,1,nil)
 	Duel.Release(g,REASON_COST)
 end
 function c100406002.atkcon(e,tp,eg,ep,ev,re,r,rp)
