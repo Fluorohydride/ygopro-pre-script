@@ -47,7 +47,7 @@ function c100406009.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100406009.ffilter(c)
-	return c:IsFusionSetCard(0x1f3) or c:IsFusionCode(96622984,22011689,69105797)
+	return c:IsFusionSetCard(0x11f3) or c:IsFusionCode(96622984,22011689,69105797)
 end
 function c100406009.rmfilter(c,lv)
 	return c:IsFaceup() and c:IsLevelBelow(lv) and c:IsAbleToRemove()

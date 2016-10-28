@@ -35,7 +35,7 @@ function c100406010.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100406010.ffilter1(c)
-	return c:IsFusionSetCard(0x1f3) or c:IsFusionCode(96622984,22011689,69105797)
+	return c:IsFusionSetCard(0x11f3) or c:IsFusionCode(96622984,22011689,69105797)
 end
 function c100406010.ffilter2(c)
 	return c:GetOriginalLevel()>=8 and c:IsAttribute(ATTRIBUTE_DARK)

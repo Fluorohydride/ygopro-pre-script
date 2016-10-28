@@ -39,7 +39,7 @@ function c100406011.mtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100406011.spfilter(c,e,tp)
-	return (c:IsFusionSetCard(0x1f3) or c:IsFusionCode(96622984,22011689,69105797)) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsFusionSetCard(0x11f3) or c:IsCode(96622984,22011689,69105797)) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100406011.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
