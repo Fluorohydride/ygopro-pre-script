@@ -44,7 +44,7 @@ function c100406002.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function c100406002.cfilter(c)
-	return c:IsSetCard(0x11f3) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return (c:IsSetCard(0x11f3) or c:IsCode(96622984,22011689,69105797)) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c100406002.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100406002.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end

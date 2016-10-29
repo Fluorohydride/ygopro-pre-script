@@ -26,7 +26,7 @@ function c100406012.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100406012.spfilter(c,e,tp)
-	return c:IsSetCard(0x11f3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(0x11f3) or c:IsCode(96622984,22011689,69105797)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100406012.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100406012.spfilter(chkc,e,tp) end
