@@ -89,7 +89,7 @@ function c100212023.recop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100212023.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=eg:IsExists(c100212023.cfilter2,1,nil,tp)
+	local g=eg:Filter(c100212023.cfilter,nil,tp,e:GetLabel())
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -109,7 +109,7 @@ end
 function c100212023.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,OCATION_ONFIELD+LOCATION_GRAVE,OCATION_ONFIELD+LOCATION_GRAVE,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
