@@ -71,7 +71,7 @@ function c100212023.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function c100212023.cfilter(c,tp,typ)
-	return c:IsFaceup() and c:IsType(typ) and c:IsControler(tp) and bit.band(c:GetSummonLocation(),LOCATION_EXTRA)~=0
+	return c:IsFaceup() and c:IsType(typ) and c:IsSetCard(0x10af) and c:IsControler(tp) and bit.band(c:GetSummonLocation(),LOCATION_EXTRA)~=0
 end
 function c100212023.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100212023.cfilter,1,nil,tp,e:GetLabel())
