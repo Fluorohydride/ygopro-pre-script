@@ -2,6 +2,9 @@
 --Raidraptor - Arsenal Falcon
 --Script by nekrozar
 function c100212027.initial_effect(c)
+	--xyz summon
+	aux.AddXyzProcedure(c,nil,7,2)
+	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100212027,0))
