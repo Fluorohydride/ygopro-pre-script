@@ -63,7 +63,6 @@ function c100406035.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100406035.spop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 	local mg1=Duel.GetMatchingGroup(c100406035.mfilter1,tp,LOCATION_HAND,0,nil,e)
 	local sg1=Duel.GetMatchingGroup(c100406035.spfilter1,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
