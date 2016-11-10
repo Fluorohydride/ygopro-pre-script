@@ -18,7 +18,7 @@ function c100406015.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100406015,1))
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_BE_MATERIAL)
 	e2:SetCountLimit(1,100406015)
 	e2:SetCondition(c100406015.drcon)
@@ -56,7 +56,8 @@ end
 function c100406015.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)==2 then
+		Duel.ShuffleHand(p)
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(p,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 	end
 end
