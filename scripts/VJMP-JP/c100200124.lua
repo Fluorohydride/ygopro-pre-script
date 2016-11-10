@@ -49,7 +49,7 @@ function c100200124.lvcon(e)
 end
 function c100200124.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetCounter(0x1041)>0 and rp~=tp
+	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetCounter(0x1041)>0 and rp==1-tp
 end
 function c100200124.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
