@@ -27,7 +27,7 @@ function c100200124.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100200124.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsCanAddCounter(0x1041,1) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsCanAddCounter(0x1041,1) end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsCanAddCounter,tp,0,LOCATION_MZONE,1,nil,0x1041,1) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,Card.IsCanAddCounter,tp,0,LOCATION_MZONE,1,1,nil,0x1041,1)
@@ -49,7 +49,7 @@ function c100200124.lvcon(e)
 end
 function c100200124.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetCounter(0x1041)>0
+	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetCounter(0x1041)>0 and rp~=tp
 end
 function c100200124.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
