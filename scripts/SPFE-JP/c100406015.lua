@@ -13,7 +13,7 @@ function c100406015.initial_effect(c)
 	e1:SetTarget(c100406015.sptg)
 	e1:SetOperation(c100406015.spop)
 	c:RegisterEffect(e1)
-	--tograve
+	--draw
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100406015,1))
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
