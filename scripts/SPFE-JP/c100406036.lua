@@ -38,7 +38,7 @@ function c100406036.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100406036.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local lv=e:GetLabel()
+	local att=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100406036.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,att)
 	local tc=g:GetFirst()
