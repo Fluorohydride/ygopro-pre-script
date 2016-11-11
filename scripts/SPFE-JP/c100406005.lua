@@ -8,10 +8,10 @@ function c100406005.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	if EFFECT_CHANGE_FUSION_ATTRIBUTE then
 		e1:SetCode(EFFECT_CHANGE_FUSION_ATTRIBUTE)
-		e1:SetValue(ATTRIBUTE_DARK)
 	else
-		e1:SetCode(100406005)
-	end	
+		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+	end
+	e1:SetValue(ATTRIBUTE_DARK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetTarget(c100406005.attrtg)
@@ -27,13 +27,11 @@ function c100406005.initial_effect(c)
 	e2:SetOperation(c100406005.operation)
 	c:RegisterEffect(e2)
 end
-
 function c100406005.attrtg(e,c)
 	return c:GetCounter(0x1041)>0
 end
-
 function c100406005.filter0(c,tp)
-	return c:IsCanBeFusionMaterial() and (c:IsControler(tp) or (c:IsFaceup() and c:GetGounter(0x1041)>0))
+	return c:IsCanBeFusionMaterial() and (c:IsControler(tp) or (c:IsFaceup() and c:GetCounter(0x1041)>0))
 end
 function c100406005.filter1(c,e,tp)
 	return c100406005.filter0(c,tp) and not c:IsImmuneToEffect(e)
