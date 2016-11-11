@@ -32,6 +32,13 @@ function c100212021.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(2)
 	c:RegisterEffect(e3)
+	--indes
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e4:SetCondition(c100212021.indcon)
+	e4:SetValue(1)
+	c:RegisterEffect(e4)
 end
 function c100212021.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x10ec) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
@@ -70,4 +77,7 @@ function c100212021.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100212021.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
+end
+function c100212021.indcon(e)
+	return Duel.GetTurnPlayer()==e:GetHandler():GetControler()
 end
