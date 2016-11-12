@@ -49,7 +49,7 @@ function c100406004.lvcon(e)
 end
 function c100406004.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local bc=e:GetHandler():GetBattleTarget()
+	local bc=c:GetBattleTarget()
 	return bc and bc:IsLevelBelow(c:GetLevel()) and bc:IsStatus(STATUS_OPPO_BATTLE) and bc:IsRelateToBattle()
 end
 function c100406004.spfilter(c,e,tp)

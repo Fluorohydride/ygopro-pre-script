@@ -42,7 +42,7 @@ function c100406013.thfilter(c)
 	return (c:IsSetCard(0x1f3) or c:IsCode(96622984,22011689,69105797)) and c:IsAbleToHand()
 end
 function c100406013.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100406013.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100406013.thop(e,tp,eg,ep,ev,re,r,rp)

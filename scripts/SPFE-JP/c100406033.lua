@@ -58,7 +58,9 @@ function c100406033.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		local g=Duel.GetMatchingGroup(c100406033.rmfilter2,tp,0,LOCATION_MZONE,nil,tc:GetAttribute())
-		g:AddCard(tc)
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		if tc:IsFaceup() and g:GetCount()>0 then
+			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		end
+		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end

@@ -43,20 +43,17 @@ end
 function c100406010.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or aux.fuslimit(e,se,sp,st)
 end
-function c100406010.disfilter(c)
-	return c:IsFaceup() and c:GetAttack()>0
-end
 function c100406010.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c100406010.disfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100406010.disfilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and aux.disfilter1(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,c100406010.disfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function c100406010.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:GetAttack()>0 then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -89,7 +86,7 @@ function c100406010.rmfilter(c)
 end
 function c100406010.spop(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	Duel.Destroy(dg,REASON_EFFECT)
+	if Duel.Destroy(dg,REASON_EFFECT)==0 then return end
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c100406010.rmfilter,tp,LOCATION_GRAVE,0,c)
 	if g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

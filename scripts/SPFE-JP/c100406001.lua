@@ -58,7 +58,7 @@ end
 function c100406001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()
 	if tc==e:GetHandler() then tc=Duel.GetAttackTarget() end
-	if chk==0 then return tc and not tc:IsStatus(STATUS_BATTLE_DESTROYED) and tc:IsRelateToBattle() end
+	if chk==0 then return tc and tc:IsRelateToBattle() end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
 function c100406001.desop(e,tp,eg,ep,ev,re,r,rp)
