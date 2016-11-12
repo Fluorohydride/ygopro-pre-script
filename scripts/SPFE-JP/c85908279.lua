@@ -1,10 +1,10 @@
 --召喚獣コキュートス
 --Kokytos the Eidolon Beast
 --Script by nekrozar
-function c100406029.initial_effect(c)
+function c85908279.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,100406026,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER),1,true,true)
+	aux.AddFusionProcCodeFun(c,86120751,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER),1,true,true)
 	--cannot target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -19,7 +19,7 @@ function c100406029.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(c100406029.indval)
+	e2:SetValue(c85908279.indval)
 	c:RegisterEffect(e2)
 	--defense attack
 	local e3=Effect.CreateEffect(c)
@@ -27,6 +27,6 @@ function c100406029.initial_effect(c)
 	e3:SetCode(EFFECT_DEFENSE_ATTACK)
 	c:RegisterEffect(e3)
 end
-function c100406029.indval(e,re,tp)
+function c85908279.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end

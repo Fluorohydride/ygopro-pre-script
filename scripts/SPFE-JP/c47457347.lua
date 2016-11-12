@@ -1,7 +1,7 @@
 --魔法名－「大いなる獣」
 --Magical Name - "Great Beast"
 --Script by nekrozar
-function c100406100.initial_effect(c)
+function c47457347.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -9,20 +9,20 @@ function c100406100.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(c100406100.target)
-	e1:SetOperation(c100406100.activate)
+	e1:SetTarget(c47457347.target)
+	e1:SetOperation(c47457347.activate)
 	c:RegisterEffect(e1)
 end
-function c100406100.filter(c,e,tp)
+function c47457347.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0xf4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100406100.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c100406100.filter(chkc) end
+function c47457347.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c47457347.filter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c100406100.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
+		and Duel.IsExistingTarget(c47457347.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	local g=Duel.GetMatchingGroup(c100406100.filter,tp,LOCATION_REMOVED,0,nil,e,tp):Filter(Card.IsCanBeEffectTarget,nil,e)
+	local g=Duel.GetMatchingGroup(c47457347.filter,tp,LOCATION_REMOVED,0,nil,e,tp):Filter(Card.IsCanBeEffectTarget,nil,e)
 	local tg=Group.CreateGroup()
 	repeat
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -30,11 +30,11 @@ function c100406100.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		tg:Merge(sg)
 		g:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
 		ft=ft-1
-	until g:GetCount()==0 or ft==0 or not Duel.SelectYesNo(tp,aux.Stringid(100406100,0))
+	until g:GetCount()==0 or ft==0 or not Duel.SelectYesNo(tp,aux.Stringid(47457347,0))
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tg,tg:GetCount(),0,0)
 end
-function c100406100.activate(e,tp,eg,ep,ev,re,r,rp)
+function c47457347.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if ft<=0 or g:GetCount()==0 or (g:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133)) then return end

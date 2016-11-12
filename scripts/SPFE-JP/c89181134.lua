@@ -2,7 +2,7 @@
 --Predator Plant Sundew Kingii
 --Scripted by Eerie Code
 --The 'fusattribute' effect is temporary, requires a core update for full functionality
-function c100406005.initial_effect(c)
+function c89181134.initial_effect(c)
 	--fusattribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -14,55 +14,55 @@ function c100406005.initial_effect(c)
 	e1:SetValue(ATTRIBUTE_DARK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e1:SetTarget(c100406005.attrtg)
+	e1:SetTarget(c89181134.attrtg)
 	c:RegisterEffect(e1)
 	--fusion summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100406005,0))
+	e2:SetDescription(aux.Stringid(89181134,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,100406005)
-	e2:SetTarget(c100406005.target)
-	e2:SetOperation(c100406005.operation)
+	e2:SetCountLimit(1,89181134)
+	e2:SetTarget(c89181134.target)
+	e2:SetOperation(c89181134.operation)
 	c:RegisterEffect(e2)
 end
-function c100406005.attrtg(e,c)
+function c89181134.attrtg(e,c)
 	return c:GetCounter(0x1041)>0
 end
-function c100406005.filter0(c,tp)
+function c89181134.filter0(c,tp)
 	return c:IsCanBeFusionMaterial() and (c:IsControler(tp) or (c:IsFaceup() and c:GetCounter(0x1041)>0))
 end
-function c100406005.filter1(c,e,tp)
-	return c100406005.filter0(c,tp) and not c:IsImmuneToEffect(e)
+function c89181134.filter1(c,e,tp)
+	return c89181134.filter0(c,tp) and not c:IsImmuneToEffect(e)
 end
-function c100406005.filter2(c,e,tp,m,f,gc)
+function c89181134.filter2(c,e,tp,m,f,gc)
 	return c:IsType(TYPE_FUSION) and c:IsAttribute(ATTRIBUTE_DARK) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,gc)
 end
-function c100406005.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c89181134.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local mg1=Duel.GetMatchingGroup(c100406005.filter0,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,c,tp)
-		local res=Duel.IsExistingMatchingCard(c100406005.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,c)
+		local mg1=Duel.GetMatchingGroup(c89181134.filter0,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,c,tp)
+		local res=Duel.IsExistingMatchingCard(c89181134.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,c)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
 				local fgroup=ce:GetTarget()
 				local mg2=fgroup(ce,e,tp)
 				local mf=ce:GetValue()
-				res=Duel.IsExistingMatchingCard(c100406005.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,c)
+				res=Duel.IsExistingMatchingCard(c89181134.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,c)
 			end
 		end
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function c100406005.operation(e,tp,eg,ep,ev,re,r,rp)
+function c89181134.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsImmuneToEffect(e) then return end
-	local mg1=Duel.GetMatchingGroup(c100406005.filter1,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,c,e,tp)
-	local sg1=Duel.GetMatchingGroup(c100406005.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,c)
+	local mg1=Duel.GetMatchingGroup(c89181134.filter1,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,c,e,tp)
+	local sg1=Duel.GetMatchingGroup(c89181134.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,c)
 	local mg2=nil
 	local sg2=nil
 	local ce=Duel.GetChainMaterial(tp)
@@ -70,7 +70,7 @@ function c100406005.operation(e,tp,eg,ep,ev,re,r,rp)
 		local fgroup=ce:GetTarget()
 		mg2=fgroup(ce,e,tp)
 		local mf=ce:GetValue()
-		sg2=Duel.GetMatchingGroup(c100406005.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,c)
+		sg2=Duel.GetMatchingGroup(c89181134.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,c)
 	end
 	if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
 		local sg=sg1:Clone()
