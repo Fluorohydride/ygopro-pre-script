@@ -4,7 +4,7 @@
 function c100406033.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x1f4),aux.FilterEqualFunction(Card.GetSummonLocation,LOCATION_EXTRA),false)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x1f4),c100406033.ffilter2,false)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -33,6 +33,9 @@ function c100406033.initial_effect(c)
 	e3:SetTarget(c100406033.rmtg)
 	e3:SetOperation(c100406033.rmop)
 	c:RegisterEffect(e3)
+end
+function c100406033.ffilter2(c)
+	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsLocation(LOCATION_MZONE)
 end
 function c100406033.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or aux.fuslimit(e,se,sp,st)
