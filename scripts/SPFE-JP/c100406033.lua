@@ -4,7 +4,7 @@
 function c100406033.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x1f4),c100406033.ffilter2,false)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0xf4),c100406033.ffilter2,false)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -42,7 +42,7 @@ function c100406033.splimit(e,se,sp,st)
 end
 function c100406033.rmfilter1(c,tp)
 	local att=c:GetAttribute()
-	return c:IsSetCard(0x1f4) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsAbleToRemove()
+	return c:IsSetCard(0xf4) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsAbleToRemove()
 		and Duel.IsExistingMatchingCard(c100406033.rmfilter2,tp,0,LOCATION_MZONE,1,nil,att)
 end
 function c100406033.rmfilter2(c,att)

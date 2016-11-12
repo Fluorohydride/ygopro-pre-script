@@ -19,10 +19,10 @@ function c100406036.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c100406036.filter1(c,e,tp)
-	return c:IsSetCard(0x1f4) and Duel.IsExistingMatchingCard(c100406036.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetOriginalAttribute())
+	return c:IsSetCard(0xf4) and Duel.IsExistingMatchingCard(c100406036.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetOriginalAttribute())
 end
 function c100406036.filter2(c,e,tp,att)
-	return c:IsSetCard(0x1f4) and c:GetOriginalAttribute()~=att and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
+	return c:IsSetCard(0xf4) and c:GetOriginalAttribute()~=att and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
 end
 function c100406036.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

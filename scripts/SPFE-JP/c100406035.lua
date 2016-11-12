@@ -37,7 +37,7 @@ function c100406035.spfilter1(c,e,tp,m,f,chkf)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c100406035.spfilter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x1f4) and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0xf4) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c100406035.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -86,7 +86,7 @@ function c100406035.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tg=sg:Select(tp,1,1,nil)
 		local tc=tg:GetFirst()
 		if sg1:IsContains(tc) and (sg3==nil or not sg3:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
-			if tc:IsSetCard(0x1f4) then
+			if tc:IsSetCard(0xf4) then
 				local mat1=Duel.SelectFusionMaterial(tp,tc,mg2,nil,chkf)
 				tc:SetMaterial(mat1)
 				local mat2=mat1:Filter(Card.IsLocation,nil,LOCATION_MZONE+LOCATION_GRAVE)

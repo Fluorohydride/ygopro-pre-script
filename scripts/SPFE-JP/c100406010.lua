@@ -4,7 +4,7 @@
 function c100406010.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,c100406010.ffilter1,c100406010.ffilter2,true)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x10f3),c100406010.ffilter2,true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -33,9 +33,6 @@ function c100406010.initial_effect(c)
 	e3:SetTarget(c100406010.sptg)
 	e3:SetOperation(c100406010.spop)
 	c:RegisterEffect(e3)
-end
-function c100406010.ffilter1(c)
-	return c:IsFusionSetCard(0x11f3) or c:IsFusionCode(96622984,22011689,69105797)
 end
 function c100406010.ffilter2(c)
 	return c:GetOriginalLevel()>=8 and c:IsAttribute(ATTRIBUTE_DARK)

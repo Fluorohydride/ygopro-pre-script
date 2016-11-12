@@ -4,7 +4,7 @@
 function c100406009.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,c100406009.ffilter,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),true)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x10f3),aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),true)
 	--remove
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100406009,0))
@@ -45,9 +45,6 @@ function c100406009.initial_effect(c)
 	e4:SetTarget(c100406009.thtg)
 	e4:SetOperation(c100406009.thop)
 	c:RegisterEffect(e4)
-end
-function c100406009.ffilter(c)
-	return c:IsFusionSetCard(0x11f3) or c:IsFusionCode(96622984,22011689,69105797)
 end
 function c100406009.rmfilter(c,lv)
 	return c:IsFaceup() and c:IsLevelBelow(lv) and c:IsAbleToRemove()
