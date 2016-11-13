@@ -2,7 +2,7 @@
 --Frightfur Patchwork
 --Scripted by Eerie Code
 function c100212022.initial_effect(c)
-    --
+    --Activate
     local e1=Effect.CreateEffect(c)
     e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +12,6 @@ function c100212022.initial_effect(c)
     e1:SetOperation(c100212022.activate)
     c:RegisterEffect(e1)
 end
-
 function c100212022.filter1(c)
     return c:IsCode(24094653) and c:IsAbleToHand()
 end

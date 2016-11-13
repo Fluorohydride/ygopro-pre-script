@@ -2,8 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`  
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
-- **November 4, 2016**  : Invasion: Vengeance (INOV-EN) : `100910XXX`  
-- **November 12, 2016**  : Booster SP: Fusion Enforcers (SPFE-JP) : `100406XXX`  
 - **November 26, 2016**  : Dimension Box Limited Edition (DBLE-JP) : `100212XXX`  
 - **December 17, 2016**  : 20th Anniversary Pack 1st Wave (20AP-JP) : `100213XXX`  
 - **December 17, 2016**  : Premium Pack 19 (PP19-JP) : `100214XXX`  
@@ -32,3 +30,5 @@
 - ~~Structure Deck R: Machine Dragon Re-Volt (SR03-JP) : `100303XXX`~~  
 - ~~Yu-Gi-Oh! ARC-V Volume 2 promotional card (YA02-JP) : `100211XXX`~~  
 - ~~RAGING TEMPEST (RATE-JP) : `100911XXX`~~  
+- ~~Invasion: Vengeance (INOV-EN) : `100910XXX`~~  
+- ~~Booster SP: Fusion Enforcers (SPFE-JP) : `100406XXX`~~  
