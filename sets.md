@@ -6,6 +6,7 @@
 - **December 17, 2016**  : 20th Anniversary Pack 1st Wave (20AP-JP) : `100213XXX`  
 - **December 17, 2016**  : Premium Pack 19 (PP19-JP) : `100214XXX`  
 - **December 23, 2016**  : Structure Deck: Pendulum Evolution (SD31-JP) : `100331XXX`  
+- **January 14, 2017**  : Maximum Crisis (MACR-JP) : `100912XXX`  
 
 #Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~  
