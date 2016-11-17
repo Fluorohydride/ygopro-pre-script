@@ -1,4 +1,4 @@
---電子光虫－ＬＥＤバグ
+--電子光虫－LEDバグ
 --Digital Bug - LED Bug
 --Scripted by Eerie Code
 function c100912029.initial_effect(c)
@@ -28,12 +28,10 @@ function c100912029.initial_effect(c)
 	e2:SetOperation(c100912029.efop)
 	c:RegisterEffect(e2)
 end
-
 function c100912029.xyzlimit(e,c)
 	if not c then return false end
 	return not c:IsRace(RACE_INSECT)
 end
-
 function c100912029.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return not c:IsStatus(STATUS_CONTINUOUS_POS) and c:IsPosition(POS_FACEUP_DEFENSE) and c:IsPreviousPosition(POS_FACEUP_ATTACK)
@@ -53,7 +51,6 @@ function c100912029.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
 function c100912029.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_XYZ
 end
@@ -78,5 +75,6 @@ function c100912029.efop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100912029.drop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,100912029)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end

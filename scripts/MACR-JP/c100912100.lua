@@ -21,7 +21,6 @@ function c100912100.initial_effect(c)
 	e2:SetOperation(c100912100.repop)
 	c:RegisterEffect(e2)
 end
-
 function c100912100.filter(c)
 	return c:IsSetCard(0xc4) and not c:IsCode(100912100) and c:IsAbleToHand()
 end
@@ -37,7 +36,6 @@ function c100912100.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
 function c100912100.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xc4) and c:IsLocation(LOCATION_ONFIELD)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
