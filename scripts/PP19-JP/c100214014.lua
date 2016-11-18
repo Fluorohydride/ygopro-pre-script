@@ -28,6 +28,7 @@ function c100214014.initial_effect(c)
 	e2:SetOperation(c100214014.atkop)
 	c:RegisterEffect(e2)
 end
+c100214014.xyz_number=70
 function c100214014.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
