@@ -24,7 +24,7 @@ end
 function c82321037.desfilter(c)
 	return c:IsType(TYPE_MONSTER) and ((c:IsLocation(LOCATION_MZONE) and c:IsFaceup()) or c:IsLocation(LOCATION_HAND))
 end
-function c82321037.locfilter(c)
+function c82321037.locfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function c82321037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -37,7 +37,7 @@ function c82321037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c82321037.desfilter,tp,loc,loc2,c)
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and g:GetCount()>=2 and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WATER)
-		and (ft>0 or g:IsExists(c82321037.locfilter,-ft+1,nil)) end
+		and (ft>0 or g:IsExists(c82321037.locfilter,-ft+1,nil,tp)) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,tp,loc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
@@ -56,7 +56,7 @@ function c82321037.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=nil local g2=nil
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	if ft<1 then
-		g1=g:FilterSelect(tp,c82321037.locfilter,1,1,nil)
+		g1=g:FilterSelect(tp,c82321037.locfilter,1,1,nil,tp)
 	else
 		g1=g:Select(tp,1,1,nil)
 	end
