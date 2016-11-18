@@ -45,7 +45,7 @@ function c100212003.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function c100212003.spfilter(c,e,tp)
-	return c:IsSetCard(0x10db) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x10db) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,100212003,0x10db,0x11,0,0,c:GetLevel(),RACE_WARRIOR,ATTRIBUTE_DARK)
 end
 function c100212003.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -65,7 +65,7 @@ function c100212003.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,100212003,0x10db,0x11,0,0,tc:GetLevel(),RACE_WARRIOR,ATTRIBUTE_DARK) then
-		c:AddMonsterAttribute(TYPE_NORMAL)
+		c:AddMonsterAttribute(TYPE_NORMAL,0,0,tc:GetLevel(),0,0)
 		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 		c:AddMonsterAttributeComplete()
 		local e1=Effect.CreateEffect(c)
