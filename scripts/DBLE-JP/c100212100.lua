@@ -24,17 +24,15 @@ end
 function c100212100.cfilter(c)
 	return c:IsSetCard(0xf3) and not c:IsPublic()
 end
-function c100212100.filter(c,e)
-	return c:IsCanAddCounter(0x1041,1) and c:IsCanBeEffectTarget(e)
-end
 function c100212100.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local hg=Duel.GetMatchingGroup(c100212100.cfilter,tp,LOCATION_HAND,0,e:GetHandler())
-	local tc=Duel.GetMatchingGroupCount(c100212100.filter,tp,0,LOCATION_MZONE,nil,e)
+	local ct=Duel.GetTargetCount(Card.IsCanAddCounter,tp,0,LOCATION_MZONE,nil,0x1041,1)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsCanAddCounter(0x1041,1) end
-	if chk==0 then return hg:GetCount()>0 and tc>0 end
+	if chk==0 then return hg:GetCount()>0 and ct>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g=hg:Select(tp,1,tc,nil)
+	local g=hg:Select(tp,1,ct,nil)
 	Duel.ConfirmCards(1-tp,g)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,Card.IsCanAddCounter,tp,0,LOCATION_MZONE,g:GetCount(),g:GetCount(),nil,0x1041,1)
 end
 function c100212100.activate(e,tp,eg,ep,ev,re,r,rp)
