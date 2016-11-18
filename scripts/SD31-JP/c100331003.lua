@@ -38,7 +38,7 @@ function c100331003.dbtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,c,1,0,0)
 end
 function c100331003.dbop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:Gethandler()
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
