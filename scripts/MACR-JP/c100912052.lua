@@ -98,7 +98,7 @@ function c100912052.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local mg=tc:GetMaterial()
-	if mg:GetCount()==0 and mg:GetCount()<=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if mg:GetCount()>0 and mg:GetCount()<=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		and not mg:IsExists(c100912052.mgfilter,1,nil,e,tp,c) and not Duel.IsPlayerAffectedByEffect(tp,59822133) then
 		local sc=mg:GetFirst()
 		while sc do
