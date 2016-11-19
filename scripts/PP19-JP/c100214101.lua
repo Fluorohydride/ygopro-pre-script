@@ -49,14 +49,14 @@ end
 function c100214101.tgfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(0xa9) or c:IsSetCard(0xad)) and c:IsType(TYPE_MONSTER)
 end
-function c100214101.tgop(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c100214101.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c100214101.tgfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100214101.tgfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg=Duel.SelectTarget(tp,c100214101.tgfilter,tp,LOCATION_REMOVED,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,sg,1,0,0)
 end
-function c100214101.thop(e,tp,eg,ep,ev,re,r,rp)
+function c100214101.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_RETURN)
