@@ -79,7 +79,7 @@ function c100912107.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		local rg=Duel.GetDecktopGroup(1-tp,4)
 		if rm and rg:GetCount()>0 and rg:FilterCount(Card.IsAbleToRemove,nil)==4
-			and Duel.SelectYesNo(tp,aux.Stringid(100912107,0)) then
+			and Duel.SelectYesNo(tp,aux.Stringid(100912107,2)) then
 			Duel.DisableShuffleCheck()
 			Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 		end
