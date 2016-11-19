@@ -25,7 +25,7 @@ function c100212016.initial_effect(c)
 	e4:SetDescription(aux.Stringid(100212016,1))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_GRAVE)
+	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,100212016)
 	e4:SetCondition(c100212016.thcon)
 	e4:SetTarget(c100212016.thtg)
@@ -43,7 +43,7 @@ function c100212016.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100212016.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
+	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE) and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end
 function c100212016.thfilter(c)
 	return c:IsSetCard(0x109a) and c:IsAbleToHand()
