@@ -28,7 +28,7 @@ function c100912009.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100912009.spfilter(c,e,tp)
-	return c:IsSetCard(0x10f3) and c:IsCode(100912009) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x10f3) and not c:IsCode(100912009) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100912009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
