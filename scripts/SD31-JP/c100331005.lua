@@ -10,7 +10,6 @@ function c100331005.initial_effect(c)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(c100331005.condition)
-	e1:SetTarget(c100331005.target)
 	e1:SetOperation(c100331005.operation)
 	c:RegisterEffect(e1)
 	--Banish
