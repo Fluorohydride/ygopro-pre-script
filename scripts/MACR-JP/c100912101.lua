@@ -31,7 +31,8 @@ function c100912101.otfilter(c)
 end
 function c100912101.otcon(e,c)
 	if c==nil then return true end
-	return c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	local tp=c:GetControler()
+	return c:GetLevel()>4 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100912101.otfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100912101.otop(e,tp,eg,ep,ev,re,r,rp,c)
