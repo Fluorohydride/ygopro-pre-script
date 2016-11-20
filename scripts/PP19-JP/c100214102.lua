@@ -57,5 +57,6 @@ function c100214102.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e2,true)
 		tc:CompleteProcedure()
+		Duel.SpecialSummonComplete()
 	end
 end
