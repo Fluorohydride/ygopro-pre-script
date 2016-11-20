@@ -17,8 +17,9 @@ function c100212015.initial_effect(c)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c100212015.damcon)
 	e2:SetOperation(c100212015.damop)
 	c:RegisterEffect(e2)
@@ -60,8 +61,10 @@ function c100212015.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-function c100212015.damcon(e)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ
+function c100212015.damcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return ep==tp and c:IsRelateToBattle() and eg:GetFirst()==c:GetBattleTarget()
+		and bit.band(c:GetSummonType(),SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ
 end
 function c100212015.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(1-ep,ev,false)
