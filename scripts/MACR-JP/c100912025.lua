@@ -97,7 +97,8 @@ function c100912025.valcheck(e,c)
 	e:SetLabel(typ)
 end
 function c100912025.efilter(e,te)
-	return te:IsActiveType(e:GetLabelObject():GetLabel()) and te:GetOwner()~=e:GetOwner()
+	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_ADVANCE)==SUMMON_TYPE_ADVANCE
+		and te:IsActiveType(e:GetLabelObject():GetLabel()) and te:GetOwner()~=e:GetOwner()
 end
 function c100912025.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
