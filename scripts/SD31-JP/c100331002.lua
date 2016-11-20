@@ -25,7 +25,7 @@ function c100331002.initial_effect(c)
 	e2:SetTarget(c100331002.sptg)
 	e2:SetOperation(c100331002.spop)
 	c:RegisterEffect(e2)
-	--Hitotsu Ni
+	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100331002,4))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -37,12 +37,11 @@ function c100331002.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100331002.rpfilter(c,e,tp)
-	return c:IsCode(20409757) and (not c:IsForbidden() or 
-		(Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:IsCode(20409757) and (not c:IsForbidden()
+		or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function c100331002.rptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDestructable()
-		and Duel.IsExistingMatchingCard(c100331002.rpfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100331002.rpfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
 function c100331002.rpop(e,tp,eg,ep,ev,re,r,rp)
@@ -122,7 +121,8 @@ function c100331002.hnfilter(c,e,tp)
 	return c:IsFacedown() and c:IsCode(100912036) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
 end
 function c100331002.hntg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and Duel.IsExistingMatchingCard(c100331002.hnfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+		and Duel.IsExistingMatchingCard(c100331002.hnfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100331002.hnop(e,tp,eg,ep,ev,re,r,rp)
