@@ -43,16 +43,18 @@ function c100212016.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100212016.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE) and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
+		and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end
 function c100212016.thfilter(c)
-	return c:IsSetCard(0x109a) and c:IsAbleToHand()
+	return (c:IsSetCard(0x109a) or c:IsCode(3064425,4786063,14624296,27756115,31181711,35800511,40028305,77679716,90361010,95500396)) and c:IsAbleToHand()
 end
 function c100212016.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100212016.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100212016.thop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsPosition(POS_FACEUP_ATTACK) then return end
 	Duel.ChangePosition(c,POS_FACEUP_ATTACK)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
