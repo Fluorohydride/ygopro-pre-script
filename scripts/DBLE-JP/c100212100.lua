@@ -32,11 +32,12 @@ function c100212100.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=hg:Select(tp,1,ct,nil)
 	Duel.ConfirmCards(1-tp,g)
+	Duel.ShuffleHand(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,Card.IsCanAddCounter,tp,0,LOCATION_MZONE,g:GetCount(),g:GetCount(),nil,0x1041,1)
 end
 function c100212100.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChaininfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	local tc=tg:GetFirst()
 	while tc do
 		if tc:AddCounter(0x1041,1) and tc:GetLevel()>1 then
