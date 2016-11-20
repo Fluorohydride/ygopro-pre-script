@@ -1,6 +1,7 @@
 --星刻の魔術師
 --Startime Magician
 --Scripted by Eerie Code
+--Summon limit temporary, might require core update
 function c100331041.initial_effect(c)
     c:EnableReviveLimit()
     aux.AddXyzProcedure(c,c100331041.matfilter,4,2)
@@ -64,7 +65,9 @@ function c100331041.thop(e,tp,eg,ep,ev,re,r,rp)
     Duel.ConfirmCards(1-tp,tc)
 end
 function c100331041.repfilter(c,tp)
-    return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE+LOCATION_PZONE)
+    local seq=c:GetSequence()
+    return c:IsFaceup() and c:IsControler(tp) 
+        and (c:IsLocation(LOCATION_MZONE) or (c:IsLocation(LOCATION_SZONE) and (seq==6 or seq==7)))
         and c:IsType(TYPE_PENDULUM) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function c100331041.repcfilter(c)
