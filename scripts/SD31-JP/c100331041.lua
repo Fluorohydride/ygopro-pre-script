@@ -76,7 +76,7 @@ end
 function c100331041.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
     local ct=eg:FilterCount(c100331041.repfilter,nil,tp)
     local g=Duel.GetMatchingGroup(c100331041.repcfilter,tp,LOCATION_DECK,0,nil)
-    if chk==0 then return g:GetCount()>0 end
+    if chk==0 then return ct>0 and g:GetCount()>0 end
     if Duel.SelectYesNo(tp,aux.Stringid(100331041,1)) then
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
         local sg=g:Select(tp,1,1,nil)
