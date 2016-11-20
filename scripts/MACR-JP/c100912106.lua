@@ -30,7 +30,6 @@ function c100912106.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,100912206)
 	e3:SetCondition(c100912106.sumcon)
-	e3:SetCost(c100912106.cost)
 	e3:SetTarget(c100912106.sumtg)
 	e3:SetOperation(c100912106.sumop)
 	c:RegisterEffect(e3)
@@ -115,7 +114,7 @@ function c100912106.sumfilter(c)
 end
 function c100912106.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100912106.sumfilter,tp,LOCATION_HAND,0,1,nil)
-		and Duel.GetFlagEffect(tp,100912306)==0 end
+		and Duel.GetFlagEffect(tp,100912306)==0 and not e:GetHandler():IsStatus(STATUS_CHAINING) end
 	Duel.RegisterFlagEffect(tp,100912306,RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
