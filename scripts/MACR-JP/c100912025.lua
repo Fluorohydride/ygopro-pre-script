@@ -65,7 +65,7 @@ function c100912025.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 		mg:Sub(g2)
 		ct=ct-g2:GetCount()
 	end
-	if ct>0 and Duel.GetTributeCount(c)>=ct and mg:GetCount()>=ct
+	if ct>0 and Duel.GetTributeCount(c)>=ct and mg:GetCount()>0
 		and Duel.SelectYesNo(tp,aux.Stringid(100912025,0)) then
 		local ect=ct
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then ect=ect-1 end
