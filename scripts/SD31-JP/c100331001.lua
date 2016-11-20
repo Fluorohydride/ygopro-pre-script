@@ -118,6 +118,7 @@ function c100331001.spop(e,tp,eg,ep,ev,re,r,rp)
     end
     local g=Duel.GetMatchingGroup(c100331001.thfilter,tp,LOCATION_DECK,0,nil)
     if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100331001,3)) then
+		Duel.BreakEffect()
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
         local sg=g:Select(tp,1,1,nil)
         Duel.SendtoHand(sg,nil,REASON_EFFECT)
