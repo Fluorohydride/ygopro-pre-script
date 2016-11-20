@@ -8,7 +8,7 @@ function c100912014.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(c100912014.spcon)
+	e1:SetCondition(c100912014.hspcon)
 	c:RegisterEffect(e1)
 	--special summon (LL)
 	local e2=Effect.CreateEffect(c)
@@ -18,17 +18,21 @@ function c100912014.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetCountLimit(1,100912014)
+	e2:SetCondition(c100912014.spcon)
 	e2:SetTarget(c100912014.sptg)
 	e2:SetOperation(c100912014.spop)
 	c:RegisterEffect(e2)
 end
-function c100912014.spcon(e,c)
+function c100912014.hspcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c100912014.spfilter(c,e,tp)
 	return c:IsSetCard(0x1f7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function c100912014.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function c100912014.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100912014.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
