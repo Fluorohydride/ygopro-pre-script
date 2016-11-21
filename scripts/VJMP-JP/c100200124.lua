@@ -4,7 +4,7 @@
 function c100200124.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsType,TYPE_FUSION),aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),true)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsType,TYPE_FUSION),aux.FilterBoolFunction(Card.IsFusionAttribute,ATTRIBUTE_DARK),true)
 	--add counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100200124,0))
