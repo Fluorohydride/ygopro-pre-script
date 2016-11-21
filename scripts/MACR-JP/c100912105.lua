@@ -60,7 +60,7 @@ end
 function c100912105.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
-		if tc:IsSetCard(0x1f8) or tc:IsCode(30539496,34079868,82321037,87765315,96746083) then
+		if tc:IsPreviousLocation(LOCATION_ONFIELD) and (tc:IsSetCard(0x1f8) or tc:IsCode(30539496,34079868,82321037,87765315,96746083)) then
 			local p=tc:GetReasonPlayer()
 			local typ=bit.band(tc:GetOriginalType(),0x7)
 			if (typ==TYPE_MONSTER and Duel.GetFlagEffect(p,100912105)==0)
