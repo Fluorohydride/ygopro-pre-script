@@ -75,7 +75,7 @@ function c100912052.mgfilter(c,e,tp,fusc,mg)
 	return not c:IsControler(tp) or not c:IsLocation(LOCATION_GRAVE)
 		or bit.band(c:GetReason(),0x40008)~=0x40008 or c:GetReasonCard()~=fusc
 		or not c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c:IsHasEffect(EFFECT_NECRO_VALLEY)
-		--or not fusc:CheckFusionMaterial(mg,c)
+		or not fusc:CheckFusionMaterial(mg,c)
 end
 function c100912052.spfilter(c,e,tp,lc)
 	if c:IsFaceup() and c:GetFlagEffect(100912052)~=0 then
