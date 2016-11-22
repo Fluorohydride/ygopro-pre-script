@@ -60,7 +60,7 @@ function c100213005.atkop1(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c100213005.costfilter(c)
-	return c:IsSetCard(0x8) and c:GetAttack()>0 and c:IsDiscardable()
+	return c:IsSetCard(0x3008) and c:GetAttack()>0 and c:IsDiscardable()
 end
 function c100213005.atkcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100213005.costfilter,tp,LOCATION_HAND,0,1,nil) end
