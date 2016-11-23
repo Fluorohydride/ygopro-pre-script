@@ -56,7 +56,7 @@ function c100213004.handcon(e)
 end
 function c100213004.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:IsReason(REASON_EFFECT) 
+	return rp~=tp and c:IsReason(REASON_EFFECT)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_SZONE)
 end
 function c100213004.thfilter(c)

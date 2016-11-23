@@ -29,7 +29,7 @@ function c100912052.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,2000)
 end
 function c100912052.filter0(c,e,tp)
-	return c:IsCanBeFusionMaterial() 
+	return c:IsCanBeFusionMaterial()
 		and Duel.IsExistingMatchingCard(c100912052.filter1,tp,LOCATION_MZONE,0,1,c,e,tp,c)
 end
 function c100912052.filter1(c,e,tp,mc)

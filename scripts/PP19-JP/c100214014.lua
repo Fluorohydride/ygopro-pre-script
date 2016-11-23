@@ -1,4 +1,4 @@
---No.70 デッドリー・シン 
+--No.70 デッドリー・シン
 --Number 70: Deadly Sin
 --Script by nekrozar
 function c100214014.initial_effect(c)

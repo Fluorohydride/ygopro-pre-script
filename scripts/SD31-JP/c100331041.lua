@@ -37,7 +37,7 @@ function c100331041.matfilter(c)
 	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
 end
 function c100331041.splimit(e,se,sp,st)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (bit.band(st,SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ 
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (bit.band(st,SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ
 		and (not se or se:GetHandler():IsCode(73860462)))
 end
 function c100331041.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -45,7 +45,7 @@ function c100331041.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c100331041.thfilter(c)
-	return c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK) 
+	return c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()
 end
 function c100331041.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -67,7 +67,7 @@ function c100331041.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100331041.repfilter(c,tp)
 	local seq=c:GetSequence()
-	return c:IsFaceup() and c:IsControler(tp) 
+	return c:IsFaceup() and c:IsControler(tp)
 		and (c:IsLocation(LOCATION_MZONE) or (c:IsLocation(LOCATION_SZONE) and (seq==6 or seq==7)))
 		and c:IsType(TYPE_PENDULUM) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end

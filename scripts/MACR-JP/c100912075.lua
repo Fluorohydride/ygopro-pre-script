@@ -22,7 +22,7 @@ function c100912075.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100912075.cfilter1(c,tp)
-	return c:IsSetCard(0xd6) and not c:IsCode(100912075) and c:IsAbleToGraveAsCost() 
+	return c:IsSetCard(0xd6) and not c:IsCode(100912075) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(c100912075.cfilter2,tp,LOCATION_DECK,0,1,c)
 end
 function c100912075.cfilter2(c)

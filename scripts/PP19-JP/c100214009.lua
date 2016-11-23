@@ -1,4 +1,4 @@
---ONiサンダー 
+--ONiサンダー
 --Brohunder
 --Script by nekrozar
 function c100214009.initial_effect(c)
