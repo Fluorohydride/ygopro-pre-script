@@ -55,6 +55,6 @@ function c100912011.spop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
 	Duel.RegisterEffect(e2,tp)
 end
-function c100912011.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsType(TYPE_FUSION)
+function c100912011.splimit(e,c)
+	return not c:IsType(TYPE_FUSION)
 end
