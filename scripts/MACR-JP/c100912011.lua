@@ -56,5 +56,5 @@ function c100912011.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function c100912011.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return bit.band(sumtype,SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION
+	return c:IsType(TYPE_FUSION)
 end
