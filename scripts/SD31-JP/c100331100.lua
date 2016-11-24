@@ -49,6 +49,10 @@ function c100331100.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetOperation(nil)
 	end
 end
+function c100331100.descost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFlagEffect(tp,100331100)==0 end
+	Duel.RegisterFlagEffect(tp,100331100,RESET_PHASE+PHASE_END,0,1)
+end
 function c100331100.desfilter(c)
 	local seq=c:GetSequence()
 	return c:IsFaceup() and c:IsSetCard(0x98)
