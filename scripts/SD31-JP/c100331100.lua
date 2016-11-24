@@ -49,19 +49,19 @@ function c100331100.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetOperation(nil)
 	end
 end
-function c100331100.desfil(c)
+function c100331100.desfilter(c)
 	local seq=c:GetSequence()
-	return c:IsFaceup() and c:IsSetCard(0x98) and c:IsDestructable()
+	return c:IsFaceup() and c:IsSetCard(0x98)
 		and (c:IsLocation(LOCATION_MZONE) or (seq==6 or seq==7))
 end
 function c100331100.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c100331100.desfil,tp,LOCATION_MZONE+LOCATION_SZONE,0,1,nil)
-		and Duel.IsExistingTarget(Card.IsDestructable,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c100331100.desfilter,tp,LOCATION_MZONE+LOCATION_SZONE,0,1,nil)
+		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,c100331100.desfil,tp,LOCATION_MZONE+LOCATION_SZONE,0,1,1,nil)
+	local g1=Duel.SelectTarget(tp,c100331100.desfilter,tp,LOCATION_MZONE+LOCATION_SZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectTarget(tp,card.IsDestructable,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
 end
@@ -71,7 +71,7 @@ function c100331100.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Destroy(g,REASON_EFFECT)~=2 then
 		local g2=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		if g2:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100331100,1)) then
-      Duel.BreakEffect()
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local sg=g2:Select(tp,1,1,nil)
 			Duel.SendtoGrave(sg,REASON_EFFECT)

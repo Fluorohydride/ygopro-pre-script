@@ -44,14 +44,16 @@ function c100212020.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100212020.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(c100212020.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(c100212020.splimit)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+	end
 	local op=e:GetLabel()
 	if op==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -62,32 +64,46 @@ function c100212020.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	else
 		if not Duel.CheckLocation(tp,LOCATION_SZONE,6) or not Duel.CheckLocation(tp,LOCATION_SZONE,7) then return end
-		local g1=Duel.GetMatchingGroup(c100212020.pzfilter,tp,LOCATION_DECK,0,nil,65025250)
-		local g2=Duel.GetMatchingGroup(c100212020.pzfilter,tp,LOCATION_DECK,0,nil,91420254)
-		if g1:GetCount()==0 or g2:GetCount()==0 then return end
-		local tc1=g1:GetFirst()
-		local tc2=g2:GetFirst()
+		local tc1=Duel.GetFirstMatchingCard(c100212020.pzfilter,tp,LOCATION_DECK,0,nil,65025250)
+		local tc2=Duel.GetFirstMatchingCard(c100212020.pzfilter,tp,LOCATION_DECK,0,nil,91420254)
+		if tc1 or tc2 then return end
 		Duel.MoveToField(tc1,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		Duel.MoveToField(tc2,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		local fid=c:GetFieldID()
+		tc1:RegisterFlagEffect(100212020,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1,fid)
+		tc2:RegisterFlagEffect(100212020,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1,fid)
+		local sg=Group.FromCards(tc1,tc2)
+		sg:KeepAlive()
 		local de1=Effect.CreateEffect(c)
-		de1:SetCategory(CATEGORY_DESTROY)
 		de1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		de1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		de1:SetCode(EVENT_PHASE+PHASE_END)
 		de1:SetCountLimit(1)
+		de1:SetLabel(fid)
+		de1:SetLabelObject(sg)
 		de1:SetCondition(c100212020.descon)
 		de1:SetOperation(c100212020.desop)
-		de1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
-		tc1:RegisterEffect(de1)
-		local de2=de1:Clone()
-		tc2:RegisterEffect(de2)
+		de1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		Duel.RegisterEffect(de1,tp)
 	end
 end
 function c100212020.splimit(e,c)
 	return not c:IsSetCard(0xb3)
 end
+function c100212020.desfilter(c,fid)
+	return c:GetFlagEffectLabel(100212020)==fid
+end
 function c100212020.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	local g=e:GetLabelObject()
+	if Duel.GetTurnPlayer()==tp then return false end
+	if not g:IsExists(c100212020.desfilter,1,nil,e:GetLabel()) then
+		g:DeleteGroup()
+		e:Reset()
+		return false
+	else return true end
 end
 function c100212020.desop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+	local g=e:GetLabelObject()
+	local tg=g:Filter(c100212020.desfilter,nil,e:GetLabel())
+	Duel.Destroy(tg,REASON_EFFECT)
 end
