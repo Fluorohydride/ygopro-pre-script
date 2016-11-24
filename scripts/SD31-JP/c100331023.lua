@@ -38,7 +38,6 @@ function c100331023.thcfilter(c,tp)
 	return c:IsType(TYPE_PENDULUM) and c:IsPreviousSetCard(0x98)
 		and c:GetPreviousControler()==tp and c:IsPreviousPosition(POS_FACEUP)
 		and (pl==LOCATION_MZONE or (pl==LOCATION_SZONE and (ps==6 or ps==7)))
-		and not c:IsFacedown()
 end
 function c100331023.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(c100331023.thcfilter,1,nil,tp)
