@@ -22,6 +22,7 @@ function c100212035.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCost(c100212035.drcost)
 	e2:SetTarget(c100212035.drtg)
 	e2:SetOperation(c100212035.drop)
 	c:RegisterEffect(e2)
@@ -33,6 +34,16 @@ function c100212035.initial_effect(c)
 	e3:SetValue(1)
 	e3:SetOperation(c100212035.synop)
 	c:RegisterEffect(e3)
+end
+function c100212035.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetCode(EFFECT_SKIP_DP)
+	e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN)
+	Duel.RegisterEffect(e1,tp)
 end
 function c100212035.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -49,14 +60,15 @@ function c100212035.drop(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
 			if tc:IsCanBeSpecialSummoned(e,0,tp,true,false)
 				and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-				and Duel.SelectYesNo(tp,aux.Stringid(89818984,1))
-				and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+				and Duel.SelectYesNo(tp,aux.Stringid(100212035,1))
+				and Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_DIRECT_ATTACK)
 				e1:SetValue(1)
 				e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 				tc:RegisterEffect(e1,true)
+				Duel.SpecialSummonComplete()
 			end
 		end
 		Duel.ShuffleHand(tp)
