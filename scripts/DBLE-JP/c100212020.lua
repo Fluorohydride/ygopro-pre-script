@@ -66,7 +66,7 @@ function c100212020.activate(e,tp,eg,ep,ev,re,r,rp)
 		if not Duel.CheckLocation(tp,LOCATION_SZONE,6) or not Duel.CheckLocation(tp,LOCATION_SZONE,7) then return end
 		local tc1=Duel.GetFirstMatchingCard(c100212020.pzfilter,tp,LOCATION_DECK,0,nil,65025250)
 		local tc2=Duel.GetFirstMatchingCard(c100212020.pzfilter,tp,LOCATION_DECK,0,nil,91420254)
-		if tc1 or tc2 then return end
+		if not (tc1 and tc2) then return end
 		Duel.MoveToField(tc1,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		Duel.MoveToField(tc2,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		local fid=c:GetFieldID()
