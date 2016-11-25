@@ -55,7 +55,7 @@ function c100331100.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100331100.desfilter(c)
 	local seq=c:GetSequence()
-	return c:IsFaceup() and c:IsSetCard(0x98)
+	return c:IsFaceup() and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
 		and (c:IsLocation(LOCATION_MZONE) or (seq==6 or seq==7))
 end
 function c100331100.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
