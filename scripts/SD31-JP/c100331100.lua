@@ -55,15 +55,15 @@ function c100331100.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100331100.desfilter(c)
 	local seq=c:GetSequence()
-	return c:IsFaceup() and c:IsSetCard(0x98)
+	return c:IsFaceup() and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
 		and (c:IsLocation(LOCATION_MZONE) or (seq==6 or seq==7))
 end
 function c100331100.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c100331100.desfilter,tp,LOCATION_MZONE+LOCATION_SZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(c100331100.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,c100331100.desfilter,tp,LOCATION_MZONE+LOCATION_SZONE,0,1,1,nil)
+	local g1=Duel.SelectTarget(tp,c100331100.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)
@@ -78,6 +78,7 @@ function c100331100.desop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local sg=g2:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
 			Duel.SendtoGrave(sg,REASON_EFFECT)
 		end
 	end
