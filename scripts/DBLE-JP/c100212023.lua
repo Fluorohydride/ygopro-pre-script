@@ -87,12 +87,16 @@ function c100212023.recop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Recover(p,d,REASON_EFFECT)
 end
+function c100212023.filter(c,tp,typ)
+	return c:IsType(typ) and c:IsSetCard(0x10af) and c:IsControler(tp) and bit.band(c:GetSummonLocation(),LOCATION_EXTRA)~=0
+end
 function c100212023.tgop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=eg:Filter(c100212023.cfilter,nil,tp,e:GetLabel())
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	local g=eg:Filter(c100212023.filter,nil,tp,e:GetLabel())
 	local tc=g:GetFirst()
 	while tc do
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 		e1:SetValue(aux.tgoval)
