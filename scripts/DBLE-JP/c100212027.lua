@@ -59,7 +59,7 @@ function c100212027.ctcon(e)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0xba)
 end
 function c100212027.ctval(e,c)
-	return e:GetHandler():GetOverlayCount()-1
+	return e:GetHandler():GetOverlayGroup():FilterCount(Card.IsSetCard,nil,0xba)-1
 end
 function c100212027.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
