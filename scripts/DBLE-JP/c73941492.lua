@@ -1,8 +1,6 @@
 --調弦の魔術師
---Tune Magician
---Script by mercury233
 --fusion and xyz limit not implemented
-function c100212002.initial_effect(c)
+function c73941492.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--atk&def
@@ -11,7 +9,7 @@ function c100212002.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetValue(c100212002.atkval)
+	e1:SetValue(c73941492.atkval)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -29,71 +27,71 @@ function c100212002.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_SYNCHRO_MATERIAL_CUSTOM)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetTarget(c100212002.syntg)
+	e4:SetTarget(c73941492.syntg)
 	e4:SetValue(1)
-	e4:SetOperation(c100212002.synop)
+	e4:SetOperation(c73941492.synop)
 	c:RegisterEffect(e4)
 	--fusion and xyz custom not implemented
 	--local e5=Effect.CreateEffect(c)
 	--local e6=Effect.CreateEffect(c)
 	--spsummon success
 	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(100212002,0))
+	e7:SetDescription(aux.Stringid(73941492,0))
 	e7:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e7:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e7:SetCountLimit(1,100212002)
-	e7:SetCondition(c100212002.spcon)
-	e7:SetTarget(c100212002.sptg)
-	e7:SetOperation(c100212002.spop)
+	e7:SetCountLimit(1,73941492)
+	e7:SetCondition(c73941492.spcon)
+	e7:SetTarget(c73941492.sptg)
+	e7:SetOperation(c73941492.spop)
 	c:RegisterEffect(e7)
 end
-function c100212002.tuner_filter(c)
+function c73941492.tuner_filter(c)
 	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
 end
-function c100212002.atkfilter(c)
+function c73941492.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
 end
-function c100212002.atkval(e,c)
-	local g=Duel.GetMatchingGroup(c100212002.atkfilter,c:GetControler(),LOCATION_EXTRA,0,nil)
+function c73941492.atkval(e,c)
+	local g=Duel.GetMatchingGroup(c73941492.atkfilter,c:GetControler(),LOCATION_EXTRA,0,nil)
 	return g:GetClassCount(Card.GetCode)*100
 end
-function c100212002.synfilter(c,syncard,tuner,f)
+function c73941492.synfilter(c,syncard,tuner,f)
 	return c:IsFaceup() and c:IsNotTuner() and c:IsCanBeSynchroMaterial(syncard,tuner) and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM) and (f==nil or f(c))
 end
-function c100212002.syntg(e,syncard,f,minc,maxc)
+function c73941492.syntg(e,syncard,f,minc,maxc)
 	local c=e:GetHandler()
 	local lv=syncard:GetLevel()-c:GetLevel()
 	if lv<=0 then return false end
-	local g=Duel.GetMatchingGroup(c100212002.synfilter,syncard:GetControler(),LOCATION_MZONE,LOCATION_MZONE,c,syncard,c,f)
+	local g=Duel.GetMatchingGroup(c73941492.synfilter,syncard:GetControler(),LOCATION_MZONE,LOCATION_MZONE,c,syncard,c,f)
 	local res=g:CheckWithSumEqual(Card.GetSynchroLevel,lv,minc,maxc,syncard)
 	return res
 end
-function c100212002.synop(e,tp,eg,ep,ev,re,r,rp,syncard,f,minc,maxc)
+function c73941492.synop(e,tp,eg,ep,ev,re,r,rp,syncard,f,minc,maxc)
 	local c=e:GetHandler()
 	local lv=syncard:GetLevel()-c:GetLevel()
-	local g=Duel.GetMatchingGroup(c100212002.synfilter,syncard:GetControler(),LOCATION_MZONE,LOCATION_MZONE,c,syncard,c,f)
+	local g=Duel.GetMatchingGroup(c73941492.synfilter,syncard:GetControler(),LOCATION_MZONE,LOCATION_MZONE,c,syncard,c,f)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 	local sg=g:SelectWithSumEqual(tp,Card.GetSynchroLevel,lv,minc,maxc,syncard)
 	Duel.SetSynchroMaterial(sg)
 end
-function c100212002.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c73941492.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetSummonType()==SUMMON_TYPE_PENDULUM and c:IsPreviousLocation(LOCATION_HAND)
 end
-function c100212002.spfilter(c,e,tp)
-	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM) and not c:IsCode(100212002)
+function c73941492.spfilter(c,e,tp)
+	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM) and not c:IsCode(73941492)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100212002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c73941492.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c100212002.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c73941492.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function c100212002.spop(e,tp,eg,ep,ev,re,r,rp)
+function c73941492.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c100212002.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c73941492.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 		local c=e:GetHandler()
