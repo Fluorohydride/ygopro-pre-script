@@ -8,8 +8,7 @@ function c100912015.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
-	e1:SetCondition(c100912015.tgcon)
+	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(c100912015.tgtg)
 	e1:SetOperation(c100912015.tgop)
 	c:RegisterEffect(e1)
@@ -19,17 +18,14 @@ function c100912015.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_REMOVE)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetTarget(c100912015.rtgtg)
 	e2:SetOperation(c100912015.rtgop)
 	c:RegisterEffect(e2)
 end
-function c100912015.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsReason(REASON_RETURN)
-end
 function c100912015.tgfilter1(c,tp)
-	return ((c:IsSetCard(0xaf) and c:IsType(TYPE_MONSTER) and not c:IsCode(100912015)) 
-		or c:IsSetCard(0xae)) and Duel.IsExistingMatchingCard(c100912015.tgfilter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
+	return ((c:IsSetCard(0xaf) and c:IsType(TYPE_MONSTER) and not c:IsCode(100912015)) or c:IsSetCard(0xae))
+		and Duel.IsExistingMatchingCard(c100912015.tgfilter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function c100912015.tgfilter2(c,cd)
 	return c:IsCode(cd) and c:IsAbleToGrave()
@@ -53,19 +49,18 @@ function c100912015.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100912015.rtgfilter(c)
-	return c:IsFaceup() and ((c:IsSetCard(0xaf) and c:IsType(TYPE_MONSTER) and not c:IsCode(100912015)) 
-		or c:IsSetCard(0xae))
+	return c:IsFaceup() and ((c:IsSetCard(0xaf) and c:IsType(TYPE_MONSTER) and not c:IsCode(100912015)) or c:IsSetCard(0xae))
 end
 function c100912015.rtgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c100912015.rtgfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100912015.rtgfilter,tp,LOCATION_REMOVED,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100912015.rtgfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c100912015.rtgfilter,tp,LOCATION_REMOVED,0,1,1,nil,tp)
+	local g=Duel.SelectTarget(tp,c100912015.rtgfilter,tp,LOCATION_REMOVED,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 end
 function c100912015.rtgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_RETURN)
+		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_RETURN)
 	end
 end
