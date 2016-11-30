@@ -17,10 +17,14 @@ function c100912001.initial_effect(c)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
 	e2:SetCondition(c100912001.atkcon)
+	e2:SetCost(c100912001.atkcost)
 	e2:SetOperation(c100912001.atkop)
 	c:RegisterEffect(e2)
+	local e2b=e2:Clone()
+	e2b:SetCode(EVENT_CUSTOM+100912001)
+	e2b:SetCondition(aux.TRUE)
+	c:RegisterEffect(e2b)
 	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100912001,1))
@@ -48,6 +52,10 @@ end
 function c100912001.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) 
 		and rp==tp and e:GetHandler():GetFlagEffect(1)>0
+end
+function c100912001.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():GetFlagEffect(100912001)==0 end
+	e:GetHandler():RegisterFlagEffect(100912001,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c100912001.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -89,6 +97,7 @@ function c100912001.thop(e,tp,eg,ep,ev,re,r,rp)
 			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
 			if target then target(te,tep,eg,ep,ev,re,r,rp,1) end
 			Duel.RaiseEvent(sc,EVENT_CHAIN_SOLVED,te,0,tp,tp,Duel.GetCurrentChain())
+			Duel.RaiseEvent(sc,EVENT_CUSTOM+100912001,te,0,tp,0,0)
 		end
 	end
 end
