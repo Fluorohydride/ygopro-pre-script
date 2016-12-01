@@ -17,7 +17,7 @@ function c100213006.filter(c,tp)
 		and Duel.IsExistingMatchingCard(c100213006.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function c100213006.desfilter(c,atk)
-	return c:IsFaceup() and c:GetAttack()>atk and c:IsDestructable()
+	return c:IsFaceup() and c:GetAttack()>atk
 end
 function c100213006.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100213006.filter(chkc,tp) end
@@ -26,9 +26,17 @@ function c100213006.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.SelectTarget(tp,c100213006.filter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	local atk=tg:GetFirst():GetAttack()
 	local g=Duel.GetMatchingGroup(c100213006.desfilter,tp,0,LOCATION_MZONE,nil,atk)
-	Duel.SetTargetPlayer(1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,1,1-tp,0)
+	Duel.SetTargetPlayer(1-tp)
+	local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local dam=0
+	if fc and c100213006.ffilter(fc) then
+		dam=g:GetSum(Card.GetBaseAttack)
+	else
+		g,dam=g:GetMaxGroup(Card.GetBaseAttack)
+	end
+	Duel.SetTargetParam(dam)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,1,1-tp,dam)
 end
 function c100213006.ffilter(c)
 	return c:IsFaceup() and (c:IsSetCard(0x1f5) or c:IsCode(63035430,47596607))
