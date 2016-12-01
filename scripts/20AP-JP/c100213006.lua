@@ -31,7 +31,7 @@ function c100213006.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,1,1-tp,0)
 end
 function c100213006.ffilter(c)
-	return c:IsFaceup() and c:IsCode(63035430)
+	return c:IsFaceup() and (c:IsSetCard(0x1f5) or c:IsCode(63035430,47596607))
 end
 function c100213006.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
