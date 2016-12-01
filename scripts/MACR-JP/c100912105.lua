@@ -60,7 +60,7 @@ end
 function c100912105.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
-		if tc:IsPreviousLocation(LOCATION_ONFIELD) and (tc:IsSetCard(0x1f8) or tc:IsCode(30539496,34079868,82321037,87765315,96746083)) then
+		if tc:IsPreviousLocation(LOCATION_ONFIELD) and (tc:IsSetCard(0x1f9) or tc:IsCode(30539496,34079868,82321037,87765315,96746083)) then
 			local p=tc:GetReasonPlayer()
 			local typ=bit.band(tc:GetOriginalType(),0x7)
 			if (typ==TYPE_MONSTER and Duel.GetFlagEffect(p,100912105)==0)
@@ -95,7 +95,7 @@ function c100912105.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,c100912105[tp],REASON_EFFECT)
 end
 function c100912105.sumfilter(c)
-	return (c:IsSetCard(0x1f8) or c:IsCode(30539496,34079868,82321037,87765315,96746083)) and c:IsSummonable(true,nil,1)
+	return (c:IsSetCard(0x1f9) or c:IsCode(30539496,34079868,82321037,87765315,96746083)) and c:IsSummonable(true,nil,1)
 end
 function c100912105.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100912105.sumfilter,tp,LOCATION_HAND,0,1,nil) end
