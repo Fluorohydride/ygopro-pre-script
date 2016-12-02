@@ -26,7 +26,7 @@ function c100912051.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetTarget(c100912051.thtg)
-	e3:SetOperation(c100912051.tgop)
+	e3:SetOperation(c100912051.thop)
 	c:RegisterEffect(e3)
 end
 function c100912051.spfilter(c,e,tp)
