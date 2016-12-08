@@ -22,6 +22,7 @@ function c100214002.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCountLimit(1,100214002)
+	e2:SetCondition(c100214002.atkcon2)
 	e2:SetTarget(c100214002.atktg2)
 	e2:SetOperation(c100214002.atkop2)
 	c:RegisterEffect(e2)
@@ -46,6 +47,9 @@ function c100214002.atkop1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		bc:RegisterEffect(e1)
 	end
+end
+function c100214002.atkcon2(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function c100214002.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9f) and c:GetBaseAttack()~=c:GetAttack()

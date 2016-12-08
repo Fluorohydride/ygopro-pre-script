@@ -37,23 +37,25 @@ end
 function c100200125.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local num=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(c100200125.hspfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,c)
-	return g:GetCount()>=2 and num>=0 and (num>0 or g:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0)
+	return g:GetCount()>=2 and ft>=0 and (ft>0 or g:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0)
 end
 function c100200125.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local tp=c:GetControler()
-	local num=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if num<0 then return end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft<0 then return end
 	local hc=2
 	local g=Duel.GetMatchingGroup(c100200125.hspfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,c)
 	local sg=Group.CreateGroup()
-	if num==0 then
+	if ft==0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg1=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE)
 		sg:Merge(sg1)
 		g:RemoveCard(sg1:GetFirst())
-		hc=1
+		hc=hc-1
 	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg2=g:Select(tp,hc,hc,nil)
 	sg:Merge(sg2)
 	Duel.SendtoGrave(sg,REASON_COST)
@@ -72,22 +74,22 @@ function c100200125.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local gc=Duel.GetMatchingGroup(c100200125.filter,tp,LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)
 	if chk==0 then
-		if gc==0 then return false end
-		if gc==1 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
-		if gc==2 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
-		return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,c)
+		local b1=Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
+		local b2=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
+		local b3=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,c)
+		return (gc==1 and b1) or (gc==2 and b2) or (gc>2 and b3)
 	end
-	if gc==1 then
-		e:SetCategory(CATEGORY_DESTROY)
-		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
-	else
-		e:SetCategory(CATEGORY_REMOVE)
-		local loc=LOCATION_ONFIELD
+	local cat=CATEGORY_DESTROY
+	local rec=nil
+	local loc=LOCATION_ONFIELD
+	if gc>1 then
+		cat=CATEGORY_REMOVE
+		rec=Card.IsAbleToRemove()
 		if gc>2 then loc=LOCATION_ONFIELD+LOCATION_GRAVE end
-		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,loc,loc,c)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
 	end
+	e:SetCategory(cat)
+	local g=Duel.GetMatchingGroup(rec,tp,loc,loc,c)
+	Duel.SetOperationInfo(0,cat,g,g:GetCount(),0,0)
 end
 function c100200125.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
