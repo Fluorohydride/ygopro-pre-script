@@ -38,7 +38,7 @@ function c100200125.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local num=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.GetMatchingGroup(c100200125.hspfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c)
+	local g=Duel.GetMatchingGroup(c100200125.hspfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,c)
 	return g:GetCount()>=2 and num>=0 and (num>0 or g:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0)
 end
 function c100200125.hspop(e,tp,eg,ep,ev,re,r,rp,c)
@@ -46,7 +46,7 @@ function c100200125.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local num=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if num<0 then return end
 	local hc=2
-	local g=Duel.GetMatchingGroup(c100200125.hspfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c)
+	local g=Duel.GetMatchingGroup(c100200125.hspfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,c)
 	local sg=Group.CreateGroup()
 	if num==0 then
 		local sg1=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE)
