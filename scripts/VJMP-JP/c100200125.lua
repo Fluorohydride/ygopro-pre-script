@@ -38,7 +38,7 @@ function c100200125.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local num=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.GetMatchingGroup(c100200125.hspfilter,tp,LOCATION_MZONE+LOCATION_HAND,1,c)
+	local g=Duel.GetMatchingGroup(c100200125.hspfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c)
 	return g:GetCount()>=2 and num>=0 and (num>0 or g:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0)
 end
 function c100200125.hspop(e,tp,eg,ep,ev,re,r,rp,c)
@@ -46,7 +46,7 @@ function c100200125.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local num=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if num<0 then return end
 	local hc=2
-	local g=Duel.GetMatchingGroup(c100200125.hspfilter,tp,LOCATION_MZONE+LOCATION_HAND,1,c)
+	local g=Duel.GetMatchingGroup(c100200125.hspfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c)
 	local sg=Group.CreateGroup()
 	if num==0 then
 		local sg1=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE)
@@ -73,9 +73,9 @@ function c100200125.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gc=Duel.GetMatchingGroup(c100200125.filter,tp,LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)
 	if chk==0 then
 		if gc==0 then return false end
-		if gc==1 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,c) end
-		if gc==2 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,c) end
-		return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,c)
+		if gc==1 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
+		if gc==2 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
+		return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,c)
 	end
 	if gc==1 then
 		e:SetCategory(CATEGORY_DESTROY)
