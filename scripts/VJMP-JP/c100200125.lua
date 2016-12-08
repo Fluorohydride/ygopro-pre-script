@@ -73,18 +73,18 @@ function c100200125.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gc=Duel.GetMatchingGroup(c100200125.filter,tp,LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)
 	if chk==0 then
 		if gc==0 then return false end
-		if gc==1 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
-		if gc==2 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
-		return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,c)
+		if gc==1 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
+		if gc==2 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
+		return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,c)
 	end
 	if gc==1 then
 		e:SetCategory(CATEGORY_DESTROY)
-		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,c)
+		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 	else
 		e:SetCategory(CATEGORY_REMOVE)
-		local loc=LOCATION_MZONE
-		if gc>2 then loc=LOCATION_MZONE+LOCATION_GRAVE end
+		local loc=LOCATION_ONFIELD
+		if gc>2 then loc=LOCATION_ONFIELD+LOCATION_GRAVE end
 		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,loc,loc,c)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
 	end
@@ -93,11 +93,11 @@ function c100200125.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local gc=Duel.GetMatchingGroup(c100200125.filter,tp,LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)
 	if gc==1 then
-		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,c)
+		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
 		Duel.Destroy(g,REASON_EFFECT)
 	else
-		local loc=LOCATION_MZONE
-		if gc>2 then loc=LOCATION_MZONE+LOCATION_GRAVE end
+		local loc=LOCATION_ONFIELD
+		if gc>2 then loc=LOCATION_ONFIELD+LOCATION_GRAVE end
 		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,loc,loc,c)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
