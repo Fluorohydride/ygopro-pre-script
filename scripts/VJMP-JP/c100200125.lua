@@ -74,7 +74,7 @@ function c100200125.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local gc=Duel.GetMatchingGroup(c100200125.filter,tp,LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)
 	if chk==0 then
-		local b1=Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
+		local b1=Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 		local b2=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 		local b3=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,c)
 		return (gc==1 and b1) or (gc==2 and b2) or (gc>2 and b3)
@@ -84,7 +84,7 @@ function c100200125.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=LOCATION_ONFIELD
 	if gc>1 then
 		cat=CATEGORY_REMOVE
-		rec=Card.IsAbleToRemove()
+		rec=Card.IsAbleToRemove
 		if gc>2 then loc=LOCATION_ONFIELD+LOCATION_GRAVE end
 	end
 	e:SetCategory(cat)
