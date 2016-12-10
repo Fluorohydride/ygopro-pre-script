@@ -91,7 +91,8 @@ function c100331001.resetop(e,tp,eg,ep,ev,re,r,rp)
 	c100331001.desgroup:Clear()
 end
 function c100331001.spcfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetPreviousControler()==tp
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100331001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(c100331001.spcfilter,1,nil,tp)
