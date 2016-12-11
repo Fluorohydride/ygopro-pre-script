@@ -49,8 +49,8 @@ function c100912040.damop(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetCount()>0 then
 			Duel.BreakEffect()
 			Duel.HintSelection(g)
-			local dam=g:GetFirst():GetAttack()
-			if Duel.Destroy(g,REASON_EFFECT)~=0 then				
+			if Duel.Destroy(g,REASON_EFFECT)~=0 then
+				local dam=g:GetFirst():GetBaseAttack()
 				Duel.Damage(p,dam,REASON_EFFECT)
 			end
 		end
