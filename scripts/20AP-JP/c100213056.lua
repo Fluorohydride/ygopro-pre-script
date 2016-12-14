@@ -1,13 +1,21 @@
 --ムーンバリア
 --Light Wing Shield
 --Scripted by Eerie Code
---The Xyz Material substitution effect has been hardcoded in the 6 "Utopia" monsters affected
 function c100213056.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_DISABLED)
 	e1:SetTarget(c100213056.target)
+	c:RegisterEffect(e1)
+	--remove overlay replace
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100213056,2))
+	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_OVERLAY_REMOVE_REPLACE)
+	e1:SetRange(LOCATION_GRAVE)
+	e1:SetCondition(c100213056.rcon)
+	e1:SetOperation(c100213056.rop)
 	c:RegisterEffect(e1)
 end
 function c100213056.filter(c)
@@ -57,4 +65,13 @@ function c100213056.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
-end		
+end
+function c100213056.rcon(e,tp,eg,ep,ev,re,r,rp)
+	return bit.band(r,REASON_COST)~=0 and re:IsHasType(0x7e0)
+		and re:IsActiveType(TYPE_XYZ) and re:GetHandler():IsSetCard(0x107f)
+		and e:GetHandler():IsAbleToRemoveAsCost()
+		and ep==e:GetOwnerPlayer() and ev==1
+end
+function c100213056.rop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+end
