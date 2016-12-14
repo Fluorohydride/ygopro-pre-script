@@ -4,8 +4,8 @@ function c77565204.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCost(c77565204.reg)
 	e1:SetTarget(c77565204.target)
-	e1:SetOperation(c77565204.activate)
 	c:RegisterEffect(e1)
 	--Turn 1
 	local e2=Effect.CreateEffect(c)
@@ -55,9 +55,9 @@ function c77565204.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return Duel.IsExistingMatchingCard(c77565204.filter2,tp,LOCATION_EXTRA,0,1,nil,mg)
 	end
 end
-function c77565204.activate(e,tp,eg,ep,ev,re,r,rp)
+function c77565204.reg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	c:SetTurnCounter(0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
