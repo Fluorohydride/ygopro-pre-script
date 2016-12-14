@@ -32,7 +32,7 @@ function c84013237.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b2=Duel.IsExistingMatchingCard(c84013237.subfilter,tp,LOCATION_GRAVE,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	if not b1 or Duel.SelectYesNo(tp,aux.Stringid(100213056,2)) then
-		local tg=Duel.GetFirstMatchingCard(c84013237.cfcost,tp,LOCATION_GRAVE,0,nil)
+		local tg=Duel.GetFirstMatchingCard(c84013237.subfilter,tp,LOCATION_GRAVE,0,nil)
 		Duel.Remove(tg,POS_FACEUP,REASON_COST)
 	else
 		e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
