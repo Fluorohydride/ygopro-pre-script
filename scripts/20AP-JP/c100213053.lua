@@ -23,31 +23,23 @@ function c100213053.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100213053.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		--return to hand
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(aux.Stringid(100213053,1))
-		e1:SetCategory(CATEGORY_TOHAND)
-		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_BATTLE_START)
-		e1:SetTarget(c100213053.tdtg)
+		e1:SetOwnerPlayer(tp)
+		e1:SetCondition(c100213053.tdcon)
 		e1:SetOperation(c100213053.tdop)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
+		tc:RegisterEffect(e1,true)
 	end
 end
-function c100213053.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local tc=Duel.GetAttacker()
-	if tc==c then tc=Duel.GetAttackTarget() end
-	if chk==0 then return tc end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,tc,1,0,0)
+function c100213053.tdcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetHandler():GetBattleTarget()
+	return tp==e:GetOwnerPlayer() and tc and tc:IsControler(1-tp)
 end
-function c100213053.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetAttacker()
-	if tc and tc==c then tc=Duel.GetAttackTarget() end
-	if tc and tc:IsRelateToBattle() then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
-	end
+function c48422921.desop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetHandler():GetBattleTarget()
+	Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 end

@@ -34,11 +34,11 @@ function c100213101.initial_effect(c)
 	c:RegisterEffect(e4)
 	--prevent attack
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetCode(EFFECT_CANNOT_ATTACK)
 	e5:SetRange(LOCATION_SZONE)
-	e5:SetCondition(c100213101.spcon)
-	e5:SetOperation(c100213101.spop)
+	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e5:SetTarget(c100213101.attg)
 	c:RegisterEffect(e5)
 	--add tohand
 	local e6=Effect.CreateEffect(c)
@@ -95,26 +95,8 @@ end
 function c100213101.settg(e,c)
 	return c:IsLocation(LOCATION_HAND)
 end
-function c100213101.spfilter(c)
-	return c:GetSummonLocation()==LOCATION_EXTRA
-end
-function c100213101.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg and eg:IsExists(c100213101.spfilter,1,nil)
-end
-function c100213101.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(c100213101.spfilter,1,nil)
-	local tc=g:GetFirst()
-	while tc do
-		if not tc:IsImmuneToEffect(e) then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_CANNOT_ATTACK)
-			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1)
-		end
-		tc=g:GetNext()
-	end
+function c100213101.attg(e,c)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:GetSummonLocation()==LOCATION_EXTRA
 end
 function c100213101.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0

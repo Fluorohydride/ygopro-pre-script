@@ -57,6 +57,7 @@ function c100912072.filter(c)
 end
 function c100912072.handcon(e)
 	return Duel.IsExistingMatchingCard(c100912072.filter,e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+		or Duel.IsEnvironment(22702055)
 end
 function c100912072.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

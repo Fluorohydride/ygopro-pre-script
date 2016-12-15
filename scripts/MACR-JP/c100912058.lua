@@ -44,7 +44,7 @@ function c100912058.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL)
 end
 function c100912058.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetLocation()==LOCATION_MZONE and c100912058.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100912058.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100912058.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,c100912058.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
@@ -68,6 +68,7 @@ function c100912058.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100912058.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
 end
 function c100912058.spop(e,tp,eg,ep,ev,re,r,rp)
