@@ -25,15 +25,23 @@ function c100912056.initial_effect(c)
 	c:RegisterEffect(e3)
 	--token
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_CHAINING)
-	e4:SetRange(LOCATION_FZONE)
-	e4:SetCondition(c100912056.spcon)
-	e4:SetCost(c100912056.cost)
-	e4:SetTarget(c100912056.sptg)
-	e4:SetOperation(c100912056.spop)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetOperation(aux.chainreg)
 	c:RegisterEffect(e4)
+	local e5=Effect.CreateEffect(c)
+	e5:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e5:SetCode(EVENT_CHAIN_SOLVING)
+	e5:SetProperty(EFFECT_FLAG_DELAY)
+	e5:SetRange(LOCATION_FZONE)
+	e5:SetCondition(c100912056.spcon)
+	e5:SetCost(c100912056.cost)
+	e5:SetTarget(c100912056.sptg)
+	e5:SetOperation(c100912056.spop)
+	c:RegisterEffect(e5)
 	--
 	Duel.AddCustomActivityCounter(100912056,ACTIVITY_SUMMON,c100912056.counterfilter)
 	Duel.AddCustomActivityCounter(100912056,ACTIVITY_SPSUMMON,c100912056.counterfilter)
@@ -67,7 +75,7 @@ function c100912056.thfilter(c)
 	return c:IsSetCard(0x1fc) and c:IsAbleToHand()
 end
 function c100912056.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100912056.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100912056.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -80,7 +88,7 @@ function c100912056.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100912056.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,0,1,nil,TYPE_TOKEN)
+	return rp~=tp and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,0,1,nil,TYPE_TOKEN) and e:GetHandler():GetFlagEffect(1)>0
 end
 function c100912056.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
