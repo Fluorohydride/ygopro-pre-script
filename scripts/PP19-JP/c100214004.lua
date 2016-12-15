@@ -1,6 +1,7 @@
 --ペンデュラム・フュージョン
 --Pendulum Fusion
 --Scripted by Eerie Code
+--Credits to MichaelLawrenceDee for the updated Card.IsCanBeFusionMaterial
 function c100214004.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -11,6 +12,17 @@ function c100214004.initial_effect(c)
 	e1:SetTarget(c100214004.target)
 	e1:SetOperation(c100214004.activate)
 	c:RegisterEffect(e1)
+	if not c100214004.global_check then
+		c100214004.global_check=true
+		local f=Card.IsCanBeFusionMaterial
+		Card.IsCanBeFusionMaterial=function(c,fc,ismon)
+			if (c:GetSequence()==6 or c:GetSequence()==7) and c:IsLocation(LOCATION_SZONE) then
+				return f(c,fc,true)
+			end
+			if c:IsCode(80604091) then return f(c,fc,true) end
+			return f(c,fc,ismon)
+		end
+	end
 end
 function c100214004.filter0(c,e)
 	local seq=c:GetSequence()
