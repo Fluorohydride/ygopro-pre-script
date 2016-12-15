@@ -71,6 +71,7 @@ function c100912056.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100912056.thop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100912056.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
@@ -88,6 +89,7 @@ function c100912056.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c100912056.spop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,100912156,0x1fc,0x4011,2000,2000,6,RACE_WYRM,ATTRIBUTE_WATER) then return end
 	local token=Duel.CreateToken(tp,100912156)
