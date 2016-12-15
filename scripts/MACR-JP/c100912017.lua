@@ -72,7 +72,7 @@ function c100912017.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local pc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-c:GetSequence())
-	if not pc:IsRelateToEffect(e) then return end
+	if not pc then return end
 	local g=Group.FromCards(c,pc)
 	if Duel.Destroy(g,REASON_EFFECT)==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
