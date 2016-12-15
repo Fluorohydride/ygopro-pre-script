@@ -68,16 +68,16 @@ function c77565204.reg(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:CreateEffectRelation(e1)
 end
 function c77565204.ctop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return end
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then
+	local ct=c:GetTurnCounter()
+	if not c:IsRelateToEffect(e) or ct>=2 then
+		c:SetTurnCounter(0)
 		e:Reset()
 		return
 	end
-	local ct=c:GetTurnCounter()
+	if Duel.GetTurnPlayer()~=tp then return end
 	ct=ct+1
 	c:SetTurnCounter(ct)
-	if ct>=2 then e:Reset() end
 end
 function c77565204.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetTurnCounter()==1
@@ -88,7 +88,7 @@ function c77565204.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local mg=Duel.GetMatchingGroup(c77565204.filter1,tp,LOCATION_DECK,0,nil,e)
 	local sg=Duel.GetMatchingGroup(c77565204.filter2,tp,LOCATION_EXTRA,0,nil,mg)
 	if sg:GetCount()>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 		local tg=sg:Select(tp,1,1,nil)
 		local tc=tg:GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
