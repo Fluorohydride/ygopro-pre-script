@@ -39,7 +39,7 @@ function c100213053.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
 	return tp==e:GetOwnerPlayer() and tc and tc:IsControler(1-tp)
 end
-function c48422921.desop(e,tp,eg,ep,ev,re,r,rp)
+function c100213053.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
 	Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 end
