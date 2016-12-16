@@ -70,7 +70,7 @@ function c100912019.pcop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100912019.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsAttribute(ATTRIBUTE_DARK)
+	return not c:IsAttribute(ATTRIBUTE_DARK) and bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c100912019.thfilter(c)
 	return c:IsSetCard(0x11fb) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
