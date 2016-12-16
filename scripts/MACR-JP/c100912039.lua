@@ -81,6 +81,7 @@ function c100912039.initial_effect(c)
 	e8:SetOperation(c100912039.penop)
 	c:RegisterEffect(e8)
 end
+c100912039.miracle_synchro_fusion=true
 function c100912039.fusfilter_sf(c,mg,ts,chkf)
 	if not c:IsRace(RACE_DRAGON) or not aux.FConditionCheckF(c,chkf) then return false end
 	if ts==TYPE_FUSION or ts==TYPE_SYNCHRO or ts==TYPE_XYZ or ts==TYPE_PENDULUM then
@@ -140,6 +141,17 @@ end
 function c100912039.fusfilter_a(c)
 	if not c:IsRace(RACE_DRAGON) then return false,false,false,false end
 	return c:IsType(TYPE_FUSION),c:IsType(TYPE_SYNCHRO),c:IsType(TYPE_XYZ),c:IsType(TYPE_PENDULUM)
+end
+function c100912039.fusfilter_c(c,mg,typ,rem,chkf)
+	if not c:IsRace(RACE_DRAGON) then return false end
+	if chkf and chkf~=PLAYER_NONE and not aux.FConditionCheckF(c,chkf) then return false end
+	if c:IsType(typ) then
+		local mg2=mg:Clone()
+		mg2:RemoveCard(c)
+		return rem-typ==0 or mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,rem-typ)
+	else
+		return false
+	end
 end
 function c100912039.get_type(c)
 	if c:IsType(TYPE_FUSION) then return TYPE_FUSION
@@ -250,23 +262,24 @@ function c100912039.fusop(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	local g1=Group.CreateGroup()
 	local ts=at
 	local mg=g:Clone()
-	local sg=nil
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	if chkf~=PLAYER_NONE then
-		sg=mg:FilterSelect(tp,c100912039.fusfilter_sf,1,1,nil,mg,ts,chkf)
-	else
-		sg=mg:FilterSelect(tp,c100912039.fusfilter_s,1,1,nil,mg,ts)
-	end
-	g1:AddCard(sg:GetFirst())
-	mg:RemoveCard(sg:GetFirst())
-	ts=ts-c100912039.get_type(sg:GetFirst())
-	for i=2,4 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-		local sg2=mg:FilterSelect(tp,c100912039.fusfilter_s,1,1,nil,mg,ts)
-		g1:AddCard(sg2:GetFirst())
-		mg:RemoveCard(sg2:GetFirst())
-		ts=ts-c100912039.get_type(sg2:GetFirst())
-	end
+	local sg1=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_FUSION,ts,chkf)
+	g1:AddCard(sg1:GetFirst())
+	mg:RemoveCard(sg1:GetFirst())
+	ts=ts-TYPE_FUSION
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+	local sg2=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_SYNCHRO,ts)
+	g1:AddCard(sg2:GetFirst())
+	mg:RemoveCard(sg2:GetFirst())
+	ts=ts-TYPE_SYNCHRO  
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+	local sg3=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_XYZ,ts)
+	g1:AddCard(sg3:GetFirst())
+	mg:RemoveCard(sg3:GetFirst())
+	ts=ts-TYPE_XYZ  
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+	local sg4=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_PENDULUM,ts)
+	g1:AddCard(sg4:GetFirst())
 	Duel.SetFusionMaterial(g1)
 end
 function c100912039.limval(e,re,rp)
