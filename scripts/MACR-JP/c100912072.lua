@@ -81,7 +81,7 @@ function c100912072.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100912072.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tc=g:GetFirst()
+	local tc=tg:GetFirst()
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(c100912072.eqfilter,tp,LOCATION_SZONE,0,nil,tg)
 	local eq=g:GetFirst()
