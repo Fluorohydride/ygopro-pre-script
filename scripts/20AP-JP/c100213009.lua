@@ -56,7 +56,7 @@ function c100213009.initial_effect(c)
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e7:SetCode(EVENT_LEAVE_FIELD)
-	e7:SetLabelObject(e5)
+	e7:SetLabelObject(e6)
 	e7:SetOperation(c100213009.leave)
 	c:RegisterEffect(e7)
 end
@@ -145,7 +145,7 @@ end
 function c100213009.leave(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabelObject():GetLabel()==0 and c:GetPreviousControler()==tp 
-		and c:IsPreviousLocation(LOCATION_SZONE) and c:IsStatus(STATUS_ACTIVATED) then
+		and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEUP) then
 		Duel.Damage(tp,3000,REASON_EFFECT)
 	end
 end
