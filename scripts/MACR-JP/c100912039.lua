@@ -230,6 +230,35 @@ function c100912039.fuscon(e,g,gc,chkfnf)
 		return g1:IsExists(c100912039.group_check,1,nil,g2,g3,g4)
 	end
 end
+function c100912039.check_fusion_material_48144509(g,chkf)
+	local mg=g:Filter(Card.IsLocation,nil,LOCATION_HAND+LOCATION_MZONE)
+	local g1=Group.CreateGroup() local g2=Group.CreateGroup() local g3=Group.CreateGroup() local g4=Group.CreateGroup() local fs=false
+	local tc=mg:GetFirst()
+	while tc do
+		if c100912039.fusfilter_s(tc,nil,TYPE_FUSION) then
+			g1:AddCard(tc)
+			if aux.FConditionCheckF(tc,chkf) then fs=true end
+		end
+		if c100912039.fusfilter_s(tc,nil,TYPE_SYNCHRO) then
+			g2:AddCard(tc)
+			if aux.FConditionCheckF(tc,chkf) then fs=true end
+		end
+		if c100912039.fusfilter_s(tc,nil,TYPE_XYZ) then
+			g3:AddCard(tc)
+			if aux.FConditionCheckF(tc,chkf) then fs=true end
+		end
+		if c100912039.fusfilter_s(tc,nil,TYPE_PENDULUM) then
+			g4:AddCard(tc)
+			if aux.FConditionCheckF(tc,chkf) then fs=true end
+		end
+		tc=mg:GetNext()
+	end
+	if chkf~=PLAYER_NONE then
+		return fs and g1:IsExists(c100912039.group_check,1,nil,g2,g3,g4)
+	else
+		return g1:IsExists(c100912039.group_check,1,nil,g2,g3,g4)
+	end
+end
 function c100912039.fusop(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	local chkf=bit.band(chkfnf,0xff)
 	local g=eg:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler())
@@ -281,6 +310,33 @@ function c100912039.fusop(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	local sg4=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_PENDULUM,ts)
 	g1:AddCard(sg4:GetFirst())
 	Duel.SetFusionMaterial(g1)
+end
+function c100912039.select_fusion_material_48144509(tp,g,chkf)
+	local mg=g:Filter(Card.IsLocation,nil,LOCATION_HAND+LOCATION_MZONE)
+	local at=TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM
+	local g1=Group.CreateGroup()
+	local ts=at
+	local mg=g:Clone()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+	local sg1=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_FUSION,ts,chkf)
+	g1:AddCard(sg1:GetFirst())
+	mg:RemoveCard(sg1:GetFirst())
+	ts=ts-TYPE_FUSION
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+	local sg2=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_SYNCHRO,ts)
+	g1:AddCard(sg2:GetFirst())
+	mg:RemoveCard(sg2:GetFirst())
+	ts=ts-TYPE_SYNCHRO  
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+	local sg3=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_XYZ,ts)
+	g1:AddCard(sg3:GetFirst())
+	mg:RemoveCard(sg3:GetFirst())
+	ts=ts-TYPE_XYZ  
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+	local sg4=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_PENDULUM,ts)
+	g1:AddCard(sg4:GetFirst())
+	Duel.SetFusionMaterial(g1)
+	return g1
 end
 function c100912039.limval(e,re,rp)
 	local rc=re:GetHandler()
