@@ -3,6 +3,7 @@
 --Scripted by Eerie Code
 function c100912039.initial_effect(c)
 	c:EnableReviveLimit()
+	aux.EnablePendulumAttribute(c)
 	--fusion procedure to be added
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
