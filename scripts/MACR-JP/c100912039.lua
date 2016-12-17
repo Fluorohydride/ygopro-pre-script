@@ -1,10 +1,12 @@
 --覇王龍ズァーク
 --Supreme King Dragon Zarc
 --Scripted by Eerie Code
+--Commented functions are part of the utility function proposed in issue #83
 function c100912039.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.EnablePendulumAttribute(c)
-	--fusion procedure to be added
+	--aux.AddFusionProcFunMulti(c,false,c100912039.filters)
+	aux.EnablePendulumAttribute(c,false)
+	--fusion procedure
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -83,260 +85,219 @@ function c100912039.initial_effect(c)
 	c:RegisterEffect(e8)
 end
 c100912039.miracle_synchro_fusion=true
-function c100912039.fusfilter_sf(c,mg,ts,chkf)
-	if not c:IsRace(RACE_DRAGON) or not aux.FConditionCheckF(c,chkf) then return false end
-	if ts==TYPE_FUSION or ts==TYPE_SYNCHRO or ts==TYPE_XYZ or ts==TYPE_PENDULUM then
-		return c:IsType(ts)
+function c100912039.fusfilter1(c)
+	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_FUSION)
+end
+function c100912039.fusfilter2(c)
+	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO)
+end
+function c100912039.fusfilter3(c)
+	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_XYZ)
+end
+function c100912039.fusfilter4(c)
+	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_PENDULUM)
+end
+c100912039.filters={c100912039.fusfilter1,c100912039.fusfilter2,c100912039.fusfilter3,c100912039.fusfilter4}
+-- TO BE REMOVED ONCE THE UTILITIES ARE UPDATED
+function c100912039.FConditionFilterMultiOr(c,funs,n)
+	for i=1,n do
+		if funs[i](c) then return true end
+	end
+	return false
+end
+function c100912039.FConditionFilterMulti(c,mg,funs,n,tbt)
+	for i=1,n do
+		local tp=2^(i-1)
+		if bit.band(tbt,tp)~=0 and funs[i](c) then
+			local t2=tbt-tp
+			if t2==0 then return true end
+			local mg2=mg:Clone()
+			mg2:RemoveCard(c)
+			if mg2:IsExists(c100912039.FConditionFilterMulti,1,nil,mg2,funs,n,t2) then return true end
+		end
+	end
+	return false
+end
+function c100912039.CloneTable(g)
+	return {table.unpack(g)}
+end
+function c100912039.FConditionFilterMulti2(c,gr)
+	local gr2=c100912039.CloneTable(gr)
+	for i=1,#gr2 do
+		gr2[i]:RemoveCard(c)
+	end
+	table.remove(gr2,1)
+	if #gr2==1 then
+		return gr2[1]:IsExists(aux.TRUE,1,nil)
 	else
-		if bit.band(ts,TYPE_FUSION) and c:IsType(TYPE_FUSION) then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_FUSION) then return true end
-		end
-		if bit.band(ts,TYPE_SYNCHRO) and c:IsType(TYPE_SYNCHRO) then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_SYNCHRO) then return true end
-		end
-		if bit.band(ts,TYPE_XYZ) and c:IsType(TYPE_XYZ) then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_XYZ) then return true end
-		end
-		if bit.band(ts,TYPE_PENDULUM) and c:IsType(TYPE_PENDULUM) then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_PENDULUM) then return true end
-		end
-		return false
+		return gr2[1]:IsExists(c100912039.FConditionFilterMulti2,1,nil,gr2)
 	end
 end
-function c100912039.fusfilter_s(c,mg,ts,ct)
-	if not c:IsRace(RACE_DRAGON) then return false end
-	if ct==nil then ct=999 end
-	if ct<1 then return false end
-	ct2=ct-1
-	if ts==TYPE_FUSION or ts==TYPE_SYNCHRO or ts==TYPE_XYZ or ts==TYPE_PENDULUM then
-		return c:IsType(ts)
-	else
-		if bit.band(ts,TYPE_FUSION) and c:IsType(TYPE_FUSION) then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_FUSION,ct2) then return true end
-		end
-		if bit.band(ts,TYPE_SYNCHRO) and c:IsType(TYPE_SYNCHRO) then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_SYNCHRO,ct2) then return true end
-		end
-		if bit.band(ts,TYPE_XYZ) and c:IsType(TYPE_XYZ) then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_XYZ,ct2) then return true end
-		end
-		if bit.band(ts,TYPE_PENDULUM) and c:IsType(TYPE_PENDULUM) then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_PENDULUM,ct2) then return true end
-		end
-		return false
+function c100912039.FConditionFilterMultiSelect(c,funs,n,mg,sg)
+	local valid=c100912039.FConditionFilterMultiValid(sg,funs,n)
+	if not valid then valid={0} end 
+	local all = (2^n)-1
+	for k,v in pairs(valid) do
+		v=bit.bxor(all,v)
+		if c100912039.FConditionFilterMulti(c,mg,funs,n,v) then return true end
 	end
+	return false
 end
-function c100912039.fusfilter_a(c)
-	if not c:IsRace(RACE_DRAGON) then return false,false,false,false end
-	return c:IsType(TYPE_FUSION),c:IsType(TYPE_SYNCHRO),c:IsType(TYPE_XYZ),c:IsType(TYPE_PENDULUM)
-end
-function c100912039.fusfilter_c(c,mg,typ,rem,chkf)
-	if not c:IsRace(RACE_DRAGON) then return false end
-	if chkf and chkf~=PLAYER_NONE and not aux.FConditionCheckF(c,chkf) then return false end
-	if c:IsType(typ) then
-		local mg2=mg:Clone()
-		mg2:RemoveCard(c)
-		return rem-typ==0 or mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,rem-typ)
-	else
-		return false
+function c100912039.FConditionFilterMultiValid(g,funs,n)
+	local tp={}
+	local tc=g:GetFirst()
+	while tc do
+		local tp1={}
+		for i=1,n do
+			if funs[i](tc) then table.insert(tp1,2^(i-1)) end
+		end
+		table.insert(tp,tp1)
+		tc=g:GetNext()
 	end
+	return c100912039.FConditionMultiGenerateValids(tp,n)
 end
-function c100912039.get_avail_type(c,mg,ts,ct)
-	if c:IsType(TYPE_FUSION) and bit.band(ts,TYPE_FUSION)
-		and mg:IsExists(c100912039.fusfilter_s,1,nil,mg,ts-TYPE_FUSION,ct) then return TYPE_FUSION
-	elseif c:IsType(TYPE_SYNCHRO) and bit.band(ts,TYPE_SYNCHRO)
-		and mg:IsExists(c100912039.fusfilter_s,1,nil,mg,ts-TYPE_SYNCHRO,ct) then return TYPE_SYNCHRO
-	elseif c:IsType(TYPE_XYZ) and bit.band(ts,TYPE_XYZ)
-		and mg:IsExists(c100912039.fusfilter_s,1,nil,mg,ts-TYPE_XYZ,ct) then return TYPE_XYZ
-	else return TYPE_PENDULUM end
-end
-function c100912039.group_check(c,g2,g3,g4)
-	if not g4 and not g3 then
-		return g2:IsExists(aux.TRUE,1,c)
-	elseif not g4 then
-		local n2=g2:Clone() n2:RemoveCard(c)
-		local n3=g3:Clone() n3:RemoveCard(c)
-		return n2:IsExists(c100912039.group_check,1,nil,n3)
-	else
-		local n2=g2:Clone() n2:RemoveCard(c)
-		local n3=g3:Clone() n3:RemoveCard(c)
-		local n4=g4:Clone() n4:RemoveCard(c)
-		return n2:IsExists(c100912039.group_check,1,nil,n3,n4)
+function c100912039.FConditionMultiGenerateValids(vs,n)
+	local c=2
+	while #vs > 1 do
+		local v1=vs[1]
+		table.remove(vs,1)
+		local v2=vs[1]
+		table.remove(vs,1)
+		table.insert(vs,1,c100912039.FConditionMultiCombine(v1,v2,n,c))
+		c=c+1
 	end
+	return vs[1]
+end
+function c100912039.FConditionMultiCombine(t1,t2,n,c)
+	local res={}
+	for k1,v1 in pairs(t1) do
+		for k2,v2 in pairs(t2) do
+			table.insert(res,bit.bor(v1,v2))
+		end
+	end 
+	return res
 end
 function c100912039.fuscon(e,g,gc,chkfnf)
-	if g==nil then return false end
+	local c=e:GetHandler()
+	if g==nil then return insf end
+	if not c:IsFacedown() then return false end
 	local chkf=bit.band(chkfnf,0xff)
-	local mg=g:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler())
+	local funs=c100912039.filters
+	local n=4
+	local mg=g:Filter(Card.IsCanBeFusionMaterial,nil,c):Filter(c100912039.FConditionFilterMultiOr,nil,funs,n)
 	if gc then
-		if not gc:IsCanBeFusionMaterial(e:GetHandler()) then return false end
-		local bf,bs,bx,bp=c100912039.fusfilter_a(gc)
-		local at=TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM
-		if bf then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(gc)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,at-TYPE_FUSION) then return true end
-		end
-		if bs then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(gc)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,at-TYPE_SYNCHRO) then return true end
-		end
-		if bx then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(gc)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,at-TYPE_XYZ) then return true end
-		end
-		if bp then
-			local mg2=mg:Clone()
-			mg2:RemoveCard(gc)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,at-TYPE_PENDULUM) then return true end
+		if not gc:IsCanBeFusionMaterial(c) then return false end
+		local check_tot=(2^n)-1
+		local mg2=mg:Clone()
+		mg2:RemoveCard(gc)
+		for i=1,n do
+			if funs[i](gc) then
+				local tbt=check_tot-2^(i-1)
+				if mg2:IsExists(c100912039.FConditionFilterMulti,1,nil,mg2,funs,n,tbt) then return true end
+			end
 		end
 		return false
 	end
-	local g1=Group.CreateGroup() local g2=Group.CreateGroup() local g3=Group.CreateGroup() local g4=Group.CreateGroup() local fs=false
+	local fs=false
+	local groups={}
+	for i=1,n do
+		table.insert(groups,Group.CreateGroup())
+	end
 	local tc=mg:GetFirst()
 	while tc do
-		if c100912039.fusfilter_s(tc,nil,TYPE_FUSION) then
-			g1:AddCard(tc)
-			if aux.FConditionCheckF(tc,chkf) then fs=true end
-		end
-		if c100912039.fusfilter_s(tc,nil,TYPE_SYNCHRO) then
-			g2:AddCard(tc)
-			if aux.FConditionCheckF(tc,chkf) then fs=true end
-		end
-		if c100912039.fusfilter_s(tc,nil,TYPE_XYZ) then
-			g3:AddCard(tc)
-			if aux.FConditionCheckF(tc,chkf) then fs=true end
-		end
-		if c100912039.fusfilter_s(tc,nil,TYPE_PENDULUM) then
-			g4:AddCard(tc)
-			if aux.FConditionCheckF(tc,chkf) then fs=true end
+		for i=1,n do
+			if funs[i](tc) then
+				groups[i]:AddCard(tc)
+				if Auxiliary.FConditionCheckF(tc,chkf) then fs=true end
+			end
 		end
 		tc=mg:GetNext()
 	end
 	if chkf~=PLAYER_NONE then
-		return fs and g1:IsExists(c100912039.group_check,1,nil,g2,g3,g4)
-	else
-		return g1:IsExists(c100912039.group_check,1,nil,g2,g3,g4)
-	end
-end
-function c100912039.check_fusion_material_48144509(g,chkf)
-	local mg=g:Filter(Card.IsLocation,nil,LOCATION_HAND+LOCATION_MZONE)
-	local g1=Group.CreateGroup() local g2=Group.CreateGroup() local g3=Group.CreateGroup() local g4=Group.CreateGroup() local fs=false
-	local tc=mg:GetFirst()
-	while tc do
-		if c100912039.fusfilter_s(tc,nil,TYPE_FUSION) then
-			g1:AddCard(tc)
-			if aux.FConditionCheckF(tc,chkf) then fs=true end
-		end
-		if c100912039.fusfilter_s(tc,nil,TYPE_SYNCHRO) then
-			g2:AddCard(tc)
-			if aux.FConditionCheckF(tc,chkf) then fs=true end
-		end
-		if c100912039.fusfilter_s(tc,nil,TYPE_XYZ) then
-			g3:AddCard(tc)
-			if aux.FConditionCheckF(tc,chkf) then fs=true end
-		end
-		if c100912039.fusfilter_s(tc,nil,TYPE_PENDULUM) then
-			g4:AddCard(tc)
-			if aux.FConditionCheckF(tc,chkf) then fs=true end
-		end
-		tc=mg:GetNext()
-	end
-	if chkf~=PLAYER_NONE then
-		return fs and g1:IsExists(c100912039.group_check,1,nil,g2,g3,g4)
-	else
-		return g1:IsExists(c100912039.group_check,1,nil,g2,g3,g4)
+		if not fs then return false end
+		local gr2=Auxiliary.CloneTable(groups)
+		return gr2[1]:IsExists(c100912039.FConditionFilterMulti2,1,nil,gr2)
 	end
 end
 function c100912039.fusop(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
+	local c=e:GetHandler()
 	local chkf=bit.band(chkfnf,0xff)
-	local g=eg:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler())
-	local at=TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM
+	local funs=c100912039.filters
+	local n=4
+	local g=eg:Filter(Card.IsCanBeFusionMaterial,nil,c):Filter(c100912039.FConditionFilterMultiOr,nil,funs,n)
 	if gc then
-		local g1=Group.FromCards(gc)
+		local sg=Group.FromCards(gc)
 		local mg=g:Clone()
 		mg:RemoveCard(gc)
-		local ts=at
-		local ct=3
-		ts=ts-c100912039.get_avail_type(gc,mg,ts,ct)
-		for i=1,3 do
+		for i=1,n-1 do
+			local mg2=mg:Filter(c100912039.FConditionFilterMultiSelect,nil,funs,n,mg,sg)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-			local sg=mg:FilterSelect(tp,c100912039.fusfilter_s,1,1,nil,mg,ts,ct)
-			g1:AddCard(sg:GetFirst())
-			mg:RemoveCard(sg:GetFirst())
-			ct=ct-1
-			ts=ts-c100912039.get_avail_type(sg:GetFirst(),mg,ts,ct)
+			local sg2=mg2:Select(tp,1,1,nil)
+			sg:AddCard(sg2:GetFirst())
+			mg:RemoveCard(sg2:GetFirst())
 		end
-		Duel.SetFusionMaterial(g1)
+		Duel.SetFusionMaterial(sg)
 		return
 	end
-	local g1=Group.CreateGroup()
-	local ts=at
+	local sg=Group.CreateGroup()
 	local mg=g:Clone()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local sg1=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_FUSION,ts,chkf)
-	g1:AddCard(sg1:GetFirst())
-	mg:RemoveCard(sg1:GetFirst())
-	ts=ts-TYPE_FUSION
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local sg2=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_SYNCHRO,ts)
-	g1:AddCard(sg2:GetFirst())
-	mg:RemoveCard(sg2:GetFirst())
-	ts=ts-TYPE_SYNCHRO  
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local sg3=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_XYZ,ts)
-	g1:AddCard(sg3:GetFirst())
-	mg:RemoveCard(sg3:GetFirst())
-	ts=ts-TYPE_XYZ  
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local sg4=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_PENDULUM,ts)
-	g1:AddCard(sg4:GetFirst())
-	Duel.SetFusionMaterial(g1)
+	for i=1,n do
+		local mg2=mg:Filter(c100912039.FConditionFilterMultiSelect,nil,funs,n,mg,sg)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+		local sg2=nil
+		if i==1 and chkf~=PLAYER_NONE then
+			sg2=mg2:FilterSelect(tp,Auxiliary.FConditionCheckF,1,1,nil,chkf)
+		else
+			sg2=mg2:Select(tp,1,1,nil)
+		end
+		sg:AddCard(sg2:GetFirst())
+		mg:RemoveCard(sg2:GetFirst())
+	end
+	Duel.SetFusionMaterial(sg)
+end
+-- END SECTION TO BE REMOVED
+function c100912039.check_fusion_material_48144509(g,chkf)
+	local fs=false
+	local mg=g:Filter(Card.IsLocation,nil,LOCATION_HAND+LOCATION_MZONE)
+	local funs=c100912039.filters
+	local groups={}
+	for i=1,4 do
+		table.insert(groups,Group.CreateGroup())
+	end
+	local tc=mg:GetFirst()
+	while tc do
+		for i=1,4 do
+		if funs[i](tc) then
+			groups[i]:AddCard(tc)
+			if Auxiliary.FConditionCheckF(tc,chkf) then fs=true end
+		end
+	end
+	tc=mg:GetNext()
+	end
+	if chkf~=PLAYER_NONE then
+		if not fs then return false end
+		local gr2=Auxiliary.CloneTable(groups)
+		return gr2[1]:IsExists(c100912039.FConditionFilterMulti2,1,nil,gr2)
+	end 
 end
 function c100912039.select_fusion_material_48144509(tp,g,chkf)
 	local mg=g:Filter(Card.IsLocation,nil,LOCATION_HAND+LOCATION_MZONE)
-	local at=TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM
-	local g1=Group.CreateGroup()
-	local ts=at
-	local mg=g:Clone()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local sg1=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_FUSION,ts,chkf)
-	g1:AddCard(sg1:GetFirst())
-	mg:RemoveCard(sg1:GetFirst())
-	ts=ts-TYPE_FUSION
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local sg2=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_SYNCHRO,ts)
-	g1:AddCard(sg2:GetFirst())
-	mg:RemoveCard(sg2:GetFirst())
-	ts=ts-TYPE_SYNCHRO  
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local sg3=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_XYZ,ts)
-	g1:AddCard(sg3:GetFirst())
-	mg:RemoveCard(sg3:GetFirst())
-	ts=ts-TYPE_XYZ  
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local sg4=mg:FilterSelect(tp,c100912039.fusfilter_c,1,1,nil,mg,TYPE_PENDULUM,ts)
-	g1:AddCard(sg4:GetFirst())
-	Duel.SetFusionMaterial(g1)
-	return g1
+	local sg=Group.CreateGroup()
+	local funs=c100912039.filters
+	for i=1,4 do
+		local mg2=mg:Filter(c100912039.FConditionFilterMultiSelect,nil,funs,4,mg,sg)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+		local sg2=nil
+		if i==1 and chkf~=PLAYER_NONE then
+			sg2=mg2:FilterSelect(tp,Auxiliary.FConditionCheckF,1,1,nil,chkf)
+		else
+			sg2=mg2:Select(tp,1,1,nil)
+		end
+		sg:AddCard(sg2:GetFirst())
+		mg:RemoveCard(sg2:GetFirst())
+	end
+	Duel.SetFusionMaterial(sg)
+	return sg
 end
 function c100912039.limval(e,re,rp)
 	local rc=re:GetHandler()
