@@ -22,6 +22,14 @@ function c100214004.initial_effect(c)
 			if c:IsCode(80604091) then return f(c,fc,true) end
 			return f(c,fc,ismon)
 		end
+		local f2=Card.IsType
+		Card.IsType=function(c,tp)
+			if (c:GetSequence()==6 or c:GetSequence()==7) and c:IsLocation(LOCATION_SZONE) then
+				local opt=bit.bor(c:GetOriginalType(),TYPE_SPELL)
+				return bit.band(tp,opt)~=0
+			end
+			return f2(c,tp)
+		end
 	end
 end
 function c100214004.filter0(c,e)
