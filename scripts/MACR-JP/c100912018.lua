@@ -127,6 +127,7 @@ function c100912018.spop(e,tp,eg,ep,ev,re,r,rp)
 			e6:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 			sc:RegisterEffect(e6,true)				
 		end
+		Duel.SpecialSummonComplete()
 	end
 end
 function c100912018.pencon(e,tp,eg,ep,ev,re,r,rp)
