@@ -1,41 +1,67 @@
 --シンクロコール
 --Synchro Call
---Script by mercury233
---Effect is not fully implemented
+--Scripted by mercury233 and Eerie Code
 function c100214103.initial_effect(c)
-	--Activate
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(c100214103.target)
 	e1:SetOperation(c100214103.activate)
 	c:RegisterEffect(e1)
 end
-function c100214103.spfilter(c,e,tp)
-	local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE,0,nil)
-	return c:GetLevel()>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function c100214103.spfilter(c,e,tp,mg)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelAbove(1)
 		and Duel.IsExistingMatchingCard(c100214103.synfilter,tp,LOCATION_EXTRA,0,1,nil,c,mg)
 end
-function c100214103.synfilter(c,tc,g)
-	local mg=g:Clone()
-	mg:AddCard(tc)
-	return mg:IsExists(c100214103.tunerfilter,1,nil,c,mg)
-		and tc:IsCanBeSynchroMaterial(c) --Blackwing - Kochi the Daybreak don't work
-		and c:IsRace(RACE_DRAGON+RACE_FIEND) and c:IsAttribute(ATTRIBUTE_DARK)
+function c100214103.matfilter(c,sc,lv)
+	return c:GetSynchroLevel(c,sc)<=lv
 end
-function c100214103.tunerfilter(c,tc,mg)
-	return c:IsType(TYPE_TUNER) and tc:IsSynchroSummonable(c,mg)
+function c100214103.syngfilter(c,sc,sg,g,olv)
+	local mg=g:Clone()
+	mg:RemoveCard(c)
+	local lv=olv-c:GetSynchroLevel(sc)
+	if lv<0 then return false end
+	local sg2=sg:Clone()
+	sg2:AddCard(c)
+	if lv==0 then 
+		return sc:IsSynchroSummonable(nil,sg2)
+	else
+		local tc=mg:GetFirst()
+		while tc do
+			if c100214103.syngfilter(tc,sc,sg2,mg,lv) then return true end
+			tc=mg:GetNext()
+		end
+		return false
+	end
+end
+function c100214103.synfilter(c,pc,g)
+	local mg=g:Clone()
+	if not c:IsRace(RACE_DRAGON+RACE_FIEND) or not c:IsAttribute(ATTRIBUTE_DARK)
+		or not c:IsType(TYPE_SYNCHRO) then return false end
+	local lv=c:GetLevel()-pc:GetSynchroLevel(c)
+	if lv<=0 then return false end
+	mg=mg:Filter(c100214103.matfilter,nil,c,lv)
+	local tc=mg:GetFirst()
+	while tc do
+		local mg2=mg:Clone()
+		mg2:RemoveCard(tc)
+		local sg=Group.FromCards(pc)
+		if c100214103.syngfilter(tc,c,sg,mg2,lv) then return true end
+		tc=mg:GetNext()
+	end
+	return false
 end
 function c100214103.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100214103.spfilter(chkc,e,tp) end
+	local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE,0,nil)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100214103.spfilter(chkc,e,tp,mg) end
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c100214103.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+		and Duel.IsExistingTarget(c100214103.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,mg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c100214103.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c100214103.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,mg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
@@ -53,12 +79,26 @@ function c100214103.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
 		local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE,0,nil)
+		if mg:IsContains(tc) then mg:RemoveCard(tc) end
 		local g=Duel.GetMatchingGroup(c100214103.synfilter,tp,LOCATION_EXTRA,0,nil,tc,mg)
 		if g:GetCount()>0 then
-			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)
-			Duel.SynchroSummon(tp,sg:GetFirst(),tc,mg) -- If tc is non-tuner, the player can still select monsters without tc to synchro summon
+			local sc=sg:GetFirst()
+			local mat=Group.FromCards(tc)
+			local lv=sc:GetLevel()-tc:GetSynchroLevel(sc)
+			while lv>0 do
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
+				local m2=mg:FilterSelect(tp,c100214103.syngfilter,1,1,nil,sc,mat,mg,lv)
+				mat:AddCard(m2:GetFirst())
+				mg:RemoveCard(m2:GetFirst())
+				lv=lv-m2:GetFirst():GetSynchroLevel(sc)
+			end
+			sc:SetMaterial(mat)
+			Duel.SendtoGrave(mat,REASON_MATERIAL+REASON_SYNCHRO)
+			Duel.BreakEffect()
+			Duel.SpecialSummon(sc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)
+			sc:CompleteProcedure()
 		end
 	end
 end
