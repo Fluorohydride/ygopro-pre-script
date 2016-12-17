@@ -58,7 +58,7 @@ function c100912023.spcon(e,tp,eg,ep,ev,re,r,rp)
 		bit.band(c:GetSummonType(),SUMMON_TYPE_ADVANCE)==SUMMON_TYPE_ADVANCE
 end
 function c100912023.spfilter(c,e,tp)
-	return c:IsSetCard(0x1f9) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(0x1f9) or c:IsCode(30539496,34079868,82321037,87765315,96746083)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100912023.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -74,7 +74,7 @@ function c100912023.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100912023.tgtg(e,c)
-	return c:IsSetCard(0x1f9) and c~=e:GetHandler()
+	return (c:IsSetCard(0x1f9) or c:IsCode(30539496,34079868,82321037,87765315,96746083)) and c~=e:GetHandler()
 end
 function c100912023.indval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()

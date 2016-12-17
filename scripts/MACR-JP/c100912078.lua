@@ -46,7 +46,7 @@ function c100912078.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	local g=Duel.GetMatchingGroup(c100912078.filter2,tp,LOCATION_MZONE+LOCATION_HAND,0,nil)
 	local ct=math.min(ft-1,g:GetCount()+1)
-	local sg=g:select(tp,1,ct,nil)
+	local sg=g:Select(tp,1,ct,nil)
 	e:SetLabel(sg:GetCount()+1)
 	Duel.SendtoGrave(sg,REASON_COST)
 end
