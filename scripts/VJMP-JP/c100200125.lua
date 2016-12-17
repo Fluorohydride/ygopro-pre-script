@@ -68,7 +68,7 @@ function c100200125.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
 function c100200125.filter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x1fa) or c:IsCode(64681432,71525232))
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf5)
 end
 function c100200125.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
