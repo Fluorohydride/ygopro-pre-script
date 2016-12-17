@@ -174,6 +174,37 @@ function c100912039.FConditionMultiCombine(t1,t2,n,c)
 			table.insert(res,bit.bor(v1,v2))
 		end
 	end 
+	res=c100912039.FConditionMultiCheckCount(res,n)
+	return c100912039.FConditionFilterMultiClean(res)
+end
+function c100912039.FConditionMultiCheckCount(vals,n)
+	local res={} local flags={}
+	for k,v in pairs(vals) do
+		local c=0
+		for i=1,n do
+			if bit.band(v,2^(i-1))~=0 then c=c+1 end
+		end
+		if not flags[c] then
+			res[c] = {v}
+			flags[c] = true
+		else
+			table.insert(res[c],v)
+		end
+	end
+	local mk=0
+	for k,v in pairs(flags) do
+		if k>mk then mk=k end
+	end
+	return res[mk]
+end
+function c100912039.FConditionFilterMultiClean(vals)
+	local res={} local flags={}
+	for k,v in pairs(vals) do
+		if not flags[v] then
+			table.insert(res,v)
+			flags[v] = true
+		end
+	end
 	return res
 end
 function c100912039.fuscon(e,g,gc,chkfnf)
