@@ -30,6 +30,7 @@ function c100214010.initial_effect(c)
 	e3:SetOperation(c100214010.damop)
 	c:RegisterEffect(e3)
 end
+c100214010.xyz_number=28
 function c100214010.dircon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<=1
 end
