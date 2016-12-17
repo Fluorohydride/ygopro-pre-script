@@ -49,9 +49,10 @@ function c100214010.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c100214010.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
+	if chk==0 then return ct>0 end
 	Duel.SetTargetPlayer(1-tp)
-	local dam=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)*500
+	local dam=ct*500
 	Duel.SetTargetParam(dam)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
