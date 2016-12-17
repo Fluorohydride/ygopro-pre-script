@@ -127,6 +127,7 @@ function c100331001.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100331001.hncfilter(c,sc)
 	return (c:IsSetCard(sc)
+		or (sc==0x10f2 and c:IsCode(1516510,16178681,72378329,88305705))
 		or (sc==0x1046 and c:IsCode(41209827,51570882))
 		or (sc==0x1f6 and c:IsCode(50954680,82044279))
 		or (sc==0x2073 and c:IsCode(16195942,1621413))
