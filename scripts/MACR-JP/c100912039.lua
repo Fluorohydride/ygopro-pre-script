@@ -110,30 +110,33 @@ function c100912039.fusfilter_sf(c,mg,ts,chkf)
 		return false
 	end
 end
-function c100912039.fusfilter_s(c,mg,ts)
+function c100912039.fusfilter_s(c,mg,ts,ct)
 	if not c:IsRace(RACE_DRAGON) then return false end
+	if ct==nil then ct=999 end
+	if ct<1 then return false end
+	ct2=ct-1
 	if ts==TYPE_FUSION or ts==TYPE_SYNCHRO or ts==TYPE_XYZ or ts==TYPE_PENDULUM then
 		return c:IsType(ts)
 	else
 		if bit.band(ts,TYPE_FUSION) and c:IsType(TYPE_FUSION) then
 			local mg2=mg:Clone()
 			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_FUSION) then return true end
+			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_FUSION,ct2) then return true end
 		end
 		if bit.band(ts,TYPE_SYNCHRO) and c:IsType(TYPE_SYNCHRO) then
 			local mg2=mg:Clone()
 			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_SYNCHRO) then return true end
+			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_SYNCHRO,ct2) then return true end
 		end
 		if bit.band(ts,TYPE_XYZ) and c:IsType(TYPE_XYZ) then
 			local mg2=mg:Clone()
 			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_XYZ) then return true end
+			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_XYZ,ct2) then return true end
 		end
 		if bit.band(ts,TYPE_PENDULUM) and c:IsType(TYPE_PENDULUM) then
 			local mg2=mg:Clone()
 			mg2:RemoveCard(c)
-			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_PENDULUM) then return true end
+			if mg2:IsExists(c100912039.fusfilter_s,1,nil,mg2,ts-TYPE_PENDULUM,ct2) then return true end
 		end
 		return false
 	end
@@ -153,10 +156,13 @@ function c100912039.fusfilter_c(c,mg,typ,rem,chkf)
 		return false
 	end
 end
-function c100912039.get_type(c)
-	if c:IsType(TYPE_FUSION) then return TYPE_FUSION
-	elseif c:IsType(TYPE_SYNCHRO) then return TYPE_SYNCHRO
-	elseif c:IsType(TYPE_XYZ) then return TYPE_XYZ
+function c100912039.get_avail_type(c,mg,ts,ct)
+	if c:IsType(TYPE_FUSION) and bit.band(ts,TYPE_FUSION)
+		and mg:IsExists(c100912039.fusfilter_s,1,nil,mg,ts-TYPE_FUSION,ct) then return TYPE_FUSION
+	elseif c:IsType(TYPE_SYNCHRO) and bit.band(ts,TYPE_SYNCHRO)
+		and mg:IsExists(c100912039.fusfilter_s,1,nil,mg,ts-TYPE_SYNCHRO,ct) then return TYPE_SYNCHRO
+	elseif c:IsType(TYPE_XYZ) and bit.band(ts,TYPE_XYZ)
+		and mg:IsExists(c100912039.fusfilter_s,1,nil,mg,ts-TYPE_XYZ,ct) then return TYPE_XYZ
 	else return TYPE_PENDULUM end
 end
 function c100912039.group_check(c,g2,g3,g4)
@@ -265,25 +271,18 @@ function c100912039.fusop(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	local at=TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM
 	if gc then
 		local g1=Group.FromCards(gc)
-		local bf,bs,bx,bp=c100912039.fusfilter_a(gc)
 		local mg=g:Clone()
 		mg:RemoveCard(gc)
 		local ts=at
-		if bf then
-			ts=ts-TYPE_FUSION
-		elseif bs then
-			ts=ts-TYPE_SYNCHRO
-		elseif bx then
-			ts=ts-TYPE_XYZ
-		else 
-			ts=ts-TYPE_PENDULUM
-		end
+		local ct=3
+		ts=ts-c100912039.get_avail_type(gc,mg,ts,ct)
 		for i=1,3 do
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-			local sg=mg:FilterSelect(tp,c100912039.fusfilter_s,1,1,nil,mg,ts)
+			local sg=mg:FilterSelect(tp,c100912039.fusfilter_s,1,1,nil,mg,ts,ct)
 			g1:AddCard(sg:GetFirst())
 			mg:RemoveCard(sg:GetFirst())
-			ts=ts-c100912039.get_type(sg:GetFirst())
+			ct=ct-1
+			ts=ts-c100912039.get_avail_type(sg:GetFirst(),mg,ts,ct)
 		end
 		Duel.SetFusionMaterial(g1)
 		return
