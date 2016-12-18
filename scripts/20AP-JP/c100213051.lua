@@ -69,7 +69,6 @@ function c100213051.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		e1:SetLabelObject(c)
 		e1:SetCountLimit(1)
-		e1:SetCondition(c100213051.retcon)
 		e1:SetOperation(c100213051.retop)
 		Duel.RegisterEffect(e1,tp)
 	end
@@ -82,7 +81,6 @@ function c100213051.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c100213051.disop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(100213051,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 	Duel.NegateActivation(ev)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
@@ -97,7 +95,6 @@ function c100213051.dstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,eg:GetCount(),0,0)
 end
 function c100213051.dsop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(100213051,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 	Duel.NegateSummon(eg)
 	Duel.Destroy(eg,REASON_EFFECT)
 end
@@ -105,13 +102,9 @@ function c100213051.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function c100213051.negop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(100213051,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 	if Duel.NegateAttack() then
 		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 	end
-end
-function c100213051.retcon(e)
-	return e:GetLabelObject():GetFlagEffect(100213051)~=0
 end
 function c100213051.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())
