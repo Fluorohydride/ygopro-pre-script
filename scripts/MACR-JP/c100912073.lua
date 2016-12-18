@@ -107,10 +107,10 @@ function c100912073.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100912073.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tc=g:GetFirst()
+	local tc=tg:GetFirst()
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,c100912073.eqfilter,tp,LOCATION_HAND,0,1,1,nil,tg)
+	local g=Duel.SelectMatchingCard(tp,c100912073.eqfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,tg)
 	local eq=g:GetFirst()
 	if eq then
 		Duel.Equip(tp,eq,tc,true)
