@@ -92,7 +92,7 @@ function c100912073.efilter(c,e)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsCanBeEffectTarget(e)
 end
 function c100912073.eqfilter(c,g)
-	return c:IsType(TYPE_EQUIP) and c:IsSetCard(0x1fc) and g:IsExists(c100912073.eqcheck,1,nil,c)
+	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsSetCard(0x1fc) and g:IsExists(c100912073.eqcheck,1,nil,c)
 end
 function c100912073.eqcheck(c,ec)
 	return ec:CheckEquipTarget(c)
@@ -107,10 +107,10 @@ function c100912073.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100912073.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tc=tg:GetFirst()
+	local tc=g:GetFirst()
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,c100912073.eqfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,tg)
+	local g=Duel.SelectMatchingCard(tp,c100912073.eqfilter,tp,LOCATION_HAND,0,1,1,nil,tg)
 	local eq=g:GetFirst()
 	if eq then
 		Duel.Equip(tp,eq,tc,true)
