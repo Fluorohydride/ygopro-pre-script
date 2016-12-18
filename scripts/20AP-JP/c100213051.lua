@@ -55,24 +55,23 @@ function c100213051.initial_effect(c)
 	e6:SetCost(c100213051.cost)
 	e6:SetOperation(c100213051.negop)
 	c:RegisterEffect(e6)
-	--Revive
-	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(100213051,3))
-	e7:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
-	e7:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e7:SetCode(EVENT_PHASE+PHASE_END)
-	e7:SetRange(LOCATION_REMOVED)
-	e7:SetCountLimit(1)
-	e7:SetTarget(c100213051.sumtg)
-	e7:SetOperation(c100213051.sumop)
-	c:RegisterEffect(e7)
 end
 function c100213051.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function c100213051.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToRemoveAsCost() end
+	if Duel.Remove(c,POS_FACEUP,REASON_COST+REASON_TEMPORARY)~=0 then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetLabelObject(c)
+		e1:SetCountLimit(1)
+		e1:SetOperation(c100213051.retop)
+		Duel.RegisterEffect(e1,tp)
+	end
 end
 function c100213051.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -86,7 +85,6 @@ function c100213051.disop(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
-	e:GetHandler():RegisterFlagEffect(100213051,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 end
 function c100213051.dscon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0
@@ -99,7 +97,6 @@ end
 function c100213051.dsop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateSummon(eg)
 	Duel.Destroy(eg,REASON_EFFECT)
-	e:GetHandler():RegisterFlagEffect(100213051,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 end
 function c100213051.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
@@ -108,16 +105,7 @@ function c100213051.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
 		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 	end
-	e:GetHandler():RegisterFlagEffect(100213051,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 end
-function c100213051.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:GetFlagEffect(100213051)>0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
-end
-function c100213051.sumop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
-	end
+function c100213051.retop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.ReturnToField(e:GetLabelObject())
 end
