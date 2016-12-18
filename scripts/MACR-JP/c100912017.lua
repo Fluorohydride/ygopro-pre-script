@@ -49,8 +49,8 @@ end
 function c100912017.ndcfilter(c)
 	return c:IsFaceup() and c:IsCode(100912039)
 end
-function c100912017.ndcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100912017.ndcfilter,tp,LOCATION_ONFIELD,0,1,nil)
+function c100912017.ndcon(e)
+	return Duel.IsExistingMatchingCard(c100912017.ndcfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function c100912017.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local seq=e:GetHandler():GetSequence()
