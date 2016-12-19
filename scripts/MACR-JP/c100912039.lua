@@ -210,7 +210,7 @@ end
 function c100912039.fuscon(e,g,gc,chkfnf)
 	local c=e:GetHandler()
 	if g==nil then return true end
-	if not c:IsFacedown() then return false end
+	if c:IsFaceup() then return false end
 	local chkf=bit.band(chkfnf,0xff)
 	local funs=c100912039.filters
 	local n=4
@@ -243,9 +243,10 @@ function c100912039.fuscon(e,g,gc,chkfnf)
 		end
 		tc=mg:GetNext()
 	end
+	local gr2=c100912039.CloneTable(groups)
 	if chkf~=PLAYER_NONE then
-		if not fs then return false end
-		local gr2=c100912039.CloneTable(groups)
+		return fs and gr2[1]:IsExists(c100912039.FConditionFilterMulti2,1,nil,gr2)
+	else
 		return gr2[1]:IsExists(c100912039.FConditionFilterMulti2,1,nil,gr2)
 	end
 end
