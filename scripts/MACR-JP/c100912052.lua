@@ -28,34 +28,41 @@ function c100912052.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,2000) end
 	Duel.PayLPCost(tp,2000)
 end
-function c100912052.filter0(c,e,tp)
-	return c:IsCanBeFusionMaterial()
-		and Duel.IsExistingMatchingCard(c100912052.filter1,tp,LOCATION_MZONE,0,1,c,e,tp,c)
+function c100912052.filter0(c,e,tp,mg)
+	return mg:IsExists(c100912052.filter1,1,nil,e,tp,c)
 end
 function c100912052.filter1(c,e,tp,mc)
 	local mg=Group.FromCards(c,mc)
-	return c:IsCanBeFusionMaterial()
-		and Duel.IsExistingMatchingCard(c100912052.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg)
+	return Duel.IsExistingMatchingCard(c100912052.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg)
 end
 function c100912052.filter2(c,e,tp,mg)
 	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(mg,nil)
 end
 function c100912052.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local mg=Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-		and Duel.IsExistingMatchingCard(c100912052.filter0,tp,LOCATION_MZONE,0,1,nil,e,tp) end
+		and mg:IsExists(c100912052.filter0,1,nil,e,tp,mg) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		Duel.SetChainLimit(aux.FALSE)
 	end
 end
+function c100912052.filter3(c,e,tp,mg)
+	return not c:IsImmuneToEffect(e) and mg:IsExists(c100912052.filter4,1,c,e,tp,c)
+end
+function c100912052.filter4(c,e,tp,mc)
+	local mg=Group.FromCards(c,mc)
+	return not c:IsImmuneToEffect(e) and Duel.IsExistingMatchingCard(c100912052.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg)
+end
 function c100912052.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<-1 then return end
+	local mg=Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local g1=Duel.SelectMatchingCard(tp,c100912052.filter0,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
+	local g1=mg:FilterSelect(tp,c100912052.filter3,1,1,nil,e,tp,mg)
 	if g1:GetCount()==0 then return end
 	local tc1=g1:GetFirst()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local g2=Duel.SelectMatchingCard(tp,c100912052.filter1,tp,LOCATION_MZONE,0,1,1,tc1,e,tp,tc1)
+	local g2=mg:FilterSelect(tp,c100912052.filter4,1,1,tc1,e,tp,tc1)
 	g1:Merge(g2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,c100912052.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,g1)
