@@ -118,7 +118,12 @@ function c100912039.FConditionFilterMulti(c,mg,funs,n,tbt)
 	return false
 end
 function c100912039.CloneTable(g)
-	return {table.unpack(g)}
+	local ng={}
+	for i=1,#g do
+		local sg=g[i]:Clone()
+		table.insert(ng,sg)
+	end
+	return ng
 end
 function c100912039.FConditionFilterMulti2(c,gr)
 	local gr2=c100912039.CloneTable(gr)
@@ -129,7 +134,7 @@ function c100912039.FConditionFilterMulti2(c,gr)
 	if #gr2==1 then
 		return gr2[1]:IsExists(aux.TRUE,1,nil)
 	else
-		return gr2[1]:GetCount()>0 and gr2[1]:IsExists(c100912039.FConditionFilterMulti2,1,nil,gr2)
+		return gr2[1]:IsExists(c100912039.FConditionFilterMulti2,1,nil,gr2)
 	end
 end
 function c100912039.FConditionFilterMultiSelect(c,funs,n,mg,sg)
