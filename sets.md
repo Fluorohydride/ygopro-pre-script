@@ -2,11 +2,9 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`  
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
-- **November 26, 2016**  : Dimension Box Limited Edition (DBLE-JP) : `100212XXX`  
-- **December 17, 2016**  : 20th Anniversary Pack 1st Wave (20AP-JP) : `100213XXX`  
-- **December 17, 2016**  : Premium Pack 19 (PP19-JP) : `100214XXX`  
 - **December 23, 2016**  : Structure Deck: Pendulum Evolution (SD31-JP) : `100331XXX`  
 - **January 14, 2017**  : Maximum Crisis (MACR-JP) : `100912XXX`  
+- **February 18, 2017**  : 20th Anniversary Pack 2nd Wave (20AP-JP) : `100213XXX`  
 
 #Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~  
@@ -33,3 +31,6 @@
 - ~~RAGING TEMPEST (RATE-JP) : `100911XXX`~~  
 - ~~Invasion: Vengeance (INOV-EN) : `100910XXX`~~  
 - ~~Booster SP: Fusion Enforcers (SPFE-JP) : `100406XXX`~~  
+- ~~Dimension Box Limited Edition (DBLE-JP) : `100212XXX`~~  
+- ~~20th Anniversary Pack 1st Wave (20AP-JP) : `100213XXX`~~  
+- ~~Premium Pack 19 (PP19-JP) : `100214XXX`~~  
