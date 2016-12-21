@@ -8,9 +8,13 @@ function c100213053.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCondition(c100213053.condition)
 	e1:SetTarget(c100213053.target)
 	e1:SetOperation(c100213053.activate)
 	c:RegisterEffect(e1)
+end
+function c100213053.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function c100213053.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xa3) and c:IsType(TYPE_SYNCHRO)

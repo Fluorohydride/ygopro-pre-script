@@ -85,16 +85,16 @@ function c100912039.initial_effect(c)
 end
 c100912039.miracle_synchro_fusion=true
 function c100912039.fusfilter1(c)
-	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_FUSION)
+	return c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_FUSION)
 end
 function c100912039.fusfilter2(c)
-	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO)
+	return c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_SYNCHRO)
 end
 function c100912039.fusfilter3(c)
-	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_XYZ)
+	return c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_XYZ)
 end
 function c100912039.fusfilter4(c)
-	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_PENDULUM)
+	return c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_PENDULUM)
 end
 c100912039.filters={c100912039.fusfilter1,c100912039.fusfilter2,c100912039.fusfilter3,c100912039.fusfilter4}
 -- TO BE REMOVED ONCE THE UTILITIES ARE UPDATED
