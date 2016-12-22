@@ -29,6 +29,7 @@ function c100912056.initial_effect(c)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetRange(LOCATION_FZONE)
+	e4:SetCondition(c100912056.regcon)
 	e4:SetOperation(aux.chainreg)
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
@@ -87,8 +88,11 @@ function c100912056.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+function c100912056.regcon(e,tp,eg,ep,ev,re,r,rp)
+	return rp~=tp and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,0,1,nil,TYPE_TOKEN)
+end
 function c100912056.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,0,1,nil,TYPE_TOKEN) and e:GetHandler():GetFlagEffect(1)>0
+	return e:GetHandler():GetFlagEffect(1)>0
 end
 function c100912056.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
