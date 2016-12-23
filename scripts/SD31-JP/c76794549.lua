@@ -130,11 +130,11 @@ function c76794549.hncost(e,tp,eg,ep,ev,re,r,rp,chk)
 		if tc then
 			rg:AddCard(tc)
 			local sc=0
-			if tcIsSetCard(0x10f2) then sc=0x10f2
-			elseif tcIsSetCard(0x2073) then sc=0x2073
-			elseif tcIsSetCard(0x2017) then sc=0x2017
+			if tc:IsSetCard(0x10f2) then sc=0x10f2
+			elseif tc:IsSetCard(0x2073) then sc=0x2073
+			elseif tc:IsSetCard(0x2017) then sc=0x2017
 			else sc=0x1046 end
-			g:Remove(Card.tcIsSetCard,nil,sc)
+			g:Remove(Card.IsSetCard,nil,sc)
 		end
 		ct=ct-1
 	end
