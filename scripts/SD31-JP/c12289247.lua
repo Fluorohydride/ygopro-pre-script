@@ -91,32 +91,42 @@ function c12289247.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c12289247.hncfilter(c,sc)
-	return c:IsSetCard(sc) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+function c12289247.hncfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c12289247.hncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local loc=LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct=-ft+1
+	local g=Duel.GetMatchingGroup(c12289247.hncfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	if chk==0 then return c:IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(c12289247.hncfilter,tp,loc,0,1,nil,0x10f2)
-		and Duel.IsExistingMatchingCard(c12289247.hncfilter,tp,loc,0,1,nil,0x2073)
-		and Duel.IsExistingMatchingCard(c12289247.hncfilter,tp,loc,0,1,nil,0x2017)
-		and Duel.IsExistingMatchingCard(c12289247.hncfilter,tp,loc,0,1,nil,0x1046)
+		and g:IsExists(Card.IsSetCard,1,nil,0x10f2)
+		and g:IsExists(Card.IsSetCard,1,nil,0x2073)
+		and g:IsExists(Card.IsSetCard,1,nil,0x2017)
+		and g:IsExists(Card.IsSetCard,1,nil,0x1046)
+		and (ft>0 or g:IsExists(Card.IsLocation,ct,nil,LOCATION_MZONE))
 	end
 	local g=Group.FromCards(c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectMatchingCard(tp,c12289247.hncfilter,tp,loc,0,1,1,nil,0x10f2)
-	g:Merge(g1)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,c12289247.hncfilter,tp,loc,0,1,1,nil,0x2073)
-	g:Merge(g2)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g3=Duel.SelectMatchingCard(tp,c12289247.hncfilter,tp,loc,0,1,1,nil,0x2017)
-	g:Merge(g3)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g4=Duel.SelectMatchingCard(tp,c12289247.hncfilter,tp,loc,0,1,1,nil,0x1046)
-	g:Merge(g4)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	for i=1,4 do
+		local tc=nil
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		if ct>0 then
+			tc=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE):GetFirst()
+		else
+			tc=g:Select(tp,1,1,nil):GetFirst()
+		end
+		if tc then
+			rg:AddCard(tc)
+			local sc=0
+			if tcIsSetCard(0x10f2) then sc=0x10f2
+			elseif tcIsSetCard(0x2073) then sc=0x2073
+			elseif tcIsSetCard(0x2017) then sc=0x2017
+			else sc=0x1046 end
+			g:Remove(Card.tcIsSetCard,nil,sc)
+		end
+		ct=ct-1
+	end
+	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 function c12289247.hnfilter(c,e,tp)
 	return c:IsFacedown() and c:IsCode(100912039) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
