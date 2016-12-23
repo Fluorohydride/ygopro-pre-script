@@ -1,7 +1,7 @@
 --星霜のペンデュラムグラフ
 --Pendulumgraph of Ages
 --Scripted by Eerie Code
-function c100331023.initial_effect(c)
+function c74850403.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -14,7 +14,7 @@ function c100331023.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_SPELLCASTER))
-	e2:SetValue(c100331023.evalue)
+	e2:SetValue(c74850403.evalue)
 	c:RegisterEffect(e2)
 	--Search
 	local e3=Effect.CreateEffect(c)
@@ -23,36 +23,36 @@ function c100331023.initial_effect(c)
 	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1,100331023)
-	e3:SetCondition(c100331023.thcon)
-	e3:SetTarget(c100331023.thtg)
-	e3:SetOperation(c100331023.thop)
+	e3:SetCountLimit(1,74850403)
+	e3:SetCondition(c74850403.thcon)
+	e3:SetTarget(c74850403.thtg)
+	e3:SetOperation(c74850403.thop)
 	c:RegisterEffect(e3)
 end
-function c100331023.evalue(e,re,rp)
+function c74850403.evalue(e,re,rp)
 	return re:IsActiveType(TYPE_SPELL) and rp~=e:GetHandlerPlayer()
 end
-function c100331023.thcfilter(c,tp)
+function c74850403.thcfilter(c,tp)
 	local pl=c:GetPreviousLocation()
 	local ps=c:GetPreviousSequence()
 	return c:IsType(TYPE_PENDULUM) and c:IsPreviousSetCard(0x98)
 		and c:GetPreviousControler()==tp and c:IsPreviousPosition(POS_FACEUP)
 		and (pl==LOCATION_MZONE or (pl==LOCATION_SZONE and (ps==6 or ps==7)))
 end
-function c100331023.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg and eg:IsExists(c100331023.thcfilter,1,nil,tp)
+function c74850403.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg and eg:IsExists(c74850403.thcfilter,1,nil,tp)
 end
-function c100331023.thfilter(c)
+function c74850403.thfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x98) and c:IsAbleToHand()
 end
-function c100331023.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c74850403.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function c100331023.thop(e,tp,eg,ep,ev,re,r,rp)
+function c74850403.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100331023.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c74850403.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
