@@ -35,22 +35,6 @@ function c100331001.initial_effect(c)
 	e3:SetTarget(c100331001.hntg)
 	e3:SetOperation(c100331001.hnop)
 	c:RegisterEffect(e3)
-	--Register destroyed monsters
-	if not c100331001.global_flag then
-		c100331001.global_flag=true
-		c100331001.desgroup=Group.CreateGroup()
-		c100331001.desgroup:KeepAlive()
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_DESTROYED)
-		ge1:SetOperation(c100331001.regop)
-		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		ge2:SetOperation(c100331001.resetop)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 function c100331001.rpfilter(c,e,tp)
 	return c:IsCode(94415058) and (not c:IsForbidden()
@@ -79,17 +63,6 @@ function c100331001.rpop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100331001.regop(e,tp,eg,ep,ev,re,r,rp)
-	if not eg then return end
-	local tc=eg:GetFirst()
-	while tc do
-		c100331001.desgroup:AddCard(tc)
-		tc=eg:GetNext()
-	end
-end
-function c100331001.resetop(e,tp,eg,ep,ev,re,r,rp)
-	c100331001.desgroup:Clear()
-end
 function c100331001.spcfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD)
@@ -103,21 +76,26 @@ function c100331001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
-function c100331001.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c100331001.desgroup:IsExists(c100331001.thfilter2,1,nil,c:GetOriginalCode())
+function c100331001.thfilter1(c,tp)
+	return c:IsType(TYPE_MONSTER) and c:IsReason(REASON_DESTROY) and c:GetTurnID()==id
+		and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+		and Duel.IsExistingMatchingCard(c100331001.thfilter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
-function c100331001.thfilter2(c,cd)
-	return c:GetOriginalCode()==cd
+function c100331001.thfilter2(c,code)
+	return c:IsCode(code) and c:IsAbleToHand()
 end
 function c100331001.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local g=Duel.GetMatchingGroup(c100331001.thfilter,tp,LOCATION_DECK,0,nil)
+		local g=Duel.GetMatchingGroup(c100331001.thfilter1,tp,0x70,0x70,nil,tp)
 		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100331001,3)) then
 			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+			local cg=g:Select(tp,1,1,nil)
+			Duel.HintSelection(cg)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg=g:Select(tp,1,1,nil)
+			local sg=Duel.SelectMatchingCard(tp,c100331001.thfilter2,tp,LOCATION_DECK,0,1,1,nil,cg:GetFirst())
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 		end
