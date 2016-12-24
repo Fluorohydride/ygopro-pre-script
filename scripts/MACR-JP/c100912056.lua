@@ -92,7 +92,7 @@ function c100912056.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,0,1,nil,TYPE_TOKEN)
 end
 function c100912056.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(1)>0
+	return rp~=tp and e:GetHandler():GetFlagEffect(1)>0
 end
 function c100912056.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

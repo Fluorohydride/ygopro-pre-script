@@ -68,11 +68,11 @@ function c100912105.checkop(e,tp,eg,ep,ev,re,r,rp)
 				or (typ==TYPE_TRAP and Duel.GetFlagEffect(p,100912305)==0) then
 				c100912105[p]=c100912105[p]+1
 				if typ==TYPE_MONSTER then
-					Duel.RegisterFlagEffect(tp,100912105,RESET_PHASE+PHASE_END,0,1)
+					Duel.RegisterFlagEffect(p,100912105,RESET_PHASE+PHASE_END,0,1)
 				elseif typ==TYPE_SPELL then
-					Duel.RegisterFlagEffect(tp,100912205,RESET_PHASE+PHASE_END,0,1)
+					Duel.RegisterFlagEffect(p,100912205,RESET_PHASE+PHASE_END,0,1)
 				else
-					Duel.RegisterFlagEffect(tp,100912305,RESET_PHASE+PHASE_END,0,1)
+					Duel.RegisterFlagEffect(p,100912305,RESET_PHASE+PHASE_END,0,1)
 				end
 			end
 		end
