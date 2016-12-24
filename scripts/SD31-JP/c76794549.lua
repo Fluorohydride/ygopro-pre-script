@@ -118,7 +118,7 @@ function c76794549.hncost(e,tp,eg,ep,ev,re,r,rp,chk)
 		and g:IsExists(Card.IsSetCard,1,nil,0x1046)
 		and (ft>0 or g:IsExists(Card.IsLocation,ct,nil,LOCATION_MZONE))
 	end
-	local g=Group.FromCards(c)
+	local rg=Group.FromCards(c)
 	for i=1,4 do
 		local tc=nil
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
