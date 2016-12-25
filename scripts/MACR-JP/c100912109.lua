@@ -27,14 +27,6 @@ function c100912109.filter(c)
 end
 function c100912109.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(c100912109.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(c100912109.filter,tp,LOCATION_DECK,0,nil)
 	local ct=0
@@ -48,6 +40,14 @@ function c100912109.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MoveToField(sc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 			sc=sg:GetNext()
 		end
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(c100912109.splimit)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
 	end
 end
 function c100912019.splimit(e,c,sump,sumtype,sumpos,targetp,se)
