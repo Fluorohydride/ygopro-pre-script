@@ -31,8 +31,8 @@ function c100912109.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(c100912109.filter,tp,LOCATION_DECK,0,nil)
 	local ct=0
-	if not Duel.GetFieldCard(tp,LOCATION_SZONE,6) then ct=ct+1 end
-	if not Duel.GetFieldCard(tp,LOCATION_SZONE,7) then ct=ct+1 end
+	if Duel.CheckLocation(tp,LOCATION_SZONE,6) then ct=ct+1 end
+	if Duel.CheckLocation(tp,LOCATION_SZONE,7) then ct=ct+1 end
 	if ct>0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100912109,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local sg=g:Select(tp,1,ct,nil)
@@ -47,7 +47,7 @@ function c100912109.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,0)
 		e1:SetTarget(c100912109.splimit)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE+PHASE_END,2)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

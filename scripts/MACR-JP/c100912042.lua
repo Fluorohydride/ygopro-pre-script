@@ -32,7 +32,7 @@ function c100912042.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c100912042.filter(c)
-	return c:IsFaceup() and (c:IsType(TYPE_EFFECT) or c:GetAttack()>0)
+	return c:IsFaceup() and not (c:GetAttack()==0 and c:IsDisabled())
 end
 function c100912042.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100912042.filter(chkc) end
@@ -65,8 +65,16 @@ function c100912042.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		e3:SetValue(0)
 		tc:RegisterEffect(e3)
+		if tc:IsType(TYPE_TRAPMONSTER) then
+			local e4=Effect.CreateEffect(c)
+			e4:SetType(EFFECT_TYPE_SINGLE)
+			e4:SetCode(EFFECT_DISABLE_TRAPMONSTER)
+			e4:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			tc:RegisterEffect(e4)
+		end
 	end
 end
 function c100912042.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x10db)
+		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
