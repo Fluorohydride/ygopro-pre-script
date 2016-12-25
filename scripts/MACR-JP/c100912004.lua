@@ -63,7 +63,7 @@ function c100912004.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-tp,tc)
 end
 function c100912004.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c100912004.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(100912004,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)

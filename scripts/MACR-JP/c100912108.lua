@@ -24,10 +24,11 @@ function c100912108.filter(c)
 end
 function c100912108.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c100912108.filter,tp,LOCATION_ONFIELD,0,1,nil)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingTarget(c100912108.filter,tp,LOCATION_ONFIELD,0,1,c)
 		and Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,c100912108.filter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g1=Duel.SelectTarget(tp,c100912108.filter,tp,LOCATION_ONFIELD,0,1,1,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g2=Duel.SelectTarget(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)

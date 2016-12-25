@@ -15,6 +15,7 @@ function c100912109.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetHintTiming(0,0x1e0)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCost(c100912109.thcost)
@@ -50,22 +51,22 @@ function c100912109.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
-function c100912019.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+function c100912109.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsSetCard(0xd8) and bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
-function c100912019.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100912109.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsSetCard,1,nil,0xd8) end
 	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,nil,0xd8)
 	Duel.Release(g,REASON_COST)
 end
-function c100912019.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c100912109.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
-function c100912019.thop(e,tp,eg,ep,ev,re,r,rp)
+function c100912109.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if e:GetHandler():IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
