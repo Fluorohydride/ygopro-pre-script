@@ -41,12 +41,8 @@ function c100912014.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100912014.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
-	local g=Duel.SelectMatchingCard(tp,c100912014.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
-	if not tc then return end
-	if tc:IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.IsChainDisablable(0) then
-		Duel.NegateEffect(0)
-		return
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100912014.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	if g:GetCount()>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-	Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 end

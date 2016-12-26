@@ -47,14 +47,9 @@ function c100912075.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100912075.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
-	local g=Duel.SelectMatchingCard(tp,c100912075.filter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100912075.filter),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	if not tc then return end
-	if tc:IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.IsChainDisablable(0) then
-		Duel.NegateEffect(0)
-		return
-	end
-	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		tc:RegisterFlagEffect(100912075,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,2)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
