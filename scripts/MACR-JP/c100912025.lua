@@ -46,7 +46,7 @@ end
 function c100912025.otfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and not c:IsType(TYPE_MONSTER) and c:IsReleasable()
 end
-function c100912025.ttcon(e,c)
+function c100912025.ttcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
