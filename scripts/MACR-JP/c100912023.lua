@@ -38,7 +38,7 @@ function c100912023.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100912023.otfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsReleasable()
+	return c:IsType(TYPE_CONTINUOUS) and c:IsReleasable()
 end
 function c100912023.otcon(e,c,minc)
 	if c==nil then return true end
