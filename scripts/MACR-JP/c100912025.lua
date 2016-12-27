@@ -49,10 +49,11 @@ end
 function c100912025.ttcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local mg=Duel.GetMatchingGroup(c100912025.otfilter,tp,LOCATION_ONFIELD,0,nil)
-	if ft<=0 and Duel.GetTributeCount(c)<=0 then return false end
-	return ft>-3 and Duel.GetTributeCount(c)+mg:GetCount()>=3
+	return (minc==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:GetCount()>=3)
+		or (minc<=1 and Duel.CheckTribute(c,1) and mg:GetCount()>=2)
+		or (minc<=2 and Duel.CheckTribute(c,2) and mg:GetCount()>=1)
+		or (minc<=3 and Duel.CheckTribute(c,3))
 end
 function c100912025.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(c100912025.otfilter,tp,LOCATION_ONFIELD,0,nil)
@@ -82,7 +83,7 @@ function c100912025.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:SetMaterial(g)
 	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 end
-function c100912025.setcon(e,c)
+function c100912025.setcon(e,c,minc)
 	if not c then return true end
 	return false
 end
