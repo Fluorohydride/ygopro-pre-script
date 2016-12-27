@@ -310,11 +310,12 @@ function c100912039.check_fusion_material_48144509(g,chkf)
 	end
 	tc=mg:GetNext()
 	end
+	local gr2=c100912039.CloneTable(groups)
 	if chkf~=PLAYER_NONE then
-		if not fs then return false end
-		local gr2=c100912039.CloneTable(groups)
+		return fs and gr2[1]:IsExists(c100912039.FConditionFilterMulti2,1,nil,gr2)
+	else
 		return gr2[1]:IsExists(c100912039.FConditionFilterMulti2,1,nil,gr2)
-	end 
+	end
 end
 function c100912039.select_fusion_material_48144509(tp,g,chkf)
 	local mg=g:Filter(Card.IsLocation,nil,LOCATION_HAND+LOCATION_MZONE)
