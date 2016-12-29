@@ -1,6 +1,7 @@
 --LL－インディペンデント・ナイチンゲール
 --Lyrical Luscinia - Independent Nightingale
 --Scripted by Eerie Code
+--Effect is not fully implemented
 function c100912041.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcCodeFun(c,100912043,aux.FilterBoolFunction(Card.IsFusionSetCard,0x1f8),1,true,true)
@@ -51,12 +52,12 @@ function c100912041.initial_effect(c)
 		Duel.RegisterEffect(ge1,tp)
 	end
 end
-function c100912041.checkfil(c,tp)
+function c100912041.checkfilter(c,tp)
 	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x1f8) and c:GetOverlayCount()>0
 end
 function c100912041.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not eg then return  end
-	local sg=eg:Filter(c100912041.checkfil,nil,tp)
+	local sg=eg:Filter(c100912041.checkfilter,nil,tp)
 	local tc=sg:GetFirst()
 	while tc do
 		local oc=tc:GetOverlayCount()
