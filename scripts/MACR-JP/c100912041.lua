@@ -80,7 +80,7 @@ end
 function c100912041.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local mg=c:GetMaterial():Filter(c100912041.lvfilter,1,nil)
+	local mg=c:GetMaterial():Filter(c100912041.lvfilter,nil)
 	local lv=0
 	local mc=mg:GetFirst()
 	while mc do
