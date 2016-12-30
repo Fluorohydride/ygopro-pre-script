@@ -47,18 +47,20 @@ function c100912103.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(c:GetSummonType(),SUMMON_TYPE_ADVANCE)==SUMMON_TYPE_ADVANCE and rp~=tp and Duel.IsChainNegatable(ev)
 end
 function c100912103.thfilter(c,tp)
-	return (c:IsSetCard(0x1f9) or c:IsCode(30539496,34079868,82321037,87765315,96746083)) and c:GetType()==0x20004 and (c:IsAbleToHand() or c:GetActivateEffect():IsActivatable(tp))
+	return (c:IsSetCard(0x1f9) or c:IsCode(30539496,34079868,82321037,87765315,96746083)) and c:GetType()==0x20004 and (c:IsAbleToHand() or (c:GetActivateEffect():IsActivatable(tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0))
 end
 function c100912103.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100912103.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100912103.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100912103,3))
 	local g=Duel.SelectMatchingCard(tp,c100912103.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
 	local tc=g:GetFirst()
 	if tc then
-		if tc:IsAbleToHand() and (not tc:GetActivateEffect():IsActivatable(tp) or Duel.SelectYesNo(tp,aux.Stringid(100912103,2))) then
+		local b1=tc:IsAbleToHand()
+		local b2=tc:GetActivateEffect():IsActivatable(tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		if b1 and (not b2 or Duel.SelectYesNo(tp,aux.Stringid(100912103,2))) then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,tc)
 		else
