@@ -1,7 +1,6 @@
 --LL－インディペンデント・ナイチンゲール
 --Lyrical Luscinia - Independent Nightingale
 --Scripted by Eerie Code
---Effect is not fully implemented
 function c100912041.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcCodeFun(c,100912043,c100912041.ffilter,1,true,true)
@@ -15,6 +14,12 @@ function c100912041.initial_effect(c)
 	e1:SetCondition(c100912041.lvcon)
 	e1:SetOperation(c100912041.lvop)
 	c:RegisterEffect(e1)
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_MATERIAL_CHECK)
+	e0:SetValue(c100912041.valcheck)
+	e0:SetLabelObject(e1)
+	c:RegisterEffect(e0)
 	--immune
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -42,62 +47,33 @@ function c100912041.initial_effect(c)
 	e4:SetTarget(c100912041.damtg)
 	e4:SetOperation(c100912041.damop)
 	c:RegisterEffect(e4)
-	--checks previous ORU on field (similar to Cipher Spectrum)
-	if not c100912041.global_check then
-		c100912041.global_check=true
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_LEAVE_FIELD_P)
-		ge1:SetOperation(c100912041.checkop)
-		Duel.RegisterEffect(ge1,tp)
-	end
 end
 function c100912041.ffilter(c)
-	return c:IsFusionSetCard(0x1f8) or c:IsCode(8491961)
+	return c:IsFusionSetCard(0x1f8) or c:IsFusionCode(8491961)
 end
-function c100912041.checkfilter(c,tp)
-	return c:IsOriginalSetCard(0x1f8) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()>0
-end
-function c100912041.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if not eg then return end
-	local sg=eg:Filter(c100912041.checkfilter,nil,tp)
-	local tc=sg:GetFirst()
-	while tc do
-		local oc=tc:GetOverlayCount()
-		if oc>0 then
-			for i=1,oc do
-				tc:RegisterFlagEffect(100912041,RESET_EVENT+0x1fe0000-EVENT_TO_GRAVE,0,1)
-			end
-		end
-		tc=sg:GetNext()
+function c100912041.matval(c)
+	if (c:IsOriginalSetCard(0x1f8) or c:GetOriginalCode()==8491961) and c:IsType(TYPE_XYZ) then
+		return c:GetOverlayCount()
 	end
+	return 0
 end
-function c100912041.lvfilter(c)
-	return (c:IsOriginalSetCard(0x1f8) or c:IsCode(8491961)) and c:GetFlagEffect(100912041)>0
+function c100912041.valcheck(e,c)
+	local val=c:GetMaterial():GetSum(c100912041.matval)
+	e:GetLabelObject():SetLabel(val)
 end
 function c100912041.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local mg=c:GetMaterial()
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION and mg and mg:IsExists(c100912041.lvfilter,1,nil)
+	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION and e:GetLabel()>0
 end
 function c100912041.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	local mg=c:GetMaterial():Filter(c100912041.lvfilter,nil)
-	local lv=0
-	local mc=mg:GetFirst()
-	while mc do
-		lv=lv+mc:GetFlagEffect(100912041)
-		mc=mg:GetNext()
+	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LEVEL)
+		e1:SetValue(e:GetLabel())
+		e1:SetReset(RESET_EVENT+0x1ff0000)
+		c:RegisterEffect(e1)
 	end
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_LEVEL)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(lv)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
-	c:RegisterEffect(e1)
 end
 function c100912041.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
@@ -111,7 +87,8 @@ function c100912041.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,e:GetHandler():GetLevel()*500)
 end
 function c100912041.damop(e,tp,eg,ep,ev,re,r,rp)
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local lv=e:GetHandler():GetLevel()
-	Duel.Damage(p,lv*500,REASON_EFFECT)
+	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+		Duel.Damage(p,c:GetLevel()*500,REASON_EFFECT)
+	end
 end
