@@ -38,8 +38,8 @@ function c100213060.initial_effect(c)
 	--gamble counter
 	if not c100213060.global_flag then
 		c100213060.global_flag=true
-		c100213060.gcounter[0]=0
-		c100213060.gcounter[1]=0
+		c100213060[0]=0
+		c100213060[1]=0
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_CHAINING)
@@ -56,10 +56,10 @@ function c100213060.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local ex1,g1,gc1,dp1,dv1=Duel.GetOperationInfo(0,CATEGORY_DICE)
 	local ex1,g1,gc1,dp1,dv1=Duel.GetOperationInfo(0,CATEGORY_COIN)
 	if ex1 then
-		c100213060.gcounter[dp1]=c100213060.gcounter[dp1]+dv1
+		c100213060[dp1]=c100213060[dp1]+dv1
 	end
 	if ex2 then
-		c100213060.gcounter[dp1]=c100213060.gcounter[dp2]+dv2
+		c100213060[dp1]=c100213060[dp2]+dv2
 	end
 	Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+100213060,re,r,rp,0,0)
 end
