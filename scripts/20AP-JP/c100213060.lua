@@ -35,7 +35,7 @@ function c100213060.initial_effect(c)
 	e6:SetCode(EVENT_DAMAGE)
 	e6:SetOperation(c100213060.damop)
 	c:RegisterEffect(e6)
-	--gamble counter
+	--event counters
 	if not c100213060.global_flag then
 		c100213060.global_flag=true
 		c100213060[0]=0
@@ -52,12 +52,18 @@ function c100213060.initial_effect(c)
 		ge2:SetCode(EVENT_CUSTOM+100213060+100)
 		ge2:SetOperation(c100213060.checkop2)
 		Duel.RegisterEffect(ge2,0)
+		--Counts the number of times a monster has battled
+		local ge3=Effect.CreateEffect(c)
+		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge3:SetCode(EVENT_BATTLE_CONFIRM)
+		ge3:SetOperation(c100213060.checkop3)
+		Duel.RegisterEffect(ge3,0)
 		--Reset at the start of the next Draw Phase
 		local ge0=Effect.CreateEffect(c)
 		ge0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge0:SetCode(EVENT_PHASE_START+PHASE_DRAW)
 		ge0:SetOperation(c100213060.clear)
-		Duel.RegisterEffect(ge0,0)
+		--Duel.RegisterEffect(ge0,0)
 	end
 end
 function c100213060.checkop(e,tp,eg,ep,ev,re,r,rp)
@@ -90,6 +96,12 @@ function c100213060.checkop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+100213060,re,r,rp,0,0)
 end
+function c100213060.checkop3(e,tp,eg,ep,ev,re,r,rp)
+	local a=Duel.GetAttacker()
+	local d=Duel.GetAttackTarget()
+	a:RegisterFlagEffect(100213060,RESET_EVENT+0x1fe0000,0,1)
+	if d then d:RegisterFlagEffect(100213060,RESET_EVENT+0x1fe0000,0,1) end
+end
 function c100213060.clear(e,tp,eg,ep,ev,re,r,rp)
 	c100213060[0]=0
 	c100213060[1]=0
@@ -118,7 +130,7 @@ function c100213060.batop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	while tc do
 		local p=tc:GetControler()
-		if (tc:GetBattledGroupCount()==5 or tc:GetAttackAnnouncedCount()==5) and e:GetHandler():GetFlagEffect(100213160+p)==0 then
+		if tc:GetFlagEffect(100213060)==5 and e:GetHandler():GetFlagEffect(100213160+p)==0 then
 			c100213060.draw_op(e,p,100213160)
 		end
 		tc=g:GetNext()
