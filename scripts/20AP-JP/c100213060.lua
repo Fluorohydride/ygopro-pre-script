@@ -40,26 +40,53 @@ function c100213060.initial_effect(c)
 		c100213060.global_flag=true
 		c100213060[0]=0
 		c100213060[1]=0
+		--Checks effects that make a player toss a coin or throw a dice
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_CHAINING)
 		ge1:SetOperation(c100213060.checkop)
 		Duel.RegisterEffect(ge1,0)
+		--Checks effects that allow a player to redo a coin toss or dice roll
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		ge2:SetOperation(c100213060.clear)
+		ge2:SetCode(EVENT_CUSTOM+100213060+100)
+		ge2:SetOperation(c100213060.checkop2)
 		Duel.RegisterEffect(ge2,0)
+		--Reset at the start of the next Draw Phase
+		local ge0=Effect.CreateEffect(c)
+		ge0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge0:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+		ge0:SetOperation(c100213060.clear)
+		Duel.RegisterEffect(ge0,0)
 	end
 end
 function c100213060.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local ex1,g1,gc1,dp1,dv1=Duel.GetOperationInfo(0,CATEGORY_DICE)
 	local ex2,g2,gc2,dp2,dv2=Duel.GetOperationInfo(0,CATEGORY_COIN)
 	if ex1 then
-		c100213060[dp1]=c100213060[dp1]+dv1
+		if dp1==PLAYER_ALL then
+			c100213060[0]=c100213060[0]+dv1
+			c100213060[1]=c100213060[1]+dv1
+		else
+			c100213060[dp1]=c100213060[dp1]+dv1
+		end
 	end
 	if ex2 then
-		c100213060[dp2]=c100213060[dp2]+dv2
+		if dp2==PLAYER_ALL then
+			c100213060[0]=c100213060[0]+dv2
+			c100213060[1]=c100213060[1]+dv2
+		else
+			c100213060[dp2]=c100213060[dp2]+dv2
+		end
+	end
+	Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+100213060,re,r,rp,0,0)
+end
+function c100213060.checkop2(e,tp,eg,ep,ev,re,r,rp)
+	if ep==PLAYER_ALL then
+		c100213060[0]=c100213060[0]+ev
+		c100213060[1]=c100213060[1]+ev
+	else
+		c100213060[ep]=c100213060[ep]+ev
 	end
 	Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+100213060,re,r,rp,0,0)
 end
