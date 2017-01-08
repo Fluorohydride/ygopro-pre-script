@@ -54,12 +54,12 @@ function c100213060.initial_effect(c)
 end
 function c100213060.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local ex1,g1,gc1,dp1,dv1=Duel.GetOperationInfo(0,CATEGORY_DICE)
-	local ex1,g1,gc1,dp1,dv1=Duel.GetOperationInfo(0,CATEGORY_COIN)
+	local ex2,g2,gc2,dp2,dv2=Duel.GetOperationInfo(0,CATEGORY_COIN)
 	if ex1 then
 		c100213060[dp1]=c100213060[dp1]+dv1
 	end
 	if ex2 then
-		c100213060[dp1]=c100213060[dp2]+dv2
+		c100213060[dp2]=c100213060[dp2]+dv2
 	end
 	Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+100213060,re,r,rp,0,0)
 end
