@@ -14,17 +14,13 @@ function c100912001.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100912001,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_CHAIN_SOLVING)
+	e2:SetCode(EVENT_CHAIN_SOLVED)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c100912001.atkcon)
 	e2:SetCost(c100912001.atkcost)
 	e2:SetOperation(c100912001.atkop)
 	c:RegisterEffect(e2)
-	local e2b=e2:Clone()
-	e2b:SetCode(EVENT_CUSTOM+100912001)
-	e2b:SetCondition(aux.TRUE)
-	c:RegisterEffect(e2b)
 	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100912001,1))
@@ -50,7 +46,7 @@ function c100912001.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100912001.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	return re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and rp==tp and e:GetHandler():GetFlagEffect(1)>0
 end
 function c100912001.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -79,7 +75,7 @@ function c100912001.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c100912001.tffilter(c,tp)
-	return c:IsSetCard(0x98) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS --and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsSetCard(0x98) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:GetActivateEffect():IsActivatable(tp)
 end
 function c100912001.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -93,11 +89,8 @@ function c100912001.thop(e,tp,eg,ep,ev,re,r,rp)
 			local te=sc:GetActivateEffect()
 			local tep=sc:GetControler()
 			local cost=te:GetCost()
-			local target=te:GetTarget()
 			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-			if target then target(te,tep,eg,ep,ev,re,r,rp,1) end
 			Duel.RaiseEvent(sc,EVENT_CHAIN_SOLVED,te,0,tp,tp,Duel.GetCurrentChain())
-			Duel.RaiseEvent(sc,EVENT_CUSTOM+100912001,te,0,tp,0,0)
 		end
 	end
 end
