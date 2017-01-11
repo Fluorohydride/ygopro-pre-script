@@ -11,10 +11,8 @@ function c100912025.initial_effect(c)
 	e1:SetOperation(c100912025.ttop)
 	e1:SetValue(SUMMON_TYPE_ADVANCE)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
+	local e2=e1:Clone()
 	e2:SetCode(EFFECT_LIMIT_SET_PROC)
-	e2:SetCondition(c100912025.setcon)
 	c:RegisterEffect(e2)
 	--tribute check
 	local e3=Effect.CreateEffect(c)
@@ -82,10 +80,6 @@ function c100912025.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 	end
 	c:SetMaterial(g)
 	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
-end
-function c100912025.setcon(e,c,minc)
-	if not c then return true end
-	return false
 end
 function c100912025.valcheck(e,c)
 	local g=c:GetMaterial()
