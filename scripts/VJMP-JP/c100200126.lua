@@ -66,12 +66,12 @@ function c100200126.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g1=Duel.SelectMatchingCard(tp,c100200126.thfilter1,tp,LOCATION_DECK,0,1,1,nil)
 	if g1:GetCount()>0 then
-		Duel.SendtoHand(g1,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100200126.thfilter2),tp,LOCATION_GRAVE,0,1,1,e:GetHandler())
 		if g2:GetCount()>0 then
-			Duel.SendtoHand(g2,nil,REASON_EFFECT)
+			g1:Merge(g2)
+			Duel.SendtoHand(g1,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g1)
 		end
 	end
 end
