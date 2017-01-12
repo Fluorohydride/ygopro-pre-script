@@ -16,7 +16,7 @@ function c100213057.filter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100213057.xyzfilter(c,mg)
-	return c:IsXyzSummonable(mg,2,2)
+	return c:IsSetCard(0x7f) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsXyzSummonable(mg,2,2)
 end
 function c100213057.mfilter1(c,mg,exg)
 	return mg:IsExists(c100213057.mfilter2,1,c,c,exg)
