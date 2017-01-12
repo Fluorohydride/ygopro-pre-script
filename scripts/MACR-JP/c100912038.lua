@@ -58,7 +58,7 @@ function c100912038.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(c100912038.cfilter,1-tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,tc:GetCode())
 		and tc:IsFaceup() and Duel.SelectYesNo(1-tp,aux.Stringid(100912038,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(1-tp,c100912038.cfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,tc:GetCode())
+		local g=Duel.SelectMatchingCard(1-tp,c100912038.cfilter,1-tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,tc:GetCode())
 		Duel.SendtoGrave(g,REASON_COST)
 		if Duel.IsChainDisablable(0) then
 			Duel.NegateEffect(0)
