@@ -48,24 +48,34 @@ function c100912038.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c100912038.thfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,c100912038.thfilter,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+	g:AddCard(e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,2,0,0)
 end
 function c100912038.cfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToGraveAsCost()
 end
 function c100912038.thop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if Duel.IsExistingMatchingCard(c100912038.cfilter,1-tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,tc:GetCode())
-		and tc:IsFaceup() and Duel.SelectYesNo(1-tp,aux.Stringid(100912038,2)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(1-tp,c100912038.cfilter,1-tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,tc:GetCode())
-		Duel.SendtoGrave(g,REASON_COST)
-		if Duel.IsChainDisablable(0) then
+	if Duel.IsChainDisablable(0) then
+		local sel=1
+		local g=Duel.GetMatchingGroup(c100912038.cfilter,tp,0,LOCATION_DECK+LOCATION_EXTRA,nil,tc:GetCode())
+		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(100912038,2))
+		if g:GetCount()>0 then
+			sel=Duel.SelectOption(1-tp,1213,1214)
+		else
+			sel=Duel.SelectOption(1-tp,1214)+1
+		end
+		if sel==0 then
+			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
+			local sg=g:Select(1-tp,1,1,nil)
+			Duel.SendtoGrave(sg,REASON_EFFECT)
 			Duel.NegateEffect(0)
 			return
 		end
 	end
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+		local rg=Group.FromCards(c,tc)
+		Duel.SendtoHand(rg,nil,REASON_EFFECT)
 	end
 end
