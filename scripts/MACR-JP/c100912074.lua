@@ -59,7 +59,7 @@ function c100912074.winop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	c:RegisterFlagEffect(100912074,RESET_EVENT+0x1fe0000,0,0)
 	if c:GetFlagEffect(100912074)>2 then
-		local WIN_REASON_CELESTIAL_WHIRLPOOL=0x11c
+		local WIN_REASON_CELESTIAL_WHIRLPOOL=0x1c
 		Duel.Win(tp,WIN_REASON_CELESTIAL_WHIRLPOOL)
 	end
 end
