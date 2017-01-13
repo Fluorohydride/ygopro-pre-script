@@ -34,7 +34,7 @@ function c100912037.spfilter1(c,tp)
 		and Duel.IsExistingMatchingCard(c100912037.spfilter2,tp,LOCATION_MZONE,0,1,c)
 end
 function c100912037.spfilter2(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToGraveAsCost()
 end
 function c100912037.spcon(e,c)
 	if c==nil then return true end
