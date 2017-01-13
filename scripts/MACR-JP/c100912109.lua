@@ -6,6 +6,7 @@ function c100912109.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetOperation(c100912109.activate)
 	c:RegisterEffect(e1)
 	--return
