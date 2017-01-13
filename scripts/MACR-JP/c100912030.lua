@@ -81,7 +81,7 @@ function c100912030.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC_G)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetRange(LOCATION_PZONE)
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,100912030+100)
 	e1:SetCondition(c100912030.pencon)
 	e1:SetOperation(c100912030.penop)
@@ -102,32 +102,33 @@ end
 function c100912030.pencon(e,c,og)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	if c:GetSequence()~=6 then return false end
+	local lpz=Duel.GetFieldCard(tp,LOCATION_SZONE,6)
 	local rpz=Duel.GetFieldCard(tp,LOCATION_SZONE,7)
-	if rpz==nil then return false end
-	local lscale=c:GetLeftScale()
+	if lpz==nil or rpz==nil then return false end
+	local lscale=lpz:GetLeftScale()
 	local rscale=rpz:GetRightScale()
 	if lscale>rscale then lscale,rscale=rscale,lscale end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return false end
 	if og then
-		return og:IsExists(Auxiliary.PConditionFilter,1,nil,e,tp,lscale,rscale)
+		return og:IsExists(c100912030.penfilter,1,nil,e,tp,lscale,rscale)
 	else
-		return Duel.IsExistingMatchingCard(Auxiliary.PConditionFilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,nil,e,tp,lscale,rscale)
+		return Duel.IsExistingMatchingCard(c100912030.penfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,nil,e,tp,lscale,rscale)
 	end
 end
 function c100912030.penop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
+	local lpz=Duel.GetFieldCard(tp,LOCATION_SZONE,6)
 	local rpz=Duel.GetFieldCard(tp,LOCATION_SZONE,7)
-	local lscale=c:GetLeftScale()
+	local lscale=lpz:GetLeftScale()
 	local rscale=rpz:GetRightScale()
 	if lscale>rscale then lscale,rscale=rscale,lscale end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	local tg=nil
 	if og then
-		tg=og:Filter(tp,Auxiliary.PConditionFilter,nil,e,tp,lscale,rscale)
+		tg=og:Filter(tp,c100912030.penfilter,nil,e,tp,lscale,rscale)
 	else
-		tg=Duel.GetMatchingGroup(Auxiliary.PConditionFilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,nil,e,tp,lscale,rscale)
+		tg=Duel.GetMatchingGroup(c100912030.penfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,nil,e,tp,lscale,rscale)
 	end
 	local ect=c29724053 and Duel.IsPlayerAffectedByEffect(tp,29724053) and c29724053[tp]
 	if ect and (ect<=0 or ect>ft) then ect=nil end
@@ -152,7 +153,7 @@ function c100912030.penop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 			sg:Merge(g)
 		end
 	end
-	Duel.HintSelection(Group.FromCards(c))
+	Duel.HintSelection(Group.FromCards(lpz))
 	Duel.HintSelection(Group.FromCards(rpz))
 end
 function c100912030.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
