@@ -1,4 +1,4 @@
---妖精伝姫- カグヤ
+--妖精伝姫－カグヤ
 --Fairy Tail – Kaguya
 --Script by dest
 function c100912038.initial_effect(c)

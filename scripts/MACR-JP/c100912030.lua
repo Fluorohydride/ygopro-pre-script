@@ -1,4 +1,4 @@
---智天の神凰龍
+--智天の神星龍
 --Zefratorah Grammaton
 --Scripted by Eerie Code
 function c100912030.initial_effect(c)
@@ -84,7 +84,7 @@ function c100912030.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC_G)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,100912030+100)
+	e1:SetCountLimit(1,100912130)
 	e1:SetCondition(c100912030.pencon)
 	e1:SetOperation(c100912030.penop)
 	e1:SetValue(SUMMON_TYPE_PENDULUM)
