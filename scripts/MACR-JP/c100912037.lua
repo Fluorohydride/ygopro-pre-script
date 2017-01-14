@@ -30,7 +30,7 @@ function c100912037.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100912037.spfilter1(c,tp)
-	return c:IsFaceup() and c:IsCode(19327348) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsCode(73318863) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(c100912037.spfilter2,tp,LOCATION_MZONE,0,1,c)
 end
 function c100912037.spfilter2(c)
