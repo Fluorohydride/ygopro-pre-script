@@ -40,17 +40,19 @@ function c100912030.initial_effect(c)
 	e4:SetOperation(c100912030.spop)
 	c:RegisterEffect(e4)
 end
-function c100912030.scfilter(c)
+function c100912030.scfilter(c,pc)
 	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xc4) and not c:IsForbidden()
+		and ((pc:GetSequence()==6 and c:GetLeftScale()~=pc:GetLeftScale())
+		or (pc:GetSequence()==7 and c:GetRightScale()~=pc:GetRightScale()))
 end
 function c100912030.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100912030.scfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100912030.scfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler()) end
 end
 function c100912030.scop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100912030,1))
-	local g=Duel.SelectMatchingCard(tp,c100912030.scfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100912030.scfilter,tp,LOCATION_DECK,0,1,1,nil,c)
 	local tc=g:GetFirst()
 	if tc and Duel.SendtoExtraP(tc,tp,REASON_EFFECT)>0 then
 		local e1=Effect.CreateEffect(c)
