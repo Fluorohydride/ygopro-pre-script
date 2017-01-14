@@ -1,4 +1,4 @@
---十二獣ハンマーコング
+--十二獣ハマーコング
 --Zoodiac Hammerkong
 --Scripted by Eerie Code
 function c100912047.initial_effect(c)
@@ -23,7 +23,7 @@ function c100912047.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(LOCATION_MZONE,0)
+	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e3:SetTarget(c100912047.efftg)
 	e3:SetCondition(c100912047.effcon)
 	e3:SetValue(aux.tgoval)
