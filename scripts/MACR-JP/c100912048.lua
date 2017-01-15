@@ -80,6 +80,7 @@ function c100912048.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
+		e3:SetValue(1)
 		tc:RegisterEffect(e3)
 		Duel.SpecialSummonComplete()
 	end
