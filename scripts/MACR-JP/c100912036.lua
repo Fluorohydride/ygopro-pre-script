@@ -26,7 +26,7 @@ function c100912036.discon(e,tp,eg,ep,ev,re,r,rp)
 		or (ex2 and bit.band(dv2,LOCATION_DECK)==LOCATION_DECK)
 		or (ex3 and bit.band(dv3,LOCATION_DECK)==LOCATION_DECK)
 		or ex4 or ex5 or ex6
-		or eg:IsExists(Card.IsCode,1,nil,23434538,44394295,58577036)) and Duel.IsChainDisablable(ev)
+		or eg:IsExists(Card.IsCode,1,nil,23434538,44394295,58577036,31222701)) and Duel.IsChainDisablable(ev)
 end
 function c100912036.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
