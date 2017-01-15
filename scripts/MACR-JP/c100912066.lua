@@ -38,9 +38,6 @@ function c100912066.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,c100912066.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function c100912066.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10db)
-end
 function c100912066.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
@@ -57,24 +54,24 @@ function c100912066.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(2)
 		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		local g=Duel.GetMatchingGroup(c100912066.filter2,tp,LOCATION_MZONE,0,nil)
-		local sc=g:GetFirst()
-		while sc do
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-			e3:SetValue(1)
-			e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e3)
-			sc=g:GetNext()
-		end
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_FIELD)
+		e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e3:SetTargetRange(LOCATION_MZONE,0)
+		e3:SetTarget(c100912066.indtarget)
+		e3:SetValue(1)
+		e3:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e3,tp)
 		if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,100912066,0x10db,0x11,600,0,2,RACE_WARRIOR,ATTRIBUTE_DARK) then
 			Duel.BreakEffect()
 			c:AddMonsterAttribute(TYPE_NORMAL)
-			Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
+			Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP_DEFENSE)
 			c:AddMonsterAttributeComplete()
 			Duel.SpecialSummonComplete()
 		end
 	end
+end
+function c100912066.indtarget(e,c)
+	return c:IsFaceup() and c:IsSetCard(0x10db)
 end
