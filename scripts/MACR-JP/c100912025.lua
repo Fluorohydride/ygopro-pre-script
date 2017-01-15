@@ -96,6 +96,15 @@ function c100912025.valcheck(e,c)
 		tc=g:GetNext()
 	end
 	e:SetLabel(typ)
+	if bit.band(typ,TYPE_MONSTER)~=0 then
+		c:RegisterFlagEffect(0,RESET_EVENT+0xfe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100912025,2))
+	end
+	if bit.band(typ,TYPE_SPELL)~=0 then
+		c:RegisterFlagEffect(0,RESET_EVENT+0xfe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100912025,3))
+	end
+	if bit.band(typ,TYPE_TRAP)~=0 then
+		c:RegisterFlagEffect(0,RESET_EVENT+0xfe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100912025,4))
+	end
 end
 function c100912025.efilter(e,te)
 	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_ADVANCE)==SUMMON_TYPE_ADVANCE
