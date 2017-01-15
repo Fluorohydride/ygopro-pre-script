@@ -112,7 +112,7 @@ function c100304021.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100304021.repval(e,c)
 	local g=e:GetLabelObject()
-	return g:IsContains(c)
+	return g and g:IsContains(c)
 end
 function c100304021.repop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)

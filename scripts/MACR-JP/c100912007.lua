@@ -109,10 +109,14 @@ function c100912007.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function c100912007.resetfilter(c)
+	return c:GetFlagEffect(100912007)>0
+end
 function c100912007.resetop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100912007.smcon2,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(c100912007.resetfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	while tc do
 		tc:ResetFlagEffect(100912007)
+		tc=g:GetNext()
 	end
 end
