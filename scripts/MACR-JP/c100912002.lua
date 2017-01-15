@@ -57,12 +57,7 @@ function c100912002.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100912002.distg(e,c)
-	local uc=e:GetHandler()
-	if Duel.GetAttacker()==uc then
-		return Duel.GetAttackTarget()==c
-	elseif Duel.GetAttackTarget()==uc then
-		return Duel.GetAttacker()==c
-	else return false end
+	return c==e:GetHandler():GetBattleTarget()
 end
 function c100912002.descfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9f)

@@ -13,6 +13,9 @@ function c100912017.initial_effect(c)
 	e1:SetCondition(c100912017.ndcon)
 	e1:SetValue(0)
 	c:RegisterEffect(e1)
+	local e0=e1:Clone()
+	e0:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+	c:RegisterEffect(e0)
 	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100912017,0))
@@ -36,15 +39,15 @@ function c100912017.initial_effect(c)
 	e3:SetOperation(c100912017.spop)
 	c:RegisterEffect(e3)
 	--pendulum
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(100912017,2))
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e6:SetCode(EVENT_DESTROYED)
-	e6:SetProperty(EFFECT_FLAG_DELAY)
-	e6:SetCondition(c100912017.pencon)
-	e6:SetTarget(c100912017.pentg)
-	e6:SetOperation(c100912017.penop)
-	c:RegisterEffect(e6)
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(100912017,2))
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_DESTROYED)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCondition(c100912017.pencon)
+	e4:SetTarget(c100912017.pentg)
+	e4:SetOperation(c100912017.penop)
+	c:RegisterEffect(e4)
 end
 function c100912017.ndcfilter(c)
 	return c:IsFaceup() and c:IsCode(100912039)
@@ -147,7 +150,7 @@ function c100912017.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7) end
 end
 function c100912017.penop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.CheckLocation(tp,LOCATION_SZONE,6) and not Duel.CheckLocation(tp,LOCATION_SZONE,7) then return false end
+	if not Duel.CheckLocation(tp,LOCATION_SZONE,6) and not Duel.CheckLocation(tp,LOCATION_SZONE,7) then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)

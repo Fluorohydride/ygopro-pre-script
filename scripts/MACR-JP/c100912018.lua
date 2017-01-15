@@ -37,15 +37,15 @@ function c100912018.initial_effect(c)
 	e3:SetOperation(c100912018.spop)
 	c:RegisterEffect(e3)
 	--pendulum
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(100912018,2))
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e6:SetCode(EVENT_DESTROYED)
-	e6:SetProperty(EFFECT_FLAG_DELAY)
-	e6:SetCondition(c100912018.pencon)
-	e6:SetTarget(c100912018.pentg)
-	e6:SetOperation(c100912018.penop)
-	c:RegisterEffect(e6)
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(100912018,2))
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_DESTROYED)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCondition(c100912018.pencon)
+	e4:SetTarget(c100912018.pentg)
+	e4:SetOperation(c100912018.penop)
+	c:RegisterEffect(e4)
 end
 function c100912018.splimcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>0
@@ -59,11 +59,14 @@ end
 function c100912018.rccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100912018.rccfilter,tp,LOCATION_MZONE,0,1,nil)
 end
+function c100912018.rcfilter(c)
+	return c:IsFaceup() and c:GetAttack()>0
+end
 function c100912018.rctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100912018.rcfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100912018.rcfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100912018.rcfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,g:GetFirst():GetAttack())
 end
@@ -125,7 +128,7 @@ function c100912018.spop(e,tp,eg,ep,ev,re,r,rp)
 			sc:RegisterEffect(e5,true)
 			local e6=e5:Clone()
 			e6:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-			sc:RegisterEffect(e6,true)				
+			sc:RegisterEffect(e6,true)
 		end
 		Duel.SpecialSummonComplete()
 	end
@@ -138,7 +141,7 @@ function c100912018.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7) end
 end
 function c100912018.penop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.CheckLocation(tp,LOCATION_SZONE,6) and not Duel.CheckLocation(tp,LOCATION_SZONE,7) then return false end
+	if not Duel.CheckLocation(tp,LOCATION_SZONE,6) and not Duel.CheckLocation(tp,LOCATION_SZONE,7) then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)

@@ -56,6 +56,7 @@ function c100912038.cfilter(c,code)
 end
 function c100912038.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if Duel.IsChainDisablable(0) then
 		local sel=1
@@ -74,7 +75,7 @@ function c100912038.thop(e,tp,eg,ep,ev,re,r,rp)
 			return
 		end
 	end
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		local rg=Group.FromCards(c,tc)
 		Duel.SendtoHand(rg,nil,REASON_EFFECT)
 	end

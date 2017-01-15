@@ -63,8 +63,8 @@ function c100912064.con(e)
 	return Duel.IsExistingMatchingCard(c100912064.cfilter,e:GetHandlerPlayer(),LOCATION_SZONE,LOCATION_SZONE,1,nil)
 end
 function c100912064.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_FIELD) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:IsActiveType(TYPE_FIELD) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():GetFlagEffect(100912064)==0
 end
 function c100912064.setlimit(e,c,tp)
-	return c:IsType(TYPE_FIELD)
+	return c:IsType(TYPE_FIELD) and c:GetFlagEffect(100912064)==0
 end

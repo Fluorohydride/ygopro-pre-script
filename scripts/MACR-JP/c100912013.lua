@@ -85,7 +85,8 @@ function c100912013.xyztg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100912013.xyzfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100912013.xyzfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c100912013.xyzfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100912013.xyzfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function c100912013.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
