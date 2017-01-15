@@ -35,6 +35,7 @@ function c100912047.initial_effect(c)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
+	e4:SetTarget(c100912047.rmtg)
 	e4:SetOperation(c100912047.rmop)
 	c:RegisterEffect(e4)
 end
@@ -64,6 +65,10 @@ function c100912047.efftg(e,c)
 end
 function c100912047.effcon(e)
 	return e:GetHandler():GetOverlayCount()>0
+end
+function c100912047.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function c100912047.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
