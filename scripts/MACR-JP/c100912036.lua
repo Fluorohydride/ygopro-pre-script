@@ -22,7 +22,7 @@ function c100912036.discon(e,tp,eg,ep,ev,re,r,rp)
 	local ex4=(Duel.GetOperationInfo(ev,CATEGORY_DRAW) or re:IsHasCategory(CATEGORY_DRAW))
 	local ex5=(Duel.GetOperationInfo(ev,CATEGORY_SEARCH) or re:IsHasCategory(CATEGORY_SEARCH))
 	local ex6=(Duel.GetOperationInfo(ev,CATEGORY_DECKDES) or re:IsHasCategory(CATEGORY_DECKDES))
-	return ep~=tp and ((ex1 and bit.band(dv1,LOCATION_DECK)==LOCATION_DECK)
+	return ((ex1 and bit.band(dv1,LOCATION_DECK)==LOCATION_DECK)
 		or (ex2 and bit.band(dv2,LOCATION_DECK)==LOCATION_DECK)
 		or (ex3 and bit.band(dv3,LOCATION_DECK)==LOCATION_DECK)
 		or ex4 or ex5 or ex6
