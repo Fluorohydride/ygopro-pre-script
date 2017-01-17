@@ -72,6 +72,7 @@ end
 function c100304021.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,100304121,0,0x4011,0,0,1,RACE_DINOSAUR,ATTRIBUTE_EARTH,POS_FACEUP_DEFENSE,1-tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
 end
 function c100304021.tkop(e,tp,eg,ep,ev,re,r,rp)
