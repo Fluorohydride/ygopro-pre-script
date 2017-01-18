@@ -32,7 +32,7 @@ function c100215002.cfilter(c)
 	return c:IsSetCard(0x95) and c:IsType(TYPE_SPELL) and c:IsDiscardable()
 end
 function c100215002.ovfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xba)
+	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsType(TYPE_XYZ) and c:IsRankBelow(5)
 end
 function c100215002.xyzop(e,tp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100215002.cfilter,tp,LOCATION_HAND,0,1,nil) end
