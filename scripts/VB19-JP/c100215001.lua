@@ -92,7 +92,7 @@ function c100215001.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 		local b1=mg:IsExists(c100215001.xyzfilter1,1,nil,mg)
 		local b2=ct<1 and (not min or min<=1) and mg:IsExists(c100215001.ovfilter,1,nil,c)
 		local g=nil
-		if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(100215001,0))) then
+		if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(100215001,1))) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 			g=mg:FilterSelect(tp,c100215001.ovfilter,1,1,nil,c)
 			local g2=g:GetFirst():GetOverlayGroup()
