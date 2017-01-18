@@ -4,6 +4,7 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
 - **January 14, 2017**  : Maximum Crisis (MACR-JP) : `100912XXX`  
 - **February 18, 2017**  : 20th Anniversary Pack 2nd Wave (20AP-JP) : `100213XXX`  
+- **February 24, 2017**  : The Valuable Book 19 (VB19-JP) : `100215XXX`  
 - **February 25, 2017**  : Structure Deck R: Tyranno's Rage (SR04-JP) : `100304XXX`  
 
 #Archived
