@@ -56,6 +56,10 @@ function c100213055.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e3,tp)
 	end
 end
+function c100213055.damop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.ChangeBattleDamage(tp,0)
+	Duel.ChangeBattleDamage(1-tp,0)
+end
 function c100213055.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject():Filter(Card.IsStatus,nil,STATUS_BATTLE_DESTROYED)
 	local tg=Group.CreateGroup()
