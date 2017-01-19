@@ -20,12 +20,7 @@ function c100912063.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100912063.cfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil)
 end
 function c100912063.filter(c)
-	if not c:IsAbleToHand() then return false end
-	if c:IsType(TYPE_MONSTER) then
-		return c:IsType(TYPE_PENDULUM) and (c:IsSetCard(0xf2) or c:IsCode(92746535,75195825,69512157,7127502,16178681,47075569))
-	else
-		return c:IsSetCard(0xf2) or c:IsCode(65646587,37803970,2359348,76660409,53208660,100214004,68477598,60434189,77826734,74926274,69982329,83461421)
-	end
+	return c:IsSetCard(0xf2) and c:IsType(TYPE_PENDULUM+TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100912063.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100912063.filter,tp,LOCATION_DECK,0,1,nil) end
