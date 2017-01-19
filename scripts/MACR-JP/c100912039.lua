@@ -375,7 +375,7 @@ function c100912039.tgvalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
 function c100912039.spfilter(c,e,tp)
-	return c:IsSetCard(0x21fb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x20fb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100912039.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100912039.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp)

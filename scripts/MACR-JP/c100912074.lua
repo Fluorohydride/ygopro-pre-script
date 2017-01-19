@@ -49,7 +49,7 @@ function c100912074.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100912074.winfilter(c)
-	return c:IsSetCard(0x1fc) and c:IsType(TYPE_EQUIP)
+	return c:IsSetCard(0xfc) and c:IsType(TYPE_EQUIP)
 end
 function c100912074.wincon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

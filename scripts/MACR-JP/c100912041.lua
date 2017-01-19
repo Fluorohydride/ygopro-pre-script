@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c100912041.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,100912043,c100912041.ffilter,1,true,true)
+	aux.AddFusionProcCodeFun(c,100912043,aux.FilterBoolFunction(Card.IsFusionSetCard,0xf8),1,true,true)
 	--increase level
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100912041,0))
@@ -48,11 +48,8 @@ function c100912041.initial_effect(c)
 	e4:SetOperation(c100912041.damop)
 	c:RegisterEffect(e4)
 end
-function c100912041.ffilter(c)
-	return c:IsFusionSetCard(0x1f8) or c:IsFusionCode(8491961)
-end
 function c100912041.matval(c)
-	if (c:IsOriginalSetCard(0x1f8) or c:GetOriginalCode()==8491961) and c:IsType(TYPE_XYZ) then
+	if c:IsOriginalSetCard(0xf8) and c:IsType(TYPE_XYZ) then
 		return c:GetOverlayCount()
 	end
 	return 0

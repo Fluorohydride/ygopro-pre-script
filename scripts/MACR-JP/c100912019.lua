@@ -43,7 +43,7 @@ function c100912019.pccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function c100912019.pcfilter(c)
-	return c:IsSetCard(0x11fb) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
+	return c:IsSetCard(0x10fb) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function c100912019.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local seq=e:GetHandler():GetSequence()
@@ -73,7 +73,7 @@ function c100912019.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsAttribute(ATTRIBUTE_DARK) and bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c100912019.thfilter(c)
-	return c:IsSetCard(0x11fb) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsSetCard(0x10fb) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c100912019.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100912019.thfilter,tp,LOCATION_DECK,0,1,nil) end

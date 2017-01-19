@@ -67,7 +67,7 @@ function c100912072.efilter(c,e)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsCanBeEffectTarget(e)
 end
 function c100912072.eqfilter(c,g)
-	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsSetCard(0x1fc) and g:IsExists(c100912072.eqcheck,1,nil,c)
+	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsSetCard(0xfc) and g:IsExists(c100912072.eqcheck,1,nil,c)
 end
 function c100912072.eqcheck(c,ec)
 	return ec:CheckEquipTarget(c)

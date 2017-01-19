@@ -2,7 +2,7 @@
 --Fire Cracker
 --Script by nekrozar
 function c100912035.initial_effect(c)
-	c:EnableCounterPermit(0x142)
+	c:EnableCounterPermit(0x42)
 	--damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100912035,0))
@@ -62,11 +62,11 @@ function c100912035.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and bit.band(r,REASON_EFFECT)~=0
 end
 function c100912035.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x142,1)
+	e:GetHandler():AddCounter(0x42,1)
 end
 function c100912035.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local ct=e:GetHandler():GetCounter(0x142)
+	local ct=e:GetHandler():GetCounter(0x42)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct)
@@ -74,9 +74,9 @@ end
 function c100912035.damop2(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	local c=e:GetHandler()
-	local ct=c:GetCounter(0x142)
+	local ct=c:GetCounter(0x42)
 	if ct>0 then
-		c:RemoveCounter(tp,0x142,ct,REASON_EFFECT)
+		c:RemoveCounter(tp,0x42,ct,REASON_EFFECT)
 		Duel.Damage(p,ct,REASON_EFFECT)
 	end
 end

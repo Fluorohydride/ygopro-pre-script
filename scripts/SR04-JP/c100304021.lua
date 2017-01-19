@@ -106,7 +106,7 @@ function c100304021.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetTargetCard(tg)
 		local tc=tg:GetFirst()
 		while tc do
-			tc:RegisterFlagEffect(100304021,RESET_EVENT+0x1fc0000+RESET_CHAIN,0,1)
+			tc:RegisterFlagEffect(100304021,RESET_EVENT+0xfc0000+RESET_CHAIN,0,1)
 			tc:SetStatus(STATUS_DESTROY_CONFIRMED,true)
 			tc=tg:GetNext()
 		end
