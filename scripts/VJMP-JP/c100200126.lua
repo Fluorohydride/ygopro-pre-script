@@ -33,7 +33,7 @@ function c100200126.initial_effect(c)
 	e4:SetCondition(c100200126.thcon)
 	e4:SetTarget(c100200126.thtg)
 	e4:SetOperation(c100200126.thop)
-	c:RegisterEffect(e3)
+	c:RegisterEffect(e4)
 end
 function c100200126.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler() and aux.bdcon(e,tp,eg,ep,ev,re,r,rp)
