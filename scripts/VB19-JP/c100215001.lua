@@ -60,12 +60,15 @@ function c100215001.xyzcon(e,c,og,min,max)
 	if 2<=ct then return false end
 	if min and (min>2 or max<2) then return false end
 	local mg=nil
+	local altmg = nil
 	if og then
 		mg=og:Filter(c100215001.mfilter,nil,c)
+		altmg = og
 	else
 		mg=Duel.GetMatchingGroup(c100215001.mfilter,tp,LOCATION_MZONE,0,nil,c)
+		altmg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	end
-	if ct<1 and (not min or min<=1) and mg:IsExists(c100215001.ovfilter,1,nil,c) then
+	if ct<1 and (not min or min<=1) and altmg:IsExists(c100215001.ovfilter,1,nil,c) then
 		return true
 	end
 	return mg:IsExists(c100215001.xyzfilter1,1,nil,mg)
@@ -81,24 +84,29 @@ function c100215001.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 			tc=og:GetNext()
 		end
 		Duel.SendtoGrave(sg,REASON_RULE)
+		c:SetMaterial(g)
+		Duel.Overlay(c,g)
 	else
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local ct=-ft
 		local mg=nil
+		local altmg=nil
 		if og then
 			mg=og:Filter(c100215001.mfilter,nil,c)
+			altmg=og
 		else
 			mg=Duel.GetMatchingGroup(c100215001.mfilter,tp,LOCATION_MZONE,0,nil,c)
+			altmg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 		end
 		local b1=mg:IsExists(c100215001.xyzfilter1,1,nil,mg)
-		local b2=ct<1 and (not min or min<=1) and mg:IsExists(c100215001.ovfilter,1,nil,c)
+		local b2=ct<1 and (not min or min<=1) and altmg:IsExists(c100215001.ovfilter,1,nil,c)
 		local g=nil
 		if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(100215001,1))) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-			g=mg:FilterSelect(tp,c100215001.ovfilter,1,1,nil,c)
+			g=altmg:FilterSelect(tp,c100215001.ovfilter,1,1,nil,c)
 			local g2=g:GetFirst():GetOverlayGroup()
 			if g2:GetCount()~=0 then
-				Duel.Overlay(c,g2)
+				Duel.Overlay(c,g)
 			end
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
@@ -111,10 +119,9 @@ function c100215001.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 			sg:Merge(tc1:GetOverlayGroup())
 			sg:Merge(tc2:GetOverlayGroup())
 			Duel.SendtoGrave(sg,REASON_RULE)
+			Duel.Overlay(c,g)
 		end
 	end
-	c:SetMaterial(g)
-	Duel.Overlay(c,g)
 end
 function c100215001.atkfilter(c)
 	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)
