@@ -106,8 +106,10 @@ function c100215001.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 			g=altmg:FilterSelect(tp,c100215001.ovfilter,1,1,nil,c)
 			local g2=g:GetFirst():GetOverlayGroup()
 			if g2:GetCount()~=0 then
-				Duel.Overlay(c,g)
+				Duel.Overlay(c,g2)
 			end
+			c:SetMaterial(g)
+			Duel.Overlay(c,g)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 			g=mg:FilterSelect(tp,c100215001.xyzfilter1,1,1,nil,mg)
