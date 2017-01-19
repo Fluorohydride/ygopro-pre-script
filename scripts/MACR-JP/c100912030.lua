@@ -195,7 +195,7 @@ function c100912030.penop1(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 			sg:Merge(g)
 		end
 	end
-	Duel.HintSelection(Group.FromCards(lpz))
+	Duel.HintSelection(Group.FromCards(c))
 	Duel.HintSelection(Group.FromCards(rpz))
 end
 function c100912030.pencon2(e,c,og)
