@@ -22,20 +22,20 @@ function c100912066.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
 end
-function c100912066.filter1(c)
-	return c:GetLevel()>0
+function c100912066.filter(c)
+	return c:GetLevel()>0 and c:IsFaceup()
 end
 function c100912066.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100912066.filter1(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100912066.filter(chkc) end
 	if chk==0 then
 		if e:GetLabel()==0 then return false end
 		e:SetLabel(0)
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,100912066,0x10db,0x11,600,0,2,RACE_WARRIOR,ATTRIBUTE_DARK)
-		 	and Duel.IsExistingTarget(c100912066.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+			and Duel.IsExistingTarget(c100912066.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c100912066.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,c100912066.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100912066.activate(e,tp,eg,ep,ev,re,r,rp)
