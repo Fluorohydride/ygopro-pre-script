@@ -57,7 +57,7 @@ function c100912064.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function c100912064.cfilter(c)
-	return c:GetSequence()==5 and c:GetFlagEffect(100912064)~=0
+	return c:GetSequence()==5 and c:IsFacedown() and c:GetFlagEffect(100912064)~=0
 end
 function c100912064.con(e)
 	return Duel.IsExistingMatchingCard(c100912064.cfilter,e:GetHandlerPlayer(),LOCATION_SZONE,LOCATION_SZONE,1,nil)
