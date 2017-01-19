@@ -55,6 +55,7 @@ end
 function c100215001.xyzcon(e,c,og,min,max)
 	if c==nil then return true end
 	local tp=c:GetControler()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=-ft
 	if 2<=ct then return false end
 	if min and (min>2 or max<2) then return false end
