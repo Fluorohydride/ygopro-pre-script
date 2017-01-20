@@ -41,8 +41,8 @@ end
 function c100912071.rop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=bit.band(ev,0xffff)
 	local rc=re:GetHandler()
-	local tc=Duel.SelectMatchingCard(tp,c100912071.rfilter,tp,LOCATION_MZONE,0,1,1,rc,ct)
-	tc:RemoveOverlayCard(tp,ct,ct,REASON_COST)
+	local tg=Duel.SelectMatchingCard(tp,c100912071.rfilter,tp,LOCATION_MZONE,0,1,1,rc,ct)
+	tg:GetFirst():RemoveOverlayCard(tp,ct,ct,REASON_COST)
 end
 function c100912071.xyzcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
