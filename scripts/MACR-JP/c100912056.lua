@@ -92,7 +92,8 @@ function c100912056.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100912056.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,100912156,0xfa,0x4011,2000,2000,6,RACE_WYRM,ATTRIBUTE_WATER) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100912156,0xfa,0x4011,2000,2000,6,RACE_WYRM,ATTRIBUTE_WATER)
+		and not e:GetHandler():IsStatus(STATUS_CHAINING) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end

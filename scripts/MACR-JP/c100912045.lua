@@ -34,11 +34,11 @@ function c100912045.ddfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xae)
 end
 function c100912045.ddtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c100912045.ddfilter(chkc) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c100912045.ddfilter(chkc) end
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingTarget(c100912045.ddfilter,tp,LOCATION_SZONE,0,1,nil) end
+		and Duel.IsExistingTarget(c100912045.ddfilter,tp,LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c100912045.ddfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100912045.ddfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
@@ -64,12 +64,14 @@ function c100912045.inop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
 		c:RegisterEffect(e1)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_BATTLED)
 		e3:SetOperation(c100912045.desop)
 		e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e3:SetReset(RESET_EVENT+0x1fe0000)
 		c:RegisterEffect(e3)
 	end
 end

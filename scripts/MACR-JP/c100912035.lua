@@ -16,7 +16,7 @@ function c100912035.initial_effect(c)
 	e1:SetTarget(c100912035.damtg1)
 	e1:SetOperation(c100912035.damop1)
 	c:RegisterEffect(e1)
-	--damage
+	--counter
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_DAMAGE)
@@ -77,6 +77,6 @@ function c100912035.damop2(e,tp,eg,ep,ev,re,r,rp)
 	local ct=c:GetCounter(0x42)
 	if ct>0 then
 		c:RemoveCounter(tp,0x42,ct,REASON_EFFECT)
-		Duel.Damage(p,ct,REASON_EFFECT)
+		Duel.Damage(p,ct*300,REASON_EFFECT)
 	end
 end
