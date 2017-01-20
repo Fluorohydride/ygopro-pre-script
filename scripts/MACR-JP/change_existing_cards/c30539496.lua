@@ -35,7 +35,7 @@ function c30539496.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=LOCATION_MZONE+LOCATION_HAND
 	if ft<0 then loc=LOCATION_MZONE end
 	local loc2=0
-	if Duel.IsPlayerAffectedByEffect(tp,100912046) then loc2=LOCATION_MZONE end
+	if Duel.IsPlayerAffectedByEffect(tp,88581108) then loc2=LOCATION_MZONE end
 	local g=Duel.GetMatchingGroup(c30539496.desfilter,tp,loc,loc2,c)
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and g:GetCount()>=2 and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_EARTH)
@@ -49,7 +49,7 @@ function c30539496.spop(e,tp,eg,ep,ev,re,r,rp)
 	local loc=LOCATION_MZONE+LOCATION_HAND
 	if ft<0 then loc=LOCATION_MZONE end
 	local loc2=0
-	if Duel.IsPlayerAffectedByEffect(tp,100912046) then loc2=LOCATION_MZONE end
+	if Duel.IsPlayerAffectedByEffect(tp,88581108) then loc2=LOCATION_MZONE end
 	local g=Duel.GetMatchingGroup(c30539496.desfilter,tp,loc,loc2,c)
 	if g:GetCount()<2 or not g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_EARTH) then return end
 	local g1=nil local g2=nil
