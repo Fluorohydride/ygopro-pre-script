@@ -1,6 +1,6 @@
 --SRアクマグネ
 --Speedroid Fiendmagnet
---Scripted by Eerie Code and mercury233
+--Scripted by Eerie Code and mercury233, thanks to MichaelLawrenceDee
 function c62899696.initial_effect(c)
 	--cannot be synchro
 	local e1=Effect.CreateEffect(c)
