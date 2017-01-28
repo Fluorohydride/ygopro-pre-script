@@ -1,4 +1,4 @@
---SPYRAL GEAR - Handy Cable
+--SPYRAL GEAR - Utility Wire
 --Scripted by Eerie Code
 function c100911088.initial_effect(c)
 	--activate
@@ -18,7 +18,7 @@ function c100911088.cfilter(c)
 	return c:IsFaceup() and c:IsCode(41091257)
 end
 function c100911088.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100911088.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100911088.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100911088.filter(c)
 	return c:IsFaceup() and c:IsAbleToDeck()
