@@ -2,23 +2,29 @@
 --Scripted by Eerie Code
 function c100911089.initial_effect(c)
 	--activate
+	local e0=Effect.CreateEffect(c)
+	e0:SetDescription(aux.Stringid(100911089,0))
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	e0:SetTarget(c100911089.target)
+	c:RegisterEffect(e0)
+	--activate(control)
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100911089,1))
+	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(c100911089.target)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
+	e1:SetCondition(c100911089.cncon)
+	e1:SetCost(c100911089.cncost)
+	e1:SetTarget(c100911089.cntg1)
+	e1:SetOperation(c100911089.cnop)
 	c:RegisterEffect(e1)
-	--control
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100911089,0))
-	e2:SetCategory(CATEGORY_CONTROL)
+	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1)
-	e2:SetCondition(c100911089.cncon)
-	e2:SetTarget(c100911089.cntg)
-	e2:SetOperation(c100911089.cnop)
+	e2:SetTarget(c100911089.cntg2)
 	c:RegisterEffect(e2)
 	--destroy replace
 	local e3=Effect.CreateEffect(c)
@@ -64,7 +70,31 @@ end
 function c100911089.cncon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100911089.cncfilter,1,nil,tp)
 end
-function c100911089.cntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c100911089.cncost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():GetFlagEffect(100911089)==0 end
+	e:GetHandler():RegisterFlagEffect(100911089,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+end
+function c100911089.cntg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsControlerCanBeChanged() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
+	local g=Duel.SelectTarget(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
+	local c=e:GetHandler()
+	--destroy
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetCountLimit(1)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCondition(c100911089.descon)
+	e1:SetOperation(c100911089.desop)
+	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)
+	c:SetTurnCounter(0)
+	c:RegisterEffect(e1)
+end
+function c100911089.cntg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsControlerCanBeChanged() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
@@ -88,7 +118,7 @@ function c100911089.repfilter(c,tp)
 end
 function c100911089.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c100911089.repfilter,1,nil,tp) end
-	if Duel.SelectYesNo(tp,aux.Stringid(100911089,1)) then
+	if Duel.SelectYesNo(tp,aux.Stringid(100911089,2)) then
 		local g=eg:Filter(c100911089.repfilter,nil,tp)
 		if g:GetCount()==1 then
 			e:SetLabelObject(g:GetFirst())
