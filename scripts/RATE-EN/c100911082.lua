@@ -5,10 +5,9 @@ function c100911082.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100911082,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
-	e1:SetCondition(c100911082.cbcon)
 	e1:SetCost(c100911082.ccost)
 	e1:SetTarget(c100911082.cbtg)
 	e1:SetOperation(c100911082.cbop)
@@ -37,9 +36,6 @@ function c100911082.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e4)
 end
-function c100911082.cbcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
-end
 function c100911082.ccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
@@ -48,11 +44,12 @@ function c100911082.cbfilter(c,e)
 	return c:IsCanBeEffectTarget(e)
 end
 function c100911082.cbtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
-	local ag=eg:GetFirst():GetAttackableTarget()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100911082.cbfilter(chkc,e) end
+	local ag=Duel.GetAttacker():GetAttackableTarget()
 	local at=Duel.GetAttackTarget()
 	ag:RemoveCard(at)
-	if chk==0 then return at:IsPosition(POS_FACEDOWN) and ag:IsExists(c100911082.cbfilter,1,e:GetHandler(),e) end
+	if chk==0 then return Duel.GetAttacker():IsControler(1-tp) and at:IsControler(tp) and at:IsFacedown()
+		and ag:IsExists(c100911082.cbfilter,1,e:GetHandler(),e) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=ag:FilterSelect(tp,c100911082.cbfilter,1,1,e:GetHandler(),e)
 	Duel.SetTargetCard(g)
