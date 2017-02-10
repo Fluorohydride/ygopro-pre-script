@@ -69,7 +69,7 @@ function c100911082.cecon(e,tp,eg,ep,ev,re,r,rp)
 	if not g or g:GetCount()~=1 then return false end
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
-	return tc:IsLocation(LOCATION_MZONE) and tc:IsPosition(POS_FACEDOWN)
+	return tc:IsLocation(LOCATION_MZONE) and tc:IsFacedown()
 end
 function c100911082.cefilter(c,re,rp,tf,ceg,cep,cev,cre,cr,crp,oc)
 	return oc~=c and tf(re,rp,ceg,cep,cev,cre,cr,crp,0,c)
@@ -89,5 +89,5 @@ function c100911082.ceop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100911082.indcon(e)
-	return Duel.IsExistingMatchingCard(Card.IsPosition,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,POS_FACEDOWN)
+	return Duel.IsExistingMatchingCard(Card.IsFacedown,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
