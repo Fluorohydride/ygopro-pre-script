@@ -7,6 +7,7 @@ function c100213054.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(c100213054.condition)
 	e1:SetTarget(c100213054.target)
 	e1:SetOperation(c100213054.activate)
 	c:RegisterEffect(e1)
@@ -31,14 +32,16 @@ end
 function c100213054.cfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON)
 end
+function c100213054.condition(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(c100213054.cfilter,tp,LOCATION_GRAVE,0,nil)
+	return g:GetClassCount(Card.GetCode)
+end
 function c100213054.filter(c,e,tp)
 	return c:IsCode(44508094) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function c100213054.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local g=Duel.GetMatchingGroup(c100213054.cfilter,tp,LOCATION_GRAVE,0,nil)
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and g:GetClassCount(Card.GetCode)
 			and Duel.IsExistingMatchingCard(c100213054.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
@@ -70,7 +73,6 @@ function c100213054.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabelObject(tc)
 		e2:SetCondition(c100213054.rmcon)
 		e2:SetOperation(c100213054.rmop)
-		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 		Duel.SpecialSummonComplete()
 	end
@@ -80,14 +82,17 @@ function c100213054.eqlimit(e,c)
 end
 function c100213054.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	return tc:GetFlagEffectLabel(100213054)==e:GetLabel()
+	if tc:GetFlagEffectLabel(100213054)~=e:GetLabel() then
+		e:Reset()
+		return false
+	else return true end
 end
 function c100213054.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 end
 function c100213054.atkfilter(c)
-	return c100213054.cfilter(c) and c:IsAttackAbove(1)
+	return c100213054.cfilter(c) and c:GetAttack()>0
 end
 function c100213054.atkval(e,c)
 	local g=Duel.GetMatchingGroup(c100213054.atkfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
