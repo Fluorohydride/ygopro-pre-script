@@ -34,7 +34,7 @@ function c100213054.cfilter(c)
 end
 function c100213054.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100213054.cfilter,tp,LOCATION_GRAVE,0,nil)
-	return g:GetClassCount(Card.GetCode)
+	return g:GetClassCount(Card.GetCode)>=5
 end
 function c100213054.filter(c,e,tp)
 	return c:IsCode(44508094) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
