@@ -96,10 +96,10 @@ function c100213060.btcon2(e,tp,eg,ep,ev,re,r,rp)
 	else return false end
 end
 function c100213060.chcon1(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and Duel.GetCurrentChain()==5 and e:GetHandler():GetFlagEffect(1)>0
+	return rp==tp and Duel.GetCurrentChain()>=5 and e:GetHandler():GetFlagEffect(1)>0
 end
 function c100213060.chcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and Duel.GetCurrentChain()==5 and e:GetHandler():GetFlagEffect(1)>0
+	return rp==1-tp and Duel.GetCurrentChain()>=5 and e:GetHandler():GetFlagEffect(1)>0
 end
 function c100213060.tosscon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTossedCoinCount(tp)+Duel.GetTossedDiceCount(tp)>=5 and e:GetHandler():GetFlagEffect(1)>0
