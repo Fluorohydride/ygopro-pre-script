@@ -59,12 +59,12 @@ end
 function c100213058.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local lp0=Duel.GetLP(tp)
-	if lp0>1000 then
+	if lp0>=1000 then
 		Duel.SetLP(tp,lp0-1000)
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 	local lp1=Duel.GetLP(1-tp)
-	if lp1>1000 then
+	if lp1>=1000 then
 		Duel.SetLP(1-tp,lp1-1000)
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end
