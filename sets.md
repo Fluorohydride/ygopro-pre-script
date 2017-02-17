@@ -5,7 +5,9 @@
 - **February 10, 2017**  : RAGING TEMPEST (RATE-EN) : `100911XXX`  
 - **February 18, 2017**  : 20th Anniversary Pack 2nd Wave (20AP-JP) : `100213XXX`  
 - **February 24, 2017**  : The Valuable Book 19 (VB19-JP) : `100215XXX`  
-- **February 25, 2017**  : Structure Deck R: Tyranno's Rage (SR04-JP) : `100304XXX`  
+- **February 25, 2017**  : Structure Deck R: Tyranno's Rage (SR04-JP) : `100304XXX`
+- **March 25, 2017**     : Starter Deck 2017 (ST17-JP) : `100317XXX`
+- **April 15, 2017**     : Code of the Duelist (COTD-JP) : `101001XXX`
 
 #Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~  
