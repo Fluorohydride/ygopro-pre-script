@@ -1,5 +1,6 @@
 --DDヴァイス・テュポーン
 --D/D Vice Typhon
+--Scripted by Eerie Code
 function c101001100.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
