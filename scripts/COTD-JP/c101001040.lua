@@ -1,5 +1,6 @@
 --DDD疾風大王エグゼクティブ・アレクサンダー
 --D/D/D Gust High King Executive Alexander
+--Scripted by Eerie Code
 function c101001040.initial_effect(c)
     c:EnableReviveLimit()
     aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
