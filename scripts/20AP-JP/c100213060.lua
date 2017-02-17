@@ -82,7 +82,7 @@ function c100213060.btcon1(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if a:IsControler(1-tp) then a,d=d,a end
 	if a then
-		a:RegisterFlagEffect(100213060,RESET_EVENT+0x1fe0000,0,1)
+		a:RegisterFlagEffect(100213060,RESET_EVENT+0x3fe0000+RESET_PHASE+PHASE_END,0,1)
 		return a:GetFlagEffect(100213060)==5
 	else return false end
 end
@@ -91,7 +91,7 @@ function c100213060.btcon2(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if a:IsControler(tp) then a,d=d,a end
 	if a then
-		a:RegisterFlagEffect(100213060,RESET_EVENT+0x1fe0000,0,1)
+		a:RegisterFlagEffect(100213060,RESET_EVENT+0x3fe0000+RESET_PHASE+PHASE_END,0,1)
 		return a:GetFlagEffect(100213060)==5
 	else return false end
 end
