@@ -63,6 +63,7 @@ function c101001028.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end
 function c101001028.ddcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	return re:IsActiveType(TYPE_MONSTER) and rc~=c
 		and rc:IsSetCard(0x38) and rc:IsControler(tp)
