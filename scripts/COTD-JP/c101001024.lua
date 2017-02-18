@@ -59,6 +59,7 @@ function c101001024.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101001024.ddcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	return re:IsActiveType(TYPE_MONSTER) and rc~=c
 		and rc:IsSetCard(0x38) and rc:IsControler(tp)
