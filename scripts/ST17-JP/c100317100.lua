@@ -32,7 +32,7 @@ function c100317100.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	local rt=Duel.GetTargetCount(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 	if rt>2 then rt=2 end
-	local ct=Duel.DiscardHand(tp,aux.TRUE,1,rt,REASON_DISCARD+REASON_EFFECT)
+	local ct=Duel.DiscardHand(tp,aux.TRUE,1,rt,REASON_DISCARD+REASON_COST)
 	e:SetLabel(ct)
 end
 function c100317100.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
