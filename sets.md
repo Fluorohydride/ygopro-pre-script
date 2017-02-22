@@ -2,8 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`  
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
-- **February 10, 2017**  : RAGING TEMPEST (RATE-EN) : `100911XXX`  
-- **February 18, 2017**  : 20th Anniversary Pack 2nd Wave (20AP-JP) : `100213XXX`  
 - **February 24, 2017**  : The Valuable Book 19 (VB19-JP) : `100215XXX`  
 - **February 25, 2017**  : Structure Deck R: Tyranno's Rage (SR04-JP) : `100304XXX`
 - **March 25, 2017**     : Starter Deck 2017 (ST17-JP) : `100317XXX`
@@ -39,3 +37,5 @@
 - ~~Premium Pack 19 (PP19-JP) : `100214XXX`~~  
 - ~~Structure Deck: Pendulum Evolution (SD31-JP) : `100331XXX`~~  
 - ~~Maximum Crisis (MACR-JP) : `100912XXX`~~  
+- ~~RAGING TEMPEST (RATE-EN) : `100911XXX`~~  
+- ~~20th Anniversary Pack 2nd Wave (20AP-JP) : `100213XXX`~~  
