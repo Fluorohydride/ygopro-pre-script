@@ -12,7 +12,7 @@ function c100304100.initial_effect(c)
 	e1:SetTarget(c100304100.target)
 	e1:SetOperation(c100304100.activate)
 	c:RegisterEffect(e1)
-	--destory
+	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100304100,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
