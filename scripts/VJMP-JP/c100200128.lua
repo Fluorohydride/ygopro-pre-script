@@ -38,7 +38,7 @@ end
 function c100200128.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local g=Duel.GetMatchingGroup(Card.IsPosition,tp,LOCATION_MZONE,0,nil,POS_FACEUP_DEFENSE)
 		local def=g:GetSum(Card.GetBaseDefense)
 		local e1=Effect.CreateEffect(c)
@@ -50,7 +50,7 @@ function c100200128.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100200128.deffilter(c)
-	return c:GetBaseDefense()>=0 and c:IsSetCard(0x9f) and c:IsPosition(POS_FACEUP_DEFENSE)
+	return c:GetBaseDefense()>=0 and c:IsSetCard(0x9f)
 end
 function c100200128.defval(e,c)
 	local g=Duel.GetMatchingGroup(c100200128.deffilter,c:GetControler(),LOCATION_MZONE,0,c)

@@ -39,7 +39,7 @@ function c100200129.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100200129.drfilter(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(0xad)
+	return c:IsControler(tp) and c:IsSetCard(0xad) and c:IsType(TYPE_FUSION)
 		and bit.band(c:GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function c100200129.drcon(e,tp,eg,ep,ev,re,r,rp)
@@ -53,14 +53,18 @@ function c100200129.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Draw(tp,1,REASON_EFFECT)
 end
+function c100200129.damfilter(c)
+	return c:IsSetCard(0xad) and c:IsType(TYPE_MONSTER)
+end
 function c100200129.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0xad) end
-	local val=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,0xad)*200
+	if chk==0 then return Duel.IsExistingMatchingCard(c100200129.damfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	local val=Duel.GetMatchingGroupCount(c100200129.damfilter,tp,LOCATION_GRAVE,0,nil)*200
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(val)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,val)
 end
 function c100200129.damop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Damage(p,d,REASON_EFFECT)
+	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	local val=Duel.GetMatchingGroupCount(c100200129.damfilter,tp,LOCATION_GRAVE,0,nil)*200
+	Duel.Damage(p,val,REASON_EFFECT)
 end
