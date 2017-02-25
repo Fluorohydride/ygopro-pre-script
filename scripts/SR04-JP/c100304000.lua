@@ -21,8 +21,7 @@ function c100304000.filter(c,e,tp)
 	return c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100304000.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c100304000.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c100304000.spop(e,tp,eg,ep,ev,re,r,rp)

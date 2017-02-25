@@ -4,6 +4,7 @@
 function c100304100.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100304100,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -11,13 +12,14 @@ function c100304100.initial_effect(c)
 	e1:SetTarget(c100304100.target)
 	e1:SetOperation(c100304100.activate)
 	c:RegisterEffect(e1)
-	--destory
+	--destroy
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100304100,1))
+	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetHintTiming(0,0x1e0)
 	e2:SetCost(c100304100.descost)
 	e2:SetTarget(c100304100.destg)
@@ -32,7 +34,7 @@ function c100304100.spfilter(c,e,tp)
 end
 function c100304100.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100304100.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-	and Duel.IsExistingMatchingCard(c100304100.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c100304100.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	local g=Duel.GetMatchingGroup(c100304100.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
@@ -41,13 +43,13 @@ function c100304100.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100304100.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local n=Duel.Destroy(g,REASON_EFFECT)
 	if n~=0 then
-		Duel.BreakEffect()
 		local tg=Duel.GetMatchingGroup(c100304100.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 		local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if ct<0 then return end
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 		ct=math.min(ct,n)
 		if ct>0 and tg:GetCount()>0 then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=tg:Select(tp,1,ct,nil)
 			if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 then
@@ -98,10 +100,10 @@ function c100304100.cfilter(c)
 end
 function c100304100.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c100304100.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(c100304100.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,c100304100.cfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g1=Duel.SelectTarget(tp,c100304100.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g2=Duel.SelectTarget(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)
