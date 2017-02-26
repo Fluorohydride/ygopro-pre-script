@@ -15,7 +15,6 @@ function c101001074.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_CHAINING)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCondition(c101001074.condition2)
 	e2:SetTarget(c101001074.target)
 	e2:SetOperation(c101001074.operation2)
@@ -36,7 +35,6 @@ function c101001074.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c101001074.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,c101001074.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.HintSelection(g)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c101001074.cfilter(c)
@@ -53,7 +51,7 @@ function c101001074.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	local pe=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT)
 	local tc=pe:GetHandler()
-	if pe:IsActiveType(TYPE_EFFECT) and pe:IsControler(1-tp)
+	if pe:IsActiveType(TYPE_MONSTER) and tc:IsControler(1-tp)
 		and Duel.SelectYesNo(tp,94) then
 		e:SetCategory(CATEGORY_TOHAND)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -74,7 +72,6 @@ function c101001074.operation1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101001074.condition2(e,tp,eg,ep,ev,re,r,rp)
-	local rc=re:GetHandler()
 	return ep~=tp and re:IsActiveType(TYPE_MONSTER)
 		and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>=3
 end
