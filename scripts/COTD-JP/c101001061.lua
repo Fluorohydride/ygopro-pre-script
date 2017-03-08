@@ -26,7 +26,7 @@ end
 function c101001061.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101001061.thfilter,tp,LOCATION_DECK,0,nil)
 	if g:GetCount()>=3 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 		local sg=g:Select(tp,3,3,nil)
 		Duel.ConfirmCards(1-tp,sg)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_ATOHAND)
