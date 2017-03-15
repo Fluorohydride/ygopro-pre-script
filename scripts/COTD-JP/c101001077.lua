@@ -1,5 +1,5 @@
---Return to the Frontlines
 --戦線復帰
+--Return to the Frontlines
 --Scripted by Eerie Code
 function c101001077.initial_effect(c)
 	--Activate
@@ -8,6 +8,7 @@ function c101001077.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetTarget(c101001077.target)
 	e1:SetOperation(c101001077.activate)
 	c:RegisterEffect(e1)
