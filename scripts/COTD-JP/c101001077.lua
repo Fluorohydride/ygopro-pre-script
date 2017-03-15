@@ -1,5 +1,5 @@
 --Return to the Frontlines
---戦線復
+--戦線復帰
 --Scripted by Eerie Code
 function c101001077.initial_effect(c)
 	--Activate
