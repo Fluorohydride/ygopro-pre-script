@@ -18,7 +18,7 @@ function c100200130.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,100200130)
 	e2:SetCondition(c100200130.tcon)
 	e2:SetTarget(c100200130.ttg)
@@ -63,8 +63,8 @@ function c100200130.ttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c100200130.top(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,100200130+100,0x51,0x4011,0,0,2,RACE_CYBERS,ATTRIBUTE_LIGHT) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100200130+100,0x51,0x4011,0,0,2,RACE_CYBERS,ATTRIBUTE_LIGHT) then return end
 	local token=Duel.CreateToken(tp,100200130+100)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 end
