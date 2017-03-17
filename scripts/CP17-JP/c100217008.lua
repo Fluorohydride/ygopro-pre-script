@@ -30,8 +30,8 @@ function c100217008.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(LOCATION_ONFIELD,0)
-	e3:SetTarget(c100217008.indtg)
+	e3:SetTargetRange(LOCATION_MZONE,0)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_PENDULUM))
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 	--destroy
@@ -96,9 +96,6 @@ function c100217008.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		local og=g:Select(tp,1,1,nil)
 		Duel.Overlay(c,og)
 	end
-end
-function c100217008.indtg(e,c)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function c100217008.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCost(tp,1,REASON_COST) end
