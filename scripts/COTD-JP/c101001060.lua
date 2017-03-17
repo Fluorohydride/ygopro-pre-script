@@ -51,13 +51,16 @@ function c101001060.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_DECK) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x38) 
 		and bit.band(r,REASON_EFFECT)~=0
 end
+function c101001060.thfilter(c)
+	return c:IsCode(101001028) and c:IsAbleToHand()
+end
 function c101001060.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101001060.filter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101001060.thfilter(chkc) end
 	local rg=Duel.GetDecktopGroup(tp,4)
-	if chk==0 then return Duel.IsExistingTarget(c101001060.filter,tp,LOCATION_GRAVE,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(c101001060.thfilter,tp,LOCATION_GRAVE,0,1,nil)
 		and rg:FilterCount(Card.IsAbleToRemove,nil)==4 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,c101001060.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101001060.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)	
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,rg,4,0,0)
 end
