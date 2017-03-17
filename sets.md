@@ -2,10 +2,10 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`  
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
-- **February 24, 2017**  : The Valuable Book 19 (VB19-JP) : `100215XXX`  
-- **February 25, 2017**  : Structure Deck R: Tyranno's Rage (SR04-JP) : `100304XXX`
-- **March 25, 2017**     : Starter Deck 2017 (ST17-JP) : `100317XXX`
-- **April 15, 2017**     : Code of the Duelist (COTD-JP) : `101001XXX`
+- **March 24, 2017**  : Perfect Rulebook 2017 (RB04-JP) : `100216XXX`  
+- **March 25, 2017**     : Starter Deck 2017 (ST17-JP) : `100317XXX`  
+- **April 15, 2017**     : Code of the Duelist (COTD-JP) : `101001XXX`  
+- **May 13, 2017**     : Collectors Pack 2017 (CP17-JP) : `100217XXX`  
 
 #Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~  
@@ -39,3 +39,5 @@
 - ~~Maximum Crisis (MACR-JP) : `100912XXX`~~  
 - ~~RAGING TEMPEST (RATE-EN) : `100911XXX`~~  
 - ~~20th Anniversary Pack 2nd Wave (20AP-JP) : `100213XXX`~~  
+- ~~The Valuable Book 19 (VB19-JP) : `100215XXX`~~  
+- ~~Structure Deck R: Tyranno's Rage (SR04-JP) : `100304XXX`~~  
