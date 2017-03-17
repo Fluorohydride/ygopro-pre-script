@@ -4,6 +4,7 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
 - **March 24, 2017**  : Perfect Rulebook 2017 (RB04-JP) : `100216XXX`  
 - **March 25, 2017**     : Starter Deck 2017 (ST17-JP) : `100317XXX`  
+- **April 4, 2017**     : Yu-Gi-Oh! ARC-V Volume 3 promotional card (YA03-JP) : `100218XXX`  
 - **April 15, 2017**     : Code of the Duelist (COTD-JP) : `101001XXX`  
 - **May 13, 2017**     : Collectors Pack 2017 (CP17-JP) : `100217XXX`  
 
