@@ -32,7 +32,7 @@ function c101001072.filter2(c,race,code)
 	return c:IsFaceup() and c:IsSetCard(0x38) and c:IsRace(race) and not c:IsCode(code)
 end
 function c101001072.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101001072.filter1,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c101001072.filter1,tp,LOCATION_MZONE,0,1,nil,tp)
 end
 function c101001072.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x38) and c:IsAbleToRemoveAsCost()
