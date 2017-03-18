@@ -1,7 +1,6 @@
 --DDD運命王ゼロ・ラプラス
 --D/D/D Destiny King Zero Laplace
 --Script by nekrozar
---Effect is not fully implemented
 function c100218001.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
@@ -49,11 +48,9 @@ function c100218001.initial_effect(c)
 	c:RegisterEffect(e5)
 	--no damage
 	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e6:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e6:SetCountLimit(1)
-	e6:SetCondition(c100218001.damcon)
-	e6:SetOperation(c100218001.damop)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e6:SetValue(c100218001.damlimit)
 	c:RegisterEffect(e6)
 end
 function c100218001.thfilter(c)
@@ -99,11 +96,13 @@ function c100218001.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100218001.valcon(e,re,r,rp)
-	return bit.band(r,REASON_BATTLE)~=0
+	if bit.band(r,REASON_BATTLE)~=0 then
+		e:GetHandler():RegisterFlagEffect(100218001,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+		return true
+	else return false end
 end
-function c100218001.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and e:GetHandler():GetBattleTarget()~=nil
-end
-function c100218001.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(ep,0)
+function c100218001.damlimit(e,c)
+	if e:GetHandler():GetFlagEffect(100218001)==0 then
+		return 1
+	else return 0 end
 end
