@@ -81,7 +81,7 @@ end
 function c100218001.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc and bc:IsFaceup() and bc:IsRelateToBattle() and tc:GetBaseAttack()*2~=c:GetAttack()
+	return c:IsRelateToBattle() and bc and bc:IsFaceup() and bc:IsRelateToBattle() and bc:GetBaseAttack()*2~=c:GetAttack()
 end
 function c100218001.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
