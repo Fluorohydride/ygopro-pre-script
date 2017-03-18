@@ -49,7 +49,7 @@ end
 function c101001053.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_SZONE) and chkc:IsFacedown() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFacedown,tp,0,LOCATION_SZONE,1,e:GetHandler()) end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(19059929,2))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101001053,2))
 	local g=Duel.SelectTarget(tp,Card.IsFacedown,tp,0,LOCATION_SZONE,1,1,e:GetHandler())
 end
 function c101001053.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -138,7 +138,7 @@ function c101001053.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:GetFirst():IsSetCard(0x1fb)
 end
 function c101001053.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and bit.band(r,REASON_BATTLE)==0 and re 
+	return ep~=tp and bit.band(r,REASON_BATTLE)==0 and re
 		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fb)
 end
 function c101001053.damop(e,tp,eg,ep,ev,re,r,rp)
