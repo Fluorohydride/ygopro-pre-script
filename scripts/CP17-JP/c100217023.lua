@@ -22,7 +22,7 @@ function c100217023.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(c100217023.ptg)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x4))
 	c:RegisterEffect(e3)
 	--special summon
 	local e4=Effect.CreateEffect(c)
@@ -30,7 +30,7 @@ function c100217023.initial_effect(c)
 	e4:SetCategory(CATEGORY_DAMAGE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_LEAVE_FIELD)
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e4:SetCondition(c100217023.spcon)
 	e4:SetTarget(c100217023.sptg)
 	e4:SetOperation(c100217023.spop)
@@ -39,12 +39,9 @@ end
 function c100217023.indtg(e,c)
 	return c:IsSetCard(0x4) and c~=e:GetHandler()
 end
-function c100217023.ptg(e,c)
-	return c:IsSetCard(0x4) and c:IsType(TYPE_MONSTER)
-end
 function c100217023.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION 
+	return bit.band(c:GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 		and (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT)))
 		and c:IsPreviousPosition(POS_FACEUP)
 end
