@@ -1,6 +1,7 @@
 --DDD運命王ゼロ・ラプラス
 --D/D/D Destiny King Zero Laplace
 --Script by nekrozar
+--Effect is not fully implemented
 function c100218001.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

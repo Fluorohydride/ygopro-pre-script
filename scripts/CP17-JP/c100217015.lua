@@ -65,7 +65,7 @@ function c100217015.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100217015.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.GetAttacker()==c and aux.bdocon(e,tp,eg,ep,ev,re,r,rp) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return Duel.GetAttacker()==c and aux.bdocon(e,tp,eg,ep,ev,re,r,rp) and c:IsChainAttackable(0)
 end
 function c100217015.atfilter(c)
 	return c:IsSetCard(0xba) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()

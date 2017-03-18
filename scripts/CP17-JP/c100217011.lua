@@ -38,10 +38,8 @@ function c100217011.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	local rt=Duel.GetTargetCount(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	if rt>2 then rt=2 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local cg=Duel.SelectMatchingCard(tp,Card.IsDiscardable,tp,LOCATION_HAND,0,1,rt,nil)
-	Duel.SendtoGrave(cg,REASON_COST+REASON_DISCARD)
-	e:SetLabel(cg:GetCount())
+	local cg=Duel.DiscardHand(tp,Card.IsDiscardable,1,rt,REASON_COST+REASON_DISCARD,nil)
+	e:SetLabel(cg)
 end
 function c100217011.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
@@ -54,7 +52,7 @@ end
 function c100217011.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local rg=tg:Filter(Card.IsRelateToEffect,nil,e)
-	if rg:GetCount()>0 then 
+	if rg:GetCount()>0 then
 		Duel.Destroy(rg,REASON_EFFECT)
 	end
 end
