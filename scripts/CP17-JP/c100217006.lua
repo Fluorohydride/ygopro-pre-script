@@ -50,9 +50,7 @@ function c100217006.matfilter(c)
 	return c:IsFusionCode(41209827) or c:IsFusionSetCard(0x1050)
 end
 function c100217006.splimit(e,se,sp,st)
-	local sumt=bit.band(st,SUMMON_TYPE_FUSION+SUMMON_TYPE_PENDULUM)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
-		or (sumt~=SUMMON_TYPE_FUSION and sumt~=SUMMON_TYPE_PENDULUM)
+	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION or bit.band(st,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c100217006.atkfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION)
