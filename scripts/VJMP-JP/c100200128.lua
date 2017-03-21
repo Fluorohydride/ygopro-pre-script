@@ -37,6 +37,7 @@ function c100200128.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100200128.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local g=Duel.GetMatchingGroup(Card.IsPosition,tp,LOCATION_MZONE,0,nil,POS_FACEUP_DEFENSE)
@@ -50,7 +51,7 @@ function c100200128.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100200128.deffilter(c)
-	return c:GetBaseDefense()>=0 and c:IsSetCard(0x9f)
+	return c:GetBaseDefense()>=0 and c:IsSetCard(0x9f) and c:IsFaceup()
 end
 function c100200128.defval(e,c)
 	local g=Duel.GetMatchingGroup(c100200128.deffilter,c:GetControler(),LOCATION_MZONE,0,c)
