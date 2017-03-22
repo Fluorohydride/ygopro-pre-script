@@ -36,7 +36,7 @@ function c101001035.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
 	return g:GetCount()>=5 and g:GetClassCount(Card.GetCode)==g:GetCount()
 end
 function c101001035.descost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -48,7 +48,7 @@ function c101001035.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
 end
 function c101001035.desop(e,tp,eg,ep,ev,re,r,rp)
-	local cg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil)
+	local cg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if g:GetCount()>0 and cg:GetClassCount(Card.GetCode)==cg:GetCount() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
