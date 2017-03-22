@@ -44,8 +44,10 @@ function c101001035.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardDeck(tp,3,REASON_COST)
 end
 function c101001035.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
+	local cg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+	if chk==0 then return cg:GetClassCount(Card.GetCode)==cg:GetCount() end
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c101001035.desop(e,tp,eg,ep,ev,re,r,rp)
 	local cg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
@@ -55,5 +57,5 @@ function c101001035.desop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.HintSelection(sg)
 		Duel.Destroy(sg,REASON_EFFECT)
-	end	
+	end
 end
