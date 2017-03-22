@@ -40,7 +40,7 @@ function c101001035.spcon(e,c)
 	return g:GetCount()>=5 and g:GetClassCount(Card.GetCode)==g:GetCount()
 end
 function c101001035.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,3) end
+	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,3) end
 	Duel.DiscardDeck(tp,3,REASON_COST)
 end
 function c101001035.destg(e,tp,eg,ep,ev,re,r,rp,chk)
