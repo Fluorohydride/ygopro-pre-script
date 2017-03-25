@@ -27,9 +27,6 @@ function c101001005.initial_effect(c)
 	e2:SetTarget(c101001005.sptg)
 	e2:SetOperation(c101001005.spop)
 	c:RegisterEffect(e2)
-	if not TYPE_LINK then
-		TYPE_LINK=0x4000000
-	end
 end
 function c101001005.cfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
