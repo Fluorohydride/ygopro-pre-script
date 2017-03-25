@@ -37,9 +37,6 @@ function c100317021.initial_effect(c)
 	e4:SetTarget(c100317021.tgtg)
 	e4:SetOperation(c100317021.tgop)
 	c:RegisterEffect(e4)
-	if not TYPE_LINK then
-		TYPE_LINK=0x4000000
-	end
 end
 function c100317021.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
