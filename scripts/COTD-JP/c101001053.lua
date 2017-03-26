@@ -58,11 +58,12 @@ function c101001053.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and tc:IsFacedown() and tc:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
 		e:SetLabelObject(tc)
+		tc:RegisterFlagEffect(101001053,RESET_EVENT+0x1fe0000,0,1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DRAW)
 		e1:SetCondition(c101001053.rcon)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
@@ -72,16 +73,19 @@ function c101001053.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetRange(LOCATION_FZONE)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
 		e2:SetCountLimit(1)
+		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DRAW)
+		e2:SetLabelObject(tc)
 		e2:SetOperation(c101001053.agop)
 		c:RegisterEffect(e2)
 	end
 end
 function c101001053.rcon(e)
-	return e:GetOwner():IsHasCardTarget(e:GetHandler())
+	return e:GetOwner():IsHasCardTarget(e:GetHandler()) and e:GetHandler():GetFlagEffect(101001053)~=0
 end
 function c101001053.agop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetHandler():GetCardTarget():GetFirst()
-	if not tc or not tc:IsRelateToEffect(e) then return end
+	local tc=e:GetLabelObject()
+	if not tc or tc:IsFaceup() or not tc:IsLocation(LOCATION_SZONE) then return end
+	tc:ResetFlagEffect(101001053)
 	local act=false
 	local te=tc:GetActivateEffect()
 	local tep=tc:GetControler()
@@ -108,27 +112,32 @@ function c101001053.agop(e,tp,eg,ep,ev,re,r,rp)
 	if op==0 then
 		Duel.ClearTargetCard()
 		e:SetProperty(te:GetProperty())
-		Duel.Hint(HINT_CARD,0,tc:GetOriginalCode())
 		Duel.ChangePosition(tc,POS_FACEUP)
-		if tc:GetType()==TYPE_TRAP then
-			tc:CancelToGrave(false)
-		end
+		Duel.Hint(HINT_CARD,0,tc:GetOriginalCode())
 		tc:CreateEffectRelation(te)
 		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
 		if target then target(te,tep,eg,ep,ev,re,r,rp,1) end
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		local tg=g:GetFirst()
-		while tg do
-			tg:CreateEffectRelation(te)
-			tg=g:GetNext()
+		local tg=nil
+		if g then
+			tg=g:GetFirst()
+			while tg do
+				tg:CreateEffectRelation(te)
+				tg=g:GetNext()
+			end
 		end
 		tc:SetStatus(STATUS_ACTIVATED,true)
 		if operation then operation(te,tep,eg,ep,ev,re,r,rp) end
 		tc:ReleaseEffectRelation(te)
-		tg=g:GetFirst()
-		while tg do
-			tg:ReleaseEffectRelation(te)
-			tg=g:GetNext()
+		if g then
+			tg=g:GetFirst()
+			while tg do
+				tg:ReleaseEffectRelation(te)
+				tg=g:GetNext()
+			end
+		end
+		if bit.band(tc:GetType(),TYPE_CONTINUOUS)==0 then
+			Duel.SendtoGrave(tc,REASON_RULE)
 		end
 	else
 		Duel.SendtoGrave(tc,REASON_EFFECT)
@@ -138,7 +147,7 @@ function c101001053.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:GetFirst():IsSetCard(0x1fb)
 end
 function c101001053.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and bit.band(r,REASON_BATTLE)==0 and re
+	return ep~=tp and bit.band(r,REASON_BATTLE)==0 and re 
 		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fb)
 end
 function c101001053.damop(e,tp,eg,ep,ev,re,r,rp)
