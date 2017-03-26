@@ -98,7 +98,7 @@ function c100217008.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100217008.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCost(tp,1,REASON_COST) end
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCost(tp,1,1,REASON_COST)
 end
 function c100217008.descfilter(c)
