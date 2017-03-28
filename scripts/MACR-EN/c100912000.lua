@@ -70,7 +70,7 @@ function c100912000.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100912000.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,100912000)==0 end
-	Duel.RegisterFlagEffect(tp,100912000,RESET_CHAIN,0,1)
+	Duel.RegisterFlagEffect(tp,100912000,RESET_PHASE+PHASE_END,0,1)
 end
 function c100912000.spfilter(c,e,tp)
 	return (c:GetSequence()==6 or c:GetSequence()==7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
