@@ -1,7 +1,7 @@
 --Re:EX
 --Scripted by Eerie Code
 function c101001034.initial_effect(c)
-	--increase atk
+	--increase atk/def
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -9,6 +9,9 @@ function c101001034.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetCondition(c101001034.condition)
 	e1:SetValue(800)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e1)
 end
 function c101001034.condition(e)
