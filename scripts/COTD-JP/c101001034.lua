@@ -8,7 +8,7 @@ function c101001034.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetCondition(c101001034.condition)
-	e1:SetValue(1000)
+	e1:SetValue(800)
 	c:RegisterEffect(e1)
 end
 function c101001034.condition(e)
