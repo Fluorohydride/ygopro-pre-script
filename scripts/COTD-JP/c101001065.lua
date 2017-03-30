@@ -1,7 +1,6 @@
 --キャッスル・リンク
 --Castle Link
 --Script by nekrozar
---Effect is not fully implemented
 function c101001065.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -32,6 +31,7 @@ function c101001065.filter(c,tp)
 	if c:IsFacedown() or not c:IsType(TYPE_LINK) then return false end
 	local zone=c:GetLinkedZone()
 	if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
+	if c:IsControler(1-tp) then zone=bit.lshift(zone,0x10) end
 	return zone~=0
 end
 function c101001065.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -46,14 +46,22 @@ function c101001065.seqop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) then return end
 	local zone=tc:GetLinkedZone()
 	if tc:GetSequence()>4 then zone=bit.band(zone,0xfff) end
+	if tc:IsControler(1-tp) then zone=bit.lshift(zone,0x10) end
 	if zone~=0 then
-		local flag=bit.bxor(zone,0xff)
-		local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,flag)
+		local flag=0
+		local s=0
+		if tc:IsControler(tp) then
+			flag=bit.bxor(zone,0xff)
+			s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,flag)
+		else
+			flag=bit.bxor(zone,0xff0000)
+			s=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,flag)
+		end
 		local nseq=0
-		if s==1 then nseq=0
-		elseif s==2 then nseq=1
-		elseif s==4 then nseq=2
-		elseif s==8 then nseq=3
+		if s==1 or s==0x10000 then nseq=0
+		elseif s==2 or s==0x20000 then nseq=1
+		elseif s==4 or s==0x40000 then nseq=2
+		elseif s==8 or s==0x80000 then nseq=3
 		else nseq=4 end
 		Duel.MoveSequence(tc,nseq)
 	end
@@ -78,5 +86,5 @@ function c101001065.chop(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.SelectMatchingCard(tp,c101001065.chfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc1,tc1:GetControler())
 	Duel.HintSelection(g2)
 	local tc2=g2:GetFirst()
-	Duel.SwapControl(tc1,tc2,0,0)
+	Duel.SwapSequence(tc1,tc2)
 end
