@@ -11,16 +11,16 @@ function c101001068.initial_effect(c)
 	e1:SetOperation(c101001068.activate)
 	c:RegisterEffect(e1)
 	--spsummon
-	local e7=Effect.CreateEffect(c)
-	e7:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e7:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e7:SetType(EFFECT_TYPE_QUICK_O)
-	e7:SetCode(EVENT_FREE_CHAIN)
-	e7:SetRange(LOCATION_GRAVE)
-	e7:SetCost(c101001068.spcost)
-	e7:SetTarget(c101001068.sptg)
-	e7:SetOperation(c101001068.spop)
-	c:RegisterEffect(e7)
+	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCost(c101001068.spcost)
+	e2:SetTarget(c101001068.sptg)
+	e2:SetOperation(c101001068.spop)
+	c:RegisterEffect(e2)
 end
 function c101001068.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
@@ -57,7 +57,7 @@ end
 function c101001068.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then 
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
+	if tc:IsRelateToEffect(e) then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
