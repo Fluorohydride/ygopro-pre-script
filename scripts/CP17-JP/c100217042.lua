@@ -34,7 +34,8 @@ function c100217042.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e4:SetCondition(c100217042.poscon)
-	e4:SetValue(POS_FACEUP_ATTACK)
+	e4:SetTarget(c100217042.postg)
+	e4:SetValue(POS_FACEUP_DEFENSE)
 	c:RegisterEffect(e4)
 	--disable
 	local e5=Effect.CreateEffect(c)
@@ -64,6 +65,9 @@ function c100217042.indval(e,re,tp)
 end
 function c100217042.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsDefensePos()
+end
+function c100217042.postg(e,c)
+	return not c:IsDefensePos()
 end
 function c100217042.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
