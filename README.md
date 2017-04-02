@@ -16,7 +16,7 @@ Repository intended to store all the relevant information for adding pre-release
 * The `inserts.sql` file is used to keep the SQL code used to quickly add all the current pre-release cards into a .cdb database. Each card should be 2 lines, one for the `DATAS` table and one for `TEXTS`. The cards should be grouped by their set/pack, with a proper comment indicating the name heading each section. ( `--` for comments in SQL) This file can also be used to find the ID of a card by searching the name, if you are unsure.
 
 
-#Licence
+# Licence
 
 Copyright (c) 2016-2017 Contributors
 

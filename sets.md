@@ -1,4 +1,4 @@
-#Upcoming
+# Upcoming
 - V Jump promotional cards (VJMP-JP) : `100200XXX`  
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
@@ -7,7 +7,7 @@
 - **May 4, 2017**     : MAXIMUM CRISIS (MACR-EN) : `100912XXX`  
 - **May 13, 2017**     : Collectors Pack 2017 (CP17-JP) : `100217XXX`  
 
-#Archived
+# Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~  
 - ~~Yu-Gi-Oh! The Dark Side of Dimensions Duel Set (MVPL-JP) : `100202XXX`~~  
 - ~~Yu-Gi-Oh! The Dark Side of Dimensions promotional cards (MVPC-JP) : `100201XXX`~~  
