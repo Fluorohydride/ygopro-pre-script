@@ -69,7 +69,7 @@ function c101001053.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		--Activate or send
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e2:SetRange(LOCATION_FZONE)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
 		e2:SetCountLimit(1)
@@ -105,8 +105,10 @@ function c101001053.agop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local op=0
 	if act then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPTION)
 		op=Duel.SelectOption(tep,aux.Stringid(101001053,3),aux.Stringid(101001053,4))
 	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPTION)
 		op=Duel.SelectOption(tep,aux.Stringid(101001053,4))+1
 	end
 	if op==0 then
