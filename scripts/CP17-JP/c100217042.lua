@@ -67,7 +67,7 @@ function c100217042.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsDefensePos()
 end
 function c100217042.postg(e,c)
-	return not c:IsDefensePos()
+	return c:IsFaceup()
 end
 function c100217042.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
