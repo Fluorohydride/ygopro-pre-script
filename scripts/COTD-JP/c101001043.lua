@@ -65,7 +65,10 @@ function c101001043.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101001043.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetLinkedGroup()
-	e:SetLabelObject(g)
+	if not g then return end
+	local lg=g:Clone()
+	lg:KeepAlive()
+	e:SetLabelObject(lg)
 end
 function c101001043.cfilter(c,g)
 	return g:IsContains(c)
