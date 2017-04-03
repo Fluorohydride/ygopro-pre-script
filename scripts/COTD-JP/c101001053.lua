@@ -46,11 +46,14 @@ function c101001053.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
+function c101001053.cfilter(c)
+	return c:IsFacedown() and c:GetSequence()<5
+end
 function c101001053.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_SZONE) and chkc:IsFacedown() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFacedown,tp,0,LOCATION_SZONE,1,e:GetHandler()) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_SZONE) and c101001053.cfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101001053.cfilter,tp,0,LOCATION_SZONE,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101001053,2))
-	local g=Duel.SelectTarget(tp,Card.IsFacedown,tp,0,LOCATION_SZONE,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,c101001053.cfilter,tp,0,LOCATION_SZONE,1,1,e:GetHandler())
 end
 function c101001053.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
