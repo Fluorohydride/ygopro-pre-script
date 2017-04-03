@@ -33,6 +33,7 @@ function c101001043.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_BATTLE_DESTROYED)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetLabelObject(e2)
 	e3:SetCondition(c101001043.spcon)
 	e3:SetTarget(c101001043.sptg)
 	e3:SetOperation(c101001043.spop)
@@ -64,24 +65,15 @@ function c101001043.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101001043.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetLinkedGroup()
-	local tc=g:GetFirst()
-	while tc do
-		tc:RegisterFlagEffect(101001043,0,0,1)
-		tc=g:GetNext()
-	end
+	e:SetLabelObject(g)
 end
-function c101001043.cfilter(c)
-	return c:GetFlagEffect(101001043)~=0
+function c101001043.cfilter(c,g)
+	return g:IsContains(c)
 end
 function c101001043.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local res=eg:IsExists(c101001043.cfilter,1,nil)
-	local g=e:GetHandler():GetLinkedGroup()
-	local tc=g:GetFirst()
-	while tc do
-		tc:ResetFlagEffect(101001043)
-		tc=g:GetNext()
-	end
-	return res
+	local lg=e:GetLabelObject():GetLabelObject()
+	if not lg then return false end
+	return eg:IsExists(c101001043.cfilter,1,nil,lg)
 end
 function c101001043.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
