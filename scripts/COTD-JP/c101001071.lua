@@ -38,20 +38,22 @@ function c101001071.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101001071.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local g=tg:Filter(Card.IsRelateToEffect,nil,e)
-	local ct=g:GetCount()
-	if ft>0 and ct<=ft and (ct==1 or not Duel.IsPlayerAffectedByEffect(tp,59822133)) then
-		local tc=g:GetFirst()
-		while tc do
-			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_CANNOT_ATTACK)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1)
-			tc=g:GetNext()
-		end
-		Duel.SpecialSummonComplete()
+	if ft<=0 then return end
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	if g:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
+	if g:GetCount()>ft then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		g=g:Select(tp,ft,ft,nil)
 	end
+	local tc=g:GetFirst()
+	while tc do
+		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
+		tc=g:GetNext()
+	end
+	Duel.SpecialSummonComplete()
 end

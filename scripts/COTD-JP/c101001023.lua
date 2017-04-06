@@ -21,7 +21,7 @@ function c101001023.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_LEAVE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCountLimit(1,101001023)
 	e2:SetCondition(c101001023.spcon)
 	e2:SetTarget(c101001023.sptg)
@@ -49,11 +49,11 @@ function c101001023.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101001023.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(Card.IsSummonLocation,1,nil,LOCATION_EXTRA)
+	local g=eg:Filter(Card.IsSummonLocation,nil,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,g:GetCount(),0,0)
 end
 function c101001023.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(Card.IsSummonLocation,1,nil,LOCATION_EXTRA)
+	local g=eg:Filter(Card.IsSummonLocation,nil,LOCATION_EXTRA)
 	if g:GetCount()>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
