@@ -3,7 +3,7 @@
 --Script by mercury233
 function c101001049.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x11fd),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x1fd),2,2)
 	c:EnableReviveLimit()
 	--atkup
 	local e1=Effect.CreateEffect(c)
@@ -37,11 +37,14 @@ function c101001049.initial_effect(c)
 	e3:SetOperation(c101001049.spop2)
 	c:RegisterEffect(e3)
 end
+function c101001049.atkfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1fe)
+end
 function c101001049.atkval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x21fd)*5000
+	return Duel.GetMatchingGroup(c101001049.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)*300
 end
 function c101001049.cfilter(c,g)
-	return c:IsSetCard(0x11fd) and g:IsContains(c)
+	return c:IsSetCard(0x1fd) and g:IsContains(c)
 end
 function c101001049.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=e:GetHandler():GetLinkedGroup()
@@ -75,7 +78,7 @@ function c101001049.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c101001049.spfilter2(c,e,tp)
-	return c:IsSetCard(0x11fd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x1fd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101001049.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
