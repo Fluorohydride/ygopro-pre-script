@@ -57,6 +57,7 @@ function c100217008.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function c100217008.spcon(e,tp,eg,ep,ev,re,r,rp)
+	local seq=e:GetHandler():GetSequence()
 	local pc=Duel.GetFieldCard(tp,LOCATION_PZONE,({1,0,0,0,0,0,1,0})[seq+1])
 	return pc and pc:IsSetCard(0xaf)
 end
