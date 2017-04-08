@@ -31,7 +31,7 @@ function c101001049.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCondition(c101001049.spcon2)
 	e3:SetTarget(c101001049.sptg2)
 	e3:SetOperation(c101001049.spop2)
@@ -70,8 +70,7 @@ function c101001049.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and zone~=0 then
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP,zone)
-		Duel.SpecialSummonComplete()
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end
 function c101001049.spcon2(e,tp,eg,ep,ev,re,r,rp)

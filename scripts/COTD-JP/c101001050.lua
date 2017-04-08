@@ -2,6 +2,7 @@
 --Star Grail Warrior Ningirsu
 --Scripted by Eerie Code
 function c101001050.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_LINK),2)
 	--draw
@@ -32,7 +33,7 @@ function c101001050.initial_effect(c)
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_TO_GRAVE)
-	e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetCondition(c101001050.spcon2)
 	e5:SetTarget(c101001050.sptg2)
 	e5:SetOperation(c101001050.spop2)
@@ -58,7 +59,7 @@ function c101001050.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101001050.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)>0 
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)>0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,0,0)
 end

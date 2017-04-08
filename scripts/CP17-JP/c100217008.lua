@@ -57,8 +57,7 @@ function c100217008.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function c100217008.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local pc=Duel.GetMatchingGroup(nil,tp,LOCATION_PZONE,0,e:GetHandler()):GetFirst()
-	return pc and pc:IsSetCard(0xaf)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),0xaf)
 end
 function c100217008.spfilter(c,e,tp)
 	return c:IsSetCard(0x10af) and c:IsType(TYPE_XYZ) and not c:IsCode(100217008)

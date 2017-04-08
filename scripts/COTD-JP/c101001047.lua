@@ -2,13 +2,16 @@
 --Star Grail Dragon Imduk
 --Scripted by Eerie Code
 function c101001047.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,c101001047.matfilter,1,1)
 	--extra summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetOperation(c101001047.sumop)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1fd))
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -25,7 +28,7 @@ function c101001047.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCondition(c101001047.spcon2)
 	e3:SetTarget(c101001047.sptg2)
 	e3:SetOperation(c101001047.spop2)
@@ -33,17 +36,6 @@ function c101001047.initial_effect(c)
 end
 function c101001047.matfilter(c)
 	return c:IsType(TYPE_NORMAL) and not c:IsType(TYPE_TOKEN)
-end
-function c101001047.sumop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,101001047)~=0 then return end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1fd))
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,101001047,RESET_PHASE+PHASE_END,0,1)
 end
 function c101001047.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
