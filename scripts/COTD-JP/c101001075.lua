@@ -11,6 +11,7 @@ function c101001075.initial_effect(c)
 	e1:SetTarget(c101001075.target)
 	e1:SetOperation(c101001075.activate)
 	c:RegisterEffect(e1)
+	--
 	if not Card.IsLinkState then
 		function Card.IsLinkState(c)
 			if not c then return false end
