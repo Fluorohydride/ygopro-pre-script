@@ -13,6 +13,7 @@ function c101001048.initial_effect(c)
 	e0:SetOperation(c101001048.linkop)
 	e0:SetValue(SUMMON_TYPE_LINK)
 	c:RegisterEffect(e0)
+	c:EnableReviveLimit()
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -49,6 +50,21 @@ function c101001048.initial_effect(c)
 	e5:SetTarget(c101001048.sptg2)
 	e5:SetOperation(c101001048.spop2)
 	c:RegisterEffect(e5)
+	--
+	if not Card.IsLinkState then
+		function Card.IsLinkState(c)
+			if not c then return false end
+			if c:IsType(TYPE_LINK) and c:GetLinkedGroupCount()>0 then return true end
+			local g=Duel.GetMatchingGroup(Card.IsType,0,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)
+			local lc=g:GetFirst()
+			while lc do
+				local lg=lc:GetLinkedGroup()
+				if lg and lg:IsContains(c) then return true end
+				lc=g:GetNext()
+			end
+			return false
+		end
+	end
 end
 function c101001048.linkfilter1(c,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(c101001048.linkfilter2,tp,LOCATION_MZONE,0,1,c,c)
@@ -69,14 +85,9 @@ function c101001048.linkop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:SetMaterial(g1)
 	Duel.SendtoGrave(g1,REASON_MATERIAL+REASON_LINK)
 end
-function c101001048.infilter(c,hc)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(hc)
-end
 function c101001048.incon(e)
 	local c=e:GetHandler()
-	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(c101001048.infilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c)
-		or c:GetLinkedGroupCount()>0
+	return c:IsLinkState()
 end
 function c101001048.repfilter(c,tp,hc)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
