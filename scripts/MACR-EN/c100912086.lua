@@ -29,7 +29,6 @@ function c100912086.initial_effect(c)
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCondition(c100912086.spcon)
 	e3:SetTarget(c100912086.sptg)
 	e3:SetOperation(c100912086.spop)
@@ -79,8 +78,7 @@ function c100912086.spfilter(c,e,tp)
 end
 function c100912086.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,0)
-	if chk==0 then return g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c100912086.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
 end
