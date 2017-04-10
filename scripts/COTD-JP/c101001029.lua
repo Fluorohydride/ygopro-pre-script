@@ -13,7 +13,6 @@ function c101001029.initial_effect(c)
 	e1:SetTarget(c101001029.sptg)
 	e1:SetOperation(c101001029.spop)
 	c:RegisterEffect(e1)
-	--
 	if not Duel.GetLinkedZones then
 		function Duel.GetLinkedZones(p)
 			local zone=0
@@ -82,7 +81,7 @@ end
 function c101001029.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=bit.band(Duel.GetLinkedZones(tp),0x1f)
-	if zone==0 then return false end
+	if zone==0 then return end
 	local ct=0
 	for i=0,4 do
 		local z=bit.lshift(1,i)
