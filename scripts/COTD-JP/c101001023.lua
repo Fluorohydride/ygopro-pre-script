@@ -6,7 +6,7 @@ function c101001023.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101001023,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_MZONE)
@@ -40,8 +40,11 @@ function c101001023.initial_effect(c)
 	e3:SetOperation(c101001023.thop)
 	c:RegisterEffect(e3)
 end
+function c101001023.tgfilter(c)
+	return bit.band(c:GetSummonLocation(),LOCATION_EXTRA)==LOCATION_EXTRA
+end
 function c101001023.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSummonLocation,1,nil,LOCATION_EXTRA)
+	return eg:IsExists(c101001023.tgfilter,1,nil)
 end
 function c101001023.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
@@ -49,11 +52,11 @@ function c101001023.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101001023.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(Card.IsSummonLocation,nil,LOCATION_EXTRA)
+	local g=eg:Filter(c101001023.tgfilter,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,g:GetCount(),0,0)
 end
 function c101001023.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(Card.IsSummonLocation,nil,LOCATION_EXTRA)
+	local g=eg:Filter(c101001023.tgfilter,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end

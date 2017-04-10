@@ -56,12 +56,18 @@ end
 function c101001049.spfilter1(c,e,tp,zone)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
+function c101001049.spfilter0(c,e,tp)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function c101001049.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=e:GetHandler():GetLinkedZone()
 	local cc=e:GetLabelObject()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
 		and chkc~=cc and c101001049.spfilter1(chkc,e,tp,zone) end
-	if chk==0 then return zone~=0 and Duel.IsExistingTarget(c101001049.spfilter1,tp,LOCATION_GRAVE,0,1,cc,e,tp,zone) end
+	if chk==0 then return zone~=0
+		and (Duel.IsExistingTarget(c101001049.spfilter1,tp,LOCATION_GRAVE,0,1,cc,e,tp,zone)
+		or (e:GetHandler():GetLinkedGroupCount()>=2 and Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+			and Duel.IsExistingTarget(c101001049.spfilter0,tp,LOCATION_GRAVE,0,1,cc,e,tp))) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c101001049.spfilter1,tp,LOCATION_GRAVE,0,1,1,cc,e,tp,zone)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
