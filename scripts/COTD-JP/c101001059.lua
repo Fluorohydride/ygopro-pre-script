@@ -30,10 +30,10 @@ end
 function c101001059.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
-		and tc:IsLocetion(LOCATION_HAND) then
+		and tc:IsLocation(LOCATION_HAND) then
 		Duel.BreakEffect()
 		local ol=tc:GetOriginalLevel()
 		local rg=Duel.GetDecktopGroup(tp,ol)
-		Duel.Remove(rg,POS_FACEUP_REASON_EFFECT)
+		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 	end
 end
