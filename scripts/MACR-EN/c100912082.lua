@@ -47,7 +47,7 @@ function c100912082.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100912082.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.NegateActivation(ev) then
+	if Duel.NegateActivation(ev) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.BreakEffect()
 		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
 	end
