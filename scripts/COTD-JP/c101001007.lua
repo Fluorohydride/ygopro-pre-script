@@ -10,7 +10,6 @@ function c101001007.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1)
 	e1:SetCost(c101001007.cost)
 	e1:SetTarget(c101001007.target)
 	e1:SetOperation(c101001007.operation)
@@ -26,7 +25,9 @@ function c101001007.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101001007.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsPublic() end
+	local c=e:GetHandler()
+	if chk==0 then return not c:IsPublic() and c:GetFlagEffect(101001007)==0 end
+	c:RegisterFlagEffect(101001007,RESET_CHAIN,0,1)
 end
 function c101001007.filter(c)
 	return c:IsSetCard(0x1fb) and c:IsAbleToHand() and not c:IsCode(101001007)
@@ -35,6 +36,7 @@ function c101001007.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101001007.filter(chkc) end
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c101001007.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,c101001007.filter,tp,LOCATION_MZONE,0,1,1,nil)
