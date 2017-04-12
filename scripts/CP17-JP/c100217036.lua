@@ -29,7 +29,6 @@ function c100217036.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e4)
 	local e5=e3:Clone()
-	e5:SetCondition(c100217036.damcon)
 	e5:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	c:RegisterEffect(e5)
 	--to deck
@@ -74,9 +73,6 @@ function c100217036.ntcon(e,c,minc)
 	return minc==0 and c:GetLevel()>4
 		and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-end
-function c100217036.damcon(e)
-	return e:GetHandler():IsAttackPos()
 end
 function c100217036.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattledGroupCount()>0

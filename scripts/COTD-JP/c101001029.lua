@@ -1,7 +1,7 @@
 --レスキューフェレット
 --Rescue Ferret
---Script by nekrozar
---Effect is not fully implemented
+--Script by nekrozar and mercury233
+--Effect is not fully implemented, see https://github.com/Fluorohydride/ygopro/issues/1951#issuecomment-292802270
 function c101001029.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -13,6 +13,27 @@ function c101001029.initial_effect(c)
 	e1:SetTarget(c101001029.sptg)
 	e1:SetOperation(c101001029.spop)
 	c:RegisterEffect(e1)
+	if not Duel.GetLinkedZones then
+		function Duel.GetLinkedZones(p)
+			local zone=0
+			local g1=Duel.GetMatchingGroup(Card.IsType,p,LOCATION_MZONE,0,nil,TYPE_LINK)
+			local lc=g1:GetFirst()
+			while lc do
+				zone=bit.bor(zone,lc:GetLinkedZone())
+				lc=g1:GetNext()
+			end
+			local g2=Duel.GetMatchingGroup(Card.IsType,p,0,LOCATION_MZONE,nil,TYPE_LINK)
+			local lc=g2:GetFirst()
+			while lc do
+				local zone0=bit.rshift(lc:GetLinkedZone(),16)
+				local zone1=bit.lshift(bit.band(lc:GetLinkedZone(),0xffff),16)
+				zone=bit.bor(zone,zone0)
+				zone=bit.bor(zone,zone1)
+				lc=g2:GetNext()
+			end
+			return zone
+		end
+	end
 end
 function c101001029.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
@@ -24,34 +45,59 @@ end
 function c101001029.spfilter(c,e,tp,zone)
 	return c:GetLevel()>0 and not c:IsCode(101001029) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
+function c101001029.spfilter0(c,e,tp)
+	return c:GetLevel()>0 and not c:IsCode(101001029) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp)
+end
 function c101001029.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local lg=Duel.GetMatchingGroup(c101001029.ctfilter,tp,LOCATION_MZONE,0,nil)
-		local zone1=lg:GetSum(Card.GetLink)
-		local zone2=lg:GetSum(Card.GetLinkedZone)
-		local ct=5
+		local zone=bit.band(Duel.GetLinkedZones(tp),0x1f)
+		if zone==0 then return false end
+		local tempfix=false
+		local ct=0
+		for i=0,4 do
+			local z=bit.lshift(1,i)
+			local c=Duel.GetFieldCard(tp,LOCATION_MZONE,i)
+			if bit.band(zone,z)>0 then
+				if not c then
+					ct=ct+1
+				elseif c==e:GetHandler() then
+					tempfix=true
+					ct=ct+1
+				end
+			end
+		end
+		if ct==0 then return false end
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
-		ct=math.min(ct,zone1)
-		local g=Duel.GetMatchingGroup(c101001029.spfilter,tp,LOCATION_DECK,0,nil,e,tp,zone2)
-		return ct>0 and g:CheckWithSumEqual(Card.GetLevel,6,1,ct)
+		if not tempfix then
+			local g=Duel.GetMatchingGroup(c101001029.spfilter,tp,LOCATION_DECK,0,nil,e,tp,zone)
+			return g:CheckWithSumEqual(Card.GetLevel,6,1,ct)
+		else
+			local g=Duel.GetMatchingGroup(c101001029.spfilter0,tp,LOCATION_DECK,0,nil,e,tp)
+			return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and g:CheckWithSumEqual(Card.GetLevel,6,1,ct)
+		end
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101001029.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local lg=Duel.GetMatchingGroup(c101001029.ctfilter,tp,LOCATION_MZONE,0,nil)
-	local zone1=lg:GetSum(Card.GetLink)
-	local zone2=lg:GetSum(Card.GetLinkedZone)
-	local ct=5
+	local zone=bit.band(Duel.GetLinkedZones(tp),0x1f)
+	if zone==0 then return end
+	local ct=0
+	for i=0,4 do
+		local z=bit.lshift(1,i)
+		if bit.band(zone,z)>0 and Duel.CheckLocation(tp,LOCATION_MZONE,i) then
+			ct=ct+1
+		end
+	end
+	if ct==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
-	ct=math.min(ct,zone1)
-	local g=Duel.GetMatchingGroup(c101001029.spfilter,tp,LOCATION_DECK,0,nil,e,tp,zone2)
+	local g=Duel.GetMatchingGroup(c101001029.spfilter,tp,LOCATION_DECK,0,nil,e,tp,zone)
 	if ct>0 and g:CheckWithSumEqual(Card.GetLevel,6,1,ct) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:SelectWithSumEqual(tp,Card.GetLevel,6,1,ct)
 		local tc=sg:GetFirst()
 		while tc do
-			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP,zone2)
+			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
