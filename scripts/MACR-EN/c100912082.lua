@@ -38,10 +38,11 @@ function c100912082.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xed) and c:IsCanTurnSet()
 end
 function c100912082.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c100912082.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100912082.filter,tp,LOCATION_MZONE,0,1,nil) end
+	local c=e:GetHandler()
+	if chkc then return chkc~=c and chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c100912082.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100912082.filter,tp,LOCATION_MZONE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g=Duel.SelectTarget(tp,c100912082.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100912082.filter,tp,LOCATION_MZONE,0,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
