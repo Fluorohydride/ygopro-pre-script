@@ -23,17 +23,22 @@ function c101001080.activate(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if not a:IsRelateToBattle() or not d:IsRelateToBattle() then return end
 	if a:IsControler(1-tp) then a,d=d,a end
+	local rock=Duel.CreateToken(tp,101001180)
+	local paper=Duel.CreateToken(tp,101001181)
+	local xors=Duel.CreateToken(tp,101001182)
+	local ch=Group.FromCards(rock,paper,xors)
 	local res=-1
-	--Let's go with 0=ROCK, 1=PAPER, 2=SCISSORS
 	while res=-1 do
-		r0=Duel.SelectOption(tp,aux.Stringid(101001080,0),aux.Stringid(101001080,1),aux.Stringid(101001080,2))
-		r1=Duel.SelectOption(1-tp,aux.Stringid(101001080,0),aux.Stringid(101001080,1),aux.Stringid(101001080,2))
-		if r0==0 then
-			if r1==0 then res=-1 elseif r1==1 then res=1-tp else res=tp end
-		elseif r0==1 then
-			if r1==1 then res=-1 elseif r1==2 then res=1-tp else res=tp end
+		local r0=ch:Select(tp,1,1,nil)
+		local r1=ch:Select(1-tp,1,1,nil)
+		Duel.ConfirmCards(tp,r1)
+		Duel.ConfirmCards(1-tp,r0)
+		if r0==rock then
+			if r1==rock then res=-1 elseif r1==paper then res=1-tp else res=tp end
+		elseif r0==paper then
+			if r1==paper then res=-1 elseif r1==xors then res=1-tp else res=tp end
 		else
-			if r1==2 then res=-1 elseif r1==0 then res=1-tp else res=tp end
+			if r1==xors then res=-1 elseif r1==rock then res=1-tp else res=tp end
 		end
 	end
 	if res==tp then
