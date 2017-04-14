@@ -103,7 +103,7 @@ end
 function c101001015.spfilter(c,e,tp)
 	return c:IsFaceup() and (c:IsSetCard(0x10f8) or c:IsSetCard(0x20f8)) 
 		and c:IsType(TYPE_PENDULUM) and not c:IsCode(101001015)
-		and c:IsCanbeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101001015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
