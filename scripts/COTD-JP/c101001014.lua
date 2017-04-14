@@ -27,7 +27,7 @@ function c101001014.indval(e,c)
 	return c:IsLevelBelow(e:GetHandler():GetLevel())
 end
 function c101001014.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and eg:GetCount()==1 
+	return tp~=ep and eg:GetCount()==1
 		and eg:GetFirst():GetLevel()>0
 		and eg:GetFirst():IsAttackAbove(eg:GetFirst():GetLevel()*200)
 end
@@ -46,6 +46,8 @@ function c101001014.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(-tc:GetLevel()*200)
 		tc:RegisterEffect(e1)
-		Duel.Damage(1-tp,nv,REASON_EFFECT)
+		if not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) then
+			Duel.Damage(1-tp,nv,REASON_EFFECT)
+		end
 	end
 end

@@ -35,15 +35,11 @@ function c101001016.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_COST)
 end
 function c101001016.ccon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_ONFIELD)
-end
-function c101001016.cfilter(c)
-	return c:IsFaceup()
+	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c101001016.cop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c101001016.cfilter,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	while tc do
 		tc:AddCounter(0x1041,1)

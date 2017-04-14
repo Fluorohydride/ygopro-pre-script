@@ -22,8 +22,8 @@ function c101001069.filter(c,e)
 	return c:IsPosition(POS_FACEUP_ATTACK) and not c:IsImmuneToEffect(e)
 end
 function c101001069.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(c101001069.filter,tp,0,LOCATION_MZONE,nil,e)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsPosition,tp,0,LOCATION_MZONE,1,nil,POS_FACEUP_ATTACK) end
+	local g=Duel.GetMatchingGroup(Card.IsPosition,tp,0,LOCATION_MZONE,nil,POS_FACEUP_ATTACK)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
 end
 function c101001069.activate(e,tp,eg,ep,ev,re,r,rp)

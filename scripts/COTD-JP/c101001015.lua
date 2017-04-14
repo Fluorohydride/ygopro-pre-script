@@ -54,8 +54,7 @@ function c101001015.thfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsAttackBelow(1500) and c:IsAbleToHand()
 end
 function c101001015.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDestructable()
-		and Duel.IsExistingMatchingCard(c101001015.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101001015.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
@@ -76,7 +75,8 @@ function c101001015.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101001015.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c101001015.hspop(e,tp,eg,ep,ev,re,r,rp)
@@ -101,7 +101,7 @@ function c101001015.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(c,REASON_COST)
 end
 function c101001015.spfilter(c,e,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x10f8) or c:IsSetCard(0x20f8)) 
+	return c:IsFaceup() and (c:IsSetCard(0x10f8) or c:IsSetCard(0x20f8))
 		and c:IsType(TYPE_PENDULUM) and not c:IsCode(101001015)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
