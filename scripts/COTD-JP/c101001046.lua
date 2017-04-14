@@ -47,7 +47,7 @@ function c101001046.descon(e,tp,eg,ep,ev,re,r,rp)
 	return g and not eg:IsContains(e:GetHandler()) and eg:IsExists(c101001046.cfilter2,1,nil,g)
 end
 function c101001046.desfilter(c)
-	return c:GetSequence()>=5
+	return c:GetSequence()<5
 end
 function c101001046.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
