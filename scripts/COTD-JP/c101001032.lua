@@ -29,8 +29,9 @@ function c101001032.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetMatchingGroup(c101001032.filter,tp,LOCATION_DECK,0,nil,e,tp,ct)
 	local lvt={}
 	local tc=tg:GetFirst()
+	local tlv=0
 	while tc do
-		local tlv=tlv+tc:GetLevel()
+		tlv=tlv+tc:GetLevel()
 		lvt[tlv]=tlv
 		tc=tg:GetNext()
 	end
