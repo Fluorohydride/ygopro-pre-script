@@ -52,7 +52,7 @@ function c101001055.checkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterFlagEffect(101001055,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 	end
 end
-function c93211810.clear(e,tp,eg,ep,ev,re,r,rp)
+function c101001055.clear(e,tp,eg,ep,ev,re,r,rp)
 	c101001055[0]=0
 	c101001055[1]=0
 end
