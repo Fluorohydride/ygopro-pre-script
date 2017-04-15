@@ -1,11 +1,10 @@
 --変則ギア
 --Trasmission Gear
---Scripted by Eerie Code
+--Scripted by Eerie Code, RPS function by nekrozar
 --Might require a core update for better functionality
 function c101001080.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(14469229,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetTarget(c101001080.target)
@@ -37,11 +36,11 @@ function c101001080.initial_effect(c)
 			local res=-1
 			repeat
 				local r0=ch:Select(0,1,1,nil)
-				local r1=ch:Select(0,1,1,nil)
-				Duel.HintSelection(r0)
-				Duel.HintSelection(r1)
+				local r1=ch:Select(1,1,1,nil)
 				local rct0=r0:GetFirst():GetCode()
 				local rct1=r1:GetFirst():GetCode()
+				Duel.Hint(HINT_CARD,1,rct0)
+				Duel.Hint(HINT_CARD,0,rct1)
 				if rct0==rock then
 					if rct1==rock then res=-1 elseif rct1==paper then res=1 else res=0 end
 				elseif rct0==paper then
@@ -67,7 +66,7 @@ function c101001080.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not a:IsRelateToBattle() or not d:IsRelateToBattle() then return end
 	if a:IsControler(1-tp) then a,d=d,a end
 	local res=Duel.RockPaperScissors()
-	if res==1 then
+	if res==tp then
 		Duel.Remove(a,POS_FACEDOWN,REASON_RULE)
 	else
 		Duel.Remove(d,POS_FACEDOWN,REASON_RULE)
