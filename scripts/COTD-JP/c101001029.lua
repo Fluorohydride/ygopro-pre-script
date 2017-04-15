@@ -13,8 +13,8 @@ function c101001029.initial_effect(c)
 	e1:SetTarget(c101001029.sptg)
 	e1:SetOperation(c101001029.spop)
 	c:RegisterEffect(e1)
-	if not Duel.GetLinkedZones then
-		function Duel.GetLinkedZones(p)
+	if not Duel.GetLinkedZone then
+		function Duel.GetLinkedZone(p)
 			local zone=0
 			local g1=Duel.GetMatchingGroup(Card.IsType,p,LOCATION_MZONE,0,nil,TYPE_LINK)
 			local lc=g1:GetFirst()
@@ -50,7 +50,7 @@ function c101001029.spfilter0(c,e,tp)
 end
 function c101001029.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local zone=bit.band(Duel.GetLinkedZones(tp),0x1f)
+		local zone=bit.band(Duel.GetLinkedZone(tp),0x1f)
 		if zone==0 then return false end
 		local tempfix=false
 		local ct=0
@@ -80,7 +80,7 @@ function c101001029.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101001029.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zone=bit.band(Duel.GetLinkedZones(tp),0x1f)
+	local zone=bit.band(Duel.GetLinkedZone(tp),0x1f)
 	if zone==0 then return end
 	local ct=0
 	for i=0,4 do
