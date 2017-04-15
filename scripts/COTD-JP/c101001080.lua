@@ -11,6 +11,49 @@ function c101001080.initial_effect(c)
 	e1:SetTarget(c101001080.target)
 	e1:SetOperation(c101001080.activate)
 	c:RegisterEffect(e1)
+	if not Duel.RockPaperScissors then
+		function Duel.RockPaperScissors()
+			local rock,paper,xors=0,0,0
+			if c101001180 then
+				rock=101001180
+			else
+				rock=71786742
+			end
+			if c101001181 then
+				paper=101001181
+			else
+				paper=45286019
+			end
+			if c101001182 then
+				xors=101001182
+			else
+				xors=1045143
+			end
+			local rocktemp=Duel.CreateToken(0,rock)
+			local papertemp=Duel.CreateToken(0,paper)
+			local xorstemp=Duel.CreateToken(0,xors)
+			local ch=Group.FromCards(rocktemp,papertemp,xorstemp)
+			Duel.Remove(ch,POS_FACEUP,REASON_RULE)
+			local res=-1
+			repeat
+				local r0=ch:Select(0,1,1,nil)
+				local r1=ch:Select(0,1,1,nil)
+				Duel.HintSelection(r0)
+				Duel.HintSelection(r1)
+				local rct0=r0:GetFirst():GetCode()
+				local rct1=r1:GetFirst():GetCode()
+				if rct0==rock then
+					if rct1==rock then res=-1 elseif rct1==paper then res=1 else res=0 end
+				elseif rct0==paper then
+					if rct1==paper then res=-1 elseif rct1==xors then res=1 else res=0 end
+				else
+					if rct1==xors then res=-1 elseif rct1==rock then res=1 else res=0 end
+				end
+			until res==0 or res==1
+			Duel.SendtoDeck(ch,nil,-2,REASON_RULE)
+			return res
+		end
+	end
 end
 function c101001080.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
@@ -23,27 +66,10 @@ function c101001080.activate(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if not a:IsRelateToBattle() or not d:IsRelateToBattle() then return end
 	if a:IsControler(1-tp) then a,d=d,a end
-	local rock=Duel.CreateToken(tp,101001180)
-	local paper=Duel.CreateToken(tp,101001181)
-	local xors=Duel.CreateToken(tp,101001182)
-	local ch=Group.FromCards(rock,paper,xors)
-	local res=-1
-	while res=-1 do
-		local r0=ch:Select(tp,1,1,nil)
-		local r1=ch:Select(1-tp,1,1,nil)
-		Duel.ConfirmCards(tp,r1)
-		Duel.ConfirmCards(1-tp,r0)
-		if r0==rock then
-			if r1==rock then res=-1 elseif r1==paper then res=1-tp else res=tp end
-		elseif r0==paper then
-			if r1==paper then res=-1 elseif r1==xors then res=1-tp else res=tp end
-		else
-			if r1==xors then res=-1 elseif r1==rock then res=1-tp else res=tp end
-		end
-	end
-	if res==tp then
-		Duel.Remove(a,POS_FACEDOWN,REASON_EFFECT)
+	local res=Duel.RockPaperScissors()
+	if res==1 then
+		Duel.Remove(a,POS_FACEDOWN,REASON_RULE)
 	else
-		Duel.Remove(d,POS_FACEDOWN,REASON_EFFECT)
+		Duel.Remove(d,POS_FACEDOWN,REASON_RULE)
 	end
 end
