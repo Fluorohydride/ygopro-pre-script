@@ -29,7 +29,7 @@ function c100217024.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
-function c100217024.sumlimit2(e,c,sump,sumtype,sumpos,targetp,se)
+function c100217024.sumlimit1(e,c,sump,sumtype,sumpos,targetp,se)
 	return Duel.GetActivityCount(sump,ACTIVITY_SPSUMMON)>0
 end
 function c100217024.sumlimit2(e,c,sump,sumtype,sumpos,targetp,se)
