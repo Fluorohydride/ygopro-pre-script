@@ -41,12 +41,12 @@ function c101001080.initial_effect(c)
 				local rct1=r1:GetFirst():GetCode()
 				Duel.Hint(HINT_CARD,1,rct0)
 				Duel.Hint(HINT_CARD,0,rct1)
-				if rct0==rock then
-					if rct1==rock then res=-1 elseif rct1==paper then res=1 else res=0 end
-				elseif rct0==paper then
-					if rct1==paper then res=-1 elseif rct1==xors then res=1 else res=0 end
+				if rct0==rct1 then 
+					res=-1
+				elseif ((rct0 == rock and rct1 == paper) or (rct0 == paper and rct1 == xors) or (rct0 == xors and rct1 == rock)) then
+					res=1
 				else
-					if rct1==xors then res=-1 elseif rct1==rock then res=1 else res=0 end
+					res=0
 				end
 			until res==0 or res==1
 			Duel.SendtoDeck(ch,nil,-2,REASON_RULE)
