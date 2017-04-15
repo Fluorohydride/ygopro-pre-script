@@ -67,7 +67,7 @@ function c101001070.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 		else sel:AddCard(s1) end
 		ct=ct-1
-		lc=lc-1  
+		lc=lc-1
 	until ct==0 or sg:GetCount()==0 or lc==0 or not Duel.SelectYesNo(tp,aux.Stringid(101001070,0))
 	local tc=exsel:GetFirst()
 	while tc do
@@ -100,7 +100,7 @@ function c101001070.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101001070.matop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g=Duel.SelectMatchingCard(tp,c101001070.matfilter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,2,2,nil)
 		if g:GetCount()>0 then

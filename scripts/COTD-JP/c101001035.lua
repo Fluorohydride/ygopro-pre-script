@@ -45,14 +45,14 @@ function c101001035.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101001035.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
-	if chk==0 then return cg:GetClassCount(Card.GetCode)==cg:GetCount() end
+	if chk==0 then return cg:GetCount()>1 and cg:GetClassCount(Card.GetCode)==cg:GetCount() end
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c101001035.desop(e,tp,eg,ep,ev,re,r,rp)
 	local cg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-	if g:GetCount()>0 and cg:GetClassCount(Card.GetCode)==cg:GetCount() then
+	if g:GetCount()>0 and cg:GetCount()>1 and cg:GetClassCount(Card.GetCode)==cg:GetCount() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.HintSelection(sg)

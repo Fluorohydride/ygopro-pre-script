@@ -58,7 +58,7 @@ function c101001038.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RegisterFlagEffect(41209827,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c101001038.copyfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+	return c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TOKEN) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function c101001038.copytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -70,7 +70,7 @@ end
 function c101001038.copyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and (tc:IsFaceup() or tc:IsLocation(LOCATION_GRAVE)) and not tc:IsType(TYPE_TOKEN) then
+	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and (tc:IsFaceup() or tc:IsLocation(LOCATION_GRAVE)) then
 		local code=tc:GetOriginalCodeRule()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -82,12 +82,6 @@ function c101001038.copyop(e,tp,eg,ep,ev,re,r,rp)
 		if not tc:IsType(TYPE_TRAPMONSTER) then
 			local cid=c:CopyEffect(code,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,1)
 		end
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_PIERCE)
-		e2:SetTargetRange(LOCATION_MZONE,0)
-		e2:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e2,tp)
 		local e3=Effect.CreateEffect(c)
 		e3:SetDescription(aux.Stringid(101001038,1))
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -101,6 +95,12 @@ function c101001038.copyop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetOperation(c101001038.rstop)
 		c:RegisterEffect(e3)
 	end
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_PIERCE)
+	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e2,tp)
 end
 function c101001038.rstop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
