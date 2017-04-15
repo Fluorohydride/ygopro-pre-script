@@ -26,7 +26,7 @@ function c101001079.filter2(c,lv)
 end
 function c101001079.activate(e,tp,eg,ep,ev,re,r,rp)
 	local d1,d2=Duel.TossDice(tp,2)
-	local g=Duel.GetMatchingGroup(c101001079.filter2,tp,0,LOCATION_MZONE,nil,d1+d2)
+	local g=Duel.GetMatchingGroup(c101001079.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil,d1+d2)
 	if g:GetCount()>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end
