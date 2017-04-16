@@ -84,10 +84,10 @@ function c101001041.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft==0 then return end
 	ft=math.min(ft,2)
-	if Duel.IsPlayerAffectedByEffect(29724053) then
+	if Duel.IsPlayerAffectedByEffect(tp,29724053) then
 		ft=math.min(ft,c29724053[tp])
 	end
-	if Duel.IsPlayerAffectedByEffect(59822133) then
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then
 		ft=1
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
