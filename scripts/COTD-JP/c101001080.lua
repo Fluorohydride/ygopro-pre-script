@@ -67,8 +67,8 @@ function c101001080.activate(e,tp,eg,ep,ev,re,r,rp)
 	if a:IsControler(1-tp) then a,d=d,a end
 	local res=Duel.RockPaperScissors()
 	if res==tp then
-		Duel.Remove(d,POS_FACEDOWN,REASON_RULE)
+		Duel.Remove(d,POS_FACEDOWN,REASON_EFFECT)
 	else
-		Duel.Remove(a,POS_FACEDOWN,REASON_RULE)
+		Duel.Remove(a,POS_FACEDOWN,REASON_EFFECT)
 	end
 end
