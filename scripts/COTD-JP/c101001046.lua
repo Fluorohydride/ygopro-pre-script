@@ -70,11 +70,11 @@ function c101001046.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
 function c101001046.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker()==e:GetHandler()
+	return Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()
 end
 function c101001046.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,e:GetHandler():GetAttackTarget():GetBaseAttack())
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,Duel.GetAttackTarget():GetBaseAttack())
 end
 function c101001046.damop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
