@@ -78,12 +78,17 @@ function c101001053.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCountLimit(1)
 		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DRAW)
 		e2:SetLabelObject(tc)
+		e2:SetCondition(c101001053.agcon)
 		e2:SetOperation(c101001053.agop)
 		c:RegisterEffect(e2)
 	end
 end
 function c101001053.rcon(e)
 	return e:GetOwner():IsHasCardTarget(e:GetHandler()) and e:GetHandler():GetFlagEffect(101001053)~=0
+end
+function c101001053.agcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	return tc and tc:GetFlagEffect(101001053)~=0
 end
 function c101001053.agop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
