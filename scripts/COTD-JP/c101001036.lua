@@ -35,7 +35,7 @@ function c101001036.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function c101001036.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:GetSummonType()==SUMMON_TYPE_SPECIAL+1 and c:GetPreviousControler()==tp
+	return rp~=tp and c:GetSummonType()==SUMMON_TYPE_SPECIAL+1 and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c101001036.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
