@@ -45,6 +45,7 @@ function c100217045.initial_effect(c)
 	e4:SetOperation(c100217045.dkop)
 	c:RegisterEffect(e4)
 end
+c100217045.xyz_number=89
 function c100217045.excost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,nil) end

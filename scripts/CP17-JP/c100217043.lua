@@ -30,6 +30,7 @@ function c100217043.initial_effect(c)
 	e3:SetOperation(c100217043.operation)
 	c:RegisterEffect(e3)
 end
+c100217045.xyz_number=68
 function c100217043.value(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_GRAVE,LOCATION_GRAVE,nil,TYPE_MONSTER)*100
 end
