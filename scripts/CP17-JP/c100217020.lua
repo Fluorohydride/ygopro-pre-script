@@ -59,7 +59,7 @@ function c100217020.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100217020.condition(e,tp,eg,ep,ev,re,r,rp)
-	return local c=e:GetHandler()
+	local c=e:GetHandler()
 	return rp==1-tp and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function c100217020.cfilter(c)
