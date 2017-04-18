@@ -48,13 +48,13 @@ function c101001056.filter(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101001056.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
 		and Duel.IsExistingMatchingCard(c101001056.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,1-tp,0)
 end
 function c101001056.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetLocationCountFromEx(tp)
 	local tg=Duel.GetMatchingGroup(c101001056.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if ft<=0 or tg:GetCount()==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
