@@ -31,7 +31,7 @@ function c101001007.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(101001007,RESET_CHAIN,0,1)
 end
 function c101001007.filter(c)
-	return c:IsSetCard(0x1fb) and c:IsAbleToHand() and not c:IsCode(101001007)
+	return c:IsSetCard(0x1fb) and c:IsFaceup() and c:IsAbleToHand() and not c:IsCode(101001007)
 end
 function c101001007.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101001007.filter(chkc) end

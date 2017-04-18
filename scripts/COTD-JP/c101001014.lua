@@ -27,9 +27,9 @@ function c101001014.indval(e,c)
 	return c:IsLevelBelow(e:GetHandler():GetLevel())
 end
 function c101001014.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and eg:GetCount()==1 
-		and eg:GetFirst():GetLevel()>0
-		and eg:GetFirst():IsAttackAbove(eg:GetFirst():GetLevel()*200)
+	if tp==ep or eg:GetCount()~=1 then return false end
+	local c=eg:GetFirst()
+	return c:GetLevel()>0 and c:IsAttackAbove(c:GetLevel()*200)
 end
 function c101001014.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -37,7 +37,7 @@ function c101001014.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101001014.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+	if tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE) and not tc:IsImmuneToEffect(e) then
 		local atk=tc:GetAttack()
 		local nv=math.min(atk,tc:GetLevel()*200)
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -46,6 +46,8 @@ function c101001014.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(-tc:GetLevel()*200)
 		tc:RegisterEffect(e1)
-		Duel.Damage(1-tp,nv,REASON_EFFECT)
+		if not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) then
+			Duel.Damage(1-tp,nv,REASON_EFFECT)
+		end
 	end
 end

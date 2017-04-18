@@ -6,6 +6,8 @@
 - **April 15, 2017**     : Code of the Duelist (COTD-JP) : `101001XXX`  
 - **May 4, 2017**     : MAXIMUM CRISIS (MACR-EN) : `100912XXX`  
 - **May 13, 2017**     : Collectors Pack 2017 (CP17-JP) : `100217XXX`  
+- **June 3, 2017**     : Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`  
+- **June 17, 2017**     : Structure Deck: Cyverse Link (SD32-JP) : `100332XXX`  
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~  

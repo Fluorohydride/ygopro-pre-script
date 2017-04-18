@@ -28,15 +28,9 @@ function c101001032.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=math.min(3,cg:GetCount())
 	local tg=Duel.GetMatchingGroup(c101001032.filter,tp,LOCATION_DECK,0,nil,e,tp,ct)
 	local lvt={}
-	local tc=tg:GetFirst()
-	while tc do
-		local tlv=tlv+tc:GetLevel()
-		lvt[tlv]=tlv
-		tc=tg:GetNext()
-	end
 	local pc=1
-	for i=1,12 do
-		if lvt[i] then lvt[i]=nil lvt[pc]=i pc=pc+1 end
+	for i=1,3 do
+		if tg:IsExists(c101001032.sfilter,1,nil,i,e,tp) then lvt[pc]=i pc=pc+1 end
 	end
 	lvt[pc]=nil
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101001032,1))

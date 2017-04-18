@@ -43,8 +43,8 @@ function c101001021.initial_effect(c)
 		end
 	end
 	--
-	if not Duel.GetLinkedZones then
-		function Duel.GetLinkedZones(p)
+	if not Duel.GetLinkedZone then
+		function Duel.GetLinkedZone(p)
 			local zone=0
 			local g1=Duel.GetMatchingGroup(Card.IsType,p,LOCATION_MZONE,0,nil,TYPE_LINK)
 			local lc=g1:GetFirst()
@@ -98,7 +98,7 @@ function c101001021.spfilter(c,e,tp,zone)
 	return c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
 end
 function c101001021.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local zone=Duel.GetLinkedZones(tp)
+	local zone=Duel.GetLinkedZone(tp)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101001021.spfilter(chkc,e,tp,zone) end
 	if chk==0 then return zone~=0
 		and Duel.IsExistingTarget(c101001021.spfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),e,tp,zone) end
@@ -107,7 +107,7 @@ function c101001021.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tg,1,0,0)
 end
 function c101001021.spop(e,tp,eg,ep,ev,re,r,rp)
-	local zone=Duel.GetLinkedZones(tp)
+	local zone=Duel.GetLinkedZone(tp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and zone~=0 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE,zone)

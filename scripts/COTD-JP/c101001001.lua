@@ -14,18 +14,20 @@ function c101001001.initial_effect(c)
 	e1:SetOperation(c101001001.posop)
 	c:RegisterEffect(e1)
 end
+function c101001001.posfilter(c)
+	return c:IsPosition(POS_FACEUP_ATTACK) and not c:IsType(TYPE_LINK)
+end
 function c101001001.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsPosition(POS_FACEUP_ATTACK) end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsPosition,tp,0,LOCATION_MZONE,1,nil,POS_FACEUP_ATTACK) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c101001001.posfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101001001.posfilter,tp,0,LOCATION_MZONE,1,nil,POS_FACEUP_ATTACK) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g=Duel.SelectTarget(tp,Card.IsPosition,tp,0,LOCATION_MZONE,1,1,nil,POS_FACEUP_ATTACK)
+	local g=Duel.SelectTarget(tp,c101001001.posfilter,tp,0,LOCATION_MZONE,1,1,nil,POS_FACEUP_ATTACK)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
 function c101001001.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
+	if tc:IsRelateToEffect(e) and Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_MUST_ATTACK_MONSTER)
@@ -46,14 +48,11 @@ function c101001001.posop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_FIELD)
 		e3:SetCode(EFFECT_PIERCE)
 		e3:SetTargetRange(LOCATION_MZONE,0)
-		e3:SetTarget(c101001001.target)
+		e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_CYBERS))
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 	end
 end
 function c101001001.attg(e,c)
 	return c==e:GetLabelObject()
-end
-function c101001001.target(e,c)
-	return c:IsRace(RACE_CYBERS)
 end
