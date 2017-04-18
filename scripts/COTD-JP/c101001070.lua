@@ -66,18 +66,16 @@ function c101001070.activate(e,tp,eg,ep,ev,re,r,rp)
 	if sg:GetCount()==0 then return end
 	local rg=Group.CreateGroup()
 	repeat
-		sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101001070.spfilter),tp,loc,0,nil,e,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tg=sg:Select(tp,1,1,nil):GetFirst()
 		rg:AddCard(tg)
 		sg:Remove(Card.IsCode,nil,tg:GetCode())
 		if tg:IsLocation(LOCATION_EXTRA) then ft2=ft2-1
 		else ft1=ft1-1 end
+		if ft1<=0 then sg:Remove(Card.IsLocation,nil,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE) end
+		if ft2<=0 then sg:Remove(Card.IsLocation,nil,LOCATION_EXTRA) end
 		ct=ct-1
-		local loc=0
-		if ft1>0 then loc=loc+LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE end
-		if ft2>0 then loc=loc+LOCATION_EXTRA end
-	until ct==0 or sg:GetCount()==0 or loc==0 or not Duel.SelectYesNo(tp,aux.Stringid(101001070,0))
+	until ct==0 or sg:GetCount()==0 or ft1+ft2==0 or not Duel.SelectYesNo(tp,aux.Stringid(101001070,0))
 	local tc=rg:GetFirst()
 	while tc do
 		Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP)

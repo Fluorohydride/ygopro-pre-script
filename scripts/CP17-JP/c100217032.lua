@@ -20,7 +20,7 @@ function c100217032.costfilter2(c)
 	return not c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost()
 end
 function c100217032.filter(c,e,tp)
-	return c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(7) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(7) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100217032.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100217032.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)

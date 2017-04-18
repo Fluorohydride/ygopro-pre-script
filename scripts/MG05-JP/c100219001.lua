@@ -34,7 +34,7 @@ function c100219001.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,100219001+100)
+	e3:SetCountLimit(1,100219001)
 	e3:SetCondition(c100219001.descon)
 	e3:SetTarget(c100219001.destg)
 	e3:SetOperation(c100219001.desop)
@@ -63,7 +63,7 @@ end
 function c100219001.atkop(e,tp,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=a:GetBattleTarget()
-	if e:GetHandler():IsRelateToEffect(e) 
+	if e:GetHandler():IsRelateToEffect(e)
 		and a:IsFaceup() and a:IsRelateToBattle()
 		and bc:IsFaceup() and bc:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -130,10 +130,10 @@ function c100219001.pencon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()
 end
 function c100219001.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7) end
+	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
 end
 function c100219001.penop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.CheckLocation(tp,LOCATION_SZONE,6) and not Duel.CheckLocation(tp,LOCATION_SZONE,7) then return false end
+	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)

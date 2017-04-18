@@ -7,9 +7,9 @@ function c100418002.initial_effect(c)
 	e1:SetDescription(aux.Stringid(100418002,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_EQUIP)
 	e1:SetCountLimit(1)
-	e1:SetCost(c100418002.descost)
 	e1:SetTarget(c100418002.destg)
 	e1:SetOperation(c100418002.desop)
 	c:RegisterEffect(e1)
@@ -30,23 +30,25 @@ function c100418002.filter1(c,ec)
 	return c:GetEquipTarget()==ec
 end
 function c100418002.filter2(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
-function c100418002.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(c100418002.filter1,1,nil,e:GetHandler()) end
-	local g=eg:Filter(c100418002.filter1,nil,e:GetHandler())
-	Duel.Destroy(g,REASON_EFFECT)
+	return c:IsType()
 end
 function c100418002.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(c100418002.filter2,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
+	if chk==0 then return eg:IsExists(c100418002.filter1,1,nil,e:GetHandler()) end
+	local g=eg:Filter(c100418002.filter1,nil,e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c100418002.desop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.SelectMatchingCard(tp,c100418002.filter2,tp,0,LOCATION_ONFIELD,1,1,nil)
-	Duel.Destroy(g,REASON_EFFECT)
+	local g=eg:Filter(c100418002.filter1,nil,e:GetHandler())
+	local sg=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
+	if Duel.Destroy(g,REASON_EFFECT)~=0 and sg:GetCount()>0
+		and Duel.SelectYesNo(tp,aux.Stringid(100418002,2)) then
+		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		local tg=sg:Select(tp,1,1,nil)
+		Duel.HintSelection(tg)
+		Duel.Destroy(tg,REASON_EFFECT)
+	end
 end
-
 function c100418002.spfilter(c,e,tp)
 	return c:IsSetCard(0x3b) and c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

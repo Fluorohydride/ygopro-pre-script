@@ -6,7 +6,8 @@ function c100418010.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)e1:SetCountLimit(1,100418010+EFFECT_COUNT_CODE_OATH)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,100418010+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100418010.target)
 	e1:SetOperation(c100418010.activate)
 	c:RegisterEffect(e1)
@@ -22,7 +23,7 @@ function c100418010.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100418010.filter(c)
-	return c:IsSetCard(0x4) and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return c:IsSetCard(0x4) and not c:IsCode(100418010) and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function c100418010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100418010.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -38,8 +39,6 @@ function c100418010.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
 end
-
-
 function c100418010.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
@@ -52,14 +51,6 @@ function c100418010.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c100418010.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100418010.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_OATH)
-	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(c100418010.ftarget)
-	e1:SetLabel(g:GetFirst():GetFieldID())
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
 end
 function c100418010.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -68,12 +59,18 @@ function c100418010.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ATTACK_ALL)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		
 	end
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CANNOT_ATTACK)
+	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetTarget(c100418010.ftarget)
+	e2:SetLabel(tc:GetFieldID())
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e2,tp)
 end
-
 function c100418010.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
