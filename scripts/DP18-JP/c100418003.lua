@@ -83,10 +83,13 @@ end
 function c100418003.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
+function c100418003.ngcfilter(c,tp)
+	return c:IsControler(tp) and c:IsOnField()
+end
 function c100418003.ngcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(Card.IsControler,1,nil,tp) and Duel.IsChainNegatable(ev)
+	return g and g:IsExists(c100418003.ngcfilter,1,nil,tp) and Duel.IsChainNegatable(ev)
 end
 function c100418003.ngfilter(c,e,tp)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToGraveAsCost()
@@ -106,7 +109,6 @@ function c100418003.ngop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-
 function c100418003.eqcheck(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabelObject() then e:GetLabelObject():DeleteGroup() end
 	local g=e:GetHandler():GetEquipGroup()
