@@ -51,7 +51,7 @@ function c100219001.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function c100219001.matfilter(c)
-	return c:IsCode(101001039,82044279,100219001,70771599) or c:IsSetCard(0x1ff)
+	return c:IsCode(101001039,82044279,90036274,70771599) or c:IsSetCard(0x1ff)
 end
 function c100219001.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
