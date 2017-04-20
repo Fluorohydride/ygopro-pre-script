@@ -72,6 +72,7 @@ function c100217039.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 	end
+	Duel.SetChainLimit(aux.FALSE)
 end
 function c100217039.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
