@@ -26,25 +26,34 @@ function c101001046.initial_effect(c)
 	e2:SetTarget(c101001046.damtg)
 	e2:SetOperation(c101001046.damop)
 	c:RegisterEffect(e2)
+	if not Duel.GetLinkedGroup then
+		function Duel.GetLinkedGroup(p,s,o)
+			local g=Group.CreateGroup()
+			local loc1,loc2=0,0
+			if s==1 then loc1=LOCATION_MZONE end
+			if o==1 then loc2=LOCATION_MZONE end
+			local tg=Duel.GetMatchingGroup(c101001046.lgfilter,p,loc1,loc2,nil)
+			local tc=tg:GetFirst()
+			while tc do
+				local lg=tc:GetLinkedGroup()
+				if lg:GetCount()>0 then
+					g:Merge(lg)
+				end
+				tc=tg:GetNext()
+			end
+			return g
+		end
+	end
 end
-function c101001046.cfilter1(c)
+function c101001046.lgfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_LINK)
 end
-function c101001046.cfilter2(c,g)
+function c101001046.cfilter(c,g)
 	return g:IsContains(c)
 end
 function c101001046.descon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Group.CreateGroup()
-	local tg=Duel.GetMatchingGroup(c101001046.cfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local tc=tg:GetFirst()
-	while tc do
-		local lg=tc:GetLinkedGroup()
-		if lg:GetCount()>0 then
-			g:Merge(lg)
-		end
-		tc=tg:GetNext()
-	end
-	return g and not eg:IsContains(e:GetHandler()) and eg:IsExists(c101001046.cfilter2,1,nil,g)
+	local g=Duel.GetLinkedGroup(tp,1,1)
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c101001046.cfilter,1,nil,g)
 end
 function c101001046.desfilter(c)
 	return c:GetSequence()<5
