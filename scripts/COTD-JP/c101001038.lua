@@ -45,11 +45,6 @@ end
 function c101001038.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-		and Duel.CheckReleaseGroup(tp,c101001038.spfilter,2,nil,c)
-
-	if c==nil then return true end
-	local tp=c:GetControler()
 	local ft=Duel.GetLocationCountFromEx(tp,PLAYER_NONE)
 	local ct=-ft+1
 	local g=Duel.GetReleaseGroup(tp):Filter(c101001038.spfilter,nil,c)
