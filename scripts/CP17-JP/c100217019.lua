@@ -52,7 +52,7 @@ function c100217019.atkoperation(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c100217019.condition(e,tp,eg,ep,ev,re,r,rp)
-	return local c=e:GetHandler()
+	local c=e:GetHandler()
 	return rp==1-tp and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function c100217019.cfilter(c)

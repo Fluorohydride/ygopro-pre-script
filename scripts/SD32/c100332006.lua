@@ -20,7 +20,7 @@ function c100332006.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetCondition(c100332006.spcon)
-	e2SetTarget(c100332006.sptg)
+	e2:SetTarget(c100332006.sptg)
 	e2:SetOperation(c100332006.spop)
 	c:RegisterEffect(e2)
 end
