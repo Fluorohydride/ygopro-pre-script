@@ -42,28 +42,6 @@ function c84899094.initial_effect(c)
 			return false
 		end
 	end
-	--
-	if not Duel.GetLinkedZone then
-		function Duel.GetLinkedZone(p)
-			local zone=0
-			local g1=Duel.GetMatchingGroup(Card.IsType,p,LOCATION_MZONE,0,nil,TYPE_LINK)
-			local lc=g1:GetFirst()
-			while lc do
-				zone=bit.bor(zone,lc:GetLinkedZone())
-				lc=g1:GetNext()
-			end
-			local g2=Duel.GetMatchingGroup(Card.IsType,p,0,LOCATION_MZONE,nil,TYPE_LINK)
-			local lc=g2:GetFirst()
-			while lc do
-				local zone0=bit.rshift(lc:GetLinkedZone(),16)
-				local zone1=bit.lshift(bit.band(lc:GetLinkedZone(),0xffff),16)
-				zone=bit.bor(zone,zone0)
-				zone=bit.bor(zone,zone1)
-				lc=g2:GetNext()
-			end
-			return zone
-		end
-	end
 end
 function c84899094.filter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsLinkState()

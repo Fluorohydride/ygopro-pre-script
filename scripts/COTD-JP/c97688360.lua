@@ -34,10 +34,10 @@ function c97688360.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function c97688360.atkfilter1(c,tp)
-	return c:IsSetCard(0x1fc) and Duel.IsExistingTarget(c97688360.atkfilter2,tp,LOCATION_MZONE,0,1,c)
+	return c:IsSetCard(0xfc) and Duel.IsExistingTarget(c97688360.atkfilter2,tp,LOCATION_MZONE,0,1,c)
 end
 function c97688360.atkfilter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x1fc)
+	return c:IsFaceup() and c:IsSetCard(0xfc)
 end
 function c97688360.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c97688360.atkfilter1,1,nil,tp) end
@@ -66,7 +66,7 @@ function c97688360.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c97688360.thfilter(c)
-	return c:IsSetCard(0x1fc) and not c:IsCode(97688360) and c:IsAbleToHand()
+	return c:IsSetCard(0xfc) and not c:IsCode(97688360) and c:IsAbleToHand()
 end
 function c97688360.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c97688360.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -34,7 +34,7 @@ function c35371948.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c35371948.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1fb) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfb) and c:IsAbleToHand()
 end
 function c35371948.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -154,11 +154,11 @@ function c35371948.agop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c35371948.damcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():IsSetCard(0x1fb)
+	return ep~=tp and eg:GetFirst():IsSetCard(0xfb)
 end
 function c35371948.damcon2(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and bit.band(r,REASON_BATTLE)==0 and re
-		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fb)
+		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0xfb)
 end
 function c35371948.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,35371948)

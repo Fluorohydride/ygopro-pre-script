@@ -28,7 +28,7 @@ function c61283655.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c61283655.filter(c)
-	return c:IsSetCard(0x1fb) and c:IsAbleToHand()
+	return c:IsSetCard(0xfb) and c:IsAbleToHand()
 end
 function c61283655.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c61283655.filter,tp,LOCATION_DECK,0,1,nil) end

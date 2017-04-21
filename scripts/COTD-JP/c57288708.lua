@@ -66,7 +66,7 @@ function c57288708.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==0
 end
 function c57288708.spfilter(c,e,tp)
-	return c:IsSetCard(0x1fd) and not c:IsCode(57288708) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xfd) and not c:IsCode(57288708) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c57288708.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
@@ -87,7 +87,7 @@ function c57288708.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c57288708.thfilter(c)
-	return c:IsSetCard(0x1fe) and c:IsAbleToHand()
+	return c:IsSetCard(0xfe) and c:IsAbleToHand()
 end
 function c57288708.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c57288708.thfilter,tp,LOCATION_DECK,0,1,nil) end

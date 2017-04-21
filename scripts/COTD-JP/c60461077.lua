@@ -25,7 +25,7 @@ function c60461077.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c60461077.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x1fc)
+	return c:IsFacedown() or not c:IsSetCard(0xfc)
 end
 function c60461077.ntcon(e,c,minc)
 	if c==nil then return true end
@@ -37,7 +37,7 @@ function c60461077.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c60461077.thfilter(c)
-	return c:IsSetCard(0x1fc) and not c:IsCode(60461077) and c:IsAbleToHand()
+	return c:IsSetCard(0xfc) and not c:IsCode(60461077) and c:IsAbleToHand()
 end
 function c60461077.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60461077.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -31,7 +31,7 @@ function c35199656.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(35199656,RESET_CHAIN,0,1)
 end
 function c35199656.filter(c)
-	return c:IsSetCard(0x1fb) and c:IsFaceup() and c:IsAbleToHand() and not c:IsCode(35199656)
+	return c:IsSetCard(0xfb) and c:IsFaceup() and c:IsAbleToHand() and not c:IsCode(35199656)
 end
 function c35199656.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c35199656.filter(chkc) end

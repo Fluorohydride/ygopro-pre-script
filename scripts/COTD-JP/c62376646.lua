@@ -14,7 +14,7 @@ function c62376646.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c62376646.spfilter(c,e,tp)
-	return c:IsSetCard(0x1fc) and c:GetLevel()>0
+	return c:IsSetCard(0xfc) and c:GetLevel()>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and c:IsCanBeEffectTarget(e)
 end
 function c62376646.rfilter(c,lv)

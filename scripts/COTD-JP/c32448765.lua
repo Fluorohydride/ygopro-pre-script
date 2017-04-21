@@ -3,7 +3,7 @@
 --Script by nekrozar
 function c32448765.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x1fb),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfb),2,2)
 	c:EnableReviveLimit()
 	--damage
 	local e1=Effect.CreateEffect(c)
@@ -39,7 +39,7 @@ function c32448765.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c32448765.cfilter(c,g)
-	return c:IsSetCard(0x1fb) and g:IsContains(c)
+	return c:IsSetCard(0xfb) and g:IsContains(c)
 end
 function c32448765.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local lg=e:GetHandler():GetLinkedGroup()
@@ -50,10 +50,10 @@ function c32448765.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,200,REASON_EFFECT)
 end
 function c32448765.indtg(e,c)
-	return c:IsSetCard(0x1fb) and e:GetHandler():GetLinkedGroup():IsContains(c)
+	return c:IsSetCard(0xfb) and e:GetHandler():GetLinkedGroup():IsContains(c)
 end
 function c32448765.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and bit.band(r,REASON_EFFECT)~=0 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fb)
+	return ep~=tp and bit.band(r,REASON_EFFECT)~=0 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0xfb)
 end
 function c32448765.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

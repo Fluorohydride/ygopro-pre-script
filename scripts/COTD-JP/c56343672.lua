@@ -13,27 +13,6 @@ function c56343672.initial_effect(c)
 	e1:SetTarget(c56343672.sptg)
 	e1:SetOperation(c56343672.spop)
 	c:RegisterEffect(e1)
-	if not Duel.GetLinkedZone then
-		function Duel.GetLinkedZone(p)
-			local zone=0
-			local g1=Duel.GetMatchingGroup(Card.IsType,p,LOCATION_MZONE,0,nil,TYPE_LINK)
-			local lc=g1:GetFirst()
-			while lc do
-				zone=bit.bor(zone,lc:GetLinkedZone())
-				lc=g1:GetNext()
-			end
-			local g2=Duel.GetMatchingGroup(Card.IsType,p,0,LOCATION_MZONE,nil,TYPE_LINK)
-			local lc=g2:GetFirst()
-			while lc do
-				local zone0=bit.rshift(lc:GetLinkedZone(),16)
-				local zone1=bit.lshift(bit.band(lc:GetLinkedZone(),0xffff),16)
-				zone=bit.bor(zone,zone0)
-				zone=bit.bor(zone,zone1)
-				lc=g2:GetNext()
-			end
-			return zone
-		end
-	end
 end
 function c56343672.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end

@@ -15,7 +15,7 @@ function c21254443.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c21254443.cfilter(c,ft)
-	return c:IsSetCard(0x1fe) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0xfe) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 		and (ft>0 or c:IsLocation(LOCATION_MZONE))
 end

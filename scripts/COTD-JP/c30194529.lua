@@ -43,7 +43,7 @@ function c30194529.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end
 function c30194529.drfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1fd)
+	return c:IsFaceup() and c:IsSetCard(0xfd)
 end
 function c30194529.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -76,7 +76,7 @@ function c30194529.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c30194529.spfilter2(c,e,tp)
-	return c:IsSetCard(0x1fd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xfd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c30194529.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

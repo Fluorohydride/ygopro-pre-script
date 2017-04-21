@@ -12,7 +12,7 @@ function c61654098.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1fd))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xfd))
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
@@ -33,14 +33,14 @@ function c61654098.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c61654098.spcfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0x1fd)
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0xfd)
 		and (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT)))
 end
 function c61654098.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c61654098.spcfilter,1,nil,tp,rp)
 end
 function c61654098.filter(c,e,tp)
-	return c:IsSetCard(0x1fd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(0xfd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c61654098.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c61654098.filter(chkc,e,tp) end

@@ -38,7 +38,7 @@ function c97648103.initial_effect(c)
 	end
 end
 function c97648103.thfilter(c,e)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1fd) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfd) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function c97648103.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c97648103.thfilter,tp,LOCATION_GRAVE,0,nil,e)
