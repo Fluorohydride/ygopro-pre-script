@@ -54,19 +54,20 @@ function c100418008.costfilter(c,ft)
 	return c:IsAbleToGraveAsCost() and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end
 function c100418008.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100418008.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,e:GetHandler(),ft) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100418008.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,c,ft) end
 	local g=nil
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	if ft<=0 then
-		g=Duel.SelectMatchingCard(tp,c100418008.costfilter,tp,LOCATION_MZONE,0,1,1,nil,ft)
+		g=Duel.SelectMatchingCard(tp,c100418008.costfilter,tp,LOCATION_MZONE,0,1,1,c,ft)
 	else
-		g=Duel.SelectMatchingCard(tp,c100418008.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil,ft)
+		g=Duel.SelectMatchingCard(tp,c100418008.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,c,ft)
 	end
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100418008.spfilter(c,e,tp)
-	return c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x4) and not c:IsCode(100418008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100418008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
