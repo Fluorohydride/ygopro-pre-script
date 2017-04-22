@@ -25,18 +25,17 @@ function c100418018.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BATTLE_START)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(c100418018.econ)
 	e3:SetCondition(c100418018.descon)
 	e3:SetTarget(c100418018.destg)
 	e3:SetOperation(c100418018.desop)
 	c:RegisterEffect(e3)
 end
-function c100418018.filter(c)
+function c100418018.filter(c,tp)
 	return c:IsCode(22702055) and c:GetActivateEffect():IsActivatable(tp)
 end
 function c100418018.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100418018.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100418018.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,tp)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100418018,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100418018.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
@@ -100,11 +99,12 @@ function c100418018.indval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
 function c100418018.descon(e,tp,eg,ep,ev,re,r,rp)
+	if not c100418018.econ(e,tp,eg,ep,ev,re,r,rp) then return false end
 	local tc=Duel.GetAttacker()
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
 	if tc:IsControler(1-tp) then tc,bc=bc,tc end
-	if tc:GetOriginalLevel()>=5 and tc:IsAttribute(ATTRIBUTE_WATER) then
+	if tc:IsFaceup() and tc:GetOriginalLevel()>=5 and tc:IsAttribute(ATTRIBUTE_WATER) then
 		e:SetLabelObject(bc)
 		return true
 	else return false end

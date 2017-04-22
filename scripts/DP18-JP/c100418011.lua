@@ -13,7 +13,7 @@ function c100418011.initial_effect(c)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100418011,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
@@ -22,7 +22,6 @@ function c100418011.initial_effect(c)
 	e2:SetCondition(c100418011.condition)
 	e2:SetTarget(c100418011.target2)
 	e2:SetOperation(c100418011.operation)
-	e2:SetLabel(1)
 	c:RegisterEffect(e2)	
 	--destroy
 	local e3=Effect.CreateEffect(c)
@@ -56,6 +55,7 @@ function c100418011.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.SelectYesNo(tp,94) then
 		e:GetHandler():RegisterFlagEffect(100418011,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 		e:GetHandler():RegisterFlagEffect(0,RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,65)
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	end
 end
@@ -80,7 +80,7 @@ function c100418011.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c100418011.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
