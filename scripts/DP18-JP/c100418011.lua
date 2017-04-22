@@ -60,7 +60,8 @@ function c100418011.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c100418011.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_BATTLE
+	local ph=Duel.GetCurrentPhase()
+	return (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
 end
 function c100418011.filter(c,e,tp)
 	return c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
