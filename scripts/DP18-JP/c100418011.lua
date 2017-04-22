@@ -96,7 +96,7 @@ end
 function c100418011.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function c100418011.spcon(e,tp,eg,ep,ev,re,r,rp)

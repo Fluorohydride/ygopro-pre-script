@@ -63,7 +63,7 @@ function c100418010.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
-	local e2=Effect.CreateEffect(c)
+	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
 	e2:SetTargetRange(LOCATION_MZONE,0)
