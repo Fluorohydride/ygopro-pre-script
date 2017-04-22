@@ -65,13 +65,14 @@ end
 function c100217039.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattledGroupCount()>0
 end
-function c100217036.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100217039.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
 	if g:GetCount()>0 then
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 	end
+	Duel.SetChainLimit(aux.FALSE)
 end
 function c100217039.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
