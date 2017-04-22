@@ -74,12 +74,19 @@ function c100418011.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c100418011.operation(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():GetFlagEffect(100418011)==0 or not e:GetHandler():IsRelateToEffect(e) then return end
+	local c=e:GetHandler()
+	if c:GetFlagEffect(100418011)==0 or not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c100418011.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	local tc=Duel.SelectMatchingCard(tp,c100418011.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(500)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
+		Duel.SpecialSummonComplete()
 	end
 end
 function c100418011.check(c,tp)
