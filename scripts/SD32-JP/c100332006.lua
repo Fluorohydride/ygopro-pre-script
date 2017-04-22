@@ -44,7 +44,7 @@ function c100332006.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
 function c100332006.spfilter(c,e,tp)
-	return cc:IsLevelBelow(4) and c:IsRace(RACE_CYBERS) and not c:IsCode(100332008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERS) and not c:IsCode(100332008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100332006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
