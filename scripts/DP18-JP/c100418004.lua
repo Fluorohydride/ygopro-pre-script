@@ -12,7 +12,7 @@ function c100418004.initial_effect(c)
 	e1:SetCondition(c100418004.condition)
 	e1:SetTarget(c100418004.target)
 	e1:SetOperation(c100418004.operation)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--sand to grave and equip
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_EQUIP)
@@ -35,7 +35,6 @@ end
 function c100418004.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c100418004.filter(chkc) and chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return Duel.IsExistingTarget(c100418004.filter,tp,LOCATION_MZONE,0,1,nil) end
-
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,c100418004.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
@@ -86,7 +85,7 @@ function c100418004.desfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
 function c100418004.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and c100418004.desfilter(chkc) and chkc~=tc end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100418004.desfilter(chkc) and chkc~=tc end
 	if chk==0 then return Duel.IsExistingTarget(c100418004.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler():GetEquipTarget()) end
 	local tc=e:GetLabelObject()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)

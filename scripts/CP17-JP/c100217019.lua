@@ -21,6 +21,7 @@ function c100217019.initial_effect(c)
 	e3:SetDescription(aux.Stringid(100217019,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCondition(c100217019.condition)
 	e3:SetCost(c100217019.cost)
@@ -28,15 +29,11 @@ function c100217019.initial_effect(c)
 	e3:SetOperation(c100217019.operation)
 	c:RegisterEffect(e3)
 end
-function c100217019.filter(c)
-	return c:IsFaceup()
-end
 function c100217019.atktarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
+	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function c100217019.atkoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -46,11 +43,10 @@ function c100217019.atkoperation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		e1:SetValue(tc:GetBaseAttack()/2)
+		e1:SetValue(math.ceil(tc:GetBaseAttack()/2))
 		tc:RegisterEffect(e1)
 	end
 end
-
 function c100217019.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp==1-tp and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
@@ -66,7 +62,7 @@ function c100217019.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100217019.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100217019.operation(e,tp,eg,ep,ev,re,r,rp)

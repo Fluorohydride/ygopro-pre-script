@@ -15,6 +15,7 @@ function c100332008.initial_effect(c)
 	c:RegisterEffect(e1)
 	--banish
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100332008,1))
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
@@ -66,12 +67,9 @@ function c100332008.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		c:RegisterEffect(e1,true)
 		Duel.SpecialSummonComplete()
-	elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
-		Duel.SendtoGrave(c,REASON_RULE)
 	end
 end
-function c100332008.filter(c,atk)
+function c100332008.rmfilter(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk) and c:IsAbleToRemove()
 end
 function c100332008.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -81,14 +79,13 @@ function c100332008.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100332008.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingTarget(c25586143.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetAttack()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100332008.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack()) end
+	local g=Duel.GetMatchingGroup(c100332008.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e:GetHandler():GetAttack())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c100332008.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil,c:GetAttack())
+	local g=Duel.SelectMatchingCard(tp,c100332008.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e:GetHandler():GetAttack())
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
