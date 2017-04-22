@@ -68,7 +68,7 @@ function c100418004.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100418004.atcon(e)
-	return e:GetHandler():GetAttackAnnouncedCount()>0
+	return e:GetHandler():GetEquipTarget():GetAttackAnnouncedCount()>0
 end
 function c100418004.eqlimit(e,c)
 	return c100418004.filter(c)
