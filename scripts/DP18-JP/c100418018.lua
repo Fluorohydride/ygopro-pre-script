@@ -38,7 +38,7 @@ function c100418018.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100418018.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100418018,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100418018.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
+		local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100418018.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
 		if tc then
 			local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 			if fc then

@@ -123,11 +123,10 @@ function c100418003.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
 function c100418003.spfilter2(c,e,tp)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100418003.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject():GetLabelObject()
-	if chkc then return g:IsContains(chkc) and c100418003.spfilter2(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and g:IsExists(c100418003.spfilter2,1,nil,e,tp) end
 	Duel.SetTargetCard(g)
