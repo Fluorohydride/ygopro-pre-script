@@ -47,16 +47,10 @@ function c100418004.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:CancelToGrave()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_EQUIP)
-		e1:SetCode(EFFECT_EXTRA_ATTACK)
+		e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		c:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_EQUIP)
-		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e2:SetCondition(c100418004.atcon)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
-		c:RegisterEffect(e2)
 		--Equip limit
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
@@ -66,9 +60,6 @@ function c100418004.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_EVENT+0x1fe0000)
 		c:RegisterEffect(e3)
 	end
-end
-function c100418004.atcon(e)
-	return e:GetHandler():GetEquipTarget():GetAttackAnnouncedCount()>0
 end
 function c100418004.eqlimit(e,c)
 	return c100418004.filter(c)
