@@ -89,10 +89,10 @@ function c100912085.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(atk)
 			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			c:RegisterEffect(e1)
+			tc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
-			c:RegisterEffect(e2)
+			tc:RegisterEffect(e2)
 		end
 	else
 		local e1=Effect.CreateEffect(c)
