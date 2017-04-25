@@ -24,14 +24,15 @@ function c100418018.initial_effect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BATTLE_START)
-	e3:SetRange(LOCATION_MZONE)
+	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(c100418018.descon)
 	e3:SetTarget(c100418018.destg)
 	e3:SetOperation(c100418018.desop)
 	c:RegisterEffect(e3)
 end
 function c100418018.filter(c,tp)
-	return c:IsCode(22702055) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsCode(22702055) and c:GetActivateEffect()
+		and (c:GetActivateEffect():IsActivatable(tp) or Duel.GetTurnPlayer()~=tp)
 end
 function c100418018.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
