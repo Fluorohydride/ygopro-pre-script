@@ -65,7 +65,7 @@ function c100219001.atkop(e,tp,ep,ev,re,r,rp)
 	local d=a:GetBattleTarget()
 	if e:GetHandler():IsRelateToEffect(e)
 		and a:IsFaceup() and a:IsRelateToBattle()
-		and bc:IsFaceup() and bc:IsRelateToBattle() then
+		and d:IsFaceup() and d:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
