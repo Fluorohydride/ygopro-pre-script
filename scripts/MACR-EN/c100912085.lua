@@ -25,6 +25,9 @@ function c100912085.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b3=Duel.IsExistingMatchingCard(c100912085.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 	local b4=Duel.GetFlagEffect(tp,100912085)==0
 	if chk==0 then return b1 or b2 or b3 or b4 end
+	local off=1
+	local ops={}
+	local opval={}
 	if b1 then
 		ops[off]=aux.Stringid(100912085,0)
 		opval[off-1]=1
