@@ -44,7 +44,7 @@ function c100418001.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		local c=e:GetHandler()
 		local tc=g:GetFirst()
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		Duel.Equip(tp,c,tc,true)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
