@@ -27,9 +27,9 @@ function c60349525.indval(e,c)
 	return c:IsLevelBelow(e:GetHandler():GetLevel())
 end
 function c60349525.condition(e,tp,eg,ep,ev,re,r,rp)
-	if tp==ep or eg:GetCount()~=1 then return false end
+	if eg:GetCount()~=1 then return false end
 	local c=eg:GetFirst()
-	return c:GetLevel()>0 and c:IsAttackAbove(c:GetLevel()*200)
+	return c:GetLevel()>0 and c:IsAttackAbove(c:GetLevel()*200) and c:GetSummonPlayer()~=tp
 end
 function c60349525.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -43,7 +43,7 @@ function c60349525.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		e1:SetValue(-tc:GetLevel()*200)
 		tc:RegisterEffect(e1)
 		if not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) then
