@@ -4,6 +4,7 @@
 function c100217042.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,4,2)
+	c:EnableReviveLimit()
 	--maintain
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

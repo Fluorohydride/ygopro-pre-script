@@ -14,10 +14,10 @@ function c100217032.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100217032.costfilter1(c)
-	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost()
+	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost()
 end
 function c100217032.costfilter2(c)
-	return not c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost()
+	return c:IsType(TYPE_MONSTER) and not c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost()
 end
 function c100217032.filter(c,e,tp)
 	return c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(7) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)

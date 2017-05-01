@@ -29,9 +29,10 @@ function c100332008.cfilter(c)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsRace(RACE_CYBERS) and c:IsAbleToRemoveAsCost()
 end
 function c100332008.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=-ft+1
-	local sg=Duel.GetMatchingGroup(c100332008.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+	local sg=Duel.GetMatchingGroup(c100332008.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,c)
 	if chk==0 then return sg:GetCount()>=2
 		and (ft>0 or (ct<3 and sg:IsExists(Card.IsLocation,ct,nil,LOCATION_MZONE))) end
 	local g=nil

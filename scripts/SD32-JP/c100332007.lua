@@ -20,7 +20,7 @@ function c100332007.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100332007.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,100332007) end
+	if chk==0 then return Duel.GetFlagEffect(tp,100332007)==0 end
 	Duel.RegisterFlagEffect(tp,100332007,RESET_PHASE+PHASE_END,0,1)
 end
 function c100332007.target(e,tp,eg,ep,ev,re,r,rp,chk)
