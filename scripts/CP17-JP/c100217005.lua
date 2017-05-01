@@ -66,7 +66,7 @@ function c100217005.penop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100217005.splimit(e,c,tp,sumtp,sumpos)
-	return c:IsLocation(LOCATION_EXTRA) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM and not c:IsLocation(LOCATION_EXTRA)
 end
 function c100217005.atktg(e,c)
 	local tp=c:GetControler()
@@ -85,5 +85,5 @@ function c100217005.atkcon1(e)
 	return Duel.GetMatchingGroupCount(Card.IsFacedown,e:GetHandlerPlayer(),0,LOCATION_SZONE,nil)>=4
 end
 function c100217005.atkval(e,c)
-	return c:GetAttack()*2
+	return c:GetBaseAttack()*2
 end

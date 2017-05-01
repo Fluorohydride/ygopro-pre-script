@@ -24,11 +24,11 @@ function c100418008.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--search
+	--special summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100418008,1))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e4:SetCost(c100418008.spcost)
 	e4:SetTarget(c100418008.sptg)
