@@ -67,7 +67,7 @@ function c100217007.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100217007.desfilter1(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(c100217007.desfilter1,tp,LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectTarget(tp,c100217007.desfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	local tc=Duel.SelectTarget(tp,c100217007.desfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
 	local g=Duel.GetMatchingGroup(c100217007.desfilter2,tp,0,LOCATION_MZONE,nil,tc:GetAttack())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetCount()*1000)
@@ -91,7 +91,7 @@ function c100217007.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100217007.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(100217007,2))
-	local pc=Duel.SelectMatchingCard(1-tp,c100217007.disfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
+	local pc=Duel.SelectMatchingCard(1-tp,c100217007.disfilter,tp,0,LOCATION_MZONE,1,1,nil,tp):GetFirst()
 	if not pc then return end
 	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,pc)
 	local tc=g:GetFirst()
