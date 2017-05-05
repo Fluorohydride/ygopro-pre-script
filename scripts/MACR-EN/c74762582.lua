@@ -22,7 +22,7 @@ function c74762582.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,74762582+100)
+	e2:SetCountLimit(1,74762583)
 	e2:SetTarget(c74762582.sptg)
 	e2:SetOperation(c74762582.spop)
 	c:RegisterEffect(e2)
@@ -57,7 +57,7 @@ function c74762582.posfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
 end
 function c74762582.spfilter(c,e,tp)
-	return c:IsSetCard(0xed) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN))
+	return c:IsSetCard(0xed) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
 end
 function c74762582.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c74762582.posfilter(chkc) end
@@ -77,8 +77,8 @@ function c74762582.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		if not tc then return end
 		local spos=0
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then spos=spos+POS_FACEUP_DEFENSE end
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN) then spos=spos+POS_FACEDOWN_DEFENSE end
+		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) then spos=spos+POS_FACEUP_DEFENSE end
+		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then spos=spos+POS_FACEDOWN_DEFENSE end
 		if spos~=0 then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,spos)
 		end
