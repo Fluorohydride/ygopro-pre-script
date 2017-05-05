@@ -53,11 +53,10 @@ function c100217007.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function c100217007.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetAttacker():GetControler()~=tp
 end
 function c100217007.desfilter1(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)
-		and c:IsSetCard(0x10af) and c:GetAttack()>0
+	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsSetCard(0x10af) and c:GetAttack()>0
 		and Duel.IsExistingMatchingCard(c100217007.desfilter2,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function c100217007.desfilter2(c,atk)

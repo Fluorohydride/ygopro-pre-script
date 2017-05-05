@@ -15,9 +15,10 @@ function c100418030.initial_effect(c)
 	e1:SetTarget(c100418030.sptg)
 	e1:SetOperation(c100418030.spop)
 	c:RegisterEffect(e1)
-	--move
+	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100418030,1))
+	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetRange(LOCATION_MZONE)
@@ -38,8 +39,8 @@ function c100418030.spfilter2(c,e,tp,atk)
 end
 function c100418030.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local loc=0
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 then loc=loc+LOCATION_DECK end
-	if Duel.GetLocationCountFromEx(tp)>-1 then loc=loc+LOCATION_EXTRA end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
+	if Duel.GetLocationCountFromEx(tp)>0 then loc=loc+LOCATION_EXTRA end
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c100418030.spfilter1(chkc,e,tp,loc) end
 	if chk==0 then return loc~=0 and Duel.IsExistingTarget(c100418030.spfilter1,tp,0,LOCATION_MZONE,1,nil,e,tp,loc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -48,8 +49,8 @@ function c100418030.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100418030.spop(e,tp,eg,ep,ev,re,r,rp)
 	local loc=0
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 then loc=loc+LOCATION_DECK end
-	if Duel.GetLocationCountFromEx(tp)>-1 then loc=loc+LOCATION_EXTRA end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
+	if Duel.GetLocationCountFromEx(tp)>0 then loc=loc+LOCATION_EXTRA end
 	local tc=Duel.GetFirstTarget()
 	if loc~=0 and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -65,13 +66,15 @@ end
 function c100418030.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c100418030.mvfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100418030.mvfilter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c100418030.mvfilter,tp,LOCATION_MZONE,0,1,1,nilc)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local g=Duel.SelectTarget(tp,c100418030.mvfilter,tp,LOCATION_MZONE,0,1,1,nilc)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c100418030.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) tc:IsControler(tp) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
+		and tc:IsLocation(LOCATION_HAND) and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local seq=tc:GetPreviousSequence()
 		Duel.MoveSequence(c,seq)
 	end
