@@ -67,7 +67,7 @@ function c100418030.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c100418030.mvfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100418030.mvfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,c100418030.mvfilter,tp,LOCATION_MZONE,0,1,1,nilc)
+	local g=Duel.SelectTarget(tp,c100418030.mvfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c100418030.mvop(e,tp,eg,ep,ev,re,r,rp)
