@@ -65,15 +65,15 @@ function c100418030.mvfilter(c)
 end
 function c100418030.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c100418030.mvfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100418030.mvfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c100418030.mvfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,c100418030.mvfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100418030.mvfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c100418030.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) tc:IsControler(tp) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
+	if tc:IsRelateToEffect(e) and tc:IsControler(tp) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
 		and tc:IsLocation(LOCATION_HAND) and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local seq=tc:GetPreviousSequence()
 		Duel.MoveSequence(c,seq)
