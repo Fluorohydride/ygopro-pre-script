@@ -8,6 +8,7 @@ function c100418036.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetValue(c100418036.splimit)
 	c:RegisterEffect(e1)
 	--atk change
 	local e2=Effect.CreateEffect(c)
@@ -30,6 +31,10 @@ function c100418036.initial_effect(c)
 	e3:SetTarget(c100418036.sptg)
 	e3:SetOperation(c100418036.spop)
 	c:RegisterEffect(e3)
+end
+function c100418036.splimit(e,se,sp,st)
+	local sc=se:GetHandler()
+	return sc and sc:IsType(TYPE_SPELL+TYPE_TRAP) and (sc:IsSetCard(0x200) or sc:IsCode(45898858))
 end
 function c100418036.atkfilter(c)
 	return aux.nzatk(c) and c:IsType(TYPE_EFFECT)
