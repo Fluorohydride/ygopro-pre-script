@@ -129,8 +129,9 @@ function c100418003.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject():GetLabelObject()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and g:IsExists(c100418003.spfilter2,1,nil,e,tp) end
-	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,g:GetCount(),0,0)
+	local sg=g:Filter(c100418003.spfilter2,nil,e,tp)
+	Duel.SetTargetCard(sg)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,sg:GetCount(),0,0)
 end
 function c100418003.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
