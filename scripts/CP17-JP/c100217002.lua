@@ -42,7 +42,7 @@ function c100217002.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
-		e1:SetValue(gc*100)
+		e1:SetValue(-gc*100)
 		d:RegisterEffect(e1)
 	end
 end
