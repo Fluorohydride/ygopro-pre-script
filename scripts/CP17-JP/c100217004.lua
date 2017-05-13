@@ -45,7 +45,7 @@ function c100217004.initial_effect(c)
 end
 function c100217004.tnfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(0x9f) or c:IsSetCard(0x99))
-		and not c:IsType(TYPE_TUNER) and c:IsLevelAbove(1)
+		and (not c:IsType(TYPE_TUNER) or c:IsLevelAbove(2))
 end
 function c100217004.tntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100217004.tnfilter(chkc) end
@@ -76,8 +76,7 @@ function c100217004.rmcon(e)
 	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsReason(REASON_MATERIAL) and c:IsReason(REASON_SYNCHRO)
 end
 function c100217004.spfilter(c,e,tp)
-	return c:IsLevelBelow(3) and (c:IsSetCard(0x9f) or c:IsSetCard(0x99)) 
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsLevelBelow(3) and (c:IsSetCard(0x9f) or c:IsSetCard(0x99)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100217004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100217004.spfilter(chkc,e,tp) end
@@ -106,19 +105,21 @@ function c100217004.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100217004.scfilter1(c,e,tp,mc)
 	local mg=Group.FromCards(c,mc)
-	return not c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(c100217004.scfilter2,tp,LOCATION_EXTRA,0,1,nil,mg)
 end
 function c100217004.scfilter2(c,mg)
 	return c:IsSynchroSummonable(nil,mg)
 end
 function c100217004.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and c100217004.scfilter1(chkc,e,tp,e:GetHandler()) end
+	local c=e:GetHandler()
+	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and c100217004.scfilter1(chkc,e,tp,c) end
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c100217004.scfilter1,tp,LOCATION_PZONE,0,1,nil,e,tp,e:GetHandler()) end
+		and Duel.GetLocationCountFromEx(tp,tp,c)>0
+		and Duel.IsExistingTarget(c100217004.scfilter1,tp,LOCATION_PZONE,0,1,nil,e,tp,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c100217004.scfilter1,tp,LOCATION_PZONE,0,1,1,nil,e,tp,e:GetHandler())
+	local g=Duel.SelectTarget(tp,c100217004.scfilter1,tp,LOCATION_PZONE,0,1,1,nil,e,tp,c)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c100217004.scop(e,tp,eg,ep,ev,re,r,rp)
@@ -137,6 +138,7 @@ function c100217004.scop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 	if not c:IsRelateToEffect(e) then return end
 	local mg=Group.FromCards(c,tc)
+	if Duel.GetLocationCountFromEx(tp,tp,mg)<=0 then return end
 	local g=Duel.GetMatchingGroup(c100217004.scfilter2,tp,LOCATION_EXTRA,0,nil,mg)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

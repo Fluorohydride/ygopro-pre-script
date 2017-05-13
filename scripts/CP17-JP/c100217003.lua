@@ -35,7 +35,7 @@ function c100217003.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100217003.pffilter1(c,e)
-	return c:IsLocation(LOCATION_ONFIELD+LOCATION_HAND) and not c:IsImmuneToEffect(e)
+	return not c:IsImmuneToEffect(e)
 end
 function c100217003.pffilter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and c:IsRace(RACE_DRAGON) and (not f or f(c))
@@ -44,7 +44,7 @@ end
 function c100217003.pftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
-		local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil)
+		local mg1=Duel.GetFusionMaterial(tp)
 		local res=Duel.IsExistingMatchingCard(c100217003.pffilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
@@ -98,7 +98,7 @@ function c100217003.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not d then return false end
 	if a:IsControler(1-tp) then a,d=d,a end
 	e:SetLabelObject(a)
-	return a:IsControler(tp) and a:IsType(TYPE_PENDULUM) and a:GetControler()~=d:GetControler()
+	return a:IsControler(tp) and a:IsFaceup() and a:IsType(TYPE_PENDULUM) and a:GetControler()~=d:GetControler()
 end
 function c100217003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -1,4 +1,4 @@
---超重武者オタス－Ｋ
+--超重武者オタス－K
 --Superheavy Samurai Helper
 --Scripted by Eerie Code
 function c100217009.initial_effect(c)
@@ -43,7 +43,7 @@ function c100217009.deftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.GetAttacker()
 	local d=a:GetAttackTarget()
 	if a:IsControler(1-tp) then a,d=d,a end
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) 
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp)
 		and c100217009.deffilter(chkc) and chkc~=e:GetLabelObject() end
 	if chk==0 then return a:IsDefensePos() and d and d:IsControler(1-tp)
 		and Duel.IsExistingTarget(c100217009.deffilter,tp,LOCATION_MZONE,0,1,a) end
@@ -76,7 +76,7 @@ function c100217009.spfilter(c,e,tp)
 end
 function c100217009.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) 
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
 		and c100217009.spfilter(chkc,e,tp) and chkc~=c end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c100217009.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp) end
@@ -86,7 +86,7 @@ function c100217009.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100217009.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then 
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

@@ -2,6 +2,7 @@
 --Abyss Actor - Curtain Raiser
 --Scripted by Eerie Code
 function c100217012.initial_effect(c)
+	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -23,7 +24,7 @@ function c100217012.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c100217012.atkcon)
 	c:RegisterEffect(e2)
-	--recover
+	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100217012,1))
 	e3:SetCategory(CATEGORY_TOHAND)

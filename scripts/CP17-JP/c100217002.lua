@@ -22,7 +22,7 @@ function c100217002.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100217002.ptg(e,c)
-	return (c:IsSetCard(0x9f) or c:IsSetCard(0x99)) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x9f) or c:IsSetCard(0x99)
 end
 function c100217002.atkfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(0x9f) or c:IsSetCard(0x99))
@@ -31,7 +31,7 @@ function c100217002.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=a:GetBattleTarget()
 	local gc=Duel.GetMatchingGroupCount(c100217002.aktfilter,tp,LOCATION_MZONE,0,nil)
-	return a:IsControler(tp) and a:IsType(TYPE_PENDULUM) and d 
+	return a:IsControler(tp) and a:IsType(TYPE_PENDULUM) and d
 		and d:IsFaceup() and not d:IsControler(tp) and gc>0
 end
 function c100217002.atkop(e,tp,eg,ep,ev,re,r,rp)
