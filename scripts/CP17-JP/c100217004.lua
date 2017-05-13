@@ -1,6 +1,7 @@
 --EMオッドアイズ・シンクロン
 --Performapal Odd-Eyes Synchron
 --Scripted by Eerie Code
+--Credits to MLD for the Synchro Summon workaround
 --Requires a core update for full functionality
 function c100217004.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
@@ -104,6 +105,7 @@ function c100217004.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function c100217004.scfilter1(c,e,tp,mc)
+	c:AssumeProperty(ASSUME_TYPE,c:GetOriginalType())
 	local mg=Group.FromCards(c,mc)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(c100217004.scfilter2,tp,LOCATION_EXTRA,0,1,nil,mg)
