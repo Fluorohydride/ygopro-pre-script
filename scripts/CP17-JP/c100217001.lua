@@ -37,7 +37,7 @@ function c100217001.initial_effect(c)
 end
 function c100217001.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsType(TYPE_PENDULUM)
-		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+		and c:IsPreviousLocation(LOCATION_MZONE) and (c:GetPreviousPosition()==POS_FACEUP or c:IsReason(REASON_BATTLE)) and c:GetPreviousControler()==tp
 end
 function c100217001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100217001.cfilter,1,nil,tp)
