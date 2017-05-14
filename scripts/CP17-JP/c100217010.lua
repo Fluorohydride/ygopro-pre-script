@@ -3,13 +3,6 @@
 --Scripted by Eerie Code
 function c100217010.initial_effect(c)
 	--Synchro Summon
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e0:SetCode(EVENT_BATTLE_DESTROYING)
-	e0:SetCondition(c100217010.regon)
-	e0:SetOperation(c100217010.regop)
-	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100217010,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -33,18 +26,35 @@ function c100217010.initial_effect(c)
 	e2:SetTarget(c100217010.sptg)
 	e2:SetOperation(c100217010.spop)
 	c:RegisterEffect(e2)
+	if not c100217010.global_check then
+		c100217010.global_check=true
+		c100217010[0]=false
+		c100217010[1]=false
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+		ge1:SetCode(EVENT_BATTLE_DESTROYING)
+		ge1:SetOperation(c100217010.checkop)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=Effect.CreateEffect(c)
+		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+		ge2:SetOperation(c100217010.clear)
+		Duel.RegisterEffect(ge2,0)
+	end
 end
-function c100217010.regcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local rc=eg:GetFirst()
-	return rc:IsRelateToBattle() and rc:IsStatus(STATUS_OPPO_BATTLE)
-		and rc:IsFaceup() and rc:IsSetCard(0x9a) and rc:IsControler(tp)
+function c100217010.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=eg:GetFirst()
+	if tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE)
+		and tc:IsFaceup() and tc:IsSetCard(0x9a) then
+		c100217010[tc:GetControler()]=true
+	end
 end
-function c100217010.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(100217010,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+function c100217010.clear(e,tp,eg,ep,ev,re,r,rp)
+	c100217010[0]=false
+	c100217010[1]=false
 end
 function c100217010.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(100217010)>0 and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return c100217010[tp] and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function c100217010.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
