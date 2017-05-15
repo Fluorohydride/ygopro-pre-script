@@ -79,11 +79,14 @@ function c100217006.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(100217006)==0 end
 	e:GetHandler():RegisterFlagEffect(100217006,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
+function c100217006.copyfilter(c)
+	return c:IsFaceup() and not tc:IsType(TYPE_TOKEN)
+end
 function c100217006.copytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c100217006.copyfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100217006.copyfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,c100217006.copyfilter,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function c100217006.copyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
