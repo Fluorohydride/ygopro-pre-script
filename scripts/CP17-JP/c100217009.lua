@@ -41,7 +41,7 @@ function c100217009.deffilter(c)
 end
 function c100217009.deftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.GetAttacker()
-	local d=a:GetAttackTarget()
+	local d=a:GetBattleTarget()
 	if a:IsControler(1-tp) then a,d=d,a end
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp)
 		and c100217009.deffilter(chkc) and chkc~=e:GetLabelObject() end
