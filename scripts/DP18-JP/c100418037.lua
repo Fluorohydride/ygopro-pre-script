@@ -19,7 +19,7 @@ function c100418037.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,100418037+100)
 	e2:SetTarget(c100418037.sptg)
 	e2:SetOperation(c100418037.spop)
@@ -49,7 +49,7 @@ function c100418037.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c100418037.spfilter(c,e,tp)
-	return (c:IsCode(22587018) or c:IsCode(58071123) or c:IsCode(100418037)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(22587018,58071123,100418037) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100418037.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100418037.filter(chkc,e,tp) end
@@ -62,6 +62,6 @@ end
 function c100418037.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

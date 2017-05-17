@@ -40,26 +40,31 @@ function c101002026.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+0x1fe0000)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_DAMAGE_STEP_END)
-	e2:SetCondition(c101002026.atkcon)
-	e2:SetTarget(c101002026.atktg)
-	e2:SetOperation(c101002026.atkop)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_BATTLED)
+	e2:SetOperation(c101002026.caop1)
 	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_DAMAGE_STEP_END)
+	e3:SetOperation(c101002026.caop2)
+	e3:SetLabelObject(e2)
+	c:RegisterEffect(e3)
 end
 function c101002026.efilter(e,re)
 	return re:IsActiveType(TYPE_TRAP)
 end
-function c101002026.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler()==Duel.GetAttacker() and Duel.GetAttackTarget() and e:GetHandler():IsRelateToBattle()
+function c101002026.caop1(e,tp,eg,ep,ev,re,r,rp)
+	local a=Duel.GetAttacker()
+	local d=Duel.GetAttackTarget()
+	if e:GetHandler()==a and d then e:SetLabel(1)
+	else e:SetLabel(0) end
 end
-function c101002026.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsChainAttackable(0,true) end	
-end
-function c101002026.atkop(e,tp,eg,ep,ev,re,r,rp)
+function c101002026.caop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToBattle() then return end
-	Duel.ChainAttack()
+	if e:GetLabelObject():GetLabel()==1 and c:IsRelateToBattle() and c:IsChainAttackable() then
+		Duel.ChainAttack()
+	end
 end
 function c101002026.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()==e:GetHandler():GetTurnID()+1

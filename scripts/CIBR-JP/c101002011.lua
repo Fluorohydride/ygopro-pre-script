@@ -31,7 +31,7 @@ function c101002011.descon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_LINK)
 end
 function c101002011.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	if chk==0 then return g:GetCount()>0 end
 	if re:GetHandler():IsRelateToEffect(re) and e:GetHandler():IsDestructable() then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
@@ -40,8 +40,9 @@ function c101002011.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101002011.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) and Duel.Destroy(e:GetHandler(),REASON_EFFECT)>0 then
-		local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
+		local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 		if g:GetCount()==0 then return end
+		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
@@ -49,7 +50,7 @@ function c101002011.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101002011.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if (c:IsReason(REASON_EFFECT) or c:IsReason(REASON_BATTLE)) and c:IsReason(REASON_DESTROY) then
+	if c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(101002011,1))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

@@ -36,7 +36,7 @@ function c100217001.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100217001.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsType(TYPE_PENDULUM)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and bit.band(c:GetPreviousTypeOnField(),TYPE_PENDULUM)~=0
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and c:IsPreviousPosition(POS_FACEUP)
 end
 function c100217001.spcon(e,tp,eg,ep,ev,re,r,rp)

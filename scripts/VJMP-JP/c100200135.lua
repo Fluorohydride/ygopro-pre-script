@@ -4,7 +4,7 @@
 function c100200135.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
-	--atk
+	--defdown
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100200135,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -14,7 +14,7 @@ function c100200135.initial_effect(c)
 	e1:SetTarget(c100200135.deftg)
 	e1:SetOperation(c100200135.defop)
 	c:RegisterEffect(e1)
-	--destroy
+	--defdown
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100200135,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -53,9 +53,9 @@ function c100200135.defop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100200135.defcon2(e,tp,eg,ep,ev,re,r,rp)
-	local t=Duel.GetAttackTarget()
-	e:SetLabelObject(t)
-	return Duel.GetAttacker()==e:GetHandler() and t~=nil and t:IsPosition(POS_FACEUP_DEFENSE) end
+	local tc=Duel.GetAttackTarget()
+	e:SetLabelObject(tc)
+	return Duel.GetAttacker()==e:GetHandler() and tc and tc:IsPosition(POS_FACEUP_DEFENSE) and tc:GetDefense()>0 end
 end
 function c100200135.defop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

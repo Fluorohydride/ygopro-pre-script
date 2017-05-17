@@ -12,7 +12,7 @@ function c100418025.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetTargetRange(LOCATION_ONFIELD,0)
+	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(c100418025.indestg)
 	e2:SetValue(c100418025.indesval)
 	c:RegisterEffect(e2)
@@ -25,12 +25,12 @@ function c100418025.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_FZONE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetRange(LOCATION_FZONE)
+	e4:SetCountLimit(1,100418025)
 	e4:SetTarget(c100418025.target)
 	e4:SetOperation(c100418025.operation)
-	e4:SetCountLimit(1,100418025)
 	c:RegisterEffect(e4)
 	--search
 	local e5=Effect.CreateEffect(c)
@@ -44,23 +44,22 @@ function c100418025.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c100418025.indestg(e,c)
-	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642)) 
+	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642))
 		and c:IsType(TYPE_EFFECT) and c:GetEquipCount()>0
 end
 function c100418025.indesval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
 function c100418025.filter(c)
-	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642)) 
+	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642))
 		and c:IsFaceup() and c:IsAbleToHand()
 end
 function c100418025.filter2(c)
 	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642)) and c:IsSummonable(true,nil)
 end
 function c100418025.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chk(c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642)) and chkc:IsType(TYPE_MONSTER) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToHand() end
-	if chk==0 then return Duel.IsExistingTarget(c100418025.filter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(c100418025.filter2,tp,LOCATION_HAND,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100418025.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100418025.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,c100418025.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
@@ -68,11 +67,12 @@ end
 function c100418025.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-		local g=Duel.SelectMatchingCard(tp,c100418025.filter2,tp,LOCATION_HAND,0,1,1,nil)
-		tc=g:GetFirst()
-		if tc then
-			Duel.Summon(tp,tc,true,nil)
+		local g=Duel.GetMatchingGroup(c100418025.filter2,tp,LOCATION_HAND,0,nil)
+		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100418025,0)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
+			local sg=g:Select(tp,1,1,nil):GetFirst()
+			Duel.Summon(tp,sg,true,nil)
 		end
 	end
 end

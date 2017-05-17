@@ -31,7 +31,7 @@ function c100418029.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c100418029.filter(c,e,tp)
-	return c:IsSetCard(0x16) and not c:IsAttribute(ATTRIBUTE_WIND) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+	return c:IsSetCard(0x16) and not c:IsAttribute(ATTRIBUTE_WIND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100418029.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
@@ -42,9 +42,8 @@ function c100418029.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100418029.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if g:GetCount()~=0 then
-		Duel.SpecialSummon(g,0,tp,tp,true,true,POS_FACEUP)
-		g:GetFirst():CompleteProcedure()
+	if g:GetCount()>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c100418029.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,7 +63,7 @@ function c100418029.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabel(0)
 		local cg=Duel.GetMatchingGroup(c100418029.cfilter,tp,LOCATION_GRAVE,0,nil)
 		return c:IsAbleToRemoveAsCost()
-			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and Duel.GetLocationCountFromEx(tp)>0
 			and Duel.IsExistingMatchingCard(c100418029.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,cg:GetCount())
 	end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
@@ -100,7 +99,7 @@ function c100418029.sfilter(c,e,tp,lv)
 	return c:IsSetCard(0x16) and c:IsType(TYPE_FUSION) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100418029.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	local lv=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100418029.sfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,lv)

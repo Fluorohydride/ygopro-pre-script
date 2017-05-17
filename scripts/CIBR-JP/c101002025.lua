@@ -65,6 +65,6 @@ function c101002025.rmop2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c101002025.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
-    Duel.ConfirmCards(1-tp,g)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end

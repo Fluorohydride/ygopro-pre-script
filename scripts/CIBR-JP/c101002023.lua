@@ -39,7 +39,7 @@ end
 function c101002023.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetDecktopGroup(tp,3)
-	if g:GetCount()==3 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)==3 
+	if g:GetCount()==3 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)==3
 		and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local og=Duel.GetOperatedGroup()
 		local oc=og:FilterCount(c101002023.rmfilter,nil)
