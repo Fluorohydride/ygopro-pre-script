@@ -1,5 +1,6 @@
 --バックリンカー
 --Backlinker
+--Scripted by Eerie Codeker
 function c100332004.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -34,9 +35,12 @@ function c100332004.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
+function c100332004.tdfilter(c)
+	return c:IsFaceup() and c:GetSequence()>=5 and c:IsAbleToDeck()
+end
 function c100332004.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100332004.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(c100332004.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100332004.tdfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(c100332004.tdfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 end
 function c100332004.tdop(e,tp,eg,ep,ev,re,r,rp)

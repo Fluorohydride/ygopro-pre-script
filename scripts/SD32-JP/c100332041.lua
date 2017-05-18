@@ -59,7 +59,7 @@ function c100332041.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local b=e:GetLabelObject()
-	if c:IsFacedown() or not b:IsRelateToBattle() then return end
+	if b:IsFacedown() or not b:IsRelateToBattle() then return end
 	local lg=c:GetLinkedGroup()
 	lg:AddCard(c)
 	local tc=nil

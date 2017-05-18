@@ -30,7 +30,7 @@ function c100418031.initial_effect(c)
 	e3:SetCondition(c100418031.atkcon)
 	e3:SetCost(c100418031.atkcost)
 	e3:SetOperation(c100418031.atkop)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(100418031,ACTIVITY_SPSUMMON,c100418031.counterfilter)
 end
 function c100418031.counterfilter(c)
@@ -50,18 +50,15 @@ function c100418031.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c100418031.desfilter(c)
-	return c:IsFaceup()
-end
 function c100418031.thfilter(c)
 	return c:IsSetCard(0x16) and c:IsAbleToHand()
 end
 function c100418031.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c100418031.desfilter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.IsExistingTarget(c100418031.desfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc~=e:GetHandler() end
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 		and Duel.IsExistingMatchingCard(c100418031.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c100418031.desfilter,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
@@ -85,14 +82,14 @@ function c100418031.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return a and a:IsSetCard(0x16)
 end
 function c100418031.atkfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x16) and c:IsAbleToGrave()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x16) and c:IsAbleToGraveAsCost()
 end
 function c100418031.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100418031.atkfilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.GetCustomActivityCount(100418031,tp,ACTIVITY_SPSUMMON)==0 end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100418031.atkfilter,tp,LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_EFFECT)
-	
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)

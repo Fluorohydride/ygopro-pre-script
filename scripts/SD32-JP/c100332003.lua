@@ -33,7 +33,7 @@ function c100332003.repfilter(c)
 end
 function c100332003.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsOnField() and c:IsFaceup()
+	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup()
 		and Duel.IsExistingMatchingCard(c100332003.repfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c) end
 	if Duel.SelectYesNo(tp,aux.Stringid(100332003,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)

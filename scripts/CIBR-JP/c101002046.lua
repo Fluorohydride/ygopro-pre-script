@@ -1,5 +1,6 @@
 --ツイン・トライアングル・ドラゴン
 --Twin Triangle Dragon
+--Scripted by Eerie Code
 function c101002046.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,c101002046.mfilter,2)
@@ -60,7 +61,7 @@ function c101002046.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_ATTACK)
 		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e3,true)		
+		tc:RegisterEffect(e3,true)
 		Duel.SpecialSummonComplete()
 	end
 end

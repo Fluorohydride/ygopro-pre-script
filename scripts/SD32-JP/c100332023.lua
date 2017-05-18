@@ -14,7 +14,7 @@ function c100332023.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100332023.rmfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERS) and c:IsAbleToRemove() and c:GetBaseAttack()>0 
+	return c:IsFaceup() and c:IsRace(RACE_CYBERS) and c:IsAbleToRemove() and c:GetBaseAttack()>0
 		and Duel.IsExistingMatchingCard(c100332023.thfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function c100332023.thfilter(c,rc)
