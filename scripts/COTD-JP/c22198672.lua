@@ -29,7 +29,7 @@ function c22198672.initial_effect(c)
 end
 function c22198672.filter(c,tp)
 	if c:IsFacedown() or not c:IsType(TYPE_LINK) then return false end
-	local zone=c:GetLinkedZone()
+	local zone=c:GetFreeLinkedZone()
 	if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
 	if c:IsControler(1-tp) then zone=bit.lshift(zone,0x10) end
 	return zone~=0
@@ -44,7 +44,7 @@ function c22198672.seqop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	local zone=tc:GetLinkedZone()
+	local zone=tc:GetFreeLinkedZone()
 	if tc:GetSequence()>4 then zone=bit.band(zone,0xfff) end
 	if tc:IsControler(1-tp) then zone=bit.lshift(zone,0x10) end
 	if zone~=0 then
