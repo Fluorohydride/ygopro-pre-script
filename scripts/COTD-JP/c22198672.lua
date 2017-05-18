@@ -67,10 +67,10 @@ function c22198672.seqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22198672.chfilter1(c,tp)
-	return c:GetSequence()<5 and Duel.IsExistingMatchingCard(c22198672.chfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetControler())
+	return c:IsType(TYPE_LINK) and c:GetSequence()<5 and Duel.IsExistingMatchingCard(c22198672.chfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetControler())
 end
 function c22198672.chfilter2(c,tp)
-	return c:GetSequence()<5 and c:IsControler(tp)
+	return c:IsType(TYPE_LINK) and c:GetSequence()<5 and c:IsControler(tp)
 end
 function c22198672.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c22198672.chfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
