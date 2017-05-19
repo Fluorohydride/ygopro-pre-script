@@ -4,15 +4,22 @@
 function c101002051.initial_effect(c)
 	c:EnableReviveLimit()
 	--link summon
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e0:SetCode(EFFECT_SPSUMMON_PROC)
+	e0:SetRange(LOCATION_EXTRA)
+	e0:SetCondition(c101002051.lkcon)
+	e0:SetOperation(c101002051.lkop)
+	e0:SetValue(SUMMON_TYPE_LINK)
+	c:RegisterEffect(e0)
+	--splimit
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetRange(LOCATION_EXTRA)
-	e1:SetCountLimit(1,101002051)
-	e1:SetCondition(c101002051.lkcon)
-	e1:SetOperation(c101002051.lkop)
-	e1:SetValue(SUMMON_TYPE_LINK)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCondition(c101002051.regcon)
+	e1:SetOperation(c101002051.regop)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
@@ -34,6 +41,22 @@ function c101002051.initial_effect(c)
 	e3:SetTarget(c101002051.actg)
 	e3:SetOperation(c101002051.acop)
 	c:RegisterEffect(e3)
+end
+function c101002051.regcon(e,tp,eg,ep,ev,re,r,rp)
+	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
+end
+function c101002051.regop(e,tp,eg,ep,ev,re,r,rp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTarget(c101002051.splimit)
+	Duel.RegisterEffect(e1,tp)
+end
+function c101002051.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+	return c:IsCode(101002051) and bit.band(sumtype,SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end
 function c101002051.lkfilter1(c,lc,tp)
 	return c:IsFaceup() and not c:IsType(TYPE_TOKEN) and Duel.IsExistingMatchingCard(c101002051.lkfilter2,tp,LOCATION_MZONE,0,1,c,lc,c,tp)
