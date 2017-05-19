@@ -84,8 +84,7 @@ function c101002075.ermop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 end
 function c101002075.rmcfilter(c,tp)
-	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
-		and (c:IsCode(89189982,36898537) or c:IsSetCard(0x202))
+	return c:IsControler(tp) and (c:IsCode(89189982,36898537) or c:IsSetCard(0x202))
 end
 function c101002075.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(c101002075.rmcfilter,1,e:GetHandler(),tp)

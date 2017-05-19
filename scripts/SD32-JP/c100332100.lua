@@ -29,7 +29,7 @@ function c100332100.spcfilter(c,tp)
 	return c:IsControler(tp) and c:IsRace(RACE_CYBERS)
 end
 function c100332100.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsContains(c100332100.spcfilter,1,nil,tp)
+	return eg:IsExists(c100332100.spcfilter,1,nil,tp)
 end
 function c100332100.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

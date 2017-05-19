@@ -46,18 +46,19 @@ function c100332041.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetCode(EVENT_BATTLED)
 	e3:SetLabelObject(b)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetOperation(c100332041.atkop)
-	e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
-	Duel.RegisterEffect(e3,tp)
+	e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE)
+	c:RegisterEffect(e3)
 end
 function c100332041.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(tp,0)
 end
 function c100332041.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local b=e:GetLabelObject()
 	if b:IsFacedown() or not b:IsRelateToBattle() then return end
 	local lg=c:GetLinkedGroup()

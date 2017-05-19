@@ -43,7 +43,7 @@ function c100418022.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function c100418022.filter(c)
-	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642))
+	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642,80033124))
 		and c:IsRace(RACE_MACHINE) and c:IsAbleToHand()
 end
 function c100418022.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
