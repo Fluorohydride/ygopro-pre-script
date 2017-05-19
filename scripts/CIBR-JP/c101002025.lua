@@ -56,11 +56,11 @@ end
 function c101002025.thfilter(c)
 	return (c:IsCode(89189982,36898537) or c:IsSetCard(0x202)) and not c:IsCode(101002025) and c:IsAbleToHand()
 end
-function c101002025.rmtg2(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101002025.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101002025.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function c101002025.rmop2(e,tp,eg,ep,ev,re,r,rp)
+function c101002025.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101002025.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
