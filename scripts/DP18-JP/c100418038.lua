@@ -14,10 +14,11 @@ function c100418038.initial_effect(c)
 	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCountLimit(1,100418038)
 	e2:SetCondition(c100418038.thcon)
 	e2:SetTarget(c100418038.thtg)
 	e2:SetOperation(c100418038.thop)
@@ -55,7 +56,7 @@ function c100418038.thfilter(c)
 	return (c:IsCode(85066822) or c:IsCode(100418036)) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100418038.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return e:GetHandler():IsAbleToHand() end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function c100418038.thop(e,tp,eg,ep,ev,re,r,rp)
