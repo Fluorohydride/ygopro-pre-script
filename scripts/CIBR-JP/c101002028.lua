@@ -35,11 +35,11 @@ end
 function c101002028.atkfilter1(c,mg)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)
 		and c:IsLocation(LOCATION_MZONE)
-		and mg:IsExists(nil,1,c)
+		and mg:IsExists(Card.IsDestructable,1,c)
 end
 function c101002028.atkfilter2(c,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)
-		and Duel.IsExistingMatchingCard(c101002028.desfilter,tp,LOCATION_MZONE+LOCATION_HAND,1,c)
+		and Duel.IsExistingMatchingCard(c101002028.desfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c)
 end
 function c101002028.desfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and (c:GetBaseAttack()>0 or c:GetBaseDefense()>0)
