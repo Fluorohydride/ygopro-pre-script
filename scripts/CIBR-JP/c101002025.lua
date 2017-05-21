@@ -30,6 +30,7 @@ end
 function c101002025.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
+	local c=e:GetHandler()
 	return re and re:IsActiveType(TYPE_MONSTER) and (c:IsCode(89189982,36898537) or c:IsSetCard(0x202))
 end
 function c101002025.rmfilter(c)
