@@ -27,7 +27,7 @@ end
 function c101002026.regcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return re and re:IsActiveType(TYPE_MONSTER) and (c:IsCode(89189982,36898537) or c:IsSetCard(0x202))
+	return re and re:IsActiveType(TYPE_MONSTER) and (rc:IsCode(89189982,36898537) or rc:IsSetCard(0x202))
 end
 function c101002026.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
