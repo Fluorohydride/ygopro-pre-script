@@ -11,6 +11,7 @@ function c101002028.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101002028)
+	e1:SetCondition(c101002028.atkcon)
 	e1:SetCost(c101002028.atkcost)
 	e1:SetTarget(c101002028.atktg)
 	e1:SetOperation(c101002028.atkop)
@@ -28,6 +29,9 @@ function c101002028.initial_effect(c)
 	e2:SetOperation(c101002028.drop)
 	c:RegisterEffect(e2)
 end
+function c101002028.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+end
 function c101002028.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
@@ -35,7 +39,7 @@ end
 function c101002028.atkfilter1(c,mg)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)
 		and c:IsLocation(LOCATION_MZONE)
-		and mg:IsExists(Card.IsDestructable,1,c)
+		and mg:IsExists(nil,1,c)
 end
 function c101002028.atkfilter2(c,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)
@@ -56,10 +60,10 @@ function c101002028.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101002028.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dc=Duel.SelectMatchingCard(tp,c101002028.desfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,tc):GetFirst()
 	if dc and Duel.Destroy(dc,REASON_EFFECT)~=0 then
+		if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -73,7 +77,7 @@ function c101002028.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101002028.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_MZONE)
+	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c101002028.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

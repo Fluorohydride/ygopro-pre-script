@@ -35,6 +35,11 @@ function c101002042.initial_effect(c)
 	e4:SetTarget(c101002042.cttg)
 	e4:SetOperation(c101002042.ctop)
 	c:RegisterEffect(e4)
+	if not Card.GetFreeLinkedZone then
+		function Card.GetFreeLinkedZone(c)
+			return c:GetLinkedZone()
+		end
+	end
 end
 function c101002042.efilter1(e,re,rp)
 	return re:IsActiveType(TYPE_MONSTER)
