@@ -48,7 +48,7 @@ function c100217030.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=mg:Select(tp,1,1,nil)
 	if c:GetLevel()>6 then
 		local g2=nil
-		if b1 and (not b2 or Duel.SelectYesNo(tp,aux.Stringid(100217030,1))) then
+		if b1 and (not b2 or Duel.SelectYesNo(tp,aux.Stringid(100217030,2))) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 			g2=mg:Select(tp,1,1,g:GetFirst())
 		else
