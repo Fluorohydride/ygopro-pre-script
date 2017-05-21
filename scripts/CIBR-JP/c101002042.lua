@@ -75,7 +75,7 @@ function c101002042.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101002042.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zone=c:GetFreeLinkedZone()
+	local zone=bit.band(c:GetFreeLinkedZone(),0xf)
 	if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
 	return zone~=0
 end
@@ -88,18 +88,9 @@ function c101002042.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
 	local c=e:GetHandler()
 	if tc then
-		local zone=c:GetFreeLinkedZone()
+		local zone=bit.band(c:GetFreeLinkedZone(),0xf)
 		if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
-		local flag=bit.bxor(zone,0xff)
-		local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,flag)
-		if Duel.GetControl(tc,tp)~=0 then
-			local seq=0
-			if s==1 then seq=0
-			elseif s==2 then seq=1
-			elseif s==4 then seq=2
-			elseif s==8 then seq=3
-			else seq=4 end
-			Duel.MoveSequence(tc,seq)
+		if Duel.GetControl(tc,tp,0,0,zone)~=0 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
