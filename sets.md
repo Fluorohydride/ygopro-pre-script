@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`  
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
-- **April 4, 2017**     : Yu-Gi-Oh! ARC-V Volume 3 promotional card (YA03-JP) : `100218XXX`  
 - **April 15, 2017**     : Code of the Duelist (COTD-JP) : `101001XXX`  
 - **May 4, 2017**     : MAXIMUM CRISIS (MACR-EN) : `100912XXX`  
 - **May 13, 2017**     : Collectors Pack 2017 (CP17-JP) : `100217XXX`  
@@ -45,3 +44,5 @@
 - ~~Structure Deck R: Tyranno's Rage (SR04-JP) : `100304XXX`~~  
 - ~~Perfect Rulebook 2017 (RB04-JP) : `100216XXX`~~  
 - ~~Starter Deck 2017 (ST17-JP) : `100317XXX`~~  
+- ~~Yu-Gi-Oh! ARC-V Volume 3 promotional card (YA03-JP) : `100218XXX`~~  
+- ~~Master Guide 5 promotional cards (MG05-JP) : `100219XXX`~~  
