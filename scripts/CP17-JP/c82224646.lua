@@ -14,6 +14,7 @@ function c82224646.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetTarget(c82224646.tntg)
 	e1:SetOperation(c82224646.tnop)
+	c:RegisterEffect(e1)
 	--Banish
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
