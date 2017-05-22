@@ -55,7 +55,7 @@ end
 function c100200135.defcon2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
 	e:SetLabelObject(tc)
-	return Duel.GetAttacker()==e:GetHandler() and tc and tc:IsPosition(POS_FACEUP_DEFENSE) and tc:GetDefense()>0 end
+	return Duel.GetAttacker()==e:GetHandler() and tc and tc:IsPosition(POS_FACEUP_DEFENSE) and tc:GetDefense()>0
 end
 function c100200135.defop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

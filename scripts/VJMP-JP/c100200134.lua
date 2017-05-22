@@ -27,8 +27,8 @@ function c100200134.spcfilter(c)
 end
 function c100200134.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
-		Duel.IsExistingMatchingCard(c14536035.spfilter,c:GetControler(),LOCATION_HAND,0,1,c)
+	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c100200134.spfilter,c:GetControler(),LOCATION_HAND,0,1,c)
 end
 function c100200134.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
