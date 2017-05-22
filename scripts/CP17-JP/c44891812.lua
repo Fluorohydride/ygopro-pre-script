@@ -45,7 +45,7 @@ function c44891812.deftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if a:IsControler(1-tp) then a,d=d,a end
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp)
 		and c44891812.deffilter(chkc) and chkc~=e:GetLabelObject() end
-	if chk==0 then return a:IsDefensePos() and d and d:IsControler(1-tp)
+	if chk==0 then return a and a:IsDefensePos() and d and d:IsControler(1-tp)
 		and Duel.IsExistingTarget(c44891812.deffilter,tp,LOCATION_MZONE,0,1,a) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c44891812.deffilter,tp,LOCATION_MZONE,0,1,1,a)
