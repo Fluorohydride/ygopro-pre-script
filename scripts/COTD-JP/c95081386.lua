@@ -1,6 +1,4 @@
 --スリーストライク・バリア
---Three-Strike Barrier
---Script by nekrozar
 function c95081386.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

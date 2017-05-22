@@ -1,6 +1,4 @@
 --雷仙神
---Kaminari Senjin
---Script by nekrozar
 function c70493141.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

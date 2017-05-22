@@ -1,6 +1,4 @@
 --DDD怒濤大王エグゼクティブ・シーザー
---D/D/D Wave High King Executive Caesar
---Scripted by Eerie Code
 function c79559912.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),6,2)

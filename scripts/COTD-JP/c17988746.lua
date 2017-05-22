@@ -1,6 +1,4 @@
 --パーリィナイツ
---Parry Knight
---Scripted by Eerie Code
 function c17988746.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

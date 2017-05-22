@@ -1,6 +1,4 @@
 --バックアップ・セクレタリー
---Backup Secretary
---Scripted by Eerie Code
 function c63528891.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

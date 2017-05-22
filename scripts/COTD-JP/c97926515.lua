@@ -1,6 +1,4 @@
 --緊急救急救命レスキュー
---Urgent Emergency Assistance Rescue
---Script by dest
 function c97926515.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

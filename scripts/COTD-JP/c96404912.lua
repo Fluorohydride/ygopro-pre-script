@@ -1,6 +1,4 @@
 --無償交換
---Recall
---Script by nekrozar
 function c96404912.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

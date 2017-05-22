@@ -1,6 +1,4 @@
 --星遺物との邂逅
---Chance Meeting with the Star Relic
---Scripted by Eerie Code
 function c61654098.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --剛鬼再戦
---Gouki Rematch
---Scripted by Eerie Code
 function c62376646.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

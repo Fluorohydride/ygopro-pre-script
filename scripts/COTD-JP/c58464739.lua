@@ -1,6 +1,4 @@
 --パルス・ボム
---Pulse Bomb
---Scripted by Eerie Code
 function c58464739.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --トワイライトロード・シャーマン ルミナス
---Lumina, Twilightsworn Shaman
---Scripted by Eerie Code
 function c56166150.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

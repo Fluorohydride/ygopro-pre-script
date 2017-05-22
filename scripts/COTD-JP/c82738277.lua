@@ -1,6 +1,4 @@
 --ランカの蟲惑魔
---Traptrix Coronatus
---Script by mercury233
 function c82738277.initial_effect(c)
 	--immune
 	local e1=Effect.CreateEffect(c)

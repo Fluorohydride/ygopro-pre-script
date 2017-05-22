@@ -1,6 +1,4 @@
 --星杯神楽イヴ
---Star Grail Shrine Maiden Eve
---Scripted by Eerie Code
 function c77610772.initial_effect(c)
 	--link summon
 	local e0=Effect.CreateEffect(c)
@@ -8,7 +6,6 @@ function c77610772.initial_effect(c)
 	e0:SetCode(EFFECT_SPSUMMON_PROC)
 	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e0:SetRange(LOCATION_EXTRA)
-	e0:SetTargetRange(POS_FACEUP_ATTACK,0)
 	e0:SetCondition(c77610772.linkcon)
 	e0:SetOperation(c77610772.linkop)
 	e0:SetValue(SUMMON_TYPE_LINK)
@@ -28,7 +25,7 @@ function c77610772.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
 	--destroy replace
 	local e4=Effect.CreateEffect(c)

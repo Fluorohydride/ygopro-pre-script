@@ -1,7 +1,4 @@
 --レスキューフェレット
---Rescue Ferret
---Script by nekrozar and mercury233
---Effect is not fully implemented, see https://github.com/Fluorohydride/ygopro/issues/1951#issuecomment-292802270
 function c56343672.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

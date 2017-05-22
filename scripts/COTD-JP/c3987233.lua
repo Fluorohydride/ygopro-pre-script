@@ -1,6 +1,4 @@
 --ミセス・レディエント
---Missus Radiant
---Script by nekrozar
 function c3987233.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_EARTH),2,2)

@@ -1,6 +1,4 @@
 --トワイライトロード・ジェネラル ジェイン
---Jain, Twilightsworn General
---Scripted by Eerie Code
 function c84673417.initial_effect(c)
 	--reduce atk
 	local e1=Effect.CreateEffect(c)

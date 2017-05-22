@@ -1,7 +1,4 @@
 --変則ギア
---Trasmission Gear
---Scripted by Eerie Code, RPS function by nekrozar
---Might require a core update for better functionality
 function c58297729.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

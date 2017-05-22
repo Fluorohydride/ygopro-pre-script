@@ -1,6 +1,4 @@
 --星杯竜イムドゥーク
---Star Grail Dragon Imduk
---Scripted by Eerie Code
 function c31226177.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()

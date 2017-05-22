@@ -1,6 +1,4 @@
 --影星軌道兵器ハイドランダー
---Hydralander the Orbital Shadowlite Weapon
---Scripted by Eerie Code
 function c44009443.initial_effect(c)
 	c:EnableReviveLimit()
 	--cannot special summon

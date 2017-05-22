@@ -1,6 +1,4 @@
 --覇王眷竜スターヴ・ヴェノム
---Supreme King Servant Dragon Starving Venom
---Scripted by Eerie Code
 function c43387895.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

@@ -1,6 +1,4 @@
 --トポロジック・ボマー・ドラゴン
---Topologic Bomber Dragon
---Script by nekrozar
 function c5821478.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_EFFECT),2)

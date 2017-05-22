@@ -1,6 +1,4 @@
 --トワイライトロード・ファイター ライコウ
---Ryko, Twilightsworn Fighter
---Scripted by Eerie Code
 function c83550869.initial_effect(c)
 	--banish
 	local e1=Effect.CreateEffect(c)

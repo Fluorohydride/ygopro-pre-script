@@ -1,6 +1,4 @@
 --星杯の妖精リース
---Star Grail Fairy Ries
---Scripted by Eerie Code
 function c21893603.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)

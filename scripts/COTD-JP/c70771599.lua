@@ -1,6 +1,4 @@
 --覇王眷竜 クリアウィング
---Supreme King Servant Dragon Clear Wing
---Scripted by Eerie Code
 function c70771599.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(c70771599.matfilter),1)

@@ -1,6 +1,4 @@
 --ルドラの魔導書
---Spellbook of Rudra
---Scripted by Eerie Code
 function c23314220.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

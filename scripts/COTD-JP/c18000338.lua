@@ -1,12 +1,11 @@
 --Re:EX
---Scripted by Eerie Code
 function c18000338.initial_effect(c)
 	--increase atk/def
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(c18000338.condition)
 	e1:SetValue(800)
 	c:RegisterEffect(e1)

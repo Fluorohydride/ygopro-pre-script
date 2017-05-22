@@ -1,6 +1,4 @@
 --トリックスター・リンカーネイション
---Trickster Reincarnation
---Scripted by Eerie Code
 function c21076084.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -12,9 +10,10 @@ function c21076084.initial_effect(c)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(21076084,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(c21076084.spcost)

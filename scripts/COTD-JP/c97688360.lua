@@ -1,6 +1,4 @@
 --剛鬼ツイストコブラ
---Gouki Twist Cobra
---Script by nekrozar
 function c97688360.initial_effect(c)
 	--atkup
 	local e1=Effect.CreateEffect(c)

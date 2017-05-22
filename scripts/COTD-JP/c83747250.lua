@@ -1,6 +1,4 @@
 --黄昏の交衣
---Twilight Clothes
---Scripted by Eerie Code
 function c83747250.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

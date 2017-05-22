@@ -1,6 +1,4 @@
 --ブーギートラップ
---Boogie Trap
---Scripted by Eerie Code
 function c96704974.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

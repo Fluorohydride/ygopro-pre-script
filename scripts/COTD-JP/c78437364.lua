@@ -1,6 +1,4 @@
 --剛鬼ザ・グレート・オーガ
---Gouki the Great Ogre
---Script by nekrozar
 function c78437364.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfc),2)

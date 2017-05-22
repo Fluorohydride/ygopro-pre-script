@@ -1,6 +1,4 @@
 --絶縁の落とし穴
---Breakoff Trap Hole
---Script by nekrozar
 function c56526564.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

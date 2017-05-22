@@ -1,6 +1,4 @@
 --星遺物の加護
---Star Relic's Aegis
---Script by mercury233
 function c97648103.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

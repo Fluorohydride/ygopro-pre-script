@@ -1,6 +1,4 @@
 --スマイル・ユニバース
---Smile Universe
---Scripted by Eerie Code
 function c35259350.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

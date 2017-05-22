@@ -1,6 +1,4 @@
 --覇王眷竜オッドアイズ
---Supreme King Servant Dragon Odd-Eyes
---Scripted by Eerie Code
 function c96733134.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--search

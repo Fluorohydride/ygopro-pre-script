@@ -1,6 +1,4 @@
 --剛鬼ライジングスコーピオ
---Gouki Rising Scorpio
---Scripted by Eerie Code
 function c60461077.initial_effect(c)
 	--summon with no tribute
 	local e1=Effect.CreateEffect(c)

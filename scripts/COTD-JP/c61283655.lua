@@ -1,6 +1,4 @@
 --トリックスター・キャンディナ
---Trickster Candina
---Scripted by Eerie Code
 function c61283655.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)

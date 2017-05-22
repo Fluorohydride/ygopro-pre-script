@@ -1,6 +1,4 @@
 --覇王の逆鱗
---Supreme King's Wrath
---Scripted by Eerie Code
 function c84869738.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

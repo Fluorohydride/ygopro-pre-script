@@ -1,6 +1,4 @@
 --クラッキング・ドラゴン
---Cracking Dragon
---Scripted by Eerie Code
 function c60349525.initial_effect(c)
 	--indes
 	local e1=Effect.CreateEffect(c)
@@ -27,9 +25,9 @@ function c60349525.indval(e,c)
 	return c:IsLevelBelow(e:GetHandler():GetLevel())
 end
 function c60349525.condition(e,tp,eg,ep,ev,re,r,rp)
-	if eg:GetCount()~=1 then return false end
+	if tp==ep or eg:GetCount()~=1 then return false end
 	local c=eg:GetFirst()
-	return c:GetLevel()>0 and c:IsAttackAbove(c:GetLevel()*200) and c:GetSummonPlayer()~=tp
+	return c:GetLevel()>0 and c:IsAttackAbove(c:GetLevel()*200)
 end
 function c60349525.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -43,7 +41,7 @@ function c60349525.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(-tc:GetLevel()*200)
 		tc:RegisterEffect(e1)
 		if not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) then

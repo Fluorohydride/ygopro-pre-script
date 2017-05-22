@@ -1,6 +1,4 @@
 --覇王眷竜ダーク・リベリオン
---Supreme King Servant Dragon Dark Rebellion
---Scripted by Eerie Code
 function c42160203.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,c42160203.matfilter,4,2)

@@ -1,6 +1,4 @@
 --トリックスター・ライトステージ
---Trickster Lightstage
---Scripted by Eerie Code
 function c35371948.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --サイバース・ウィザード
---Cybers Wizard
---Scripted by Eerie Code
 function c36033786.initial_effect(c)
 	--change pos
 	local e1=Effect.CreateEffect(c)

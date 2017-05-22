@@ -1,6 +1,4 @@
 --捕食植物バンクシアオーガ
---Predaplant Banksia Ogre
---Scripted by Eerie Code
 function c22138839.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

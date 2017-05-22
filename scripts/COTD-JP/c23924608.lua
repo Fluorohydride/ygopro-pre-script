@@ -1,6 +1,4 @@
 --砂塵の大嵐
---Heavy Dust Storm
---Scripted by Eerie Code
 function c23924608.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

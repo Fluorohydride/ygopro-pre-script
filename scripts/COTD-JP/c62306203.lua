@@ -1,6 +1,4 @@
 --サルベージェント・ドライバー
---Salvagent Driver
---Script by nekrozar
 function c62306203.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

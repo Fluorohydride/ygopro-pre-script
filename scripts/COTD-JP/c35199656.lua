@@ -1,6 +1,4 @@
 --トリックスター・マンジュシカ
---Trickster Lycorissica
---Scripted by mercury233
 function c35199656.initial_effect(c)
 	--return
 	local e1=Effect.CreateEffect(c)

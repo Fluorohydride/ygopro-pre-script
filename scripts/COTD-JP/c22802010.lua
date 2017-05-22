@@ -1,6 +1,4 @@
 --無差別崩壊
---Blind Ruination
---Script by nekrozar
 function c22802010.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

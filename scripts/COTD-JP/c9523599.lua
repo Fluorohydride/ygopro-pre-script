@@ -1,6 +1,4 @@
 --スタック・リバイバー
---Stack Reviver
---Script by nekrozar
 function c9523599.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --ゾンビーナ
---Zombiena
---Script by nekrozar
 function c81616639.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

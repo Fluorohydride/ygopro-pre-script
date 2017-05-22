@@ -1,6 +1,4 @@
 --戦線復帰
---Return to the Frontlines
---Scripted by Eerie Code
 function c59919307.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,4 @@
 --星杯戦士ニンギルス
---Star Grail Warrior Ningirsu
---Scripted by Eerie Code
 function c30194529.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
