@@ -80,7 +80,7 @@ function c101002042.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return zone~=0
 end
 function c101002042.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHander()
+	local c=e:GetHandler()
 	local tc=Duel.GetAttackTarget()
 	local zone=bit.band(c:GetFreeLinkedZone(),0xf)
 	if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
