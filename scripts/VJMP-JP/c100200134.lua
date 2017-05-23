@@ -32,7 +32,7 @@ function c100200134.spcon(e,c)
 end
 function c100200134.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local g=Duel.SelectMatchingCard(tp,c14536035.spfilter,tp,LOCATION_HAND,0,1,1,c)
+	local g=Duel.SelectMatchingCard(tp,c100200134.spfilter,tp,LOCATION_HAND,0,1,1,c)
 	Duel.SendtoGrave(g,REASON_DISCARD+REASON_COST)
 end
 function c100200134.tncon(e,tp,eg,ep,ev,re,r,rp)

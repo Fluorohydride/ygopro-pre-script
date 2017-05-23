@@ -96,7 +96,8 @@ function c101002051.cfilter(c,mc)
 end
 function c101002051.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local lg=e:GetHandler():GetLinkedGroup():Filter(c101002051.cfilter,nil,e:GetHandler())
+		local c=e:GetHandler()
+		local lg=c:GetLinkedGroup():Filter(c101002051.cfilter,nil,c)
 		local ct=lg:GetSum(Card.GetLink)
 		if ct<=0 or not Duel.IsPlayerCanDiscardDeck(tp,ct) then return false end
 		local g=Duel.GetDecktopGroup(tp,ct)
@@ -111,7 +112,8 @@ function c101002051.thfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()
 end
 function c101002051.acop(e,tp,eg,ep,ev,re,r,rp)
-	local lg=e:GetHandler():GetLinkedGroup():Filter(c101002051.cfilter,nil,c)
+	local c=e:GetHandler()
+	local lg=c:GetLinkedGroup():Filter(c101002051.cfilter,nil,c)
 	local ct=lg:GetSum(Card.GetLink)
 	if ct<=0 or not Duel.IsPlayerCanDiscardDeck(tp,ct) then return end
 	Duel.ConfirmDecktop(tp,ct)

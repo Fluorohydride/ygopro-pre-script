@@ -31,12 +31,11 @@ function c101002010.descon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_LINK)
 end
 function c101002010.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
-	if chk==0 then return g:GetCount()>0 end
-	if re:GetHandler():IsRelateToEffect(re) and e:GetHandler():IsDestructable() then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
-		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
-	end
+	if chk==0 then return c:IsDestructable() and g:GetCount()>0 end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 end
 function c101002010.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) and Duel.Destroy(e:GetHandler(),REASON_EFFECT)>0 then

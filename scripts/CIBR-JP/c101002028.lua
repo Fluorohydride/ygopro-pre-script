@@ -39,7 +39,7 @@ end
 function c101002028.atkfilter1(c,mg)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)
 		and c:IsLocation(LOCATION_MZONE)
-		and mg:IsExists(nil,1,c)
+		and mg:IsExists(aux.TRUE,1,c)
 end
 function c101002028.atkfilter2(c,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)
