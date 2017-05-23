@@ -75,14 +75,14 @@ function c101002042.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101002042.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zone=bit.band(c:GetFreeLinkedZone(),0xf)
+	local zone=bit.band(c:GetFreeLinkedZone(),0x1f)
 	if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
 	return zone~=0
 end
 function c101002042.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttackTarget()
-	local zone=bit.band(c:GetFreeLinkedZone(),0xf)
+	local zone=bit.band(c:GetFreeLinkedZone(),0x1f)
 	if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
 	if chk==0 then return Duel.GetAttacker()==c and tc and tc:IsControlerCanBeChanged(zone) end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,0,0)
@@ -91,9 +91,13 @@ function c101002042.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
 	local c=e:GetHandler()
 	if tc then
-		local zone=bit.band(c:GetFreeLinkedZone(),0xf)
+		local zone=bit.band(c:GetFreeLinkedZone(),0x1f)
 		if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
 		if Duel.GetControl(tc,tp,0,0,zone)~=0 then
+			local token=Duel.CreateToken(tp,73915052)
+			Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE,bit.lshift(1,tc:GetPreviousSequence()))
+			Duel.CalculateDamage(c,token)
+			--Duel.NegateAttack()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
