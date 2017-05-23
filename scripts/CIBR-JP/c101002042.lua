@@ -95,7 +95,7 @@ function c101002042.ctop(e,tp,eg,ep,ev,re,r,rp)
 		if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
 		if Duel.GetControl(tc,tp,0,0,zone)~=0 then
 			local token=Duel.CreateToken(tp,73915052)
-			Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE,bit.lshift(1,tc:GetPreviousSequence()))
+			Duel.MoveToField(token,tp,1-tp,LOCATION_MZONE,POS_FACEUP_DEFENSE,true)
 			Duel.CalculateDamage(c,token)
 			--Duel.NegateAttack()
 			local e1=Effect.CreateEffect(c)
