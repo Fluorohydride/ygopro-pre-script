@@ -80,10 +80,11 @@ function c101002042.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return zone~=0
 end
 function c101002042.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHander()
 	local tc=Duel.GetAttackTarget()
 	local zone=bit.band(c:GetFreeLinkedZone(),0xf)
-	if e:GetHander():GetSequence()>4 then zone=bit.band(zone,0xfff) end
-	if chk==0 then return  Duel.GetAttacker()==e:GetHandler() and tc and tc:IsControlerCanBeChanged(zone) end
+	if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
+	if chk==0 then return Duel.GetAttacker()==c and tc and tc:IsControlerCanBeChanged(zone) end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,0,0)
 end
 function c101002042.ctop(e,tp,eg,ep,ev,re,r,rp)
