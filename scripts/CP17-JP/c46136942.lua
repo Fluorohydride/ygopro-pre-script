@@ -132,7 +132,7 @@ end
 function c46136942.mftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,c)
+		local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil)
 		mg1:Merge(Duel.GetMatchingGroup(c46136942.mffilter0,tp,LOCATION_PZONE,0,nil,e))
 		local res=Duel.IsExistingMatchingCard(c46136942.mffilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,c)
 		if not res then
@@ -151,7 +151,7 @@ end
 function c46136942.mfop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) or c:IsImmuneToEffect(e) then return end
-	local mg1=Duel.GetFusionMaterial(tp):Filter(c46136942.mffilter1,c,e)
+	local mg1=Duel.GetFusionMaterial(tp):Filter(c46136942.mffilter1,nil,e)
 	mg1:Merge(Duel.GetMatchingGroup(c46136942.mffilter0,tp,LOCATION_PZONE,0,nil,e))
 	local sg1=Duel.GetMatchingGroup(c46136942.mffilter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,c)
 	local mg2=nil
