@@ -27,7 +27,7 @@ end
 function c60349525.condition(e,tp,eg,ep,ev,re,r,rp)
 	if tp==ep or eg:GetCount()~=1 then return false end
 	local c=eg:GetFirst()
-	return c:GetLevel()>0 and c:IsAttackAbove(c:GetLevel()*200)
+	return c:GetLevel()>0
 end
 function c60349525.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
