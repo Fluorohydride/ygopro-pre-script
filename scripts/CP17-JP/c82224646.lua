@@ -1,8 +1,6 @@
 --EMオッドアイズ・シンクロン
 --Performapal Odd-Eyes Synchron
 --Scripted by Eerie Code
---Credits to MLD for the Synchro Summon workaround
---Requires a core update for full functionality
 function c82224646.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--tuner
@@ -46,8 +44,7 @@ function c82224646.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c82224646.tnfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x9f) or c:IsSetCard(0x99))
-		and (not c:IsType(TYPE_TUNER) or c:IsLevelAbove(2))
+	return c:IsFaceup() and (c:IsSetCard(0x9f) or c:IsSetCard(0x99)) and (not c:IsType(TYPE_TUNER) or c:IsLevelAbove(2))
 end
 function c82224646.tntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c82224646.tnfilter(chkc) end
@@ -106,9 +103,8 @@ function c82224646.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function c82224646.scfilter1(c,e,tp,mc)
-	c:AssumeProperty(ASSUME_TYPE,c:GetOriginalType())
 	local mg=Group.FromCards(c,mc)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCanBeSynchroMaterial() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(c82224646.scfilter2,tp,LOCATION_EXTRA,0,1,nil,mg)
 end
 function c82224646.scfilter2(c,mg)
