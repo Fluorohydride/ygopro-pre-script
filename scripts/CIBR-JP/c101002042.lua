@@ -31,15 +31,9 @@ function c101002042.initial_effect(c)
 	e4:SetCategory(CATEGORY_CONTROL)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_BATTLE_START)
-	e4:SetCondition(c101002042.ctcon)
 	e4:SetTarget(c101002042.cttg)
 	e4:SetOperation(c101002042.ctop)
 	c:RegisterEffect(e4)
-	if not Card.GetFreeLinkedZone then
-		function Card.GetFreeLinkedZone(c)
-			return c:GetLinkedZone()
-		end
-	end
 end
 function c101002042.efilter1(e,re,rp)
 	return re:IsActiveType(TYPE_MONSTER)
@@ -73,26 +67,21 @@ function c101002042.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-function c101002042.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local zone=bit.band(c:GetFreeLinkedZone(),0x1f)
-	if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
-	return zone~=0
-end
 function c101002042.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttackTarget()
-	local zone=bit.band(c:GetFreeLinkedZone(),0x1f)
-	if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
-	if chk==0 then return Duel.GetAttacker()==c and tc and tc:IsControlerCanBeChanged(zone) end
+	if chk==0 then
+		if not c:IsType(TYPE_LINK) then return false end
+		local zone=bit.band(c:GetLinkedZone(),0x1f)
+		return Duel.GetAttacker()==c and tc and tc:IsControlerCanBeChanged(false,zone)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,0,0)
 end
 function c101002042.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
 	local c=e:GetHandler()
 	if tc then
-		local zone=bit.band(c:GetFreeLinkedZone(),0x1f)
-		if c:GetSequence()>4 then zone=bit.band(zone,0xfff) end
+		local zone=bit.band(c:GetLinkedZone(),0x1f)
 		if Duel.GetControl(tc,tp,0,0,zone)~=0 then
 			local token=Duel.CreateToken(tp,73915052)
 			Duel.MoveToField(token,tp,1-tp,LOCATION_MZONE,POS_FACEUP_DEFENSE,true)
