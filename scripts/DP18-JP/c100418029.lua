@@ -25,17 +25,20 @@ function c100418029.initial_effect(c)
 	e2:SetOperation(c100418029.spop)
 	c:RegisterEffect(e2)
 end
+function c100418029.costfilter(c,tp,ft)
+	return c:IsRace(RACE_MACHINE) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
+end
 function c100418029.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsRace,1,nil,RACE_MACHINE) end
-	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,nil,RACE_MACHINE)
-	Duel.Release(g,REASON_COST)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return ft>-1 and Duel.CheckReleaseGroup(tp,c100418029.costfilter,1,nil,tp,ft) end
+	local sg=Duel.SelectReleaseGroup(tp,c100418029.costfilter,1,1,nil,tp,ft)
+	Duel.Release(sg,REASON_COST)
 end
 function c100418029.filter(c,e,tp)
 	return c:IsSetCard(0x16) and not c:IsAttribute(ATTRIBUTE_WIND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100418029.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-		and Duel.IsExistingMatchingCard(c100418029.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100418029.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c100418029.operation(e,tp,eg,ep,ev,re,r,rp)

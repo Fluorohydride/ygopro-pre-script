@@ -13,7 +13,7 @@ function c100418002.initial_effect(c)
 	e1:SetTarget(c100418002.destg)
 	e1:SetOperation(c100418002.desop)
 	c:RegisterEffect(e1)
-	--summon
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100418002,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,9 +28,6 @@ function c100418002.initial_effect(c)
 end
 function c100418002.filter1(c,ec)
 	return c:GetEquipTarget()==ec
-end
-function c100418002.filter2(c)
-	return c:IsType()
 end
 function c100418002.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c100418002.filter1,1,nil,e:GetHandler()) end
@@ -49,14 +46,14 @@ function c100418002.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tg,REASON_EFFECT)
 	end
 end
-function c100418002.spfilter(c,e,tp)
-	return c:IsSetCard(0x3b) and c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function c100418002.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(Card.IsAbleToGraveAsCost,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=e:GetHandler():GetEquipGroup():FilterSelect(tp,Card.IsAbleToGraveAsCost,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
+end
+function c100418002.spfilter(c,e,tp)
+	return c:IsSetCard(0x3b) and c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100418002.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100418002.spfilter(chkc,e,tp) end

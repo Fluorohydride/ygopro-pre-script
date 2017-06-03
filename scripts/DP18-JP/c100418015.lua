@@ -10,7 +10,7 @@ function c100418015.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e1:SetValue(3643300)
 	c:RegisterEffect(e1)
-	--immune spell
+	--immune
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -19,10 +19,10 @@ function c100418015.initial_effect(c)
 	e2:SetCondition(c100418015.econ)
 	e2:SetValue(c100418015.efilter)
 	c:RegisterEffect(e2)
-	--special summon
+	--search
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100418015,0))
-	e3:SetCategory(CATEGORY_DAMAGE)
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
@@ -32,7 +32,7 @@ function c100418015.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100418015.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
 end
 function c100418015.filter(c)
 	return c:IsFaceup() and c:IsCode(22702055)

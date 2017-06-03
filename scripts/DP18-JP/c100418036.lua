@@ -37,7 +37,7 @@ function c100418036.splimit(e,se,sp,st)
 	return sc and sc:IsType(TYPE_SPELL+TYPE_TRAP) and (sc:IsSetCard(0x200) or sc:IsCode(45898858))
 end
 function c100418036.atkfilter(c)
-	return aux.nzatk(c) and c:IsType(TYPE_EFFECT)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
 function c100418036.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100418036.atkfilter,tp,0,LOCATION_MZONE,1,nil) end

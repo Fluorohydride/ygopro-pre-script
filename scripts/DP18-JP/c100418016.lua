@@ -36,14 +36,35 @@ function c100418016.initial_effect(c)
 	e3:SetOperation(c100418016.disop)
 	c:RegisterEffect(e3)
 end
+function c100418016.rfilter(c,tp)
+	return c:IsAttribute(ATTRIBUTE_WATER) and (c:IsControler(tp) or c:IsFaceup())
+end
+function c100418016.mzfilter(c,tp)
+	return c:IsControler(tp) and c:GetSequence()<5
+end
 function c100418016.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsAttribute,2,nil,ATTRIBUTE_WATER) end
-	local g=Duel.SelectReleaseGroup(tp,Card.IsAttribute,2,2,nil,ATTRIBUTE_WATER)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c100418016.rfilter,nil,tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct=-ft+1
+	if chk==0 then return ft>-2 and rg:GetCount()>1 and (ft>0 or rg:IsExists(c100418016.mzfilter,ct,nil,tp)) end
+	local g=nil
+	if ft>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		g=rg:Select(tp,2,2,nil)
+	elseif ft==0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		g=rg:FilterSelect(tp,c100418016.mzfilter,1,1,nil,tp)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		local g2=rg:Select(tp,1,1,g:GetFirst())
+		g:Merge(g2)
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		g=rg:FilterSelect(tp,c100418016.mzfilter,2,2,nil,tp)
+	end
 	Duel.Release(g,REASON_COST)
 end
 function c100418016.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100418016.spop(e,tp,eg,ep,ev,re,r,rp,c)

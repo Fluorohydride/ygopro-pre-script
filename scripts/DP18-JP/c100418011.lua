@@ -13,16 +13,16 @@ function c100418011.initial_effect(c)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100418011,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
-	e2:SetHintTiming(0,TIMING_END_PHASE)
+	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
 	e2:SetCondition(c100418011.condition)
 	e2:SetTarget(c100418011.target2)
 	e2:SetOperation(c100418011.operation)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100418011,1))
@@ -38,7 +38,7 @@ function c100418011.initial_effect(c)
 	e4:SetDescription(aux.Stringid(100418011,2))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetCondition(c100418011.spcon)
 	e4:SetTarget(c100418011.sptg)
@@ -55,7 +55,7 @@ function c100418011.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.SelectYesNo(tp,94) then
 		e:GetHandler():RegisterFlagEffect(100418011,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 		e:GetHandler():RegisterFlagEffect(0,RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,65)
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE)
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	end
 end
@@ -67,7 +67,7 @@ function c100418011.filter(c,e,tp)
 	return c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100418011.target2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(100418011)==0 
+	if chk==0 then return e:GetHandler():GetFlagEffect(100418011)==0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100418011.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	e:GetHandler():RegisterFlagEffect(100418011,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)

@@ -6,28 +6,24 @@ function c100418004.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetCondition(c100418004.condition)
 	e1:SetTarget(c100418004.target)
 	e1:SetOperation(c100418004.operation)
 	c:RegisterEffect(e1)
 	--sand to grave and equip
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_EQUIP)
+	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCondition(c100418004.descon)
 	e2:SetCost(c100418004.descost)
 	e2:SetTarget(c100418004.destg)
 	e2:SetOperation(c100418004.desop)
 	c:RegisterEffect(e2)
-end
-function c100418004.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function c100418004.filter(c)
 	return c:IsSetCard(0x3b) and c:IsFaceup()
@@ -36,7 +32,7 @@ function c100418004.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c100418004.filter(chkc) and chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return Duel.IsExistingTarget(c100418004.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,c100418004.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c100418004.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 function c100418004.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -62,10 +58,10 @@ function c100418004.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100418004.eqlimit(e,c)
-	return c100418004.filter(c)
+	return c:IsSetCard(0x3b)
 end
 function c100418004.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget()
+	return e:GetHandler():GetEquipTarget() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function c100418004.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -76,12 +72,12 @@ function c100418004.desfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
 function c100418004.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local tc=e:GetLabelObject()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100418004.desfilter(chkc) and chkc~=tc end
 	if chk==0 then return Duel.IsExistingTarget(c100418004.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler():GetEquipTarget()) end
-	local tc=e:GetLabelObject()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c100418004.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc)
-	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,tc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function c100418004.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
