@@ -22,17 +22,17 @@ function c100200134.initial_effect(c)
 	e2:SetOperation(c100200134.tnop)
 	c:RegisterEffect(e2)
 end
-function c100200134.spcfilter(c)
+function c100200134.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER)
 end
 function c100200134.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c100200134.spfilter,c:GetControler(),LOCATION_HAND,0,1,c)
+		and Duel.IsExistingMatchingCard(c100200134.cfilter,c:GetControler(),LOCATION_HAND,0,1,c)
 end
 function c100200134.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local g=Duel.SelectMatchingCard(tp,c100200134.spfilter,tp,LOCATION_HAND,0,1,1,c)
+	local g=Duel.SelectMatchingCard(tp,c100200134.cfilter,tp,LOCATION_HAND,0,1,1,c)
 	Duel.SendtoGrave(g,REASON_DISCARD+REASON_COST)
 end
 function c100200134.tncon(e,tp,eg,ep,ev,re,r,rp)
