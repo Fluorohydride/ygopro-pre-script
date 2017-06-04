@@ -1,5 +1,4 @@
 --Pendulum Switch
---Script by dest
 function c42378577.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

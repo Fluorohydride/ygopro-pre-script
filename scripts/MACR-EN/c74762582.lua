@@ -1,5 +1,4 @@
 --Subterror Fiendess
---Scripted by Eerie Code
 function c74762582.initial_effect(c)
 	--negate
 	local e1=Effect.CreateEffect(c)

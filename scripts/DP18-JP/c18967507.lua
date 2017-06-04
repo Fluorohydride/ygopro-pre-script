@@ -1,62 +1,60 @@
 --鎧獄竜－サイバー・ダークネス・ドラゴン
---Cyberdarkness Dragon
---Scripted by Eerie Code
-function c100418024.initial_effect(c)
+function c18967507.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,c100418024.matfilter,5,true)
+	aux.AddFusionProcFunRep(c,c18967507.matfilter,5,true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(c100418024.splimit)
+	e1:SetValue(c18967507.splimit)
 	c:RegisterEffect(e1)
 	--equip
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100418024,0))
+	e2:SetDescription(aux.Stringid(18967507,0))
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetTarget(c100418024.eqtg)
-	e2:SetOperation(c100418024.eqop)
+	e2:SetTarget(c18967507.eqtg)
+	e2:SetOperation(c18967507.eqop)
 	c:RegisterEffect(e2)
 	--Negate
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100418024,1))
+	e3:SetDescription(aux.Stringid(18967507,1))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(c100418024.negcon)
-	e3:SetCost(c100418024.negcost)
-	e3:SetTarget(c100418024.negtg)
-	e3:SetOperation(c100418024.negop)
+	e3:SetCondition(c18967507.negcon)
+	e3:SetCost(c18967507.negcost)
+	e3:SetTarget(c18967507.negtg)
+	e3:SetOperation(c18967507.negop)
 	c:RegisterEffect(e3)
 end
-function c100418024.matfilter(c)
+function c18967507.matfilter(c)
 	return c:IsType(TYPE_EFFECT) and (c:IsFusionSetCard(0x4093)
 		or c:IsFusionCode(40418351,77625948,41230939,3019642))
 end
-function c100418024.splimit(e,se,sp,st)
+function c18967507.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or aux.fuslimit(e,se,sp,st)
 end
-function c100418024.eqfilter(c,tp)
+function c18967507.eqfilter(c,tp)
 	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
-function c100418024.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c18967507.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c100418024.eqfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
+		and Duel.IsExistingMatchingCard(c18967507.eqfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 end
-function c100418024.eqop(e,tp,eg,ep,ev,re,r,rp)
+function c18967507.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100418024.eqfilter),tp,LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c18967507.eqfilter),tp,LOCATION_GRAVE,0,1,1,nil,tp)
 	local tc=g:GetFirst()
 	if tc then
 		if not Duel.Equip(tp,tc,c,true) then return end
@@ -65,7 +63,7 @@ function c100418024.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
-		e1:SetValue(c100418024.eqlimit)
+		e1:SetValue(c18967507.eqlimit)
 		tc:RegisterEffect(e1)
 		local atk=tc:GetBaseAttack()
 		if atk>0 then
@@ -79,29 +77,29 @@ function c100418024.eqop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100418024.eqlimit(e,c)
+function c18967507.eqlimit(e,c)
 	return e:GetOwner()==c
 end
-function c100418024.negcon(e,tp,eg,ep,ev,re,r,rp)
+function c18967507.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp and Duel.IsChainNegatable(ev)
 end
-function c100418024.negfilter(c)
+function c18967507.negfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsAbleToGraveAsCost()
 end
-function c100418024.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100418024.negfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+function c18967507.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c18967507.negfilter,tp,LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100418024.negfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c18967507.negfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function c100418024.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c18967507.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
-function c100418024.negop(e,tp,eg,ep,ev,re,r,rp)
+function c18967507.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end

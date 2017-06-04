@@ -1,5 +1,4 @@
 --Subterror Behemoth Speleogeist
---Scripted by Eerie Code
 function c47556396.initial_effect(c)
 	--flip
 	local e1=Effect.CreateEffect(c)

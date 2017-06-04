@@ -1,5 +1,4 @@
 --SPYRAL GEAR - Last Resort
---Scripted by Eerie Code
 function c37433748.initial_effect(c)
 	--equip
 	local e1=Effect.CreateEffect(c)
