@@ -2,11 +2,8 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`  
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`  
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`  
-- **April 15, 2017**     : Code of the Duelist (COTD-JP) : `101001XXX`  
-- **May 4, 2017**     : MAXIMUM CRISIS (MACR-EN) : `100912XXX`  
-- **May 13, 2017**     : Collectors Pack 2017 (CP17-JP) : `100217XXX`  
-- **June 3, 2017**     : Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`  
 - **June 17, 2017**     : Structure Deck: Cyverse Link (SD32-JP) : `100332XXX`  
+- **July 8, 2017**     : Circuit Break (CIBR-JP) : `101002XXX`  
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~  
@@ -46,3 +43,7 @@
 - ~~Starter Deck 2017 (ST17-JP) : `100317XXX`~~  
 - ~~Yu-Gi-Oh! ARC-V Volume 3 promotional card (YA03-JP) : `100218XXX`~~  
 - ~~Master Guide 5 promotional cards (MG05-JP) : `100219XXX`~~  
+- ~~Code of the Duelist (COTD-JP) : `101001XXX`~~  
+- ~~MAXIMUM CRISIS (MACR-EN) : `100912XXX`~~  
+- ~~Collectors Pack 2017 (CP17-JP) : `100217XXX`~~  
+- ~~Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`~~  
