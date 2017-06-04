@@ -42,18 +42,16 @@ function c44352516.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c44352516.indestg(e,c)
-	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642))
-		and c:IsType(TYPE_EFFECT) and c:GetEquipCount()>0
+	return c:IsSetCard(0x4093) and c:IsType(TYPE_EFFECT) and c:GetEquipCount()>0
 end
 function c44352516.indesval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
 function c44352516.filter(c)
-	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642))
-		and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(0x4093) and c:IsFaceup() and c:IsAbleToHand()
 end
 function c44352516.filter2(c)
-	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642)) and c:IsSummonable(true,nil)
+	return c:IsSetCard(0x4093) and c:IsSummonable(true,nil)
 end
 function c44352516.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c44352516.filter(chkc) end

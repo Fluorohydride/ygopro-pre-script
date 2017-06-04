@@ -41,8 +41,7 @@ function c45078193.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function c45078193.filter(c)
-	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642,80033124))
-		and c:IsRace(RACE_MACHINE) and c:IsAbleToHand()
+	return c:IsSetCard(0x4093) and c:IsRace(RACE_MACHINE) and c:IsAbleToHand()
 end
 function c45078193.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c45078193.filter,tp,LOCATION_DECK,0,1,nil) end

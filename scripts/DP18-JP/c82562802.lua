@@ -41,8 +41,7 @@ function c82562802.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function c82562802.filter2(c)
-	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642))
-		and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x4093) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c82562802.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c82562802.filter2,tp,LOCATION_DECK,0,1,nil) end
@@ -74,8 +73,7 @@ function c82562802.gyop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c82562802.filter1(c)
-	return (c:IsSetCard(0x4093) or c:IsCode(40418351,77625948,41230939,3019642))
-		and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x4093) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c82562802.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
