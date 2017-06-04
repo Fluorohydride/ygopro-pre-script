@@ -32,7 +32,7 @@ function c101002007.spcon(e,c)
 		and Duel.IsExistingMatchingCard(c101002007.spfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function c101002007.filter(c,e,tp)
-	return c:IsRace(RACE_DRAGON)  and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101002007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
