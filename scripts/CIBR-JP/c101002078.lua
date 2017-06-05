@@ -18,9 +18,9 @@ function c101002078.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101002078.filter(c,seq,tp)
 	if c:IsControler(tp) then
-		return c:GetSequence()==seq
+		return c:GetSequence()==seq or (seq==1 and c:GetSequence()==5) or (seq==3 and c:GetSequence()==6)
 	else
-		return c:GetSequence()==4-seq
+		return c:GetSequence()==4-seq or (seq==1 and c:GetSequence()==6) or (seq==3 and c:GetSequence()==5)
 	end
 end
 function c101002078.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
