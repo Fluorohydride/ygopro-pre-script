@@ -17,6 +17,7 @@ function c101002078.condition(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsLocation(LOCATION_SZONE)
 end
 function c101002078.filter(c,seq,tp)
+	if c:IsLocation(LOCATION_SZONE) and c:GetSequence()>=5 then return false end
 	if c:IsControler(tp) then
 		return c:GetSequence()==seq or (seq==1 and c:GetSequence()==5) or (seq==3 and c:GetSequence()==6)
 	else
