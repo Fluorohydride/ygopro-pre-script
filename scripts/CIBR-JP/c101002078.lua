@@ -14,7 +14,7 @@ function c101002078.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101002078.condition(e,tp,eg,ep,ev,re,r,rp)
-	return c:IsLocation(LOCATION_SZONE)
+	return e:GetHandler():IsLocation(LOCATION_SZONE)
 end
 function c101002078.filter(c,seq,tp)
 	if c:IsLocation(LOCATION_SZONE) and c:GetSequence()>=5 then return false end
