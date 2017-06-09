@@ -2,6 +2,7 @@
 --Excrawler Qualiark
 --Scripted by Eerie Code
 function c101002050.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x204),2,2)
 	--special summon
@@ -55,11 +56,11 @@ function c101002050.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousPosition(POS_FACEUP)
 end
 function c101002050.spfilter1(c,e,tp)
-	return c:IsSetCard(0x204) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(0x204) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 		and Duel.IsExistingTarget(c62709239.spfilter2,tp,LOCATION_GRAVE,0,1,c,c:GetCode(),e,tp)
 end
 function c101002050.spfilter2(c,cd,e,tp)
-	return not c:IsCode(cd) and c:IsSetCard(0x204) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return not c:IsCode(cd) and c:IsSetCard(0x204) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function c101002050.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -78,14 +79,14 @@ function c101002050.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local g=tg:Filter(Card.IsRelateToEffect,nil,e)
-	local ct=g:GetCount()
-	if ft>0 and ct<=ft and (ct==1 or not Duel.IsPlayerAffectedByEffect(tp,59822133)) then
-		local tc=g:GetFirst()
-		while tc do
-			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-			tc=g:GetNext()
-		end
-		Duel.SpecialSummonComplete()
+	if g:GetCount()==0 or ft<=0 or (g:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133)) then return end
+	if ft<g:GetCount() then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		g=g:Select(tp,ft,ft,nil)
+	end
+	if g:GetCount()>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function c101002050.effilter(c)

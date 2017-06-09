@@ -1,7 +1,6 @@
 --剛鬼サンダー・オーガ
 --Gouki Thunder Ogre
 --Script by mercury233
---not fully implemented
 function c101002045.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfc),2)
@@ -12,7 +11,7 @@ function c101002045.initial_effect(c)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
-	e1:SetTarget(c101002045.estg)
+	e1:SetValue(c101002045.sumval)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -34,23 +33,8 @@ function c101002045.initial_effect(c)
 	e3:SetOperation(c101002045.atkop)
 	c:RegisterEffect(e3)
 end
-function c101002045.estg(e,tc)
-	local c=e:GetHandler()
-	if c:GetSequence()<5 then return false end
-	local tp=Duel.GetTurnPlayer()
-	local p=c:GetControler()
-	local ct=1
-	if p==tp then ct=2 end
-	local mi,ma=tc:GetTributeRequirement()
-	local lct1=c:GetLinkedGroup():Filter(Card.IsControler,nil,tp):GetCount()
-	if ma==0 then
-		return ct-lct1>0
-	else
-		local lct2=c:GetLinkedGroup():Filter(Card.IsControler,nil,tp):Filter(Card.IsReleasable,nil):GetCount()
-		local g=Duel.GetTributeGroup(tc)
-		g:RemoveCard(c)
-		return g:GetCount()>=mi and ct-lct1+lct2>0
-	end
+function c101002045.sumval(e,c)
+	return e:GetHandler():GetLinkedZone()*0x10000
 end
 function c101002045.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetLinkedGroup()
