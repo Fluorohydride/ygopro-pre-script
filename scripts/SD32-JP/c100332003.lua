@@ -24,9 +24,8 @@ function c100332003.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100332003.atkcon(e)
-	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetTurnPlayer()==tp and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==0
+	return Duel.GetTurnPlayer()==tp and e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)
 end
 function c100332003.repfilter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsRace(RACE_CYBERS) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)

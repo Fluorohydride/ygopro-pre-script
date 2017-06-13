@@ -22,7 +22,7 @@ function c101002046.mfilter(c)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_DRAGON) and not c:IsType(TYPE_TOKEN)
 end
 function c101002046.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c101002046.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
