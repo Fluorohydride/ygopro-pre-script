@@ -4,6 +4,7 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **June 17, 2017** : Structure Deck: Cyverse Link (SD32-JP) : `100332XXX`
 - **July 8, 2017** : Circuit Break (CIBR-JP) : `101002XXX`
+- **August 11, 2017** : Deck Build Pack: Spirit Warriors (CIBR-JP) : `100419XXX`
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
