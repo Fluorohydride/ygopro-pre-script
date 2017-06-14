@@ -1,5 +1,6 @@
 --影六武衆－キザル
 --Shadow Six Samurai – Kizaru
+--Scripted by Eerie Code
 function c100419005.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)
@@ -25,8 +26,8 @@ function c100419005.filter(c,att)
 	return c:IsFaceup() and c:IsAttribute(att)
 end
 function c100419005.thfilter(c)
-	return c:IsSetCard(0x9f) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() 
-	and not Duel.IsExistingMatchingCard(c100419005.filter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetAttribute())
+	return c:IsSetCard(0x9f) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+		and not Duel.IsExistingMatchingCard(c100419005.filter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetAttribute())
 end
 function c100419005.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100419005.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -41,13 +42,12 @@ function c100419005.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100419005.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x3d) 
+	return c:IsFaceup() and c:IsSetCard(0x3d)
 		and c:IsOnField() and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function c100419005.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c100419005.repfilter,1,nil,tp)
-	and eg:GetCount()==1
-	end
+		and eg:GetCount()==1 end
 	return Duel.SelectYesNo(tp,aux.Stringid(100419005,1))
 end
 function c100419005.repval(e,c)

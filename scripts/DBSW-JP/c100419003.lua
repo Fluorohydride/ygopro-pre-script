@@ -1,5 +1,6 @@
 --影六武衆－ハツメ
 --Shadow Six Samurai – Hatsume
+--Scripted by Eerie Code
 function c100419003.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -48,8 +49,8 @@ function c100419003.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function c100419003.filter2(c,e,sp)
-	return c:IsSetCard(0x3d) and c:GetCode()~=100419003 and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+function c100419003.filter2(c,e,tp)
+	return c:IsSetCard(0x3d) and not c:IsCode(100419003) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100419003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100419003.filter2(chkc,e,tp) end
@@ -66,13 +67,12 @@ function c100419003.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100419003.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x3d) 
+	return c:IsFaceup() and c:IsSetCard(0x3d)
 		and c:IsOnField() and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function c100419003.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c100419003.repfilter,1,nil,tp)
-	and eg:GetCount()==1
-	end
+		and eg:GetCount()==1 end
 	return Duel.SelectYesNo(tp,aux.Stringid(100419003,1))
 end
 function c100419003.repval(e,c)
