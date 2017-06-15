@@ -48,9 +48,9 @@ function c101002073.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if b1 and b2 then
 			op=Duel.SelectOption(tp,aux.Stringid(101002073,0),aux.Stringid(101002073,1))
 		elseif b1 then
-			op=Duel.SelectOption(tp,aux.Stringid(37055344,0))
+			op=Duel.SelectOption(tp,aux.Stringid(101002073,0))
 		else
-			op=Duel.SelectOption(tp,aux.Stringid(37055344,1))+1
+			op=Duel.SelectOption(tp,aux.Stringid(101002073,1))+1
 		end
 		e:SetLabel(op)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -69,10 +69,10 @@ function c101002073.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function c101002073.postg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsPosition(POS_FACEDOWN_DEFENSE) end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsPosition,tp,LOCATION_MZONE,0,1,nil,POS_FACEDOWN_DEFENSE) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFacedown() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsFacedown,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g=Duel.SelectTarget(tp,Card.IsPosition,tp,LOCATION_MZONE,0,1,1,nil,POS_FACEDOWN_DEFENSE)
+	local g=Duel.SelectTarget(tp,Card.IsFacedown,tp,LOCATION_MZONE,0,1,1,nil)
 	e:SetLabel(0)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
@@ -85,7 +85,7 @@ function c101002073.posop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101002073.cfilter(c)
-	return c:IsSetCard(0x204) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsSetCard(0x204) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function c101002073.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c101002073.cost(e,tp,eg,ep,ev,re,r,rp,0)

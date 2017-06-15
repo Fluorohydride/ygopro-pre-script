@@ -13,7 +13,7 @@ function c101002057.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard(0x204)))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x204))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -42,7 +42,7 @@ function c101002057.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c101002057.spfilter(c,e,tp)
-	return c:IsLevelBelow(2) and c:IsRace(RACE_INSECT) 
+	return c:IsLevelBelow(2) and c:IsRace(RACE_INSECT)
 		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN))
 end
 function c101002057.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -60,6 +60,9 @@ function c101002057.spop(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then spos=spos+POS_FACEUP_DEFENSE end
 		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN) then spos=spos+POS_FACEDOWN_DEFENSE end
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,spos)
+		if tc:IsFacedown() then
+			Duel.ConfirmCards(1-tp,tc)
+		end
 	end
 end
 function c101002057.cfilter(c,tp)

@@ -1,5 +1,6 @@
 --トリックスター・ナルキッス
 --Trickstar Narkiss
+--Scripted by Eerie Code
 function c101002004.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -40,10 +41,7 @@ end
 function c101002004.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
-		Duel.SendtoGrave(c,REASON_RULE)
-	end
+	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c101002004.regop(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp and re:IsActiveType(TYPE_MONSTER)	and (re:GetActivateLocation()==LOCATION_GRAVE or re:GetActivateLocation()==LOCATION_HAND) then

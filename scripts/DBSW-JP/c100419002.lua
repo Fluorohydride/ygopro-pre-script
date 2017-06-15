@@ -40,7 +40,7 @@ function c100419002.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100419002.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x3d)
-		and c:IsOnField() and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+		and c:IsOnField() and c:IsControler(tp) and c:IsReason(REASON_EFFECT)
 end
 function c100419002.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c100419002.repfilter,1,nil,tp)

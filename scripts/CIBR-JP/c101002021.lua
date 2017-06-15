@@ -1,5 +1,6 @@
 --クローラー・デンドライト
 --Crawler Dendrite
+--Scripted by Eerie Code
 function c101002021.initial_effect(c)
 	--flip
 	local e1=Effect.CreateEffect(c)
@@ -40,8 +41,8 @@ function c101002021.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101002021.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK 
-	and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK
+		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function c101002021.filter1(c,e,tp)
 	return c:IsSetCard(0x204) and not c:IsCode(101002021) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -50,7 +51,7 @@ function c101002021.filter2(c,g)
 	return g:IsExists(c101002021.filter3,1,c,c:GetCode())
 end
 function c101002021.filter3(c,code)
-	return c:GetCode()~=code
+	return not c:IsCode(code)
 end
 function c101002021.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -76,5 +77,7 @@ function c101002021.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 		Duel.SpecialSummonStep(tc2,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 		Duel.SpecialSummonComplete()
+		local g=Group.FromCards(tc1,tc2)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end

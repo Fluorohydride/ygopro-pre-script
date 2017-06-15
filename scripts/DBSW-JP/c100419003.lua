@@ -24,38 +24,38 @@ function c100419003.initial_effect(c)
 	e2:SetOperation(c100419003.repop)
 	c:RegisterEffect(e2)
 end
+function c100419003.filter0(c)
+	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5
+end
 function c100419003.filter1(c)
-	return c:IsSetCard(0x3d) and c:IsAbleToRemoveAsCost() and ((c:IsLocation(LOCATION_ONFIELD) and c:IsFaceup()) or c:IsLocation(LOCATION_GRAVE))
+	return c:IsSetCard(0x3d) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+end
+function c100419003.filter3(c,e,tp)
+	return c100419003.filter1(c)
+		and Duel.IsExistingMatchingCard(c100419003.filter3,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,c,e,tp,c)
+end
+function c100419003.filter4(c,e,tp,rc)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local g=Group.FromCards(c,rc)
+	local ct=g:FilterCount(c100419003.filter0,nil)
+	return c100419003.filter1(c) and ft+ct>0
+		and Duel.IsExistingTarget(c100419003.filter2,tp,LOCATION_GRAVE,0,1,g,e,tp)
 end
 function c100419003.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	local sg=Duel.GetMatchingGroup(c92572371.cfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,nil)
-	if chk==0 then return sg:GetCount()>=2
-		and (ft>0 or (ct<3 and sg:IsExists(Card.IsLocation,ct,nil,LOCATION_MZONE))) end
-	local g=nil
-	if ft<=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		g=sg:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
-		if ct<2 then
-			sg:Sub(g)
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local g1=sg:Select(tp,2-ct,2-ct,nil)
-			g:Merge(g1)
-		end
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		g=sg:Select(tp,2,2,nil)
-	end
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100419003.filter3,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g1=Duel.SelectMatchingCard(tp,c100419003.filter3,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,1,nil,e,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g2=Duel.SelectMatchingCard(tp,c100419003.filter4,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,1,g1,e,tp,g1:GetFirst())
+	g1:Merge(g2)
+	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end
 function c100419003.filter2(c,e,tp)
 	return c:IsSetCard(0x3d) and not c:IsCode(100419003) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100419003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100419003.filter2(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-		and Duel.IsExistingTarget(c100419003.filter2,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100419003.filter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
@@ -68,7 +68,7 @@ function c100419003.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100419003.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x3d)
-		and c:IsOnField() and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+		and c:IsOnField() and c:IsControler(tp) and c:IsReason(REASON_EFFECT)
 end
 function c100419003.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c100419003.repfilter,1,nil,tp)
