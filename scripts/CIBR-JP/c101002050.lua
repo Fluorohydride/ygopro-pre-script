@@ -7,7 +7,7 @@ function c101002050.initial_effect(c)
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x204),2,2)
 	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(19801646,0))
+	e1:SetDescription(aux.Stringid(101002050,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_LEAVE_FIELD)
@@ -57,7 +57,7 @@ function c101002050.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101002050.spfilter1(c,e,tp)
 	return c:IsSetCard(0x204) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
-		and Duel.IsExistingTarget(c62709239.spfilter2,tp,LOCATION_GRAVE,0,1,c,c:GetCode(),e,tp)
+		and Duel.IsExistingTarget(c101002050.spfilter2,tp,LOCATION_GRAVE,0,1,c,c:GetCode(),e,tp)
 end
 function c101002050.spfilter2(c,cd,e,tp)
 	return not c:IsCode(cd) and c:IsSetCard(0x204) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
