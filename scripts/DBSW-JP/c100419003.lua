@@ -32,7 +32,7 @@ function c100419003.filter1(c)
 end
 function c100419003.filter3(c,e,tp)
 	return c100419003.filter1(c)
-		and Duel.IsExistingMatchingCard(c100419003.filter3,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,c,e,tp,c)
+		and Duel.IsExistingMatchingCard(c100419003.filter4,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,c,e,tp,c)
 end
 function c100419003.filter4(c,e,tp,rc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

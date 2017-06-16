@@ -14,17 +14,14 @@ function c100419007.initial_effect(c)
 	e1:SetOperation(c100419007.activate)
 	c:RegisterEffect(e1)
 end
-function c100419007.costfilter(c)
-	return c:IsAbleToGraveAsCost()
-end
 function c100419007.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100419007.costfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100419007.costfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100419007.filter(c,e,tp)
-	return c:IsSetCard(0x3d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(0x3d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100419007.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and c100419007.filter(chkc,e,tp) end

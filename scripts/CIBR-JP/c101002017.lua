@@ -25,14 +25,11 @@ function c101002017.initial_effect(c)
 	e2:SetOperation(c101002017.spop)
 	c:RegisterEffect(e2)
 end
-function c101002017.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
 function c101002017.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and c101002017.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101002017.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsOnField() and chkc:IsType(TYPE_SPELL+TYPE_TRAP) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c101002017.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c101002017.operation(e,tp,eg,ep,ev,re,r,rp)
