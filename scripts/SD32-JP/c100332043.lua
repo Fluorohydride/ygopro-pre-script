@@ -70,33 +70,32 @@ function c100332043.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():GetMutualLinkedCount()>=2
 end
 function c100332043.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,2,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100332043,2))
-	local g1=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
-	e:SetLabelObject(g1:GetFirst())
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100332043,3))
-	local g2=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,g1:GetFirst())
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,2,2,nil)
 end
 function c100332043.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local hc=e:GetLabelObject()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tc=g:GetFirst()
-	if tc==hc then tc=g:GetNext() end
-	if hc:IsFaceup() and hc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local atk=hc:GetAttack()
+	local tc1=g:GetFirst()
+	local tc2=g:GetNext()
+	if tc1:IsFaceup() and tc1:IsRelateToEffect(e) and tc2:IsFaceup() and tc2:IsRelateToEffect(e) then
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100332043,2))
+		local sg=g:Select(1-tp,1,1,nil)
+		local atk=sg:GetFirst():GetAttack()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		e1:SetValue(atk/2)
-		if hc:RegisterEffect(e1) then
+		e1:SetValue(math.ceil(atk/2))
+		if sg:GetFirst():RegisterEffect(e1) then
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
 			e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			e2:SetValue(atk/2)
-			tc:RegisterEffect(e2)
+			e2:SetValue(math.ceil(atk/2))
+			if sg:GetFirst()==tc1 then tc2:RegisterEffect(e2)
+			else tc1:RegisterEffect(e2) end
 		end
 	end
 end
