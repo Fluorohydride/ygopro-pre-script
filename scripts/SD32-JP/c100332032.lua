@@ -29,7 +29,7 @@ function c100332032.filter(c,tp)
 		and c:IsAbleToRemove() and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function c100332032.spfilter(c,e,tp)
-	return (c:IsCode(1861629) or c:IsSetCard(0x203)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x101) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100332032.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_MZONE) and chkc:IsControler(tp) and c100332032.filter(chkc,tp) end
@@ -63,7 +63,7 @@ function c100332032.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c100332032.spfilter2(c,e,tp)
-	return c:IsFaceup() and (c:IsCode(1861629) or c:IsSetCard(0x203)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(0x101) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100332032.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and c100332032.spfilter2(chkc,e,tp) end
