@@ -16,7 +16,7 @@ function c101002054.initial_effect(c)
 	e2:SetCountLimit(2,101002054)
 	e2:SetTarget(c101002054.tktg)
 	e2:SetOperation(c101002054.tkop)
-	e2:RegisterEffect(e2)
+	c:RegisterEffect(e2)
 end
 function c101002054.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
