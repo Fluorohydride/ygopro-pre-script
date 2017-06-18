@@ -28,26 +28,28 @@ end
 function c100332008.cfilter(c)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsRace(RACE_CYBERS) and c:IsAbleToRemoveAsCost()
 end
+function c100332008.mzfilter(c,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5
+end
 function c100332008.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
+	local rg=Duel.GetMatchingGroup(c100332008.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=-ft+1
-	local sg=Duel.GetMatchingGroup(c100332008.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,c)
-	if chk==0 then return sg:GetCount()>=2
-		and (ft>0 or (ct<3 and sg:IsExists(Card.IsLocation,ct,nil,LOCATION_MZONE))) end
+	if chk==0 then return ft>-2 and rg:GetCount()>1 and (ft>0 or rg:IsExists(c100332008.mzfilter,ct,nil,tp)) end
 	local g=nil
-	if ft<=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		g=sg:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
-		if ct<2 then
-			sg:Sub(g)
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-			local g1=sg:Select(tp,2-ct,2-ct,nil)
-			g:Merge(g1)
-		end
+	if ft>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		g=rg:Select(tp,2,2,nil)
+	elseif ft==0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		g=rg:FilterSelect(tp,c100332008.mzfilter,1,1,nil,tp)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local g2=rg:Select(tp,1,1,g:GetFirst())
+		g:Merge(g2)
 	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		g=sg:Select(tp,2,2,nil)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		g=rg:FilterSelect(tp,c100332008.mzfilter,2,2,nil,tp)
 	end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
@@ -64,7 +66,7 @@ function c100332008.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetValue(atk/2)
+		e1:SetValue(math.ceil(atk/2))
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		c:RegisterEffect(e1,true)
 		Duel.SpecialSummonComplete()
