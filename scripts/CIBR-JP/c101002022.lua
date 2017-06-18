@@ -70,7 +70,7 @@ function c101002022.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 	end
 end
-function c100332003.thcon(e)
+function c101002022.thcon(e)
 	local c=e:GetHandler()
 	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==0
 end
