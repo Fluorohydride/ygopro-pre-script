@@ -14,10 +14,17 @@ function c100419016.initial_effect(c)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	c:RegisterEffect(e2)
 	--search
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e0:SetCode(EVENT_CHAINING)
+	e0:SetRange(LOCATION_MZONE)
+	e0:SetOperation(aux.chainreg)
+	c:RegisterEffect(e0)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_CHAINING)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_CHAIN_SOLVING)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,100419016)
@@ -29,18 +36,15 @@ end
 function c100419016.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if not c:IsStatus(STATUS_BATTLE_DESTROYED) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsSetCard(0x206) then 
-		local ms=c:GetSequence()
-		local rs=rc:GetSequence()
-		e:SetLabelObject(rc)
-		if rc:IsControler(tp) then
-			return ms==rs
-		else
-			return ms==(4-rs)
-		end
-	else
-		return false 
-	end
+	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or c:GetFlagEffect(1)<=0 then return false end
+	local mseq=c:GetSequence()
+	local rseq=rc:GetSequence()
+	if rc:IsLocation(LOCATION_SZONE) and rseq>=5 then return false end
+	if mseq==5 then mseq=1 elseif mseq==6 then mseq=3 end
+	e:SetLabelObject(rc)
+	if rc:IsControler(tp) then
+		return ms==rs
+	else return ms==(4-rs) end
 end
 function c100419016.thfilter(c,rc)
 	return c:IsSetCard(0x206) and not c:IsCode(rc:GetCode()) and c:IsAbleToHand()

@@ -32,6 +32,7 @@ function c101002044.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101002044.regop(e,tp,eg,ep,ev,re,r,rp)
+	if e:GetLabelObject() then e:GetLabelObject():DeleteGroup() end
 	local g=e:GetHandler():GetLinkedGroup()
 	if not g then return end
 	local lg=g:Clone()
@@ -56,17 +57,15 @@ function c101002044.atkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101002044.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local lg=c:GetLinkedGroup()
-	if not lg then return end
-	local gc=lg:GetCount()
-	if gc==0 then return end
+	local ct=c:GetLinkedGroupCount()
+	if ct<=0 then return end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(-gc*200)
+		e1:SetValue(-ct*200)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		tc=g:GetNext()
