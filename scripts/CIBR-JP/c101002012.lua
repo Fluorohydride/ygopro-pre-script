@@ -62,10 +62,10 @@ function c101002012.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if ft>0 then
 		g1=Duel.SelectTarget(tp,c101002012.thfilter1,tp,LOCATION_ONFIELD,0,1,1,nil)
 	else
-		g1=Duel.SelectTarget(tp,c101002012.thfilter2,tp,LOCATION_ONFIELD,0,1,1,nil)
+		g1=Duel.SelectTarget(tp,c101002012.thfilter2,tp,LOCATION_MZONE,0,1,1,nil)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g2=Duel.SelectTarget(tp,c101002012.spfilter,tp,LOCATION_ONFIELD,0,1,1,nil,e,tp)
+	local g2=Duel.SelectTarget(tp,c101002012.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g1,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g2,1,0,0)
 	e:SetLabelObject(g1:GetFirst())
