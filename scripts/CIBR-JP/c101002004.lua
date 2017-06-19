@@ -43,7 +43,7 @@ function c101002004.sumop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c101002004.regop(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp and re:IsActiveType(TYPE_MONSTER)	and (re:GetActivateLocation()==LOCATION_GRAVE or re:GetActivateLocation()==LOCATION_HAND) then
+	if rp~=tp and re:IsActiveType(TYPE_MONSTER)	and (re:GetActivateLocation()==LOCATION_GRAVE or re:GetActivateLocation()==LOCATION_HAND) then
 		e:GetHandler():RegisterFlagEffect(101002004,RESET_EVENT+0x1fc0000+RESET_CHAIN,0,1)
 	end
 end

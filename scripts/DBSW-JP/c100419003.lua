@@ -46,7 +46,7 @@ function c100419003.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=Duel.SelectMatchingCard(tp,c100419003.filter3,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,c100419003.filter4,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,1,g1,e,tp,g1:GetFirst())
+	local g2=Duel.SelectMatchingCard(tp,c100419003.filter4,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,1,g1:GetFirst(),e,tp,g1:GetFirst())
 	g1:Merge(g2)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end
