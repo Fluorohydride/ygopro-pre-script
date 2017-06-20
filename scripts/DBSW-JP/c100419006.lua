@@ -4,13 +4,20 @@
 --Fusion procedure by edo9300
 function c100419006.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,c100419006.ffilter,3)
 	--spsummon condition
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetValue(c100419006.splimit)
+	c:RegisterEffect(e0)
+	--Fusion procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetCode(EFFECT_FUSION_MATERIAL)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetValue(c100419006.splimit)
+	e1:SetCondition(c100419006.fscon)
+	e1:SetOperation(c100419006.fsop)
 	c:RegisterEffect(e1)
 	--special summon rule
 	local e2=Effect.CreateEffect(c)
@@ -53,11 +60,41 @@ end
 function c100419006.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
-function c100419006.fusfilter(c,attr)
-	return c:IsFusionAttribute(code) and not c:IsHasEffect(511002961)
+function c100419006.ffilter(c,fc)
+    return c:IsFusionSetCard(0x3d) and not c:IsHasEffect(6205579) and c:IsCanBeFusionMaterial(fc)
 end
-function c100419006.ffilter(c,fc,sub,mg,sg)
-	return c:IsFusionSetCard(0x3d) and (not sg or not sg:IsExists(c100419006.fusfilter,1,c,c:GetFusionAttribute()))
+function c100419006.fselect(c,mg,sg,tp,fc)
+	if sg:IsExists(Card.IsFusionAttribute,1,nil,c:GetFusionAttribute()) then return false end
+	sg:AddCard(c)
+	local res=false
+	if sg:GetCount()==3 then
+		res=Duel.GetLocationCountFromEx(tp,tp,sg,fc)>0
+	else
+		res=mg:IsExists(c100419006.fselect,1,sg,mg,sg,tp,fc)
+	end
+	sg:RemoveCard(c)
+	return res
+end
+function c100419006.fscon(e,g,gc,chkf)
+	if g==nil then return true end
+	local c=e:GetHandler()
+	local tp=c:GetControler()
+	local mg=g:Filter(c100419006.ffilter,nil,c)
+	local sg=Group.CreateGroup()
+	if gc then return c100419006.ffilter(gc,c) and c100419006.fselect(gc,mg,sg,tp,c) end
+	return mg:IsExists(c100419006.fselect,1,sg,mg,sg,tp,c)
+end
+function c100419006.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
+	local c=e:GetHandler()
+	local mg=eg:Filter(c100419006.ffilter,nil,c)
+	local sg=Group.CreateGroup()
+	if gc then sg:AddCard(gc) end
+	repeat
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+		local g=mg:FilterSelect(tp,c100419006.fselect,1,1,sg,mg,sg,tp,c)
+		sg:Merge(g)
+	until sg:GetCount()==3
+	Duel.SetFusionMaterial(sg)
 end
 function c100419006.sprcon(e,c)
 	if c==nil then return true end
