@@ -71,10 +71,7 @@ function c101002012.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabelObject(g1:GetFirst())
 end
 function c101002012.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if g:GetCount()~=2 then return end
-	local tc1=g:GetFirst()
-	local tc2=g:GetNext()
+	local tc1,tc2=Duel.GetFirstTarget()
 	if tc1~=e:GetLabelObject() then tc1,tc2=tc2,tc1 end
 	if tc1:IsRelateToEffect(e) and Duel.SendtoGrave(tc1,REASON_EFFECT)>0
 		and tc1:IsLocation(LOCATION_GRAVE) and tc2:IsRelateToEffect(e) then
