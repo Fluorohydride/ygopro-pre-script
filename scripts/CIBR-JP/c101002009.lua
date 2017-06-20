@@ -70,7 +70,7 @@ function c101002009.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101002009.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) then
+	if c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_ONFIELD) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(101002009,1))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
