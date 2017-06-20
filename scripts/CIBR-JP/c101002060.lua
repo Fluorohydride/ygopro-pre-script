@@ -31,7 +31,7 @@ function c101002060.initial_effect(c)
 	c:RegisterEffect(e3)
 	--position
 	local e4=e3:Clone()
-	e4:SetDescription(aux.Stringid(101002060,2)
+	e4:SetDescription(aux.Stringid(101002060,2))
 	e4:SetCategory(CATEGORY_POSITION)
 	e4:SetCondition(c101002060.poscon)
 	e4:SetTarget(c101002060.postg)

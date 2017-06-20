@@ -21,7 +21,7 @@ function c101002021.initial_effect(c)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetCountLimit(1,101002118)
 	e2:SetCondition(c101002021.spcon)
-	e2SetTarget(c101002021.sptg)
+	e2:SetTarget(c101002021.sptg)
 	e2:SetOperation(c101002021.spop)
 	c:RegisterEffect(e2)
 end
