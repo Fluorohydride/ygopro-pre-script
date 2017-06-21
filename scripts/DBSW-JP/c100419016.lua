@@ -43,8 +43,8 @@ function c100419016.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if mseq==5 then mseq=1 elseif mseq==6 then mseq=3 end
 	e:SetLabelObject(rc)
 	if rc:IsControler(tp) then
-		return ms==rs
-	else return ms==(4-rs) end
+		return mseq==rseq
+	else return mseq==(4-rseq) end
 end
 function c100419016.thfilter(c,rc)
 	return c:IsSetCard(0x206) and not c:IsCode(rc:GetCode()) and c:IsAbleToHand()
