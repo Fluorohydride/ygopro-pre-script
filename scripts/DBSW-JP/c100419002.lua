@@ -23,7 +23,7 @@ function c100419002.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100419002.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x3d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100419002.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and c100419002.thfilter(chkc) end
