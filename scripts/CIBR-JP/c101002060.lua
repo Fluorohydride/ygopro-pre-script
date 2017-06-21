@@ -91,7 +91,7 @@ end
 function c101002060.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return c101002060.effcon(e,tp,eg,ep,ev,re,r,rp) and Duel.GetTurnPlayer()~=tp
 end
-function c101002060.postg(e,tp,eg,ep,ev,re,r,rp)
+function c101002060.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(c101002060.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
