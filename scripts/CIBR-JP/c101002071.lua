@@ -77,8 +77,8 @@ function c101002071.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101002071.effectfilter(e,ct)
 	local p=e:GetHandler():GetControler()
-	local te,tp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
-	return p==tp and te:GetHandler():IsSetCard(0x205)
+	local te,tp,loc=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
+	return p==tp and te:GetHandler():IsSetCard(0x205) and bit.band(loc,LOCATION_ONFIELD)~=0
 end
 function c101002071.distarget(e,c)
 	return c:IsSetCard(0x205)
