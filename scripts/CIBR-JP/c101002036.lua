@@ -12,7 +12,7 @@ function c101002036.initial_effect(c)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
 	--cannot act
-	local e2=Effect.CreateEffect(e:GetHandler())
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
