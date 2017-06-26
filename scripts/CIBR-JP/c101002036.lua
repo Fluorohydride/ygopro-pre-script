@@ -1,5 +1,5 @@
 --天岩戸
---Amanoiwato
+--Amanoiwato 
 --Scripted by Eerie Code
 function c101002036.initial_effect(c)
 	--spirit return
