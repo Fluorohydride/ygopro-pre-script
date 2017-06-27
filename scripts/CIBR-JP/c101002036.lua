@@ -1,5 +1,5 @@
 --天岩戸
---Amanoiwato 
+--Ama-no-Iwato
 --Scripted by Eerie Code
 function c101002036.initial_effect(c)
 	--spirit return
@@ -22,5 +22,5 @@ function c101002036.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101002036.aclimit(e,re,tp)
-	return not re:GetHandler():IsType(TYPE_SPIRIT)
+	return not re:GetHandler():IsType(TYPE_SPIRIT) and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
 end
