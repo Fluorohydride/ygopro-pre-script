@@ -3,7 +3,7 @@
 --Scripted by edo9300
 function c101002042.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_EFFECT),3)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),3)
 	c:EnableReviveLimit()
 	--cannot be target
 	local e2=Effect.CreateEffect(c)

@@ -26,7 +26,7 @@ function c13536606.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c13536606.matfilter(c)
-	return not c:IsType(TYPE_TOKEN)
+	return not c:IsLinkType(TYPE_TOKEN)
 end
 function c13536606.cfilter(c,mc)
 	local lg=c:GetLinkedGroup()

@@ -59,11 +59,11 @@ function c101002051.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsCode(101002051) and bit.band(sumtype,SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end
 function c101002051.lkfilter1(c,lc,tp)
-	return c:IsFaceup() and not c:IsType(TYPE_TOKEN) and Duel.IsExistingMatchingCard(c101002051.lkfilter2,tp,LOCATION_MZONE,0,1,c,lc,c,tp)
+	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and not c:IsLinkType(TYPE_TOKEN) and Duel.IsExistingMatchingCard(c101002051.lkfilter2,tp,LOCATION_MZONE,0,1,c,lc,c,tp)
 end
 function c101002051.lkfilter2(c,lc,mc,tp)
 	local mg=Group.FromCards(c,mc)
-	return c:IsFaceup() and c:IsRace(mc:GetRace()) and not c:IsType(TYPE_TOKEN) and Duel.GetLocationCountFromEx(tp,tp,mg,lc)>0
+	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and c:IsRace(mc:GetRace()) and not c:IsLinkType(TYPE_TOKEN) and Duel.GetLocationCountFromEx(tp,tp,mg,lc)>0
 end
 function c101002051.lkcon(e,c)
 	if c==nil then return true end
