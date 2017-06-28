@@ -4,7 +4,7 @@
 function c101002079.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(c101002079.condition)
@@ -16,7 +16,7 @@ function c101002079.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsLocation(LOCATION_SZONE) then return false end
 	local seq=c:GetSequence()
-	if not Duel.IsChainNegatable(ev) then return false end
+	if not Duel.IsChainNegatable(ev) or not (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
 	local rc=re:GetHandler()
 	local rs=rc:GetSequence()
 	if not rc:IsOnField() or (rc:IsLocation(LOCATION_SZONE) and rs>=5) then return false end
