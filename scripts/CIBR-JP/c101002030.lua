@@ -1,5 +1,5 @@
 --幻獣機ライテン
---Mecha Phantom Beast Liten
+--Mecha Phantom Beast Raiten
 --Scripted by Eerie Code
 function c101002030.initial_effect(c)
 	--level
@@ -59,8 +59,9 @@ function c101002030.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
-	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetTargetRange(0x23e,0x23e)
 	e1:SetTarget(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x101b)))
+	e1:SetValue(c101002030.sumlimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
@@ -79,4 +80,8 @@ function c101002030.spop(e,tp,eg,ep,ev,re,r,rp)
 		local token=Duel.CreateToken(tp,101002030+100)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end
+end
+function c101002030.sumlimit(e,c)
+	if not c then return false end
+	return c:IsControler(e:GetHandlerPlayer())
 end
