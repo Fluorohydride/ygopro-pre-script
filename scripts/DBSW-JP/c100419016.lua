@@ -37,14 +37,7 @@ function c100419016.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or c:GetFlagEffect(1)<=0 then return false end
-	local mseq=c:GetSequence()
-	local rseq=rc:GetSequence()
-	if rc:IsLocation(LOCATION_SZONE) and rseq>=5 then return false end
-	if mseq==5 then mseq=1 elseif mseq==6 then mseq=3 end
-	e:SetLabelObject(rc)
-	if rc:IsControler(tp) then
-		return mseq==rseq
-	else return mseq==(4-rseq) end
+	return c:IsOnSameColumn(rc) and rc:IsSetCard(0x206)
 end
 function c100419016.thfilter(c,rc)
 	return c:IsSetCard(0x206) and not c:IsCode(rc:GetCode()) and c:IsAbleToHand()
