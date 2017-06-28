@@ -34,7 +34,6 @@ function c101002079.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c101002079.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
