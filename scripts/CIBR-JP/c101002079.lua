@@ -14,17 +14,8 @@ function c101002079.initial_effect(c)
 end
 function c101002079.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsLocation(LOCATION_SZONE) then return false end
-	local seq=c:GetSequence()
-	if not Duel.IsChainNegatable(ev) or not (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
 	local rc=re:GetHandler()
-	local rs=rc:GetSequence()
-	if not rc:IsOnField() or (rc:IsLocation(LOCATION_SZONE) and rs>=5) then return false end
-	if rc:IsControler(tp) then
-		return rs==seq or (seq==1 and rs==5) or (seq==3 and rs==6)
-	else
-		return rs==4-seq or (seq==1 and rs==6) or (seq==3 and rs==5)
-	end
+	return aux.checksamecolumn(c,rc) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function c101002079.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
