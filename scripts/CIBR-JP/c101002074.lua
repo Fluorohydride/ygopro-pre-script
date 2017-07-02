@@ -33,6 +33,10 @@ function c101002074.activate(e,tp,eg,ep,ev,re,r,rp)
 		g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
 		sg:Merge(g1)
 	end
+	local cg=sg:Filter(Card.IsLocation,nil,LOCATION_HAND)
+	if cg:GetCount()>0 then
+		Duel.ConfirmCards(1-tp,cg)
+	end
 	Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup()
 	if og:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
