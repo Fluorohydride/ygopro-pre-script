@@ -1,7 +1,7 @@
 --虹天気アルシエル
 --Rainbow Weathery Arciel
 --Scripted by Eerie Code
---Prototype, might require a core update for full functionality
+--Prototype, might require a core update for full functionality 
 function c100419035.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x207),3,3)
