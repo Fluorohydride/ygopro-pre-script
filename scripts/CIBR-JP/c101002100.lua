@@ -3,18 +3,18 @@
 function c101002100.initial_effect(c)
 	c:EnableCounterPermit(0x43)
 	c:SetCounterLimit(0x43,1)
-	--counter
+	--damage reduce
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(101002100,0))
-	e1:SetCategory(CATEGORY_COUNTER)
-	e1:SetType(EFFECT_TYPE_QUICK_F)
-	e1:SetCode(EVENT_CHAINING)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
-	e1:SetCondition(aux.damcon1)
-	e1:SetTarget(c101002100.cttg)
-	e1:SetOperation(c101002100.ctop)
+	e1:SetTargetRange(1,0)
+	e1:SetValue(c101002100.damval)
 	c:RegisterEffect(e1)
+	local e4=e1:Clone()
+	e4:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+	c:RegisterEffect(e4)
 	--atkup
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -30,30 +30,14 @@ function c101002100.initial_effect(c)
 	e2:SetOperation(c101002100.op)
 	c:RegisterEffect(e2)
 end
-function c101002100.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanAddCounter(0x43,1) end
-end
-function c101002100.ctop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:AddCounter(0x43,1) then
-		local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_CHANGE_DAMAGE)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e1:SetTargetRange(1,0)
-		e1:SetLabel(cid)
-		e1:SetValue(c101002100.damval)
-		e1:SetReset(RESET_CHAIN)
-		Duel.RegisterEffect(e1,tp)
-	end
-end
 function c101002100.damval(e,re,val,r,rp,rc)
-	local cc=Duel.GetCurrentChain()
-	if cc==0 or bit.band(r,REASON_EFFECT)==0 then return val end
-	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
-	if cid~=e:GetLabel() then return val end
-	return 0
+	local c=e:GetHandler()
+	if bit.band(r,REASON_EFFECT)~=0 and c:IsCanAddCounter(0x43,1) and c:GetFlagEffect(101002100)==0 then
+		c:AddCounter(0x43,1)
+		c:RegisterFlagEffect(101002100,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+		return 0
+	end
+	return val
 end
 function c101002100.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x43,1,REASON_COST) end
