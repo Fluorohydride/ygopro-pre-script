@@ -2,6 +2,7 @@
 --Defect Compiler
 function c101002100.initial_effect(c)
 	c:EnableCounterPermit(0x43)
+	c:SetCounterLimit(0x43,1)
 	--counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101002100,0))
