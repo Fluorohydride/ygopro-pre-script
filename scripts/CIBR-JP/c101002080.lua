@@ -35,7 +35,7 @@ function c101002080.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)<2 then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,101002180,0xf,0x4011,0,1000,2,RACE_BEAST,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE,1-tp) then return end
 	for i=1,2 do
-		local token=Duel.CreateToken(tp,101002080)
+		local token=Duel.CreateToken(tp,101002080+(i*100))
 		if Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
