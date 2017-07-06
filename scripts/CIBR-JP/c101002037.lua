@@ -13,22 +13,22 @@ function c101002037.initial_effect(c)
 	e1:SetTarget(c101002037.thtg)
 	e1:SetOperation(c101002037.thop)
 	c:RegisterEffect(e1)
-	--tribute check
-	if not c101002037.global_check then
-		c101002037.global_check=true
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD)
-		ge1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		ge1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		ge1:SetValue(LOCATION_HAND)
-		ge1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-		ge1:SetTarget(c101002037.trtg)
-		Duel.RegisterEffect(ge1,tp)
-	end
+	--tribute
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_MATERIAL_CHECK)
+	e2:SetValue(c101002037.valcheck)
+	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_SUMMON_COST)
+	e3:SetOperation(c101002037.facechk)
+	e3:SetLabelObject(e2)
+	c:RegisterEffect(e3)
 end
 function c101002037.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0) end
-	Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_COST,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c101002037.thfilter(c,hc)
 	return c:IsAbleToHand() and aux.checksamecolumn(c,hc)
@@ -47,7 +47,22 @@ function c101002037.thop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c101002037.trtg(e,c)
-	local rc=c:GetReasonCard()
-	return c:IsReason(REASON_RELEASE) and rc and rc:IsCode(101002037)
+function c101002037.valcheck(e,c)
+	local g=c:GetMaterial()
+	local tc=g:GetFirst()
+	if e:GetLabel()==1 then
+		e:SetLabel(0)
+		while tc do
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_TO_GRAVE_REDIRECT)
+			e1:SetValue(LOCATION_HAND)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
+			tc:RegisterEffect(e1)
+			tc=g:GetNext()
+		end
+	end
+end
+function c101002037.facechk(e,tp,eg,ep,ev,re,r,rp)
+	e:GetLabelObject():SetLabel(1)
 end
