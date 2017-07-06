@@ -1,5 +1,6 @@
 --ディフェクト・コンパイラー
 --Defect Compiler
+--Scripted by Eerie Code
 function c101002100.initial_effect(c)
 	c:EnableCounterPermit(0x43)
 	c:SetCounterLimit(0x43,1)
@@ -25,6 +26,7 @@ function c101002100.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCountLimit(1)
+	e2:SetCondition(c101002100.condition)
 	e2:SetCost(c101002100.cost)
 	e2:SetTarget(c101002100.tg)
 	e2:SetOperation(c101002100.op)
@@ -39,19 +41,21 @@ function c101002100.damval(e,re,val,r,rp,rc)
 	end
 	return val
 end
+function c101002100.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+end
 function c101002100.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x43,1,REASON_COST) end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.RemoveCounter(tp,1,0,0x43,1,REASON_COST)
 end
 function c101002100.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERS) 
+	return c:IsFaceup() and c:IsRace(RACE_CYBERS)
 end
 function c101002100.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101002100.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101002100.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101002100.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101002100.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,c101002100.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101002100.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,g,1,0,500)
 end
 function c101002100.op(e,tp,eg,ep,ev,re,r,rp)
