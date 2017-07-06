@@ -1,5 +1,6 @@
 --燃え竹光
---Burning Bamboo Sword 
+--Burning Bamboo Sword
+--Scripted by Eerie Code
 function c101002066.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -25,10 +26,11 @@ function c101002066.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101002066.skipcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:GetHandler():IsSetCard(0x60) and e:GetHandler():GetFlagEffect(1)>0
 end
 function c101002066.skipop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SKIP_MP1)

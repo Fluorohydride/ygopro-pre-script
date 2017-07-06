@@ -1,5 +1,6 @@
 --素早いビーバー
 --Nimble Beaver
+--Scripted by Eerie Code
 function c101002040.initial_effect(c)
 	--summon success
 	local e1=Effect.CreateEffect(c)

@@ -26,7 +26,7 @@ function c101002020.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101002020.filter(c)
-  return c:IsSetCard(0x204) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x204) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101002020.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101002020.filter(chkc) end
@@ -37,9 +37,9 @@ function c101002020.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101002020.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-  if g:GetCount()>0 then
-    Duel.SendtoHand(g,nil,REASON_EFFECT)
-  end
+	if g:GetCount()>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	end
 end
 function c101002020.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

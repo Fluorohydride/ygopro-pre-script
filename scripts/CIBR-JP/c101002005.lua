@@ -1,7 +1,8 @@
 --ダーク・エンジェル
 --Dark Angel
+--Scripted by Eerie Code
 function c101002005.initial_effect(c)
-	--Increase ATK
+	--atkup
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101002005,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -18,10 +19,6 @@ end
 function c101002005.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	return at:IsControler(tp) and at:IsRace(RACE_FAIRY)
-end
-function c101002005.cfilter(c)
-	local at=Duel.GetAttackTarget()
-	return c:IsRace(RACE_FAIRY) and c==at
 end
 function c101002005.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttackTarget()
@@ -46,7 +43,7 @@ function c101002005.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
