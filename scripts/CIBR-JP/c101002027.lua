@@ -8,7 +8,6 @@ function c101002027.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -16,8 +15,8 @@ function c101002027.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetCondition(c101002027.spcon)
-	e2:SetOperation(c101002027.spop)
+	e2:SetCondition(c101002027.sprcon)
+	e2:SetOperation(c101002027.sprop)
 	c:RegisterEffect(e2)
 	--indes
 	local e3=Effect.CreateEffect(c)
@@ -38,23 +37,23 @@ function c101002027.initial_effect(c)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e5:SetCountLimit(1)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCondition(c101002027.zcon)
+	e5:SetCondition(c101002027.spcon)
 	e5:SetTarget(c101002027.sptg)
 	e5:SetOperation(c101002027.spop)
 	c:RegisterEffect(e5)
 end
-function c101002027.spcfilter(c)
+function c101002027.sprfilter(c)
 	return (c:IsCode(89189982,36898537) or c:IsSetCard(0x202)) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
-function c101002027.spcon(e,c)
+function c101002027.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local g=Duel.GetMatchingGroup(c101002027.spcfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(c101002027.sprfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and g:GetClassCount(Card.GetCode)>=5
 end
-function c101002027.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetMatchingGroup(c101002027.spcfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+function c101002027.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=Duel.GetMatchingGroup(c101002027.sprfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	local rg=Group.CreateGroup()
 	for i=1,5 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -68,8 +67,7 @@ function c101002027.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
 end
 function c101002027.spfilter(c,e,tp)
-	return (c:IsCode(89189982,36898537) or c:IsSetCard(0x202))
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and (c:IsCode(89189982,36898537) or c:IsSetCard(0x202)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101002027.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c11260714.spfilter(chkc,e,tp) end
@@ -91,12 +89,12 @@ function c101002027.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabel(Duel.GetTurnCount()+1)
 		e2:SetLabelObject(tc)
 		e2:SetReset(RESET_PHASE+PHASE_END,2)
-		e2:SetCondition(c101002027.descon)
-		e2:SetOperation(c101002027.desop)
+		e2:SetCondition(c101002027.rmcon)
+		e2:SetOperation(c101002027.rmop)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
-function c101002027.descon(e,tp,eg,ep,ev,re,r,rp)
+function c101002027.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if tc:GetFlagEffect(101002027)~=0 then
 		return Duel.GetTurnCount()==e:GetLabel()
@@ -105,7 +103,7 @@ function c101002027.descon(e,tp,eg,ep,ev,re,r,rp)
 		return false
 	end
 end
-function c101002027.desop(e,tp,eg,ep,ev,re,r,rp)
+function c101002027.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 end

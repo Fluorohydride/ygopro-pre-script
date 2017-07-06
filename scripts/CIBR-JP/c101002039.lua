@@ -8,7 +8,6 @@ function c101002039.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
@@ -18,7 +17,7 @@ function c101002039.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(c101002039.spcon)
 	c:RegisterEffect(e2)
-	--stats up
+	--atk/def
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
@@ -32,7 +31,7 @@ function c101002039.initial_effect(c)
 	--disable special summon
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(101002039,0))
-	e5:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_REMOVE)
+	e5:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_DESTROY)
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetCode(EVENT_SPSUMMON)
 	e5:SetRange(LOCATION_MZONE)
@@ -68,9 +67,9 @@ end
 function c101002039.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,eg,eg:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,eg:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,eg:GetCount(),0,0)
 end
 function c101002039.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateSummon(eg)
-	Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
+	Duel.Destroy(eg,REASON_EFFECT)
 end
