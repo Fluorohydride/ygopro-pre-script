@@ -50,15 +50,20 @@ function c100209004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100209004.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(1-tp,LOCATION_MZONE,1-tp)>0 then
+	local olc=Duel.GetLocationCount(1-tp,LOCATION_MZONE,1-tp)
+	if olc>0 then
+		if Duel.IsPlayerAffectedByEffect(1-tp,59822133) then olc=1 end
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
-		local g1=Duel.SelectMatchingCard(1-tp,c100209004.spfilter1,1-tp,LOCATION_GRAVE,0,1,2,nil,e,1-tp)
+		local g1=Duel.SelectMatchingCard(1-tp,aux.NecroValleyFilter(c100209004.spfilter1),1-tp,LOCATION_GRAVE,0,1,olc,nil,e,1-tp)
 		if g1:GetCount()>0 then
 			local ct=Duel.SpecialSummon(g1,0,1-tp,1-tp,false,false,POS_FACEUP)
+			if ct<1 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 			local zone=c:GetLinkedZone()
-			if ct>0 and zone~=0 then
+			ct=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone),ct)
+			if ct>0 then
+				if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local g2=Duel.SelectMatchingCard(tp,c100209004.spfilter2,tp,LOCATION_GRAVE,0,1,ct,nil,e,tp,zone)
+				local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100209004.spfilter2),tp,LOCATION_GRAVE,0,1,ct,nil,e,tp,zone)
 				if g2:GetCount()>0 then
 					Duel.BreakEffect()
 					Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP,zone)
