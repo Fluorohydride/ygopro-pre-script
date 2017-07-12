@@ -36,7 +36,7 @@ function c100419001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100419001.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local tg=Duel.GetFirstMatchingCard(c100419001.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
+	local tg=Duel.SelectMatchingCard(tp,c100419001.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tg then
 		Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
 	end
