@@ -1,0 +1,72 @@
+--雲の天気模様
+--Cloudy Weathery Pattern
+--Scripted by Eerie Code
+--Prototype, might require a core update for full functionality
+function c100419038.initial_effect(c)
+	c:SetUniqueOnField(100419038,1,0)
+	--activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e1)
+	--adjust
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_ADJUST)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetOperation(c100419038.op)
+	c:RegisterEffect(e2)
+end
+function c100419038.fil(c,seq,ignore_flag)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x207) 
+		and c:GetSequence()<5 and math.abs(c:GetSequence()-seq)<=1 and (ignore_flag or c:GetFlagEffect(100419038)==0)
+end
+function c100419038.op(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local seq=c:GetSequence()
+	local g=Duel.GetMatchingGroup(c100419038.fil,tp,LOCATION_MZONE,0,nil,seq)
+	if c:IsDisabled() then return end
+	for tc in aux.Next(g) do
+		tc:RegisterFlagEffect(100419038,RESET_EVENT+0x1fe0000,0,1)
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(100419038,0))
+		e1:SetType(EFFECT_TYPE_QUICK_O)
+		e1:SetCode(EVENT_FREE_CHAIN)
+		e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetLabelObject(c)
+		e1:SetCost(aux.bfgcost)
+		e1:SetTarget(c100419038.datg)
+		e1:SetOperation(c100419038.daop)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
+		tc:RegisterEffect(e1)
+	end
+end
+function c100419038.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
+	local gc=e:GetLabelObject()
+	if chk==0 then return gc and gc:IsFaceup() and gc:IsLocation(LOCATION_SZONE) 
+		and not gc:IsDisabled() and c100419038.fil(e:GetHandler(),gc:GetSequence(),true)
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+end
+function c100419038.thop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local atk=math.floor(tc:GetAttack()/2)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_DIRECT_ATTACK)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e2:SetValue(atk)
+		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e2)		
+	end
+end
