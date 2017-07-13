@@ -80,8 +80,11 @@ function c101002073.posop1(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFacedown() then
-		local pos=Duel.SelectPosition(tp,tc,POS_FACEUP_ATTACK+POS_FACEUP_DEFENSE)
-		Duel.ChangePosition(tc,pos)
+		local pos1=0
+		if not tc:IsPosition(POS_FACEUP_ATTACK) then pos1=pos+POS_FACEUP_ATTACK end
+		if not tc:IsPosition(POS_FACEUP_DEFENSE) then pos1=pos+POS_FACEUP_DEFENSE end
+		local pos2=Duel.SelectPosition(tp,tc,pos1)
+		Duel.ChangePosition(tc,pos2)
 	end
 end
 function c101002073.cfilter(c)
