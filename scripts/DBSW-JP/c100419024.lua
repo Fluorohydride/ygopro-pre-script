@@ -23,7 +23,7 @@ function c100419024.condition(e,tp,eg,ep,ev,re,r,rp)
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function c100419024.filter(c)
-	return not (c:GetAttack()==0 and c:GetDefense()==0 and c:IsDisabled())
+	return c:IsFaceup() and not (c:GetAttack()==0 and c:GetDefense()==0 and c:IsDisabled())
 end
 function c100419024.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100419024.filter(chkc) end
