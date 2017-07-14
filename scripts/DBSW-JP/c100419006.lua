@@ -111,7 +111,7 @@ function c100419006.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100419006.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x3d)
-		and c:IsOnField() and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function c100419006.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c100419006.repfilter,1,nil,tp) end
