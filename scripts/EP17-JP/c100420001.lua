@@ -66,10 +66,11 @@ function c100420001.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0
 		and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 		local zone=e:GetHandler():GetLinkedZone()
-		local sg=Duel.GetMatchingGroup(c100420001.spfilter,tp,LOCATION_HAND,0,nil,e,tp,zone)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sg=Duel.SelectMatchingCard(tp,c100420001.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,zone)
 		if zone~=0 and sg:GetCount()>0 then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE,zone)
-			Duel.ConfirmCards(1-tp,tg)
+			Duel.ConfirmCards(1-tp,sg)
 		end
 	end
 end
