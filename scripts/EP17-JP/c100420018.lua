@@ -30,10 +30,10 @@ end
 function c100420018.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=e:GetHandler():GetLinkedZone()
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0
-		and Duel.IsExistingMatchingCard(c100420018.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,zone) end
+		and Duel.IsExistingMatchingCard(c100420018.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,zone) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
 	e:SetLabel(Duel.SelectOption(tp,70,71,72))
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c100420018.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)==0 then return end
@@ -44,7 +44,7 @@ function c100420018.spop(e,tp,eg,ep,ev,re,r,rp)
 	if (opt==0 and tc:IsType(TYPE_MONSTER)) or (opt==1 and tc:IsType(TYPE_SPELL)) or (opt==2 and tc:IsType(TYPE_TRAP)) then
 		local zone=e:GetHandler():GetLinkedZone()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=Duel.SelectMatchingCard(tp,c100420018.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,zone)
+		local sg=Duel.SelectMatchingCard(tp,c100420018.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp,zone)
 		local sc=sg:GetFirst()
 		if sc then
 			if zone~=0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
