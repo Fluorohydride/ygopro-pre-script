@@ -24,13 +24,10 @@ function c101002044.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101002044.cfilter(c,tp,zone)
-	if not c:IsReason(REASON_DESTROY) then return false end
+	if not c:IsReason(REASON_DESTROY) or not c:IsReason(REASON_BATTLE+REASON_EFFECT) then return false end
 	local seq=c:GetPreviousSequence()
-	if c:IsControler(tp) then
-		return bit.band(zone,bit.lshift(1,seq))~=0
-	else
-		return bit.band(bit.rshift(zone,16),bit.lshift(1,seq))~=0
-	end
+	if c:GetPreviousControler()~=tp then seq=seq+16 end
+	return c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
 end
 function c101002044.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101002044.cfilter,1,nil,e:GetHandler():GetLinkedZone())
