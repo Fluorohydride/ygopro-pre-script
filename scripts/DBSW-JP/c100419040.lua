@@ -51,16 +51,14 @@ function c100419040.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return gc and gc:IsFaceup() and gc:IsLocation(LOCATION_SZONE)
 		and not gc:IsDisabled() and c100419040.efffilter(c,gc:GetSequence(),true)
 		and (Duel.GetAttackTarget()==c or (Duel.GetAttacker()==c and Duel.GetAttackTarget()~=nil)) end
-	local a=Duel.GetAttacker()
-	if a==c then a=Duel.GetAttackTarget()
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,a,1,0,0)
+	local tc=Duel.GetAttacker()
+	if tc==c then tc=Duel.GetAttackTarget() end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tc,1,0,0)
 end
 function c100419040.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttacker()
-	if tc==c then
-		tc=Duel.GetAttackTarget()
-	end
+	if tc==c then tc=Duel.GetAttackTarget() end
 	if tc and tc:IsRelateToBattle() then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
