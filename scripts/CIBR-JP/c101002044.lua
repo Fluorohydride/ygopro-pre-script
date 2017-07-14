@@ -5,19 +5,11 @@ function c101002044.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfb),2,2)
 	--damage
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_LEAVE_FIELD_P)
-	e1:SetOperation(c101002044.regop)
-	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetLabelObject(e1)
 	e2:SetCondition(c101002044.damcon)
 	e2:SetOperation(c101002044.damop)
 	c:RegisterEffect(e2)
@@ -31,21 +23,17 @@ function c101002044.initial_effect(c)
 	e3:SetOperation(c101002044.atkop)
 	c:RegisterEffect(e3)
 end
-function c101002044.regop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabelObject() then e:GetLabelObject():DeleteGroup() end
-	local g=e:GetHandler():GetLinkedGroup()
-	if not g then return end
-	local lg=g:Clone()
-	lg:KeepAlive()
-	e:SetLabelObject(lg)
-end
-function c101002044.cfilter(c,g)
-	return g:IsContains(c)
+function c101002044.cfilter(c,tp,zone)
+	if not c:IsReason(REASON_DESTROY) then return false end
+	local seq=c:GetPreviousSequence()
+	if c:IsControler(tp) then
+		return bit.band(zone,bit.lshift(1,seq))~=0
+	else
+		return bit.band(bit.rshift(zone,16),bit.lshift(1,seq))~=0
+	end
 end
 function c101002044.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local lg=e:GetLabelObject():GetLabelObject()
-	if not lg then return false end
-	return eg:IsExists(c101002044.cfilter,1,nil,lg)
+	return eg:IsExists(c101002044.cfilter,1,nil,e:GetHandler():GetLinkedZone())
 end
 function c101002044.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,101002044)

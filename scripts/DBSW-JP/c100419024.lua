@@ -20,6 +20,7 @@ function c100419024.cfilter(c)
 end
 function c100419024.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100419024.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function c100419024.filter(c)
 	return not (c:GetAttack()==0 and c:GetDefense()==0 and c:IsDisabled())

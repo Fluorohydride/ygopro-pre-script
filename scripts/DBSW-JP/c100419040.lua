@@ -15,17 +15,17 @@ function c100419040.initial_effect(c)
 	e2:SetCode(EVENT_ADJUST)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetOperation(c100419040.op)
+	e2:SetOperation(c100419040.effop)
 	c:RegisterEffect(e2)
 end
-function c100419040.fil(c,seq,ignore_flag)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x207) 
+function c100419040.efffilter(c,seq,ignore_flag)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x207)
 		and c:GetSequence()<5 and math.abs(c:GetSequence()-seq)<=1 and (ignore_flag or c:GetFlagEffect(100419040)==0)
 end
-function c100419040.op(e,tp,eg,ep,ev,re,r,rp)
+function c100419040.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local seq=c:GetSequence()
-	local g=Duel.GetMatchingGroup(c100419040.fil,tp,LOCATION_MZONE,0,nil,seq)
+	local g=Duel.GetMatchingGroup(c100419040.efffilter,tp,LOCATION_MZONE,0,nil,seq)
 	if c:IsDisabled() then return end
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(100419040,RESET_EVENT+0x1fe0000,0,1)
@@ -48,9 +48,9 @@ end
 function c100419040.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local gc=e:GetLabelObject()
-	if chk==0 then return gc and gc:IsFaceup() and gc:IsLocation(LOCATION_SZONE) 
-		and not gc:IsDisabled() and c100419040.fil(c,gc:GetSequence(),true)
-		and Duel.GetAttackTarget()==c or (Duel.GetAttacker()==c and Duel.GetAttackTarget()~=nil) end
+	if chk==0 then return gc and gc:IsFaceup() and gc:IsLocation(LOCATION_SZONE)
+		and not gc:IsDisabled() and c100419040.efffilter(c,gc:GetSequence(),true)
+		and (Duel.GetAttackTarget()==c or (Duel.GetAttacker()==c and Duel.GetAttackTarget()~=nil)) end
 	local a=Duel.GetAttacker()
 	if a==c then a=Duel.GetAttackTarget()
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,a,1,0,0)

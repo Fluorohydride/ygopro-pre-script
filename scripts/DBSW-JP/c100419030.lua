@@ -31,16 +31,16 @@ function c100419030.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-function c100419030.tffilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x207) and not c:IsForbidden()
+function c100419030.tffilter(c,tp)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x207) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c100419030.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c100419030.tffilter,tp,LOCATION_HAND,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c100419030.tffilter,tp,LOCATION_HAND,0,1,nil,tp) end
 end
 function c100419030.tfop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-	local tc=Duel.SelectMatchingCard(tp,c100419030.tffilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,c100419030.tffilter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
 	if tc then
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end

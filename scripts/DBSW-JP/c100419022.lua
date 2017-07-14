@@ -1,7 +1,7 @@
 --魔弾の悪魔 ザミエル
 --Magibullet Fiend Zamiel
 --Scripted by Eerie Code
-function c100419022.initial_effect(c)	
+function c100419022.initial_effect(c)
 	--normal summon with 1 tribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100419022,0))
@@ -45,6 +45,12 @@ function c100419022.initial_effect(c)
 	e6:SetLabelObject(e5)
 	e6:SetOperation(c100419022.regop)
 	c:RegisterEffect(e6)
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e7:SetCode(EVENT_CHAIN_NEGATED)
+	e7:SetLabelObject(e5)
+	e7:SetOperation(c100419022.regop2)
+	c:RegisterEffect(e7)
 end
 function c100419022.otfilter(c,tp)
 	return c:IsSetCard(0x206) and (c:IsControler(tp) or c:IsFaceup())
@@ -65,6 +71,13 @@ function c100419022.regop(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsSetCard(0x206) and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local val=e:GetLabelObject():GetLabel()
 		e:GetLabelObject():SetLabel(val+1)
+	end
+end
+function c100419022.regop2(e,tp,eg,ep,ev,re,r,rp)
+	if re:GetHandler():IsSetCard(0x206) and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		local val=e:GetLabelObject():GetLabel()
+		if val==0 then val=1 end
+		e:GetLabelObject():SetLabel(val-1)
 	end
 end
 function c100419022.drcon(e,tp,eg,ep,ev,re,r,rp)

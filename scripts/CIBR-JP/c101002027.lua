@@ -45,21 +45,33 @@ end
 function c101002027.sprfilter(c)
 	return (c:IsCode(89189982,36898537) or c:IsSetCard(0x202)) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
+function c101002027.mzfilter(c)
+	return c:GetSequence()<5 and c:IsLocation(LOCATION_MZONE)
+end
 function c101002027.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local g=Duel.GetMatchingGroup(c101002027.sprfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and g:GetClassCount(Card.GetCode)>=5
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct=-ft+1
+	return ft>-5 and g:GetClassCount(Card.GetCode)>=5 and (ft>0 or g:IsExists(c101002027.mzfilter,ct,nil))
 end
 function c101002027.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(c101002027.sprfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct=-ft+1
 	local rg=Group.CreateGroup()
 	for i=1,5 do
+		local sc=nil
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local sc=g:Select(tp,1,1,nil):GetFirst()
+		if ct>0 then
+			sc=g:FilterSelect(tp,c101002027.mzfilter,1,1,nil):GetFirst()
+		else
+			sc=g:Select(tp,1,1,nil):GetFirst()
+		end
 		rg:AddCard(sc)
 		g:Remove(Card.IsCode,nil,sc:GetCode())
+		ct=ct-1
 	end
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end

@@ -1,14 +1,14 @@
 --虹天気アルシエル
 --Rainbow Weathery Arciel
 --Scripted by Eerie Code
---Prototype, might require a core update for full functionality 
+--Prototype, might require a core update for full functionality
 function c100419035.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x207),3,3)
 	--disable special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100419035,0))
-	e1:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_REMOVE)
+	e1:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_SPSUMMON)
 	e1:SetRange(LOCATION_MZONE)
@@ -40,8 +40,8 @@ function c100419035.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_ADJUST)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetOperation(c100419035.op)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetOperation(c100419035.effop)
 	c:RegisterEffect(e4)
 end
 function c100419035.discon(e,tp,eg,ep,ev,re,r,rp)
@@ -54,11 +54,11 @@ end
 function c100419035.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,eg,eg:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,eg:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,eg:GetCount(),0,0)
 end
 function c100419035.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateSummon(eg)
-	Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
+	Duel.Destroy(eg,REASON_EFFECT)
 end
 function c100419035.spreg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -83,15 +83,15 @@ function c100419035.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c100419035.fil(c,lg,ignore_flag)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x207) 
+function c100419035.efffilter(c,lg,ignore_flag)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x207)
 		and c:GetSequence()<5 and lg and lg:IsContains(c)
 		and (ignore_flag or c:GetFlagEffect(100419035)==0)
 end
-function c100419035.op(e,tp,eg,ep,ev,re,r,rp)
+function c100419035.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local lg=c:GetLinkedGroup()
-	local g=Duel.GetMatchingGroup(c100419035.fil,tp,LOCATION_MZONE,0,nil,lg)
+	local g=Duel.GetMatchingGroup(c100419035.efffilter,tp,LOCATION_MZONE,0,nil,lg)
 	if c:IsDisabled() then return end
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(100419035,RESET_EVENT+0x1fe0000,0,1)
@@ -115,9 +115,9 @@ function c100419035.discon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	local gc=e:GetLabelObject()
-	return Duel.IsChainNegatable(ev) and gc 
-		and gc:IsFaceup() and gc:IsLocation(LOCATION_MZONE) 
-		and c100419035.fil(c,gc:GetLinkedGroup(),true)
+	return Duel.IsChainNegatable(ev) and gc
+		and gc:IsFaceup() and gc:IsLocation(LOCATION_MZONE)
+		and c100419035.efffilter(c,gc:GetLinkedGroup(),true)
 end
 function c100419035.distg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
