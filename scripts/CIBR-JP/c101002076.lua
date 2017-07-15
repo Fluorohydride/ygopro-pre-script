@@ -35,7 +35,11 @@ function c101002076.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.SendtoGrave(fc,REASON_RULE)
 				Duel.BreakEffect()
 			end
-			Duel.Activate(te)
+			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			local tep=tc:GetControler()
+			local cost=te:GetCost()
+			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
+			Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
 		end
 	end
 end
