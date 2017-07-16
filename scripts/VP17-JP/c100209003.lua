@@ -39,12 +39,12 @@ function c100209003.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,100209003)
 	Duel.Recover(tp,200,REASON_EFFECT)
 end
-function c100209003.cfilter(c)
+function c100209003.costfilter(c)
 	return c:IsDiscardable() and c:IsSetCard(0xfb)
 end
 function c100209003.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100209003.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c100209003.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100209003.costfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,c100209003.costfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c100209003.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=1
