@@ -19,9 +19,9 @@ end
 function c101002078.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and aux.checksamecolumn(chkc,c) end
-	if chk==0 then return Duel.IsExistingTarget(aux.checksamecolumn,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
+	if chk==0 then return Duel.IsExistingTarget(aux.checksamecolumn,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.checksamecolumn,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)
+	local g=Duel.SelectTarget(tp,aux.checksamecolumn,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c,c)
 	e:SetLabel(seq)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
