@@ -43,7 +43,7 @@ function c100419001.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100419001.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x3d) 
-		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_EFFECT)
 end
 function c100419001.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c100419001.repfilter,1,nil,tp)
