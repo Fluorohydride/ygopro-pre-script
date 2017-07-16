@@ -44,13 +44,14 @@ function c100419038.effop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100419038.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
+	local c=e:GetHandler()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc~=c end
 	local gc=e:GetLabelObject()
 	if chk==0 then return gc and gc:IsFaceup() and gc:IsLocation(LOCATION_SZONE)
-		and not gc:IsDisabled() and c100419038.efffilter(e:GetHandler(),gc:GetSequence(),true)
-		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+		and not gc:IsDisabled() and c100419038.efffilter(c,gc:GetSequence(),true)
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c100419038.daop(e,tp,eg,ep,ev,re,r,rp)
