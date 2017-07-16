@@ -46,13 +46,14 @@ function c100419022.initial_effect(c)
 	e6:SetLabelObject(e5)
 	e6:SetOperation(c100419022.regop)
 	c:RegisterEffect(e6)
-	local e7=Effect.CreateEffect(c)
-	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	local e7=e6:Clone()
 	e7:SetCode(EVENT_CHAIN_NEGATED)
-	e7:SetRange(LOCATION_MZONE)
-	e7:SetLabelObject(e5)
 	e7:SetOperation(c100419022.regop2)
 	c:RegisterEffect(e7)
+	local e8=e6:Clone()
+	e8:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+	e8:SetOperation(c100419022.clearop)
+	c:RegisterEffect(e8)
 end
 function c100419022.otfilter(c,tp)
 	return c:IsSetCard(0x206) and (c:IsControler(tp) or c:IsFaceup())
@@ -70,17 +71,20 @@ function c100419022.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(sg, REASON_SUMMON+REASON_MATERIAL)
 end
 function c100419022.regop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x206) and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(0x206) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local val=e:GetLabelObject():GetLabel()
 		e:GetLabelObject():SetLabel(val+1)
 	end
 end
 function c100419022.regop2(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x206) and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(0x206) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local val=e:GetLabelObject():GetLabel()
 		if val==0 then val=1 end
 		e:GetLabelObject():SetLabel(val-1)
 	end
+end
+function c100419022.clearop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetLabelObject():SetLabel(0)
 end
 function c100419022.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
