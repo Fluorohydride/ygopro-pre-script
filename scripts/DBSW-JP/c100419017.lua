@@ -37,7 +37,6 @@ function c100419017.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or c:GetFlagEffect(1)<=0 then return false end
-	e:SetLabelObject(rc)
 	return aux.checksamecolumn(c,rc)
 end
 function c100419017.thfilter(c,rc)
@@ -46,6 +45,7 @@ end
 function c100419017.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
 	if chk==0 then return rc and Duel.IsExistingMatchingCard(c100419017.thfilter,tp,LOCATION_GRAVE,0,1,nil,rc) end
+	e:SetLabelObject(rc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function c100419017.thop(e,tp,eg,ep,ev,re,r,rp)
