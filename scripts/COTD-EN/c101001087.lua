@@ -50,7 +50,7 @@ end
 function c101001087.atkval(e,c)
 	return c:GetLevel()*300
 end
-function c30270176.immval(e,te)
+function c101001087.immval(e,te)
 	if te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() then
 		local lv=e:GetHandler():GetLevel()
 		local tc=te:GetHandler()
