@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 --Prototype, might require a core update for full functionality
 function c100419041.initial_effect(c)
-	c:SetUniqueOnField(100419041,1,0)
+	c:SetUniqueOnField(1,0,100419041)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
