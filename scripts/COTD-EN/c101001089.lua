@@ -1,7 +1,7 @@
 --F.A. Downforce
 --Scripted by Eerie Code
 function c101001089.initial_effect(c)
-	--lv up
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
