@@ -42,8 +42,10 @@ function c101002018.operation(e,tp,eg,ep,ev,re,r,rp)
 	local spos=0
 	if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) then spos=spos+POS_FACEUP_ATTACK end
 	if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then spos=spos+POS_FACEDOWN_DEFENSE end
-	if spos~=0 then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,spos)
+	if spos~=0 and Duel.SpecialSummon(tc,0,tp,tp,false,false,spos)~=0 then
+		if tc:IsFacedown() then
+			Duel.ConfirmCards(1-tp,tc)
+		end
 	end
 end
 function c101002018.spcon(e,tp,eg,ep,ev,re,r,rp)
