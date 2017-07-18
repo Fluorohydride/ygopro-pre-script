@@ -81,5 +81,5 @@ function c101001087.excon(e)
 	return e:GetHandler():IsLevelAbove(7)
 end
 function c101001087.extg(e,c)
-	return c:GetOwner()==e:GetHandlerPlayer()
+	return c:GetOwner()~=e:GetHandlerPlayer()
 end
