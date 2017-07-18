@@ -53,6 +53,7 @@ function c100209004.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE,1-tp)
 	if ft>0 then
 		if Duel.IsPlayerAffectedByEffect(1-tp,59822133) then ft=1 end
+		if ft>1 then ft=2 end
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 		local g1=Duel.SelectMatchingCard(1-tp,aux.NecroValleyFilter(c100209004.spfilter1),1-tp,LOCATION_GRAVE,0,1,ft,nil,e,1-tp)
 		if g1:GetCount()>0 then
