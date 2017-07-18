@@ -30,7 +30,7 @@ function c100419027.initial_effect(c)
 end
 function c100419027.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return rp~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
 end
 function c100419027.thfilter(c)
 	return c:IsSetCard(0x206) and not c:IsCode(100419027) and c:IsAbleToHand()
