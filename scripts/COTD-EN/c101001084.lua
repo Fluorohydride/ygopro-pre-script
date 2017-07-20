@@ -23,6 +23,9 @@ function c101001084.filter(c,e,tp,m1,m2,ft)
 	if not c:IsSetCard(0x209) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m1:Filter(Card.IsCanBeRitualMaterial,c,c)
 	mg:Merge(m2)
+	if c.mat_filter then
+		mg=mg:Filter(c.mat_filter,nil)
+	end
 	if ft>0 then
 		return mg:CheckWithSumGreater(Card.GetRitualLevel,c:GetLevel(),c)
 	else

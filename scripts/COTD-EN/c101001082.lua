@@ -20,6 +20,7 @@ function c101001082.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCountLimit(1,101001082)
 	e2:SetCondition(c101001082.thcon)
 	e2:SetTarget(c101001082.thtg)
 	e2:SetOperation(c101001082.thop)
@@ -47,13 +48,13 @@ function c101001082.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(300)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+0x1ff0000)
 		c:RegisterEffect(e1)
 	end
 end
 function c101001082.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and bit.band(c:GetSummonType(),SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_RITUAL)
 end
 function c101001082.thfilter(c)
 	return c:GetType()==TYPE_RITUAL+TYPE_SPELL and c:IsAbleToHand()
@@ -70,9 +71,12 @@ end
 function c101001082.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local hg=Duel.SelectMatchingCard(tp,c101001082.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if hg:GetCount()>0 and Duel.SendtoHand(hg,tp,REASON_EFFECT)>0 then
+	if hg:GetCount()>0 and Duel.SendtoHand(hg,tp,REASON_EFFECT)>0
+		and hg:GetFirst():IsLocation(LOCATION_HAND) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c101001082.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if g:GetCount()>0 then Duel.SendtoGrave(g,REASON_EFFECT) end
+		if g:GetCount()>0 then
+			Duel.SendtoGrave(g,REASON_EFFECT)
+		end
 	end
 end

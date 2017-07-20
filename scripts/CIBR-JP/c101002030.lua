@@ -70,11 +70,9 @@ function c101002030.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 	Duel.RegisterEffect(e3,tp)
-	if EFFECT_CANNOT_BE_LINK_MATERIAL then
-		local e4=e1:Clone()
-		e4:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
-		Duel.RegisterEffect(e4,tp)
-	end
+	local e4=e1:Clone()
+	e4:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+	Duel.RegisterEffect(e4,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	if Duel.IsPlayerCanSpecialSummonMonster(tp,101002030+100,0x101b,0x4011,0,0,3,RACE_MACHINE,ATTRIBUTE_WIND) then
 		local token=Duel.CreateToken(tp,101002030+100)
