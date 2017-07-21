@@ -19,6 +19,7 @@ function c101001084.initial_effect(c)
 	e2:SetOperation(c101001084.repop)
 	c:RegisterEffect(e2)
 end
+c101001084.fit_monster={101001082}
 function c101001084.filter(c,e,tp,m1,m2,ft)
 	if not c:IsSetCard(0x209) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m1:Filter(Card.IsCanBeRitualMaterial,c,c)
