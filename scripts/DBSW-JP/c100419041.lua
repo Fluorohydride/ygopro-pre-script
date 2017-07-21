@@ -36,6 +36,7 @@ function c100419041.effop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_TO_HAND)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetRange(LOCATION_MZONE)
+		e1:SetLabelObject(c)
 		e1:SetCondition(c100419041.rmcon)
 		e1:SetCost(aux.bfgcost)
 		e1:SetTarget(c100419041.rmtg)
@@ -48,8 +49,12 @@ function c100419041.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetCount()==1
 end
 function c100419041.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	local gc=e:GetLabelObject()
 	local ec=eg:GetFirst()
-	if chk==0 then return ec and ec:IsAbleToRemove() and Duel.IsPlayerCanDraw(ec:GetControler(),1) end
+	if chk==0 then return gc and gc:IsFaceup() and gc:IsLocation(LOCATION_SZONE)
+		and not gc:IsDisabled() and c100419041.efffilter(c,gc:GetSequence(),true)
+		and ec and ec:IsAbleToRemove() and Duel.IsPlayerCanDraw(ec:GetControler(),1) end
 	local htp=ec:GetControler()
 	Duel.SetTargetPlayer(htp)
 	Duel.SetTargetParam(1)
