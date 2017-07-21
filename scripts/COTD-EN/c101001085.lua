@@ -28,7 +28,7 @@ function c101001085.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.Release(tc,REASON_EFFECT)>0 then
-		local token=Duel.CreateToken(tp,101001085,0x209,0,0,tc:GetOriginalLevel(),RACE_ZOMBIE,ATTRIBUTE_DARK)
+		local token=Duel.CreateToken(tp,101001085+100,0x209,0,0,tc:GetOriginalLevel(),RACE_ZOMBIE,ATTRIBUTE_DARK)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
