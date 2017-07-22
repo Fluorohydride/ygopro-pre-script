@@ -16,45 +16,40 @@ function c83477829.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(83477829,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetCountLimit(1,83477830)
 	e2:SetTarget(c83477829.tg)
 	e2:SetOperation(c83477829.op)
 	c:RegisterEffect(e2)
-	local e2b=e2:Clone()
-	e2b:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e2b)
-	--to hand
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(83477829,2))
-	e3:SetCategory(CATEGORY_TOHAND)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,83477831)
-	e3:SetHintTiming(0,0x1e0)
-	e3:SetCondition(c83477829.thcon)
-	e3:SetTarget(c83477829.thtg)
-	e3:SetOperation(c83477829.thop)
+	local e3=e2:Clone()
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
+	--to hand
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(83477829,2))
+	e4:SetCategory(CATEGORY_TOHAND)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1,83477831)
+	e4:SetHintTiming(0,0x1e0)
+	e4:SetCondition(c83477829.thcon)
+	e4:SetTarget(c83477829.thtg)
+	e4:SetOperation(c83477829.thop)
+	c:RegisterEffect(e4)
 end
 function c83477829.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c83477829.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 then
-		c:CompleteProcedure()
-	elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		and c:IsCanBeSpecialSummoned(e,0,tp,true,false) then
-		Duel.SendtoGrave(c,REASON_RULE)
-	end
+	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c83477829.filter(c)
 	return c:IsSetCard(0xfe) and c:IsAbleToHand()

@@ -1,6 +1,7 @@
 --ヴァレルロード・ドラゴン
 --Varrel Load Dragon
 --Scripted by edo9300
+--Effect is not fully implemented
 function c31833038.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),3)

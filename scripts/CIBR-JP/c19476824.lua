@@ -2,7 +2,7 @@
 --Metaphys Ragnarok
 --Scripted by Eerie Code
 function c19476824.initial_effect(c)
-	--banish and increase atk
+	--remove
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(19476824,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_ATKCHANGE)
@@ -36,7 +36,7 @@ end
 function c19476824.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetDecktopGroup(tp,3)
-	if g:GetCount()==3 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)==3
+	if g:GetCount()>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0
 		and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local og=Duel.GetOperatedGroup()
 		local oc=og:FilterCount(Card.IsSetCard,nil,0x105)
@@ -45,7 +45,7 @@ function c19476824.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(oc*300)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+0x1ff0000)
 		c:RegisterEffect(e1)
 	end
 end

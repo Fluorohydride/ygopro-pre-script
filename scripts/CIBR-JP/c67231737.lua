@@ -2,11 +2,12 @@
 --Link Bumper
 --Scripted by Eerie Code
 function c67231737.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_CYBERS),2,2)
+	--extra attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(67231737,0))
-	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_DAMAGE_STEP_END)
 	e1:SetRange(LOCATION_MZONE)

@@ -2,7 +2,7 @@
 --Cyberse Beacon
 --Scripted by Larry126
 function c91269402.initial_effect(c)
---search
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

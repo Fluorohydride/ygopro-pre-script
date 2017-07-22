@@ -2,7 +2,7 @@
 --Metaphys Daedalus
 --Scripted by Eerie Code
 function c45960523.initial_effect(c)
-	--banish
+	--remove
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(45960523,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -13,7 +13,7 @@ function c45960523.initial_effect(c)
 	e1:SetTarget(c45960523.rmtg)
 	e1:SetOperation(c45960523.rmop)
 	c:RegisterEffect(e1)
-	--banish from deck
+	--remove
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(45960523,1))
 	e2:SetCategory(CATEGORY_REMOVE)

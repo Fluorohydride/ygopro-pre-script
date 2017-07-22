@@ -2,6 +2,7 @@
 --Altergeist Prime Banshee
 --Scripted by Eerie Code
 function c93503294.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x103),2)
 	--special summon

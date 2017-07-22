@@ -2,7 +2,7 @@
 --Metaphys Nephthys
 --Scripted by Eerie Code
 function c72355272.initial_effect(c)
-	--banish
+	--remove
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(72355272,0))
 	e1:SetCategory(CATEGORY_REMOVE)

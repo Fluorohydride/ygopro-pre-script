@@ -2,7 +2,7 @@
 --Mermail Abyssnelia
 --Scripted by Eerie Code
 function c71133680.initial_effect(c)
-	--increase atk
+	--atk/def
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(71133680,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE+CATEGORY_DESTROY)

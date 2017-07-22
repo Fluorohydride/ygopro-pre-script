@@ -7,7 +7,7 @@ function c66719533.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--discard and draw
+	--draw
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(66719533,0))
 	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_DRAW)
@@ -18,7 +18,7 @@ function c66719533.initial_effect(c)
 	e2:SetTarget(c66719533.drtg)
 	e2:SetOperation(c66719533.drop)
 	c:RegisterEffect(e2)
-	--reduce stats
+	--atk/def
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(66719533,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)

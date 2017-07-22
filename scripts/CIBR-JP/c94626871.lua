@@ -2,6 +2,7 @@
 --Trickstar Sweet Devil
 --Scripted by Eerie Code
 function c94626871.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfb),2,2)
 	--damage
@@ -13,7 +14,7 @@ function c94626871.initial_effect(c)
 	e2:SetCondition(c94626871.damcon)
 	e2:SetOperation(c94626871.damop)
 	c:RegisterEffect(e2)
-	--reduce atk
+	--atkdown
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
