@@ -33,7 +33,7 @@ function c101002015.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101002015.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x205)
+	return c:IsFaceup() and c:IsSetCard(0x103)
 end
 function c101002015.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()

@@ -53,7 +53,7 @@ function c101002071.discon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function c101002071.discfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x205) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsAbleToGraveAsCost()
 end
 function c101002071.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -78,8 +78,8 @@ end
 function c101002071.effectfilter(e,ct)
 	local p=e:GetHandler():GetControler()
 	local te,tp,loc=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
-	return p==tp and te:GetHandler():IsSetCard(0x205) and bit.band(loc,LOCATION_ONFIELD)~=0
+	return p==tp and te:GetHandler():IsSetCard(0x103) and bit.band(loc,LOCATION_ONFIELD)~=0
 end
 function c101002071.distarget(e,c)
-	return c:IsSetCard(0x205)
+	return c:IsSetCard(0x103)
 end

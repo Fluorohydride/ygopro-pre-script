@@ -26,7 +26,7 @@ function c101002018.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101002018.filter(c,e,tp)
-	return c:IsSetCard(0x204) and not c:IsCode(101002018) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
+	return c:IsSetCard(0x104) and not c:IsCode(101002018) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
 end
 function c101002018.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -54,7 +54,7 @@ function c101002018.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function c101002018.filter1(c,e,tp)
-	return c:IsSetCard(0x204) and not c:IsCode(101002018) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x104) and not c:IsCode(101002018) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101002018.filter2(c,g)
 	return g:IsExists(c101002018.filter3,1,c,c:GetCode())

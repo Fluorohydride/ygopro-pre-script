@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c100209002.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x201),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x102),2,2)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100209002,0))
@@ -34,7 +34,7 @@ function c100209002.spfilter1(c,e,tp)
 	else return false end
 end
 function c100209002.spfilter2(c,e,tp,zone)
-	return c:IsSetCard(0x201) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c100209002.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -90,7 +90,7 @@ function c100209002.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetPreviousControler()==tp and bit.band(r,0x21)==0x21
 end
 function c100209002.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x201) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x102) and c:IsAbleToHand()
 end
 function c100209002.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100209002.thfilter(chkc) end

@@ -22,7 +22,7 @@ function c101002070.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101002070.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x205)
+	return c:IsFaceup() and c:IsSetCard(0x103)
 end
 function c101002070.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101002070.filter(chkc) end
@@ -75,7 +75,7 @@ function c101002070.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
 function c101002070.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x205) and c:IsLocation(LOCATION_ONFIELD)
+	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsLocation(LOCATION_ONFIELD)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function c101002070.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -48,11 +48,11 @@ function c101002049.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousPosition(POS_FACEUP)
 end
 function c101002049.spfilter1(c,e,tp)
-	return c:IsSetCard(0x204) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(0x104) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 		and Duel.IsExistingTarget(c101002049.spfilter2,tp,LOCATION_GRAVE,0,1,c,c:GetCode(),e,tp)
 end
 function c101002049.spfilter2(c,cd,e,tp)
-	return not c:IsCode(cd) and c:IsSetCard(0x204) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return not c:IsCode(cd) and c:IsSetCard(0x104) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function c101002049.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -82,11 +82,11 @@ function c101002049.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101002049.indtg(e,c)
-	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x204)
+	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x104)
 end
 function c101002049.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsSetCard(0x204) and tc:GetBattleTarget()~=nil and e:GetHandler():GetLinkedGroup():IsContains(tc)
+	return ep~=tp and tc:IsSetCard(0x104) and tc:GetBattleTarget()~=nil and e:GetHandler():GetLinkedGroup():IsContains(tc)
 end
 function c101002049.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev*2)

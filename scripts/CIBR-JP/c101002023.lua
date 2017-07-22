@@ -28,9 +28,6 @@ function c101002023.initial_effect(c)
 	e3:SetOperation(c101002023.spop)
 	c:RegisterEffect(e3)
 end
-function c101002023.rmfilter(c)
-	return c:IsCode(89189982,36898537) or c:IsSetCard(0x202)
-end
 function c101002023.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetDecktopGroup(tp,3)
 	if chk==0 then return rg:FilterCount(Card.IsAbleToRemove,nil)==3 end
@@ -42,7 +39,7 @@ function c101002023.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()==3 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)==3
 		and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local og=Duel.GetOperatedGroup()
-		local oc=og:FilterCount(c101002023.rmfilter,nil)
+		local oc=og:FilterCount(Card.IsSetCard,nil,0x105)
 		if oc==0 then return end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -56,8 +53,7 @@ function c101002023.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function c101002023.spfilter(c,e,tp)
-	return (c:IsCode(89189982,36898537) or c:IsSetCard(0x202)) and c:IsLevelAbove(5)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x105) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101002023.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

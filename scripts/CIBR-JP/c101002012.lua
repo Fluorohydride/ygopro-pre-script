@@ -23,7 +23,7 @@ function c101002012.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101002012.setfilter(c)
-	return c:IsSetCard(0x205) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x103) and c:IsType(TYPE_TRAP) and c:IsSSetable()
 end
 function c101002012.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101002012.setfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -37,13 +37,13 @@ function c101002012.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101002012.thfilter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x205) and c:IsAbleToGrave()
+	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsAbleToGrave()
 end
 function c101002012.thfilter2(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x205) and c:IsAbleToGrave() and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsAbleToGrave() and c:GetSequence()<5
 end
 function c101002012.spfilter(c,e,tp)
-	return c:IsSetCard(0x205) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x103) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101002012.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

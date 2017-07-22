@@ -26,7 +26,7 @@ function c101002019.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101002019.filter(c)
-	return c:IsSetCard(0x204) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x104) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101002019.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101002019.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -46,7 +46,7 @@ function c101002019.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function c101002019.filter1(c,e,tp)
-	return c:IsSetCard(0x204) and not c:IsCode(101002019) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x104) and not c:IsCode(101002019) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101002019.filter2(c,g)
 	return g:IsExists(c101002019.filter3,1,c,c:GetCode())

@@ -44,7 +44,7 @@ function c101002017.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function c101002017.filter1(c,e,tp)
-	return c:IsSetCard(0x204) and not c:IsCode(101002017) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x104) and not c:IsCode(101002017) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101002017.filter2(c,g)
 	return g:IsExists(c101002017.filter3,1,c,c:GetCode())

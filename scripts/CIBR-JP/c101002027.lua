@@ -43,7 +43,7 @@ function c101002027.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c101002027.sprfilter(c)
-	return (c:IsCode(89189982,36898537) or c:IsSetCard(0x202)) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return c:IsSetCard(0x105) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function c101002027.mzfilter(c)
 	return c:GetSequence()<5 and c:IsLocation(LOCATION_MZONE)
@@ -79,7 +79,7 @@ function c101002027.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
 end
 function c101002027.spfilter(c,e,tp)
-	return c:IsFaceup() and (c:IsCode(89189982,36898537) or c:IsSetCard(0x202)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(0x105) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101002027.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101002027.spfilter(chkc,e,tp) end

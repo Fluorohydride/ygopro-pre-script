@@ -28,9 +28,7 @@ function c101002025.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101002025.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	if not re then return false end
-	local rc=re:GetHandler()
-	return re and re:IsActiveType(TYPE_MONSTER) and (rc:IsCode(89189982,36898537) or rc:IsSetCard(0x202))
+	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x105)
 end
 function c101002025.rmfilter(c)
 	return c:IsFacedown() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemove()
@@ -54,7 +52,7 @@ function c101002025.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(e:GetHandler(),tp,2,REASON_COST)
 end
 function c101002025.thfilter(c)
-	return (c:IsCode(89189982,36898537) or c:IsSetCard(0x202)) and not c:IsCode(101002025) and c:IsAbleToHand()
+	return c:IsSetCard(0x105) and not c:IsCode(101002025) and c:IsAbleToHand()
 end
 function c101002025.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101002025.thfilter,tp,LOCATION_DECK,0,1,nil) end
