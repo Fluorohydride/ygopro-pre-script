@@ -3,6 +3,7 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **July 8, 2017** : Circuit Break (CIBR-JP) : `101002XXX`
+- **July 22, 2017** : Jump Victory Carnival 2017 (VF17-JP) : `100230XXX`
 - **August 11, 2017** : Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX`
 - **September 9, 2017** : EXTRA PACK 2017 (EP17-JP) : `100420XXX`
 
