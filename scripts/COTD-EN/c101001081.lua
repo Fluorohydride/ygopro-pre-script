@@ -20,7 +20,7 @@ function c101001081.initial_effect(c)
 	e2:SetCondition(c101001081.spcon)
 	e2:SetTarget(c101001081.sptg)
 	e2:SetOperation(c101001081.spop)
-	c:RegisterEffect(e3)
+	c:RegisterEffect(e2)
 end
 function c101001081.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_ZOMBIE) and c:IsAbleToGrave()
