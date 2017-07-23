@@ -2,8 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **July 8, 2017** : Circuit Break (CIBR-JP) : `101002XXX`
-- **July 22, 2017** : Jump Victory Carnival 2017 (VF17-JP) : `100230XXX`
 - **August 11, 2017** : Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX`
 - **September 9, 2017** : EXTRA PACK 2017 (EP17-JP) : `100420XXX`
 
@@ -50,3 +48,5 @@
 - ~~Collectors Pack 2017 (CP17-JP) : `100217XXX`~~
 - ~~Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`~~
 - ~~Structure Deck: Cyverse Link (SD32-JP) : `100332XXX`~~
+- ~~Circuit Break (CIBR-JP) : `101002XXX`~~
+- ~~Jump Victory Carnival 2017 (VF17-JP) : `100230XXX`~~
