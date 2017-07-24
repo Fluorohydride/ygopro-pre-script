@@ -18,14 +18,14 @@ function c100419037.initial_effect(c)
 	e2:SetOperation(c100419037.effop)
 	c:RegisterEffect(e2)
 end
-function c100419037.efffilter(c,seq,ignore_flag)
+function c100419037.efffilter(c,g,ignore_flag)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x207)
-		and c:GetSequence()<5 and math.abs(c:GetSequence()-seq)<=1 and (ignore_flag or c:GetFlagEffect(100419037)==0)
+		and c:GetSequence()<5 and g:IsContains(c) and (ignore_flag or c:GetFlagEffect(100419037)==0)
 end
 function c100419037.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local seq=c:GetSequence()
-	local g=Duel.GetMatchingGroup(c100419037.efffilter,tp,LOCATION_MZONE,0,nil,seq)
+	local cg=c:GetColumnGroup(1,1)
+	local g=Duel.GetMatchingGroup(c100419037.efffilter,tp,LOCATION_MZONE,0,nil,cg)
 	if c:IsDisabled() then return end
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(100419037,RESET_EVENT+0x1fe0000,0,1)
@@ -51,7 +51,7 @@ function c100419037.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c100419037.thfilter(chkc) end
 	local gc=e:GetLabelObject()
 	if chk==0 then return gc and gc:IsFaceup() and gc:IsLocation(LOCATION_SZONE)
-		and not gc:IsDisabled() and c100419037.efffilter(e:GetHandler(),gc:GetSequence(),true)
+		and not gc:IsDisabled() and c100419037.efffilter(e:GetHandler(),gc:GetColumnGroup(1,1),true)
 		and Duel.IsExistingTarget(c100419037.thfilter,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,c100419037.thfilter,tp,0,LOCATION_ONFIELD,1,1,nil)

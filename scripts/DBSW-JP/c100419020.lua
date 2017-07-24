@@ -36,9 +36,8 @@ function c100419020.initial_effect(c)
 end
 function c100419020.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local rc=re:GetHandler()
 	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or c:GetFlagEffect(1)<=0 then return false end
-	return aux.checksamecolumn(c,rc)
+	return c:GetColumnGroup():IsContains(re:GetHandler())
 end
 function c100419020.filter(c,e,tp)
 	return c:IsSetCard(0x206) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

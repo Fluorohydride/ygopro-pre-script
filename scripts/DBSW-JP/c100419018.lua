@@ -37,9 +37,8 @@ function c100419018.initial_effect(c)
 end
 function c100419018.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local rc=re:GetHandler()
 	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or c:GetFlagEffect(1)<=0 then return false end
-	return aux.checksamecolumn(c,rc)
+	return c:GetColumnGroup():IsContains(re:GetHandler())
 end
 function c100419018.cfilter(c)
 	return c:IsSetCard(0x206) and c:IsDiscardable()
@@ -56,5 +55,5 @@ function c100419018.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100419018.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)	
+	Duel.Draw(p,d,REASON_EFFECT)
 end

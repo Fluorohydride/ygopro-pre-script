@@ -18,14 +18,14 @@ function c100419041.initial_effect(c)
 	e2:SetOperation(c100419041.effop)
 	c:RegisterEffect(e2)
 end
-function c100419041.efffilter(c,seq,ignore_flag)
+function c100419041.efffilter(c,g,ignore_flag)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x207)
-		and c:GetSequence()<5 and math.abs(c:GetSequence()-seq)<=1 and (ignore_flag or c:GetFlagEffect(100419041)==0)
+		and c:GetSequence()<5 and g:IsContains(c) and (ignore_flag or c:GetFlagEffect(100419041)==0)
 end
 function c100419041.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local seq=c:GetSequence()
-	local g=Duel.GetMatchingGroup(c100419041.efffilter,tp,LOCATION_MZONE,0,nil,seq)
+	local cg=c:GetColumnGroup(1,1)
+	local g=Duel.GetMatchingGroup(c100419041.efffilter,tp,LOCATION_MZONE,0,nil,cg)
 	if c:IsDisabled() then return end
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(100419041,RESET_EVENT+0x1fe0000,0,1)
@@ -53,7 +53,7 @@ function c100419041.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gc=e:GetLabelObject()
 	local ec=eg:GetFirst()
 	if chk==0 then return gc and gc:IsFaceup() and gc:IsLocation(LOCATION_SZONE)
-		and not gc:IsDisabled() and c100419041.efffilter(c,gc:GetSequence(),true)
+		and not gc:IsDisabled() and c100419041.efffilter(c,gc:GetColumnGroup(1,1),true)
 		and ec and ec:IsAbleToRemove() and Duel.IsPlayerCanDraw(ec:GetControler(),1) end
 	local htp=ec:GetControler()
 	Duel.SetTargetPlayer(htp)
