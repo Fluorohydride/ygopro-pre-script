@@ -2,20 +2,26 @@
 --Angel Paladin Arch-Parshath
 --Scripted by sahim
 function c100305001.initial_effect(c)
+	--counter
+	local e01=Effect.CreateEffect(c)
+	e01:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e01:SetCode(EVENT_CHAINING)
+	e01:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e01:SetOperation(c100305001.chop1)
+	c:RegisterEffect(e01)
+	local e02=Effect.CreateEffect(c)
+	e02:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e02:SetCode(EVENT_CHAIN_SOLVED)
+	e02:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e02:SetOperation(c100305001.chop2)
+	c:RegisterEffect(e02)
 	--special summon
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e0:SetCode(EVENT_CHAINING)
-	e0:SetRange(LOCATION_MZONE)
-	e0:SetOperation(aux.chainreg)
-	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100305001,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
-	e1:SetCode(EVENT_CHAIN_SOLVED)
+	e1:SetCode(EVENT_CHAIN_END)
 	e1:SetCondition(c100305001.spcon1)
 	e1:SetCost(c100305001.spcost)
 	e1:SetTarget(c100305001.sptg)
@@ -25,6 +31,8 @@ function c100305001.initial_effect(c)
 	e2:SetCode(EVENT_CHAIN_NEGATED)
 	e2:SetCondition(c100305001.spcon2)
 	c:RegisterEffect(e2)
+	e01:SetLabelObject(e1)
+	e02:SetLabelObject(e1)
 	--pierce
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -41,9 +49,15 @@ function c100305001.initial_effect(c)
 	e4:SetOperation(c100305001.thop)
 	c:RegisterEffect(e4)
 end
+function c100305001.chop1(e,tp,eg,ep,ev,re,r,rp)
+	e:GetLabelObject():SetLabel(0)
+end
+function c100305001.chop2(e,tp,eg,ep,ev,re,r,rp)
+	if rp~=tp or not re:IsActiveType(TYPE_COUNTER) then return end
+	e:GetLabelObject():SetLabel(1)
+end
 function c100305001.spcon1(e,tp,eg,ep,ev,re,r,rp,chk)
-	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_COUNTER)
-		and e:GetHandler():GetFlagEffect(1)>0
+	return e:GetLabel()==1
 end
 function c100305001.spcon2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local de,dp=Duel.GetChainInfo(ev,CHAININFO_DISABLE_REASON,CHAININFO_DISABLE_PLAYER)
