@@ -46,6 +46,7 @@ function c100419030.tfop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100419030.spreg(e,tp,eg,ep,ev,re,r,rp)
+	if not re then return end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	if c:IsReason(REASON_COST) and rc:IsSetCard(0x207) then

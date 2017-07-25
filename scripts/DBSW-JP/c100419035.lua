@@ -61,6 +61,7 @@ function c100419035.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(eg,REASON_EFFECT)
 end
 function c100419035.spreg(e,tp,eg,ep,ev,re,r,rp)
+	if not re then return end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	if c:IsReason(REASON_COST) and rc:IsSetCard(0x207) then
