@@ -50,12 +50,12 @@ function c100419036.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gc=e:GetLabelObject()
 	if chk==0 then return gc and gc:IsFaceup() and gc:IsLocation(LOCATION_SZONE)
 		and not gc:IsDisabled() and c100419036.efffilter(e:GetHandler(),gc:GetColumnGroup(1,1),true)
-		and Duel.IsExistingMatchingCard(c100419036.thfilter,tp,0,LOCATION_DECK,1,nil) end
+		and Duel.IsExistingMatchingCard(c100419036.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
 end
-function c100419036.thop(e,tp,eg,ep,ev,re,r,rp)	
+function c100419036.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100419036.thfilter,tp,0,LOCATION_DECK,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100419036.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

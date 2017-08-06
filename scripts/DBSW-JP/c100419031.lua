@@ -42,18 +42,21 @@ function c100419031.tffilter(c,tp)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x207) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c100419031.tftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100419031.tffilter(chkc) end
-	local lc=math.min(2,Duel.GetLocationCount(tp,LOCATION_SZONE))
-	if chk==0 then return lc>0 and Duel.IsExistingTarget(c100419031.tffilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
-	Duel.SelectTarget(tp,c100419031.tffilter,tp,LOCATION_GRAVE,0,1,lc,nil,tp)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100419031.tffilter(chkc,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(c100419031.tffilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
+	local ct=math.min(Duel.GetLocationCount(tp,LOCATION_SZONE),2)
+	local g=Duel.SelectTarget(tp,c100419031.tffilter,tp,LOCATION_GRAVE,0,1,ct,nil,tp)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,g:GetCount(),0,0)
 end
 function c100419031.tfop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if g:GetCount()<1 then return end
-	local lc=math.min(2,Duel.GetLocationCount(tp,LOCATION_SZONE))
-	if lc<1 then return end
-	if g:GetCount()>lc then
-		g=g:Select(tp,1,lc,nil)
+	if g:GetCount()<=0 then return end
+	local ct=math.min(2,Duel.GetLocationCount(tp,LOCATION_SZONE))
+	if ct<1 then return end
+	if g:GetCount()>ct then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+		g=g:Select(tp,1,ct,nil)
 	end
 	for tc in aux.Next(g) do
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
@@ -83,4 +86,3 @@ function c100419031.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-	

@@ -46,11 +46,11 @@ function c100419039.effop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100419039.spcfilter(c,e,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return c:IsFaceup() and c:IsReleasableByEffect() and (ft>0 or c:GetSequence()<5)
+	return c:IsReleasableByEffect() and (ft>0 or c:GetSequence()<5)
 		and Duel.IsExistingMatchingCard(c100419039.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,c:GetCode())
 end
-function c100419039.spfilter(c,e,tp,cd)
-	return c:IsSetCard(0x207) and not c:IsCode(cd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function c100419039.spfilter(c,e,tp,code)
+	return c:IsSetCard(0x207) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100419039.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100419039.spcfilter(chkc,e,tp) end
@@ -64,7 +64,7 @@ function c100419039.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100419039.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.Release(tc,REASON_EFFECT)>0 
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.Release(tc,REASON_EFFECT)>0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100419039.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp,tc:GetCode())
