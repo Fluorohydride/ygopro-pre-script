@@ -55,7 +55,7 @@ function c67045745.indval(e,c)
 	else return false end
 end
 function c67045745.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x20a) and e:GetHandler():GetFlagEffect(1)>0
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x107) and e:GetHandler():GetFlagEffect(1)>0
 end
 function c67045745.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -24,7 +24,7 @@ function c66322203.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c66322203.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x20a) and c:IsLevelAbove(1)
+	return c:IsFaceup() and c:IsSetCard(0x107) and c:IsLevelAbove(1)
 end
 function c66322203.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c66322203.filter(chkc) end

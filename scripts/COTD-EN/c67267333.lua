@@ -22,7 +22,7 @@ function c67267333.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c67267333.cfilter(c)
-	return c:IsSetCard(0x209) and c:IsDiscardable()
+	return c:IsSetCard(0x106) and c:IsDiscardable()
 end
 function c67267333.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c67267333.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -51,7 +51,7 @@ end
 function c67267333.mtop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,67267333)~=0 then return end
 	local c=e:GetHandler()
-	local g=eg:Filter(Card.IsSetCard,nil,0x209)
+	local g=eg:Filter(Card.IsSetCard,nil,0x106)
 	local rc=g:GetFirst()
 	if not rc then return end
 	local e1=Effect.CreateEffect(c)

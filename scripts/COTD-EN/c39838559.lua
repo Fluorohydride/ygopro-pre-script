@@ -12,7 +12,7 @@ function c39838559.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_LEVEL)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x20a))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x107))
 	e2:SetValue(2)
 	e2:SetCondition(c39838559.lvcon)
 	c:RegisterEffect(e2)
@@ -49,7 +49,7 @@ function c39838559.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=eg:GetFirst()
 	return rc:IsRelateToBattle() and rc:IsStatus(STATUS_OPPO_BATTLE)
-		and rc:IsFaceup() and rc:IsSetCard(0x20a) and rc:IsControler(tp)
+		and rc:IsFaceup() and rc:IsSetCard(0x107) and rc:IsControler(tp)
 end
 function c39838559.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -68,7 +68,7 @@ function c39838559.thcon2(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_SZONE) and c:GetPreviousSequence()==5
 end
 function c39838559.thfilter2(c)
-	return c:IsSetCard(0x20a) and not c:IsCode(39838559) and c:IsAbleToHand()
+	return c:IsSetCard(0x107) and not c:IsCode(39838559) and c:IsAbleToHand()
 end
 function c39838559.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c39838559.thfilter2,tp,LOCATION_DECK,0,1,nil) end
