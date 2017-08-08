@@ -1,13 +1,13 @@
 --F.A. Hang On Mach
 --Scripted by Eerie Code
-function c101001087.initial_effect(c)
+function c93449450.initial_effect(c)
 	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(c101001087.atkval)
+	e1:SetValue(c93449450.atkval)
 	c:RegisterEffect(e1)
 	--immune
 	local e2=Effect.CreateEffect(c)
@@ -15,7 +15,7 @@ function c101001087.initial_effect(c)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(c101001087.immval)
+	e2:SetValue(c93449450.immval)
 	c:RegisterEffect(e2)
 	--lv up
 	local e0=Effect.CreateEffect(c)
@@ -26,14 +26,14 @@ function c101001087.initial_effect(c)
 	e0:SetOperation(aux.chainreg)
 	c:RegisterEffect(e0)
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(101001087,0))
+	e3:SetDescription(aux.Stringid(93449450,0))
 	e3:SetCategory(CATEGORY_LVCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_CHAIN_SOLVING)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(c101001087.lvcon)
-	e3:SetOperation(c101001087.lvop)
+	e3:SetCondition(c93449450.lvcon)
+	e3:SetOperation(c93449450.lvop)
 	c:RegisterEffect(e3)
 	--redirect
 	local e4=Effect.CreateEffect(c)
@@ -41,16 +41,16 @@ function c101001087.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e4:SetCode(EFFECT_TO_GRAVE_REDIRECT)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(c101001087.excon)
-	e4:SetTarget(c101001087.extg)
+	e4:SetCondition(c93449450.excon)
+	e4:SetTarget(c93449450.extg)
 	e4:SetTargetRange(0xff,0xff)
 	e4:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e4)
 end
-function c101001087.atkval(e,c)
+function c93449450.atkval(e,c)
 	return c:GetLevel()*300
 end
-function c101001087.immval(e,te)
+function c93449450.immval(e,te)
 	if te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() then
 		local lv=e:GetHandler():GetLevel()
 		local tc=te:GetHandler()
@@ -61,10 +61,10 @@ function c101001087.immval(e,te)
 		else return false end
 	else return false end
 end
-function c101001087.lvcon(e,tp,eg,ep,ev,re,r,rp)
+function c93449450.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x20a) and e:GetHandler():GetFlagEffect(1)>0
 end
-function c101001087.lvop(e,tp,eg,ep,ev,re,r,rp)
+function c93449450.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e4=Effect.CreateEffect(c)
@@ -77,9 +77,9 @@ function c101001087.lvop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e4)
 	end
 end
-function c101001087.excon(e)
+function c93449450.excon(e)
 	return e:GetHandler():IsLevelAbove(7)
 end
-function c101001087.extg(e,c)
+function c93449450.extg(e,c)
 	return c:GetOwner()~=e:GetHandlerPlayer()
 end
