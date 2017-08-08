@@ -54,6 +54,7 @@ function c93449450.immval(e,te)
 	if te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() then
 		local lv=e:GetHandler():GetLevel()
 		local tc=te:GetHandler()
+		if tc:GetControler()==e:GetHandler():GetControler() then return false end
 		if tc:GetRank()>0 then
 			return tc:GetOriginalRank()<lv
 		elseif tc:GetLevel()>0 then
