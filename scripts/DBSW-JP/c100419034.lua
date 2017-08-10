@@ -1,4 +1,4 @@
---極天気ランプラ
+--極天気ランブラ
 --Polar Weathery Lampla
 --Scripted by Eerie Code
 function c100419034.initial_effect(c)
