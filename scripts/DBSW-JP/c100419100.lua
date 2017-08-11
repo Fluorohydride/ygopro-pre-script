@@ -9,6 +9,7 @@ function c100419100.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,100419100)
 	e1:SetCost(c100419100.tfcost)
+	e1:SetTarget(c100419100.tftg)
 	e1:SetOperation(c100419100.tfop)
 	c:RegisterEffect(e1)
 	--spsummon
