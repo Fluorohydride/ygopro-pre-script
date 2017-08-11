@@ -32,23 +32,25 @@ function c100419032.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-function c100419032.gspcfilter(c)
+function c100419032.gspcfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGraveAsCost()
+		and Duel.IsExistingMatchingCard(c100419032.gspfilter,tp,LOCATION_HAND,0,1,nil,c,tp)
+end
+function c100419032.gspfilter(c,cc,tp)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x207)
+		and not c:IsForbidden() and c:CheckUniqueOnField(tp,LOCATION_ONFIELD,cc)
 end
 function c100419032.gspcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100419032.gspcfilter,tp,LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100419032.gspcfilter,tp,LOCATION_SZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100419032.gspcfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100419032.gspcfilter,tp,LOCATION_SZONE,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
-end
-function c100419032.gspfilter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x207) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c100419032.gsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-		and Duel.IsExistingMatchingCard(c100419032.gspfilter,tp,LOCATION_HAND,0,1,nil,tp) end
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>-1
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c100419032.gspop(e,tp,eg,ep,ev,re,r,rp)
@@ -57,7 +59,7 @@ function c100419032.gspop(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local tc=Duel.SelectMatchingCard(tp,c100419032.gspfilter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
+		local tc=Duel.SelectMatchingCard(tp,c100419032.gspfilter,tp,LOCATION_HAND,0,1,1,nil,nil,tp):GetFirst()
 		if tc then
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		end

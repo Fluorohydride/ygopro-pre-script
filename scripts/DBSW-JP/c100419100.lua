@@ -31,27 +31,27 @@ function c100419100.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-function c100419100.cfilter(c)
+function c100419100.cfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGraveAsCost()
+		and Duel.IsExistingMatchingCard(c100419100.tffilter,tp,LOCATION_DECK,0,1,nil,c,tp)
+end
+function c100419100.tffilter(c,cc,tp)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x207)
+		and not c:IsForbidden() and c:CheckUniqueOnField(tp,LOCATION_ONFIELD,cc)
 end
 function c100419100.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>-1
-		and Duel.IsExistingMatchingCard(c100419100.cfilter,tp,LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100419100.cfilter,tp,LOCATION_SZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100419100.cfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100419100.cfilter,tp,LOCATION_SZONE,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function c100419100.tffilter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x207) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
-end
 function c100419100.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>-1
-		and Duel.IsExistingMatchingCard(c100419100.tffilter,tp,LOCATION_DECK,0,1,nil,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>-1 end
 end
 function c100419100.tfop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,c100419100.tffilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,c100419100.tffilter,tp,LOCATION_DECK,0,1,1,nil,nil,tp):GetFirst()
 	if tc then
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
