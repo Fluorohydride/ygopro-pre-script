@@ -1,4 +1,4 @@
---雨天気スレット
+--曇天気スレット
 --Cloudy Weathery Sleet
 --Scripted by Eerie Code
 function c28806532.initial_effect(c)
