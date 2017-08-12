@@ -4,6 +4,7 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **August 11, 2017** : Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX`
 - **September 9, 2017** : EXTRA PACK 2017 (EP17-JP) : `100420XXX`
+- **September 23, 2017** : Structure Deck R: Surge of Divine Light (SR05-JP) : `100305XXX`
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
@@ -50,3 +51,4 @@
 - ~~Structure Deck: Cyverse Link (SD32-JP) : `100332XXX`~~
 - ~~Circuit Break (CIBR-JP) : `101002XXX`~~
 - ~~Jump Victory Carnival 2017 (VF17-JP) : `100230XXX`~~
+- ~~Code of the Duelist (COTD-EN) : `101001XXX`~~
