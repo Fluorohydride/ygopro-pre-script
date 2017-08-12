@@ -31,7 +31,7 @@ function c100419029.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100419029.tffilter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x207) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x109) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c100419029.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -49,7 +49,7 @@ function c100419029.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if c:IsReason(REASON_COST) and rc:IsSetCard(0x207) then
+	if c:IsReason(REASON_COST) and rc:IsSetCard(0x109) then
 		e:SetLabel(Duel.GetTurnCount()+1)
 		c:RegisterFlagEffect(100419029,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,2)
 	end

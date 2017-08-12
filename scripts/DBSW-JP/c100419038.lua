@@ -19,7 +19,7 @@ function c100419038.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100419038.efffilter(c,g,ignore_flag)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x207)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109)
 		and c:GetSequence()<5 and g:IsContains(c) and (ignore_flag or c:GetFlagEffect(100419038)==0)
 end
 function c100419038.effop(e,tp,eg,ep,ev,re,r,rp)

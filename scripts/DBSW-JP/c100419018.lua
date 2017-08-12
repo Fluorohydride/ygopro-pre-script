@@ -7,7 +7,7 @@ function c100419018.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x206))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x108))
 	e1:SetTargetRange(LOCATION_HAND,0)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -41,7 +41,7 @@ function c100419018.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetColumnGroup():IsContains(re:GetHandler())
 end
 function c100419018.cfilter(c)
-	return c:IsSetCard(0x206) and c:IsDiscardable()
+	return c:IsSetCard(0x108) and c:IsDiscardable()
 end
 function c100419018.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100419018.cfilter,tp,LOCATION_HAND,0,1,nil) end

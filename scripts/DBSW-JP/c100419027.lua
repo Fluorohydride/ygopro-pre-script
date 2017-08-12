@@ -14,7 +14,7 @@ function c100419027.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x206))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x108))
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--to hand
@@ -33,7 +33,7 @@ function c100419027.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
 end
 function c100419027.thfilter(c)
-	return c:IsSetCard(0x206) and not c:IsCode(100419027) and c:IsAbleToHand()
+	return c:IsSetCard(0x108) and not c:IsCode(100419027) and c:IsAbleToHand()
 end
 function c100419027.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100419027.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

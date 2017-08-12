@@ -14,7 +14,7 @@ function c100419028.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100419028.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x206)
+	return c:IsFaceup() and c:IsSetCard(0x108)
 end
 function c100419028.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)

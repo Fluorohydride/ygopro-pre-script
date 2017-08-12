@@ -4,7 +4,7 @@
 --Prototype, might require a core update for full functionality
 function c100419035.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x207),3,3)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x109),3,3)
 	--disable special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100419035,0))
@@ -64,7 +64,7 @@ function c100419035.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if c:IsReason(REASON_COST) and rc:IsSetCard(0x207) then
+	if c:IsReason(REASON_COST) and rc:IsSetCard(0x109) then
 		e:SetLabel(Duel.GetTurnCount()+1)
 		c:RegisterFlagEffect(100419035,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,2)
 	end
@@ -85,7 +85,7 @@ function c100419035.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100419035.efffilter(c,lg,ignore_flag)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x207)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109)
 		and c:GetSequence()<5 and lg and lg:IsContains(c)
 		and (ignore_flag or c:GetFlagEffect(100419035)==0)
 end

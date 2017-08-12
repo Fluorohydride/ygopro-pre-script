@@ -19,7 +19,7 @@ function c100419036.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100419036.efffilter(c,g,ignore_flag)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x207)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109)
 		and c:GetSequence()<5 and g:IsContains(c) and (ignore_flag or c:GetFlagEffect(100419036)==0)
 end
 function c100419036.effop(e,tp,eg,ep,ev,re,r,rp)
@@ -44,7 +44,7 @@ function c100419036.effop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100419036.thfilter(c)
-	return c:IsSetCard(0x207) and c:IsAbleToHand()
+	return c:IsSetCard(0x109) and c:IsAbleToHand()
 end
 function c100419036.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gc=e:GetLabelObject()

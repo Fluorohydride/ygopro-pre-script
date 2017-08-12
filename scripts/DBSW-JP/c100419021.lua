@@ -7,7 +7,7 @@ function c100419021.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x206))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x108))
 	e1:SetTargetRange(LOCATION_HAND,0)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -39,7 +39,7 @@ function c100419021.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetColumnGroup():IsContains(re:GetHandler())
 end
 function c100419021.filter(c)
-	return c:IsSetCard(0x206) and c:IsAbleToDeck()
+	return c:IsSetCard(0x108) and c:IsAbleToDeck()
 end
 function c100419021.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100419021.filter(chkc) end

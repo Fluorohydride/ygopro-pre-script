@@ -34,13 +34,13 @@ function c100419031.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100419031.tfcfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0x207) and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0x109) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100419031.tfcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100419031.tfcfilter,1,e:GetHandler(),tp)
 end
 function c100419031.tffilter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x207) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x109) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c100419031.tftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100419031.tffilter(chkc,tp) end
@@ -67,7 +67,7 @@ function c100419031.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if c:IsReason(REASON_COST) and rc:IsSetCard(0x207) then
+	if c:IsReason(REASON_COST) and rc:IsSetCard(0x109) then
 		e:SetLabel(Duel.GetTurnCount()+1)
 		c:RegisterFlagEffect(100419031,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,2)
 	end

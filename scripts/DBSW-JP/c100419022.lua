@@ -20,7 +20,7 @@ function c100419022.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x206))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x108))
 	e3:SetTargetRange(LOCATION_HAND,0)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
@@ -56,7 +56,7 @@ function c100419022.initial_effect(c)
 	c:RegisterEffect(e8)
 end
 function c100419022.otfilter(c,tp)
-	return c:IsSetCard(0x206) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(0x108) and (c:IsControler(tp) or c:IsFaceup())
 end
 function c100419022.otcon(e,c,minc)
 	if c==nil then return true end
@@ -71,13 +71,13 @@ function c100419022.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(sg, REASON_SUMMON+REASON_MATERIAL)
 end
 function c100419022.regop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x206) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(0x108) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local val=e:GetLabelObject():GetLabel()
 		e:GetLabelObject():SetLabel(val+1)
 	end
 end
 function c100419022.regop2(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x206) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(0x108) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local val=e:GetLabelObject():GetLabel()
 		if val==0 then val=1 end
 		e:GetLabelObject():SetLabel(val-1)

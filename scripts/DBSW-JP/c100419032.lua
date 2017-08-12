@@ -37,7 +37,7 @@ function c100419032.gspcfilter(c,tp)
 		and Duel.IsExistingMatchingCard(c100419032.gspfilter,tp,LOCATION_HAND,0,1,nil,c,tp)
 end
 function c100419032.gspfilter(c,cc,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x207)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x109)
 		and not c:IsForbidden() and c:CheckUniqueOnField(tp,LOCATION_ONFIELD,cc)
 end
 function c100419032.gspcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -69,7 +69,7 @@ function c100419032.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if c:IsReason(REASON_COST) and rc:IsSetCard(0x207) then
+	if c:IsReason(REASON_COST) and rc:IsSetCard(0x109) then
 		e:SetLabel(Duel.GetTurnCount()+1)
 		c:RegisterFlagEffect(100419032,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,2)
 	end

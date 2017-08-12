@@ -16,7 +16,7 @@ function c100419024.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100419024.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x206)
+	return c:IsFaceup() and c:IsSetCard(0x108)
 end
 function c100419024.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100419024.cfilter,tp,LOCATION_MZONE,0,1,nil)
