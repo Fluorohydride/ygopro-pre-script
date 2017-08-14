@@ -54,7 +54,7 @@ function c101003058.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
 end
 function c101003058.spfilter(c,e,tp)
-	return (c:IsCode(14553285,45462639,22923081,8034697,43930492,83269557,6061630,10239627,84055227,21051146,55424270,73752131,88901771,46363422,65338781,70791313,73665146) or (c.spell_counter_permit and c.spell_counter_permit>=2))
+	return (c:IsCode(14553285,45462639,22923081,8034697,43930492,83269557,6061630,10239627,84055227,21051146,55424270,73752131,88901771,46363422,65338781,70791313,73665146,2525268,71413901,5640330,62154416) or (c.spell_counter_permit and c.spell_counter_permit>=2))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101003058.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
