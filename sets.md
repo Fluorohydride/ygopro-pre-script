@@ -5,6 +5,7 @@
 - **August 11, 2017** : Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX`
 - **September 9, 2017** : EXTRA PACK 2017 (EP17-JP) : `100420XXX`
 - **September 23, 2017** : Structure Deck R: Surge of Divine Light (SR05-JP) : `100305XXX`
+- **October 14, 2017** : EXTREME FORCE (EXFO-JP) : `101003XXX`
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
