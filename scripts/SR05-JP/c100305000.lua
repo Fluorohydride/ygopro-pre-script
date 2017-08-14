@@ -4,6 +4,8 @@
 function c100305000.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100305000,0))
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -16,16 +18,15 @@ function c100305000.cfilter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToRemoveAsCost()
 end
 function c100305000.filter(c)
-	return c:IsLevelBelow(2) and c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT) 
-		and not c:IsCode(100305000) and c:IsAbleToHand()
+	return c:IsLevelBelow(2) and c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT) and not c:IsCode(100305000) and c:IsAbleToHand()
 end
 function c100305000.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100305000.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler())
 		and Duel.IsExistingMatchingCard(c100305000.filter,tp,LOCATION_DECK,0,1,nil) end
 	local dg=Duel.GetMatchingGroup(c100305000.filter,tp,LOCATION_DECK,0,nil)
-	local dc=math.min(2,dg:GetClassCount(Card.GetCode))
+	local ct=math.min(2,dg:GetClassCount(Card.GetCode))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,c100305000.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,e:GetHandler())
+	local rg=Duel.SelectMatchingCard(tp,c100305000.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,ct,e:GetHandler())
 	local rc=Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	Duel.SetTargetParam(rc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,rc,tp,LOCATION_DECK)

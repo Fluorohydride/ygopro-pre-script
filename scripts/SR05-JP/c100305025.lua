@@ -15,7 +15,7 @@ function c100305025.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE+LOCATION_GRAVE)
 	e2:SetValue(56433456)
 	c:RegisterEffect(e2)
-	--stats boost
+	--atk/def
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
@@ -27,9 +27,10 @@ function c100305025.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
-	--cannot be target/effect indestructable
+	--cannot be target/indestructable
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e5:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
@@ -54,7 +55,7 @@ function c100305025.tdfilter(c,e)
 	return (c:IsRace(RACE_FAIRY) or c:IsType(TYPE_COUNTER)) and c:IsAbleToDeck() and (not e or c:IsCanBeEffectTarget(e))
 end
 function c100305025.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100305025.tdfilter(chkc) end
+	if chkc then return false end
 	local g=Duel.GetMatchingGroup(c100305025.tdfilter,tp,LOCATION_GRAVE,0,nil,e)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>=3 end
 	local tg=Group.CreateGroup()

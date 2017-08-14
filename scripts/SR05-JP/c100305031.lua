@@ -4,7 +4,7 @@
 function c100305031.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(c100305031.condition)
@@ -43,14 +43,11 @@ end
 function c100305031.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.NegateActivation(ev) then return end
 	if re:GetHandler():IsRelateToEffect(re) and Duel.SendtoDeck(eg,nil,2,REASON_EFFECT)~=0 then
-		local l1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		local l2=Duel.GetLocationCountFromEx(tp)>0
-		if not l1 and not l2 then return end
 		local loc=0
-		if l1 then loc=bit.bor(loc,LOCATION_DECK) end
-		if l2 then loc=bit.bor(loc,LOCATION_EXTRA) end
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
+		if Duel.GetLocationCountFromEx(tp)>0 then loc=loc+LOCATION_EXTRA end
 		local g=Duel.GetMatchingGroup(c100305031.spfilter,tp,loc,0,nil,e,tp)
-		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100305031,0)) then
+		if loc==0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100305031,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)
