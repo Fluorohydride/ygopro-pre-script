@@ -40,7 +40,7 @@ function c101003027.initial_effect(c)
 	e4:SetCondition(c101003027.incon)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
-	--banish & boost
+	--remove
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(101003027,1))
 	e5:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_REMOVE)
@@ -57,7 +57,7 @@ function c101003027.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
 end
 function c101003027.thfilter(c)
-	return (c:IsSetCard(0x209) or c:IsCode(55424270)) and c:IsLevelBelow(7) 
+	return (c:IsSetCard(0x209) or c:IsCode(55424270)) and c:IsLevelBelow(7)
 		and c:IsType(TYPE_EFFECT) and c:IsAbleToHand()
 end
 function c101003027.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -91,7 +91,7 @@ function c101003027.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RemoveCounter(tp,1,0,0x1,4,REASON_COST)
 end
 function c101003027.rmfilter(c)
-	return c:IsFaceup() and c:IsAbleToRemove() and c:GetBaseAttack()>0
+	return c:IsAbleToRemove()
 end
 function c101003027.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c101003027.rmfilter(chkc) end
