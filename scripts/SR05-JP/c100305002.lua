@@ -28,10 +28,13 @@ function c100305002.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not rc then return end
 	local cc=rc:GetCode()
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100305002.thfilter),tp,LOCATION_GRAVE,0,nil,cc)
-	if Duel.IsEnvironment(56433456) and g:GetCount()>0 then
+	if (Duel.IsExistingMatchingCard(c100305002.envfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or Duel.IsEnvironment(56433456)) and g:GetCount()>0 then
 		Duel.Hint(HINT_CARD,0,100305002)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	end
+end
+function c100305002.envfilter(c)
+	return c:IsFaceup() and c:IsCode(56433456)
 end
