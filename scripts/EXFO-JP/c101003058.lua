@@ -42,7 +42,11 @@ end
 function c101003058.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		tc:AddCounter(0x1,2)
+		if tc:IsCanAddCounter(0x1,2) and Duel.SelectYesNo(tp,aux.Stringid(101003058,0)) then
+			tc:AddCounter(0x1,2)
+		else
+			tc:AddCounter(0x1,1)
+		end
 	end
 end
 function c101003058.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -62,6 +66,10 @@ function c101003058.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c101003058.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		tc:AddCounter(0x1,2)
+		if tc:IsCanAddCounter(0x1,2) and Duel.SelectYesNo(tp,aux.Stringid(101003058,0)) then
+			tc:AddCounter(0x1,2)
+		else
+			tc:AddCounter(0x1,1)
+		end
 	end
 end
