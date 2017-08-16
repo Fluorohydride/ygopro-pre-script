@@ -59,7 +59,7 @@ function c101003006.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function c101003006.cfilter(c,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()==tp
+	return c:IsFaceup() and c:GetSummonPlayer()==tp and c:IsSummonType(SUMMON_TYPE_LINK)
 end
 function c101003006.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101003006.cfilter,1,nil,tp)

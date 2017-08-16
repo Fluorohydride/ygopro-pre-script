@@ -25,7 +25,22 @@ function c100305031.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.CheckLPCost(tp,1000) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local cg=Duel.SelectMatchingCard(tp,c100305031.cfilter,tp,LOCATION_HAND,0,1,1,nil)
+	local tc=g:GetFirst()
 	Duel.ConfirmCards(1-tp,cg)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_PUBLIC)
+	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_CHAIN)
+	tc:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_CHAIN_SOLVED)
+	e2:SetRange(LOCATION_HAND)
+	e2:SetOperation(c100305031.clearop)
+	e2:SetReset(RESET_EVENT+0x1fe0000+RESET_CHAIN)
+	e2:SetLabel(Duel.GetCurrentChain())
+	e2:SetLabelObject(e1)
+	tc:RegisterEffect(e2)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 	Duel.PayLPCost(tp,1000)
 end
@@ -41,17 +56,25 @@ function c100305031.spfilter(c,e,tp)
 	return c:IsSetCard(0x208) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100305031.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.NegateActivation(ev) then return end
-	if re:GetHandler():IsRelateToEffect(re) and Duel.SendtoDeck(eg,nil,2,REASON_EFFECT)~=0 then
-		local loc=0
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
-		if Duel.GetLocationCountFromEx(tp)>0 then loc=loc+LOCATION_EXTRA end
-		local g=Duel.GetMatchingGroup(c100305031.spfilter,tp,loc,0,nil,e,tp)
-		if loc==0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100305031,0)) then
-			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=g:Select(tp,1,1,nil)
-			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+	local ec=re:GetHandler()
+	if Duel.NegateActivation(ev) and ec:IsRelateToEffect(re) then
+		ec:CancelToGrave()
+		if Duel.SendtoDeck(ec,nil,2,REASON_EFFECT)~=0 and ec:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+			local loc=0
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
+			if Duel.GetLocationCountFromEx(tp)>0 then loc=loc+LOCATION_EXTRA end
+			local g=Duel.GetMatchingGroup(c100305031.spfilter,tp,loc,0,nil,e,tp)
+			if loc~=0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100305031,0)) then
+				Duel.BreakEffect()
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+				local sg=g:Select(tp,1,1,nil)
+				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+			end
 		end
 	end
+end
+function c100305031.clearop(e,tp,eg,ep,ev,re,r,rp)
+	if ev~=e:GetLabel() then return end
+	e:GetLabelObject():Reset()
+	e:Reset()
 end
