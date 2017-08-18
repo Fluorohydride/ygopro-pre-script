@@ -21,7 +21,8 @@ function c100305031.cfilter(c)
 end
 function c100305031.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100305031.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler())
-		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler())
+		and (Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler())
+		or Duel.IsPlayerAffectedByEffect(tp,EFFECT_DISCARD_COST_CHANGE))
 		and Duel.CheckLPCost(tp,1000) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local cg=Duel.SelectMatchingCard(tp,c100305031.cfilter,tp,LOCATION_HAND,0,1,1,nil)
@@ -41,7 +42,9 @@ function c100305031.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e2:SetLabel(Duel.GetCurrentChain())
 	e2:SetLabelObject(e1)
 	tc:RegisterEffect(e2)
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	if not Duel.IsPlayerAffectedByEffect(tp,EFFECT_DISCARD_COST_CHANGE) then
+		Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	end
 	Duel.PayLPCost(tp,1000)
 end
 function c100305031.target(e,tp,eg,ep,ev,re,r,rp,chk)
