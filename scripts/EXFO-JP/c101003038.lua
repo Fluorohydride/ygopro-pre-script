@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c101003038.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_CYBERS),2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_CYBERSE),2)
 	--lock zones
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101003038,0))
