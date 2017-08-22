@@ -44,13 +44,14 @@ function c100200137.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c100200137.filter(c)
+function c100200137.filter(c,mc)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x3d) and c:IsAbleToRemoveAsCost()
+		and not (c:GetLevel()==mc:GetLevel() and c:IsAttribute(mc:GetAttribute()) and c:GetAttack()==mc:GetAttack() and c:GetDefense()==mc:GetDefense())
 end
 function c100200137.cost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100200137.filter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100200137.filter,tp,LOCATION_GRAVE,0,1,nil,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c100200137.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100200137.filter,tp,LOCATION_GRAVE,0,1,1,nil,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	e:SetLabelObject(g:GetFirst())
 end
@@ -69,7 +70,7 @@ function c100200137.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
-		e2:SetCode(EFFECT_CHANGE_RACE)
+		e2:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e2:SetValue(att)
 		c:RegisterEffect(e2)
 		local e3=e1:Clone()
