@@ -69,6 +69,7 @@ function c100305025.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,tg:GetCount(),0,0)
 end
 function c100305025.tdop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if tg:GetCount()==0 then return end
 	local ct=Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)

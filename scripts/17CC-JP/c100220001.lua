@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c100220001.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2,2)
 	c:EnableReviveLimit()
 	--atk
 	local e1=Effect.CreateEffect(c)
@@ -31,7 +31,7 @@ function c100220001.atkval(e,c)
 	return c:GetLinkedGroupCount()*500
 end
 function c100220001.incon(e)
-	return c:GetLinkedGroupCount()>0
+	return e:GetHandler():GetLinkedGroupCount()>0
 end
 function c100220001.inval(e,re,r,rp)
 	return rp~=e:GetHandlerPlayer()
