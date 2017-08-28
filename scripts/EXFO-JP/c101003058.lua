@@ -1,7 +1,6 @@
 --魔導加速
 --Magical Boost
 --Scripted by Eerie Code
---Prototype, will require either a core update or a script overhaul
 function c101003058.initial_effect(c)
 	--counter
 	local e1=Effect.CreateEffect(c)
