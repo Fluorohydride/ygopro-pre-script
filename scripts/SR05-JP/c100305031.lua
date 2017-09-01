@@ -26,7 +26,7 @@ function c100305031.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.CheckLPCost(tp,1000) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local cg=Duel.SelectMatchingCard(tp,c100305031.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	local tc=g:GetFirst()
+	local tc=cg:GetFirst()
 	Duel.ConfirmCards(1-tp,cg)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
