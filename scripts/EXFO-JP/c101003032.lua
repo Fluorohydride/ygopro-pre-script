@@ -48,7 +48,7 @@ function c101003032.initial_effect(c)
 	e6:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetTargetRange(1,1)
-	e6:SetCondition(c101003032.indcon)
+	e6:SetCondition(c101003032.actcon)
 	e6:SetValue(c101003032.aclimit)
 	c:RegisterEffect(e6)
 end
