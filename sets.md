@@ -3,8 +3,6 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **August 11, 2017** : Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX`
-- **September 9, 2017** : EXTRA PACK 2017 (EP17-JP) : `100420XXX`
-- **September 9, 2017** : Link Monster GET!! Campaign (17CC-JP) : `100220XXX`
 - **September 23, 2017** : Structure Deck R: Surge of Divine Light (SR05-JP) : `100305XXX`
 - **October 7, 2017** : Promotion Pack 2017 (17PR-JP) : `100230XXX`
 - **October 14, 2017** : EXTREME FORCE (EXFO-JP) : `101003XXX`
@@ -55,3 +53,5 @@
 - ~~Circuit Break (CIBR-JP) : `101002XXX`~~
 - ~~Jump Victory Carnival 2017 (VF17-JP) : `100230XXX`~~
 - ~~Code of the Duelist (COTD-EN) : `101001XXX`~~
+- ~~EXTRA PACK 2017 (EP17-JP) : `100420XXX`~~
+- ~~Link Monster GET!! Campaign (17CC-JP) : `100220XXX`~~
