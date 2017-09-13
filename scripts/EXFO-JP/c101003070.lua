@@ -71,7 +71,7 @@ function c101003070.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101003070.thfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSetCard(0x10.) and c:IsAbleToHand()
+	return c:IsType(TYPE_TRAP) and c:IsSetCard(0x103) and c:IsAbleToHand()
 end
 function c101003070.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101003070.thfilter(chkc) end
