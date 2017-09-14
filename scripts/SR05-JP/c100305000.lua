@@ -42,4 +42,5 @@ function c100305000.thop(e,tp,eg,ep,ev,re,r,rp)
 		dg:Remove(Card.IsCode,nil,tc:GetCode())
 	end
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
+	Duel.ConfirmCards(1-tp,g)
 end
