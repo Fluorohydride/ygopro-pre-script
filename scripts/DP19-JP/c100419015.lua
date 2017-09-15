@@ -38,7 +38,7 @@ function c100419015.initial_effect(c)
 	e3:SetOperation(c100419015.thop)
 	c:RegisterEffect(e3)
 end
-c100419015.coin_toss=true
+c100419015.toss_coin=true
 function c100419015.filter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(0x10db) and c:GetPreviousControler()==tp
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
