@@ -1,5 +1,5 @@
 --ミレニアム・アイズ・サクリファイス
--- Millennium-Eyes Restrict
+--Millennium-Eyes Restrict
 function c100419003.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
@@ -8,14 +8,15 @@ function c100419003.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100419003,0))
 	e1:SetCategory(CATEGORY_EQUIP)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_CHAINING)
+	e1:SetCountLimit(1)
 	e1:SetCondition(c100419003.eqcon)
 	e1:SetTarget(c100419003.eqtg)
 	e1:SetOperation(c100419003.eqop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -28,7 +29,7 @@ function c100419003.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	e3:SetValue(c100419003.defval)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 	--disable
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -50,15 +51,13 @@ function c100419003.CanEquipMonster(c)
 	return true
 end
 function c100419003.eqcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ph=Duel.GetCurrentPhase()
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
-		and re:IsActiveType(TYPE_MONSTER)
+	return ep~=tp and re:IsActiveType(TYPE_MONSTER)
 end
 function c100419003.eqfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToChangeControler()
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsType(TYPE_EFFECT) and c:IsAbleToChangeControler()
 end
 function c100419003.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToChangeControler() end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(1-tp) and c100419003.eqfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(c100419003.eqfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
@@ -78,7 +77,7 @@ function c100419003.EquipMonster(c,tp,tc)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetReset(RESET_EVENT+0x1fe0000)
 	e1:SetValue(c100419003.eqlimit)
-	tc:RegisterEffect(e1)		
+	tc:RegisterEffect(e1)
 end
 function c100419003.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -88,7 +87,7 @@ function c100419003.eqop(e,tp,eg,ep,ev,re,r,rp)
 			c100419003.EquipMonster(c,tp,tc)
 		else Duel.SendtoGrave(tc,REASON_EFFECT) end
 	end
-end	
+end
 function c100419003.atkval(e,c)
 	local atk=0
 	local g=c:GetEquipGroup()
@@ -113,10 +112,10 @@ function c100419003.defval(e,c)
 	end
 	return atk
 end
-function c100419003.disfilter(c,code)
-	return c:IsFaceup() and c:GetFlagEffect(100419003)~=0 and c:IsCode(code)
+function c100419003.disfilter(c)
+	return c:IsFaceup() and c:GetFlagEffect(100419003)~=0
 end
 function c100419003.distg(e,c)
-	local g=e:GetHandler():GetEquipGroup():Filter(c100419003.disfilter,nil,c:GetCode())
-	return c:IsFaceUp() and g:GetCount()>0
+	local g=e:GetHandler():GetEquipGroup():Filter(c100419003.disfilter,nil)
+	return c:IsFaceup() and g:IsExists(Card.IsCode,1,nil,c:GetCode())
 end

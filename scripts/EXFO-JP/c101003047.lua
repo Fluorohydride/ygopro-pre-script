@@ -35,7 +35,7 @@ function c101003047.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101003047.dircon(e)
-	return Duel.GetFieldGroupCount(Card.IsOnSameColumn,e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e:GetHandler(),true)==0
+	return e:GetHandler():GetColumnGroupCount()==0
 end
 function c101003047.indcon(e)
 	local c=e:GetHandler()
@@ -49,9 +49,10 @@ function c101003047.spfilter(c,e,tp)
 end
 function c101003047.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local loc=LOCATION_ONFIELD
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then loc=LOCATION_MZONE end
-	if chk==0 then return Duel.IsExistingMatchingCard(c101003047.spcfilter,tp,loc,0,1,c,c) end
+	if ft<=0 then loc=LOCATION_MZONE end
+	if chk==0 then return ft>-1 and Duel.IsExistingMatchingCard(c101003047.spcfilter,tp,loc,0,1,c,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101003047.spcfilter,tp,loc,0,1,1,c,c)
 	Duel.SendtoGrave(g,REASON_COST)
@@ -64,5 +65,7 @@ function c101003047.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101003047.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	if g:GetCount()>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	end
 end

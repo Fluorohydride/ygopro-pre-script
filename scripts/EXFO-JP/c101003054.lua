@@ -56,8 +56,8 @@ end
 function c101003054.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
 		and Duel.IsExistingMatchingCard(c101003054.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c101003054.cfilter,1,1,REASON_COST+REASON_DISCARD)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	Duel.DiscardHand(tp,c101003054.cfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c101003054.filter(c)
 	return c:IsCode(101003054) and c:IsAbleToHand()

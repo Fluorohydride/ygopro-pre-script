@@ -1,4 +1,4 @@
---魔玩具融合
+--サクリファイス・フュージョン
 --Relinquished Fusion
 function c100419004.initial_effect(c)
 	--Activate
@@ -9,10 +9,12 @@ function c100419004.initial_effect(c)
 	e1:SetTarget(c100419004.target)
 	e1:SetOperation(c100419004.activate)
 	c:RegisterEffect(e1)
-	--indes
+	--equip
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(81994591,1))
+	e2:SetDescription(aux.Stringid(100419004,0))
+	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(c100419004.eqcost)
 	e2:SetTarget(c100419004.eqtg)
@@ -34,7 +36,7 @@ function c100419004.filter3(c)
 end
 function c100419004.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
+		local chkf=tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(c100419004.filter0,nil)
 		local mg2=Duel.GetMatchingGroup(c100419004.filter3,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,nil)
 		mg1:Merge(mg2)
@@ -53,7 +55,7 @@ function c100419004.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100419004.activate(e,tp,eg,ep,ev,re,r,rp)
-	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
+	local chkf=tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c100419004.filter1,nil,e)
 	local mg2=Duel.GetMatchingGroup(c100419004.filter3,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,nil)
 	mg1:Merge(mg2)
@@ -92,26 +94,28 @@ function c100419004.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c100419004.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and Duel.IsExistingMatchingCard(c100419004.eqfilter,tp,LOCATION_MZONE,0,1,nil)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
 function c100419004.eqfilter(c)
 	local m=_G["c"..c:GetCode()]
 	return c:IsFaceup() and (c:IsSetCard(0x20a) or c:IsCode(64631466)) and m.CanEquipMonster(c)
 end
 function c100419004.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and c100419004.filter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.IsExistingTarget(c100419004.filter,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c100419004.filter,tp,0,LOCATION_MZONE,1,1,e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100419004.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100419004.filter,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(c100419004.eqfilter,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+	local g=Duel.SelectTarget(tp,c100419004.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function c100419004.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	local g=Duel.SelectMatchingCard(tp,c100419004.eqfilter,tp,LOCATION_MZONE,0,1,1,nil,tc)
+	local tc1=Duel.GetFirstTarget()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local g=Duel.SelectMatchingCard(tp,c100419004.eqfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	local tc2=g:GetFirst()
 	local m=_G["c"..tc2:GetCode()]
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp) then
-		m.EquipMonster(tc2,tp,tc)
+	if tc1:IsFaceup() and tc1:IsRelateToEffect(e) and tc1:IsControler(1-tp) and tc2 then
+		m.EquipMonster(tc2,tp,tc1)
 	end
 end

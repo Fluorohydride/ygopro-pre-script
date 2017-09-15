@@ -19,7 +19,7 @@ function c101003020.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-  e2:SetRange(LOCATION_MZONE)
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101003020+100)
 	e2:SetTarget(c101003020.thtg)
 	e2:SetOperation(c101003020.thop)
@@ -29,7 +29,7 @@ function c101003020.cfilter(c,tp,seq)
 	local s=c:GetSequence()
 	if c:IsLocation(LOCATION_SZONE) and s==5 then return false end
 	if c:IsControler(tp) then
-		return s==seq or (seq==1 and s==5) or (seq==3 and s==6)		
+		return s==seq or (seq==1 and s==5) or (seq==3 and s==6)
 	else
 		return s==4-seq or (seq==1 and s==6) or (seq==3 and s==5)
 	end
@@ -58,8 +58,7 @@ function c101003020.rmfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x20c) and c:IsAbleToRemove()
 end
 function c101003020.thfilter(c)
-	return c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER) 
-		and not c:IsCode(101003020) and c:IsAbleToHand()
+	return c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER) and not c:IsCode(101003020) and c:IsAbleToHand()
 end
 function c101003020.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101003020.rmfilter(chkc) end
@@ -72,15 +71,26 @@ function c101003020.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101003020.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0
+		and tc:IsLocation(LOCATION_REMOVED) then
+		local ct=1
+		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then ct=2 end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetLabelObject(c)
+		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetLabelObject(tc)
 		e1:SetCountLimit(1)
+		e1:SetCondition(c101003020.retcon)
 		e1:SetOperation(c101003020.retop)
+		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
+			e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)
+			e1:SetValue(Duel.GetTurnCount())
+		else
+			e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+			e1:SetValue(0)
+		end
 		Duel.RegisterEffect(e1,tp)
+		tc:RegisterFlagEffect(101003020,RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,ct)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c101003020.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if g:GetCount()>0 then
@@ -88,4 +98,12 @@ function c101003020.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,g)
 		end
 	end
+end
+function c101003020.retcon(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetTurnPlayer()~=tp or Duel.GetTurnCount()==e:GetValue() then return false end
+	return e:GetLabelObject():GetFlagEffect(101003020)~=0
+end
+function c101003020.retop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	Duel.ReturnToField(tc)
 end

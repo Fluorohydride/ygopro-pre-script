@@ -14,7 +14,7 @@ function c101003016.initial_effect(c)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(34325937,0))
+	e2:SetDescription(aux.Stringid(101003016,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_LEAVE_FIELD)
@@ -29,7 +29,7 @@ function c101003016.cfilter(c,tp,seq)
 	local s=c:GetSequence()
 	if c:IsLocation(LOCATION_SZONE) and s==5 then return false end
 	if c:IsControler(tp) then
-		return s==seq or (seq==1 and s==5) or (seq==3 and s==6)		
+		return s==seq or (seq==1 and s==5) or (seq==3 and s==6)
 	else
 		return s==4-seq or (seq==1 and s==6) or (seq==3 and s==5)
 	end

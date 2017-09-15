@@ -45,7 +45,7 @@ function c101003055.atkcon(e)
 	return Duel.IsExistingMatchingCard(c101003055.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,3,nil)
 end
 function c101003055.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp
+	return Duel.GetTurnPlayer()==tp
 end
 function c101003055.ctfilter(c)
 	return c:IsSetCard(0x20b) and c:IsAbleToChangeControler()
@@ -70,8 +70,8 @@ end
 function c101003055.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
 		and Duel.IsExistingMatchingCard(c101003055.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c101003055.cfilter,1,1,REASON_COST+REASON_DISCARD)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	Duel.DiscardHand(tp,c101003055.cfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c101003055.filter(c)
 	return c:IsCode(101003055) and c:IsAbleToHand()
