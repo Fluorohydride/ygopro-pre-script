@@ -6,7 +6,8 @@ function c100200138.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100200138,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,100200138)
 	e1:SetTarget(c100200138.thtg)
 	e1:SetOperation(c100200138.thop)
@@ -34,7 +35,7 @@ function c100200138.thfilter(c)
 	return c:IsSetCard(0xed) and not c:IsCode(100200138) and c:IsAbleToHand()
 end
 function c100200138.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100200138.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100200138.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -49,10 +50,10 @@ function c100200138.setcfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xed)
 end
 function c100200138.setcon1(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c100200138.setcfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(c100200138.setcfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function c100200138.setcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100200138.setcfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(c100200138.setcfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function c100200138.setfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
