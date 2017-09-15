@@ -32,7 +32,7 @@ function c101003014.cfilter(c,tp,seq)
 	local s=c:GetSequence()
 	if c:IsLocation(LOCATION_SZONE) and s==5 then return false end
 	if c:IsControler(tp) then
-		return s==seq or (seq==1 and s==5) or (seq==3 and s==6)		
+		return s==seq or (seq==1 and s==5) or (seq==3 and s==6)
 	else
 		return s==4-seq or (seq==1 and s==6) or (seq==3 and s==5)
 	end
@@ -58,7 +58,7 @@ function c101003014.spval(e,c)
 	return 0,zone
 end
 function c101003014.thfilter(c)
-	return c:IsSetCard(0x20c) and not c:IsCode(101003014) and c:IsAbleToHand()
+	return c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER) and not c:IsCode(101003014) and c:IsAbleToHand()
 end
 function c101003014.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101003014.thfilter,tp,LOCATION_DECK,0,nil)

@@ -89,7 +89,7 @@ function c100419007.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or rc~=tc then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(c100419007.disfilter,1,nil)	and Duel.IsChainNegatable(ev)
+	return g and g:IsExists(c100419007.disfilter,1,nil) and Duel.IsChainNegatable(ev)
 end
 function c100419007.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
@@ -98,7 +98,7 @@ function c100419007.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE)
 end
 function c100419007.spfilter(c,e,tp)
-	return c:IsRace(RACE_INSECT) and c:IsLevelAbove(7) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsRace(RACE_INSECT) and c:IsLevelAbove(7) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100419007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

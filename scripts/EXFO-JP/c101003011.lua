@@ -1,4 +1,4 @@
---ティンダングル・ハウンド 
+--ティンダングル・ハウンド
 --Tindangle Hound
 function c101003011.initial_effect(c)
 	--flip
@@ -24,13 +24,14 @@ function c101003011.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCategory(CATEGORY_POSITION)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCode(EVENT_DESTROYED)
+	e3:SetCode(EVENT_TO_GRAVE)
+	e3:SetCondition(c101003011.poscon)
 	e3:SetTarget(c101003011.postg)
 	e3:SetOperation(c101003011.posop)
 	c:RegisterEffect(e3)
 end
 function c101003011.filter(c)
-	return c:IsFaceup() and c:IsCanTurnSet()
+	return c:IsFaceup() and c:IsCanTurnSet() and c:GetBaseAttack()>0
 end
 function c101003011.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101003011.filter(chkc) end
@@ -47,13 +48,17 @@ function c101003011.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT+0x1ff0000)
 		c:RegisterEffect(e1)
 		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
 	end
 end
 function c101003011.val(e,c)
 	return c:GetLinkedGroupCount()*-1000
+end
+function c101003011.poscon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function c101003011.posfilter(c)
 	return c:IsFacedown() and c:IsCanChangePosition()

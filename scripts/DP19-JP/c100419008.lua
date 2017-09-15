@@ -2,7 +2,7 @@
 --Ultimately Mutated Insect Queen
 --Scripted by Eerie Code
 function c100419008.initial_effect(c)
-	c:EnableReviveLimit()
+	c:EnableUnsummonable()
 	--cannot special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -53,7 +53,7 @@ function c100419008.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100419008.splimit(e,se,sp,st)
-	return se
+	return se:IsHasType(EFFECT_TYPE_ACTIONS)
 end
 function c100419008.indfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT)
@@ -94,5 +94,5 @@ function c100419008.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,91512836,0,0x4011,100,100,1,RACE_INSECT,ATTRIBUTE_EARTH) then return end
 	local token=Duel.CreateToken(tp,91512836)
-	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 end

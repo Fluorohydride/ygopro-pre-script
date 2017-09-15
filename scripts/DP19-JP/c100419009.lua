@@ -27,10 +27,10 @@ function c100419009.cfilter(c)
 		and c:GetEquipCount()>0
 end
 function c100419009.filter(c,e,tp)
-	return c:IsRace(RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsRace(RACE_INSECT) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100419009.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 		local loc=LOCATION_MZONE
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then loc=0 end
 		return Duel.IsExistingMatchingCard(c100419009.cfilter,tp,LOCATION_MZONE,loc,1,nil)
@@ -57,14 +57,17 @@ function c100419009.tdfilter(c)
 end
 function c100419009.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100419009.tdfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100419009.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c100419009.tdfilter,tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c100419009.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c100419009.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and	Duel.SendtoDeck(tc,nil,2,REASON_EFFECT) then
+	if tc:IsRelateToEffect(e) and	Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
+		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

@@ -5,8 +5,9 @@ function c101003010.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
 	e1:SetRange(LOCATION_HAND)
+	e1:SetTargetRange(POS_FACEUP_DEFENSE,0)
 	e1:SetCountLimit(1,101003010)
 	e1:SetCondition(c101003010.condition)
 	c:RegisterEffect(e1)
@@ -45,7 +46,7 @@ function c101003010.lkfilter(c)
 end
 function c101003010.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local zone=0
-	local lg=Duel.GetMatchingGroup(c101003010.lkfilter,tp,LOCATION_MZONE,0,nil)
+	local lg=Duel.GetMatchingGroup(c101003010.lkfilter,tp,0,LOCATION_MZONE,nil)
 	for tc in aux.Next(lg) do
 		zone=bit.bor(zone,tc:GetLinkedZone())
 	end
@@ -56,7 +57,7 @@ function c101003010.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c101003010.spfilter(c,e,tp)
-	return c:IsSetCard(0x20b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x20b) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
 end
 function c101003010.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
@@ -67,7 +68,14 @@ function c101003010.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101003010.spfilter),tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp)
-	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+	local tc=g:GetFirst()
+	if tc then
+		local spos=0
+		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) then spos=spos+POS_FACEUP_ATTACK end
+		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then spos=spos+POS_FACEDOWN_DEFENSE end
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,spos)
+		if tc:IsFacedown() then
+			Duel.ConfirmCards(1-tp,tc)
+		end
 	end
 end
