@@ -9,9 +9,8 @@ function c100221001.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 	e1:SetTargetRange(1,0)
-	e1:SetCondition(c100221001.psplimcon)
 	e1:SetTarget(c100221001.psplimit)
 	c:RegisterEffect(e1)
 	--special summon
@@ -72,9 +71,6 @@ function c100221001.initial_effect(c)
 	e8:SetOperation(c100221001.tdop)
 	c:RegisterEffect(e8)
 end
-function c100221001.psplimcon(e)
-	return not e:GetHandler():IsForbidden()
-end
 function c100221001.psplimit(e,c,tp,sumtp,sumpos)
 	return not c:IsRace(RACE_DRAGON) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
@@ -82,12 +78,11 @@ function c100221001.spfilter(c,e,tp)
 	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100221001.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local c=e:GetHandler()
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100221001.spfilter(chkc,e,tp) end
-	if chk==0 then return c:IsDestructable() and Duel.IsExistingTarget(c100221001.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100221001.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100221001.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c100221001.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -100,30 +95,42 @@ end
 function c100221001.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM and e:GetHandler():IsLocation(LOCATION_HAND)
 end
-function c100221001.hspfilter1(c,g)
+function c100221001.hspfilter1(c,g,ft)
 	local rg=Group.FromCards(c)
-	return c:IsType(TYPE_FUSION) and g:IsExists(c100221001.hspfilter2,1,rg,g,rg)
+	local ct=ft
+	if c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then ct=ct+1 end
+	return c:IsType(TYPE_FUSION) and g:IsExists(c100221001.hspfilter2,1,rg,g,rg,ft)
 end
-function c100221001.hspfilter2(c,g,rg)
+function c100221001.hspfilter2(c,g,rg,ft)
 	local rg2=rg:Clone()
 	rg2:AddCard(c)
-	return c:IsType(TYPE_SYNCHRO) and g:IsExists(Card.IsType,1,rg2,TYPE_XYZ)
+	local ct=ft
+	if c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then ct=ct+1 end
+	return c:IsType(TYPE_SYNCHRO) and g:IsExists(c100221001.hspfilter3,1,rg2,ft)
+end
+function c100221001.hspfilter3(c,ft)
+	local ct=ft
+	if c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then ct=ct+1 end
+	return c:IsType(TYPE_XYZ) and ct>0
 end
 function c100221001.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft<-2 then return false end
 	local g=Duel.GetReleaseGroup(tp):Filter(Card.IsRace,nil,RACE_DRAGON)
-	return g:IsExists(c100221001.hspfilter1,1,nil,g)
+	return g:IsExists(c100221001.hspfilter1,1,nil,g,ft)
 end
 function c100221001.hspop(e,tp,eg,ep,ev,re,r,rp,c)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetReleaseGroup(tp):Filter(Card.IsRace,nil,RACE_DRAGON)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g1=g:FilterSelect(tp,c100221001.hspfilter1,1,1,nil,g)
+	local g1=g:FilterSelect(tp,c100221001.hspfilter1,1,1,nil,g,ft)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g2=g:FilterSelect(tp,c100221001.hspfilter2,1,1,g1,g,g1)
+	local g2=g:FilterSelect(tp,c100221001.hspfilter2,1,1,g1,g,g1,ft)
 	g1:Merge(g2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g3=g:FilterSelect(tp,Card.IsType,1,1,g1,TYPE_XYZ)
+	local g3=g:FilterSelect(tp,c100221001.hspfilter3,1,1,g1,ft)
 	g1:Merge(g3)
 	Duel.Release(g1,REASON_COST+REASON_MATERIAL)
 end

@@ -94,7 +94,7 @@ function c100419004.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c100419004.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToChangeControler()
 end
 function c100419004.eqfilter(c)
 	local m=_G["c"..c:GetCode()]

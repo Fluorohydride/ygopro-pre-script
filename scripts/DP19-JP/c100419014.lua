@@ -16,8 +16,8 @@ function c100419014.initial_effect(c)
 	--damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100419014,0))
-	e2:SetCategory(CATEGORY_TOGRAVE)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCategory(CATEGORY_DAMAGE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYED)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100419014)
@@ -36,11 +36,11 @@ end
 function c100419014.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(c100419014.desfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g1=Duel.SelectTarget(tp,c100419014.desfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g2=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
 end
@@ -54,29 +54,32 @@ end
 function c100419014.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return tc:GetPreviousControler()~=tp and tc:IsLocation(LOCATION_GRAVE) 
+	return tc:GetPreviousControler()~=tp and tc:IsLocation(LOCATION_GRAVE)
 		and bc:IsControler(tp) and bc:GetOriginalAttribute()==ATTRIBUTE_DARK and bc:GetOriginalRace()==RACE_MACHINE
 end
-function c100419014.damfilter(c,tp)
-	return c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()~=tp
+function c100419014.damfilter1(c,tp)
+	return c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()~=tp
 end
 function c100419014.damcon2(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return rc:IsControler(tp) and rc:GetOriginalAttribute()==ATTRIBUTE_DARK 
+	return rc:IsControler(tp) and rc:GetOriginalAttribute()==ATTRIBUTE_DARK
 		and rc:GetOriginalRace()==RACE_MACHINE
-		and eg:IsExists(c100419014.damfilter,1,nil,tp)
+		and eg:IsExists(c100419014.damfilter1,1,nil,tp)
 end
 function c100419014.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
+function c100419014.damfilter2(c,tp)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()~=tp
+end
 function c100419014.damop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(c100419014.damfilter,nil,e,tp)
+	local g=eg:Filter(c100419014.damfilter2,nil,tp)
 	if g:GetCount()>0 then
 		if g:GetCount()>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 			g=g:Select(tp,1,1,nil)
 		end
-		Duel.Damage(1-tp,g:GetFirst():GetBaseAttack()/2,REASON_EFFECT)
+		Duel.Damage(1-tp,math.ceil(g:GetFirst():GetBaseAttack()/2),REASON_EFFECT)
 	end
 end

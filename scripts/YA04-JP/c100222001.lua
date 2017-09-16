@@ -1,4 +1,4 @@
---白闘気双頭神龍 
+--白闘気双頭神龍
 --White Aura Biphamet
 function c100222001.initial_effect(c)
 	--synchro summon
@@ -32,7 +32,6 @@ function c100222001.initial_effect(c)
 	e3:SetDescription(aux.Stringid(100222001,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCondition(c100222001.spcon)
 	e3:SetTarget(c100222001.sptg)
@@ -67,7 +66,7 @@ function c100222001.tkop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100222001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and rp~=tp and c:IsReason(REASON_EFFECT) 
+	return c:IsReason(REASON_DESTROY) and rp~=tp and c:IsReason(REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function c100222001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -78,6 +77,6 @@ function c100222001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100222001.spop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end

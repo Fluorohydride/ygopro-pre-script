@@ -66,7 +66,7 @@ function c100419009.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100419009.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and	Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
 		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
