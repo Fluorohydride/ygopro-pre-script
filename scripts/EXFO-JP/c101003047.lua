@@ -42,7 +42,7 @@ function c101003047.indcon(e)
 	return c:GetSequence()>4 and c:GetLinkedGroupCount()==0
 end
 function c101003047.spcfilter(c,hc)
-	return c:IsOnSameColumn(hc) and c:IsAbleToGraveAsCost()
+	return c:GetColumnGroup():IsContains(hc) and c:IsAbleToGraveAsCost()
 end
 function c101003047.spfilter(c,e,tp)
 	return c:IsSetCard(0x20c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

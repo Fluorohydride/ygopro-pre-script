@@ -47,7 +47,7 @@ function c101003045.atkfilter(c)
 end
 function c101003045.atkval(e,c)
 	local lg=c:GetLinkedGroup():Filter(c101003045.atkfilter,nil)
-	return lg::GetCount()*600
+	return lg:GetCount()*600
 end
 function c101003045.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.gbspcon(e,tp,eg,ep,ev,re,r,rp)

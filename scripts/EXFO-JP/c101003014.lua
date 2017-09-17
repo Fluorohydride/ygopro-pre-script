@@ -9,8 +9,8 @@ function c101003014.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101003014)
-	e1:SetCondition(c101003014.spcon)
-	e1:SetValue(c101003014.spval)
+	e1:SetCondition(c101003014.hspcon)
+	e1:SetValue(c101003014.hspval)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
@@ -37,7 +37,7 @@ function c101003014.cfilter(c,tp,seq)
 		return s==4-seq or (seq==1 and s==6) or (seq==3 and s==5)
 	end
 end
-function c101003014.spcon(e,c)
+function c101003014.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local zone=0
@@ -48,14 +48,18 @@ function c101003014.spcon(e,c)
 	end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
-function c101003014.spval(e,c)
+function c101003014.hspval(e,c)
+	local tp=c:GetControler()
 	local zone=0
 	for i=0,4 do
-		if Duel.GetMatchingGroupCount(c101003014.cfilter,c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tp,i)>=2 then
+		if Duel.GetMatchingGroupCount(c101003014.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tp,i)>=2 then
 			zone=zone+math.pow(2,i)
 		end
 	end
 	return 0,zone
+end
+function c101003014.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function c101003014.thfilter(c)
 	return c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER) and not c:IsCode(101003014) and c:IsAbleToHand()

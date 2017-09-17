@@ -17,7 +17,7 @@ function c101003012.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
 end
-function c41114306.thfilter(c)
+function c101003012.thfilter(c)
 	return c:IsSetCard(0x20b) and c:IsAbleToHand()
 end
 function c101003012.operation(e,tp,eg,ep,ev,re,r,rp)

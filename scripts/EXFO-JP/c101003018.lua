@@ -45,9 +45,10 @@ function c101003018.hspcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function c101003018.hspval(e,c)
+	local tp=c:GetControler()
 	local zone=0
 	for i=0,4 do
-		if Duel.GetMatchingGroupCount(c101003018.cfilter,c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tp,i)>=2 then
+		if Duel.GetMatchingGroupCount(c101003018.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tp,i)>=2 then
 			zone=zone+math.pow(2,i)
 		end
 	end

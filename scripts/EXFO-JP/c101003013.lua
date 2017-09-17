@@ -36,7 +36,7 @@ function c101003013.initial_effect(c)
 	e3:SetOperation(c101003013.spop)
 	c:RegisterEffect(e3)
 end
-function c41114306.thfilter(c)
+function c101003013.thfilter(c)
 	return c:IsSetCard(0x20b) and c:IsAbleToHand()
 end
 function c101003013.target(e,tp,eg,ep,ev,re,r,rp,chk)
