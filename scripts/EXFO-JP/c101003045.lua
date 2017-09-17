@@ -1,4 +1,4 @@
---ティンダングル・アキュート・ケルベロス 
+--ティンダングル・アキュート・ケルベロス
 --Tindangle Acute Cerberus
 function c101003045.initial_effect(c)
 	c:EnableReviveLimit()
@@ -11,7 +11,7 @@ function c101003045.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(c101003045.atkcon)
 	e1:SetValue(3000)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -23,8 +23,8 @@ function c101003045.initial_effect(c)
 	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101003045,0))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
@@ -33,28 +33,25 @@ function c101003045.initial_effect(c)
 	e3:SetOperation(c101003045.spop)
 	c:RegisterEffect(e3)
 end
-function c101003045.filter(c)
-	return c:IsFaceup() and c:IsCode(101003010)
+function c101003045.cfilter(c)
+	return c:IsSetCard(0x20b) and c:IsType(TYPE_MONSTER)
 end
-function c101003045.atkcon(e,c)
-	if c==nil then return true end
-	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)<=0 then return false end
-	return Duel.GetMatchingGroup(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x20b):GetClassCount(Card.GetCode)>=3
-	and Duel.IsExistingMatchingCard(c101003045.filter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
+function c101003045.atkcon(e)
+	local g=Duel.GetMatchingGroup(c101003045.cfilter,e:GetHandler():GetControler(),LOCATION_GRAVE,0,nil)
+	return g:GetClassCount(Card.GetCode)>=3 and g:IsExists(Card.IsCode,1,nil,101003010)
 end
 function c101003045.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x20b) 
+	return c:IsFaceup() and c:IsSetCard(0x20b)
 end
 function c101003045.atkval(e,c)
-	local lg=c:GetLinkedGroup():Filter(c101003045.atkfilter,nil)
-	return lg:GetCount()*600
+	return c:GetLinkedGroup():FilterCount(c101003045.atkfilter,nil)*600
 end
 function c101003045.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.gbspcon(e,tp,eg,ep,ev,re,r,rp)
-		and e:GetHandler():GetBattledGroupCount()>0
+	return e:GetHandler():GetAttackedCount()>0
 end
 function c101003045.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,101003145,0x20b,0x4011,0,0,1,RACE_FIEND,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
