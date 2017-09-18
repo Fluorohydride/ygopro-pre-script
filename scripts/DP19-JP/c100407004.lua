@@ -28,11 +28,11 @@ function c100407004.filter1(c,e)
 	return c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
 end
 function c100407004.filter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and (not f or f(c)) and (c:IsSetCard(0x20a) or c:IsCode(63519819))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c100407004.filter3(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x20a) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove()
+	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove()
 end
 function c100407004.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -98,7 +98,7 @@ function c100407004.filter(c)
 end
 function c100407004.eqfilter(c)
 	local m=_G["c"..c:GetCode()]
-	return c:IsFaceup() and (c:IsSetCard(0x20a) or c:IsCode(64631466)) and m.CanEquipMonster(c)
+	return c:IsFaceup() and (c:IsSetCard(0x20a) or c:IsCode(64631466,63519819)) and m.CanEquipMonster(c)
 end
 function c100407004.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100407004.filter(chkc) end
