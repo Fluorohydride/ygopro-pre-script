@@ -25,42 +25,37 @@ function c101003016.initial_effect(c)
 	e2:SetOperation(c101003016.spop)
 	c:RegisterEffect(e2)
 end
-function c101003016.cfilter(c,tp,seq)
-	local s=c:GetSequence()
-	if c:IsLocation(LOCATION_SZONE) and s==5 then return false end
-	if c:IsControler(tp) then
-		return s==seq or (seq==1 and s==5) or (seq==3 and s==6)
-	else
-		return s==4-seq or (seq==1 and s==6) or (seq==3 and s==5)
-	end
+function c101003016.cfilter(c)
+	return c:GetColumnGroupCount()>0
 end
 function c101003016.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local zone=0
-	for i=0,4 do
-		if Duel.GetMatchingGroupCount(c101003016.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tp,i)>=2 then
-			zone=zone+math.pow(2,i)
-		end
+	local lg=Duel.GetMatchingGroup(c101003016.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	for tc in aux.Next(lg) do
+		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE))
 	end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function c101003016.hspval(e,c)
 	local tp=c:GetControler()
 	local zone=0
-	for i=0,4 do
-		if Duel.GetMatchingGroupCount(c101003016.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tp,i)>=2 then
-			zone=zone+math.pow(2,i)
-		end
+	local lg=Duel.GetMatchingGroup(c101003016.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	for tc in aux.Next(lg) do
+		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE))
 	end
 	return 0,zone
 end
-function c101003016.spcfilter(c,tp,seq)
-	local s=c:GetPreviousSequence()
-	return c:GetPreviousControler()~=tp and (s==4-seq or (seq==1 and s==6) or (seq==3 and s==5))
+function c101003016.spcfilter(c,tp,zone)
+	if c:GetPreviousControler()==tp or not zone then return false end
+	local seq=c:GetPreviousSequence()+16
+	return bit.extract(zone,seq)~=0
 end
 function c101003016.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101003016.spcfilter,1,nil,tp,e:GetHandler():GetSequence())
+	local c=e:GetHandler()
+	local zone=bit.bor(0,c:GetColumnZone(LOCATION_MZONE),c:GetColumnZone(LOCATION_SZONE))
+	return eg:IsExists(c101003016.spcfilter,1,nil,tp,zone)
 end
 function c101003016.filter(c,e,tp)
 	return c:IsSetCard(0x20c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
