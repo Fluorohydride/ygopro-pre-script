@@ -47,15 +47,16 @@ function c101003016.hspval(e,c)
 	end
 	return 0,zone
 end
-function c101003016.spcfilter(c,tp,zone)
-	if c:GetPreviousControler()==tp or not zone then return false end
+function c101003016.spcfilter(c,tp,mc)
+	if c:GetPreviousControler()==tp then return false end
+	local loc=LOCATION_MZONE
+	if c:IsPreviousLocation(LOCATION_SZONE) then loc=LOCATION_SZONE
+	local zone=mc:GetColumnZone(loc)
 	local seq=c:GetPreviousSequence()+16
-	return bit.extract(zone,seq)~=0
+	return zone and bit.extract(zone,seq)~=0
 end
 function c101003016.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local zone=bit.bor(0,c:GetColumnZone(LOCATION_MZONE),c:GetColumnZone(LOCATION_SZONE))
-	return eg:IsExists(c101003016.spcfilter,1,nil,tp,zone)
+	return eg:IsExists(c101003016.spcfilter,1,nil,tp,e:GetHandler())
 end
 function c101003016.filter(c,e,tp)
 	return c:IsSetCard(0x20c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
