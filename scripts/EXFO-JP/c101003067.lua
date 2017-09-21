@@ -4,7 +4,7 @@
 function c101003067.initial_effect(c)
 	--destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCondition(c101003067.condition)
@@ -18,6 +18,7 @@ function c101003067.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(c101003067.immcon)
 	e2:SetCost(aux.bfgcost)
+	e2:SetTarget(c101003067.immtg)
 	e2:SetOperation(c101003067.immop)
 	c:RegisterEffect(e2)
 end
@@ -56,9 +57,9 @@ function c101003067.spop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()==0 then return end
 	for p=0,1 do
 		local tg=g:Filter(Card.IsControler,nil,p)
-		local lc=Duel.GetLocationCount(p,LOCATION_MZONE)
-		if tg:GetCount()>lc then
-			tg=tg:Select(tp,lc,lc,nil)
+		local ft=Duel.GetLocationCount(p,LOCATION_MZONE)
+		if tg:GetCount()>ft then
+			tg=tg:Select(tp,ft,ft,nil)
 		end
 		for tc in aux.Next(tg) do
 			Duel.SpecialSummonStep(tc,0,tp,p,false,false,POS_FACEUP)
@@ -69,19 +70,27 @@ end
 function c101003067.immcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsActiveType(TYPE_MONSTER)
 end
+function c101003067.immfilter(c)
+	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK)
+end
+function c101003067.immtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101003067.immfilter,tp,LOCATION_MZONE,0,1,nil) end
+end
 function c101003067.immop(e,tp,eg,ep,ev,re,r,rp)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_IMMUNE_EFFECT)
-	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(c101003067.etarget)
-	e1:SetValue(c101003067.efilter)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	local g=Duel.GetMatchingGroup(c101003067.immfilter,tp,LOCATION_MZONE,0,nil)
+	local tc=g:GetFirst()
+	while tc do
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1:SetCode(EFFECT_IMMUNE_EFFECT)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetValue(c101003067.efilter)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
+		tc=g:GetNext()
+	end
 end
-function c101003067.etarget(e,c)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK)
-end
-function c101003067.efilter(e,te,c)
-	return te:GetOwner()~=c
+function c101003067.efilter(e,te)
+	return te:GetOwner()~=e:GetHandler()
 end
