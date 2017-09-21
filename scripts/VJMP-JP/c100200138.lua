@@ -61,7 +61,7 @@ end
 function c100200138.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc~=c and c100200138.setfilter(chkc) end
-	if chk==0 then return c100200138.setfilter(c) 
+	if chk==0 then return c100200138.setfilter(c)
 		and Duel.IsExistingTarget(c100200138.setfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectTarget(tp,c100200138.setfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
@@ -71,8 +71,10 @@ end
 function c100200138.setop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsFaceup() and c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local g=Group.FromCards(c,tc)
+	local g=Group.CreateGroup()
+	if c:IsFaceup() and c:IsRelateToEffect(e) then g:AddCard(c) end
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then g:AddCard(c) end
+	if g:GetCount()>0 then
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 	end
 end

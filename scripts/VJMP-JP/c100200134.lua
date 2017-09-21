@@ -12,7 +12,7 @@ function c100200134.initial_effect(c)
 	e1:SetCondition(c100200134.spcon)
 	e1:SetOperation(c100200134.spop)
 	c:RegisterEffect(e1)
-	--Tuner
+	--tuner
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
