@@ -6,6 +6,7 @@
 - **September 23, 2017** : Structure Deck R: Surge of Divine Light (SR05-JP) : `100305XXX`
 - **October 4, 2017** : Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 2 promotional card (YS02-JP) : `100221XXX`
 - **October 4, 2017** : Yu-Gi-Oh! ARC-V Volume 4 promotional card (YA04-JP) : `100222XXX`
+- **October 5, 2017** : Legendary Dragon Decks (LEDD-EN) : `100240XXX`
 - **October 7, 2017** : Promotion Pack 2017 (17PR-JP) : `100230XXX`
 - **October 14, 2017** : EXTREME FORCE (EXFO-JP) : `101003XXX`
 - **November 11, 2017** : Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX`
