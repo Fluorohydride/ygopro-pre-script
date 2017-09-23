@@ -43,6 +43,9 @@ end
 function c101003054.indtg(e,c)
 	return c:IsSetCard(0x20b) and c:GetSequence()<5
 end
+function c101003054.indval(e,re,rp)
+	return rp~=e:GetHandlerPlayer()
+end
 function c101003054.damval(e,re,val,r,rp,rc)
 	local tp=e:GetHandlerPlayer()
 	if Duel.GetFlagEffect(tp,101003054)~=0 or bit.band(r,REASON_BATTLE)==0
