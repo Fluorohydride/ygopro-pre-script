@@ -33,8 +33,8 @@ function c100305000.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100305000.thop(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(c100305000.filter,tp,LOCATION_DECK,0,nil)
-	local ct=math.min(Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM),dg:GetClassCount(Card.GetCode))
-	if ct==0 then return end
+	local ct=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+	if dg:GetClassCount(Card.GetCode)==0 or dg:GetClassCount(Card.GetCode)<ct then return end
 	local g=Group.CreateGroup()
 	for i=1,ct do
 		local tc=dg:Select(tp,1,1,nil):GetFirst()
