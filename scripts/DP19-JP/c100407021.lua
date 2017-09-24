@@ -37,6 +37,7 @@ function c100407021.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
+	e4:SetHintTiming(0,0x1e0)
 	e4:SetCondition(c100407021.rmcon)
 	e4:SetCost(c100407021.rmcost)
 	e4:SetTarget(c100407021.rmtg)
@@ -110,7 +111,7 @@ function c100407021.acfilter(c,cd)
 	return c:IsFaceup() and c:IsCode(cd)
 end
 function c100407021.aclimit(e,re,tp)
-	return Duel.IsExistingMatchingCard(c100407021.acfilter,e:GetHandlerPlayer(),LOCATION_REMOVED,0,1,nil,re:GetHandler():GetCode())
+	return Duel.IsExistingMatchingCard(c100407021.acfilter,e:GetHandlerPlayer(),LOCATION_REMOVED,LOCATION_REMOVED,1,nil,re:GetHandler():GetCode())
 end
 function c100407021.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
