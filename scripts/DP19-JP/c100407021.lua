@@ -37,6 +37,7 @@ function c100407021.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1)
 	e4:SetHintTiming(0,0x1e0)
 	e4:SetCondition(c100407021.rmcon)
 	e4:SetCost(c100407021.rmcost)
@@ -56,9 +57,9 @@ end
 function c100407021.regop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
 		if tc:IsCode(84243274) then
-			Duel.RegisterFlagEffect(tc:GetControler(),100407021,0,0,0)
+			Duel.RegisterFlagEffect(tc:GetSummonPlayer(),100407021,0,0,0)
 		elseif tc:IsCode(73879377) then
-			Duel.RegisterFlagEffect(tc:GetControler(),100407021+100,0,0,0)
+			Duel.RegisterFlagEffect(tc:GetSummonPlayer(),100407021+100,0,0,0)
 		end
 	end
 end
