@@ -1,7 +1,7 @@
 --パーシアスの神域
 --Sanctuary of Parshath
 --Scripted by Eerie Code
-function c100305025.initial_effect(c)
+function c15449853.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -47,16 +47,16 @@ function c100305025.initial_effect(c)
 	e7:SetRange(LOCATION_SZONE)
 	e7:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e7:SetCountLimit(1)
-	e7:SetTarget(c100305025.tdtg)
-	e7:SetOperation(c100305025.tdop)
+	e7:SetTarget(c15449853.tdtg)
+	e7:SetOperation(c15449853.tdop)
 	c:RegisterEffect(e7)
 end
-function c100305025.tdfilter(c,e)
+function c15449853.tdfilter(c,e)
 	return (c:IsRace(RACE_FAIRY) or c:IsType(TYPE_COUNTER)) and c:IsAbleToDeck() and (not e or c:IsCanBeEffectTarget(e))
 end
-function c100305025.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c15449853.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetMatchingGroup(c100305025.tdfilter,tp,LOCATION_GRAVE,0,nil,e)
+	local g=Duel.GetMatchingGroup(c15449853.tdfilter,tp,LOCATION_GRAVE,0,nil,e)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>=3 end
 	local tg=Group.CreateGroup()
 	repeat
@@ -68,7 +68,7 @@ function c100305025.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,tg:GetCount(),0,0)
 end
-function c100305025.tdop(e,tp,eg,ep,ev,re,r,rp)
+function c15449853.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if tg:GetCount()==0 then return end
