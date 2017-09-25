@@ -105,7 +105,7 @@ function c100305001.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function c100305001.thfilter(c)
-	return (c:IsSetCard(0x208) or c:IsCode(18036057,69514125,76925842,12510878) or c:IsType(TYPE_COUNTER)) and c:IsAbleToHand()
+	return (c:IsSetCard(0x10a) or c:IsType(TYPE_COUNTER)) and c:IsAbleToHand()
 end
 function c100305001.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100305001.thfilter,tp,LOCATION_DECK,0,1,nil) end
