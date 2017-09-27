@@ -2,14 +2,15 @@
 --Ultimate Crystal God Rainbow Over Dragon
 --Scripted by Eerie Code
 function c100407037.initial_effect(c)
+	--fusion summon
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x1034),5,true)
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x1034),7,true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(c100407037.splimit)
+	e1:SetValue(aux.fuslimit)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
@@ -19,14 +20,12 @@ function c100407037.initial_effect(c)
 	e2:SetRange(LOCATION_EXTRA)
 	e2:SetCondition(c100407037.hspcon)
 	e2:SetOperation(c100407037.hspop)
-	e2:SetValue(210)
 	c:RegisterEffect(e2)
 	--atk up
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetDescription(aux.Stringid(100407037,0))
 	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCost(c100407037.atkcost)
 	e3:SetOperation(c100407037.atkop)
@@ -44,16 +43,12 @@ function c100407037.initial_effect(c)
 	e4:SetOperation(c100407037.tdop)
 	c:RegisterEffect(e4)
 end
-function c100407037.splimit(e,se,sp,st)
-	return aux.fuslimit(e,se,sp,st) or bit.band(st,SUMMON_TYPE_SPECIAL+210)==SUMMON_TYPE_SPECIAL+210
-end
 function c100407037.hspfilter(c,tp,sc)
 	return c:IsSetCard(0x2034) and c:GetLevel()==10 and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,sc,c)>0
 end
 function c100407037.hspcon(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	return ft>-1 and Duel.CheckReleaseGroup(tp,c100407037.hspfilter,1,nil,tp,c)
+	return Duel.CheckReleaseGroup(tp,c100407037.hspfilter,1,nil,c:GetControler(),c)
 end
 function c100407037.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectReleaseGroup(tp,c100407037.hspfilter,1,1,nil,tp,c)
