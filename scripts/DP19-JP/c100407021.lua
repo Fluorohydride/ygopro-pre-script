@@ -21,7 +21,7 @@ function c100407021.initial_effect(c)
 	e2:SetCondition(c100407021.spcon)
 	e2:SetOperation(c100407021.spop)
 	c:RegisterEffect(e2)
-	--inactivate
+	--cannot activate
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
@@ -30,7 +30,7 @@ function c100407021.initial_effect(c)
 	e3:SetTargetRange(0,1)
 	e3:SetValue(c100407021.aclimit)
 	c:RegisterEffect(e3)
-	--banish
+	--remove
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100407021,0))
 	e4:SetCategory(CATEGORY_REMOVE)
@@ -44,14 +44,13 @@ function c100407021.initial_effect(c)
 	e4:SetTarget(c100407021.rmtg)
 	e4:SetOperation(c100407021.rmop)
 	c:RegisterEffect(e4)
-	--register summon
 	if not c100407021.global_flag then
 		c100407021.global_flag=true
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge1:SetOperation(c100407021.regop)
-		Duel.RegisterEffect(ge1,tp)
+		Duel.RegisterEffect(ge1,0)
 	end
 end
 function c100407021.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -67,7 +66,7 @@ function c100407021.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
 end
 function c100407021.cfilter(c)
-	return c:IsFaceup() and c:IsFusionCode(84243274,73879377) and c:IsAbleToRemoveAsCost()
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsFusionCode(84243274,73879377) and c:IsAbleToRemoveAsCost()
 end
 function c100407021.fcheck(c,sg,g,code,...)
 	if not c:IsFusionCode(code) then return false end
@@ -108,11 +107,12 @@ function c100407021.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	end
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 end
-function c100407021.acfilter(c,cd)
-	return c:IsFaceup() and c:IsCode(cd)
+function c100407021.acfilter(c,code)
+	return c:IsFaceup() and c:IsCode(code)
 end
 function c100407021.aclimit(e,re,tp)
 	return Duel.IsExistingMatchingCard(c100407021.acfilter,e:GetHandlerPlayer(),LOCATION_REMOVED,LOCATION_REMOVED,1,nil,re:GetHandler():GetCode())
+		and not re:GetHandler():IsImmuneToEffect(e)
 end
 function c100407021.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
@@ -124,8 +124,8 @@ function c100407021.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100407021.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
-	if chk==0 then return g:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
 end
 function c100407021.rmop(e,tp,eg,ep,ev,re,r,rp)
