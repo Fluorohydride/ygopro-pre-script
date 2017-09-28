@@ -51,7 +51,7 @@ function c100407032.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c100407032.activate(e,tp,eg,ep,ev,re,r,rp)
-	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
+	local chkf=tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c100407032.filter1,nil,e)
 	local mg2=Duel.GetMatchingGroup(c100407032.filter0,tp,LOCATION_DECK,0,nil)
 	if mg2:GetCount()>0 then
