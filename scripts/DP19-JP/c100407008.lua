@@ -42,7 +42,7 @@ function c100407008.initial_effect(c)
 	c:RegisterEffect(e4)
 	--spsummon
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(91512835,0))
+	e5:SetDescription(aux.Stringid(91512835,1))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e5:SetRange(LOCATION_MZONE)

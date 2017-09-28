@@ -20,7 +20,7 @@ function c101003071.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101003071.atkfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(6)
+	return c:IsFaceup() and c:IsLevelAbove(5)
 end
 function c101003071.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101003071.atkfilter(chkc) end
