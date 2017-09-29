@@ -17,7 +17,7 @@ function c100407032.fcheck(tp,sg,fc,mg)
 	return true
  end
 function c100407032.filterchk(c)
-	return c:IsFaceup() and c:IsCode(83104731,95735217)
+	return c:IsFaceup() and c:IsCode(83104731,95735217) and c:IsOnField()
 end
 function c100407032.filter0(c)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToGrave()
