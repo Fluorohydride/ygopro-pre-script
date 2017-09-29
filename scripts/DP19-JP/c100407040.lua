@@ -25,21 +25,19 @@ function c100407040.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100407040.confilter(c,tp)
-	return c:IsSetCard(0x1034) and c:GetPreviousControler()==tp
+	return c:IsPreviousSetCard(0x1034) and c:GetPreviousControler()==tp
 end
 function c100407040.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100407040.confilter,1,nil,tp)
 end
 function c100407040.cfilter(c)
-	return c:IsSetCard(0x1034) and c:IsType(TYPE_MONSTER)
-		and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE))
-		and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x1034) and (c:IsFaceup() or not c:IsLocation(LOCATION_ONFIELD)) and c:IsAbleToGraveAsCost()
 end
 function c100407040.exfilter(c,tp)
 	return Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c))>0
 end
 function c100407040.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c100407040.cfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK,0,nil)
+	local g=Duel.GetMatchingGroup(c100407040.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_DECK,0,nil)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>=7
 		and (Duel.GetLocationCountFromEx(tp)>0 or g:IsExists(c100407040.exfilter,1,nil,tp)) end
 	local rg=Group.CreateGroup()
@@ -68,16 +66,16 @@ function c100407040.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100407040.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<1 then return end
+	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100407040.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(g,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c100407040.plcfilter(c,tp)
-	return c:IsSetCard(0x2034) and c:GetPreviousControler()==tp
-		and c:IsControler(tp) and c:GetReasonPlayer()~=tp
+	return c:IsPreviousSetCard(0x2034) and c:GetPreviousControler()==tp
+		and c:IsPreviousPosition(POS_FACEUP) and c:GetReasonPlayer()~=tp
 		and c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100407040.plcon(e,tp,eg,ep,ev,re,r,rp)
