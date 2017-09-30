@@ -17,12 +17,12 @@ function c100240003.initial_effect(c)
 	e1:SetOperation(c100240003.spop)
 	c:RegisterEffect(e1)
 end
-function c100240003.spfilter(c,tp)
+function c100240003.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousSetCard(0x99)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c100240003.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100240003.spfilter,1,nil,tp)
+	return eg:IsExists(c100240003.cfilter,1,nil,tp)
 end
 function c100240003.spfilter(c,e,tp)
 	return c:IsSetCard(0x99) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
