@@ -69,7 +69,7 @@ function c100407008.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==c and c:IsChainAttackable(0,true)
 end
 function c100407008.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,nil,1,e:GetHandler()) nd
+	if chk==0 then return Duel.CheckReleaseGroup(tp,nil,1,e:GetHandler()) end
 	local g=Duel.SelectReleaseGroup(tp,nil,1,1,e:GetHandler())
 	Duel.Release(g,REASON_COST)
 end

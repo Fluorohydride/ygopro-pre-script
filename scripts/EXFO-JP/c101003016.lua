@@ -50,7 +50,7 @@ end
 function c101003016.spcfilter(c,tp,mc)
 	if c:GetPreviousControler()==tp then return false end
 	local loc=LOCATION_MZONE
-	if c:IsPreviousLocation(LOCATION_SZONE) then loc=LOCATION_SZONE
+	if c:IsPreviousLocation(LOCATION_SZONE) then loc=LOCATION_SZONE end
 	local zone=mc:GetColumnZone(loc)
 	local seq=c:GetPreviousSequence()+16
 	return zone and bit.extract(zone,seq)~=0
