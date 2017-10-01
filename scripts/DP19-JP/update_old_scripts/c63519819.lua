@@ -71,7 +71,6 @@ function c63519819.EquipMonster(c,tp,tc)
 	if not Duel.Equip(tp,tc,c,false) then return end
 	--Add Equip limit
 	tc:RegisterFlagEffect(63519819,RESET_EVENT+0x1fe0000,0,0)
-	e:SetLabelObject(tc)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
@@ -93,7 +92,7 @@ function c63519819.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp) then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
-		c63519819.EquipMonster(c,tp,tc)
+			c63519819.EquipMonster(c,tp,tc)
 		else Duel.SendtoGrave(tc,REASON_EFFECT) end
 	end
 end
