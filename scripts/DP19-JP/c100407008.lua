@@ -50,7 +50,7 @@ function c100407008.initial_effect(c)
 	e5:SetCountLimit(1)
 	e5:SetTarget(c100407008.sptg)
 	e5:SetOperation(c100407008.spop)
-	c:RegisterEffect(e4)
+	c:RegisterEffect(e5)
 end
 function c100407008.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS)
