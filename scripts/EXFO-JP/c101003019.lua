@@ -64,6 +64,7 @@ function c101003019.seqop(e,tp,eg,ep,ev,re,r,rp)
 	for i=0,4 do
 		if Duel.CheckLocation(tp,LOCATION_MZONE,i) then flag=bit.bor(flag,math.pow(2,i)) end
 	end
+	flag=bit.bxor(flag,0xff)
 	if flag==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,571)
 	local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,flag)
