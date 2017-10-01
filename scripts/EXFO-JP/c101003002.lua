@@ -65,6 +65,7 @@ function c101003002.disfilter(c,e)
 	return c:IsFaceup() and c:IsRelateToEffect(e)
 end
 function c101003002.disop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(c101003002.disfilter,nil,e)
 	local tc=g:GetFirst()
 	while tc do

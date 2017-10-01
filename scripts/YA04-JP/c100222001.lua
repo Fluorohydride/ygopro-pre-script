@@ -39,7 +39,7 @@ function c100222001.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100222001.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return Duel.GetTurnPlayer()==tp and e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c100222001.tktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

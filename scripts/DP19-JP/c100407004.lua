@@ -113,9 +113,11 @@ function c100407004.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,c100407004.eqfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	local tc2=g:GetFirst()
-	local m=_G["c"..tc2:GetCode()]
-	if tc1:IsFaceup() and tc1:IsRelateToEffect(e) and tc1:IsControler(1-tp) and tc2 then
-		m.EquipMonster(tc2,tp,tc1)
+	if g:GetCount()>0 then
+		local tc2=g:GetFirst()
+		local m=_G["c"..tc2:GetCode()]
+		if tc1:IsFaceup() and tc1:IsRelateToEffect(e) and tc1:IsControler(1-tp) and tc2 then
+			m.EquipMonster(tc2,tp,tc1)
+		end
 	end
 end

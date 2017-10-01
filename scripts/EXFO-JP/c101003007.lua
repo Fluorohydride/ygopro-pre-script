@@ -55,7 +55,7 @@ function c101003007.desop(e,tp,eg,ep,ev,re,r,rp)
 			tc=g:GetFirst()
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			tc=g:Select(tp,1,1,nil)
+			tc=g:Select(tp,1,1,nil):GetFirst()
 		end
 		local seq=tc:GetSequence()
 		local dg=Group.CreateGroup()

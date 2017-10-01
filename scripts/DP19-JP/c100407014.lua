@@ -61,6 +61,7 @@ function c100407014.damfilter1(c,tp)
 	return c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()~=tp
 end
 function c100407014.damcon2(e,tp,eg,ep,ev,re,r,rp)
+	if not re then return false end
 	local rc=re:GetHandler()
 	return rc:IsControler(tp) and rc:GetOriginalAttribute()==ATTRIBUTE_DARK
 		and rc:GetOriginalRace()==RACE_MACHINE
