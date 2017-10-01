@@ -31,13 +31,20 @@ end
 function c101003014.cfilter(c)
 	return c:GetColumnGroupCount()>0
 end
+function c101003014.getzone(c,tp)
+	if c:IsControler(tp) then		
+		return bit.band(c:GetColumnZone(LOCATION_MZONE),0xff)
+	else
+		return bit.rshift(bit.band(c:GetColumnZone(LOCATION_MZONE),0xff0000),16)
+	end
+end
 function c101003014.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local zone=0
 	local lg=Duel.GetMatchingGroup(c101003014.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	for tc in aux.Next(lg) do
-		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE))
+		zone=bit.bor(zone,c101003014.getzone(tc,tp))
 	end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
@@ -46,7 +53,7 @@ function c101003014.hspval(e,c)
 	local zone=0
 	local lg=Duel.GetMatchingGroup(c101003014.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	for tc in aux.Next(lg) do
-		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE))
+		zone=bit.bor(zone,c101003014.getzone(tc,tp))
 	end
 	return 0,zone
 end
