@@ -31,24 +31,27 @@ end
 function c101003014.cfilter(c)
 	return c:GetColumnGroupCount()>0
 end
-function c101003014.hspcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
+function c101003014.getzone(tp)
 	local zone=0
 	local lg=Duel.GetMatchingGroup(c101003014.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	for tc in aux.Next(lg) do
-		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE))
+		if tc:IsControler(tp) then
+			zone=bit.bor(zone,bit.band(tc:GetColumnZone(LOCATION_MZONE),0xff))
+		else
+			zone=bit.bor(zone,bit.rshift(bit.band(tc:GetColumnZone(LOCATION_MZONE),0xff0000),16))
+		end
 	end
+	return zone
+end
+function c101003014.hspcon(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	local zone=c101003014.getzone(tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function c101003014.hspval(e,c)
 	local tp=c:GetControler()
-	local zone=0
-	local lg=Duel.GetMatchingGroup(c101003014.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-	for tc in aux.Next(lg) do
-		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE))
-	end
-	return 0,zone
+	return 0,c101003014.getzone(tp)
 end
 function c101003014.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
