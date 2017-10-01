@@ -76,6 +76,7 @@ function c100407032.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tg=sg:Select(tp,1,1,nil)
 	local tc=tg:GetFirst()
+	if not tc then return end
 	if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
 		aux.FCheckAdditional=c100407032.fcheck
 		local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
