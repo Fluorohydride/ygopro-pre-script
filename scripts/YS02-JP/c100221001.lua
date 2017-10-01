@@ -2,8 +2,14 @@
 --Odd-Eyes Revolution Dragon
 --Scripted by Eerie Code
 function c100221001.initial_effect(c)
-	c:EnableReviveLimit()
 	aux.EnablePendulumAttribute(c)
+	--revive limit
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_REVIVE_LIMIT)
+	e0:SetCondition(c100221001.rvlimit)
+	c:RegisterEffect(e0)
 	--splimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -70,6 +76,9 @@ function c100221001.initial_effect(c)
 	e8:SetTarget(c100221001.tdtg)
 	e8:SetOperation(c100221001.tdop)
 	c:RegisterEffect(e8)
+end
+function c100221001.rvlimit(e)
+	return not e:GetHandler():IsLocation(LOCATION_HAND)
 end
 function c100221001.psplimit(e,c,tp,sumtp,sumpos)
 	return not c:IsRace(RACE_DRAGON) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
