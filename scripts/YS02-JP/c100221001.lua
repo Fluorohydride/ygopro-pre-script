@@ -4,6 +4,7 @@
 function c100221001.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--revive limit
+	c:EnableUnsummonable()
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
