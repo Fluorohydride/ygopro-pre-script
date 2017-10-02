@@ -26,6 +26,6 @@ function c101003064.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,571)
 	local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
-	local nseq=math.sqrt(s)
+	local nseq=math.log(s,2)
 	Duel.MoveSequence(tc,nseq)
 end
