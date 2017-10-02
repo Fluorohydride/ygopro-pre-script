@@ -29,7 +29,7 @@ function c101003100.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsControler(tp) or Duel.GetLocationCount(1-tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,571)
-	local s=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,flag)
+	local s=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0)
 	local nseq=math.log(bit.rshift(s,16),2)
 	Duel.MoveSequence(tc,nseq)
 end
