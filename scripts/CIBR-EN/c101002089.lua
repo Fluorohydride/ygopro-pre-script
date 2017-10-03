@@ -43,7 +43,7 @@ function c101002089.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsLevelAbove(3) and not tc:IsImmuneToEffect(e) then 
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_LEVEL)
+		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(-2)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1)
