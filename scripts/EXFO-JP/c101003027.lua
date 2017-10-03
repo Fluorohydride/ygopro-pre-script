@@ -53,7 +53,6 @@ function c101003027.initial_effect(c)
 	e5:SetOperation(c101003027.rmop)
 	c:RegisterEffect(e5)
 end
-c101003027.spell_counter_permit=99
 function c101003027.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
 end

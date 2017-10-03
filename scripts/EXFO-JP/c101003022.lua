@@ -42,7 +42,6 @@ function c101003022.initial_effect(c)
 	e4:SetOperation(c101003022.spop)
 	c:RegisterEffect(e4)
 end
-c101003022.spell_counter_permit=99
 function c101003022.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
 end
@@ -62,7 +61,7 @@ end
 function c101003022.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) 
+	if c:IsRelateToEffect(e)
 		and Duel.Destroy(c,REASON_EFFECT)~=0
 		and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		tc:AddCounter(0x1,1)
