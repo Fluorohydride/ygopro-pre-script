@@ -44,7 +44,7 @@ function c101002087.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCondition(c101002087.lvcon)
 	e4:SetOperation(c101002087.lvop)
-	c:RegisterEffect(e4) 
+	c:RegisterEffect(e4)
 	--actlimit
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
@@ -78,7 +78,7 @@ function c101002087.tgval(e,re,rp)
 		return c:GetOriginalRank()<lv
 	elseif c:GetLevel()>0 then
 		return c:GetOriginalLevel()<lv
-	else return false end 
+	else return false end
 end
 function c101002087.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x107) and e:GetHandler():GetFlagEffect(1)>0
@@ -105,7 +105,4 @@ function c101002087.actcon(e)
 	local d=a:GetBattleTarget()
 	if a:IsControler(1-tp) then a,d=d,a end
 	return a and a:IsSetCard(0x107)
-end
-function c101002087.excon(e)
-	return e:GetHandler():IsLevelAbove(7)
 end

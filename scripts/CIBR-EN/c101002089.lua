@@ -1,11 +1,11 @@
 --F.A. Pit Stop
 --Scripted by Eerie Code
 function c101002089.initial_effect(c)
-	--draw
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_LVCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101002089)
 	e1:SetTarget(c101002089.target)
@@ -40,7 +40,7 @@ function c101002089.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local d=Duel.GetMatchingGroupCount(Card.IsCode,p,LOCATION_GRAVE,0,nil,101002089)+1
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsLevelAbove(3) and not tc:IsImmuneToEffect(e) then 
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsLevelAbove(3) and not tc:IsImmuneToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
