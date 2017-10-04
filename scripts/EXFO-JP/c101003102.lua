@@ -35,6 +35,7 @@ function c101003102.initial_effect(c)
 	e4:SetDescription(aux.Stringid(101003102,1))
 	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
@@ -48,7 +49,7 @@ function c101003102.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
 end
 function c101003102.spfilter(c,e,tp)
-	return c:IsSetCard(0x209) and c:IsFaceup() and c:IsType(TYPE_PENDULUM) 
+	return c:IsSetCard(0x209) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 		and not c:IsCode(101003102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101003102.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -91,7 +92,7 @@ function c101003102.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c101003102.operation(e,tp,eg,ep,ev,re,r,rp)
-	local rc=re:GetHandler()
-	if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) then 
-		Duel.Destroy(rc,REASON_EFFECT)end
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.Destroy(eg,REASON_EFFECT)
+	end
 end
