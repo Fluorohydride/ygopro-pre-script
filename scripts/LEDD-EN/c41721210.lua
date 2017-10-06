@@ -1,6 +1,6 @@
 --Dark Magician the Dragon Knight
 --Scripted by Eerie COde
-function c100240001.initial_effect(c)
+function c41721210.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcCodeFun(c,46986414,aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON),1,false,false)
@@ -20,7 +20,7 @@ function c100240001.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_ONFIELD,0)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_SPELL+TYPE_TRAP))
-	e3:SetValue(c100240001.indval)
+	e3:SetValue(c41721210.indval)
 	c:RegisterEffect(e3)
 	--indes
 	local e4=e3:Clone()
@@ -29,6 +29,6 @@ function c100240001.initial_effect(c)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 end
-function c100240001.indval(e,re,rp)
+function c41721210.indval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
