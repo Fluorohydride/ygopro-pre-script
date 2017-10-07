@@ -1,5 +1,5 @@
 --沼地のドロゴン
-
+--Mudragon of the Swamp
 --Script by nekrozar
 function c100230008.initial_effect(c)
 	--fusion material

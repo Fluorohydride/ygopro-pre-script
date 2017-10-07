@@ -1,5 +1,5 @@
 --リンクルベル
-
+--Linklebell
 --Script by nekrozar
 function c100230011.initial_effect(c)
 	c:EnableReviveLimit()
