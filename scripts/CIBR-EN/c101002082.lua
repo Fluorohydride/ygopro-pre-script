@@ -16,16 +16,14 @@ function c101002082.initial_effect(c)
 	e1:SetTarget(c101002082.target)
 	e1:SetOperation(c101002082.operation)
 	c:RegisterEffect(e1)
-	--reduce atk
+	--atk/def
 	local e2=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101002082,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_RELEASE)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,101002082+100)
 	e2:SetCondition(c101002082.atkcon)
-	e2:SetTarget(c101002082.atktg)
 	e2:SetOperation(c101002082.atkop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -62,9 +60,6 @@ function c101002082.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101002082.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_RITUAL)
-end
-function c101002082.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>0 end
 end
 function c101002082.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)

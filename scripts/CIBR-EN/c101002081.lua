@@ -1,6 +1,7 @@
 --Samurai Destroyer
 --Scripted by Eerie Code
 function c101002081.initial_effect(c)
+	--synchro summon
 	c:EnableReviveLimit()
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(),1)
 	--actlimit
@@ -18,7 +19,7 @@ function c101002081.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(c101002081.discon)
+	e2:SetCondition(c101002081.con)
 	e2:SetOperation(c101002081.disop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -27,7 +28,7 @@ function c101002081.initial_effect(c)
 	--special summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101002081,0))
-	e4:SetCategory(CATEGORY_DAMAGE)
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
@@ -41,7 +42,7 @@ function c101002081.aclimit(e,re,tp)
 end
 function c101002081.con(e)
 	local c=e:GetHandler()
-	return (Duel.GetAttacker()==c and c:GetBattleTarget()) or c==Duel.GetAttackTarget()
+	return Duel.GetAttacker()==c or Duel.GetAttackTarget()==c
 end
 function c101002081.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -67,8 +68,7 @@ function c101002081.discon2(e)
 end
 function c101002081.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP)
-		and c:GetPreviousControler()==c:GetOwner()
+	return rp~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
 end
 function c101002081.filter(c,e,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

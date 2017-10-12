@@ -22,7 +22,7 @@ function c101003021.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e3:SetValue(c101003021.tgvalue)
+	e3:SetValue(c101003021.indval)
 	c:RegisterEffect(e3)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
@@ -39,13 +39,13 @@ function c101003021.initial_effect(c)
 end
 function c101003021.immval(e,te)
 	local tc=te:GetHandler()
-	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) 
-		and te:IsActivated() and te:GetSummonLocation()==LOCATION_EXTRA
+	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER)
+		and te:IsActivated() and tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:GetSummonLocation()==LOCATION_EXTRA
 end
 function c101003021.tgtg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0xfe) and e:GetHandler():GetColumnGroup():IsContains(c)
+	return c:IsSetCard(0xfe) and e:GetHandler():GetColumnGroup():IsContains(c)
 end
-function c101003021.tgvalue(e,re,rp)
+function c101003021.indval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
 function c101003021.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,7 +64,7 @@ end
 function c101003021.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local g=Duel.GetMatchingGroup(c101003021.spfilter,1-tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
+		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101003021.spfilter),1-tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
 		if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 			and g:GetCount()>0 and Duel.SelectYesNo(1-tp,aux.Stringid(101003021,1)) then
 			Duel.BreakEffect()
