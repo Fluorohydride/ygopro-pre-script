@@ -2,13 +2,9 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **August 11, 2017** : Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX`
-- **September 23, 2017** : Structure Deck R: Surge of Divine Light (SR05-JP) : `100305XXX`
-- **October 4, 2017** : Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 2 promotional card (YS02-JP) : `100221XXX`
-- **October 4, 2017** : Yu-Gi-Oh! ARC-V Volume 4 promotional card (YA04-JP) : `100222XXX`
-- **October 5, 2017** : Legendary Dragon Decks (LEDD-EN) : `100240XXX`
 - **October 7, 2017** : Promotion Pack 2017 (17PR-JP) : `100230XXX`
 - **October 14, 2017** : EXTREME FORCE (EXFO-JP) : `101003XXX`
+- **October 19, 2017** : Circuit Break (CIBR-EN) : `101002XXX`
 - **November 11, 2017** : Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX`
 
 # Archived
@@ -56,6 +52,11 @@
 - ~~Structure Deck: Cyverse Link (SD32-JP) : `100332XXX`~~
 - ~~Circuit Break (CIBR-JP) : `101002XXX`~~
 - ~~Jump Victory Carnival 2017 (VF17-JP) : `100230XXX`~~
+- ~~Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX`~~
 - ~~Code of the Duelist (COTD-EN) : `101001XXX`~~
 - ~~EXTRA PACK 2017 (EP17-JP) : `100420XXX`~~
 - ~~Link Monster GET!! Campaign (17CC-JP) : `100220XXX`~~
+- ~~Structure Deck R: Surge of Divine Light (SR05-JP) : `100305XXX`~~
+- ~~Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 2 promotional card (YS02-JP) : `100221XXX`~~
+- ~~Yu-Gi-Oh! ARC-V Volume 4 promotional card (YA04-JP) : `100222XXX`~~
+- ~~Legendary Dragon Decks (LEDD-EN) : `100240XXX`~~
