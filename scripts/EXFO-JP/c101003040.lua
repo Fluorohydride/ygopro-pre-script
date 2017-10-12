@@ -17,9 +17,9 @@ function c101003040.initial_effect(c)
 	e1:SetOperation(c101003040.spop)
 	c:RegisterEffect(e1)
 end
-function c101003040.cfilter(c,tp,g,zone1,zone2)
+function c101003040.cfilter(c,tp,g,zone)
 	return g:IsContains(c) and (Duel.CheckLocation(c:GetControler(),LOCATION_MZONE,c:GetSequence(),true)
-		or Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone2)>0)
+		or Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0)
 end
 function c101003040.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
