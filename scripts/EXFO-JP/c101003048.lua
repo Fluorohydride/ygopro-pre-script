@@ -1,5 +1,5 @@
 --鎖龍蛇－スカルデット
-
+--Skulldeat, the Chained Dracoserpent
 --Script by nekrozar
 function c101003048.initial_effect(c)
 	--link summon

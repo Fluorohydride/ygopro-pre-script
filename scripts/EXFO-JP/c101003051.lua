@@ -13,18 +13,24 @@ function c101003051.initial_effect(c)
 	e1:SetOperation(c101003051.activate)
 	c:RegisterEffect(e1)
 end
+function c101003051.cfilter(c)
+	return c:IsFaceup() and c:IsLinkAbove(4)
+end
 function c101003051.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsLinkAbove,tp,LOCATION_MZONE,0,1,nil,4)
+	return Duel.IsExistingMatchingCard(c101003051.cfilter,tp,LOCATION_MZONE,0,1,nil)
+end
+function c101003051.filter(c)
+	return c:IsFaceup() and c:IsLinkAbove(3)
 end
 function c101003051.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(Card.IsLinkAbove,tp,LOCATION_MZONE,0,nil,3)
+	local ct=Duel.GetMatchingGroupCount(c101003051.filter,tp,LOCATION_MZONE,0,nil)
 	local dg=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
 	if chk==0 then return ct>0 and dg:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,0,0)
 end
 function c101003051.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(Card.IsLinkAbove,tp,LOCATION_MZONE,0,nil,3)
-	if ct<1 then return end
+	local ct=Duel.GetMatchingGroupCount(c101003051.filter,tp,LOCATION_MZONE,0,nil)
+	if ct==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,ct,nil)
 	if g:GetCount()>0 then

@@ -8,7 +8,6 @@ function c101003008.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,101003008)
 	e1:SetCondition(c101003008.descon)
@@ -33,23 +32,19 @@ end
 function c101003008.desfilter(c,g)
 	return g:IsContains(c)
 end
-function c101003008.desfilter2(c,s)
-	local seq=c:GetSequence()
-	return seq<5 and math.abs(seq-s)==1
-end
 function c101003008.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c101003008.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c:GetColumnGroup())
-	if chk==0 then return c:IsDestructable() and g:GetCount()>0 end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,c,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
+	local cg=c:GetColumnGroup():Filter(Card.IsControler,nil,1-tp)
+	if chk==0 then return c:IsDestructable() and cg:GetCount()>0 end
+	cg:AddCard(c)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c101003008.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local lg=c:GetColumnGroup()
-	if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)>0 and lg:GetCount()>0 then
+	local cg=c:GetColumnGroup():Filter(Card.IsControler,nil,1-tp)
+	if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)>0 and cg:GetCount()>0 then
 		Duel.BreakEffect()
-		Duel.Destroy(lg,REASON_EFFECT)
+		Duel.Destroy(cg,REASON_EFFECT)
 	end
 end
 function c101003008.regop(e,tp,eg,ep,ev,re,r,rp)
