@@ -34,15 +34,9 @@ end
 function c101003048.matfilter(c,lc,tp)
 	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc)
 end
-function c101003048.lkcheck(c,sg)
-	return sg:FilterCount(c101003048.lkcheck2,c,c)+1==sg:GetCount()
-end
-function c101003048.lkcheck2(c,mc)
-	return not c:IsCode(mc:IsCode())
-end
 function c101003048.lkgoal(c,tp,lc,ct,sg)
 	return sg:GetCount()>1 and sg:CheckWithSumEqual(aux.GetLinkCount,lc:GetLink(),ct,ct)
-		and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0 and sg:IsExists(c101003048.lkcheck,1,nil,sg)
+		and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0 and sg:GetClassCount(Card.GetCode)==sg:GetCount()
 end
 function c101003048.lkselect(c,tp,lc,ct,mg,sg)
 	sg:AddCard(c)
