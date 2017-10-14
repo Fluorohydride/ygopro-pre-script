@@ -80,7 +80,7 @@ end
 function c100407021.fselect(c,tp,mg,sg,...)
 	sg:AddCard(c)
 	local res=false
-	if sg:GetCount()<3 then
+	if sg:GetCount()<2 then
 		res=mg:IsExists(c100407021.fselect,1,sg,tp,mg,sg,...)
 	elseif Duel.GetLocationCountFromEx(tp,tp,sg)>0 then
 		local g=Group.CreateGroup()
@@ -100,7 +100,7 @@ end
 function c100407021.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(c100407021.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	local sg=Group.CreateGroup()
-	while sg:GetCount()<3 do
+	while sg:GetCount()<2 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g=mg:FilterSelect(tp,c100407021.fselect,1,1,sg,tp,mg,sg,84243274,73879377)
 		sg:Merge(g)
