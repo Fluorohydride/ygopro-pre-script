@@ -66,7 +66,7 @@ function c101003076.actop(e,tp,eg,ep,ev,re,r,rp)
 			local rc=rg:GetCount()
 			if rc>1 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-				local dg=rg:Select(tp,rc-1,rc-1,nil)
+				local dg=rg:Select(p,rc-1,rc-1,nil)
 				Duel.SendtoGrave(dg,REASON_EFFECT)
 				local g=Duel.GetMatchingGroup(Card.IsFaceup,p,LOCATION_MZONE,0,nil)
 			end
