@@ -36,7 +36,8 @@ end
 function c100407022.filter(c,fc,e,tp)
 	return c:IsCode(table.unpack(fc.material)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100407022.cfilter2(c,g,mg)
+function c100407022.cfilter2(c,g,mg,ft,rm)
+	if not rm and ft==0 and not c:IsLocation(LOCATION_MZONE) then return false end
 	local g2=g:Clone()
 	g2:AddCard(c)
 	local mg2=mg:Clone()
@@ -54,14 +55,17 @@ function c100407022.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100407022.filter),tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,nil,rc,e,tp)
 	local rg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100407022.cfilter),tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,0,nil)
 	local g=Group.CreateGroup()
+	local rm=(ft>0)
 	repeat
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local sc=rg:FilterSelect(tp,c100407022.cfilter2,1,1,nil,g,mg)
+		local sc=rg:FilterSelect(tp,c100407022.cfilter2,1,1,nil,g,mg,ft,rm):GetFirst()
 		g:AddCard(sc)
 		rg:RemoveCard(sc)
 		mg:RemoveCard(sc)
 		if not sc:IsLocation(LOCATION_MZONE) then ft=ft-1 end
-	until ft==0 or rg:GetCount()==0 or mg:GetClassCount(Card.GetCode)==g:GetCount() or not Duel.SelectYesNo(tp,aux.Stringid(100407022,0))
+	until g:GetCount()==5 or rg:GetCount()==0 or mg:GetClassCount(Card.GetCode)==g:GetCount() 
+		or (ft==0 and not rg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE)) 
+		or not Duel.SelectYesNo(tp,aux.Stringid(100407022,0))
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	e:SetLabel(Duel.GetOperatedGroup():GetCount())
 end
