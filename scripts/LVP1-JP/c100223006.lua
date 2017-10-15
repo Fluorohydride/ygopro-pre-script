@@ -30,6 +30,7 @@ function c100223006.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
 	e6:SetRange(LOCATION_MZONE)
+	e6:SetCountLimit(1,100223006)
 	e6:SetCondition(c100223006.spcon)
 	e6:SetCost(c100223006.spcost)
 	e6:SetTarget(c100223006.sptg)
@@ -46,7 +47,7 @@ function c100223006.actcon(e)
 	local tc=Duel.GetAttacker()
 	local tp=e:GetHandlerPlayer()
 	return tc and tc:IsControler(tp) and tc:IsSetCard(0x19)
-endend
+end
 function c100223006.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattledGroupCount()>0
 end
