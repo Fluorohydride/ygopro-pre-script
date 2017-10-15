@@ -6,8 +6,8 @@
 - **October 14, 2017** : EXTREME FORCE (EXFO-JP) : `101003XXX`
 - **October 19, 2017** : Circuit Break (CIBR-EN) : `101002XXX`
 - **November 11, 2017** : Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX`
+- **November 25, 2017** : LINK VRAINS Pack (LVP1-JP) : `100223XXX`
 - **December 9, 2017** : Structure Deck: Powercode Link (SD33-JP) : `100333XXX`
-- **December 9, 2017** : LINK VRAINS Pack (LVP1-JP) : `100223XXX`
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
