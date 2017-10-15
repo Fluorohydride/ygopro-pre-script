@@ -38,7 +38,7 @@ function c101003010.condition(e,c)
 end
 function c101003010.cfilter(c,tp,zone)
 	local seq=c:GetSequence()
-	if c:IsControler(1-tp) then seq=seq+16 end
+	if c:IsControler(tp) then seq=seq+16 end
 	return bit.extract(zone,seq)~=0
 end
 function c101003010.lkfilter(c)

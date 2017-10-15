@@ -43,7 +43,7 @@ function c101003021.immval(e,te)
 		and te:IsActivated() and tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:GetSummonLocation()==LOCATION_EXTRA
 end
 function c101003021.tgtg(e,c)
-	return c:IsSetCard(0xfe) and e:GetHandler():GetColumnGroup():IsContains(c)
+	return e:GetHandler()==c or (c:IsSetCard(0xfe) and e:GetHandler():GetColumnGroup():IsContains(c))
 end
 function c101003021.indval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
