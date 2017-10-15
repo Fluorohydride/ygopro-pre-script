@@ -40,6 +40,7 @@ function c101002084.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101002084.thop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101002084.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
@@ -51,7 +52,8 @@ function c101002084.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	local bc=ec:GetBattleTarget()
 	e:SetLabelObject(ec)
-	return bc and bc:IsType(TYPE_MONSTER) and ec:IsChainAttackable(2,true) and ec:IsStatus(STATUS_OPPO_BATTLE)
+	return ec:IsControler(tp) and ec:IsSetCard(0x106) and bc and bc:IsType(TYPE_MONSTER) 
+		and ec:IsChainAttackable(2,true) and ec:IsStatus(STATUS_OPPO_BATTLE)
 end
 function c101002084.atcfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x106) and c:IsAbleToRemoveAsCost()
@@ -63,6 +65,7 @@ function c101002084.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c101002084.atop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local ec=e:GetLabelObject()
 	if not ec or not ec:IsRelateToBattle() then return end

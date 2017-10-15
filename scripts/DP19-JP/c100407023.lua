@@ -35,25 +35,25 @@ function c100407023.filter1(c,cd)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf) and not c:IsCode(cd) and c:IsAbleToHand()
 end
 function c100407023.filter2(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsCode(59464593,980973,46384672,73879377,65192027,89189982) or c:IsCode(0x20f)) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and (c:IsCode(59464593,980973,46384672,73879377,65192027,89189982) or c:IsSetCard(0x20f)) and c:IsAbleToHand()
 end
 function c100407023.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(c100407023.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp)
+		return Duel.IsExistingMatchingCard(c100407023.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler(),tp)
 	end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100407023.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,c100407023.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler(),tp)
 	e:SetLabelObject(g:GetFirst())
 	Duel.SendtoGrave(g,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c100407023.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sc=e:GetLabelObject()
-	local g1=Duel.GetMatchingGroup(tp,aux.NecroValleyFilter(c100407023.filter1),tp,LOCATION_DECK+LOCATION_GRAVE,0,sc,sc:GetCode())
-	local g2=Duel.GetMatchingGroup(tp,aux.NecroValleyFilter(c100407023.filter2),tp,LOCATION_DECK+LOCATION_GRAVE,0,sc)
+	local g1=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100407023.filter1),tp,LOCATION_DECK+LOCATION_GRAVE,0,sc,sc:GetCode())
+	local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100407023.filter2),tp,LOCATION_DECK+LOCATION_GRAVE,0,sc)
 	if g1:GetCount()==0 or g2:GetCount()==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=g1:Select(tp,1,1,nil)
@@ -72,8 +72,7 @@ function c100407023.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100407023.tdfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) 
-		and c:IsSetCard(0xf) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf) and c:IsAbleToDeck()
 end
 function c100407023.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c100407023.tdfilter(chkc) end
@@ -86,7 +85,6 @@ function c100407023.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c100407023.drop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if tg:GetCount()<=0 then return end
 	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
