@@ -76,12 +76,12 @@ function c100407023.tdfilter(c)
 		and c:IsSetCard(0xf) and c:IsAbleToDeck()
 end
 function c100407023.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100407023.tdfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c100407023.tdfilter(chkc) end
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingTarget(c100407023.tdfilter,tp,LOCATION_GRAVE,0,3,nil) end
+		and Duel.IsExistingTarget(c100407023.tdfilter,tp,LOCATION_REMOVED,0,3,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c100407023.tdfilter,tp,LOCATION_GRAVE,0,3,3,nil)
+	local g=Duel.SelectTarget(tp,c100407023.tdfilter,tp,LOCATION_REMOVED,0,3,3,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
