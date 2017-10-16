@@ -100,6 +100,7 @@ function c100407017.coincon2(e,tp,eg,ep,ev,re,r,rp)
 	return re==e:GetLabelObject()
 end
 function c100407017.coinop2(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,100407017)
 	local res={Duel.GetCoinResult()}
 	local ct=ev
 	for i=1,ct do
