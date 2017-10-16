@@ -15,7 +15,7 @@ function c101003020.initial_effect(c)
 	--banish & search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101003020,0))
-	e2:SetCategory(CATEGORY_REMOVE)
+	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
