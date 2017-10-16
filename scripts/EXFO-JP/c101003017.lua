@@ -32,9 +32,9 @@ function c101003017.getzone(tp)
 	local lg=Duel.GetMatchingGroup(c101003017.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	for tc in aux.Next(lg) do
 		if tc:IsControler(tp) then
-			zone=bit.bor(zone,bit.band(tc:GetColumnZone(LOCATION_MZONE),0xff))
+			zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,0,0,tp))
 		else
-			zone=bit.bor(zone,bit.rshift(bit.band(tc:GetColumnZone(LOCATION_MZONE),0xff0000),16))
+			zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,0,0,1-tp))
 		end
 	end
 	return zone
