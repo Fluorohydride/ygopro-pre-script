@@ -18,7 +18,7 @@ function c101003057.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101003057.thfilter(c)
-	return ((c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xfe)) and c:IsAbleToHand()
+	return ((c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xfe)) and c:IsFaceup() and c:IsAbleToHand()
 end
 function c101003057.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101003057.thfilter(chkc) end
