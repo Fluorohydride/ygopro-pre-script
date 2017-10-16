@@ -3,15 +3,8 @@
 --Script by nekrozar
 function c101003048.initial_effect(c)
 	--link summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetRange(LOCATION_EXTRA)
-	e1:SetCondition(c101003048.lkcon)
-	e1:SetOperation(c101003048.lkop)
-	e1:SetValue(SUMMON_TYPE_LINK)
-	c:RegisterEffect(e1)
+	aux.AddLinkProcedure(c,nil,2,99,c101003048.lcheck)
+	c:EnableReviveLimit()
 	--effect gain
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -31,46 +24,8 @@ function c101003048.initial_effect(c)
 	e3:SetOperation(c101003048.drop)
 	c:RegisterEffect(e3)
 end
-function c101003048.matfilter(c,lc,tp)
-	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc)
-end
-function c101003048.lkgoal(c,tp,lc,ct,sg)
-	return sg:GetCount()>1 and sg:CheckWithSumEqual(aux.GetLinkCount,lc:GetLink(),ct,ct)
-		and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0 and sg:GetClassCount(Card.GetCode)==sg:GetCount()
-end
-function c101003048.lkselect(c,tp,lc,ct,mg,sg)
-	sg:AddCard(c)
-	ct=ct+1
-	local res=c101003048.lkgoal(c,tp,lc,ct,sg) or mg:IsExists(c101003048.lkselect,1,sg,tp,lc,ct,mg,sg)
-	sg:RemoveCard(c)
-	return res
-end
-function c101003048.lkcon(e,c)
-	if c==nil then return true end
-	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
-	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(c101003048.matfilter,tp,LOCATION_MZONE,0,nil,c,tp)
-	local sg=Group.CreateGroup()
-	return mg:IsExists(c101003048.lkselect,1,nil,tp,c,0,mg,sg)
-end
-function c101003048.lkop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(c101003048.matfilter,tp,LOCATION_MZONE,0,nil,c,tp)
-	local sg=Group.CreateGroup()
-	for i=0,98 do
-		local cg=mg:Filter(c101003048.lkselect,sg,tp,c,i,mg,sg)
-		if cg:GetCount()==0 then break end
-		local minct=1
-		if c101003048.lkgoal(c,tp,c,i,sg) then
-			if not Duel.SelectYesNo(tp,210) then break end
-			minct=0
-		end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=cg:Select(tp,minct,1,nil)
-		if g:GetCount()==0 then break end
-		sg:Merge(g)
-	end
-	c:SetMaterial(sg)
-	Duel.SendtoGrave(sg,REASON_MATERIAL+REASON_LINK)
+function c101003048.lcheck(g,lc)
+	return g:GetClassCount(Card.GetCode)==g:GetCount()
 end
 function c101003048.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
