@@ -55,7 +55,7 @@ function c100223081.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c100223081.cfilter(c)
-	return c:IsLevel(3) and (c:GetBaseAttack()>0 or c:GetBaseAttack()>0) and c:IsAbleToGraveAsCost()
+	return c:IsLevel(3) and (c:GetBaseAttack()>0 or c:GetBaseDefense()>0) and c:IsAbleToGraveAsCost()
 end
 function c100223081.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xb1)
