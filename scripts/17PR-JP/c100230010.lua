@@ -20,12 +20,16 @@ function c100230010.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
+	e2:SetCondition(c100230010.indcon)
 	e2:SetCost(c100230010.indcost)
 	e2:SetOperation(c100230010.indop)
 	c:RegisterEffect(e2)
 end
 function c100230010.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
+end
+function c100230010.indcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsAbleToEnterBP()
 end
 function c100230010.indcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
