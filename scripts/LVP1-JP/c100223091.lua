@@ -2,8 +2,17 @@
 --Crystron Halifiber
 --Scripted by Eerie Code
 function c100223091.initial_effect(c)
+	--link summon
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e0:SetCode(EFFECT_SPSUMMON_PROC)
+	e0:SetRange(LOCATION_EXTRA)
+	e0:SetCondition(c100223091.lkcon)
+	e0:SetOperation(c100223091.lkop)
+	e0:SetValue(SUMMON_TYPE_LINK)
+	c:RegisterEffect(e0)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,nil,2,2,c100223091.spcheck)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100223091,0))
@@ -32,8 +41,25 @@ function c100223091.initial_effect(c)
 	e2:SetOperation(c100223091.spop)
 	c:RegisterEffect(e2)
 end
-function c100223091.spcheck(g,lc,tp)
-	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER)
+function c100223091.lkfilter1(c,lc,tp)
+	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and Duel.IsExistingMatchingCard(c100223091.linkfilter2,tp,LOCATION_MZONE,0,1,c,lc,c,tp)
+end
+function c100223091.lkfilter2(c,lc,mc,tp)
+	local mg=Group.FromCards(c,mc)
+	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and mg:IsExists(Card.IsType,1,nil,TYPE_TUNER) and Duel.GetLocationCountFromEx(tp,tp,mg,lc)>0
+end
+function c100223091.lkcon(e,c)
+	if c==nil then return true end
+	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
+	local tp=c:GetControler()
+	return Duel.IsExistingMatchingCard(c100223091.lkfilter1,tp,LOCATION_MZONE,0,1,nil,c,tp)
+end
+function c100223091.lkop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g1=Duel.SelectMatchingCard(tp,c100223091.lkfilter1,tp,LOCATION_MZONE,0,1,1,nil,c,tp)
+	local g2=Duel.SelectMatchingCard(tp,c100223091.lkfilter2,tp,LOCATION_MZONE,0,1,1,g1:GetFirst(),c,g1:GetFirst(),tp)
+	g1:Merge(g2)
+	c:SetMaterial(g1)
+	Duel.SendtoGrave(g1,REASON_MATERIAL+REASON_LINK)
 end
 function c100223091.hspcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
@@ -42,7 +68,7 @@ function c100223091.hspfilter(c,e,tp)
 	return c:IsType(TYPE_TUNER) and c:IsLevelBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100223091.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100223091.hspfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
@@ -69,13 +95,13 @@ function c100223091.spfilter(c,e,tp)
 	return c:IsType(TYPE_SYNCHRO) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function c100223091.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.GetLocationCountFromEx(tp)>0 or e:GetHandler():CheckMZoneFromEx(tp))
+	if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,c)>0
 		and Duel.IsExistingMatchingCard(c100223091.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100223091.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCountFromEx(tp)
-	if ft==0 then return end
+	if ft<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100223091.spfilter,tp,LOCATION_EXTRA,0,1,ft,nil,e,tp):GetFirst()
 	if tc then

@@ -32,7 +32,7 @@ function c100333031.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)
 	if ct<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
-	local g=Duel.GetMatchingGroup(c100333031.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100333031.filter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
 	if g:GetCount()>0 then
 		local sg=Group.CreateGroup()
 		repeat

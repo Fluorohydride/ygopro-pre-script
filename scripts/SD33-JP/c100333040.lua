@@ -2,6 +2,7 @@
 --Powercode Talker
 --Scripted by Eerie Code
 function c100333040.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,nil,3,3)
 	--negate
@@ -82,7 +83,7 @@ function c100333040.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_DAMAGE_CAL)
 		e1:SetValue(atk*2)
 		c:RegisterEffect(e1)
 	end

@@ -2,6 +2,7 @@
 --Security Dragon
 --Scripted by Eerie Code
 function c100200139.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,nil,2,2)
 	--to hand
@@ -13,17 +14,12 @@ function c100200139.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(c100200139.thcon)
-	e1:SetCost(c100200139.thcost)
 	e1:SetTarget(c100200139.thtg)
 	e1:SetOperation(c100200139.thop)
 	c:RegisterEffect(e1)
 end
 function c100200139.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
-end
-function c100200139.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,100200139)==0 end
-	Duel.RegisterFlagEffect(tp,100200139,RESET_PHASE+PHASE_END,0,1)
 end
 function c100200139.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end
@@ -34,6 +30,8 @@ function c100200139.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100200139,1))
 end
 function c100200139.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	Duel.SendtoHand(g,nil,REASON_EFFECT)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	end
 end

@@ -2,6 +2,7 @@
 --Gladiator Beast Dragacius
 --Scripted by Eerie Code
 function c100223006.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x19),2,2)
 	--indes
@@ -57,7 +58,7 @@ function c100223006.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,0,REASON_COST)
 end
 function c100223006.spfilter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,123,tp,false,false)
+	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,125,tp,false,false)
 end
 function c100223006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -75,16 +76,16 @@ function c100223006.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100223006.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	if g:GetCount()>=2 and g:GetClassCount(Card.GetCode)>=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:Select(tp,1,1,nil)
-		local tc=sg:GetFirst()
-		Duel.SpecialSummonStep(tc,123,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+0x1ff0000,0,0)
-		g:Remove(Card.IsCode,nil,tc:GetCode())
+		local sg1=g:Select(tp,1,1,nil)
+		local tc1=sg1:GetFirst()
+		g:Remove(Card.IsCode,nil,tc1:GetCode())
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		sg=g:Select(tp,1,1,nil)
-		tc=sg:GetFirst()
-		Duel.SpecialSummonStep(tc,123,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+0x1ff0000,0,0)
+		local sg2=g:Select(tp,1,1,nil)
+		local tc2=sg2:GetFirst()
+		sg1:Merge(sg2)
+		Duel.SpecialSummonStep(sg1,125,tp,tp,false,false,POS_FACEUP)
+		tc:RegisterFlagEffect(tc1:GetOriginalCode(),RESET_EVENT+0x1ff0000,0,0)
+		tc:RegisterFlagEffect(tc2:GetOriginalCode(),RESET_EVENT+0x1ff0000,0,0)
 		Duel.SpecialSummonComplete()
 	end
 end

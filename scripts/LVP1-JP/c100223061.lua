@@ -2,8 +2,9 @@
 --Qliphort Genius
 --Scripted by Eerie Code
 function c100223061.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE),2,2)
 	--immune
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -15,6 +16,7 @@ function c100223061.initial_effect(c)
 	c:RegisterEffect(e1)
 	--disable
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100223061,0))
 	e2:SetCategory(CATEGORY_DISABLE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,7 +27,7 @@ function c100223061.initial_effect(c)
 	c:RegisterEffect(e2)
 	--search
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100223061,0))
+	e3:SetDescription(aux.Stringid(100223061,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -38,20 +40,17 @@ function c100223061.immcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c100223061.efilter(e,te)
-	local c=e:GetHandler()
-	local tc=te:GetHandler()
 	if te:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return true
-	else return tc:IsType(TYPE_LINK) and tc~=c end
+	else return te:IsActiveType(TYPE_LINK) and te:IsActivated() and te:GetOwner()~=e:GetOwner() end
 end
 function c100223061.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingTarget(aux.disfilter1,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
-	local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
-	e:SetLabelObject(g:GetFirst())
+	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,LOCATION_MZONE,0,1,e:GetHandler())
+		and Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	Duel.SelectTarget(tp,aux.disfilter1,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
+	Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function c100223061.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -86,8 +85,9 @@ function c100223061.thcfilter(c,lg)
 	return lg:IsContains(c)
 end
 function c100223061.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local lg=e:GetHandler():GetLinkedGroup()
-	return eg:FilterCount(c100223061.thcfilter,nil,lg)==2
+	local c=e:GetHandler()
+	local lg=c:GetLinkedGroup()
+	return not eg:IsContains(c) and eg:FilterCount(c100223061.thcfilter,nil,lg)==2
 end
 function c100223061.thfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsLevelAbove(5) and c:IsAbleToHand()
