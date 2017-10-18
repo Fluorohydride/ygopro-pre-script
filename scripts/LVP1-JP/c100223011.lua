@@ -3,15 +3,7 @@
 --Scripted by Eerie Code
 function c100223011.initial_effect(c)
 	--link summon
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_FIELD)
-	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e0:SetCode(EFFECT_SPSUMMON_PROC)
-	e0:SetRange(LOCATION_EXTRA)
-	e0:SetCondition(c100223011.lkcon)
-	e0:SetOperation(c100223011.lkop)
-	e0:SetValue(SUMMON_TYPE_LINK)
-	c:RegisterEffect(e0)
+	aux.AddLinkProcedure(c,nil,3,3,c100223011.lcheck)
 	c:EnableReviveLimit()
 	--to grave
 	local e1=Effect.CreateEffect(c)
@@ -32,9 +24,9 @@ function c100223011.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,100223011+100)
-	e2:SetCondition(c100223011.gycon2)
-	e2:SetTarget(c100223011.gytg2)
-	e2:SetOperation(c100223011.gyop2)
+	e2:SetCondition(c100223011.ddcon)
+	e2:SetTarget(c100223011.ddtg)
+	e2:SetOperation(c100223011.ddop)
 	c:RegisterEffect(e2)
 	--to hand
 	local e3=Effect.CreateEffect(c)
@@ -48,25 +40,8 @@ function c100223011.initial_effect(c)
 	e3:SetOperation(c100223011.thop)
 	c:RegisterEffect(e3)
 end
-function c100223011.lkfilter1(c,lc,tp)
-	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and Duel.IsExistingMatchingCard(c100223011.linkfilter2,tp,LOCATION_MZONE,0,1,c,lc,c,tp)
-end
-function c100223011.lkfilter2(c,lc,mc,tp)
-	local mg=Group.FromCards(c,mc)
-	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and not c:IsRace(mc:GetRace()) and c:IsAttribute(mc:GetAttribute()) and Duel.GetLocationCountFromEx(tp,tp,mg,lc)>0
-end
-function c100223011.lkcon(e,c)
-	if c==nil then return true end
-	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
-	local tp=c:GetControler()
-	return Duel.IsExistingMatchingCard(c100223011.lkfilter1,tp,LOCATION_MZONE,0,1,nil,c,tp)
-end
-function c100223011.lkop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g1=Duel.SelectMatchingCard(tp,c100223011.lkfilter1,tp,LOCATION_MZONE,0,1,1,nil,c,tp)
-	local g2=Duel.SelectMatchingCard(tp,c100223011.lkfilter2,tp,LOCATION_MZONE,0,1,1,g1:GetFirst(),c,g1:GetFirst(),tp)
-	g1:Merge(g2)
-	c:SetMaterial(g1)
-	Duel.SendtoGrave(g1,REASON_MATERIAL+REASON_LINK)
+function c100223011.lcheck(g)
+	return g:GetClassCount(Card.GetAttribute)==1 and g:GetClassCount(Card.GetRace)==g:GetCount()
 end
 function c100223011.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
