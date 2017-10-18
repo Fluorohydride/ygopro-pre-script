@@ -37,7 +37,7 @@ function c32472237.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg=c:GetColumnGroup():Filter(Card.IsControler,nil,1-tp)
 	if chk==0 then return c:IsDestructable() and cg:GetCount()>0 end
 	cg:AddCard(c)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,cg,cg:GetCount(),0,0)
 end
 function c32472237.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
