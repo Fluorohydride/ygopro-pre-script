@@ -21,7 +21,7 @@ function c101002087.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e3:SetTarget(c101002087.tglimit)
@@ -70,8 +70,11 @@ end
 function c101002087.atlimit(e,c)
 	return c~=e:GetHandler()
 end
+function c101002087.tglimit(e,c)
+	return c~=e:GetHandler()
+end
 function c101002087.tgval(e,re,rp)
-	if not aux.tgoval(e,re,rp) then return end
+	if not aux.tgoval(e,re,rp) then return false end
 	local c=re:GetHandler()
 	local lv=e:GetHandler():GetLevel()
 	if c:GetRank()>0 then
