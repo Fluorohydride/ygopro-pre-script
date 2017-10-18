@@ -29,7 +29,7 @@ end
 function c100407002.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and ((c:IsPreviousSetCard(0x20a) and bit.band(c:GetPreviousTypeOnField(),TYPE_FUSION)~=0)
-			or c:GetPreviousCodeOnField()==64631466 or c:GetPreviousCodeOnField()==63519819))
+			or (c:GetPreviousCodeOnField()==64631466 or c:GetPreviousCodeOnField()==63519819))
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c100407002.spcon1(e,tp,eg,ep,ev,re,r,rp)
