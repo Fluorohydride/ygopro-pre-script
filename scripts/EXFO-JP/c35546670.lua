@@ -12,7 +12,7 @@ function c35546670.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x20c))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x10c))
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
@@ -42,7 +42,7 @@ function c35546670.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c35546670.costfilter1(c)
-	return ((c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xfe)) and c:IsDiscardable()
+	return ((c:IsSetCard(0x10c) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xfe)) and c:IsDiscardable()
 end
 function c35546670.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c35546670.costfilter1,tp,LOCATION_HAND,0,1,nil) end
@@ -61,7 +61,7 @@ function c35546670.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function c35546670.costfilter2(c)
-	return c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x10c) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsAbleToRemoveAsCost()
 end
 function c35546670.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c35546670.costfilter2,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)

@@ -22,7 +22,7 @@ function c62753201.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(rg,REASON_COST)
 end
 function c62753201.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x20d)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x10f)
 end
 function c62753201.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c62753201.filter(chkc) end
@@ -32,7 +32,7 @@ function c62753201.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 function c62753201.eqlimit(e,c)
-	return c:GetControler()==e:GetHandlerPlayer() and c:IsType(TYPE_LINK) and c:IsSetCard(0x20d)
+	return c:GetControler()==e:GetHandlerPlayer() and c:IsType(TYPE_LINK) and c:IsSetCard(0x10f)
 end
 function c62753201.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

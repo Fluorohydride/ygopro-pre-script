@@ -74,7 +74,7 @@ function c98935722.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c98935722.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x20c)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x10c)
 end
 function c98935722.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetColumnGroup():FilterCount(c98935722.cfilter,nil,tp)>0

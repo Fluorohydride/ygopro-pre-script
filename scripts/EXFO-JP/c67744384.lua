@@ -18,14 +18,14 @@ function c67744384.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
 end
 function c67744384.thfilter(c)
-	return c:IsSetCard(0x20b) and c:IsAbleToHand()
+	return c:IsSetCard(0x10b) and c:IsAbleToHand()
 end
 function c67744384.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_MZONE,0,1,3,nil)
 	if g:GetCount()>0 then
 		local ct=Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
-		if ct==g:GetCount() and g:IsExists(Card.IsSetCard,ct,nil,0x20b) then
+		if ct==g:GetCount() and g:IsExists(Card.IsSetCard,ct,nil,0x10b) then
 			local sg=Duel.GetMatchingGroup(c67744384.thfilter,tp,LOCATION_DECK,0,nil)
 			if sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(67744384,1)) then
 				Duel.BreakEffect()

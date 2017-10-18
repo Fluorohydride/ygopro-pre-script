@@ -47,7 +47,7 @@ function c56809158.hspval(e,c)
 	return 0,zone
 end
 function c56809158.costfilter(c)
-	return c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x10c) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c56809158.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c56809158.costfilter,tp,LOCATION_GRAVE,0,1,nil) end

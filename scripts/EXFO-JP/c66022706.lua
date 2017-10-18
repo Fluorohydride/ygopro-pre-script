@@ -53,7 +53,7 @@ function c66022706.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetAttacker()==c or Duel.GetAttackTarget()==c) and tc and c:GetColumnGroup():IsContains(tc)
 end
 function c66022706.thfilter(c)
-	return c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x10c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c66022706.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c66022706.thfilter(chkc) end

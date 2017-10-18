@@ -71,7 +71,7 @@ function c80959027.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c80959027.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x209) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x10d) and c:IsAbleToHand()
 end
 function c80959027.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

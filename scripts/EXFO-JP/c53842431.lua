@@ -56,7 +56,7 @@ function c53842431.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
 end
 function c53842431.thfilter(c)
-	return (c:IsSetCard(0x209) or c:IsCode(55424270)) and c:IsLevelBelow(7)
+	return c:IsSetCard(0x10d) and c:IsLevelBelow(7)
 		and c:IsType(TYPE_EFFECT) and c:IsAbleToHand()
 end
 function c53842431.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

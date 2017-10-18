@@ -59,7 +59,7 @@ function c93020401.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c93020401.spcfilter,1,nil,tp,e:GetHandler())
 end
 function c93020401.filter(c,e,tp)
-	return c:IsSetCard(0x20c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x10c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c93020401.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

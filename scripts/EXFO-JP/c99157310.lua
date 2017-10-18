@@ -27,7 +27,7 @@ function c99157310.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c99157310.cfilter1(c)
-	return c:IsSetCard(0x20b) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x10b) and c:IsType(TYPE_MONSTER)
 end
 function c99157310.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and Duel.GetAttacker():IsControler(1-tp)
@@ -63,7 +63,7 @@ function c99157310.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(c99157310.cfilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c99157310.spfilter(c,e,tp)
-	return c:IsSetCard(0x20b) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(0x10b) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function c99157310.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

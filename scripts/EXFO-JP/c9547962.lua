@@ -39,7 +39,7 @@ function c9547962.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c9547962.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x20b)
+	return c:IsFaceup() and c:IsSetCard(0x10b)
 end
 function c9547962.atkcon(e)
 	return Duel.IsExistingMatchingCard(c9547962.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,3,nil)
@@ -48,7 +48,7 @@ function c9547962.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function c9547962.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x20b) and c:IsAbleToChangeControler()
+	return c:IsFaceup() and c:IsSetCard(0x10b) and c:IsAbleToChangeControler()
 end
 function c9547962.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c9547962.ctfilter(chkc) end
@@ -65,7 +65,7 @@ function c9547962.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c9547962.cfilter(c)
-	return c:IsSetCard(0x20b) and c:IsDiscardable()
+	return c:IsSetCard(0x10b) and c:IsDiscardable()
 end
 function c9547962.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()

@@ -86,7 +86,7 @@ function c41782653.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function c41782653.thfilter(c)
-	return c:IsSetCard(0x20e) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x10e) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
 function c41782653.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c41782653.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -51,10 +51,10 @@ function c28692962.hspval(e,c)
 	return 0,c28692962.getzone(tp)
 end
 function c28692962.rmfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x20c) and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsSetCard(0x10c) and c:IsAbleToRemove()
 end
 function c28692962.thfilter(c)
-	return c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER) and not c:IsCode(28692962) and c:IsAbleToHand()
+	return c:IsSetCard(0x10c) and c:IsType(TYPE_MONSTER) and not c:IsCode(28692962) and c:IsAbleToHand()
 end
 function c28692962.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c28692962.rmfilter(chkc) end

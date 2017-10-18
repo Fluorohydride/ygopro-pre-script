@@ -49,7 +49,7 @@ function c27354732.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
 end
 function c27354732.spfilter(c,e,tp)
-	return c:IsSetCard(0x209) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(0x10d) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 		and not c:IsCode(27354732) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c27354732.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

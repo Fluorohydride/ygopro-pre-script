@@ -47,7 +47,7 @@ function c92204263.hspval(e,c)
 	return 0,zone
 end
 function c92204263.seqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x20c)
+	return c:IsFaceup() and c:IsSetCard(0x10c)
 end
 function c92204263.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c92204263.seqfilter(chkc) end

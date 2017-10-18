@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c38502358.initial_effect(c)
   c:EnableReviveLimit()
-  aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x20c),2)
+  aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x10c),2)
 	--direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -45,7 +45,7 @@ function c38502358.spcfilter(c,hc)
 	return c:GetColumnGroup():IsContains(hc) and c:IsAbleToGraveAsCost()
 end
 function c38502358.spfilter(c,e,tp)
-	return c:IsSetCard(0x20c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(0x10c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c38502358.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

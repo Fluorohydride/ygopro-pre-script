@@ -18,7 +18,7 @@ function c2930675.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c2930675.thfilter(c)
-	return ((c:IsSetCard(0x20c) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xfe)) and c:IsFaceup() and c:IsAbleToHand()
+	return ((c:IsSetCard(0x10c) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xfe)) and c:IsFaceup() and c:IsAbleToHand()
 end
 function c2930675.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c2930675.thfilter(chkc) end
@@ -45,7 +45,7 @@ function c2930675.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c2930675.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x20c)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x10c)
 end
 function c2930675.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetColumnGroup():FilterCount(c2930675.cfilter,nil,tp)>0

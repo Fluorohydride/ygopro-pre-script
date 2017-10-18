@@ -41,7 +41,7 @@ function c63053267.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c63053267.indtg(e,c)
-	return c:IsSetCard(0x20b) and c:GetSequence()<5
+	return c:IsSetCard(0x10b) and c:GetSequence()<5
 end
 function c63053267.indval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
@@ -49,12 +49,12 @@ end
 function c63053267.damval(e,re,val,r,rp,rc)
 	local tp=e:GetHandlerPlayer()
 	if Duel.GetFlagEffect(tp,63053267)~=0 or bit.band(r,REASON_BATTLE)==0
-		or not rc:IsSetCard(0x20b) or not rc:IsControler(tp) then return val end
+		or not rc:IsSetCard(0x10b) or not rc:IsControler(tp) then return val end
 	Duel.RegisterFlagEffect(tp,63053267,RESET_PHASE+PHASE_END,0,1)
 	return val*2
 end
 function c63053267.cfilter(c)
-	return c:IsSetCard(0x20b) and c:IsDiscardable()
+	return c:IsSetCard(0x10b) and c:IsDiscardable()
 end
 function c63053267.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
