@@ -69,16 +69,16 @@ function c15397015.econ1(e)
 end
 function c15397015.aclimit3(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not re:IsActiveType(TYPE_MONSTER) then return end
-	e:GetHandler():RegisterFlagEffect(101003135,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(15397016,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c15397015.aclimit4(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	e:GetHandler():ResetFlagEffect(101003135)
+	e:GetHandler():ResetFlagEffect(15397016)
 end
 function c15397015.econ2(e)
 	local g=Duel.GetMatchingGroup(c15397015.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil)
 	local ct=g:GetClassCount(c15397015.typecount)
-	return e:GetHandler():GetFlagEffect(101003135)<ct
+	return e:GetHandler():GetFlagEffect(15397016)<ct
 end
 function c15397015.elimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
