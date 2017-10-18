@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **October 7, 2017** : Promotion Pack 2017 (17PR-JP) : `100230XXX`
 - **October 14, 2017** : EXTREME FORCE (EXFO-JP) : `101003XXX`
 - **October 19, 2017** : Circuit Break (CIBR-EN) : `101002XXX`
 - **November 11, 2017** : Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX`
@@ -62,3 +61,4 @@
 - ~~Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 2 promotional card (YS02-JP) : `100221XXX`~~
 - ~~Yu-Gi-Oh! ARC-V Volume 4 promotional card (YA04-JP) : `100222XXX`~~
 - ~~Legendary Dragon Decks (LEDD-EN) : `100240XXX`~~
+- ~~Promotion Pack 2017 (17PR-JP) : `100230XXX`~~
