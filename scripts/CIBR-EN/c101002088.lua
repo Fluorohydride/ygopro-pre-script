@@ -25,7 +25,7 @@ function c101002088.initial_effect(c)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1,101002088)
 	e3:SetCondition(c101002088.descon)
-	e3:SetTarget(c101002088.destarg)
+	e3:SetTarget(c101002088.destg)
 	e3:SetOperation(c101002088.desop)
 	c:RegisterEffect(e3)
 	--to hand
