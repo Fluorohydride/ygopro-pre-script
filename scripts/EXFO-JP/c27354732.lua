@@ -43,7 +43,7 @@ function c27354732.initial_effect(c)
 	e4:SetCost(c27354732.cost)
 	e4:SetTarget(c27354732.target)
 	e4:SetOperation(c27354732.operation)
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e4)
 end
 function c27354732.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)

@@ -86,7 +86,7 @@ function c28570310.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c28570310.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=eg:Filter(c28570310.cfilter,1,nil,1-tp):Filter(Card.IsAbleToHand,nil)
+	local g=eg:Filter(c28570310.cfilter,nil,1-tp):Filter(Card.IsAbleToHand,nil)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and g:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
