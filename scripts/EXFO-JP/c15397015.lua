@@ -46,7 +46,7 @@ function c15397015.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function c15397015.sumcon(e)
-	return Duel.GetFieldGroupCount(e:GetHandler():IsControler(),LOCATION_MZONE,0)>0
+	return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),LOCATION_MZONE,0)>0
 end
 function c15397015.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM+TYPE_LINK)
