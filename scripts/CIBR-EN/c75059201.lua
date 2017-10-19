@@ -1,13 +1,13 @@
 --F.A. Turbo Charger
 --Scripted by Eerie Code
-function c101002087.initial_effect(c)
+function c75059201.initial_effect(c)
 	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(c101002087.atkval)
+	e1:SetValue(c75059201.atkval)
 	c:RegisterEffect(e1)
 	--untargetable
 	local e2=Effect.CreateEffect(c)
@@ -15,8 +15,8 @@ function c101002087.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
-	e2:SetTarget(c101002087.atglimit)
-	e2:SetValue(c101002087.atlimit)
+	e2:SetTarget(c75059201.atglimit)
+	e2:SetValue(c75059201.atlimit)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -24,8 +24,8 @@ function c101002087.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetTarget(c101002087.tglimit)
-	e3:SetValue(c101002087.tgval)
+	e3:SetTarget(c75059201.tglimit)
+	e3:SetValue(c75059201.tgval)
 	c:RegisterEffect(e3)
 	--lv up
 	local e0=Effect.CreateEffect(c)
@@ -36,14 +36,14 @@ function c101002087.initial_effect(c)
 	e0:SetOperation(aux.chainreg)
 	c:RegisterEffect(e0)
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(101002087,0))
+	e4:SetDescription(aux.Stringid(75059201,0))
 	e4:SetCategory(CATEGORY_LVCHANGE)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e4:SetCode(EVENT_CHAIN_SOLVING)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(c101002087.lvcon)
-	e4:SetOperation(c101002087.lvop)
+	e4:SetCondition(c75059201.lvcon)
+	e4:SetOperation(c75059201.lvop)
 	c:RegisterEffect(e4)
 	--actlimit
 	local e5=Effect.CreateEffect(c)
@@ -52,14 +52,14 @@ function c101002087.initial_effect(c)
 	e5:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetTargetRange(0,1)
-	e5:SetValue(c101002087.aclimit)
-	e5:SetCondition(c101002087.actcon)
+	e5:SetValue(c75059201.aclimit)
+	e5:SetCondition(c75059201.actcon)
 	c:RegisterEffect(e5)
 end
-function c101002087.atkval(e,c)
+function c75059201.atkval(e,c)
 	return c:GetLevel()*300
 end
-function c101002087.atglimit(e,c)
+function c75059201.atglimit(e,c)
 	local lv=e:GetHandler():GetLevel()
 	if c:GetRank()>0 then
 		return c:GetOriginalRank()<lv
@@ -67,13 +67,13 @@ function c101002087.atglimit(e,c)
 		return c:GetOriginalLevel()<lv
 	else return false end
 end
-function c101002087.atlimit(e,c)
+function c75059201.atlimit(e,c)
 	return c~=e:GetHandler()
 end
-function c101002087.tglimit(e,c)
+function c75059201.tglimit(e,c)
 	return c~=e:GetHandler()
 end
-function c101002087.tgval(e,re,rp)
+function c75059201.tgval(e,re,rp)
 	if not aux.tgoval(e,re,rp) then return false end
 	local c=re:GetHandler()
 	local lv=e:GetHandler():GetLevel()
@@ -83,10 +83,10 @@ function c101002087.tgval(e,re,rp)
 		return c:GetOriginalLevel()<lv
 	else return false end
 end
-function c101002087.lvcon(e,tp,eg,ep,ev,re,r,rp)
+function c75059201.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x107) and e:GetHandler():GetFlagEffect(1)>0
 end
-function c101002087.lvop(e,tp,eg,ep,ev,re,r,rp)
+function c75059201.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
@@ -99,10 +99,10 @@ function c101002087.lvop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function c101002087.aclimit(e,re,tp)
+function c75059201.aclimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
 end
-function c101002087.actcon(e)
+function c75059201.actcon(e)
 	if not e:GetHandler():IsLevelAbove(7) then return false end
 	local a=Duel.GetAttacker()
 	if not a then return false end
