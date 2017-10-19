@@ -34,7 +34,7 @@ function c66022706.hspcon(e,c)
 	local zone=0
 	local lg=Duel.GetMatchingGroup(c66022706.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	for tc in aux.Next(lg) do
-		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,0,0,tc:GetControler()))
+		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,0,0,tp))
 	end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
@@ -43,7 +43,7 @@ function c66022706.hspval(e,c)
 	local zone=0
 	local lg=Duel.GetMatchingGroup(c66022706.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	for tc in aux.Next(lg) do
-		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,0,0,tc:GetControler()))
+		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,0,0,tp))
 	end
 	return 0,zone
 end

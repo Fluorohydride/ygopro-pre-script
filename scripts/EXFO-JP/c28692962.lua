@@ -28,27 +28,24 @@ end
 function c28692962.cfilter(c)
 	return c:GetColumnGroupCount()>0
 end
-function c28692962.getzone(tp)
-	local zone=0
-	local lg=Duel.GetMatchingGroup(c28692962.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-	for tc in aux.Next(lg) do
-		if tc:IsControler(tp) then
-			zone=bit.bor(zone,bit.band(tc:GetColumnZone(LOCATION_MZONE),0xff))
-		else
-			zone=bit.bor(zone,bit.rshift(bit.band(tc:GetColumnZone(LOCATION_MZONE),0xff0000),16))
-		end
-	end
-	return zone
-end
 function c28692962.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local zone=c28692962.getzone(tp)
+	local zone=0
+	local lg=Duel.GetMatchingGroup(c28692962.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	for tc in aux.Next(lg) do
+		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,0,0,tp))
+	end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function c28692962.hspval(e,c)
 	local tp=c:GetControler()
-	return 0,c28692962.getzone(tp)
+	local zone=0
+	local lg=Duel.GetMatchingGroup(c28692962.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	for tc in aux.Next(lg) do
+		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,0,0,tp))
+	end
+	return 0,zone
 end
 function c28692962.rmfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10c) and c:IsAbleToRemove()
