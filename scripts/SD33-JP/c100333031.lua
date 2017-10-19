@@ -42,6 +42,6 @@ function c100333031.activate(e,tp,eg,ep,ev,re,r,rp)
 			g:Remove(Card.IsCode,nil,sg2:GetFirst():GetCode())
 			ct=ct-1
 		until ct==0 or g:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(100333031,0))
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,zone)
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end

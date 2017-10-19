@@ -48,9 +48,9 @@ function c13452889.spop(e,tp,eg,ep,ev,re,r,rp)
 		local zone2=c:GetLinkedZone(1-tp)
 		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone1)
 			and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp,zone2) or Duel.SelectYesNo(tp,aux.Stringid(13452889,1))) then
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,zone1)
+			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone1)
 		else
-			if Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP,zone2)~=0
+			if Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP,zone2)~=0
 				and c:IsRelateToBattle() then
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)

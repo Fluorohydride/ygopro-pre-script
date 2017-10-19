@@ -42,7 +42,7 @@ function c89015998.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c89015998.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	return Duel.GetTurnCount()~=e:SetLabel() and tc:GetFlagEffect(89015998)~=0
+	return Duel.GetTurnCount()~=e:GetLabel() and tc:GetFlagEffect(89015998)~=0
 end
 function c89015998.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())
