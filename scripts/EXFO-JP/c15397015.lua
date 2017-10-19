@@ -19,12 +19,6 @@ function c15397015.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(c15397015.aclimit1)
 	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e3:SetCode(EVENT_CHAIN_NEGATED)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetOperation(c15397015.aclimit2)
-	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -37,9 +31,6 @@ function c15397015.initial_effect(c)
 	local e5=e2:Clone()
 	e5:SetOperation(c15397015.aclimit3)
 	c:RegisterEffect(e5)
-	local e6=e3:Clone()
-	e6:SetOperation(c15397015.aclimit4)
-	c:RegisterEffect(e6)
 	local e7=e4:Clone()
 	e7:SetCondition(c15397015.econ2)
 	e7:SetTargetRange(0,1)
@@ -58,10 +49,6 @@ function c15397015.aclimit1(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp or not re:IsActiveType(TYPE_MONSTER) then return end
 	e:GetHandler():RegisterFlagEffect(15397015,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
 end
-function c15397015.aclimit2(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	e:GetHandler():ResetFlagEffect(15397015)
-end
 function c15397015.econ1(e)
 	local g=Duel.GetMatchingGroup(c15397015.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil)
 	local ct=g:GetClassCount(c15397015.typecount)
@@ -70,10 +57,6 @@ end
 function c15397015.aclimit3(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not re:IsActiveType(TYPE_MONSTER) then return end
 	e:GetHandler():RegisterFlagEffect(15397016,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
-end
-function c15397015.aclimit4(e,tp,eg,ep,ev,re,r,rp)
-	if ep==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	e:GetHandler():ResetFlagEffect(15397016)
 end
 function c15397015.econ2(e)
 	local g=Duel.GetMatchingGroup(c15397015.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil)
