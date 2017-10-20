@@ -77,6 +77,9 @@ function c100407010.activate(e,tp,eg,ep,ev,re,r,rp)
 		e7:SetCondition(c100407010.atkcon2)
 		e7:SetValue(c100407010.atkval)
 		c:RegisterEffect(e7)
+		local e8=e7:Clone()
+		e8:SetCode(EFFECT_UPDATE_DEFENSE)
+		c:RegisterEffect(e8)
 	end
 end
 function c100407010.eqlimit(e,c)
