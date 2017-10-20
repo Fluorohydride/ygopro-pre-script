@@ -25,7 +25,7 @@ function c100407003.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(c100407003.atkval)
 	c:RegisterEffect(e2)
-	-- def
+	--def
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	e3:SetValue(c100407003.defval)
@@ -38,6 +38,13 @@ function c100407003.initial_effect(c)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e4:SetTarget(c100407003.distg)
 	c:RegisterEffect(e4)
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e6:SetCode(EVENT_CHAIN_SOLVING)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetCondition(c100407003.discon)
+	e6:SetOperation(c100407003.disop)
+	c:RegisterEffect(e6)
 	--atk limit
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
@@ -116,6 +123,21 @@ function c100407003.disfilter(c)
 	return c:IsFaceup() and c:GetFlagEffect(100407003)~=0
 end
 function c100407003.distg(e,c)
+	if not c:IsFaceup() then return false end
 	local g=e:GetHandler():GetEquipGroup():Filter(c100407003.disfilter,nil)
-	return c:IsFaceup() and g:IsExists(Card.IsCode,1,nil,c:GetCode())
+	local code=c:GetCode()
+	local code2=c:GetFlagEffectLabel(100407103)
+	if code2 then code=code2 end
+	local res=g:IsExists(Card.IsCode,1,nil,code)
+	if res and code2==nil and code~=c:GetOriginalCode() then
+		c:RegisterFlagEffect(100407103,RESET_EVENT+0x1fe0000,0,0,code)
+	end
+	return res
+end
+function c100407003.discon(e,tp,eg,ep,ev,re,r,rp)
+	local g=e:GetHandler():GetEquipGroup():Filter(c100407003.disfilter,nil)
+	return re:IsActiveType(TYPE_MONSTER) and g:IsExists(Card.IsCode,1,nil,re:GetHandler():GetCode())
+end
+function c100407003.disop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.NegateEffect(ev)
 end
