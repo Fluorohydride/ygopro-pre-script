@@ -18,7 +18,7 @@ function c13452889.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c13452889.cfilter(c,tp,g,zone)
-	return g:IsContains(c) and (Duel.CheckLocation(c:GetControler(),LOCATION_MZONE,c:GetSequence(),true)
+	return g:IsContains(c) and (Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_TOFIELD,zone)>0
 		or Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0)
 end
 function c13452889.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -34,16 +34,15 @@ function c13452889.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=c:GetBattleTarget()
 	local zone1=c:GetLinkedZone(tp)
 	local zone2=c:GetLinkedZone(1-tp)
-	if chk==0 then return c:GetLinkedZone()~=0
-		and (bc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone1,true))
-		or (bc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp,zone2)) end
+	if chk==0 then return bc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		or bc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp,zone2) end
 	Duel.SetTargetCard(bc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,bc,1,0,0)
 end
 function c13452889.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:GetLinkedZone()~=0 and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		local zone1=c:GetLinkedZone(tp)
 		local zone2=c:GetLinkedZone(1-tp)
 		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone1)

@@ -63,7 +63,7 @@ end
 function c97803170.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if Duel.DiscardHand(tp,c97803170.cfilter,1,1,REASON_EFFECT,nil)~=0 then
+	if Duel.DiscardHand(tp,c97803170.cfilter,1,1,REASON_EFFECT+REASON_DISCARD,nil)~=0 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not tc:IsRelateToEffect(e) then return end
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
