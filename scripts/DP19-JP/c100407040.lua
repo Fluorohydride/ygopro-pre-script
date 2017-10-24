@@ -71,6 +71,7 @@ function c100407040.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100407040.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
+		g:GetFirst():CompleteProcedure()
 	end
 end
 function c100407040.plcfilter(c,tp)
