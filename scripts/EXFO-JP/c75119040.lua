@@ -44,7 +44,7 @@ function c75119040.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10b)
 end
 function c75119040.atkval(e,c)
-	return c:GetLinkedGroup():FilterCount(c75119040.atkfilter,nil)*600
+	return c:GetLinkedGroup():FilterCount(c75119040.atkfilter,nil)*500
 end
 function c75119040.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetAttackedCount()>0
