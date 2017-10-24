@@ -58,8 +58,8 @@ end
 function c100407008.indfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT)
 end
-function c100407008.indcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100407008.indfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+function c100407008.indcon(e)
+	return Duel.IsExistingMatchingCard(c100407008.indfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function c100407008.indval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
