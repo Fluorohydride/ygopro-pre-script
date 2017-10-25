@@ -2,6 +2,7 @@
 --Perpetual King Archfiend
 --Script by nekrozar
 function c100223001.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),2,2)
 	--maintain
@@ -83,7 +84,7 @@ function c100223001.dctg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100223001.dcop(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.TossDice(tp,1)
-	local g=eg:Filter(c100223001.cfilter,nil,e,tp)
+	local g=eg:Filter(aux.NecroValleyFilter(c100223001.cfilter),nil,e,tp)
 	if g:GetCount()==0 then return end
 	local tc=nil
 	if g:GetCount()>1 then
