@@ -48,8 +48,9 @@ end
 function c35146019.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK)==0 then return end
+		if not c:IsRelateToEffect(e) then return end
 		Duel.Equip(tp,c,tc)
 		c:CancelToGrave()
 		--Add Equip limit
