@@ -8,16 +8,41 @@ function c100407010.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCost(c100407010.cost)
 	e1:SetTarget(c100407010.target)
 	e1:SetOperation(c100407010.activate)
 	c:RegisterEffect(e1)
+end
+function c100407010.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local c=e:GetHandler()
+	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_REMAIN_FIELD)
+	e1:SetProperty(EFFECT_FLAG_OATH)
+	e1:SetReset(RESET_CHAIN)
+	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_CHAIN_DISABLED)
+	e2:SetOperation(c100407010.tgop)
+	e2:SetLabel(cid)
+	e2:SetReset(RESET_CHAIN)
+	Duel.RegisterEffect(e2,tp)
+end
+function c100407010.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
+	if cid~=e:GetLabel() then return end
+	e:GetOwner():CancelToGrave(false)
 end
 function c100407010.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT)
 end
 function c100407010.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100407010.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100407010.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
+		and Duel.IsExistingTarget(c100407010.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,c100407010.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
@@ -25,8 +50,9 @@ end
 function c100407010.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsLocation(LOCATION_SZONE) then return end
+	if not c:IsRelateToEffect(e) or c:IsStatus(STATUS_LEAVE_CONFIRMED) then return end
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,c,tc)
 		c:CancelToGrave()
 		local e1=Effect.CreateEffect(c)
@@ -57,10 +83,10 @@ function c100407010.activate(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e4)
 		local e5=Effect.CreateEffect(c)
 		e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e5:SetCode(EVENT_CHAINING)
 		e5:SetRange(LOCATION_SZONE)
-		e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e5:SetOperation(c100407010.regop)
+		e5:SetOperation(aux.chainreg)
 		c:RegisterEffect(e5)
 		local e6=Effect.CreateEffect(c)
 		e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -80,10 +106,12 @@ function c100407010.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e8=e7:Clone()
 		e8:SetCode(EFFECT_UPDATE_DEFENSE)
 		c:RegisterEffect(e8)
+	else
+		c:CancelToGrave(false)
 	end
 end
 function c100407010.eqlimit(e,c)
-	return c:GetControler()==e:GetHandlerPlayer() or e:GetHandler():GetEquipTarget()==c
+	return c:IsRace(RACE_INSECT) or e:GetHandler():GetEquipTarget()==c
 end
 function c100407010.atkcon1(e)
 	local ec=e:GetHandler():GetEquipTarget()
@@ -107,11 +135,8 @@ function c100407010.ctop(e,tp,eg,ep,ev,re,r,rp)
 		tc=g:GetNext()
 	end
 end
-function c100407010.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(100407010,RESET_EVENT+0x1fc0000+RESET_CHAIN,0,1)
-end
 function c100407010.ctcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget() and ep~=tp and c:GetFlagEffect(100407010)~=0
+	return e:GetHandler():GetEquipTarget() and ep~=tp and e:GetHandler():GetFlagEffect(1)>0
 end
 function c100407010.atkcon2(e)
 	return e:GetHandler():GetEquipTarget()
