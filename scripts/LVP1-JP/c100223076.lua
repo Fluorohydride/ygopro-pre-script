@@ -2,6 +2,7 @@
 --Aromaseraphy Jasmine
 --Scripted by Eerie Code
 function c100223076.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_PLANT),2,2)
 	--indes
@@ -16,10 +17,9 @@ function c100223076.initial_effect(c)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(4709881,0))
+	e2:SetDescription(aux.Stringid(100223076,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100223076)
 	e2:SetCost(c100223076.spcost)
@@ -28,11 +28,11 @@ function c100223076.initial_effect(c)
 	c:RegisterEffect(e2)
 	--search
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100223076,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_RECOVER)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetCountLimit(1)
 	e3:SetCondition(c100223076.thcon)
 	e3:SetTarget(c100223076.thtg)
@@ -67,9 +67,8 @@ function c100223076.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100223076.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	if g:GetCount()>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
 function c100223076.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -79,7 +78,7 @@ function c100223076.thfilter(c)
 	return c:IsRace(RACE_PLANT) and c:IsAbleToHand()
 end
 function c100223076.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100223076.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100223076.thop(e,tp,eg,ep,ev,re,r,rp)
