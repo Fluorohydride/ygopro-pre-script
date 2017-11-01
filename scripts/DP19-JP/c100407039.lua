@@ -1,5 +1,5 @@
 --宝玉の絆
-
+--Crystal Bonds
 --Script by nekrozar
 function c100407039.initial_effect(c)
 	--Activate
@@ -7,6 +7,7 @@ function c100407039.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,100407039+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100407039.target)
 	e1:SetOperation(c100407039.activate)
 	c:RegisterEffect(e1)
@@ -19,14 +20,18 @@ function c100407039.plfilter(c,code)
 	return c:IsSetCard(0x1034) and c:IsType(TYPE_MONSTER) and not c:IsCode(code) and not c:IsForbidden()
 end
 function c100407039.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100407039.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end
+	local ft=0
+	if e:GetHandler():IsLocation(LOCATION_HAND) then ft=1 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>ft
+		and Duel.IsExistingMatchingCard(c100407039.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100407039.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g1=Duel.SelectMatchingCard(tp,c100407039.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
-	if g1:GetCount()>0 Duel.SendtoHand(g1,nil,REASON_EFFECT)~=0 then
+	if g1:GetCount()>0 Duel.SendtoHand(g1,nil,REASON_EFFECT)~=0 and g1:GetFirst():IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,g1)
+		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local g2=Duel.SelectMatchingCard(tp,c100407039.plfilter,tp,LOCATION_DECK,0,1,1,nil,g1:GetFirst():GetCode())
 		local tc=g2:GetFirst()
