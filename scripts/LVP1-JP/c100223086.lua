@@ -2,8 +2,9 @@
 --Heavymetalfoes Electrum
 --Scripted by Eerie Code
 function c100223086.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_PENDULUM),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_PENDULUM),2,2)
 	--to extra
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100223086,0))
