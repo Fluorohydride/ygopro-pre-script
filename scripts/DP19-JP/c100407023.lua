@@ -27,12 +27,12 @@ function c100407023.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c100407023.cfilter(c,tp)
-	return c:IsSetCard(0xf) and (c:IsFaceup() or not c:IsOnField()) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0xf) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(c100407023.filter1,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,c,c:GetCode())
 		and Duel.IsExistingMatchingCard(c100407023.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,c)
 end
-function c100407023.filter1(c,cd)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf) and not c:IsCode(cd) and c:IsAbleToHand()
+function c100407023.filter1(c,code)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf) and not c:IsCode(code) and c:IsAbleToHand()
 end
 function c100407023.filter2(c)
 	return c:IsType(TYPE_MONSTER) and (c:IsCode(59464593,980973,46384672,73879377,65192027,89189982) or c:IsSetCard(0x20f)) and c:IsAbleToHand()
@@ -78,10 +78,9 @@ function c100407023.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c100407023.tdfilter(chkc) end
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
 		and Duel.IsExistingTarget(c100407023.tdfilter,tp,LOCATION_REMOVED,0,3,nil) end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c100407023.tdfilter,tp,LOCATION_REMOVED,0,3,3,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,3,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c100407023.drop(e,tp,eg,ep,ev,re,r,rp)
