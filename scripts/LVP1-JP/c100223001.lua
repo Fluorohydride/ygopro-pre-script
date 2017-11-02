@@ -24,7 +24,7 @@ function c100223001.initial_effect(c)
 	e2:SetCode(EVENT_PAY_LPCOST)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c100223001.tgcon)
-	e2:SetCost(c100223001.cost)
+	e2:SetCost(c100223001.tgcost)
 	e2:SetTarget(c100223001.tgtg)
 	e2:SetOperation(c100223001.tgop)
 	c:RegisterEffect(e2)
@@ -36,7 +36,7 @@ function c100223001.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(c100223001.cost)
+	e3:SetCost(c100223001.dccost)
 	e3:SetTarget(c100223001.dctg)
 	e3:SetOperation(c100223001.dcop)
 	c:RegisterEffect(e3)
@@ -54,7 +54,7 @@ end
 function c100223001.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
 end
-function c100223001.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100223001.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(100223001)==0 end
 	c:RegisterFlagEffect(100223001,RESET_CHAIN,0,1)
@@ -73,9 +73,14 @@ function c100223001.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
+function c100223001.dccost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(100223101)==0 end
+	c:RegisterFlagEffect(100223101,RESET_CHAIN,0,1)
+end
 function c100223001.cfilter(c,e,tp)
-	return bit.band(c:GetPreviousRaceOnField(),RACE_FIEND)~=0 and c:IsType(TYPE_MONSTER)
-		and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
+	return (c:IsRace(RACE_FIEND) or bit.band(c:GetPreviousRaceOnField(),RACE_FIEND)~=0)
+		and c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
 		and (c:IsAbleToHand() or c:IsAbleToDeck() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function c100223001.dctg(e,tp,eg,ep,ev,re,r,rp,chk)
