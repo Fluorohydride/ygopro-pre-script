@@ -29,8 +29,8 @@ function c36368606.desfilter(c)
 	return c:GetSequence()<5
 end
 function c36368606.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c36368606.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(c36368606.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if chk==0 then return g:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c36368606.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -58,6 +58,7 @@ function c36368606.spop(e,tp,eg,ep,ev,re,r,rp)
 	for p=0,1 do
 		local tg=g:Filter(Card.IsControler,nil,p)
 		local ft=Duel.GetLocationCount(p,LOCATION_MZONE)
+		if ft>1 and Duel.IsPlayerAffectedByEffect(p,59822133) then ft=1 end
 		if tg:GetCount()>ft then
 			tg=tg:Select(tp,ft,ft,nil)
 		end
