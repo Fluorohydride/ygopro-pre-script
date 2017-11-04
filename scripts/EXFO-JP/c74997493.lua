@@ -122,7 +122,6 @@ function c74997493.drop(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetCount()==0 then return end
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=g:Select(p,3,3,nil)
-		Duel.ConfirmCards(1-p,sg)
 		Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
 		Duel.SortDecktop(p,p,3)
 		for i=1,3 do

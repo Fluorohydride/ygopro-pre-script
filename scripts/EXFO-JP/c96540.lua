@@ -20,6 +20,7 @@ function c96540.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c96540.costfilter(c,e,tp)
 	return c:IsFaceup() and c:GetOriginalLevel()>0 and Duel.IsExistingMatchingCard(c96540.spfilter,tp,LOCATION_DECK,0,1,nil,c,e,tp)
+		and Duel.GetMZoneCount(tp,c)>0
 end
 function c96540.spfilter(c,tc,e,tp)
 	return c:GetOriginalLevel()==tc:GetOriginalLevel()-1
@@ -31,8 +32,7 @@ function c96540.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-			and Duel.CheckReleaseGroup(tp,c96540.costfilter,1,nil,e,tp)
+		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.CheckReleaseGroup(tp,c96540.costfilter,1,nil,e,tp)
 	end
 	e:SetLabel(0)
 	local g=Duel.SelectReleaseGroup(tp,c96540.costfilter,1,1,nil,e,tp)

@@ -18,7 +18,7 @@ function c63053267.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e3:SetValue(c63053267.indval)
+	e3:SetValue(aux.indoval)
 	c:RegisterEffect(e3)
 	--double damage
 	local e4=Effect.CreateEffect(c)
@@ -42,9 +42,6 @@ function c63053267.initial_effect(c)
 end
 function c63053267.indtg(e,c)
 	return c:IsSetCard(0x10b) and c:GetSequence()<5
-end
-function c63053267.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end
 function c63053267.damval(e,re,val,r,rp,rc)
 	local tp=e:GetHandlerPlayer()

@@ -18,7 +18,7 @@ function c100407008.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCondition(c100407008.indcon)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_INSECT))
-	e2:SetValue(c100407008.indval)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 	--cannot be target
 	local e3=Effect.CreateEffect(c)
@@ -60,9 +60,6 @@ function c100407008.indfilter(c)
 end
 function c100407008.indcon(e)
 	return Duel.IsExistingMatchingCard(c100407008.indfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
-end
-function c100407008.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end
 function c100407008.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

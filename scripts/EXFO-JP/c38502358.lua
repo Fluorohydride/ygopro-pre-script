@@ -41,20 +41,18 @@ function c38502358.indcon(e)
 	local c=e:GetHandler()
 	return c:GetSequence()>4 and c:GetLinkedGroupCount()==0
 end
-function c38502358.spcfilter(c,hc)
-	return c:GetColumnGroup():IsContains(hc) and c:IsAbleToGraveAsCost()
+function c38502358.spcfilter(c,g,tp)
+	return g:IsContains(c) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function c38502358.spfilter(c,e,tp)
 	return c:IsSetCard(0x10c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c38502358.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local loc=LOCATION_ONFIELD
-	if ft<=0 then loc=LOCATION_MZONE end
-	if chk==0 then return ft>-1 and Duel.IsExistingMatchingCard(c38502358.spcfilter,tp,loc,0,1,c,c) end
+	local cg=c:GetColumnGroup()
+	if chk==0 then return Duel.IsExistingMatchingCard(c38502358.spcfilter,tp,LOCATION_ONFIELD,0,1,c,g,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c38502358.spcfilter,tp,loc,0,1,1,c,c)
+	local g=Duel.SelectMatchingCard(tp,c38502358.spcfilter,tp,LOCATION_ONFIELD,0,1,1,c,g,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c38502358.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

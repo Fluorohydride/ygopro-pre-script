@@ -22,7 +22,7 @@ function c55787576.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e3:SetValue(c55787576.indval)
+	e3:SetValue(aux.indoval)
 	c:RegisterEffect(e3)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
@@ -44,9 +44,6 @@ function c55787576.immval(e,te)
 end
 function c55787576.tgtg(e,c)
 	return e:GetHandler()==c or (c:IsSetCard(0xfe) and e:GetHandler():GetColumnGroup():IsContains(c))
-end
-function c55787576.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end
 function c55787576.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end

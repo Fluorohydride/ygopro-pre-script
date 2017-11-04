@@ -39,7 +39,7 @@ function c15419596.initial_effect(c)
 	e5:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCondition(c15419596.indcon)
-	e5:SetValue(c15419596.indval)
+	e5:SetValue(aux.indoval)
 	c:RegisterEffect(e5)
 	--cannot activate
 	local e6=Effect.CreateEffect(c)
@@ -60,9 +60,6 @@ function c15419596.eacon(e)
 end
 function c15419596.indcon(e)
 	return e:GetHandler():GetSequence()==2
-end
-function c15419596.indval(e,re,tp)
-	return tp~=e:GetHandlerPlayer()
 end
 function c15419596.actcon(e)
 	local c=e:GetHandler()
