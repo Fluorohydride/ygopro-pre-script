@@ -34,18 +34,17 @@ function c64631466.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetProperty(EFFECT_FLAG_AVAILABLE_BD)
-	e4:SetCode(EVENT_DAMAGE)
+	e4:SetCode(EVENT_BATTLE_DAMAGE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCondition(c64631466.damcon)
 	e4:SetOperation(c64631466.damop)
 	c:RegisterEffect(e4)
 end
 function c64631466.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c64631466.CanEquipMonster(c)
+	return c64631466.CanEquipMonster(e:GetHandler())
 end
 function c64631466.eqfilter(c)
-	return c:GetFlagEffect(64631466)~=0 
+	return c:GetFlagEffect(64631466)~=0
 end
 function c64631466.CanEquipMonster(c)
 	local g=c:GetEquipGroup():Filter(c64631466.eqfilter,nil)
@@ -81,7 +80,7 @@ function c64631466.EquipMonster(c,tp,tc)
  	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
  	e2:SetReset(RESET_EVENT+0x1fe0000)
  	e2:SetValue(c64631466.repval)
- 	tc:RegisterEffect(e2)		
+ 	tc:RegisterEffect(e2)
 end
 function c64631466.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -98,13 +97,13 @@ end
 function c64631466.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=c:GetEquipGroup():Filter(c64631466.eqfilter,nil)
-	return g:GetCount()>0 and ep==tp and bit.band(r,REASON_BATTLE)~=0
+	return g:GetCount()>0 and ep==tp
 		and (Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler())
 end
 function c64631466.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,ev,REASON_EFFECT)
 end
-function c64631466.adcon(e,tp,eg,ep,ev,re,r,rp)
+function c64631466.adcon(e)
 	local c=e:GetHandler()
 	local g=c:GetEquipGroup():Filter(c64631466.eqfilter,nil)
 	return g:GetCount()>0
