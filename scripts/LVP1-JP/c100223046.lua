@@ -40,6 +40,7 @@ function c100223046.initial_effect(c)
 	e4:SetCode(EVENT_DESTROYED)
 	e4:SetCountLimit(1,100223146)
 	e4:SetCondition(c100223046.spcon)
+	e4:SetCost(c100223046.spcost)
 	e4:SetTarget(c100223046.sptg)
 	e4:SetOperation(c100223046.spop)
 	c:RegisterEffect(e4)
@@ -73,6 +74,15 @@ function c100223046.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp~=tp and c:GetPreviousControler()==tp
 		and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
+end
+function c100223046.spcfilter(c)
+	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToGraveAsCost()
+end
+function c100223046.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100223046.spcfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c100223046.spcfilter,tp,LOCATION_DECK,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100223046.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
