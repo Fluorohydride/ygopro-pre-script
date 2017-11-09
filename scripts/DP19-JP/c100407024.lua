@@ -56,7 +56,7 @@ function c100407024.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c100407024.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c100407024.thfilter(c)
 	return c:IsSetCard(0xf) and c:IsAbleToHand()
@@ -70,7 +70,7 @@ function c100407024.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100407024.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
+	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_HAND) then
 		Duel.BreakEffect()
 		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT,nil)
 	end
@@ -79,18 +79,18 @@ function c100407024.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
 		and ((c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_FUSION))
 			or c:IsCode(59464593,980973,46384672,73879377,65192027,89189982) or c:IsSetCard(0x20f))
-		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT)) and not c:IsReason(REASON_REPLACE)
+		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
-function c100407024.desfilter(c,e,tp)
+function c100407024.desfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE) and c:IsSetCard(0xf)
 		and c:IsAbleToRemove() and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function c100407024.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c100407024.repfilter,1,nil,tp)
-		and Duel.IsExistingMatchingCard(c100407024.desfilter,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c100407024.desfilter,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local g=Duel.SelectMatchingCard(tp,c100407024.desfilter,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(tp,c100407024.desfilter,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp)
 		e:SetLabelObject(g:GetFirst())
 		g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
 		return true
@@ -110,7 +110,7 @@ function c100407024.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0xf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100407024.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100407024.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
@@ -118,10 +118,16 @@ function c100407024.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100407024.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local tg=Duel.GetMatchingGroup(c100407024.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp)
 	if ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c100407024.spfilter,tp,LOCATION_REMOVED,0,ft,ft,nil,e,tp)
+	local g=nil
+	if tg:GetCount()>ft then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		g=tg:Select(tp,ft,ft,nil)
+	else
+		g=tg
+	end
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
