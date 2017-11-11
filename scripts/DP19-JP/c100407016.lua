@@ -1,7 +1,6 @@
 --鋼鉄の襲撃者
 --Heavy Metal Raiders
 --Script by nekrozar
---Effect is not fully implemented
 function c100407016.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -14,56 +13,47 @@ function c100407016.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x10ec))
+	e2:SetTarget(c100407016.indtg)
 	e2:SetValue(c100407016.indct)
 	c:RegisterEffect(e2)
-	--atkup
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_BATTLE_DAMAGE)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetCondition(c100407016.atkcon)
-	e3:SetOperation(c100407016.atkop)
-	c:RegisterEffect(e3)
 	--special summon
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(100407016,0))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
-	e4:SetCode(EVENT_BATTLE_DESTROYED)
-	e4:SetRange(LOCATION_FZONE)
-	e4:SetCountLimit(1)
-	e4:SetCondition(c100407016.spcon1)
-	e4:SetTarget(c100407016.sptg)
-	e4:SetOperation(c100407016.spop)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100407016,0))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e3:SetCode(EVENT_BATTLE_DESTROYED)
+	e3:SetRange(LOCATION_FZONE)
+	e3:SetCountLimit(1)
+	e3:SetCondition(c100407016.spcon1)
+	e3:SetTarget(c100407016.sptg)
+	e3:SetOperation(c100407016.spop)
+	c:RegisterEffect(e3)
+	local e4=e3:Clone()
+	e4:SetCode(EVENT_DESTROYED)
+	e4:SetCondition(c100407016.spcon2)
 	c:RegisterEffect(e4)
-	local e5=e4:Clone()
-	e5:SetCode(EVENT_DESTROYED)
-	e5:SetCondition(c100407016.spcon2)
-	c:RegisterEffect(e5)
 end
 function c100407016.indtg(e,c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function c100407016.indct(e,re,r,rp)
-	if bit.band(r,REASON_BATTLE)~=0 then
-		return 1
-	else return 0 end
-end
-function c100407016.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	return ep==tp and tc:IsRace(RACE_MACHINE) and tc:IsAttribute(ATTRIBUTE_DARK)
-end
-function c100407016.atkop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,100407016)
-	local tc=eg:GetFirst()
+	if bit.band(r,REASON_BATTLE)==0 then return 0 end
+	local tp=e:GetHandlerPlayer()
+	local a=Duel.GetAttacker()
+	local tc=a:GetBattleTarget()
+	if tc and tc:IsControler(1-tp) then a,tc=tc,a end
+	local dam=Duel.GetBattleDamage(tp)
+	if not tc or dam<=0 then return 1 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(ev)
-	e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(dam)
+	e1:SetReset(RESET_EVENT+0x1fe0000)
 	tc:RegisterEffect(e1)
+	return 1
 end
 function c100407016.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
