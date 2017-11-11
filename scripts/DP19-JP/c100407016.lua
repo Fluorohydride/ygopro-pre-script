@@ -1,6 +1,7 @@
 --鋼鉄の襲撃者
 --Heavy Metal Raiders
 --Script by nekrozar
+--Effect is not fully implemented
 function c100407016.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -47,13 +48,12 @@ function c100407016.indtg(e,c)
 end
 function c100407016.indct(e,re,r,rp)
 	if bit.band(r,REASON_BATTLE)~=0 then
-		re:GetHandler():RegisterFlagEffect(100407016,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 		return 1
 	else return 0 end
 end
 function c100407016.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep==tp and tc:IsRace(RACE_MACHINE) and tc:IsAttribute(ATTRIBUTE_DARK) and tc:GetFlagEffect(100407016)==0
+	return ep==tp and tc:IsRace(RACE_MACHINE) and tc:IsAttribute(ATTRIBUTE_DARK)
 end
 function c100407016.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,100407016)
