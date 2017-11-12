@@ -18,13 +18,15 @@ function c13452889.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c13452889.cfilter(c,tp,g,zone)
-	return g:IsContains(c) and (Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_TOFIELD,zone)>0
-		or Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0)
+	return g:IsContains(c) and (Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_TOFIELD,zone[tp])>0
+		or Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone[1-tp])>0)
 end
 function c13452889.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local lg=c:GetLinkedGroup()
-	local zone=c:GetLinkedZone(1-tp)
+	local zone={}
+	zone[0]=c:GetLinkedZone(0)
+	zone[1]=c:GetLinkedZone(1)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c13452889.cfilter,1,nil,tp,lg,zone) end
 	local g=Duel.SelectReleaseGroup(tp,c13452889.cfilter,1,1,nil,tp,lg,zone)
 	Duel.Release(g,REASON_COST)
@@ -32,10 +34,9 @@ end
 function c13452889.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	local zone1=c:GetLinkedZone(tp)
-	local zone2=c:GetLinkedZone(1-tp)
+	local zone=c:GetLinkedZone(1-tp)
 	if chk==0 then return bc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		or bc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp,zone2) end
+		or bc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp,zone) end
 	Duel.SetTargetCard(bc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,bc,1,0,0)
 end
