@@ -123,7 +123,7 @@ function c100407003.disfilter(c)
 	return c:IsFaceup() and c:GetFlagEffect(100407003)~=0
 end
 function c100407003.distg(e,c)
-	if not c:IsFaceup() then return false end
+	if c:IsFacedown() then return false end
 	local g=e:GetHandler():GetEquipGroup():Filter(c100407003.disfilter,nil)
 	local code=c:GetCode()
 	local code2=c:GetFlagEffectLabel(100407103)

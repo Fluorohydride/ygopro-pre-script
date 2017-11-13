@@ -56,7 +56,7 @@ function c100200140.spfilter2(c,e,tp,lg)
 	return c:IsFaceup() and lg:IsContains(c) and Duel.IsExistingMatchingCard(c100200140.spfilter3,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetRace())
 end
 function c100200140.spfilter3(c,e,tp,rac)
-	return c:IsRace(rac) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(rac) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100200140.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -86,11 +86,11 @@ function c100200140.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then
 		local sump=tp
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp,zone[1-tp])
-			and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone[tp]) or Duel.SelectYesNo(tp,aux.Stringid(100200140,2))) then
+		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp,zone[1-tp])
+			and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone[tp]) or Duel.SelectYesNo(tp,aux.Stringid(100200140,2))) then
 			sump=1-tp
 		end
-		if Duel.SpecialSummon(tc,0,tp,sump,false,false,POS_FACEUP,zone[sump])~=0 then
+		if Duel.SpecialSummon(tc,0,tp,sump,false,false,POS_FACEUP_DEFENSE,zone[sump])~=0 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
