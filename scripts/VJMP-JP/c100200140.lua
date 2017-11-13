@@ -56,7 +56,8 @@ function c100200140.spfilter2(c,e,tp,lg)
 	return c:IsFaceup() and lg:IsContains(c) and Duel.IsExistingMatchingCard(c100200140.spfilter3,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetRace())
 end
 function c100200140.spfilter3(c,e,tp,rac)
-	return c:IsRace(rac) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsRace(rac)
+		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp))
 end
 function c100200140.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
