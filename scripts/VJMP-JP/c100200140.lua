@@ -85,11 +85,22 @@ function c100200140.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100200140.spfilter3,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetRace())
 	local tc=g:GetFirst()
 	if tc then
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone[tp])
-			and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp,zone[1-tp]) or Duel.SelectYesNo(tp,aux.Stringid(100200140,2))) then
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone[tp])
-		else
-			Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP,zone[1-tp])
+		local sump=tp
+		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp,zone[1-tp])
+			and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone[tp]) or Duel.SelectYesNo(tp,aux.Stringid(100200140,2))) then
+			sump=1-tp
+		end
+		if Duel.SpecialSummon(tc,0,tp,sump,false,false,POS_FACEUP,zone[sump])~=0 then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_DISABLE)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
+			tc:RegisterEffect(e1)
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_DISABLE_EFFECT)
+			e2:SetReset(RESET_EVENT+0x1fe0000)
+			tc:RegisterEffect(e2)
 		end
 	end
 end
