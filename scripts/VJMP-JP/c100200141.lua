@@ -1,5 +1,5 @@
 --トリックスター・キャロベイン
-
+--Trickstar Carobein
 --Script by nekrozar
 function c100200141.initial_effect(c)
 	--special summon
