@@ -6,6 +6,7 @@
 - **November 11, 2017** : Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX`
 - **November 25, 2017** : LINK VRAINS Pack (LVP1-JP) : `100223XXX`
 - **December 9, 2017** : Structure Deck: Powercode Link (SD33-JP) : `100333XXX`
+- **January 13, 2018** : FLAMES OF DESTRUCTION (FLOD-JP) : `101004XXX`
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
