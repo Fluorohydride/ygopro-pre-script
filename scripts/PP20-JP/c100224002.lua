@@ -2,6 +2,7 @@
 --Xtra HERO Wonder Driver
 --Scripted by Eerie Code
 function c100224002.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x8),2,2)
 	--set
@@ -23,7 +24,7 @@ function c100224002.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCondition(c100224002.spcon)
 	e3:SetTarget(c100224002.sptg)
 	e3:SetOperation(c100224002.spop)

@@ -83,33 +83,20 @@ function c100223056.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-function c100223056.cfilter(c)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsSetCard(0x9d) and c:IsAbleToGraveAsCost()
-end
-function c100223056.mzfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5
+function c100223056.cfilter(c,tp)
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsSetCard(0x9d) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function c100223056.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local sg=Duel.GetMatchingGroup(c100223056.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and sg:GetCount()>=1 and (ft>0 or sg:IsExists(c100223056.mzfilter,1,nil)) end
+		and Duel.IsExistingMatchingCard(c100223056.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100223056.spop2(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local sg=Duel.GetMatchingGroup(c100223056.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
-	local g=nil
-	if ft<=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		g=sg:FilterSelect(tp,c100223056.mzfilter,1,1,nil)		
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		g=sg:Select(tp,1,1,nil)
-	end
-	if Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local tg=Duel.SelectMatchingCard(tp,c100223056.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp)
+	local tc=tg:GetFirst()
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE)
+		and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

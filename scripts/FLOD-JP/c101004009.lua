@@ -1,4 +1,4 @@
--- 剛鬼マンジロック
+--剛鬼マンジロック
 --Gouki Octostretch
 function c101004009.initial_effect(c)
 	--half damage
@@ -39,8 +39,8 @@ function c101004009.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetBattleDamage(tp)>0 and Duel.GetAttacker()~=tp
 end
 function c101004009.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	if chk==0 then return e:GetHandler():IsDiscardable() end
+	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c101004009.damop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -51,7 +51,7 @@ function c101004009.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c101004009.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,ev/2)
+	Duel.ChangeBattleDamage(tp,math.ceil(ev/2))
 end
 function c101004009.operation(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
@@ -69,7 +69,7 @@ function c101004009.damcon2(e,re,val,r,rp,rc)
 		local cc=Duel.GetCurrentChain()
 	if cc==0 or bit.band(r,REASON_EFFECT)==0 then return end
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
-	return cid==e:GetLabel() and val/2 or val
+	return cid==e:GetLabel() and math.ceil(val/2) or val
 end
 function c101004009.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

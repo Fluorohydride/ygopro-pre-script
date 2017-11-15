@@ -12,19 +12,18 @@ function c101004056.initial_effect(c)
 	e1:SetOperation(c101004056.activate)
 	c:RegisterEffect(e1)
 end
-function c101004056.desfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0xfc) and (ft>0 or c:GetSequence()<5)
+function c101004056.desfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(0xfc) and Duel.GetMZoneCount(tp,c)>0
 end
 function c101004056.spfilter(c,e,tp)
 	return c:IsSetCard(0xfc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101004056.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.IsExistingTarget(c101004056.desfilter,tp,LOCATION_MZONE,0,1,nil,ft)
+	if chk==0 then return Duel.IsExistingTarget(c101004056.desfilter,tp,LOCATION_ONFIELD,0,1,nil,tp)
 		and Duel.IsExistingTarget(c101004056.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,c101004056.desfilter,tp,LOCATION_MZONE,0,1,1,nil,ft)
+	local g1=Duel.SelectTarget(tp,c101004056.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g2=Duel.SelectTarget(tp,c101004056.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,1,0,0)

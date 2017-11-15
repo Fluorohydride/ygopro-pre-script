@@ -22,7 +22,7 @@ function c100224010.filter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
 end
 function c100224010.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c100224010.filter(chkc) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and c100224010.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100224010.filter,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,c100224010.filter,tp,0,LOCATION_GRAVE,1,1,nil)
@@ -30,7 +30,8 @@ function c100224010.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100224010.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 then
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0
+		and tc:IsLocation(LOCATION_REMOVED) then
 		--disable
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
@@ -53,8 +54,8 @@ function c100224010.distg(e,c)
 	return c:IsType(TYPE_SPELL)
 end
 function c100224010.disop(e,tp,eg,ep,ev,re,r,rp)
-	local tl,p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_PLAYER)
-	if tl==LOCATION_SZONE and p~=tp and re:IsActiveType(TYPE_SPELL) then
+	local loc,p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_PLAYER)
+	if loc==LOCATION_SZONE and p~=tp and re:IsActiveType(TYPE_SPELL) then
 		Duel.NegateEffect(ev)
 	end
 end
