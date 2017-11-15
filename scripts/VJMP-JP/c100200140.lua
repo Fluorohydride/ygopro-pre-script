@@ -47,7 +47,7 @@ function c100200140.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone(1-tp)
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c100200140.spfilter1,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c100200140.spfilter1,tp,LOCATION_HAND,0,1,1,nil,e,tp,zone)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE,zone)
 	end
@@ -67,7 +67,7 @@ function c100200140.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lg=c:GetLinkedGroup()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100200140.spfilter2(chkc,e,tp,lg) end
 	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone[tp])>0
-		or Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone[1-tp])
+		or Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone[1-tp]))
 		and Duel.IsExistingTarget(c100200140.spfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp,lg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100200140.spfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e,tp,lg)
@@ -81,7 +81,7 @@ function c100200140.spop2(e,tp,eg,ep,ev,re,r,rp)
 	zone[0]=c:GetLinkedZone(0)
 	zone[1]=c:GetLinkedZone(1)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone[tp])<=0
-		or Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone[1-tp]<=0 return end
+		and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone[1-tp]<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100200140.spfilter3,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetRace())
 	local tc=g:GetFirst()

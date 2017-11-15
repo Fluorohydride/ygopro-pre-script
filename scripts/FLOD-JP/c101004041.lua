@@ -69,6 +69,7 @@ function c101004041.disfilter(c,e)
 	return ((c:IsFaceup() and not c:IsDisabled()) or c:IsType(TYPE_TRAPMONSTER)) and c:IsRelateToEffect(e)
 end
 function c101004041.disop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(c101004041.disfilter,nil,e)
 	local tc=g:GetFirst()
 	while tc do
