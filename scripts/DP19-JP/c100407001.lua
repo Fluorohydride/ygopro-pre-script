@@ -60,7 +60,7 @@ function c100407001.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100407001.thfilter(c,e)
-	return (c:IsSetCard(0x20a) and c:IsType(TYPE_FUSION)) or c:IsCode(64631466,63519819)
+	return c:IsFaceup() and ((c:IsSetCard(0x20a) and c:IsType(TYPE_FUSION)) or c:IsCode(64631466,63519819))
 end
 function c100407001.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100407001.thfilter,1,nil)
