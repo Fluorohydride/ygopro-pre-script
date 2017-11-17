@@ -35,7 +35,7 @@ function c100407023.filter1(c,code)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf) and not c:IsCode(code) and c:IsAbleToHand()
 end
 function c100407023.filter2(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsCode(59464593,980973,46384672,73879377,65192027,89189982) or c:IsSetCard(0x20f)) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x111) and c:IsAbleToHand()
 end
 function c100407023.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

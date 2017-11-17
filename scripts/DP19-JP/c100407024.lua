@@ -78,8 +78,7 @@ function c100407024.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100407024.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
-		and ((c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_FUSION))
-			or c:IsCode(59464593,980973,46384672,73879377,65192027,89189982) or c:IsSetCard(0x20f))
+		and ((c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_FUSION)) or c:IsSetCard(0x111))
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function c100407024.desfilter(c,tp)
