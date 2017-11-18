@@ -47,7 +47,7 @@ end
 function c100333022.spfilter(c,e,tp)
 	return c:IsFacedown() and c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100333022.sptp(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100333022.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100333022.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
