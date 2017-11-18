@@ -2,8 +2,8 @@
 --Mekk-Knight of the World Remains
 --Scripted by Eerie Code
 function c38502358.initial_effect(c)
-  c:EnableReviveLimit()
-  aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x10c),2)
+	c:EnableReviveLimit()
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x10c),2)
 	--direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -50,9 +50,9 @@ end
 function c38502358.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local cg=c:GetColumnGroup()
-	if chk==0 then return Duel.IsExistingMatchingCard(c38502358.spcfilter,tp,LOCATION_ONFIELD,0,1,c,g,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c38502358.spcfilter,tp,LOCATION_ONFIELD,0,1,c,cg,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c38502358.spcfilter,tp,LOCATION_ONFIELD,0,1,1,c,g,tp)
+	local g=Duel.SelectMatchingCard(tp,c38502358.spcfilter,tp,LOCATION_ONFIELD,0,1,1,c,cg,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c38502358.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

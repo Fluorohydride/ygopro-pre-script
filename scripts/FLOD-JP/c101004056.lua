@@ -20,10 +20,11 @@ function c101004056.spfilter(c,e,tp)
 end
 function c101004056.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c101004056.desfilter,tp,LOCATION_ONFIELD,0,1,nil,tp)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingTarget(c101004056.desfilter,tp,LOCATION_ONFIELD,0,1,c,tp)
 		and Duel.IsExistingTarget(c101004056.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,c101004056.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
+	local g1=Duel.SelectTarget(tp,c101004056.desfilter,tp,LOCATION_ONFIELD,0,1,1,c,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g2=Duel.SelectTarget(tp,c101004056.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,1,0,0)
