@@ -104,5 +104,5 @@ end
 function c101004041.atlimit(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandlerPlayer(),0,LOCATION_MZONE,nil)
 	local tg=g:GetMaxGroup(Card.GetAttack)
-	return not g:IsContains(c) or c:IsFacedown()
+	return not tg:IsContains(c) or c:IsFacedown()
 end

@@ -36,7 +36,7 @@ function c40669071.lzfilter(c)
 end
 function c40669071.lztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(c40669071.lzfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)>ct end
+	if chk==0 then return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)>ct end
 	local dis=Duel.SelectDisableField(tp,ct,LOCATION_MZONE,LOCATION_MZONE,0)
 	e:SetLabel(dis)
 end

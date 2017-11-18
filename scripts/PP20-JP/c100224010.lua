@@ -29,6 +29,7 @@ function c100224010.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c100224010.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0
 		and tc:IsLocation(LOCATION_REMOVED) then
@@ -39,7 +40,7 @@ function c100224010.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTargetRange(0,LOCATION_SZONE)
 		e2:SetTarget(c100224010.distg)
 		e2:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e2)
+		Duel.RegisterEffect(e2,tp)
 		--disable effect
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -47,7 +48,7 @@ function c100224010.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetOperation(c100224010.disop)
 		e3:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e3)
+		Duel.RegisterEffect(e3,tp)
 	end
 end
 function c100224010.distg(e,c)

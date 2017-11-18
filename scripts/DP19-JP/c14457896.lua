@@ -79,7 +79,7 @@ function c14457896.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function c14457896.atlimit(e,c)
-	return c:IsRace(RACE_INSECT)
+	return c:IsRace(RACE_INSECT) and c:IsFaceup()
 end
 function c14457896.disfilter(c)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_INSECT)

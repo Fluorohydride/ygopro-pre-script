@@ -48,7 +48,7 @@ function c9547962.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function c9547962.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10b) and c:IsAbleToChangeControler()
+	return c:IsFaceup() and c:IsSetCard(0x10b) and c:IsControlerCanBeChanged()
 end
 function c9547962.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c9547962.ctfilter(chkc) end
