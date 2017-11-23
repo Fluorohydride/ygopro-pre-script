@@ -1,10 +1,10 @@
---聖騎士の追想　イゾルデ
+--聖騎士の追想 イゾルデ
 --Isolde, Fleeting Memory of the Noble Knights
 function c100223051.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR),2,2)
 	c:EnableReviveLimit()
-	--special summon
+	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100223051,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -93,7 +93,8 @@ function c100223051.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 			and Duel.IsExistingMatchingCard(c100223051.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,cg:GetClassCount(Card.GetCode))
 	end
 	local cg=Duel.GetMatchingGroup(c100223051.cfilter,tp,LOCATION_DECK,0,nil)
-	local tg=Duel.GetMatchingGroup(c100223051.spfilter,tp,LOCATION_DECK,0,nil,e,tp,cg:GetClassCount(Card.GetCode))
+	local ct=cg:GetClassCount(Card.GetCode)
+	local tg=Duel.GetMatchingGroup(c100223051.spfilter,tp,LOCATION_DECK,0,nil,e,tp,ct)
 	local lvt={}
 	local tc=tg:GetFirst()
 	while tc do
@@ -109,13 +110,14 @@ function c100223051.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	lvt[pc]=nil
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100223051,2))
 	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))
-	local rg1=Group.CreateGroup()
-	if lv>1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local rg2=cg:Select(tp,lv-1,lv-1,c)
-		rg1:Merge(rg2)
+	local rg=Group.CreateGroup()
+	for i=1,lv do
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		local sg=cg:Select(tp,1,1,nil)
+		cg:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
+		rg:Merge(sg)
 	end
-	Duel.SendtoGrave(rg1,REASON_COST)
+	Duel.SendtoGrave(rg,REASON_COST)
 	e:SetLabel(lv)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
@@ -127,6 +129,7 @@ function c100223051.spop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100223051.sfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,lv)
-	local tc=g:GetFirst()
-	if tc then Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP) end
+	if g:GetCount()>0 then
+		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
+	end
 end

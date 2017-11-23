@@ -2,7 +2,7 @@
 --Aleister the Meltdown Invoker
 function c100223096.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,nil,2,nil,c100223096.spcheck)
+	aux.AddLinkProcedure(c,nil,2,2,c100223096.spcheck)
 	--code
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -10,7 +10,7 @@ function c100223096.initial_effect(c)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e1:SetValue(89631139)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100223096,0))
@@ -20,10 +20,9 @@ function c100223096.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c100223096.thcon)
-	e2:SetCost(c100223096.thcost)
 	e2:SetTarget(c100223096.thtg)
 	e2:SetOperation(c100223096.thop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--search
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100223096,1))
@@ -36,32 +35,29 @@ function c100223096.initial_effect(c)
 	e3:SetOperation(c100223096.thop2)
 	c:RegisterEffect(e3)
 end
-function c100223096.spcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetRace,lc,SUMMON_TYPE_LINK,tp)>1 and g:GetClassCount(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)>1
-end
-function c100223096.thcfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsControler(tp)
+function c100223096.spcheck(g)
+	return g:GetClassCount(Card.GetRace)==g:GetCount() and g:GetClassCount(Card.GetAttribute)==g:GetCount()
 end
 function c100223096.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg and eg:IsExists(c100223096.thcfilter,1,nil,tp)
-end
-function c100223096.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	return eg:IsExists(Card.IsSummonType,1,nil,SUMMON_TYPE_FUSION)
 end
 function c100223096.thfilter(c)
-	return (c:IsCode(74063034) or c:IsCode(458748)) and c:IsAbleToHand()
+	return c:IsCode(74063034,458748) and c:IsAbleToHand()
 end
 function c100223096.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100223096.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0
+		and Duel.IsExistingMatchingCard(c100223096.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100223096.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100223096.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)~=0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g=Duel.SelectMatchingCard(tp,c100223096.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+		if g:GetCount()>0 then
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g)
+		end
 	end
 end
 function c100223096.thcon2(e,tp,eg,ep,ev,re,r,rp)

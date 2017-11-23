@@ -1,8 +1,9 @@
---聖霊獣騎キムンファルコス
+--聖霊獣騎 キムンファルコス
 --Ritual Beast Ulti-Kimunfalcos
 function c100223066.initial_effect(c)
+	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xb5),2,2)
-	c:EnableReviveLimit()	
+	c:EnableReviveLimit()
 	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -22,7 +23,7 @@ function c100223066.initial_effect(c)
 	e2:SetCost(c100223066.cost)
 	e2:SetTarget(c100223066.target)
 	e2:SetOperation(c100223066.operation)
-	c:RegisterEffect(e2)		
+	c:RegisterEffect(e2)
 	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100223066,1))
@@ -36,7 +37,7 @@ function c100223066.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100223066.tgtg(e,c)
-	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0xb5) 
+	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0xb5)
 end
 function c100223066.cfilter(c)
 	return c:IsSetCard(0xb5) and c:IsAbleToRemoveAsCost()
@@ -51,8 +52,7 @@ function c100223066.filter(c)
 	return c:IsSetCard(0xb5) and c:IsSummonable(true,nil)
 end
 function c100223066.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c100223066.filter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100223066.filter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function c100223066.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -74,7 +74,7 @@ end
 function c100223066.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return false end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+		and Duel.GetMZoneCount(tp,e:GetHandler())>1
 		and Duel.IsExistingTarget(c100223066.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,0x10b5)
 		and Duel.IsExistingTarget(c100223066.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,0x20b5) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -89,6 +89,14 @@ function c100223066.spop(e,tp,eg,ep,ev,re,r,rp)
 	if ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if g:GetCount()==0 or g:GetCount()>ft then return end
-	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	if g:GetCount()==0 then return end
+	if g:GetCount()<=ft then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sg=g:Select(tp,ft,ft,nil)
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		g:Sub(sg)
+		Duel.SendtoGrave(g,REASON_RULE)
+	end
 end

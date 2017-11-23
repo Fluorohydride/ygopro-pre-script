@@ -48,7 +48,7 @@ function c100223071.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100223071.thfilter(c)
-	return (not c:IsLocation(LOCATION_EXTRA) or (c:IsFaceup() and c:IsType(TYPE_PENDULUM)))
+	return (c:IsLocation(LOCATION_GRAVE) or (c:IsFaceup() and c:IsType(TYPE_PENDULUM)))
 		and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100223071.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
