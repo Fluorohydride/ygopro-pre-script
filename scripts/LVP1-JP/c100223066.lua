@@ -43,9 +43,9 @@ function c100223066.cfilter(c)
 	return c:IsSetCard(0xb5) and c:IsAbleToRemoveAsCost()
 end
 function c100223066.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100223066.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100223066.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c100223066.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c100223066.cfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100223066.filter(c)
@@ -69,18 +69,18 @@ function c100223066.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,0,REASON_COST)
 end
 function c100223066.spfilter(c,e,tp,setcode)
-	return c:IsSetCard(setcode) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsFaceup() and c:IsSetCard(setcode) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100223066.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return false end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetMZoneCount(tp,e:GetHandler())>1
-		and Duel.IsExistingTarget(c100223066.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,0x10b5)
-		and Duel.IsExistingTarget(c100223066.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,0x20b5) end
+		and Duel.IsExistingTarget(c100223066.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp,0x10b5)
+		and Duel.IsExistingTarget(c100223066.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp,0x20b5) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=Duel.SelectTarget(tp,c100223066.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,0x10b5)
+	local g1=Duel.SelectTarget(tp,c100223066.spfilter,tp,LOCATION_REMOVED,0,1,1,nil,e,tp,0x10b5)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g2=Duel.SelectTarget(tp,c100223066.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,0x20b5)
+	local g2=Duel.SelectTarget(tp,c100223066.spfilter,tp,LOCATION_REMOVED,0,1,1,nil,e,tp,0x20b5)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,2,0,0)
 end
