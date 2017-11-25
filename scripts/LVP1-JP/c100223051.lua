@@ -45,7 +45,6 @@ function c100223051.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	if Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,tc)
-		if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CANNOT_SUMMON)
