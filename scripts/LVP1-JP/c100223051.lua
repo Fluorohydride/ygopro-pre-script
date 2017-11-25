@@ -70,7 +70,7 @@ function c100223051.sumlimit(e,c)
 	return c:IsCode(e:GetLabel())
 end
 function c100223051.aclimit(e,re,tp)
-	return re:GetHandler():IsCode(e:GetLabel()) and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:GetHandler():IsCode(e:GetLabel()) and re:IsActiveType(TYPE_MONSTER)
 end
 function c100223051.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
