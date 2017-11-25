@@ -54,7 +54,7 @@ function c41578483.initial_effect(c)
 	e5:SetTarget(c41578483.distg)
 	c:RegisterEffect(e5)
 end
-function c41578483.CanEquipMonster(c)
+function c41578483.can_equip_monster(c)
 	return true
 end
 function c41578483.eqcon(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -74,7 +74,7 @@ end
 function c41578483.eqlimit(e,c)
 	return e:GetOwner()==c
 end
-function c41578483.EquipMonster(c,tp,tc)
+function c41578483.equip_monster(c,tp,tc)
 	if not Duel.Equip(tp,tc,c,false) then return end
 	--Add Equip limit
 	tc:RegisterFlagEffect(41578483,RESET_EVENT+0x1fe0000,0,0)
@@ -91,7 +91,7 @@ function c41578483.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp) then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
-			c41578483.EquipMonster(c,tp,tc)
+			c41578483.equip_monster(c,tp,tc)
 		else Duel.SendtoGrave(tc,REASON_EFFECT) end
 	end
 end
