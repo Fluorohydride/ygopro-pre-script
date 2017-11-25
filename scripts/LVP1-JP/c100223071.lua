@@ -79,6 +79,7 @@ function c100223071.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100223071.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	if g:GetCount()~=2 then return end
 	for tc in aux.Next(g) do
 		if Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 			tc:RegisterFlagEffect(100223071,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)

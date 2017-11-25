@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c100223041.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FitlerBoolFunction(Card.IsSetCard,0x71),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x71),2,2)
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
