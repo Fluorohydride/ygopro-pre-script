@@ -1,7 +1,5 @@
 --パーペチュアルキングデーモン
---Perpetual King Archfiend
---Script by nekrozar
-function c100223001.initial_effect(c)
+function c35606858.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),2,2)
@@ -12,84 +10,84 @@ function c100223001.initial_effect(c)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(c100223001.mtcon)
-	e1:SetOperation(c100223001.mtop)
+	e1:SetCondition(c35606858.mtcon)
+	e1:SetOperation(c35606858.mtop)
 	c:RegisterEffect(e1)
 	--tograve
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100223001,0))
+	e2:SetDescription(aux.Stringid(35606858,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_PAY_LPCOST)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(c100223001.tgcon)
-	e2:SetCost(c100223001.tgcost)
-	e2:SetTarget(c100223001.tgtg)
-	e2:SetOperation(c100223001.tgop)
+	e2:SetCondition(c35606858.tgcon)
+	e2:SetCost(c35606858.tgcost)
+	e2:SetTarget(c35606858.tgtg)
+	e2:SetOperation(c35606858.tgop)
 	c:RegisterEffect(e2)
 	--dice
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100223001,1))
+	e3:SetDescription(aux.Stringid(35606858,1))
 	e3:SetCategory(CATEGORY_DICE+CATEGORY_TOHAND+CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(c100223001.dccost)
-	e3:SetTarget(c100223001.dctg)
-	e3:SetOperation(c100223001.dcop)
+	e3:SetCost(c35606858.dccost)
+	e3:SetTarget(c35606858.dctg)
+	e3:SetOperation(c35606858.dcop)
 	c:RegisterEffect(e3)
 end
-function c100223001.mtcon(e,tp,eg,ep,ev,re,r,rp)
+function c35606858.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
-function c100223001.mtop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.CheckLPCost(tp,500) and Duel.SelectYesNo(tp,aux.Stringid(100223001,2)) then
+function c35606858.mtop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.CheckLPCost(tp,500) and Duel.SelectYesNo(tp,aux.Stringid(35606858,2)) then
 		Duel.PayLPCost(tp,500)
 	else
 		Duel.Destroy(e:GetHandler(),REASON_COST)
 	end
 end
-function c100223001.tgcon(e,tp,eg,ep,ev,re,r,rp)
+function c35606858.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
 end
-function c100223001.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c35606858.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(100223001)==0 end
-	c:RegisterFlagEffect(100223001,RESET_CHAIN,0,1)
+	if chk==0 then return c:GetFlagEffect(35606858)==0 end
+	c:RegisterFlagEffect(35606858,RESET_CHAIN,0,1)
 end
-function c100223001.tgfilter(c,val)
+function c35606858.tgfilter(c,val)
 	return c:IsRace(RACE_FIEND) and c:IsType(TYPE_MONSTER) and (c:GetAttack()==val or c:GetDefense()==val) and c:IsAbleToGrave()
 end
-function c100223001.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100223001.tgfilter,tp,LOCATION_DECK,0,1,nil,ev) end
+function c35606858.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c35606858.tgfilter,tp,LOCATION_DECK,0,1,nil,ev) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-function c100223001.tgop(e,tp,eg,ep,ev,re,r,rp)
+function c35606858.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100223001.tgfilter,tp,LOCATION_DECK,0,1,1,nil,ev)
+	local g=Duel.SelectMatchingCard(tp,c35606858.tgfilter,tp,LOCATION_DECK,0,1,1,nil,ev)
 	if g:GetCount()>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-function c100223001.dccost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c35606858.dccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(100223101)==0 end
-	c:RegisterFlagEffect(100223101,RESET_CHAIN,0,1)
+	if chk==0 then return c:GetFlagEffect(35606859)==0 end
+	c:RegisterFlagEffect(35606859,RESET_CHAIN,0,1)
 end
-function c100223001.cfilter(c,e,tp)
+function c35606858.cfilter(c,e,tp)
 	return (c:IsRace(RACE_FIEND) or bit.band(c:GetPreviousRaceOnField(),RACE_FIEND)~=0)
 		and c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
 		and (c:IsAbleToHand() or c:IsAbleToDeck() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
-function c100223001.dctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(c100223001.cfilter,1,nil,e,tp) end
+function c35606858.dctg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return eg:IsExists(c35606858.cfilter,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
-function c100223001.dcop(e,tp,eg,ep,ev,re,r,rp)
+function c35606858.dcop(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.TossDice(tp,1)
-	local g=eg:Filter(aux.NecroValleyFilter(c100223001.cfilter),nil,e,tp)
+	local g=eg:Filter(aux.NecroValleyFilter(c35606858.cfilter),nil,e,tp)
 	if g:GetCount()==0 then return end
 	local tc=nil
 	if g:GetCount()>1 then

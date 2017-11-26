@@ -1,89 +1,87 @@
 --ジェムナイト・ファントムルーツ
---Gem-Knight Phantom Roots
---Script by nekrozar
-function c100223016.initial_effect(c)
+function c24484270.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x47),2,2)
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100223016,0))
+	e1:SetDescription(aux.Stringid(24484270,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCountLimit(1,100223016)
-	e1:SetCondition(c100223016.thcon)
-	e1:SetTarget(c100223016.thtg)
-	e1:SetOperation(c100223016.thop)
+	e1:SetCountLimit(1,24484270)
+	e1:SetCondition(c24484270.thcon)
+	e1:SetTarget(c24484270.thtg)
+	e1:SetOperation(c24484270.thop)
 	c:RegisterEffect(e1)
 	--fusion summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100223016,1))
+	e2:SetDescription(aux.Stringid(24484270,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,100223116)
-	e2:SetCost(c100223016.spcost)
-	e2:SetTarget(c100223016.sptg)
-	e2:SetOperation(c100223016.spop)
+	e2:SetCountLimit(1,24484271)
+	e2:SetCost(c24484270.spcost)
+	e2:SetTarget(c24484270.sptg)
+	e2:SetOperation(c24484270.spop)
 	c:RegisterEffect(e2)
 end
-function c100223016.thcon(e,tp,eg,ep,ev,re,r,rp)
+function c24484270.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
-function c100223016.thfilter(c)
+function c24484270.thfilter(c)
 	return c:IsSetCard(0x1047) and c:IsAbleToHand()
 end
-function c100223016.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100223016.thfilter,tp,LOCATION_DECK,0,1,nil) end
+function c24484270.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c24484270.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function c100223016.thop(e,tp,eg,ep,ev,re,r,rp)
+function c24484270.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100223016.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c24484270.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c100223016.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c24484270.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
 end
-function c100223016.filter0(c)
+function c24484270.filter0(c)
 	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
-function c100223016.filter1(c,e)
+function c24484270.filter1(c,e)
 	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsType(TYPE_MONSTER) and not c:IsImmuneToEffect(e) and c:IsAbleToDeck()
 end
-function c100223016.filter2(c,e,tp,m,f,chkf)
+function c24484270.filter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x1047) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
-function c100223016.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c24484270.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp
-		local mg1=Duel.GetMatchingGroup(c100223016.filter0,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
-		local res=Duel.IsExistingMatchingCard(c100223016.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
+		local mg1=Duel.GetMatchingGroup(c24484270.filter0,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
+		local res=Duel.IsExistingMatchingCard(c24484270.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
 				local fgroup=ce:GetTarget()
 				local mg2=fgroup(ce,e,tp)
 				local mf=ce:GetValue()
-				res=Duel.IsExistingMatchingCard(c100223016.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,chkf)
+				res=Duel.IsExistingMatchingCard(c24484270.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,chkf)
 			end
 		end
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function c100223016.spop(e,tp,eg,ep,ev,re,r,rp)
+function c24484270.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local chkf=tp
-	local mg1=Duel.GetMatchingGroup(c100223016.filter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)
-	local sg1=Duel.GetMatchingGroup(c100223016.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
+	local mg1=Duel.GetMatchingGroup(c24484270.filter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)
+	local sg1=Duel.GetMatchingGroup(c24484270.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	local mg2=nil
 	local sg2=nil
 	local ce=Duel.GetChainMaterial(tp)
@@ -91,7 +89,7 @@ function c100223016.spop(e,tp,eg,ep,ev,re,r,rp)
 		local fgroup=ce:GetTarget()
 		mg2=fgroup(ce,e,tp)
 		local mf=ce:GetValue()
-		sg2=Duel.GetMatchingGroup(c100223016.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
+		sg2=Duel.GetMatchingGroup(c24484270.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
 	end
 	if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
 		local sg=sg1:Clone()

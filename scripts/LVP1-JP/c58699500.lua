@@ -1,7 +1,5 @@
 --彼岸の黒天使 ケルビーニ
---Cherubini, Black Angel of the Burning Abyss
---Scripted by Eerie Code
-function c100223081.initial_effect(c)
+function c58699500.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLevel,3),2,2)
@@ -12,7 +10,7 @@ function c100223081.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e1:SetTarget(c100223081.indtg)
+	e1:SetTarget(c58699500.indtg)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	--destroy replace
@@ -21,66 +19,66 @@ function c100223081.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
-	e2:SetTarget(c100223081.desreptg)
+	e2:SetTarget(c58699500.desreptg)
 	c:RegisterEffect(e2)
 	--boost
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100223081,0))
+	e3:SetDescription(aux.Stringid(58699500,0))
 	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetLabel(0)
-	e3:SetCountLimit(1,100223081)
-	e3:SetCost(c100223081.atkcost)
-	e3:SetTarget(c100223081.atktg)
-	e3:SetOperation(c100223081.atkop)
+	e3:SetCountLimit(1,58699500)
+	e3:SetCost(c58699500.atkcost)
+	e3:SetTarget(c58699500.atktg)
+	e3:SetOperation(c58699500.atkop)
 	c:RegisterEffect(e3)
 end
-function c100223081.indtg(e,c)
+function c58699500.indtg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)
 end
-function c100223081.repfilter(c)
+function c58699500.repfilter(c)
 	return not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
-function c100223081.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c58699500.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsReason(REASON_REPLACE) and (c:IsReason(REASON_BATTLE) or rp~=tp)
-		and Duel.IsExistingMatchingCard(c100223081.repfilter,tp,LOCATION_ONFIELD,0,1,c) end
+		and Duel.IsExistingMatchingCard(c58699500.repfilter,tp,LOCATION_ONFIELD,0,1,c) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,c100223081.repfilter,tp,LOCATION_ONFIELD,0,1,1,c)
+		local g=Duel.SelectMatchingCard(tp,c58699500.repfilter,tp,LOCATION_ONFIELD,0,1,1,c)
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REPLACE)
 		return true
 	else return false end
 end
-function c100223081.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c58699500.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
 end
-function c100223081.cfilter(c)
+function c58699500.cfilter(c)
 	return c:IsLevel(3) and (c:GetBaseAttack()>0 or c:GetBaseDefense()>0) and c:IsAbleToGraveAsCost()
 end
-function c100223081.filter(c)
+function c58699500.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xb1)
 end
-function c100223081.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100223081.filter(chkc) end
+function c58699500.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c58699500.filter(chkc) end
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(c100223081.cfilter,tp,LOCATION_DECK,0,1,nil)
-			and Duel.IsExistingTarget(c100223081.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		return Duel.IsExistingMatchingCard(c58699500.cfilter,tp,LOCATION_DECK,0,1,nil)
+			and Duel.IsExistingTarget(c58699500.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 	end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100223081.cfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c58699500.cfilter,tp,LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 	e:SetLabelObject(g:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c100223081.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,c58699500.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
-function c100223081.atkop(e,tp,eg,ep,ev,re,r,rp)
+function c58699500.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local sc=e:GetLabelObject()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and sc then
