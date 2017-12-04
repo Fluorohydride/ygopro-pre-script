@@ -64,7 +64,8 @@ function c100224014.pcon(e)
 	return e:GetHandler():GetSummonLocation()==LOCATION_GRAVE
 end
 function c100224014.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_BATTLE+REASON_EFFECT)
+	local c=e:GetHandler()
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function c100224014.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,100224014+100,0,0x4011,500,500,2,RACE_ZOMBIE,ATTRIBUTE_FIRE)
