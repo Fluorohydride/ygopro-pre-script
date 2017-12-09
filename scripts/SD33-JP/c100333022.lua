@@ -54,7 +54,7 @@ end
 function c100333022.spop(e,tp,eg,ep,ev,re,r,rp)
 	--prototype, to be replaced with the appropriate core functions
 	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_EXTRA,0,nil)
-	if g:GetCount()==0 or Duel.GetLocationCountFromEx(tp)<=0 then return end
+	if not Duel.IsPlayerCanSpecialSummon(tp) or g:GetCount()==0 or Duel.GetLocationCountFromEx(tp)<=0 then return end
 	local tc=g:RandomSelect(tp,1):GetFirst()
 	if tc then
 		Duel.ConfirmCards(PLAYER_ALL,tc)
