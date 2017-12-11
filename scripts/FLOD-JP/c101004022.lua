@@ -23,11 +23,26 @@ function c101004022.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101004022.costfilter(c)
-	return c:IsSetCode(0x400d) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsSetCode(0x400d) and c:IsType(TYPE_MONSTER) and (c:IsDiscardable() or (c:IsLocation(LOCATION_DECK) and c:IsAbleToGraveAsCost()))
+end
+function c101004022.fieldcheck(c)
+	return c:IsFaceup() and c:IsCode(101004060) and not c:IsDisabled() and c:GetFlagEffect(101004060)==0
 end
 function c101004022.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101004022.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c101004022.costfilter,1,1,REASON_COST+REASON_DISCARD)
+	local fc=Duel.GetMatchingGroup(c101004022.fieldcheck,tp,LOCATION_FZONE,0,1,nil):GetFirst()
+	local loc=LOCATION_HAND
+	if fc then loc=LOCATION_HAND+LOCATION_DECK end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101004022.costfilter,tp,loc,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local tc=Duel.SelectMatchingCard(tp,c101004022.costfilter,tp,loc,0,1,1,nil):GetFirst()
+	local rs=REASON_COST
+	if tc:IsLocation(LOCATION_DECK) then
+		Duel.Hint(HINT_CARD,0,101004060)
+		fc:RegisterFlagEffect(101004060,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
+	else
+		rs=rs+REASON_DISCARD
+	end
+	Duel.SendtoGrave(tc,rs)
 end
 function c101004022.filter(c)
 	return c:IsSetCode(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
