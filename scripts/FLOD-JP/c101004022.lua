@@ -52,8 +52,8 @@ function c101004022.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101004022.attop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		local e1=Effect.CreateEffect(e:GetHandler())
+	if c:IsRelateToEffect(e) then
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetValue(e:GetLabel())
