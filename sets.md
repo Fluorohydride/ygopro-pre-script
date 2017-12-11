@@ -7,6 +7,7 @@
 - **November 25, 2017** : LINK VRAINS Pack (LVP1-JP) : `100223XXX`
 - **December 9, 2017** : Structure Deck: Powercode Link (SD33-JP) : `100333XXX`
 - **December 16, 2017** : PREMIUM PACK 20 (PP20-JP) : `100224XXX`
+- **December 23, 2017** : LINK VRAINS Box (LVB1-JP) : `100225XXX`
 - **January 13, 2018** : FLAMES OF DESTRUCTION (FLOD-JP) : `101004XXX`
 
 # Archived
