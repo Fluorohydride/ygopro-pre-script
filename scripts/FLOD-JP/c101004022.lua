@@ -23,7 +23,7 @@ function c101004022.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101004022.costfilter(c)
-	return c:IsSetCode(0x400d) and c:IsType(TYPE_MONSTER) and (c:IsDiscardable() or (c:IsLocation(LOCATION_DECK) and c:IsAbleToGraveAsCost()))
+	return c:IsSetCode(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c101004022.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fc=Duel.IsPlayerAffectedByEffect(tp,101004060)
@@ -32,15 +32,12 @@ function c101004022.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101004022.costfilter,tp,loc,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,c101004022.costfilter,tp,loc,0,1,1,nil):GetFirst()
-	local rs=REASON_COST
 	if tc:IsLocation(LOCATION_DECK) then
 		Duel.Hint(HINT_CARD,0,101004060)
 		local field=Duel.GetFirstMatchingCard(Card.IsHasEffect,tp,LOCATION_ONFIELD,0,nil,101004060)
 		if field then field:RegisterFlagEffect(101004060,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0) end
-	else
-		rs=rs+REASON_DISCARD
 	end
-	Duel.SendtoGrave(tc,rs)
+	Duel.SendtoGrave(tc,REASON_COST)
 end
 function c101004022.filter(c)
 	return c:IsSetCode(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
