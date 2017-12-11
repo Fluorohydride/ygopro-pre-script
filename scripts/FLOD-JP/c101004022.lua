@@ -36,7 +36,7 @@ function c101004022.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if tc:IsLocation(LOCATION_DECK) then
 		Duel.Hint(HINT_CARD,0,101004060)
 		local field=Duel.GetFirstMatchingCard(Card.IsHasEffect,tp,LOCATION_ONFIELD,0,nil,101004060)
-		field:RegisterFlagEffect(101004060,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
+		if field then field:RegisterFlagEffect(101004060,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0) end
 	else
 		rs=rs+REASON_DISCARD
 	end
