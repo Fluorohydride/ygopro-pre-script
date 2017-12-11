@@ -25,11 +25,8 @@ end
 function c101004022.costfilter(c)
 	return c:IsSetCode(0x400d) and c:IsType(TYPE_MONSTER) and (c:IsDiscardable() or (c:IsLocation(LOCATION_DECK) and c:IsAbleToGraveAsCost()))
 end
-function c101004022.fieldcheck(c)
-	return c:IsFaceup() and c:IsCode(101004060) and not c:IsDisabled() and c:GetFlagEffect(101004060)==0
-end
 function c101004022.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local fc=Duel.GetMatchingGroup(c101004022.fieldcheck,tp,LOCATION_FZONE,0,1,nil):GetFirst()
+	local fc=Duel.IsPlayerAffectedByEffect(tp,101004060)
 	local loc=LOCATION_HAND
 	if fc then loc=LOCATION_HAND+LOCATION_DECK end
 	if chk==0 then return Duel.IsExistingMatchingCard(c101004022.costfilter,tp,loc,0,1,nil) end
@@ -38,7 +35,8 @@ function c101004022.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rs=REASON_COST
 	if tc:IsLocation(LOCATION_DECK) then
 		Duel.Hint(HINT_CARD,0,101004060)
-		fc:RegisterFlagEffect(101004060,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
+		local field=Duel.GetFirstMatchingCard(Card.IsHasEffect,tp,LOCATION_ONFIELD,0,nil,101004060)
+		field:RegisterFlagEffect(101004060,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 	else
 		rs=rs+REASON_DISCARD
 	end
