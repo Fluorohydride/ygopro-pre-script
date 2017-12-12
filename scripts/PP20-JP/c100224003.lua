@@ -2,8 +2,9 @@
 --Junk Connector
 --Scripted by Eerie Code
 function c100224003.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_WARRIOR+RACE_MACHINE,2,2,c100224003.lcheck)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR+RACE_MACHINE,2,2,c100224003.lcheck)
 	--synchro effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100224003,0))
@@ -20,7 +21,7 @@ function c100224003.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCondition(c100224003.spcon)
 	e2:SetTarget(c100224003.sptg)
@@ -28,7 +29,7 @@ function c100224003.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100224003.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER)
+	return g:IsExists(Card.IsLinkType,1,nil,TYPE_TUNER)
 end
 function c100224003.sccon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

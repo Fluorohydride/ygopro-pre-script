@@ -2,7 +2,7 @@
 --Formud Skipper
 --Scripted by Eerie Code
 function c100225002.initial_effect(c)
-	--link tag
+	--link
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100225002,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)

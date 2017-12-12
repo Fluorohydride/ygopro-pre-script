@@ -31,7 +31,7 @@ function c101004008.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,c101004008.cfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c101004008.filter(c,e,tp)
-	return c:IsSetCard(0xfb) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(0xfb) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101004008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101004008.filter(chkc,e,tp) end
@@ -42,14 +42,13 @@ function c101004008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101004008.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c101004008.damfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_GRAVE) and not c:IsControler(tp)
+	return c:IsPreviousLocation(LOCATION_GRAVE) and c:GetPreviousControler()==1-tp
 end
 function c101004008.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101004008.damfilter,1,nil,tp)

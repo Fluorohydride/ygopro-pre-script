@@ -24,6 +24,7 @@ function c100224005.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100224005,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
 	e3:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetRange(LOCATION_MZONE)
@@ -31,10 +32,12 @@ function c100224005.initial_effect(c)
 	e3:SetTarget(c100224005.mttg)
 	e3:SetOperation(c100224005.mtop)
 	c:RegisterEffect(e3)
-	--return 
+	--return
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100224005,1))
+	e4:SetCategory(CATEGORY_TODECK)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_PHASE+PHASE_BATTLE)
 	e4:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
 	e4:SetRange(LOCATION_MZONE)
@@ -56,19 +59,21 @@ function c100224005.mtfilter(c)
 	return c:IsType(TYPE_MONSTER)
 end
 function c100224005.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100224005.mtfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100224005.mtfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100224005.mtfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+	local sg=Duel.SelectTarget(tp,c100224005.mtfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,sg,1,0,0)
 end
 function c100224005.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g=Duel.SelectMatchingCard(tp,c100224005.mtfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.Overlay(c,g)
+	local tc=Duel.GetFirstTarget()
+	if c:IsFaceup() and c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+		Duel.Overlay(c,Group.FromCards(tc))
 	end
 end
 function c100224005.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:GetLocation()==LOCATION_GRAVE and chkc:GetControler()==1-tp and chkc:IsAbleToDeck() end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsAbleToDeck() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,1-tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=Duel.SelectTarget(tp,Card.IsAbleToDeck,1-tp,LOCATION_GRAVE,0,1,1,nil)

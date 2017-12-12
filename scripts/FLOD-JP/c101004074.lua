@@ -77,9 +77,8 @@ function c101004074.activate(e,tp,eg,ep,ev,re,r,rp)
 	local att=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101004074.filter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,att)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
+	if g:GetCount()>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c101004074.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -87,7 +86,7 @@ function c101004074.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function c101004074.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x400d) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x212) and c:IsAbleToHand()
 end
 function c101004074.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)

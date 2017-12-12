@@ -11,7 +11,7 @@ function c101004022.initial_effect(c)
 	e1:SetCost(c101004022.sgcost)
 	e1:SetTarget(c101004022.sgtg)
 	e1:SetOperation(c101004022.sgop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--att change
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101004022,1))
@@ -50,15 +50,15 @@ end
 function c101004022.sgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101004022.filter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then 
+	if g:GetCount()>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
 function c101004022.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,563)
-	local aat=Duel.AnnounceAttribute(tp,1,0xff-e:GetHandler():GetAttribute())
-	e:SetLabel(aat)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
+	local att=Duel.AnnounceAttribute(tp,1,0xff-e:GetHandler():GetAttribute())
+	e:SetLabel(att)
 end
 function c101004022.attop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

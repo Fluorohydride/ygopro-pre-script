@@ -40,8 +40,8 @@ function c101004011.spcfilter1(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingMatchingCard(c101004011.spcfilter2,tp,LOCATION_GRAVE,0,2,c,c:GetCode())
 end
-function c101004011.spcfilter2(c,cd)
-	return c:IsCode(cd) and c:IsAbleToRemoveAsCost()
+function c101004011.spcfilter2(c,code)
+	return c:IsCode(code) and c:IsAbleToRemoveAsCost()
 end
 function c101004011.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

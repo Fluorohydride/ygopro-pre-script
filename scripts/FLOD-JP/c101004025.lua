@@ -56,11 +56,11 @@ end
 function c101004025.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c101004025.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject():GetLabel()~=0
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1 and e:GetLabelObject():GetLabel()~=0
 end
 function c101004025.regop(e,tp,eg,ep,ev,re,r,rp)
 	local flag=e:GetLabelObject():GetLabel()
