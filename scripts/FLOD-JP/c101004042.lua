@@ -5,7 +5,7 @@ function c101004042.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x103),2,2)
-	--search
+	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101004042,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
