@@ -25,7 +25,7 @@ end
 function c101004068.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if e:GetHandler():IsStatus(STATUS_ACT_FROM_HAND) then
-		Duel.SetLP(tp,math.floor(Duel.GetLP(tp)/2))
+		Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 	end
 end
 function c101004068.setfilter(c)
