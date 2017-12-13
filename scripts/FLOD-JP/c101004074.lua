@@ -50,8 +50,7 @@ function c101004074.intg(e,c)
 	return c:IsFaceup() and c:IsCode(101004060)
 end
 function c101004074.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(101004074)==0 end
-	e:GetHandler():RegisterFlagEffect(101004074,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+	if chk==0 then return true end
 	e:SetLabel(100)
 end
 function c101004074.filter1(c,e,tp)
@@ -61,7 +60,7 @@ end
 function c101004074.filter2(c,e,tp,att)
 	return c:IsSetCard(0x400d) and c:GetOriginalAttribute()~=att and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c101004074.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101004074.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
@@ -72,7 +71,7 @@ function c101004074.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(rg,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function c101004074.activate(e,tp,eg,ep,ev,re,r,rp)
+function c101004074.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local att=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

@@ -27,7 +27,7 @@ function c101004025.costfilter(c)
 		and (c:IsSetCard(0x400d) or c:IsLocation(LOCATION_HAND))
 end
 function c101004025.regfilter(c,attr)
-	return c:IsSetCard(0x400d) and c:GetOriginalAttribute()&attr~=0
+	return c:IsSetCard(0x400d) and bit.band(c:GetOriginalAttribute(),attr)~=0
 end
 function c101004025.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fc=Duel.IsPlayerAffectedByEffect(tp,101004060)
@@ -42,9 +42,9 @@ function c101004025.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		if field then field:RegisterFlagEffect(101004060,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0) end
 	end
 	local flag=0
-	if g:IsExists(c101004025.regfilter,1,nil,ATTRIBUTE_EARTH+ATTRIBUTE_WIND) then flag=flag+1 end
-	if g:IsExists(c101004025.regfilter,1,nil,ATTRIBUTE_WATER+ATTRIBUTE_FIRE) then flag=flag+2 end
-	if g:IsExists(c101004025.regfilter,1,nil,ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) then flag=flag+4 end
+	if g:IsExists(c101004025.regfilter,1,nil,ATTRIBUTE_EARTH+ATTRIBUTE_WIND) then flag=bit.bor(flag,0x1) end
+	if g:IsExists(c101004025.regfilter,1,nil,ATTRIBUTE_WATER+ATTRIBUTE_FIRE) then flag=bit.bor(flag,0x2) end
+	if g:IsExists(c101004025.regfilter,1,nil,ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) then flag=bit.bor(flag,0x4) end
 	Duel.SendtoGrave(g,REASON_COST)
 	e:SetLabel(flag)
 end
@@ -71,21 +71,21 @@ function c101004025.regop(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetRange(LOCATION_MZONE)
 	e0:SetTargetRange(LOCATION_MZONE,0)
 	e0:SetTarget(c101004025.immtg)
-	if flag&1 then
+	if bit.band(flag,0x1)~=0 then
 		local e1=e0:Clone()
 		e1:SetDescription(aux.Stringid(101004025,1))
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
 		c:RegisterEffect(e1)
 	end
-	if flag&2 then
+	if bit.band(flag,0x2)~=0 then
 		local e2=e0:Clone()
 		e2:SetDescription(aux.Stringid(101004025,2))
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e2:SetValue(1)
 		c:RegisterEffect(e2)
 	end
-	if flag&4 then
+	if bit.band(flag,0x4)~=0 then
 		local e3=e0:Clone()
 		e3:SetDescription(aux.Stringid(101004025,3))
 		e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)

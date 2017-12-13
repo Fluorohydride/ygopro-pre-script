@@ -83,7 +83,7 @@ end
 function c100225007.spcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return ep~=tp and eg:GetFirst()==e:GetHandler():GetEquipTarget()
 end
-function c11913700.spfilter(c,e,tp)
+function c100225007.spfilter(c,e,tp)
 	return c:IsSetCard(0xfb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100225007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
