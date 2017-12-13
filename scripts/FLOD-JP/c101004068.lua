@@ -8,6 +8,7 @@ function c101004068.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(c101004068.condition)
+	e1:SetCost(c101004068.cost)
 	e1:SetTarget(c101004068.target)
 	e1:SetOperation(c101004068.activate)
 	c:RegisterEffect(e1)
@@ -15,15 +16,20 @@ function c101004068.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e2:SetOperation(c101004068.handop)
 	c:RegisterEffect(e2)
 end
 function c101004068.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainNegatable(ev)
 end
+function c101004068.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	if e:GetHandler():IsStatus(STATUS_ACT_FROM_HAND) then
+		Duel.SetLP(tp,math.floor(Duel.GetLP(tp)/2))
+	end
+end
 function c101004068.setfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsType(TYPE_TRAP) and c:IsSSetable(true)
 end
 function c101004068.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -39,8 +45,8 @@ function c101004068.activate(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetCount()>0 and Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0 and Duel.SelectYesNo(1-tp,aux.Stringid(101004068,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local sg=g:Select(1-tp,1,1,nil)
-			Duel.SSet(tp,sg:GetFirst())
-			Duel.ConfirmCards(1-tp,sg)
+			Duel.SSet(1-tp,sg:GetFirst())
+			Duel.ConfirmCards(tp,sg)
 		end
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -51,8 +57,4 @@ function c101004068.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-end
-function c101004068.handop(e)
-	local lp=Duel.GetLP(e:GetHandlerPlayer())
-	Duel.SetLP(e:GetHandlerPlayer(),math.floor(lp/2))
 end

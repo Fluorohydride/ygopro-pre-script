@@ -46,6 +46,7 @@ function c100224005.initial_effect(c)
 	e4:SetOperation(c100224005.retop)
 	c:RegisterEffect(e4)
 end
+c100224005.xyz_number=5
 function c100224005.atkval(e,c)
 	return c:GetOverlayCount()*1000
 end
