@@ -12,8 +12,8 @@ function c100225017.initial_effect(c)
 	e1:SetOperation(c100225017.activate)
 	c:RegisterEffect(e1)
 end
-function c100225017.desfilter1(c,ft)
-	return c:IsFaceup() and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
+function c100225017.desfilter1(c,e,tp)
+	return c:IsFaceup() and Duel.GetMZoneCount(tp,c)>0
 	and Duel.IsExistingMatchingCard(c100225017.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,c:GetOriginalCode())
 end
 function c100225017.spfilter(c,e,tp,code)
@@ -21,11 +21,10 @@ function c100225017.spfilter(c,e,tp,code)
 end
 function c100225017.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc~=c and c100225017.desfilter1(chkc,ft) end
-	if chk==0 then return ft>-1 and Duel.IsExistingTarget(c100225017.desfilter1,tp,LOCATION_ONFIELD,0,1,c,ft) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc~=c and c100225017.desfilter1(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100225017.desfilter1,tp,LOCATION_ONFIELD,0,1,c,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c100225017.desfilter1,tp,LOCATION_ONFIELD,0,1,1,c,ft)
+	local g=Duel.SelectTarget(tp,c100225017.desfilter1,tp,LOCATION_ONFIELD,0,1,1,c,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end

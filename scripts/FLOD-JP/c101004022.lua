@@ -23,7 +23,7 @@ function c101004022.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101004022.costfilter(c)
-	return c:IsSetCode(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c101004022.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fc=Duel.IsPlayerAffectedByEffect(tp,101004060)
@@ -40,7 +40,7 @@ function c101004022.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tc,REASON_COST)
 end
 function c101004022.filter(c)
-	return c:IsSetCode(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function c101004022.sgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

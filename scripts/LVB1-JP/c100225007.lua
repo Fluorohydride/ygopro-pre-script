@@ -22,7 +22,7 @@ function c100225007.initial_effect(c)
 	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetOperation(c100225007.desop)
 	e3:SetLabelObject(e2)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 	--atkup
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100225007,0))
@@ -84,7 +84,7 @@ function c100225007.spcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return ep~=tp and eg:GetFirst()==e:GetHandler():GetEquipTarget()
 end
 function c11913700.spfilter(c,e,tp)
-	return c:IsSetCode(0xfb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xfb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100225007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

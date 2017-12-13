@@ -24,7 +24,7 @@ function c101004020.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101004020.costfilter(c)
-	return c:IsSetCode(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c101004020.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fc=Duel.IsPlayerAffectedByEffect(tp,101004060)

@@ -30,7 +30,7 @@ function c101004023.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function c101004023.costfilter(c)
-	return c:IsSetCode(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c101004023.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fc=Duel.IsPlayerAffectedByEffect(tp,101004060)

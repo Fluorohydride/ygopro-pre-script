@@ -27,7 +27,7 @@ function c101004036.rmcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101004036.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(c101004036.cfilter,1,nil,e:GetHandler():GetLinkedZone())
+	local g=eg:Filter(c101004036.cfilter,nil,e:GetHandler():GetLinkedZone())
 	local g2=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 	g:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
@@ -35,7 +35,7 @@ end
 function c101004036.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=eg:Filter(c101004036.cfilter,1,nil,c:GetLinkedZone())
+	local g=eg:Filter(c101004036.cfilter,nil,c:GetLinkedZone())
 	local g2=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 	g:Merge(g2)
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
