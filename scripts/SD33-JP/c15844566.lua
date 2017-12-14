@@ -1,42 +1,42 @@
 --パワーコード・トーカー
 --Powercode Talker
 --Scripted by Eerie Code
-function c100333040.initial_effect(c)
+function c15844566.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,nil,3,3)
 	--negate
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100333040,0))
+	e1:SetDescription(aux.Stringid(15844566,0))
 	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetTarget(c100333040.distg)
-	e1:SetOperation(c100333040.disop)
+	e1:SetTarget(c15844566.distg)
+	e1:SetOperation(c15844566.disop)
 	c:RegisterEffect(e1)
 	--atk
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100333040,1))
+	e2:SetDescription(aux.Stringid(15844566,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(c100333040.atkcon)
-	e2:SetCost(c100333040.atkcost)
-	e2:SetOperation(c100333040.atkop)
+	e2:SetCondition(c15844566.atkcon)
+	e2:SetCost(c15844566.atkcost)
+	e2:SetOperation(c15844566.atkop)
 	c:RegisterEffect(e2)
 end
-function c100333040.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c15844566.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and aux.disfilter1(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
-function c100333040.disop(e,tp,eg,ep,ev,re,r,rp)
+function c15844566.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if ((tc:IsFaceup() and not tc:IsDisabled()) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
@@ -64,19 +64,19 @@ function c100333040.disop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100333040.atkcon(e,tp,eg,ep,ev,re,r,rp)
+function c15844566.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattleTarget()~=nil
 end
-function c100333040.cfilter(c,g)
+function c15844566.cfilter(c,g)
 	return g:IsContains(c) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
-function c100333040.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c15844566.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=e:GetHandler():GetLinkedGroup()
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c100333040.cfilter,1,nil,lg) end
-	local g=Duel.SelectReleaseGroup(tp,c100333040.cfilter,1,1,nil,lg)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c15844566.cfilter,1,nil,lg) end
+	local g=Duel.SelectReleaseGroup(tp,c15844566.cfilter,1,1,nil,lg)
 	Duel.Release(g,REASON_COST)
 end
-function c100333040.atkop(e,tp,eg,ep,ev,re,r,rp)
+function c15844566.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local atk=c:GetBaseAttack()
