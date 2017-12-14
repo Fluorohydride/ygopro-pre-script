@@ -40,7 +40,7 @@ function c101004022.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tc,REASON_COST)
 end
 function c101004022.filter(c)
-	return c:IsSetCard(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x400d) and not c:IsCode(101004022) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function c101004022.sgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
