@@ -1,7 +1,6 @@
 --鉄騎龍ティアマトン
 --Tiamaton the Steel Battalion Dragon
 --Script by nekrozar
---not fully implemented
 function c101004032.initial_effect(c)
 	c:EnableReviveLimit()
 	--cannot special summon
@@ -60,8 +59,8 @@ function c101004032.desfilter(c,g)
 	return c:IsAbleToHand() and g:IsContains(c)
 end
 function c101004032.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
 	local cg=e:GetHandler():GetColumnGroup()
-	if chk==0 then return Duel.IsExistingMatchingCard(c101004032.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,cg) end
 	local g=Duel.GetMatchingGroup(c101004032.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,cg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
@@ -77,9 +76,9 @@ function c101004032.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101004032.disop(e,tp)
 	local c=e:GetHandler()
-	local flag1=bit.band(c:GetColumnZone(LOCATION_MZONE,0,0,tp),0xffffff00)
-	local flag2=bit.band(bit.lshift(c:GetColumnZone(LOCATION_SZONE,0,0,tp),8),0xffff00ff)
-	local flag3=bit.band(c:GetColumnZone(LOCATION_MZONE,0,0,1-tp),0xff00ffff)
-	local flag4=bit.band(bit.lshift(c:GetColumnZone(LOCATION_SZONE,0,0,1-tp),24),0xffff)
+	local flag1=bit.band(c:GetColumnZone(LOCATION_MZONE),0xffffff00)
+	local flag2=bit.band(bit.lshift(c:GetColumnZone(LOCATION_SZONE),8),0xffff00ff)
+	local flag3=bit.band(c:GetColumnZone(LOCATION_MZONE),0xff00ffff)
+	local flag4=bit.band(bit.lshift(c:GetColumnZone(LOCATION_SZONE),8),0xffff)
 	return flag1+flag2+flag3+flag4
 end
