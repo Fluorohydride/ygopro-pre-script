@@ -75,12 +75,13 @@ function c100225012.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetMatchingGroup(c100225012.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 	if tg:GetCount()==0 or ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	local g=nil
-	if tg:GetCount()>ft then
+	local g=Group.CreateGroup()
+	while tg:GetCount()>0 and ft>0 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		g=tg:Select(tp,ft,ft,nil)
-	else
-		g=tg
+		local sg=tg:Select(tp,1,1,nil)
+		g:Merge(sg)
+		ft=ft-1
+		tg:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
 	end
 	if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		c:AddCounter(0x146,3)

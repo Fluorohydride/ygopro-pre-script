@@ -79,7 +79,7 @@ end
 function c100224001.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=Duel.SelectMatchingCard(tp,c100224001.spfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g1=Duel.SelectMatchingCard(tp,c100224001.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g1:GetCount()>0 and Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		Duel.ConfirmCards(1-tp,g1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
