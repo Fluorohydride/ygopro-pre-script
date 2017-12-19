@@ -1,32 +1,32 @@
 --ペンデュラム・ホルト
 --Pendulum Halt
 --Scripted by Eerie Code
-function c100224006.initial_effect(c)
+function c36111775.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(c100224006.condition)
-	e1:SetTarget(c100224006.target)
-	e1:SetOperation(c100224006.activate)
+	e1:SetCondition(c36111775.condition)
+	e1:SetTarget(c36111775.target)
+	e1:SetOperation(c36111775.activate)
 	c:RegisterEffect(e1)
 end
-function c100224006.filter(c)
+function c36111775.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
-function c100224006.condition(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100224006.filter,tp,LOCATION_EXTRA,0,nil)
+function c36111775.condition(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(c36111775.filter,tp,LOCATION_EXTRA,0,nil)
 	return g:GetClassCount(Card.GetCode)>=3
 end
-function c100224006.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c36111775.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
-function c100224006.activate(e,tp,eg,ep,ev,re,r,rp)
+function c36111775.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
