@@ -26,13 +26,13 @@ function c101004003.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	for tc in aux.Next(lg) do
 		tg:Merge(tc:GetLinkedGroup())
 	end
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101004003.thfilter(chkc,tg) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101004003.thfilter(chkc,tg) end
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c101004003.thfilter,tp,LOCATION_MZONE,0,1,nil,tg) end
+		and Duel.IsExistingTarget(c101004003.thfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,c101004003.thfilter,tp,LOCATION_MZONE,0,1,1,nil,tg)
+	local g=Duel.SelectTarget(tp,c101004003.thfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tg)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end

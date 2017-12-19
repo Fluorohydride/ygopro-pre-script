@@ -23,16 +23,17 @@ function c101004020.initial_effect(c)
 	e2:SetOperation(c101004020.attop)
 	c:RegisterEffect(e2)
 end
-function c101004020.costfilter(c)
+function c101004020.costfilter(c,tp)
 	return c:IsSetCard(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+		and Duel.IsExistingMatchingCard(c101004020.thfilter,tp,LOCATION_DECK,0,1,c)
 end
 function c101004020.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fc=Duel.IsPlayerAffectedByEffect(tp,101004060)
 	local loc=LOCATION_HAND
 	if fc then loc=LOCATION_HAND+LOCATION_DECK end
-	if chk==0 then return Duel.IsExistingMatchingCard(c101004020.costfilter,tp,loc,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101004020.costfilter,tp,loc,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tc=Duel.SelectMatchingCard(tp,c101004020.costfilter,tp,loc,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,c101004020.costfilter,tp,loc,0,1,1,nil,tp):GetFirst()
 	if tc:IsLocation(LOCATION_DECK) then
 		Duel.Hint(HINT_CARD,0,101004060)
 		local field=Duel.GetFirstMatchingCard(Card.IsHasEffect,tp,LOCATION_ONFIELD,0,nil,101004060)
