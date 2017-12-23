@@ -1,7 +1,7 @@
 --トラフィックゴースト
 --Traffic Ghost
 --Script by nekrozar
-function c42148270.initial_effect(c)
+function c41248270.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,nil,3,3)
