@@ -7,6 +7,7 @@ function c101004061.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCountLimit(1,101004061+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c101004061.target)
 	e1:SetOperation(c101004061.operation)
 	c:RegisterEffect(e1)
@@ -27,6 +28,7 @@ function c101004061.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_EQUIP)
 	e4:SetCode(EFFECT_DOUBLE_TRIBUTE)
+	e4:SetValue(c101004061.condition)
 	c:RegisterEffect(e4)
 end
 function c101004061.spfilter(c,e,tp)
@@ -48,7 +50,7 @@ function c101004061.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
-		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then return end
+		if not Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then return end
 		Duel.Equip(tp,c,tc)
 		--Add Equip limit
 		local e1=Effect.CreateEffect(tc)
@@ -81,4 +83,7 @@ function c101004061.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsLocation(LOCATION_MZONE) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
+end
+function c101004061.condition(e,c)
+     return c:IsType(TYPE_MONSTER)
 end
