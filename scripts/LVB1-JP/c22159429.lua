@@ -23,7 +23,7 @@ function c22159429.initial_effect(c)
 	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetOperation(c22159429.desop)
 	e3:SetLabelObject(e2)
-	c:RegisterEffect(e3)
+	c:RegisterEffect(e3)	
 	--atkup
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(22159429,0))
@@ -81,15 +81,13 @@ function c22159429.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function c22159429.spcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return ep~=tp and eg:GetFirst()==e:GetHandler():GetEquipTarget()
-end
-function c22159429.spfilter(c,e,tp)
-	return c:IsSetCard(0xfb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function c22159429.spcon(e,tp,eg,ep,ev,re,r,rp)
+	local cet=e:GetHandler():GetEquipTarget()
+	return ep~=tp and ((eg and eg:GetFirst() == cet) or (re and re:GetHandler() == cet))
 end
 function c22159429.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c22159429.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c22159429.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)  end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c22159429.spop(e,tp,eg,ep,ev,re,r,rp)
