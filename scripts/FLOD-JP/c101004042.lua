@@ -32,7 +32,7 @@ function c101004042.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0x103) and tc~=e:GetHandler()
 end
-function c101004042.spfilter(c,e,tp)
+function c101004042.spfilter(c,e,tp,zone)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c101004042.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -51,14 +51,13 @@ function c101004042.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(c101004042.atkcon)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1)
 	end
 end
 function c101004042.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnCount()~=e:GetLabel()
+	return e:GetOwner():GetAttackAnnouncedCount()==0
 end
 function c101004042.thfilter(c)
 	return c:IsSetCard(0x103) and c:IsAbleToHand()

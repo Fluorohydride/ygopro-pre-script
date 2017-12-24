@@ -27,6 +27,7 @@ function c101004074.initial_effect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetCountLimit(1)
 	e4:SetHintTiming(0,TIMING_END_PHASE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCost(c101004074.spcost)
@@ -50,8 +51,8 @@ function c101004074.intg(e,c)
 	return c:IsFaceup() and c:IsCode(101004060)
 end
 function c101004074.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
 	e:SetLabel(100)
+	if chk==0 then return true end
 end
 function c101004074.filter1(c,e,tp)
 	return Duel.IsExistingMatchingCard(c101004074.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalAttribute())

@@ -30,16 +30,24 @@ function c101004025.regfilter(c,attr)
 	return c:IsSetCard(0x400d) and bit.band(c:GetOriginalAttribute(),attr)~=0
 end
 function c101004025.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local fc=Duel.IsPlayerAffectedByEffect(tp,101004060)
+	local fg=Group.CreateGroup()
+	for i,pe in ipairs({Duel.IsPlayerAffectedByEffect(tp,101004060)}) do
+		fg:AddCard(pe:GetHandler())
+	end
 	local loc=LOCATION_HAND
-	if fc then loc=LOCATION_HAND+LOCATION_DECK end
+	if fg:GetCount()>0 then loc=LOCATION_HAND+LOCATION_DECK end
 	if chk==0 then return Duel.IsExistingMatchingCard(c101004025.costfilter,tp,loc,0,2,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101004025.costfilter,tp,loc,0,2,2,e:GetHandler())
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
-		Duel.Hint(HINT_CARD,0,101004060)
-		local field=Duel.GetFirstMatchingCard(Card.IsHasEffect,tp,LOCATION_ONFIELD,0,nil,101004060)
-		if field then field:RegisterFlagEffect(101004060,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0) end
+		local fc=nil
+		if fg:GetCount()==1 then
+			fc=fg:GetFirst()
+		else
+			fc=fg:Select(tp,1,1,nil)
+		end
+		Duel.Hint(HINT_CARD,0,fc:GetCode())
+		fc:RegisterFlagEffect(101004060,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 	end
 	local flag=0
 	if g:IsExists(c101004025.regfilter,1,nil,ATTRIBUTE_EARTH+ATTRIBUTE_WIND) then flag=bit.bor(flag,0x1) end
