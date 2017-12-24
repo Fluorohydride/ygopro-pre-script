@@ -49,7 +49,7 @@ function c23971061.atkop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function c23971061.efilter(e,te)
-	return not te:IsType(TYPE_LINK)
+	return te:IsActiveType(TYPE_MONSTER) and not te:GetOwner():IsType(TYPE_LINK)
 end
 function c23971061.indval(e,c)
 	return not c:IsType(TYPE_LINK)
