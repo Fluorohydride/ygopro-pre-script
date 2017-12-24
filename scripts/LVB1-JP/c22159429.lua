@@ -23,7 +23,7 @@ function c22159429.initial_effect(c)
 	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetOperation(c22159429.desop)
 	e3:SetLabelObject(e2)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 	--atkup
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(22159429,0))
@@ -87,7 +87,7 @@ function c22159429.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c22159429.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c22159429.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)  end
+		and Duel.IsExistingMatchingCard(c22159429.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c22159429.spop(e,tp,eg,ep,ev,re,r,rp)
