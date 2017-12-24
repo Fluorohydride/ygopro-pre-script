@@ -40,7 +40,7 @@ function c101004060.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c101004060.atkval(e,c)
-	return Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_GRAVE,0):GetClassCount(Card.GetAttribute)*200
+	return Duel.GetMatchingGroup(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_MONSTER):GetClassCount(Card.GetAttribute)*200
 end
 function c101004060.thfilter(c)
 	return c:IsSetCard(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
