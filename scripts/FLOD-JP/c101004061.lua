@@ -85,5 +85,5 @@ function c101004061.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101004061.condition(e,c)
-     return c:IsType(TYPE_MONSTER)
+	return c:IsType(TYPE_MONSTER)
 end
