@@ -2,7 +2,7 @@
 --Gouki Deathmatch
 --Script by nekrozar
 function c85638822.initial_effect(c)
-	c:EnableCounterPermit(0x146)
+	c:EnableCounterPermit(0x46)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -34,13 +34,13 @@ function c85638822.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c85638822.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanAddCounter(tp,0x146,3,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,3,0,0x146)
+	if chk==0 then return Duel.IsCanAddCounter(tp,0x46,3,e:GetHandler()) end
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,3,0,0x46)
 end
 function c85638822.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		c:AddCounter(0x146,3)
+		c:AddCounter(0x46,3)
 	end
 end
 function c85638822.rccon(e,tp,eg,ep,ev,re,r,rp)
@@ -52,13 +52,13 @@ end
 function c85638822.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		c:RemoveCounter(tp,0x146,3,REASON_EFFECT)
-		c:RegisterFlagEffect(85638822,RESET_EVENT+0x1fe0000,0,0)
+		c:RemoveCounter(tp,0x46,1,REASON_EFFECT)
+		c:RegisterFlagEffect(85638822,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE,0,0)
 	end
 end
 function c85638822.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetCounter(0x146)==0 and c:GetFlagEffect(85638822)>2
+	return c:GetCounter(0x46)==0 and c:GetFlagEffect(85638822)>0
 end
 function c85638822.spfilter(c,e,sp)
 	return c:IsSetCard(0xfc) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
@@ -84,7 +84,6 @@ function c85638822.spop(e,tp,eg,ep,ev,re,r,rp)
 		tg:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
 	end
 	if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		c:AddCounter(0x146,3)
-		c:ResetFlagEffect(85638822)
+		c:AddCounter(0x46,3)
 	end
 end
