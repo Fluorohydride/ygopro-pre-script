@@ -40,7 +40,7 @@ function c101004037.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101004037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=0
-	local lg=eg:Filter(c48009503.cfilter,nil,tp)
+	local lg=eg:Filter(c101004037.cfilter,nil,tp)
 	for tc in aux.Next(lg) do
 		zone=bit.bor(zone,tc:GetLinkedZone())
 	end
@@ -51,7 +51,7 @@ end
 function c101004037.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=0
-	local lg=eg:Filter(c48009503.cfilter,nil,tp)
+	local lg=eg:Filter(c101004037.cfilter,nil,tp)
 	for tc in aux.Next(lg) do
 		zone=bit.bor(zone,tc:GetLinkedZone())
 	end
