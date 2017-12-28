@@ -31,15 +31,23 @@ function c101004024.costfilter(c)
 end
 function c101004024.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fc=Duel.IsPlayerAffectedByEffect(tp,101004060)
+	for i,pe in ipairs({Duel.IsPlayerAffectedByEffect(tp,101004060)}) do
+		fg:AddCard(pe:GetHandler())
+	end
 	local loc=LOCATION_HAND
-	if fc then loc=LOCATION_HAND+LOCATION_DECK end
+	if fg:GetCount()>0 then loc=LOCATION_HAND+LOCATION_DECK end
 	if chk==0 then return Duel.IsExistingMatchingCard(c101004024.costfilter,tp,loc,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,c101004024.costfilter,tp,loc,0,1,1,nil):GetFirst()
 	if tc:IsLocation(LOCATION_DECK) then
-		Duel.Hint(HINT_CARD,0,101004060)
-		local field=Duel.GetFirstMatchingCard(Card.IsHasEffect,tp,LOCATION_ONFIELD,0,nil,101004060)
-		if field then field:RegisterFlagEffect(101004060,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0) end
+		local fc=nil
+		if fg:GetCount()==1 then
+			fc=fg:GetFirst()
+		else
+			fc=fg:Select(tp,1,1,nil)
+		end
+		Duel.Hint(HINT_CARD,0,fc:GetCode())
+		fc:RegisterFlagEffect(101004060,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 	end
 	Duel.SendtoGrave(tc,REASON_COST)
 end
