@@ -2,7 +2,7 @@
 --Solar Batteryman
 --Scripted by Eerie Code
 function c101004027.initial_effect(c)
-	--gy
+	--to grave
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101004027,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -68,13 +68,13 @@ function c101004027.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c101004027.tkop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,101004027+100,0,0x4011,0,0,1,RACE_THUNDER,ATTRIBUTE_LIGHT) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,101004027+100,0,0x4011,0,0,1,RACE_THUNDER,ATTRIBUTE_LIGHT) then return end
 	local token=Duel.CreateToken(tp,101004027+100)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 end
 function c101004027.nmfilter(c,cd)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsType(TYPE_EFFECT) 
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsType(TYPE_EFFECT)
 		and c:IsOriginalSetCard(0x28) and c:GetOriginalCode()~=cd
 end
 function c101004027.nmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -87,7 +87,7 @@ end
 function c101004027.nmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and (tc:IsLocation(LOCATION_GRAVE) or tc:IsFaceup()) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)

@@ -2,8 +2,9 @@
 --Vampire Sucker
 --Scripted by Eerie Code
 function c101004100.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_ZOMBIE),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_ZOMBIE),2,2)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101004100,0))
@@ -63,7 +64,7 @@ function c101004100.drfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function c101004100.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101004100.drfilter,1,nil)
+	return eg:IsExists(c101004100.drfilter,1,nil) and not eg:IsContains(e:GetHandler())
 end
 function c101004100.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
