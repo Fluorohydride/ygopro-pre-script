@@ -70,7 +70,7 @@ function c101004077.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101004077.distg(e,c)
 	local zone=e:GetLabel()
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and bit.extract(zone,seq)~=0
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and bit.extract(zone,c:GetSequence())~=0
 end
 function c101004077.disop(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetLabel()
