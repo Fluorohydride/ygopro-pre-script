@@ -1,5 +1,6 @@
 --F.A. Motorhome Transport
 function c101003087.initial_effect(c)
+	--synchro summon
 	c:EnableReviveLimit()
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
 	--atk up
@@ -90,7 +91,7 @@ function c101003087.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101003087.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
