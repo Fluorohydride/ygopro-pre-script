@@ -16,7 +16,7 @@ function c101004017.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(1,0)
 	e2:SetTarget(c101004017.splimit)
@@ -37,7 +37,7 @@ end
 function c101004017.get_zone(c,seq)
 	local zone=0
 	if seq<4 and c:IsLinkMarker(LINK_MARKER_LEFT) then zone=bit.bor(zone,math.pow(2,seq-1)) end
-	if seq>0 and c:IsLinkMarker(LINK_MARKER_RIGHT) then zone=bit.bor(zone,math.pow(2,seq+1)) end
+	if seq>0 and seq<5 and c:IsLinkMarker(LINK_MARKER_RIGHT) then zone=bit.bor(zone,math.pow(2,seq+1)) end
 end
 function c101004017.spfilter(c,e,tp,seq)
 	local zone=c101004017.get_zone(c,seq)
@@ -55,28 +55,25 @@ end
 function c101004017.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
 		local zone=c101004017.get_zone(tc,c:GetSequence())
 		if zone~=0 and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 			e1:SetReset(RESET_EVENT+0x1fe0000)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 			e2:SetReset(RESET_EVENT+0x1fe0000)
 			tc:RegisterEffect(e2)
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_CHANGE_ATTACK_FINAL)
-			e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 			e3:SetValue(0)
 			e3:SetReset(RESET_EVENT+0x1fe0000)
-			tc:RegisterEffect(e3)		
+			tc:RegisterEffect(e3)
 		end
 		Duel.SpecialSummonComplete()
 	end
@@ -89,7 +86,8 @@ function c101004017.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101004017.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp) end
+	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c101004017.operation(e,tp,eg,ep,ev,re,r,rp)
