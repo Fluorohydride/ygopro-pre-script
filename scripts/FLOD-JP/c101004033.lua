@@ -6,8 +6,9 @@ function c101004033.initial_effect(c)
 	--negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101004033,0))
-	e1:SetCategory(CATEGORY_DISABLE)
+	e1:SetCategory(CATEGORY_NEGATE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101004033)
@@ -27,7 +28,7 @@ function c101004033.discon(e,tp,eg,ep,ev,re,r,rp)
 		or (ex2 and bit.band(dv2,LOCATION_GRAVE)==LOCATION_GRAVE)
 		or (ex4 and bit.band(dv4,LOCATION_GRAVE)==LOCATION_GRAVE)
 		or (ex5 and bit.band(dv5,LOCATION_GRAVE)==LOCATION_GRAVE)
-		or ex6) and Duel.IsChainDisablable(ev)
+		or ex6) and Duel.IsChainNegatable(ev)
 end
 function c101004033.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -35,9 +36,13 @@ function c101004033.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function c101004033.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED) end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function c101004033.disop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateEffect(ev)
+	if Duel.NegateActivation(ev) then
+		if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
+			Duel.SendtoGrave(eg,REASON_EFFECT)
+		end
+	end
 end
