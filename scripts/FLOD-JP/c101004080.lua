@@ -1,5 +1,5 @@
 --やぶ蛇
-
+--Shrub Serpent
 --Script by nekrozar
 function c101004080.initial_effect(c)
 	--special summon

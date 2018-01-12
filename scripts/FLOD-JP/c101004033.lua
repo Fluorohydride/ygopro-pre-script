@@ -1,5 +1,5 @@
 --屋敷わらし
-
+--Yashiki Warashi
 --Script by nekrozar
 --not fully implemented
 function c101004033.initial_effect(c)
@@ -20,13 +20,11 @@ end
 function c101004033.discon(e,tp,eg,ep,ev,re,r,rp)
 	local ex1,g1,gc1,dp1,dv1=Duel.GetOperationInfo(ev,CATEGORY_TOHAND)
 	local ex2,g2,gc2,dp2,dv2=Duel.GetOperationInfo(ev,CATEGORY_TODECK)
---	local ex3,g3,gc3,dp3,dv3=Duel.GetOperationInfo(ev,CATEGORY_TOEXTRA)
 	local ex4,g4,gc4,dp4,dv4=Duel.GetOperationInfo(ev,CATEGORY_SPECIAL_SUMMON)
 	local ex5,g5,gc5,dp5,dv5=Duel.GetOperationInfo(ev,CATEGORY_TOGRAVE)
 	local ex6=re:IsHasCategory(CATEGORY_LEAVE_GRAVE)
 	return ((ex1 and bit.band(dv1,LOCATION_GRAVE)==LOCATION_GRAVE)
 		or (ex2 and bit.band(dv2,LOCATION_GRAVE)==LOCATION_GRAVE)
---		or (ex3 and bit.band(dv3,LOCATION_GRAVE)==LOCATION_GRAVE)
 		or (ex4 and bit.band(dv4,LOCATION_GRAVE)==LOCATION_GRAVE)
 		or (ex5 and bit.band(dv5,LOCATION_GRAVE)==LOCATION_GRAVE)
 		or ex6) and Duel.IsChainDisablable(ev)

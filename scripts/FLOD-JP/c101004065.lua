@@ -1,5 +1,5 @@
 --墓穴の指名者
-
+--Designator From the Grave
 --Script by nekrozar
 function c101004065.initial_effect(c)
 	--Activate

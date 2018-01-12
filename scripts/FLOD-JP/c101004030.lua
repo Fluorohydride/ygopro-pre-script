@@ -1,5 +1,5 @@
 --妖海のアウトロール
-
+--Outroll of the Haunted Sea
 --Script by nekrozar
 function c101004030.initial_effect(c)
 	--change

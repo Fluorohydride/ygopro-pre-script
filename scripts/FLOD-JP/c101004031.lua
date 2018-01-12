@@ -1,5 +1,5 @@
 --ヤジロベーダー
-
+--Yajirovader
 --Script by nekrozar
 function c101004031.initial_effect(c)
 	--self destroy

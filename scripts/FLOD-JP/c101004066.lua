@@ -1,5 +1,5 @@
 --取捨蘇生
-
+--Selective Reborn
 --Script by nekrozar
 function c101004066.initial_effect(c)
 	--Activate
