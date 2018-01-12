@@ -56,7 +56,7 @@ function c101004032.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101004032.desfilter(c,g)
-	return c:IsAbleToHand() and g:IsContains(c)
+	return g:IsContains(c)
 end
 function c101004032.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
