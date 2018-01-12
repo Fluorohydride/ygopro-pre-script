@@ -20,7 +20,7 @@ function c101004004.cfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and c:IsControler(tp)
 end
 function c101004004.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101004004.cfilter,1,nil,tp)
+	return eg:IsExists(c101004004.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
 function c101004004.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

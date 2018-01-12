@@ -12,41 +12,36 @@ function c101004053.initial_effect(c)
 	e1:SetOperation(c101004053.activate)
 	c:RegisterEffect(e1)
 end
-function c101004053.filter(c,e,tp)
+function c101004053.filter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_LINK)
 		and Duel.IsExistingMatchingCard(c101004053.rmfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetLink())
 end
 function c101004053.rmfilter(c,link)
 	return c:IsType(TYPE_MONSTER) and c:IsLink(link) and c:IsAbleToRemove()
 end
-function c101004053.dfilter(c)
-	return c:IsFaceup()
-end
 function c101004053.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c101004053.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c101004053.filter,tp,0,LOCATION_MZONE,1,nil,e,tp) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c101004053.filter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c101004053.filter,tp,0,LOCATION_MZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c101004053.filter,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
-	e:SetLabel(g:GetFirst():GetLink())
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),1-tp,LOCATION_MZONE)
+	local g=Duel.SelectTarget(tp,c101004053.filter,tp,0,LOCATION_MZONE,1,1,nil,tp)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_SZONE)
 end
 function c101004053.activate(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if not tc:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c101004053.rmfilter,tp,LOCATION_GRAVE,0,1,1,nil,e:GetLabel())
+	local g=Duel.SelectMatchingCard(tp,aux.NecroVallerFilter(c101004053.rmfilter),tp,LOCATION_GRAVE,0,1,1,nil,tc:GetLink())
 	local rc=g:GetFirst()
-	if rc and Duel.Remove(rc,0,REASON_EFFECT)~=0 and rc:IsLocation(LOCATION_REMOVED) then
-		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0
-			and rc:IsRace(RACE_CYBERSE) and Duel.SelectYesNo(tp,aux.Stringid(101004053,0)) then
+	if rc and Duel.Remove(rc,0,REASON_EFFECT)~=0 and rc:IsLocation(LOCATION_REMOVED)
+		and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_SZONE,nil)
+		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101004053,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local dg=Duel.SelectMatchingCard(tp,c101004053.dfilter,tp,0,LOCATION_SZONE,1,1,nil)
-			if dg:GetCount()>0 then
-				Duel.HintSelection(dg)
-				Duel.Destroy(dg,REASON_EFFECT)
-			end
+			local dg=g:Select(tp,1,1,nil)
+			Duel.HintSelection(dg)
+			Duel.Destroy(dg,REASON_EFFECT)
 		end
 	end
 end
