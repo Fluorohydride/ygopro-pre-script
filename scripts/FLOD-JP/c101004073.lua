@@ -16,8 +16,7 @@ function c101004073.cfilter(c)
 	return c:IsFaceup() and c:GetMutualLinkedGroupCount()>0
 end
 function c101004073.condition(e,tp,eg,ep,ev,re,r,rp)
-	if ep==tp or not Duel.IsExistingMatchingCard(c101004073.cfilter,tp,LOCATION_MZONE,0,1,nil)
-		or Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)~=0 then return false end
+	if ep==tp or not Duel.IsExistingMatchingCard(c101004073.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
 	return Duel.IsChainNegatable(ev) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function c101004073.target(e,tp,eg,ep,ev,re,r,rp,chk)

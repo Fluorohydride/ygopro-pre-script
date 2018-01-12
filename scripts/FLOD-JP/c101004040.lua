@@ -14,24 +14,23 @@ function c101004040.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101004040.filter(c)
-	return c:IsSetCard(0xfb) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0xfb) and c:IsAbleToHand()
 end
-function c101004040.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c101004040.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101004040.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101004040.filter,tp,LOCATION_REMOVED,0,1,nil)
-	and Duel.IsExistingMatchingCard(Card.IsType,c:GetControler(),0,LOCATION_MZONE,1,nil,TYPE_LINK)	end
+		and Duel.IsExistingMatchingCard(Card.IsType,tp,0,LOCATION_MZONE,1,nil,TYPE_LINK)	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_LINK)
+	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_MZONE,nil,TYPE_LINK)
 	local g=Duel.SelectTarget(tp,c101004040.filter,tp,LOCATION_REMOVED,0,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),0,0)
 end
-function c101004040.op(e,tp,eg,ep,ev,re,r,rp)
+function c101004040.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local rg=tg:Filter(Card.IsRelateToEffect,nil,e)
 	Duel.SendtoHand(rg,nil,REASON_EFFECT)
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.BreakEffect()
 		local og=Duel.GetOperatedGroup()
 		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_HAND)
 		if ct>0 then

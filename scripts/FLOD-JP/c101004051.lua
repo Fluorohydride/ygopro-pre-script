@@ -2,7 +2,7 @@
 --Pint-Sized Priest Hidaruma
 function c101004051.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsLinkRace,RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST),2,2)
 	c:EnableReviveLimit()
 	--atkup
 	local e1=Effect.CreateEffect(c)
@@ -41,17 +41,17 @@ end
 function c101004051.atkval(e,c)
 	return Duel.GetMatchingGroupCount(c101004051.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)*500
 end
-function c93966624.des(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+function c93966624.desfilter(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c101004051.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(c93966624.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingTarget(c93966624.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,c69351984.desfilter,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler(),tp)
+	local g1=Duel.SelectTarget(tp,c69351984.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectTarget(tp,c69351984.desfilter,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler(),tp)
+	local g2=Duel.SelectTarget(tp,c69351984.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
 end
@@ -63,13 +63,13 @@ function c101004051.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101004051.thfilter(c)
-	return  c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST)) and c:IsAbleToHand()
+	return c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsAbleToHand()
 end
 function c101004051.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101004051.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101004051.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c101004051.thfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101004051.thfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,c101004051.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101004051.thfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c101004051.thop(e,tp,eg,ep,ev,re,r,rp)

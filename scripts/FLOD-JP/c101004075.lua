@@ -15,7 +15,7 @@ end
 function c101004075.costfilter(c)
 	return c:IsSetCard(0xef)
 		and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()
-		and Duel.IsExistingMatchingCard(nil,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
+		and Duel.IsExistingMatchingCard(c101004075.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function c101004075.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101004075.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
@@ -27,14 +27,14 @@ function c101004075.filter(c)
 	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_EFFECT)
 end
 function c101004075.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c10667321.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101004075.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,0,0)
 end
 function c101004075.activate(e,tp,eg,ep,ev,re,r,rp)
 	local exc=nil
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then exc=e:GetHandler() end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,exc)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local g=Duel.SelectMatchingCard(tp,c101004075.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,exc)
 	if g:GetCount()>0 then
 		local tc=g:GetFirst()
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -51,8 +51,8 @@ function c101004075.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
 		local atk=tc:GetAttack()
-		if gc>0 then
-		Duel.Recover(p,atk,REASON_EFFECT)
-	end
+		if atk>0 then
+			Duel.Recover(tp,atk,REASON_EFFECT)
+		end
 	end
 end
