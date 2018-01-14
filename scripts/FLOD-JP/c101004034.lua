@@ -82,8 +82,8 @@ function c101004034.plchk(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local cg=c:GetColumnGroup()
 	cg:KeepAlive()
-	if c:GetFlagEffect(101004035)==0 then
-		c:RegisterFlagEffect(101004035,RESET_EVENT+0x1fd0000,0,1)
+	if c:GetFlagEffect(101004034+1)==0 then
+		c:RegisterFlagEffect(101004034+1,RESET_EVENT+0x1fd0000,0,1)
 		e:SetLabelObject(cg)
 	elseif not e:GetLabelObject():Includes(cg) then
 		e:SetLabelObject(cg)
@@ -98,8 +98,8 @@ function c101004034.datop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetValue(c:GetAttack()/2)
+		e1:SetCode(EFFECT_SET_BASE_ATTACK)
+		e1:SetValue(c:GetBaseAttack()/2)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
