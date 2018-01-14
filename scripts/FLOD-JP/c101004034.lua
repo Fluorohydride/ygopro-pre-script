@@ -39,33 +39,22 @@ function c101004034.initial_effect(c)
 	e3:SetOperation(c101004034.datop)
 	c:RegisterEffect(e3)
 end
-function c101004034.cfilter(c,tp,seq)
-	local s=c:GetSequence()
-	if c:IsLocation(LOCATION_SZONE) and s==5 then return false end
-	if c:IsControler(tp) then
-		return s==seq or (seq==1 and s==5) or (seq==3 and s==6)
-	else
-		return s==4-seq or (seq==1 and s==6) or (seq==3 and s==5)
-	end
-end
 function c101004034.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local zone=0
-	for i=0,4 do
-		if Duel.GetMatchingGroupCount(c101004034.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tp,i)==0 then
-			zone=zone+math.pow(2,i)
-		end
+	local zone=0x1f
+	local lg=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
+	for tc in aux.Next(lg) do
+		zone=bit.band(zone,bit.bnot(tc:GetColumnZone(LOCATION_MZONE,0,0,tp)))
 	end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function c101004034.hspval(e,c)
 	local tp=c:GetControler()
-	local zone=0
-	for i=0,4 do
-		if Duel.GetMatchingGroupCount(c101004034.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tp,i)==0 then
-			zone=zone+math.pow(2,i)
-		end
+	local zone=0x1f
+	local lg=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
+	for tc in aux.Next(lg) do
+		zone=bit.band(zone,bit.bnot(tc:GetColumnZone(LOCATION_MZONE,0,0,tp)))
 	end
 	return 0,zone
 end
