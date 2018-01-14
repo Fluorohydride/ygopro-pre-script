@@ -39,7 +39,7 @@ function c101004051.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST)
 end
 function c101004051.atkval(e,c)
-	return Duel.GetMatchingGroupCount(c101004051.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)*500
+	return Duel.GetMatchingGroupCount(c101004051.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)*100
 end
 function c93966624.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

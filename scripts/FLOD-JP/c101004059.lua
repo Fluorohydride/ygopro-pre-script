@@ -61,7 +61,7 @@ function c101004059.mvop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 			local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
 			local nseq=math.log(s,2)
-			Duel.MoveSequence(tc,nseq)
+			Duel.MoveSequence(g:GetFirst(),nseq)
 		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)

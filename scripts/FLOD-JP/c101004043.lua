@@ -34,7 +34,7 @@ function c101004043.matfilter(c)
 	return c:IsLinkSetCard(0x213) and not c:IsLinkCode(101004043)
 end
 function c101004043.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c101004043.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
