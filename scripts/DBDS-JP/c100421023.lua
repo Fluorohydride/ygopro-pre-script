@@ -1,7 +1,7 @@
--- 空牙団の英雄 ラファール
+--空牙団の英雄 ラファール
 --Lafarl, Hero of the Skyfang Brigade
 function c100421023.initial_effect(c)
-	--to grave
+	--to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100421023,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -14,62 +14,63 @@ function c100421023.initial_effect(c)
 	c:RegisterEffect(e1)
 	--negate
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100421023,0))
-	e2:SetCategory(CATEGORY_NEGATE)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e2:SetDescription(aux.Stringid(100421023,1))
+	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,100421024+100)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetCode(EVENT_CHAINING)
-	e2:SetCost(c100421023.cost)
-	e2:SetCondition(c100421023.discon)
-	e2:SetTarget(c100421023.distg)
-	e2:SetOperation(c100421023.disop)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,100421123)
+	e2:SetCondition(c100421023.negcon)
+	e2:SetCost(c100421023.negcost)
+	e2:SetTarget(c100421023.negtg)
+	e2:SetOperation(c100421023.negop)
 	c:RegisterEffect(e2)
 end
-function c100421023.filter(c)
-	return c:IsSetCard(0x214) and c:IsType(TYPE_MONSTER)
+function c100421023.ctfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x214)
 end
 function c100421023.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(c100421023.filter,c:GetControler(),LOCATION_MZONE,0,nil)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,ct) end
+	if chk==0 then
+		local ct=Duel.GetMatchingGroup(c100421023.ctfilter,tp,LOCATION_MZONE,0,nil):GetClassCount(Card.GetCode)
+		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return false end
+		local g=Duel.GetDecktopGroup(tp,ct)
+		return g:FilterCount(Card.IsAbleToHand,nil)>0
+	end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function c100421023.thop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(c100421023.filter,c:GetControler(),LOCATION_MZONE,0,nil)
-	if not Duel.IsPlayerCanDiscardDeck(tp,ct) then return end
+	local ct=Duel.GetMatchingGroup(c100421023.ctfilter,tp,LOCATION_MZONE,0,nil):GetClassCount(Card.GetCode)
 	Duel.ConfirmDecktop(tp,ct)
 	local g=Duel.GetDecktopGroup(tp,ct)
 	if g:GetCount()>0 then
-		Duel.DisableShuffleCheck()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local add=g:Select(tp,1,1,nil)
-		if add:GetFirst():IsAbleToHand() then
-			Duel.SendtoHand(add,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,add)
-			Duel.ShuffleHand(tp)
-		else
-			Duel.SendtoGrave(add,REASON_EFFECT)
+		local tg=g:Filter(Card.IsAbleToHand,nil)
+		if tg:GetCount()>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local sg=tg:Select(tp,1,1,nil)
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
 		end
 		Duel.ShuffleDeck(tp)
 	end
 end
-
-
+function c100421023.negcon(e,tp,eg,ep,ev,re,r,rp)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+		and ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+end
 function c100421023.cfilter(c)
 	return c:IsSetCard(0x214) and c:IsDiscardable()
 end
-function c100421023.discost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100421023.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100421023.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c100421023.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,c100421023.cfilter,1,1,REASON_COST+REASON_DISCARD,nil)
 end
-function c100421023.discon(e,tp,eg,ep,ev,re,r,rp,chk)
-	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return ep~=tp and loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
-end
-function c100421023.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100421023.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
-function c100421023.disop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateActivation(ev)
+function c100421023.negop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.NegateActivation(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SendtoGrave(eg,REASON_EFFECT)
+	end
 end
