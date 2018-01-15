@@ -4,7 +4,7 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **January 13, 2018** : FLAMES OF DESTRUCTION (FLOD-JP) : `101004XXX`
 - **February 23, 2018** : The Valuable Book 20 (VB20-JP) : `100226XXX`~~
-- **February 24, 2018** : Deck Build Pack: Dark Savers (DBDS-JP) : `100421XXX`~~
+- **February 24, 2018** : Deck Build Pack: Dark Savers (DBDS-JP) : `100408XXX`~~
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
