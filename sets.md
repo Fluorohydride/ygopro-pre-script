@@ -3,8 +3,14 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **January 13, 2018** : FLAMES OF DESTRUCTION (FLOD-JP) : `101004XXX`
-- **February 23, 2018** : The Valuable Book 20 (VB20-JP) : `100226XXX`~~
-- **February 24, 2018** : Deck Build Pack: Dark Savers (DBDS-JP) : `100408XXX`~~
+- **February 23, 2018** : The Valuable Book 20 (VB20-JP) : `100226XXX`
+- **February 24, 2018** : Deck Build Pack: Dark Savers (DBDS-JP) : `100408XXX`
+
+# Announced
+- **March 9, 2018** : Legendary Collection Kaiba (????-EN) : `100241XXX`
+- **March 10, 2018** : Structure Deck R: Curse of the Dark (????-JP) : `100306XXX`
+- **March 24, 2018** : Starter Deck 2018 (????-JP) : `100318XXX`
+- **April 14, 2018** : Cybernetic Horizon (????-JP) : `101005XXX`
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
