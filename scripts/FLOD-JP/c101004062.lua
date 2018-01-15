@@ -45,7 +45,7 @@ function c101004062.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
-	e1:SetTarget(c101004062.aclimit)
+	e1:SetValue(c101004062.aclimit)
 	Duel.RegisterEffect(e1,tp)
 end
 function c101004062.aclimit(e,re,tp)
