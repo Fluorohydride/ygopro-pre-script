@@ -2,13 +2,8 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **October 14, 2017** : EXTREME FORCE (EXFO-JP) : `101003XXX`
-- **November 11, 2017** : Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX`
-- **November 25, 2017** : LINK VRAINS Pack (LVP1-JP) : `100223XXX`
-- **December 9, 2017** : Structure Deck: Powercode Link (SD33-JP) : `100333XXX`
-- **December 16, 2017** : PREMIUM PACK 20 (PP20-JP) : `100224XXX`
-- **December 23, 2017** : LINK VRAINS Box (LVB1-JP) : `100225XXX`
 - **January 13, 2018** : FLAMES OF DESTRUCTION (FLOD-JP) : `101004XXX`
+- **February 24, 2018** : Deck Build Pack: Dark Savers (DBDS-JP) : `100421XXX`~~
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
@@ -65,3 +60,9 @@
 - ~~Legendary Dragon Decks (LEDD-EN) : `100240XXX`~~
 - ~~Promotion Pack 2017 (17PR-JP) : `100230XXX`~~
 - ~~Circuit Break (CIBR-EN) : `101002XXX`~~
+- ~~EXTREME FORCE (EXFO-JP) : `101003XXX`~~
+- ~~Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX`~~
+- ~~LINK VRAINS Pack (LVP1-JP) : `100223XXX`~~
+- ~~Structure Deck: Powercode Link (SD33-JP) : `100333XXX`~~
+- ~~PREMIUM PACK 20 (PP20-JP) : `100224XXX`~~
+- ~~LINK VRAINS Box (LVB1-JP) : `100225XXX`~~
