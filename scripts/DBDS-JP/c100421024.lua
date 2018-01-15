@@ -1,4 +1,4 @@
--- 飛竜艇-ファンドラ
+--飛竜艇－ファンドラ
 --Dragon Airship - Fandra
 function c100421024.initial_effect(c)
 	--activate
@@ -6,7 +6,6 @@ function c100421024.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	
 	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100421024,0))
@@ -18,7 +17,7 @@ function c100421024.initial_effect(c)
 	e2:SetTarget(c100421024.target)
 	e2:SetOperation(c100421024.operation)
 	c:RegisterEffect(e2)
-	-- Destroy
+	--Destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100421024,1))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -30,16 +29,15 @@ function c100421024.initial_effect(c)
 	e3:SetOperation(c100421024.desop)
 	c:RegisterEffect(e3)
 end
-
 function c100421024.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 		and Duel.GetDrawCount(tp)>0
 end
-function c100421024.filter(c)
+function c100421024.thfilter(c)
 	return c:IsSetCard(0x214) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100421024.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100421024.filter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100421024.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	local dt=Duel.GetDrawCount(tp)
 	if dt~=0 then
 		_replace_count=0
@@ -57,22 +55,20 @@ function c100421024.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100421024.operation(e,tp,eg,ep,ev,re,r,rp)
 	_replace_count=_replace_count+1
-	if _replace_count>_replace_max or not e:GetHandler():IsRelateToEffect(e) or e:GetHandler():IsFacedown() then return end
+	if _replace_count>_replace_max or not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100421024.filter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()~=0 then
+	local g=Duel.SelectMatchingCard(tp,c100421024.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
-
-function c100421024.filter(c)
+function c100421024.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x214)
 end
 function c100421024.descon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100421024.filter,tp,LOCATION_MZONE,0,nil)
-	return g:GetClassCount(Card.GetCode)>5
+	local g=Duel.GetMatchingGroup(c100421024.cfilter,tp,LOCATION_MZONE,0,nil)
+	return g:GetClassCount(Card.GetCode)>=5
 end
 function c100421024.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -86,4 +82,16 @@ end
 function c100421024.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	Duel.Destroy(g,REASON_EFFECT)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(0,1)
+	e1:SetValue(0)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e2,tp)
 end
