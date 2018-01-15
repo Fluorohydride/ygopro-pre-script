@@ -53,53 +53,39 @@ function c101004031.seqop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) then return end
 	local seq=c:GetSequence()
 	if seq>4 then return end
-	if (seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1))
-		or (seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1)) then
-		local flag=0
-		if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=bit.replace(flag,0x1,seq-1) end
-		if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=bit.replace(flag,0x1,seq+1) end
-		flag=bit.bxor(flag,0xff)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-		local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,flag)
-		local nseq=0
-		if s==1 then nseq=0
-		elseif s==2 then nseq=1
-		elseif s==4 then nseq=2
-		elseif s==8 then nseq=3
-		else nseq=4 end
-		Duel.MoveSequence(c,nseq)
-	end
+	local flag=0
+	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=bit.replace(flag,0x1,seq-1) end
+	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=bit.replace(flag,0x1,seq+1) end
+	if flag==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,bit.bnot(flag)),2))
 end
 function c101004031.mvcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetCount()==1 and eg:GetFirst():IsControler(1-tp)
 end
 function c101004031.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true	end
+	if chk==0 then return true end
 	local tc=eg:GetFirst()
 	tc:CreateEffectRelation(e)
 end
-function c101004031.desfilter(c,g)
-	return g:IsContains(c)
-end
-function c101004031.seqop(e,tp,eg,ep,ev,re,r,rp)
+function c101004031.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=eg:GetFirst()
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp)
 	 	or not tc:IsRelateToEffect(e) or tc:IsControler(tp) then return end
 	local seq1=c:GetSequence()
-	local seq2=tc:GetSequence()
-	if seq1>4 then return end
-	if (seq1>seq2 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1)
-		or seq1<seq2 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1)) then
-		local nseq=0
-		if seq1>seq2 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then nseq=seq1-1
-		else nseq=seq1+1 end
-		Duel.MoveSequence(c,nseq)
+	local seq2=4-tc:GetSequence()
+	if seq1>4 or seq1==seq2 then return end
+	local increase=seq2>seq1 and -1 or 1
+	while(not Duel.CheckLocation(tp,LOCATION_MZONE,seq2) and seq2>=0 and seq2<=4) do
+		seq2=seq2+increase
+	end
+	if(seq2>=0 and seq2<=4) then
+		Duel.MoveSequence(c,seq2)
 		local cg=c:GetColumnGroup()
-		local g=Duel.GetMatchingGroup(c101004031.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,cg)
-		if g:GetCount()>0 then
+		if cg:GetCount()>0 then
 			Duel.BreakEffect()
-			Duel.Destroy(g,REASON_EFFECT)
+			Duel.Destroy(cg,REASON_EFFECT)
 		end
 	end
 end
