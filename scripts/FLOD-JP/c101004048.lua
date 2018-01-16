@@ -73,5 +73,5 @@ function c101004048.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101004048.aclimit(e,re,tp)
 	local tc=re:GetHandler()
-	return tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() and tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:GetMutualLinkedGroupCount()==0 and re:IsActiveType(TYPE_MONSTER) and not tc:IsImmuneToEffect(e)
+	return tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() and tc:IsSummonType(SUMMON_TYPE_SPECIAL) and not tc:IsLinkState() and re:IsActiveType(TYPE_MONSTER) and not tc:IsImmuneToEffect(e)
 end
