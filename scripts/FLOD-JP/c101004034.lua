@@ -1,3 +1,4 @@
+--急き兎馬
 --Rapid Red Hared Mare
 --scripted by Edo9300
 function c101004034.initial_effect(c)
@@ -15,7 +16,7 @@ function c101004034.initial_effect(c)
 	--self destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101004034,0))
-	e2:SetCategory(CATEGORY_TODECK)
+	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(101004034)
 	e2:SetTarget(c101004034.destg)
@@ -67,21 +68,29 @@ function c101004034.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	end
 end
+function c101004034.plfilter(c)
+	return not c:IsStatus(STATUS_SUMMONING) and not c:IsStatus(STATUS_SUMMON_DISABLED)
+end
+function c101004034.gfilter(c,g)
+	return not g:IsContains(c)
+end
 function c101004034.plchk(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local cg=c:GetColumnGroup():Filter(function(c) return not c:IsStatus(STATUS_SUMMONING) and not c:IsStatus(STATUS_SUMMON_DISABLED)end,nil)
-	cg:KeepAlive()
-	if c:GetFlagEffect(101004034+1)==0 or c:GetFlagEffectLabel(101004034+1)~=c:GetSequence() then
-		c:ResetFlagEffect(101004034+1)
-		c:RegisterFlagEffect(101004034+1,RESET_EVENT+0x1fd0000,0,1,c:GetSequence())
+	local cg=c:GetColumnGroup():Filter(c101004034.plfilter,nil)
+	if c:GetFlagEffect(101004034+100)==0 or c:GetFlagEffectLabel(101004034+100)~=c:GetSequence() then
+		c:ResetFlagEffect(101004034+100)
+		c:RegisterFlagEffect(101004034+100,RESET_EVENT+0x1fd0000,0,1,c:GetSequence())
+		cg:KeepAlive()
 		e:SetLabelObject(cg)
-	elseif not e:GetLabelObject():Includes(cg) then
+	elseif cg:IsExists(c101004034.gfilter,1,nil,e:GetLabelObject()) then
+		cg:KeepAlive()
 		e:SetLabelObject(cg)
 		Duel.RaiseSingleEvent(c,101004034,e,0,0,0,0)
 	end
 end
 function c101004034.dattg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,0,0)
 end
 function c101004034.datop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -90,7 +99,7 @@ function c101004034.datop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(c:GetBaseAttack()/2)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
