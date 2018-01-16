@@ -41,17 +41,17 @@ end
 function c101004051.atkval(e,c)
 	return Duel.GetMatchingGroupCount(c101004051.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)*100
 end
-function c93966624.desfilter(c)
+function c101004051.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c101004051.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(c93966624.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingTarget(c93966624.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+		and Duel.IsExistingTarget(c101004051.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,c69351984.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g1=Duel.SelectTarget(tp,c101004051.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectTarget(tp,c69351984.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g2=Duel.SelectTarget(tp,c101004051.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
 end

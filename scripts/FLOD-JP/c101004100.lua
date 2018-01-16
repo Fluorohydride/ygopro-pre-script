@@ -50,13 +50,15 @@ function c101004100.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101004100.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,1-tp,false,false,POS_FACEUP)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_RACE)
-		e1:SetValue(RACE_ZOMBIE)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
-		tc:RegisterEffect(e1)
+	if tc:IsRelateToEffect(e) then
+		if Duel.SpecialSummonStep(tc,0,tp,1-tp,false,false,POS_FACEUP) then
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_CHANGE_RACE)
+			e1:SetValue(RACE_ZOMBIE)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
+			tc:RegisterEffect(e1)
+		end
 		Duel.SpecialSummonComplete()
 	end
 end
