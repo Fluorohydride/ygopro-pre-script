@@ -28,7 +28,7 @@ function c100408023.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100408023.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x214)
+	return c:IsFaceup() and c:IsSetCard(0x214) and not c:IsCode(100408023)
 end
 function c100408023.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

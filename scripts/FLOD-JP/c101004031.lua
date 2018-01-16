@@ -81,7 +81,7 @@ end
 function c101004031.desfilter(c,g)
 	return g:IsContains(c)
 end
-function c101004031.seqop(e,tp,eg,ep,ev,re,r,rp)
+function c101004031.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=eg:GetFirst()
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp)
@@ -89,8 +89,8 @@ function c101004031.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local seq1=c:GetSequence()
 	local seq2=tc:GetSequence()
 	if seq1>4 then return end
-	if (seq1>seq2 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1)
-		or seq1<seq2 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1)) then
+	if (seq1>seq2 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1))
+		or (seq1<seq2 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1)) then
 		local nseq=0
 		if seq1>seq2 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then nseq=seq1-1
 		else nseq=seq1+1 end

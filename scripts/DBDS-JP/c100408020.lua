@@ -24,7 +24,7 @@ function c100408020.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100408020.damfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x214)
+	return c:IsFaceup() and c:IsSetCard(0x214) and not c:IsCode(100408020)
 end
 function c100408020.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100408020.damfilter,tp,LOCATION_MZONE,0,1,nil) end

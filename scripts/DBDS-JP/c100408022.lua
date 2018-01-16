@@ -28,7 +28,7 @@ function c100408022.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100408022.recfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x214)
+	return c:IsFaceup() and c:IsSetCard(0x214) and not c:IsCode(100408022)
 end
 function c100408022.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100408022.recfilter,tp,LOCATION_MZONE,0,1,nil) end
