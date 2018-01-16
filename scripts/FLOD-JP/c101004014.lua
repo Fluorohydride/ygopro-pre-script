@@ -18,8 +18,8 @@ function c101004014.initial_effect(c)
 	e2:SetCountLimit(1,101004014)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCondition(c101004014.spcon1)
-	e2:SetTarget(c101004014.sptg)
-	e2:SetOperation(c101004014.spop)
+	e2:SetTarget(c101004014.sptg1)
+	e2:SetOperation(c101004014.spop1)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
@@ -29,8 +29,8 @@ function c101004014.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCountLimit(1,101004014+100)
 	e3:SetCost(c101004014.spcost)
-	e3:SetTarget(c101004014.sptg)
-	e3:SetOperation(c101004014.spop)
+	e3:SetTarget(c101004014.sptg2)
+	e3:SetOperation(c101004014.spop2)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(101004014,ACTIVITY_SPSUMMON,c101004014.counterfilter)
 end
@@ -40,12 +40,12 @@ end
 function c101004014.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:IsHasType(TYPE_TRAP) and e:GetHandler():GetFlagEffect(1)>0
 end
-function c101004014.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101004014.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function c101004014.spop(e,tp,eg,ep,ev,re,r,rp)
+function c101004014.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
@@ -68,12 +68,12 @@ end
 function c101004014.filter(c,e,tp)
 	return c:IsSetCard(0x103) and not c:IsCode(101004014) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
-function c101004014.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101004014.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101004014.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function c101004014.spop(e,tp,eg,ep,ev,re,r,rp)
+function c101004014.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101004014.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
