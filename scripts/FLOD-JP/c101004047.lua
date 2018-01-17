@@ -56,7 +56,7 @@ function c101004047.tdop(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,1)
 		and Duel.SelectYesNo(tp,aux.Stringid(101004047,1)) then
 		Duel.BreakEffect()
-		if tc:IsLocation(LOCATION_DECK) then
+		if tc:IsLocation(LOCATION_DECK) and tc:IsControler(tp) then
 			Duel.ShuffleDeck(tp)
 		end
 		Duel.Draw(tp,1,REASON_EFFECT)
