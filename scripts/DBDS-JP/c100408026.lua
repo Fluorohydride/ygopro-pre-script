@@ -41,7 +41,7 @@ function c100408026.spfilter1(c,e,tp)
 		and lv>0 and Duel.IsExistingMatchingCard(c100408026.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,lv)
 end
 function c100408026.spfilter2(c,e,tp,lv)
-	return c:GetLevel()>lv and c:IsSetCard(0x9e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()<lv and c:IsSetCard(0x9e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100408026.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and c100408026.spfilter1(chkc,e,tp) end
