@@ -77,8 +77,9 @@ function c101004018.tkop(e,tp,eg,ep,ev,re,r,rp)
 		or Duel.GetLocationCount(1-tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,101004118,0xfe,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE)
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,101004118,0xfe,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp) then return end
-	local token=Duel.CreateToken(tp,101004118)
-	Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-	Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)
+	local token1=Duel.CreateToken(tp,101004118)
+	local token2=Duel.CreateToken(tp,101004118)
+	Duel.SpecialSummonStep(token1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	Duel.SpecialSummonStep(token2,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)
 	Duel.SpecialSummonComplete()
 end

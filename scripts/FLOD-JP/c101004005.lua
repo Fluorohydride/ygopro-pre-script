@@ -20,6 +20,7 @@ function c101004005.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetHintTiming(0,0x1e0)
 	e2:SetCountLimit(1,101004005)
 	e2:SetTarget(c101004005.rmtg)
 	e2:SetOperation(c101004005.rmop)
@@ -39,14 +40,15 @@ function c101004005.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectMatchingCard(tp,c101004005.sprfilter,tp,LOCATION_GRAVE,0,2,2,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function c101004005.rmfilter(c)
+function c101004005.rmfilter(c,atk)
 	return c:IsFaceup() and c:GetAttack()>atk and c:IsAbleToRemove()
 end
 function c101004005.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c101004005.rmfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101004005.rmfilter,tp,0,LOCATION_MZONE,1,nil) end
+	local atk=e:GetHandler():GetAttack()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c101004005.rmfilter(chkc,atk) end
+	if chk==0 then return Duel.IsExistingTarget(c101004005.rmfilter,tp,0,LOCATION_MZONE,1,nil,atk) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,c101004005.rmfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101004005.rmfilter,tp,0,LOCATION_MZONE,1,1,nil,atk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c101004005.rmop(e,tp,eg,ep,ev,re,r,rp)
