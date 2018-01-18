@@ -8,7 +8,7 @@ function c101004047.initial_effect(c)
 	--todeck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101004047,0))
-	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -45,6 +45,7 @@ function c101004047.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 	if e:GetHandler():GetMutualLinkedGroupCount()>0 then
+		e:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)

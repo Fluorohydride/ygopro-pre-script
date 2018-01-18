@@ -8,7 +8,7 @@ function c101004045.initial_effect(c)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101004045,0))
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
+	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -48,6 +48,7 @@ function c101004045.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c101004045.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	if e:GetHandler():GetMutualLinkedGroupCount()>0 then
+		e:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)

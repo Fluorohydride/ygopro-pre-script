@@ -8,7 +8,7 @@ function c101004043.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101004043,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,101004043)
@@ -48,6 +48,7 @@ function c101004043.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(c101004043.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	if e:GetHandler():GetMutualLinkedGroupCount()>0 then
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)
