@@ -51,6 +51,7 @@ function c101004045.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
 		e:SetLabel(1)
 	else
+		e:SetCategory(CATEGORY_DESTROY)
 		e:SetLabel(0)
 	end
 end

@@ -52,6 +52,7 @@ function c101004048.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetCategory(CATEGORY_LEAVE_GRAVE+CATEGORY_DRAW)
 		e:SetLabel(1)
 	else
+		e:SetCategory(CATEGORY_LEAVE_GRAVE)
 		e:SetLabel(0)
 	end
 end

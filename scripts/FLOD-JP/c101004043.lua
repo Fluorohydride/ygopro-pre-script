@@ -51,6 +51,7 @@ function c101004043.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
 		e:SetLabel(1)
 	else
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e:SetLabel(0)
 	end
 end

@@ -43,6 +43,7 @@ function c101004044.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_DRAW)
 		e:SetLabel(1)
 	else
+		e:SetCategory(0)
 		e:SetLabel(0)
 	end
 end

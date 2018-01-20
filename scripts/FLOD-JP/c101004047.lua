@@ -48,6 +48,7 @@ function c101004047.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 		e:SetLabel(1)
 	else
+		e:SetCategory(CATEGORY_TODECK)
 		e:SetLabel(0)
 	end
 end
