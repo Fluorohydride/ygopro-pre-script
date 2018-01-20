@@ -31,7 +31,7 @@ function c101004053.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroVallerFilter(c101004053.rmfilter),tp,LOCATION_GRAVE,0,1,1,nil,tc:GetLink())
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101004053.rmfilter),tp,LOCATION_GRAVE,0,1,1,nil,tc:GetLink())
 	local rc=g:GetFirst()
 	if rc and Duel.Remove(rc,0,REASON_EFFECT)~=0 and rc:IsLocation(LOCATION_REMOVED)
 		and Duel.Destroy(tc,REASON_EFFECT)~=0 then

@@ -49,34 +49,39 @@ function c101004077.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e3)
 		end
-		if not c:IsStatus(STATUS_ACT_FROM_HAND) then
+		if not c:IsStatus(STATUS_ACT_FROM_HAND) and c:IsLocation(LOCATION_SZONE) then
 			local e4=Effect.CreateEffect(c)
 			e4:SetType(EFFECT_TYPE_FIELD)
 			e4:SetCode(EFFECT_DISABLE)
 			e4:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
 			e4:SetTarget(c101004077.distg)
 			e4:SetReset(RESET_PHASE+PHASE_END)
-			e4:SetLabel(c:GetColumnZone(LOCATION_SZONE))
+			e4:SetLabel(c:GetSequence())
 			Duel.RegisterEffect(e4,tp)
 			local e5=Effect.CreateEffect(c)
 			e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e5:SetCode(EVENT_CHAIN_SOLVING)
 			e5:SetOperation(c101004077.disop)
 			e5:SetReset(RESET_PHASE+PHASE_END)
-			e5:SetLabel(c:GetColumnZone(LOCATION_SZONE))
+			e5:SetLabel(c:GetSequence())
 			Duel.RegisterEffect(e5,tp)
 		end
 	end
 end
 function c101004077.distg(e,c)
-	local zone=e:GetLabel()
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and bit.extract(zone,c:GetSequence())~=0
+	local seq=e:GetLabel()
+	local p=c:GetControler()
+	local tp=e:GetHandlerPlayer()
+	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+		and ((p==tp and c:GetSequence()==seq) or (p==1-tp and c:GetSequence()==4-seq))
 end
 function c101004077.disop(e,tp,eg,ep,ev,re,r,rp)
-	local zone=e:GetLabel()
+	local tseq=e:GetLabel()
 	local loc,seq=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE)
-	local tpe=re:GetActiveType()
-	if bit.band(loc,LOCATION_SZONE)~=0 and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and bit.extract(zone,seq)~=0 then
+	local p=re:GetHandlerPlayer()
+	local tp=e:GetHandlerPlayer()
+	if bit.band(loc,LOCATION_SZONE)~=0 and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+		and ((p==tp and seq==tseq) or (p==1-tp and seq==4-tseq)) then
 		Duel.NegateEffect(ev)
 	end
 end
