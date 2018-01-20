@@ -65,12 +65,12 @@ function c101004059.mvop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-		local g1=Duel.SelectMatchingCard(tp,c101004059.mvfilter3,tp,LOCATION_MZONE,0,1,1,nil,tp)
+		local g1=Duel.SelectMatchingCard(tp,c101004059.mvfilter2,tp,LOCATION_MZONE,0,1,1,nil,tp)
 		local tc1=g1:GetFirst()
 		if not tc1 then return end
 		Duel.HintSelection(g1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-		local g2=Duel.SelectMatchingCard(tp,c101004059.mvfilter2,tp,LOCATION_MZONE,0,1,1,tc1)
+		local g2=Duel.SelectMatchingCard(tp,c101004059.mvfilter3,tp,LOCATION_MZONE,0,1,1,tc1)
 		Duel.HintSelection(g2)
 		local tc2=g2:GetFirst()
 		Duel.SwapSequence(tc1,tc2)
