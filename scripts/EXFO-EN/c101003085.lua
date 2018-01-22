@@ -33,7 +33,7 @@ function c101003085.spfilter(c,e,tp)
 	return c:IsSetCard(0x106) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101003085.thfilter(c)
-	return c:GetType()&TYPE_SPELL+TYPE_RITUAL ==TYPE_SPELL+TYPE_RITUAL and c:IsAbleToHand()
+	return c:GetType()==TYPE_SPELL+TYPE_RITUAL and c:IsAbleToHand()
 end
 function c101003085.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
