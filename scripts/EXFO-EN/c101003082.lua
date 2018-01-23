@@ -14,7 +14,7 @@ function c101003082.initial_effect(c)
 	c:RegisterEffect(e1)
 	--search
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101003082,2))
+	e2:SetDescription(aux.Stringid(101003082,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
@@ -36,8 +36,8 @@ function c101003082.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101003082.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101003082,1))
-	e:SetLabel(Duel.SelectOption(tp,70,71,72))
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
+	e:SetLabel(Duel.AnnounceType(tp))
 end
 function c101003082.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -63,10 +63,10 @@ function c101003082.aclimit1(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
 end
 function c101003082.aclimit2(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_SPELL) and not re:GetHandler():IsImmuneToEffect(e)
 end
 function c101003082.aclimit3(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_TRAP) and not re:GetHandler():IsImmuneToEffect(e)
 end
 function c101003082.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
