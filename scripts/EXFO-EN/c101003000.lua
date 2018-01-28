@@ -51,7 +51,7 @@ function c101003000.gyop(e,tp,eg,ep,ev,re,r,rp)
 	if pg:GetCount()==0 then return end
 	local g=Group.CreateGroup()
 	for pc in aux.Next(pg) do
-		g:Merge(Duel.GetMatchingGroup(c101003000.gyfilter,tp,0,LOCATION_MZONE,nil,pc:GetColumnZone()))
+		g:Merge(Duel.GetMatchingGroup(c101003000.gyfilter,tp,0,LOCATION_MZONE,nil,pc:GetColumnGroup()))
 	end
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end
