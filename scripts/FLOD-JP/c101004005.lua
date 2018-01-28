@@ -43,7 +43,7 @@ end
 function c101004005.rmfilter(c,atk)
 	return c:IsFaceup() and c:GetAttack()>atk and c:IsAbleToRemove()
 end
-function c101004005.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101004005.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local atk=e:GetHandler():GetAttack()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c101004005.rmfilter(chkc,atk) end
 	if chk==0 then return Duel.IsExistingTarget(c101004005.rmfilter,tp,0,LOCATION_MZONE,1,nil,atk) end

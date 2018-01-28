@@ -48,13 +48,10 @@ function c101003085.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g2,1,0,0)
 end
 function c101003085.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if g:GetCount()~=2 then return end
-	local spc=g:GetFirst()
-	local thc=g:GetNext()
-	if spc~=e:GetLabelObject() then spc,thc=thc,spc end
-	if Duel.SpecialSummon(spc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
-		Duel.SendtoHand(thc,REASON_EFFECT)
+	local tc1,tc2=Duel.GetFirstTarget()
+	if tc1~=e:GetLabelObject() then tc1,tc2=tc2,tc1 end
+	if tc1:IsRelateToEffect(e) and Duel.SpecialSummon(tc1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 and tc2:IsRelateToEffect(e) then
+		Duel.SendtoHand(tc2,REASON_EFFECT)
 	end
 end
 function c101003085.drfilter(c)
@@ -62,7 +59,7 @@ function c101003085.drfilter(c)
 end
 function c101003085.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101003085.drfilter(chkc) end
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) 
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
 		and Duel.IsExistingTarget(c101003085.drfilter,tp,LOCATION_REMOVED,0,5,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c101003085.drfilter,tp,LOCATION_REMOVED,0,5,5,nil)
