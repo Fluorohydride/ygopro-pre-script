@@ -33,8 +33,8 @@ function c100408007.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCondition(c100408007.spcon)
 	e3:SetCost(c100408007.cost)
 	e3:SetTarget(c100408007.sptg)
 	e3:SetOperation(c100408007.spop)
@@ -67,24 +67,22 @@ function c100408007.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100408007.spfilter(c,e,tp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsControler(1-tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-end
-function c100408007.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100408007.spfilter,1,nil,e,tp)
+		and c:IsLocation(LOCATION_GRAVE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100408007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and eg:IsExists(c100408007.spfilter,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,eg,1,0,0)
 end
 function c100408007.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
-	local tc=nil
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	local sg=nil
 	local g=eg:Filter(c100408007.spfilter,nil,e,tp)
 	if g:GetCount()==0 then return end
 	if g:GetCount()==1 then
-		tc=g:GetFirst()
+		sg=g
 	else
-		tc=g:Select(tp,1,1,nil):GetFirst()
+		sg=g:Select(tp,1,1,nil)
 	end
-	Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
