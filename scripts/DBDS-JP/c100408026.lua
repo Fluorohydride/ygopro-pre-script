@@ -32,7 +32,7 @@ function c100408026.initial_effect(c)
 	e2:SetOperation(c100408026.spop)
 	c:RegisterEffect(e2)
 end
-function c100408026.spfilter1(c,e,tp)
+function c100408026.spfilter1(c,e,tp,rp)
 	local lv=c:GetLevel()
 	return (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT)))
 		and c:IsPreviousSetCard(0x214) and c:IsType(TYPE_MONSTER)
@@ -44,11 +44,11 @@ function c100408026.spfilter2(c,e,tp,lv)
 	return c:GetLevel()<lv and c:IsSetCard(0x214) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100408026.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return eg:IsContains(chkc) and c100408026.spfilter1(chkc,e,tp) end
+	if chkc then return eg:IsContains(chkc) and c100408026.spfilter1(chkc,e,tp,rp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and eg:IsExists(c100408026.spfilter1,1,nil,e,tp) end
+		and eg:IsExists(c100408026.spfilter1,1,nil,e,tp,rp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=eg:FilterSelect(tp,c100408026.spfilter1,1,1,nil,e,tp)
+	local g=eg:FilterSelect(tp,c100408026.spfilter1,1,1,nil,e,tp,rp)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
