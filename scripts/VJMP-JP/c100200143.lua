@@ -27,6 +27,7 @@ function c100200143.initial_effect(c)
 	e3:SetCost(c100200143.spcost)
 	e3:SetTarget(c100200143.sptg)
 	e3:SetOperation(c100200143.spop)
+	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(100200143,ACTIVITY_SPSUMMON,c100200143.counterfilter)
 end
 function c100200143.counterfilter(c)
