@@ -5,7 +5,7 @@ function c101004036.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2)
-	--banish	
+	--banish
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101004036,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_DAMAGE)
