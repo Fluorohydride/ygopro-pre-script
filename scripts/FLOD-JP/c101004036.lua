@@ -17,25 +17,28 @@ function c101004036.initial_effect(c)
 	e1:SetOperation(c101004036.rmop)
 	c:RegisterEffect(e1)
 end
-function c101004036.cfilter(c,g)
-	return g:IsContains(c)
+function c101004036.cfilter(c,ec)
+	if c:IsLocation(LOCATION_MZONE) then
+		return ec:GetLinkedGroup():IsContains(c)
+	else
+		return bit.band(ec:GetLinkedZone(c:GetPreviousControler()),bit.lshift(0x1,c:GetPreviousSequence()))~=0
+	end
 end
 function c101004036.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	local lg=e:GetHandler():GetLinkedGroup()
-	return lg and eg:IsExists(c101004036.cfilter,1,nil,lg)
+	return eg:IsExists(c101004036.cfilter,1,nil,e:GetHandler())
 end
 function c101004036.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(c101004036.cfilter,nil,e:GetHandler():GetLinkedGroup())
+	local g=eg:Filter(c101004036.cfilter,nil,e:GetHandler())
+	local tg=g:Filter(Card.IsLocation,nil,LOCATION_MZONE)
+	Duel.SetTargetCard(tg)
 	local g2=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 	g:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
 end
 function c101004036.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local lg=c:GetLinkedGroup()
-	if not c:IsRelateToEffect(e) or not lg then return end
-	local g=eg:Filter(c101004036.cfilter,nil,lg)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	local g2=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 	g:Merge(g2)
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
