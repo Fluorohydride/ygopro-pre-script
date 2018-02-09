@@ -65,7 +65,7 @@ function c101004047.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101004047.drfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x213) and c:GetMutualLinkedGroupCount()>0
+	return c:IsFaceup() and c:IsSetCard(0x112) and c:GetMutualLinkedGroupCount()>0
 end
 function c101004047.drval(e)
 	local g=Duel.GetMatchingGroup(c101004047.drfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil)

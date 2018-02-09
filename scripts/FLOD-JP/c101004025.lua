@@ -104,5 +104,5 @@ function c101004025.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101004025.immtg(e,c)
-	return c:IsSetCard(0x400d) or c:IsSetCard(0x212)
+	return c:IsSetCard(0x400d) or c:IsSetCard(0x113)
 end

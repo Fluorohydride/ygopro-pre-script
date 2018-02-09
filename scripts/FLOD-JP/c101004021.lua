@@ -50,7 +50,7 @@ function c101004021.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tc,REASON_COST)
 end
 function c101004021.thfilter(c)
-	return (c:IsSetCard(0x400d) or c:IsSetCard(0x212)) and c:IsType(TYPE_MONSTER) and not c:IsCode(101004021) and c:IsAbleToHand()
+	return (c:IsSetCard(0x400d) or c:IsSetCard(0x113)) and c:IsType(TYPE_MONSTER) and not c:IsCode(101004021) and c:IsAbleToHand()
 end
 function c101004021.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101004021.thfilter(chkc) end

@@ -31,14 +31,14 @@ function c101004059.efilter(e,c)
 	return c:GetMutualLinkedGroupCount()>0
 end
 function c101004059.mvfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x213)
+	return c:IsFaceup() and c:IsSetCard(0x112)
 end
 function c101004059.mvfilter2(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x213) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(0x112) and c:GetSequence()<5
 		and Duel.IsExistingMatchingCard(c101004059.mvfilter3,tp,LOCATION_MZONE,0,1,c)
 end
 function c101004059.mvfilter3(c)
-	return c:IsFaceup() and c:IsSetCard(0x213) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(0x112) and c:GetSequence()<5
 end
 function c101004059.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(c101004059.mvfilter1,tp,LOCATION_MZONE,0,1,nil)
