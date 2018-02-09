@@ -8,7 +8,7 @@ function c100200143.initial_effect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,100200143)
 	e1:SetCost(c100200143.thcost)
 	e1:SetTarget(c100200143.thtg)
@@ -72,10 +72,10 @@ function c100200143.filter1(c,e,tp)
 	return c.material and Duel.IsExistingMatchingCard(c100200143.filter2,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function c100200143.filter2(c,e,tp,fc)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and c:IsCode(table.unpack(fc.material))
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and c:IsCode(table.unpack(fc.material))
 end
 function c100200143.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return c100200143.cost(e,tp,eg,ep,ev,re,r,rp,0) 
+	if chk==0 then return c100200143.cost(e,tp,eg,ep,ev,re,r,rp,0)
 		and Duel.IsExistingMatchingCard(c100200143.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,c100200143.filter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
@@ -90,8 +90,10 @@ end
 function c100200143.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	local fc=e:GetLabelObject()
-	local g=Duel.SelectMatchingCard(tp,c100200143.filter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,fc)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100200143.filter2),tp,LOCATION_GRAVE,0,1,1,nil,e,tp,fc)
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
