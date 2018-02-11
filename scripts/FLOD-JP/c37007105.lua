@@ -34,12 +34,12 @@ function c37007105.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c37007105.rmfilter),tp,LOCATION_GRAVE,0,1,1,nil,tc:GetLink())
 	local rc=g:GetFirst()
 	if rc and Duel.Remove(rc,0,REASON_EFFECT)~=0 and rc:IsLocation(LOCATION_REMOVED)
-		and Duel.Destroy(tc,REASON_EFFECT)~=0 then
-		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_SZONE,nil)
-		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(37007105,0)) then
+		and Duel.Destroy(tc,REASON_EFFECT)~=0 and bit.band(rc:GetOriginalRace(),RACE_CYBERSE)>0 then
+		local sg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_SZONE,nil)
+		if sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(37007105,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local dg=g:Select(tp,1,1,nil)
+			local dg=sg:Select(tp,1,1,nil)
 			Duel.HintSelection(dg)
 			Duel.Destroy(dg,REASON_EFFECT)
 		end

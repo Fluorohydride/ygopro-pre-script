@@ -55,6 +55,7 @@ function c39064822.sumop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,39064822)~=0 then return end
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(39064822,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetTargetRange(LOCATION_HAND,0)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)

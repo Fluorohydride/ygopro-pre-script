@@ -6,6 +6,7 @@ function c45025640.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e1:SetCondition(c45025640.damcon)
 	e1:SetOperation(c45025640.damop)
 	c:RegisterEffect(e1)
 	--to hand
@@ -19,8 +20,12 @@ function c45025640.initial_effect(c)
 	e2:SetOperation(c45025640.thop)
 	c:RegisterEffect(e2)
 end
+function c45025640.damcon(e,tp,eg,ep,ev,re,r,rp)
+	return ep~=tp
+end
 function c45025640.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(1-ep,ev,false)
+	Duel.ChangeBattleDamage(ep,0,false)
 end
 function c45025640.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
