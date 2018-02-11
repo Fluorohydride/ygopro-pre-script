@@ -74,7 +74,7 @@ function c101004031.mvcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetCount()==1 and eg:GetFirst():IsControler(1-tp)
 end
 function c101004031.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true	end
+	if chk==0 then return true end
 	local tc=eg:GetFirst()
 	tc:CreateEffectRelation(e)
 end
@@ -89,6 +89,9 @@ function c101004031.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local seq1=c:GetSequence()
 	local seq2=tc:GetSequence()
 	if seq1>4 then return end
+	if seq2==5 then seq2=1 end
+	if seq2==6 then seq2=3 end
+	seq2=4-seq2
 	if (seq1>seq2 and Duel.CheckLocation(tp,LOCATION_MZONE,seq1-1))
 		or (seq1<seq2 and Duel.CheckLocation(tp,LOCATION_MZONE,seq1+1)) then
 		local nseq=0
