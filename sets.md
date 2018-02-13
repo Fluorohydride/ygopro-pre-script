@@ -12,6 +12,7 @@
 - **March 24, 2018** : Starter Deck 2018 (????-JP) : `100318XXX`
 - **April 14, 2018** : Cybernetic Horizon (????-JP) : `101005XXX`
 - **May 12, 2018** : Collectors Pack 2018 (????-JP) : `100227XXX`
+- **June 9, 2018** : Duelist Pack: Legend Duelist 3 (????-JP) : `100409XXX`
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
