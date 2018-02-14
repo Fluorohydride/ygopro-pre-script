@@ -52,7 +52,7 @@ end
 function c100408016.drcfilter(c)
 	return c:IsSetCard(0x214) nd c:IsDiscardable()
 end
-function c100408016.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100408016.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100408016.drcfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,c100408016.drcfilter,1,1,REASON_COST+REASON_DISCARD)
 end

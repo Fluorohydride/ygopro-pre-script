@@ -1,11 +1,12 @@
---閃刀姫-カガリ
+--閃刀姫－カガリ
 --Brandish Maiden Kagari
 --Scripted by Eerie Code
 function c100408027.initial_effect(c)
 	c:SetSPSummonOnce(100408027)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,c100408027.matfilter,1,1)
-	--stats up
+	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -40,7 +41,7 @@ function c100408027.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c100408027.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local sg=Duel.SelectTarget(tp,c100408027.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,sg,sg:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,sg,1,0,0)
 end
 function c100408027.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

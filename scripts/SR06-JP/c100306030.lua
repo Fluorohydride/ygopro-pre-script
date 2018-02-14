@@ -17,16 +17,21 @@ function c100306030.costfilter(c,matk)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsAttackBelow(matk)
 end
 function c100306030.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(100)
+	return true
+end
+function c100306030.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dc=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND+LOCATION_DECK)
 	local matk=math.min(3000,dc*500)
-	if chk==0 then return matk>0 and Duel.CheckReleaseGroup(tp,c100306030.costfilter,1,nil,matk) end
+	if chk==0 then
+		if e:GetLabel()~=100 then return false end
+		e:SetLabel(0)
+		return matk>0 and Duel.CheckReleaseGroup(tp,c100306030.costfilter,1,nil,matk)
+	end
 	local g=Duel.SelectReleaseGroup(tp,c100306030.costfilter,1,1,nil,matk)
 	e:SetLabel(g:GetFirst():GetAttack())
 	Duel.Release(g,REASON_COST)
-end
-function c100306030.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local ct=math.floor(e:GetLabel()/500)
+	local ct=math.floor(g:GetFirst()/500)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,ct,1-tp,LOCATION_DECK+LOCATION_HAND)
 end
 function c100306030.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -37,24 +42,13 @@ function c100306030.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()~=0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
 		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 		for oc in aux.Next(og) do
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+0x17a0000)
-			oc:RegisterEffect(e1)
-			local e2=e1:Clone()
-			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			oc:RegisterEffect(e2)
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_CANNOT_TRIGGER)
 			e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e3:SetRange(LOCATION_GRAVE)
-			e3:SetReset(RESET_EVENT+0x17a0000+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 			oc:RegisterEffect(e3)
-			local e4=e3:Clone()
-			e4:SetCode(EFFECT_CANNOT_ACTIVATE)
-			oc:RegisterEffect(e4)
 		end
 	end
 	if atk>=2000 then
@@ -88,24 +82,13 @@ function c100306030.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Destroy(dg,REASON_EFFECT)~=0 then
 		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 		for oc in aux.Next(og) do
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+0x17a0000)
-			oc:RegisterEffect(e1)
-			local e2=e1:Clone()
-			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			oc:RegisterEffect(e2)
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_CANNOT_TRIGGER)
 			e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e3:SetRange(LOCATION_GRAVE)
-			e3:SetReset(RESET_EVENT+0x17a0000+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 			oc:RegisterEffect(e3)
-			local e4=e3:Clone()
-			e4:SetCode(EFFECT_CANNOT_ACTIVATE)
-			oc:RegisterEffect(e4)
 		end
 	end
 	Duel.ShuffleHand(ep)

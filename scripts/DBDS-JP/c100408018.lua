@@ -12,7 +12,7 @@ function c100408018.initial_effect(c)
 	e1:SetTarget(c100408018.sptg)
 	e1:SetOperation(c100408018.spop)
 	c:RegisterEffect(e1)
-	--recover from gy
+	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100408018,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -52,7 +52,7 @@ function c100408018.thfilter(c)
 	return c:IsSetCard(0x214) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100408018.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c88204302.thfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100408018.thfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100408018.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local sg=Duel.SelectTarget(tp,c100408018.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)

@@ -1,11 +1,12 @@
---閃刀姫-シズク
+--閃刀姫－シズク
 --Brandish Maiden Shizuku
 --Scripted by Eerie Code
 function c100408028.initial_effect(c)
 	c:SetSPSummonOnce(100408028)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,c100408028.matfilter,1,1)
-	--stats down
+	--atk down
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)

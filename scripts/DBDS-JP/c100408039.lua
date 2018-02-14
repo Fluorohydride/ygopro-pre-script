@@ -9,6 +9,7 @@ function c100408039.initial_effect(c)
 	c:RegisterEffect(e1)
 	--excavate
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100408039,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -19,6 +20,7 @@ function c100408039.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100408039,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
@@ -46,7 +48,7 @@ function c100408039.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,3)
 	if g:GetCount()>0 then
 		if g:IsExists(Card.IsSetCard,1,nil,0x215) then
-			if Duel.SelectYesNo(tp,aux.Stringid(100408039,1)) then
+			if Duel.SelectYesNo(tp,aux.Stringid(100408039,2)) then
 				Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
 				local sg=g:FilterSelect(tp,Card.IsSetCard,1,1,nil,0x215)
 				if sg:GetFirst():IsAbleToHand() then
@@ -75,7 +77,6 @@ function c100408039.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c100408039.spop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100408039.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)

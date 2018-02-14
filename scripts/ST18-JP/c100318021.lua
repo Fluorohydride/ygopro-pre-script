@@ -22,15 +22,15 @@ function c100318021.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100318021.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) 
-		and c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_LINK)
+	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:IsPreviousPosition(POS_FACEUP) and bit.band(c:GetPreviousTypeOnField(),TYPE_LINK)~=0
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp)
 end
 function c100318021.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100318021.cfilter,1,nil,tp)
 end
 function c100318021.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return not c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100318021.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100318021.filter(chkc,e,tp) end
