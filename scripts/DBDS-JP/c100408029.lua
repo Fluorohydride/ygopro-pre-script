@@ -1,7 +1,6 @@
 --閃刀姫－レイ
 --Brandish Maiden Rei
 --Script by nekrozar
---not fully implemented
 function c100408029.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -36,16 +35,16 @@ function c100408029.spfilter1(c,e,tp)
 	return c:IsSetCard(0x1215) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100408029.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,e:GetHandler())>0
+	if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,e:GetHandler(),nil,0x30)>0
 		and Duel.IsExistingMatchingCard(c100408029.spfilter1,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100408029.spop1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
+	if Duel.GetLocationCountFromEx(tp,tp,nil,nil,0x30)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100408029.spfilter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,0x30)
 	end
 end
 function c100408029.cfilter(c,tp,rp)
