@@ -47,6 +47,17 @@ function c100408033.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 		token:RegisterEffect(e2)
+		if Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL)>=3 then
+			local e3=Effect.CreateEffect(c)
+			e3:SetType(EFFECT_TYPE_SINGLE)
+			e3:SetCode(EFFECT_SET_ATTACK)
+			e3:SetValue(1500)
+			e3:SetReset(RESET_EVENT+0x1fe0000)
+			token:RegisterEffect(e3)
+			local e4=e3:Clone()
+			e4:SetCode(EFFECT_SET_DEFENSE)
+			token:RegisterEffect(e4)
+		end
 	end
 	Duel.SpecialSummonComplete()
 end
