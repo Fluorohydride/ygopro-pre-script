@@ -52,9 +52,9 @@ function c100306002.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		or (Duel.CheckReleaseGroup(tp,Card.IsAttribute,1,c,ATTRIBUTE_DARK) and Duel.IsExistingMatchingCard(c100306002.thfilter2,tp,LOCATION_DECK,0,1,nil))) end
 	local sg=nil
 	if Duel.IsExistingMatchingCard(c100306002.thfilter2,tp,LOCATION_DECK,0,1,nil) and not Duel.IsPlayerCanDraw(tp,1) then
-		sg=Duel.SelectReleaseGroup(tp,Card.IsAttribute,1,1,c)
+		sg=Duel.SelectReleaseGroup(tp,Card.IsAttribute,1,1,c,ATTRIBUTE_DARK)
 	else
-		sg=Duel.SelectReleaseGroup(tp,Card.IsAttribute,1,1,nil)
+		sg=Duel.SelectReleaseGroup(tp,Card.IsAttribute,1,1,nil,ATTRIBUTE_DARK)
 	end
 	e:SetLabelObject(sg:GetFirst())
 	Duel.Release(sg,REASON_COST)
@@ -70,7 +70,7 @@ function c100306002.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100306002.drop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabelObject()~=e:GetHandler() and Duel.IsExistingMatchingCard(c100306002.thfilter2,tp,LOCATION_DECK,0,1,nil)
-		and not (Duel.IsPlayerCanDraw(tp,1) or Duel.SelectYesNo(tp,aux.Stringid(100306002,2)) then
+		and not (Duel.IsPlayerCanDraw(tp,1) or Duel.SelectYesNo(tp,aux.Stringid(100306002,2))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c100306002.thfilter2,tp,LOCATION_DECK,0,1,1,nil)
 		if g:GetCount()>0 then
@@ -81,3 +81,4 @@ function c100306002.drop(e,tp,eg,ep,ev,re,r,rp)
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Draw(p,d,REASON_EFFECT)
 	end
+end
