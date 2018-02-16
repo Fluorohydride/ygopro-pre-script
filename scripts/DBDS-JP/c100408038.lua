@@ -65,7 +65,7 @@ function c100408038.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	Duel.SendtoGrave(tc,REASON_EFFECT)
 end
-function c100408038.chainop(e,tp,eg,ep,ev,re,r,rp)
+function c100408038.actop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) then
 		Duel.SetChainLimit(c100408038.chainlm)
@@ -99,7 +99,8 @@ function c100408038.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 end
 function c100408038.setop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	local ct=e:GetLabel()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ct>ft then ct=ft end
@@ -117,13 +118,13 @@ function c100408038.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=tg:GetFirst()
 	while tc do
 		Duel.SSet(tp,tc)
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(LOCATION_REMOVED)
 		e1:SetReset(RESET_EVENT+0x47e0000)
-		c:RegisterEffect(e1)
+		tc:RegisterEffect(e1)
 		tc=tg:GetNext()
 	end
 	Duel.ConfirmCards(1-tp,tg)
