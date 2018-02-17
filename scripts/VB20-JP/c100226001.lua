@@ -49,7 +49,7 @@ function c100226001.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function c100226001.valcheck(e,c)
-	local g=c:GetMaterial()
+	local g=c:GetMaterial():Filter(Card.IsRace,nil,RACE_SPELLCASTER)
 	if g:GetClassCount(Card.GetCode)==5 then e:GetLabelObject():SetLabel(1) end
 end
 function c100226001.descon(e,tp,eg,ep,ev,re,r,rp)
