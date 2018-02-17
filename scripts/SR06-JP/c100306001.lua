@@ -4,15 +4,13 @@
 function c100306001.initial_effect(c)
 	--cannot release
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_RELEASE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EFFECT_UNRELEASABLE_SUM)
-	e1:SetValue(c100306001.sumlimit)
+	e1:SetTargetRange(0,1)
+	e1:SetTarget(c100306001.rellimit)
 	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
-	c:RegisterEffect(e2)
 	--cannot be target
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -44,9 +42,8 @@ function c100306001.initial_effect(c)
 	e5:SetOperation(c100306001.tdop)
 	c:RegisterEffect(e5)
 end
-function c100306001.sumlimit(e,c)
-	if not c then return false end
-	return not c:IsControler(e:GetHandlerPlayer())
+function c100306001.rellimit(e,c,tp,sumtp)
+	return c==e:GetHandler()
 end
 function c100306001.spcfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:GetPreviousAttributeOnField()==ATTRIBUTE_DARK
