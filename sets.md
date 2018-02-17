@@ -2,11 +2,10 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **January 13, 2018** : FLAMES OF DESTRUCTION (FLOD-JP) : `101004XXX`
 - **February 23, 2018** : The Valuable Book 20 (VB20-JP) : `100226XXX`
 - **February 24, 2018** : Deck Build Pack: Dark Savers (DBDS-JP) : `100408XXX`
 - **March 9, 2018** : Legendary Collection Kaiba (LC06-EN) : `100241XXX`
-- **March 10, 2018** : Structure Deck R: Curse of the Dark (SR06?-JP) : `100306XXX`
+- **March 10, 2018** : Structure Deck R: Curse of the Dark (SR06-JP) : `100306XXX`
 - **March 24, 2018** : Starter Deck 2018 (ST18-JP) : `100318XXX`
 
 # Announced
@@ -75,3 +74,4 @@
 - ~~Structure Deck: Powercode Link (SD33-JP) : `100333XXX`~~
 - ~~PREMIUM PACK 20 (PP20-JP) : `100224XXX`~~
 - ~~LINK VRAINS Box (LVB1-JP) : `100225XXX`~~
+- ~~FLAMES OF DESTRUCTION (FLOD-JP) : `101004XXX`~~
