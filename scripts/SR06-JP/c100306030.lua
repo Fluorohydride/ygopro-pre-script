@@ -29,9 +29,10 @@ function c100306030.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return matk>0 and Duel.CheckReleaseGroup(tp,c100306030.costfilter,1,nil,matk)
 	end
 	local g=Duel.SelectReleaseGroup(tp,c100306030.costfilter,1,1,nil,matk)
-	e:SetLabel(g:GetFirst():GetAttack())
+	local atk=g:GetFirst():GetAttack()
+	e:SetLabel(atk)
 	Duel.Release(g,REASON_COST)
-	local ct=math.floor(g:GetFirst()/500)
+	local ct=math.floor(atk/500)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,ct,1-tp,LOCATION_DECK+LOCATION_HAND)
 end
 function c100306030.activate(e,tp,eg,ep,ev,re,r,rp)

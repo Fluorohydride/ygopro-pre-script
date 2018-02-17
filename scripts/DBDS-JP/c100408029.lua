@@ -33,7 +33,7 @@ function c100408029.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100408029.spfilter1(c,e,tp,ec)
 	return c:IsSetCard(0x1215) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.GetLocationCountFromEx(tp,tp,ec,c,0x30)>0
+		and Duel.GetLocationCountFromEx(tp,tp,ec,c,0x60)>0
 end
 function c100408029.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100408029.spfilter1,tp,LOCATION_EXTRA,0,1,nil,e,tp,e:GetHandler()) end
@@ -43,7 +43,7 @@ function c100408029.spop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100408029.spfilter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,e:GetHandler())
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,0x30)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,0x60)
 	end
 end
 function c100408029.cfilter(c,tp,rp)
