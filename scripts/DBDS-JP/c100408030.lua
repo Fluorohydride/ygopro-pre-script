@@ -34,10 +34,11 @@ function c100408030.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-		if Duel.IsPlayerCanDraw(tp,1) 
-			and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL)>=3 
+		if Duel.IsPlayerCanDraw(tp,1)
+			and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL)>=3
 			and Duel.SelectYesNo(tp,aux.Stringid(100408030,0)) then
 			Duel.BreakEffect()
+			Duel.ShuffleDeck(tp)
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	end

@@ -2,6 +2,7 @@
 function c100241001.initial_effect(c)
 	--destroy
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100241001,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_HAND)
@@ -33,7 +34,8 @@ function c100241001.filter(c,e,tp)
 end
 function c100241001.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-	if Duel.Destroy(sg,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c100241001.filter,tp,LOCATION_DECK,0,1,nil,e,tp) then
+	if Duel.Destroy(sg,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c100241001.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
+		and Duel.SelectYesNo(tp,aux.Stringid(100241001,1)) then
 		Duel.BreakEffect()
 		local tc=Duel.SelectMatchingCard(tp,c100241001.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
