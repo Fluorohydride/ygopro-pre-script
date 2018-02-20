@@ -101,20 +101,26 @@ end
 function c100408038.setop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100408038.setfilter),tp,LOCATION_GRAVE,0,nil)
+	if g:GetCount()==0 then return end
+	local field=false
+	if g:IsExists(Card.IsType,1,nil,TYPE_FIELD) then field=true end
 	local ct=e:GetLabel()
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if ct>ft then ct=ft end
-	if ct<=0 then return end
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100408038.setfilter),tp,LOCATION_GRAVE,0,nil)
-	if g:GetCount()==0 then return end
+	if ct<=0 and not field then return end
 	local tg=Group.CreateGroup()
 	repeat
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sg=g:Select(tp,1,1,nil)
 		tg:Merge(sg)
 		g:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
-		ct=ct-1
-	until ct==0 or g:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(100408038,2))
+		if sg:GetFirst():IsType(TYPE_FIELD) then
+			field=false
+		else
+			ct=ct-1
+		end
+	until (ct==0 and not field) or g:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(100408038,2))
 	local tc=tg:GetFirst()
 	while tc do
 		Duel.SSet(tp,tc)
