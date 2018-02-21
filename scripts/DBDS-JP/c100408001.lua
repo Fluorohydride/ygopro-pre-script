@@ -26,7 +26,7 @@ function c100408001.initial_effect(c)
 	e2:SetOperation(c100408001.spop)
 	c:RegisterEffect(e2)
 end
-function c100408001.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100408001.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
 	Duel.PayLPCost(tp,500)
 end

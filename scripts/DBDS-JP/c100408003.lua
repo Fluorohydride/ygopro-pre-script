@@ -45,13 +45,13 @@ function c100408003.initial_effect(c)
 end
 function c100408003.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100408003.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
 function c100408003.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -69,7 +69,7 @@ function c100408003.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local ac=Duel.AnnounceNumber(tp,table.unpack(t))
 	Duel.PayLPCost(tp,ac)
-	e:SetLabel(-ac)
+	e:SetLabel(ac)
 	e:GetHandler():RegisterFlagEffect(100408003,RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
 end
 function c100408003.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -81,6 +81,9 @@ function c100408003.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
 	e1:SetValue(e:GetLabel())
 	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	c:RegisterEffect(e2)
 end
 function c100408003.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(100408003,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE,0,1)

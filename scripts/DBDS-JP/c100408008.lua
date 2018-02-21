@@ -67,14 +67,13 @@ function c100408008.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,c100408008.tgfilter2,tp,LOCATION_DECK,0,1,1,nil,tc:GetLevel())
 		if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE)
 			and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-				local lv=g:GetFirst():GetLevel()
-				local e1=Effect.CreateEffect(e:GetHandler())
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_CHANGE_LEVEL)
-				e1:SetValue(lv)
-				e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-				tc:RegisterEffect(e1)
-			end
+			local lv=g:GetFirst():GetLevel()
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_CHANGE_LEVEL)
+			e1:SetValue(lv)
+			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			tc:RegisterEffect(e1)
 		end
 	else
 		local tc=Duel.GetFirstTarget()
@@ -82,8 +81,7 @@ function c100408008.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tg=Duel.SelectMatchingCard(tp,c100408008.spfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
 		if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE)
 			and tc:IsRelateToEffect(e) then
-				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-			end
+			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 end
