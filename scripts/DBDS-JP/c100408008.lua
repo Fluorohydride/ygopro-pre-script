@@ -18,7 +18,7 @@ function c100408008.tgfilter1(c,tp)
 		and Duel.IsExistingMatchingCard(c100408008.tgfilter2,tp,LOCATION_DECK,0,1,nil,lv)
 end
 function c100408008.tgfilter2(c,lv)
-	return c:IsSetCard(0x8e) and not c:IsLevel(lv) and c:IsAbleToGrave()
+	return c:IsSetCard(0x8e) and c:IsLevelAbove(0) and not c:IsLevel(lv) and c:IsAbleToGrave()
 end
 function c100408008.spfilter1(c,tp)
 	return c:IsAbleToGrave() and Duel.GetMZoneCount(tp,c)>0
