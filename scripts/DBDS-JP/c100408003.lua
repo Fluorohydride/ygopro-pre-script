@@ -55,8 +55,8 @@ function c100408003.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100408003.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():IsSetCard(0x8e))
-		or (Duel.GetAttackTarget() and Duel.GetAttackTarget():IsControler(tp) and Duel.GetAttackTarget():IsSetCard(0x8e))
+	return Duel.GetAttackTarget() and (Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():IsSetCard(0x8e))
+		or (Duel.GetAttackTarget():IsControler(tp) and Duel.GetAttackTarget():IsSetCard(0x8e))
 end
 function c100408003.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(100408003)==0
