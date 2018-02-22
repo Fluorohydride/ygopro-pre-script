@@ -56,8 +56,8 @@ function c100408003.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100408003.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()
-		and (Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():IsRace(RACE_ZOMBIE))
-		or (Duel.GetAttackTarget():IsControler(tp) and Duel.GetAttackTarget():IsRace(RACE_ZOMBIE))
+		and (Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():IsRace(RACE_ZOMBIE)
+		or Duel.GetAttackTarget():IsControler(tp) and Duel.GetAttackTarget():IsRace(RACE_ZOMBIE))
 end
 function c100408003.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(100408003)==0
