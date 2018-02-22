@@ -30,7 +30,7 @@ function c100408004.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100408004.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x8e)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp))
 end
 function c100408004.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
