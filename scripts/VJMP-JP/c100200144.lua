@@ -2,7 +2,6 @@
 --Performapal Clay Breaker
 --Scripted by ahtelel
 function c100200144.initial_effect(c)
-	aux.EnablePendulumAttribute(c)
 	--atk down
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100200144,0))
