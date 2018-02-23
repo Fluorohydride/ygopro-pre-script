@@ -1,7 +1,7 @@
 --クインテット・マジシャン
 --Quintet Magician
 --Scripted by Eerie Code
-function c100226001.initial_effect(c)
+function c84433295.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER),5,true)
@@ -18,14 +18,14 @@ function c100226001.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCondition(c100226001.descon)
-	e2:SetTarget(c100226001.destg)
-	e2:SetOperation(c100226001.desop)
+	e2:SetCondition(c84433295.descon)
+	e2:SetTarget(c84433295.destg)
+	e2:SetOperation(c84433295.desop)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_MATERIAL_CHECK)
-	e3:SetValue(c100226001.valcheck)
+	e3:SetValue(c84433295.valcheck)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 	--cannot release
@@ -48,19 +48,19 @@ function c100226001.initial_effect(c)
 	e7:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e7)
 end
-function c100226001.valcheck(e,c)
+function c84433295.valcheck(e,c)
 	local g=c:GetMaterial():Filter(Card.IsRace,nil,RACE_SPELLCASTER)
 	if g:GetClassCount(Card.GetCode)==5 then e:GetLabelObject():SetLabel(1) end
 end
-function c100226001.descon(e,tp,eg,ep,ev,re,r,rp)
+function c84433295.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()==1
 end
-function c100226001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c84433295.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	if chk==0 then return g:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
-function c100226001.desop(e,tp,eg,ep,ev,re,r,rp)
+function c84433295.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	if g:GetCount()>0 then
 		Duel.Destroy(g,REASON_EFFECT)
