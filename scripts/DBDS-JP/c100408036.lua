@@ -32,10 +32,8 @@ function c100408036.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,c100408036.filter,tp,0,LOCATION_GRAVE,1,1,nil)
 	if spchk and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetFirst():IsCanBeSpecialSummoned(e,0,tp,false,false) and not g:GetFirst():IsAbleToRemove() then
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	elseif not (spchk and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetFirst():IsCanBeSpecialSummoned(e,0,tp,false,false)) and g:GetFirst():IsAbleToRemove() then
-		e:SetCategory(CATEGORY_REMOVE)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 	end
 end
