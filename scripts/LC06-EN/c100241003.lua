@@ -26,17 +26,19 @@ function c100241003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
-	local atk=g:GetFirst():GetTextAttack()
-	if atk<0 then atk=0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,atk)
+	if tc:IsLocation(LOCATION_MZONE) then
+		local atk=g:GetFirst():GetTextAttack()
+		if atk<0 then atk=0 end
+		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,atk)
+	end
 end
 function c100241003.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsControler(1-tp) then
 		local atk=tc:GetTextAttack()
 		if atk<0 then atk=0 end
-		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
+		if Duel.Destroy(tc,REASON_EFFECT)~=0 and tc:IsPreviousLocation(LOCATION_MZONE) then
 			Duel.BreakEffect()
 			Duel.Damage(1-tp,atk,REASON_EFFECT)
 		end
