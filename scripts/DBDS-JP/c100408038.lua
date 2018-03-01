@@ -120,7 +120,7 @@ function c100408038.setop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			ct=ct-1
 		end
-	until (ct==0 and not field) or g:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(100408038,2))
+	until (ct==0 and not field) or g:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(100408038,1))
 	local tc=tg:GetFirst()
 	while tc do
 		Duel.SSet(tp,tc)
