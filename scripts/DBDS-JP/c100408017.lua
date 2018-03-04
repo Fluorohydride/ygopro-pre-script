@@ -27,7 +27,7 @@ function c100408017.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100408017.spfilter(c,e,tp)
-	return c:IsSetCard(0x214) and not c:IsCode(100408017) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x114) and not c:IsCode(100408017) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100408017.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -43,13 +43,13 @@ function c100408017.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100408017.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x214) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x114) and c:IsControler(tp)
 end
 function c100408017.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c100408017.cfilter,1,nil,tp)
 end
 function c100408017.thfilter(c)
-	return c:IsSetCard(0x214) and c:IsType(TYPE_MONSTER) and not c:IsCode(100408017) and c:IsAbleToHand()
+	return c:IsSetCard(0x114) and c:IsType(TYPE_MONSTER) and not c:IsCode(100408017) and c:IsAbleToHand()
 end
 function c100408017.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100408017.thfilter,tp,LOCATION_DECK,0,1,nil) end

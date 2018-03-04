@@ -28,7 +28,7 @@ function c100408023.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100408023.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x214) and not c:IsCode(100408023)
+	return c:IsFaceup() and c:IsSetCard(0x114) and not c:IsCode(100408023)
 end
 function c100408023.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -59,7 +59,7 @@ function c100408023.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function c100408023.cfilter(c)
-	return c:IsSetCard(0x214) and c:IsDiscardable()
+	return c:IsSetCard(0x114) and c:IsDiscardable()
 end
 function c100408023.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100408023.cfilter,tp,LOCATION_HAND,0,1,nil) end

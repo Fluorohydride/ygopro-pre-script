@@ -92,7 +92,7 @@ function c100408101.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100408101.tdfilter(c)
-	return c:IsSetCard(0x215) and not c:IsCode(100408101) and c:IsAbleToDeck()
+	return c:IsSetCard(0x115) and not c:IsCode(100408101) and c:IsAbleToDeck()
 end
 function c100408101.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100408101.tdfilter(chkc) end

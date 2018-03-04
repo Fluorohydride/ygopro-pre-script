@@ -19,7 +19,7 @@ function c100408030.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(c100408030.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100408030.filter(c)
-	return c:IsSetCard(0x215) and c:IsAbleToHand() and not c:IsCode(100408030)
+	return c:IsSetCard(0x115) and c:IsAbleToHand() and not c:IsCode(100408030)
 end
 function c100408030.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100408030.filter,tp,LOCATION_DECK,0,1,nil) end

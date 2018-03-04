@@ -37,7 +37,7 @@ function c100408028.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100408028.matfilter(c)
-	return c:IsLinkSetCard(0x1215) and not c:IsLinkAttribute(ATTRIBUTE_WATER)
+	return c:IsLinkSetCard(0x1115) and not c:IsLinkAttribute(ATTRIBUTE_WATER)
 end
 function c100408028.atkval(e)
 	return Duel.GetMatchingGroupCount(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_SPELL)*-100
@@ -49,7 +49,7 @@ function c100408028.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(100408028)~=0
 end
 function c100408028.thfilter(c,tp)
-	return c:IsSetCard(0x215) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x115) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function c100408028.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

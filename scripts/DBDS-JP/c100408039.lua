@@ -47,10 +47,10 @@ function c100408039.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,3)
 	local g=Duel.GetDecktopGroup(tp,3)
 	if g:GetCount()>0 then
-		if g:IsExists(Card.IsSetCard,1,nil,0x215) then
+		if g:IsExists(Card.IsSetCard,1,nil,0x115) then
 			if Duel.SelectYesNo(tp,aux.Stringid(100408039,2)) then
 				Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
-				local sg=g:FilterSelect(tp,Card.IsSetCard,1,1,nil,0x215)
+				local sg=g:FilterSelect(tp,Card.IsSetCard,1,1,nil,0x115)
 				if sg:GetFirst():IsAbleToHand() then
 					Duel.SendtoHand(sg,nil,REASON_EFFECT)
 					Duel.ConfirmCards(1-tp,sg)
@@ -71,7 +71,7 @@ function c100408039.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_FZONE)
 end
 function c100408039.spfilter(c,e,tp)
-	return c:IsSetCard(0x1215) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x1115) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100408039.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

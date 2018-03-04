@@ -75,13 +75,13 @@ function c100408038.chainlm(e,rp,tp)
 	return tp==rp
 end
 function c100408038.regop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x215) and re:IsActiveType(TYPE_SPELL) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(0x115) and re:IsActiveType(TYPE_SPELL) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local val=e:GetLabelObject():GetLabel()
 		e:GetLabelObject():SetLabel(val+1)
 	end
 end
 function c100408038.regop2(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x215) and re:IsActiveType(TYPE_SPELL) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(0x115) and re:IsActiveType(TYPE_SPELL) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local val=e:GetLabelObject():GetLabel()
 		if val==0 then val=1 end
 		e:GetLabelObject():SetLabel(val-1)
@@ -91,7 +91,7 @@ function c100408038.clearop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabel(0)
 end
 function c100408038.setfilter(c)
-	return c:IsSetCard(0x215) and c:IsType(TYPE_SPELL) and c:IsSSetable()
+	return c:IsSetCard(0x115) and c:IsType(TYPE_SPELL) and c:IsSSetable()
 end
 function c100408038.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=e:GetLabel()

@@ -27,7 +27,7 @@ function c100408014.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100408014.spfilter(c,e,tp)
-	return c:IsSetCard(0x214) and not c:IsCode(100408014) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x114) and not c:IsCode(100408014) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100408014.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -43,7 +43,7 @@ function c100408014.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100408014.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x214) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x114) and c:IsControler(tp)
 end
 function c100408014.descon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c100408014.cfilter,1,nil,tp)

@@ -22,7 +22,7 @@ function c100408021.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100408021.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x214)
+	return c:IsFaceup() and c:IsSetCard(0x114)
 end
 function c100408021.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100408021.filter,tp,LOCATION_MZONE,0,nil)
@@ -41,5 +41,5 @@ function c100408021.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100408021.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x214) and c~=e:GetHandler()
+	return c:IsFaceup() and c:IsSetCard(0x114) and c~=e:GetHandler()
 end

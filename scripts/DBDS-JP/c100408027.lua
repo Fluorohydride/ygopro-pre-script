@@ -25,13 +25,13 @@ function c100408027.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100408027.matfilter(c)
-	return c:IsLinkSetCard(0x1215) and not c:IsLinkAttribute(ATTRIBUTE_FIRE)
+	return c:IsLinkSetCard(0x1115) and not c:IsLinkAttribute(ATTRIBUTE_FIRE)
 end
 function c100408027.atkval(e)
 	return Duel.GetMatchingGroupCount(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_SPELL)*100
 end
 function c100408027.thfilter(c,tp)
-	return c:IsSetCard(0x215) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x115) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
 function c100408027.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100408027.thfilter(chkc) end

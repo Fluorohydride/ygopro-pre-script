@@ -33,7 +33,7 @@ function c100408029.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c100408029.spfilter1(c,e,tp,ec)
-	return c:IsSetCard(0x1215) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x1115) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,ec,c,0x60)>0
 end
 function c100408029.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -49,7 +49,7 @@ function c100408029.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100408029.cfilter(c,tp,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and bit.band(c:GetPreviousTypeOnField(),TYPE_LINK)~=0
-		and c:IsPreviousSetCard(0x1215) and (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT)))
+		and c:IsPreviousSetCard(0x1115) and (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT)))
 end
 function c100408029.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100408029.cfilter,1,nil,tp,rp)

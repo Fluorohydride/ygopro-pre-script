@@ -28,7 +28,7 @@ function c100408016.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100408016.spfilter(c,e,tp)
-	return c:IsSetCard(0x214) and not c:IsCode(100408016) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x114) and not c:IsCode(100408016) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100408016.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -44,13 +44,13 @@ function c100408016.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100408016.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x214) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x114) and c:IsControler(tp)
 end
 function c100408016.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c100408016.cfilter,1,nil,tp)
 end
 function c100408016.drcfilter(c)
-	return c:IsSetCard(0x214) and c:IsDiscardable()
+	return c:IsSetCard(0x114) and c:IsDiscardable()
 end
 function c100408016.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100408016.drcfilter,tp,LOCATION_HAND,0,1,nil) end

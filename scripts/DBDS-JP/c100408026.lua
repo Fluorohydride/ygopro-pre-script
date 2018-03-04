@@ -35,13 +35,13 @@ end
 function c100408026.spfilter1(c,e,tp,rp)
 	local lv=c:GetLevel()
 	return (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT)))
-		and c:IsPreviousSetCard(0x214) and c:IsType(TYPE_MONSTER)
+		and c:IsPreviousSetCard(0x114) and c:IsType(TYPE_MONSTER)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 		and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c:IsCanBeEffectTarget(e)
 		and lv>0 and Duel.IsExistingMatchingCard(c100408026.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,lv)
 end
 function c100408026.spfilter2(c,e,tp,lv)
-	return c:GetLevel()<lv and c:IsSetCard(0x214) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()<lv and c:IsSetCard(0x114) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100408026.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and c100408026.spfilter1(chkc,e,tp,rp) end

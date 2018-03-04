@@ -34,7 +34,7 @@ function c100408024.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetDrawCount(tp)>0
 end
 function c100408024.thfilter(c)
-	return c:IsSetCard(0x214) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x114) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100408024.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100408024.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -64,7 +64,7 @@ function c100408024.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100408024.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x214)
+	return c:IsFaceup() and c:IsSetCard(0x114)
 end
 function c100408024.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100408024.cfilter,tp,LOCATION_MZONE,0,nil)
