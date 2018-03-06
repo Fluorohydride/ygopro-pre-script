@@ -36,7 +36,7 @@ function c100200146.lvtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-function c49959355.tgfilter(c,lv)
+function c100200146.tgfilter(c,lv)
 	return c:IsLevelBelow(lv) and c:IsAbleToGrave() 
 end
 function c100200146.lvop1(e,tp,eg,ep,ev,re,r,rp)
