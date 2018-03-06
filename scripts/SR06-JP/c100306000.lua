@@ -27,14 +27,14 @@ function c100306000.atkcon(e)
 end
 function c100306000.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsAttribute,1,nil,ATTRIBUTE_DARK) end
-    local g=Duel.SelectReleaseGroup(tp,Card.IsAttribute,1,1,nil,ATTRIBUTE_DARK)
-    Duel.Release(g,REASON_COST)
+	local g=Duel.SelectReleaseGroup(tp,Card.IsAttribute,1,1,nil,ATTRIBUTE_DARK)
+	Duel.Release(g,REASON_COST)
 end
 function c100306000.thfilter(c)
 	return c:GetType()==TYPE_TRAP and c:IsSSetable()
 end
 function c100306000.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c100306000.thfilter,tp,LOCATION_DECK,0,3,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
