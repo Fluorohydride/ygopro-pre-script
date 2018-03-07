@@ -58,7 +58,8 @@ function c100318041.atktg(e,c)
 	return c==e:GetHandler() or g:IsContains(c)
 end
 function c100318041.filter(c,e,tp,zone)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsRace(RACE_CYBERSE) and c:IsLinkBelow(3) and not c:IsCode(100318041) 
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c100318041.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=e:GetHandler():GetLinkedZone(tp)&0x1f
