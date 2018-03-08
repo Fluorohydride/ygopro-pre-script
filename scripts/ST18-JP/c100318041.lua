@@ -2,6 +2,7 @@
 --Transcode Talker
 --Scripted by Eerie Code
 function c100318041.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2)
 	--atk gain
@@ -58,11 +59,11 @@ function c100318041.atktg(e,c)
 	return c==e:GetHandler() or g:IsContains(c)
 end
 function c100318041.filter(c,e,tp,zone)
-	return c:IsRace(RACE_CYBERSE) and c:IsLinkBelow(3) and not c:IsCode(100318041) 
+	return c:IsRace(RACE_CYBERSE) and c:IsLinkBelow(3) and c:IsType(TYPE_LINK) and not c:IsCode(100318041)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c100318041.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local zone=e:GetHandler():GetLinkedZone(tp)&0x1f
+	local zone=e:GetHandler():GetLinkedZone(tp)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100318041.filter(chkc,e,tp,zone) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c100318041.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,zone) end
@@ -71,7 +72,7 @@ function c100318041.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c100318041.spop(e,tp,eg,ep,ev,re,r,rp)
-	local zone=e:GetHandler():GetLinkedZone(tp)&0x1f
+	local zone=e:GetHandler():GetLinkedZone(tp)
 	if tc:IsRelateToEffect(e) and zone~=0 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end

@@ -4,10 +4,10 @@ function c100200146.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
 	c:EnableReviveLimit()
-	--spsummon
+	--lv
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100200146,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -15,7 +15,7 @@ function c100200146.initial_effect(c)
 	e1:SetCondition(c100200146.lvlcon)
 	e1:SetTarget(c100200146.lvtg1)
 	e1:SetOperation(c100200146.lvop1)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--synchro effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100200146,1))
@@ -33,18 +33,18 @@ function c100200146.lvlcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c100200146.lvtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100200146.tgfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetLevel()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c100200146.tgfilter(c,lv)
-	return c:IsLevelBelow(lv) and c:IsAbleToGrave() 
+	return c:IsLevelBelow(lv-1) and c:IsAbleToGrave()
 end
 function c100200146.lvop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100200146.tgfilter,tp,LOCATION_DECK,0,1,1,nil,c:GetLevel())
-	if g:GetCount()==0 or Duel.SendtoGrave(g,REASON_EFFECT)==0 then return end
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
+	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE)
+		and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local lv=g:GetFirst():GetLevel()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -62,11 +62,6 @@ function c100200146.lvop1(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabelObject(g:GetFirst())
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_CANNOT_TRIGGER)
-		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		g:GetFirst():RegisterEffect(e3)
 	end
 end
 function c100200146.aclimit(e,re,tp)
