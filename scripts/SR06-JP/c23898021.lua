@@ -1,7 +1,7 @@
 --悪魔嬢リリス
 --Lilith, Lady of Lament
 --Scripted by Eerie Code
-function c100306000.initial_effect(c)
+function c23898021.initial_effect(c)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -9,37 +9,37 @@ function c100306000.initial_effect(c)
 	e1:SetValue(1000)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(c100306000.atkcon)
+	e1:SetCondition(c23898021.atkcon)
 	c:RegisterEffect(e1)
 	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,100306000)
-	e2:SetCost(c100306000.thcost)
-	e2:SetTarget(c100306000.thtg)
-	e2:SetOperation(c100306000.thop)
+	e2:SetCountLimit(1,23898021)
+	e2:SetCost(c23898021.thcost)
+	e2:SetTarget(c23898021.thtg)
+	e2:SetOperation(c23898021.thop)
 	c:RegisterEffect(e2)
 end
-function c100306000.atkcon(e)
+function c23898021.atkcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)
 end
-function c100306000.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c23898021.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsAttribute,1,nil,ATTRIBUTE_DARK) end
 	local g=Duel.SelectReleaseGroup(tp,Card.IsAttribute,1,1,nil,ATTRIBUTE_DARK)
 	Duel.Release(g,REASON_COST)
 end
-function c100306000.thfilter(c)
+function c23898021.thfilter(c)
 	return c:GetType()==TYPE_TRAP and c:IsSSetable()
 end
-function c100306000.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c23898021.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c100306000.thfilter,tp,LOCATION_DECK,0,3,nil) end
+		and Duel.IsExistingMatchingCard(c23898021.thfilter,tp,LOCATION_DECK,0,3,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function c100306000.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100306000.thfilter,tp,LOCATION_DECK,0,nil)
+function c23898021.thop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(c23898021.thfilter,tp,LOCATION_DECK,0,nil)
 	if g:GetCount()>=3 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sg=g:Select(tp,3,3,nil)
