@@ -1,41 +1,41 @@
 --悪のデッキ破壊ウイルス
 --Grinning Ghost Virus
 --Scripted by Eerie Code
-function c100306030.initial_effect(c)
+function c85555787.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_TOHAND+0x1c0)
-	e1:SetCost(c100306030.cost)
-	e1:SetTarget(c100306030.target)
-	e1:SetOperation(c100306030.activate)
+	e1:SetCost(c85555787.cost)
+	e1:SetTarget(c85555787.target)
+	e1:SetOperation(c85555787.activate)
 	c:RegisterEffect(e1)
 end
-function c100306030.costfilter(c,matk)
+function c85555787.costfilter(c,matk)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsAttackBelow(matk)
 end
-function c100306030.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c85555787.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	return true
 end
-function c100306030.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c85555787.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dc=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND+LOCATION_DECK)
 	local matk=math.min(3000,dc*500)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return matk>0 and Duel.CheckReleaseGroup(tp,c100306030.costfilter,1,nil,matk)
+		return matk>0 and Duel.CheckReleaseGroup(tp,c85555787.costfilter,1,nil,matk)
 	end
-	local g=Duel.SelectReleaseGroup(tp,c100306030.costfilter,1,1,nil,matk)
+	local g=Duel.SelectReleaseGroup(tp,c85555787.costfilter,1,1,nil,matk)
 	local atk=g:GetFirst():GetAttack()
 	e:SetLabel(atk)
 	Duel.Release(g,REASON_COST)
 	local ct=math.floor(atk/500)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,ct,1-tp,LOCATION_DECK+LOCATION_HAND)
 end
-function c100306030.activate(e,tp,eg,ep,ev,re,r,rp)
+function c85555787.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local atk=e:GetLabel()
 	local ct=math.floor(atk/500)
@@ -57,23 +57,23 @@ function c100306030.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetProperty(EFFECT_FLAG_DELAY)
 		e1:SetCode(EVENT_DRAW)
-		e1:SetOperation(c100306030.desop)
+		e1:SetOperation(c85555787.desop)
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
 		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
 		e2:SetCountLimit(1)
-		e2:SetCondition(c100306030.turncon)
-		e2:SetOperation(c100306030.turnop)
+		e2:SetCondition(c85555787.turncon)
+		e2:SetOperation(c85555787.turnop)
 		e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
 		Duel.RegisterEffect(e2,tp)
 		e2:SetLabelObject(e1)
 		c:RegisterFlagEffect(1082946,RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,3)
-		c100306030[c]=e2
+		c85555787[c]=e2
 	end
 end
-function c100306030.desop(e,tp,eg,ep,ev,re,r,rp)
+function c85555787.desop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==e:GetOwnerPlayer() then return end
 	local c=e:GetHandler()
 	local hg=eg:Filter(Card.IsLocation,nil,LOCATION_HAND)
@@ -94,10 +94,10 @@ function c100306030.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.ShuffleHand(ep)
 end
-function c100306030.turncon(e,tp,eg,ep,ev,re,r,rp)
+function c85555787.turncon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
-function c100306030.turnop(e,tp,eg,ep,ev,re,r,rp)
+function c85555787.turnop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
 	ct=ct+1
 	e:SetLabel(ct)
