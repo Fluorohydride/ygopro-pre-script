@@ -54,7 +54,7 @@ function c100306003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 	while true do
 		local mg=rg:Filter(c100306003.fselect,g,tp,rg,g)
-		if mg:GetCount()==0 or (Duel.GetMZoneCount(tp,g)>0 and not Duel.SelectYesNo(tp,210)) then break end
+		if mg:GetCount()==0 or (g:GetCount()>0 and Duel.GetMZoneCount(tp,g)>0 and not Duel.SelectYesNo(tp,210)) then break end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		local sg=mg:Select(tp,1,1,nil)
 		g:Merge(sg)
