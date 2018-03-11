@@ -24,6 +24,7 @@ function c100306022.initial_effect(c)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK))
 	e3:SetCountLimit(1)
+	e3:SetCondition(c100306022.relcon)
 	e3:SetValue(c100306022.relval)
 	c:RegisterEffect(e3)
 	--token
@@ -42,6 +43,9 @@ function c100306022.initial_effect(c)
 	e5:SetTarget(c100306022.sptg)
 	e5:SetOperation(c100306022.spop)
 	c:RegisterEffect(e5)
+end
+function c100306022.relcon(e)
+	return e:GetHandler():GetFlagEffect(100306122)==0
 end
 function c100306022.relval(e,re,r,rp)
 	return bit.band(r,REASON_COST)~=0

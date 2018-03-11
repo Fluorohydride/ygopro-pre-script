@@ -33,14 +33,21 @@ end
 function c100306003.counterfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK)
 end
+function c100306003.exfilter(c,p)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsFaceup()
+		and c:IsControler(p) and c:IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)
+end
 function c100306003.fselect(c,tp,rg,sg)
 	sg:AddCard(c)
-	local res=Duel.GetMZoneCount(tp,sg)>0 or rg:IsExists(c100306003.fselect,1,sg,tp,rg,sg)
+	local res=sg:FilterCount(c100306003.exfilter,nil,1-tp)<=1
+		and (Duel.GetMZoneCount(tp,sg)>0 or rg:IsExists(c100306003.fselect,1,sg,tp,rg,sg))
 	sg:RemoveCard(c)
 	return res
 end
 function c100306003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetReleaseGroup(tp):Filter(Card.IsAttribute,nil,ATTRIBUTE_DARK)
+	local exg=Duel.GetMatchingGroup(c100306003.exfilter,tp,0,LOCATION_MZONE,nil,1-tp)
+	rg:Merge(exg)
 	local g=Group.CreateGroup()
 	if chk==0 then return Duel.GetCustomActivityCount(100306003,tp,ACTIVITY_SPSUMMON)==0
 		and rg:IsExists(c100306003.fselect,1,nil,tp,rg,g) end
@@ -60,6 +67,10 @@ function c100306003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		g:Merge(sg)
 	end
 	e:SetLabel(g:GetCount())
+	if g:FilterCount(c100306003.exfilter,nil,1-tp)>=1 then
+		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+		fc:RegisterFlagEffect(100306122,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+	end
 	Duel.Release(g,REASON_COST)
 end
 function c100306003.splimit(e,c,sump,sumtype,sumpos,targetp,se)
