@@ -33,21 +33,23 @@ end
 function c100306003.counterfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK)
 end
-function c100306003.exfilter(c,p)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsFaceup()
-		and c:IsControler(p) and c:IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)
-end
 function c100306003.fselect(c,tp,rg,sg)
 	sg:AddCard(c)
-	local res=sg:FilterCount(c100306003.exfilter,nil,1-tp)<=1
-		and (Duel.GetMZoneCount(tp,sg)>0 or rg:IsExists(c100306003.fselect,1,sg,tp,rg,sg))
+	local res=c100306003.fgoal(tp,sg) or rg:IsExists(c100306003.fselect,1,sg,tp,rg,sg)
 	sg:RemoveCard(c)
 	return res
 end
+function c100306003.relfilter(c,g)
+	return g:IsContains(c)
+end
+function c100306003.fgoal(tp,sg)
+	if sg:GetCount()>0 and Duel.GetMZoneCount(tp,sg)>0 then
+		Duel.SetSelectedCard(sg)
+		return Duel.CheckReleaseGroup(tp,nil,0,nil)
+	else return false end
+end
 function c100306003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetReleaseGroup(tp):Filter(Card.IsAttribute,nil,ATTRIBUTE_DARK)
-	local exg=Duel.GetMatchingGroup(c100306003.exfilter,tp,0,LOCATION_MZONE,nil,1-tp)
-	rg:Merge(exg)
 	local g=Group.CreateGroup()
 	if chk==0 then return Duel.GetCustomActivityCount(100306003,tp,ACTIVITY_SPSUMMON)==0
 		and rg:IsExists(c100306003.fselect,1,nil,tp,rg,g) end
@@ -61,16 +63,12 @@ function c100306003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 	while true do
 		local mg=rg:Filter(c100306003.fselect,g,tp,rg,g)
-		if mg:GetCount()==0 or (g:GetCount()>0 and Duel.GetMZoneCount(tp,g)>0 and not Duel.SelectYesNo(tp,210)) then break end
+		if mg:GetCount()==0 or (c100306003.fgoal(tp,sg) and not Duel.SelectYesNo(tp,210)) then break end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local sg=mg:Select(tp,1,1,nil)
+		local sg=Duel.SelectReleaseGroup(tp,c100306003.relfilter,1,1,nil,mg)
 		g:Merge(sg)
 	end
 	e:SetLabel(g:GetCount())
-	if g:FilterCount(c100306003.exfilter,nil,1-tp)>=1 then
-		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-		fc:RegisterFlagEffect(100306122,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
-	end
 	Duel.Release(g,REASON_COST)
 end
 function c100306003.splimit(e,c,sump,sumtype,sumpos,targetp,se)
