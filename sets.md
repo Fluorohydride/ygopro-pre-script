@@ -7,10 +7,10 @@
 - **March 9, 2018** : Legendary Collection Kaiba (LC06-EN) : `100241XXX`
 - **March 10, 2018** : Structure Deck R: Curse of the Dark (SR06-JP) : `100306XXX`
 - **March 24, 2018** : Starter Deck 2018 (ST18-JP) : `100318XXX`
+- **April 14, 2018** : Cybernetic Horizon (CYHO-JP) : `101005XXX`
+- **May 12, 2018** : Collectors Pack 2018 (CP18-JP) : `100227XXX`
 
 # Announced
-- **April 14, 2018** : Cybernetic Horizon (????-JP) : `101005XXX`
-- **May 12, 2018** : Collectors Pack 2018 (????-JP) : `100227XXX`
 - **June 9, 2018** : Duelist Pack: Legend Duelist 3 (????-JP) : `100409XXX`
 
 # Archived

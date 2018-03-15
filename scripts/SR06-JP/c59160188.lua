@@ -1,7 +1,6 @@
 --闇黒世界－シャドウ・ディストピア－
 --Lair of Darkness
 --Script by mercury233
---not fully implemented
 function c59160188.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -18,8 +17,15 @@ function c59160188.initial_effect(c)
 	e2:SetValue(ATTRIBUTE_DARK)
 	c:RegisterEffect(e2)
 	--release replace
-	--local e3=Effect.CreateEffect(c)
-	--c:RegisterEffect(e3)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_EXTRA_RELEASE_NONSUM)
+	e3:SetRange(LOCATION_FZONE)
+	e3:SetTargetRange(0,LOCATION_MZONE)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK))
+	e3:SetCountLimit(1)
+	e3:SetValue(c59160188.relval)
+	c:RegisterEffect(e3)
 	--token
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -36,6 +42,9 @@ function c59160188.initial_effect(c)
 	e5:SetTarget(c59160188.sptg)
 	e5:SetOperation(c59160188.spop)
 	c:RegisterEffect(e5)
+end
+function c59160188.relval(e,re,r,rp)
+	return bit.band(r,REASON_COST)~=0
 end
 function c59160188.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
