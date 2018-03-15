@@ -35,28 +35,20 @@ function c12766474.counterfilter(c)
 end
 function c12766474.fselect(c,tp,rg,sg)
 	sg:AddCard(c)
-<<<<<<< HEAD:scripts/SR06-JP/c12766474.lua
-	local res=Duel.GetMZoneCount(tp,sg)>0 or rg:IsExists(c12766474.fselect,1,sg,tp,rg,sg)
+	local res=c12766474.fgoal(tp,sg) or rg:IsExists(c12766474.fselect,1,sg,tp,rg,sg)
 	sg:RemoveCard(c)
 	return res
 end
-function c12766474.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-=======
-	local res=c100306003.fgoal(tp,sg) or rg:IsExists(c100306003.fselect,1,sg,tp,rg,sg)
-	sg:RemoveCard(c)
-	return res
-end
-function c100306003.relfilter(c,g)
+function c12766474.relfilter(c,g)
 	return g:IsContains(c)
 end
-function c100306003.fgoal(tp,sg)
+function c12766474.fgoal(tp,sg)
 	if sg:GetCount()>0 and Duel.GetMZoneCount(tp,sg)>0 then
 		Duel.SetSelectedCard(sg)
 		return Duel.CheckReleaseGroup(tp,nil,0,nil)
 	else return false end
 end
-function c100306003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
->>>>>>> master:scripts/SR06-JP/c100306003.lua
+function c12766474.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetReleaseGroup(tp):Filter(Card.IsAttribute,nil,ATTRIBUTE_DARK)
 	local g=Group.CreateGroup()
 	if chk==0 then return Duel.GetCustomActivityCount(12766474,tp,ACTIVITY_SPSUMMON)==0
@@ -70,15 +62,10 @@ function c100306003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	while true do
-<<<<<<< HEAD:scripts/SR06-JP/c12766474.lua
 		local mg=rg:Filter(c12766474.fselect,g,tp,rg,g)
-		if mg:GetCount()==0 or (Duel.GetMZoneCount(tp,g)>0 and not Duel.SelectYesNo(tp,210)) then break end
-=======
-		local mg=rg:Filter(c100306003.fselect,g,tp,rg,g)
-		if mg:GetCount()==0 or (c100306003.fgoal(tp,g) and not Duel.SelectYesNo(tp,210)) then break end
->>>>>>> master:scripts/SR06-JP/c100306003.lua
+		if mg:GetCount()==0 or (c12766474.fgoal(tp,g) and not Duel.SelectYesNo(tp,210)) then break end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local sg=Duel.SelectReleaseGroup(tp,c100306003.relfilter,1,1,nil,mg)
+		local sg=Duel.SelectReleaseGroup(tp,c12766474.relfilter,1,1,nil,mg)
 		g:Merge(sg)
 	end
 	e:SetLabel(g:GetCount())

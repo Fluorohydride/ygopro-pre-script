@@ -47,18 +47,7 @@ function c98338152.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-<<<<<<< HEAD:scripts/DBDS-JP/c98338152.lua
-		if tc:IsType(TYPE_TRAPMONSTER) then
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e3)
-		end
 		if Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL)>=3 and tc:IsControlerCanBeChanged() and Duel.SelectYesNo(tp,aux.Stringid(98338152,0)) then
-=======
-		if Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL)>=3 and tc:IsControlerCanBeChanged() and Duel.SelectYesNo(tp,aux.Stringid(100408034,0)) then
->>>>>>> master:scripts/DBDS-JP/c100408034.lua
 			Duel.BreakEffect()
 			Duel.GetControl(tc,tp,PHASE_END,1)
 		end
