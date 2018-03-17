@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c101005037.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_CYBERSE),2,2)
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -60,7 +60,7 @@ function c101005037.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101005037.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=e:GetLabelObject()
-	return eg:IsContains(rc) and r&REASON_EFFECT~=0 and rp~=tp
+	return eg:IsContains(rc) and bit.band(r,REASON_EFFECT)~=0 and rp~=tp
 end
 function c101005037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
