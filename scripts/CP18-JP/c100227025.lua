@@ -1,5 +1,5 @@
 --時械神 サンダイオン
--- Sandaion the Timelord
+--Sandaion the Timelord
 function c100227025.initial_effect(c)
 	c:SetUniqueOnField(1,0,100227025)
 	--cannot special summon
@@ -14,7 +14,7 @@ function c100227025.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100227025,0))
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_SPSUMMON_PROC)
+	e2:SetCode(EFFECT_SUMMON_PROC)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(c100227025.spcon)
 	c:RegisterEffect(e2)

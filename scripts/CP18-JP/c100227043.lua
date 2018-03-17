@@ -18,7 +18,7 @@ function c100227043.initial_effect(c)
 	c:RegisterEffect(e1)	
 	--discard
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100227043,0))
+	e2:SetDescription(aux.Stringid(100227043,1))
 	e2:SetCategory(CATEGORY_HANDES+CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)

@@ -8,6 +8,7 @@ function c101005026.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(1,0)
 	e1:SetLabel(tp)
 	e1:SetValue(c101005026.val)
@@ -42,10 +43,10 @@ function c101005026.initial_effect(c)
 	c:RegisterEffect(e4)
 	--to hand
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(83039729,0))
+	e5:SetDescription(aux.Stringid(101005026,1))
 	e5:SetCategory(CATEGORY_TOHAND)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_DESTROYED)
 	e5:SetCondition(c101005026.thcon)
 	e5:SetTarget(c101005026.thtg)
@@ -53,10 +54,12 @@ function c101005026.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c101005026.val(e,re,dam,r,rp,rc)
-	if r&REASON_BATTLE>0 and Duel.IsPlayerAffectedByEffect(e:GetLabel(),92481084) then return dam end
-	elseif r&REASON_EFFECT~=0 or r&REASON_BATTLE~=0 then
+	if bit.band(r,REASON_BATTLE)>0 and Duel.IsPlayerAffectedByEffect(e:GetLabel(),92481084) then return dam end
+	if bit.band(r,REASON_EFFECT)~=0 or bit.band(r,REASON_BATTLE)~=0 then
 		return dam/2
-	else return dam end
+	else
+		return dam
+	end
 end
 function c101005026.filter(c)
 	return c:IsType(TYPE_LINK)
@@ -88,6 +91,10 @@ function c101005026.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101005026.thfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+end
+function c101005026.thcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsReason(REASON_EFFECT) and rp~=tp and c:GetPreviousControler()==tp
 end
 function c101005026.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_DECK) and c101005026.thfilter(chkc) end

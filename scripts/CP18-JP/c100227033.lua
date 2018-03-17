@@ -1,5 +1,5 @@
--- No.90 銀河眼の光子卿
--- Number 90:Galaxy-Eyes Photon Lord
+--No.90 銀河眼の光子卿
+--Number 90:Galaxy-Eyes Photon Lord
 function c100227033.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,8,2)
@@ -29,7 +29,7 @@ function c100227033.initial_effect(c)
 	--search
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e3:SetDescription(aux.Stringid(100227033,0))
+	e3:SetDescription(aux.Stringid(100227033,1))
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCountLimit(1,100227033+100)
@@ -44,9 +44,8 @@ function c100227033.indcon(e)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x55)
 end
 function c100227033.negcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
-		and loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
 end
 function c100227033.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -80,7 +79,7 @@ function c100227033.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.SelectMatchingCard(tp,c100227033.filter,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
-	if tc and (tc:IsAbleToHand() and Duel.SelectYesNo(tp,aux.Stringid(100227033,1))) then
+	if tc and (tc:IsAbleToHand() and Duel.SelectYesNo(tp,aux.Stringid(100227033,2))) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 	else

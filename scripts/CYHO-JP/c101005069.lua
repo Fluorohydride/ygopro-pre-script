@@ -32,7 +32,7 @@ function c101005069.initial_effect(c)
 end
 function c101005069.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if c101005069.thcon(e,tp,eg,ep,ev,re,r,rp) and c101005069.thcost(e,tp,eg,ep,ev,re,r,rp,0) 
+	if c101005069.thcon(e,tp,eg,ep,ev,re,r,rp) and c101005069.thcost(e,tp,eg,ep,ev,re,r,rp,0)
 		and c101005069.thtg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(101005069,0)) then
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e:SetOperation(c101005069.thop)

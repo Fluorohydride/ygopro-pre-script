@@ -41,10 +41,11 @@ function c100200146.tgfilter(c,lv)
 end
 function c100200146.lvop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100200146.tgfilter,tp,LOCATION_DECK,0,1,1,nil,c:GetLevel())
 	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE)
-		and c:IsFaceup() and c:IsRelateToEffect(e) then
+		and c:IsFaceup() then
 		local lv=g:GetFirst():GetLevel()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

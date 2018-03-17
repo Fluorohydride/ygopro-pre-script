@@ -12,7 +12,7 @@ function c100318002.initial_effect(c)
 	e1:SetCondition(c100318002.condition)
 	e1:SetTarget(c100318002.target)
 	e1:SetOperation(c100318002.operation)
-	c:RegisterEffect(c)
+	c:RegisterEffect(e1)
 end
 function c100318002.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget() and Duel.GetAttackTarget():IsControler(tp)

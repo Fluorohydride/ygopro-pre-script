@@ -1,5 +1,5 @@
--- 破滅の美神ルイン
--- Ruin, Graceful Queen of Oblivion
+--破滅の美神ルイン
+--Ruin, Graceful Queen of Oblivion
 function c101005029.initial_effect(c)
 	c:EnableReviveLimit()
 	--code
@@ -16,7 +16,7 @@ function c101005029.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetCondition(c101005029.thcon)
+	e2:SetCondition(c101005029.indcon)
 	e2:SetTarget(c101005029.indtg)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)

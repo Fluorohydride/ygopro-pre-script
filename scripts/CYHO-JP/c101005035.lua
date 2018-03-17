@@ -37,33 +37,40 @@ function c101005035.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local lg=e:GetHandler():GetLinkedGroup()
 	return eg:IsExists(c101005035.thcfilter,1,nil,tp,lg)
 end
-function c101005035.thfilter(c,tp)
-	return (c:IsCode(101005051) or (c:IsType(TYPE_RITUAL) and c:IsRace(RACE_CYBERSE))) and c:IsAbleToHand()
-end
-function c101005035.cfilter(c,tp)
+function c101005035.cfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
 end
 function c101005035.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101005035.cfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101005035.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c101005035.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,c101005035.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
+function c101005035.thfilter1(c,tp)
+	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+		and Duel.IsExistingMatchingCard(c101005035.thfilter2,tp,LOCATION_DECK,0,1,c)
+end
+function c101005035.thfilter2(c)
+	return c:IsCode(101005051) and c:IsAbleToHand()
+end
 function c101005035.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101005035.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101005035.thfilter1,tp,LOCATION_DECK,0,1,nil,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
 end
 function c101005035.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c101005035.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+	local g1=Duel.SelectMatchingCard(tp,c101005035.thfilter1,tp,LOCATION_DECK,0,1,1,nil,tp)
+	if g1:GetCount()>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g2=Duel.SelectMatchingCard(tp,c101005035.thfilter2,tp,LOCATION_DECK,0,1,1,g1:GetFirst())
+		g1:Merge(g2)
+		Duel.SendtoHand(g1,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g1)
 	end
 	Duel.RegisterFlagEffect(tp,101005035,RESET_PHASE+PHASE_END,0,1)
 end
-function c101005035.spcon(e,tp,eg,ep,ev,re,r,rp)   
-	return Duel.GetFlagEffect(tp,101005035)>=0
+function c101005035.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,101005035)>0
 end
 function c101005035.spfilter(c,e,tp)
 	return c:IsRace(RACE_CYBERSE) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

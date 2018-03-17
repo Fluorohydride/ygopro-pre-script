@@ -15,7 +15,7 @@ function c101005028.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101005028,0))
 	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
@@ -77,7 +77,7 @@ function c101005028.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101005028.actop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsActiveType(TYPE_RITUAL) and ep==tp then
+	if re:IsActiveType(TYPE_RITUAL) and re:IsActiveType(TYPE_MONSTER) and ep==tp then
 		Duel.SetChainLimit(c101005028.chainlm)
 	end
 end
