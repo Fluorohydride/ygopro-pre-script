@@ -41,7 +41,7 @@ function c101005028.filter(c)
 	return c:IsFaceup()
 end
 function c101005028.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101005028.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(c101005028.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
