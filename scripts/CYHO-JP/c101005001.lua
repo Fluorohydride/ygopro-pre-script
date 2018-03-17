@@ -18,27 +18,38 @@ function c101005001.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsPublic() end
 end
+function c101005001.lkfilter(c)
+	return c:IsType(TYPE_LINK) and c:IsLinkState()
+end
 function c101005001.filter(c)
 	return c:IsRace(RACE_CYBERSE) and c:GetLevel()==4
 end
 function c101005001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local zone=bit.band(Duel.GetLinkedZone(tp),0x1f)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101005001.filter(chkc) end
 	local c=e:GetHandler()
-	if chk==0 then return zone~=0 and
-		c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	if chk==0 then
+		local lg=Duel.GetMatchingGroup(c101005001.lkfilter,tp,LOCATION_MZONE,0,nil)
+		local zone=0
+		for tc in aux.Next(lg) do
+			zone=bit.bor(zone,bit.band(tc:GetLinkedZone(),0x1f))
+		end
+		return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c101005001.filter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),e,tp,zone) end
+		and Duel.IsExistingTarget(c101005001.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,c101005001.filter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler(),e,tp,zone)
+	local g=Duel.SelectTarget(tp,c101005001.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c101005001.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zone=bit.band(Duel.GetLinkedZone(tp),0x1f)
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)~=0 then
+	local lg=Duel.GetMatchingGroup(c101005001.lkfilter,tp,LOCATION_MZONE,0,nil)
+	local zone=0
+	for tc in aux.Next(lg) do
+		zone=bit.bor(zone,bit.band(tc:GetLinkedZone(),0x1f))
+	end
+	if zone~=0 and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)~=0 then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
