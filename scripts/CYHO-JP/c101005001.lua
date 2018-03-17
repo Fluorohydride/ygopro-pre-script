@@ -22,7 +22,7 @@ function c101005001.filter(c)
 	return c:IsRace(RACE_CYBERSE) and c:GetLevel()==4
 end
 function c101005001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local zone=Duel.GetLinkedZone(tp)&0x1f
+	local zone=bit.band(Duel.GetLinkedZone(tp),0x1f)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101005001.filter(chkc) end
 	local c=e:GetHandler()
 	if chk==0 then return zone~=0 and
@@ -36,7 +36,7 @@ function c101005001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101005001.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zone=Duel.GetLinkedZone(tp)&0x1f
+	local zone=bit.band(Duel.GetLinkedZone(tp),0x1f)
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)~=0 then
 		local tc=Duel.GetFirstTarget()
