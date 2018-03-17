@@ -6,7 +6,6 @@ function c101005069.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(c101005069.target)
 	c:RegisterEffect(e1)
 	--search
 	local e2=Effect.CreateEffect(c)
@@ -30,19 +29,6 @@ function c101005069.initial_effect(c)
 	e3:SetOperation(c101005069.setop)
 	c:RegisterEffect(e3)
 end
-function c101005069.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if c101005069.thcon(e,tp,eg,ep,ev,re,r,rp) and c101005069.thcost(e,tp,eg,ep,ev,re,r,rp,0)
-		and c101005069.thtg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(101005069,0)) then
-		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-		e:SetOperation(c101005069.thop)
-		c101005069.thcost(e,tp,eg,ep,ev,re,r,rp,1)
-		c101005069.thtg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
-	end
-end
 function c101005069.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
@@ -58,9 +44,7 @@ function c101005069.thfilter(c)
 	return c:IsCode(44095762) and c:IsAbleToHand()
 end
 function c101005069.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101005069.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
-		and e:GetHandler():GetFlagEffect(101005069)==0 end
-	e:GetHandler():RegisterFlagEffect(101005069,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101005069.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c101005069.thop(e,tp,eg,ep,ev,re,r,rp)
