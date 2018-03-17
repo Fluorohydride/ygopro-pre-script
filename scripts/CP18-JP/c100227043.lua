@@ -27,6 +27,27 @@ function c100227043.initial_effect(c)
 	e2:SetTarget(c100227043.hdtg2)
 	e2:SetOperation(c100227043.hdop2)
 	c:RegisterEffect(e2)
+	if not Card.IsExtraLinked then
+		function Duel.GetExtraLinkedGroup(tp)
+			local card1=Duel.GetFieldCard(tp,LOCATION_MZONE,1)
+			local card2=Duel.GetFieldCard(tp,LOCATION_MZONE,2)
+			local card3=Duel.GetFieldCard(tp,LOCATION_MZONE,3)
+			local card5=Duel.GetFieldCard(tp,LOCATION_MZONE,5)
+			local card6=Duel.GetFieldCard(tp,LOCATION_MZONE,6)
+			if not card1 or not card2 or not card3 or not card5 or not card6 then return nil end
+			if bit.band(card1:GetMutualLinkedZone(),0x24)~=0x24 then return nil end
+			if bit.band(card2:GetMutualLinkedZone(),0xa)~=0xa then return nil end
+			if bit.band(card3:GetMutualLinkedZone(),0x44)~=0x44 then return nil end
+			if bit.band(card5:GetMutualLinkedZone(),0x2)~=0x2 then return nil end
+			if bit.band(card6:GetMutualLinkedZone(),0x8)~=0x8 then return nil end
+			return Group:FromCards(card1,card2,card3,card5,card6)
+		end
+		function Card.IsExtraLinked(c)
+			if c:GetSequence()==0 or c:GetSequence()==4 then return false end
+			local elg=Duel.GetExtraLinkedGroup(c:GetControler())
+			return elg and elg:IsContains(c)
+		end
+	end
 end
 function c100227043.cfilter(c,zone)
 	local seq=c:GetSequence()
@@ -37,35 +58,30 @@ function c100227043.hdcon(e,tp,eg,ep,ev,re,r,rp)
 	local zone=Duel.GetLinkedZone(0)+Duel.GetLinkedZone(1)*0x10000
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c100227043.cfilter,1,nil,zone)
 end
-function c100227043.hdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	local rt=Duel.GetFieldGroup(1-tp,0,LOCATION_HAND)
-	if rt>2 then rt=2 end
-	if Duel.GetFieldGroup(tp,0,LOCATION_HAND)<2 then rt=Duel.GetFieldGroup(tp,0,LOCATION_HAND) end
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	local sg=g:RandomSelect(tp,rt)
-	Duel.SendtoGrave(sg,REASON_COST+REASON_DISCARD)
-	e:SetLabel(rt)
-end
 function c100227043.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,e:GetLabel())
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,1)
 end
 function c100227043.hdop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,e:GetLabel())
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+	local ct=math.min(hg:GetCount(),2)
+	if ct<=0 then return false end
+	ct=Duel.AnnounceNumber(tp,1,2)
+	local g=hg:RandomSelect(tp,ct)
+	local ct2=Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+	Duel.DiscardHand(1-tp,nil,ct2,ct2,REASON_EFFECT+REASON_DISCARD)
 end
 function c100227043.hdcon2(e)
 	return e:GetHandler():IsExtraLinked()
 end
 function c100227043.hdtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,2)
 end
 function c100227043.hdop2(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(1-tp,0,LOCATION_HAND):RandomSelect(tp,2)
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
-	if Duel.GetFieldGroup(1-tp,0,LOCATION_HAND)==0 then
+	if Duel.DiscardHand(1-tp,nil,2,2,REASON_EFFECT+REASON_DISCARD)~=0
+		and Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)==0 then
 		Duel.Damage(1-tp,3000,REASON_EFFECT)
 	end
 end
