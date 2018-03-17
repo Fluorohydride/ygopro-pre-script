@@ -40,10 +40,14 @@ function c100227043.initial_effect(c)
 			if bit.band(card3:GetMutualLinkedZone(),0x44)~=0x44 then return nil end
 			if bit.band(card5:GetMutualLinkedZone(),0x2)~=0x2 then return nil end
 			if bit.band(card6:GetMutualLinkedZone(),0x8)~=0x8 then return nil end
-			return Group:FromCards(card1,card2,card3,card5,card6)
+			local elg=Group:FromCards(card1,card2,card3,card5,card6)
+			local card0=Duel.GetFieldCard(tp,LOCATION_MZONE,0)
+			local card4=Duel.GetFieldCard(tp,LOCATION_MZONE,4)
+			if card0 and bit.band(card0:GetMutualLinkedZone(),0x2)==0x2 then elg:AddCard(card0) end
+			if card4 and bit.band(card4:GetMutualLinkedZone(),0x8)==0x8 then elg:AddCard(card4) end
+			return elg
 		end
 		function Card.IsExtraLinked(c)
-			if c:GetSequence()==0 or c:GetSequence()==4 then return false end
 			local elg=Duel.GetExtraLinkedGroup(c:GetControler())
 			return elg and elg:IsContains(c)
 		end
