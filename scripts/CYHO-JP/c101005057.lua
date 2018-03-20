@@ -2,6 +2,7 @@
 --Break of the World
 --Scripted by Eerie Code
 function c101005057.initial_effect(c)
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -75,7 +76,7 @@ function c101005057.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101005057.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsPlayerCanDraw(tp,1)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
 	local b2=g:GetCount()>0
 	if chk==0 then return b1 or b2 end
 	local sel=0

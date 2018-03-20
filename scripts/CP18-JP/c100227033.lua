@@ -25,7 +25,7 @@ function c100227033.initial_effect(c)
 	e2:SetCost(c100227033.negcost)
 	e2:SetTarget(c100227033.negtg)
 	e2:SetOperation(c100227033.negop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--search
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -37,14 +37,14 @@ function c100227033.initial_effect(c)
 	e3:SetCondition(c100227033.condition)
 	e3:SetTarget(c100227033.target)
 	e3:SetOperation(c100227033.operation)
-	c:RegisterEffect(e3,false,1)
+	c:RegisterEffect(e3)
 end
 c100227033.xyz_number=90
 function c100227033.indcon(e)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x55)
 end
 function c100227033.negcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
+	return ep~=tp
 		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
 end
 function c100227033.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -56,16 +56,16 @@ end
 function c100227033.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
+	if re:GetHandler():IsDestructable() and e:GetLabelObject():IsSetCard(0x7b) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,re:GetHandler(),1,0,0)
+	end
 end
 function c100227033.negop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateEffect(ev) and e:GetLabelObject():IsSetCard(0x7b) then
+	if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) and e:GetLabelObject():IsSetCard(0x7b) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
 function c100227033.condition(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	return Duel.GetTurnPlayer()~=tp
 end
 function c100227033.filter(c)

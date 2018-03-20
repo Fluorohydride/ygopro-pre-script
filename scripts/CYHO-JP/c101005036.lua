@@ -7,13 +7,14 @@ function c101005036.initial_effect(c)
 	aux.AddLinkProcedure(c,c101005036.matfilter,1,1)
 	--splimit
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101005036,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetOperation(c101005036.ls)
+	e1:SetOperation(c101005036.limop)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101005036,0))
+	e2:SetDescription(aux.Stringid(101005036,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_RELEASE)
@@ -37,7 +38,7 @@ end
 function c101005036.matfilter(c,lc,sumtype,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSE,lc,sumtype,tp)
 end
-function c101005036.ls(e,tp,eg,ep,ev,re,r,rp,c)
+function c101005036.limop(e,tp,eg,ep,ev,re,r,rp,c)
 	--cannot link summon
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -49,7 +50,7 @@ function c101005036.ls(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.RegisterEffect(e1,tp)
 end
 function c101005036.splimit(e,c,tp,sumtp,sumpos)
-	return c:IsType(TYPE_LINK) and c:GetLink()>=3 and bit.band(sumtp,SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
+	return c:IsType(TYPE_LINK) and c:IsLinkAbove(3) and bit.band(sumtp,SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end
 function c101005036.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabel()>0

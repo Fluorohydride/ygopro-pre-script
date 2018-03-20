@@ -50,13 +50,12 @@ function c101005002.tkcon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101005002.tkcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)
-		and Duel.GetAttackTarget() and Duel.GetAttackTarget():IsAbleToRemoveAsCost() end
+		and Duel.GetAttackTarget() and Duel.GetAttackTarget():IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,Duel.GetAttackTarget())>0 end
 	local g=Group.FromCards(e:GetHandler(),Duel.GetAttackTarget())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c101005002.tktg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(Card.IsType,tp,0,LOCATION_MZONE,1,nil,TYPE_LINK)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,0,LOCATION_MZONE,1,nil,TYPE_LINK)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,101005002+100,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
@@ -66,13 +65,10 @@ function c101005002.tkop2(e,tp,eg,ep,ev,re,r,rp)
 	local ct=math.min(Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_MZONE,nil,TYPE_LINK),Duel.GetLocationCount(tp,LOCATION_MZONE))
 	if ct<1 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
-	local i=0
-	local ctn=true
-	while ct>0 and ctn do
+	repeat
 		local token=Duel.CreateToken(tp,101005002+100)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		ct=ct-1
-		if ct<=0 or not Duel.SelectYesNo(tp,aux.Stringid(101005002,0)) then ctn=false end
-	end
+	until ct<=0 or not Duel.SelectYesNo(tp,aux.Stringid(101005002,0))
 	Duel.SpecialSummonComplete()
 end

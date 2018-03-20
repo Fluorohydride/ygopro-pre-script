@@ -39,8 +39,7 @@ function c101005029.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101005029.indcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_RITUAL)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
 end
 function c101005029.indtg(e,c)
 	return c:IsType(TYPE_RITUAL)

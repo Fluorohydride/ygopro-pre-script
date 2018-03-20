@@ -34,16 +34,14 @@ function c101005026.initial_effect(c)
 	c:RegisterEffect(e3)
 	--atk up
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(101005026,0))
-	e4:SetCategory(CATEGORY_ATKCHANGE)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e4:SetCondition(c101005026.atkcon)
 	e4:SetOperation(c101005026.atkop)
 	c:RegisterEffect(e4)
 	--to hand
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(101005026,1))
+	e5:SetDescription(aux.Stringid(101005026,0))
 	e5:SetCategory(CATEGORY_TOHAND)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_DESTROYED)
@@ -53,7 +51,7 @@ function c101005026.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c101005026.val(e,re,dam,r,rp,rc)
-	if bit.band(r,REASON_BATTLE)>0 and Duel.IsPlayerAffectedByEffect(e:GetLabel(),92481084) then return dam end
+	if bit.band(r,REASON_BATTLE)>0 then return dam end
 	if bit.band(r,REASON_EFFECT)~=0 or bit.band(r,REASON_BATTLE)~=0 then
 		return dam/2
 	else
@@ -83,7 +81,7 @@ function c101005026.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_DAMAGE_CAL)
 		e1:SetValue(1000)
 		c:RegisterEffect(e1)
 	end

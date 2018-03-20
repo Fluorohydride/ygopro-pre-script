@@ -15,7 +15,7 @@ function c100227043.initial_effect(c)
 	e1:SetCondition(c100227043.hdcon)
 	e1:SetTarget(c100227043.hdtg)
 	e1:SetOperation(c100227043.hdop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--discard
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100227043,1))
@@ -71,10 +71,11 @@ function c100227043.hdop(e,tp,eg,ep,ev,re,r,rp)
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	local ct=math.min(hg:GetCount(),2)
 	if ct<=0 then return false end
-	ct=Duel.AnnounceNumber(tp,1,2)
-	local g=hg:RandomSelect(tp,ct)
-	local ct2=Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
-	Duel.DiscardHand(1-tp,nil,ct2,ct2,REASON_EFFECT+REASON_DISCARD)
+	local ct2=1
+	if ct>1 then ct2=Duel.AnnounceNumber(tp,1,2) end
+	local g=hg:RandomSelect(tp,ct2)
+	local ct3=Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+	Duel.DiscardHand(1-tp,nil,ct3,ct3,REASON_EFFECT+REASON_DISCARD)
 end
 function c100227043.hdcon2(e)
 	return e:GetHandler():IsExtraLinked()

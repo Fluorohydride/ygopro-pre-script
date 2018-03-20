@@ -1,4 +1,4 @@
---魔神儀-タリスマンドラ
+--魔神儀－タリスマンドラ
 --Deviritual Talismandra
 function c101005013.initial_effect(c)
 	--spsummon
@@ -51,7 +51,7 @@ function c101005013.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(c101005013.filter,tp,LOCATION_DECK,0,1,e:GetHandler(),e,tp) end
+		and Duel.IsExistingMatchingCard(c101005013.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c101005013.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -59,7 +59,7 @@ function c101005013.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c101005013.filter,tp,LOCATION_DECK,0,1,1,e:GetHandler(),e,tp)
+	local g=Duel.SelectMatchingCard(tp,c101005013.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		g:AddCard(e:GetHandler())
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)

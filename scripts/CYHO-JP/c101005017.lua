@@ -1,4 +1,4 @@
---ドラグニティ-クーゼ
+--ドラグニティ－クーゼ
 --Dragunity Couse
 --scripted by Naim
 function c101005017.initial_effect(c)

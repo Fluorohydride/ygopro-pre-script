@@ -33,7 +33,6 @@ function c100228001.initial_effect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,100228001+200)
 	e3:SetCondition(c100228001.atkcon)
 	e3:SetOperation(c100228001.atkop)
@@ -48,7 +47,7 @@ function c100228001.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c100228001.thfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c100228001.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100228001.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -66,6 +65,10 @@ end
 function c100228001.exfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x99) and c:IsType(TYPE_PENDULUM)
 end
+function c100228001.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFieldCard(tp,LOCATION_PZONE,0) and Duel.GetFieldCard(tp,LOCATION_PZONE,1)
+		and Duel.IsExistingMatchingCard(c100228001.exfilter,tp,LOCATION_EXTRA,0,1,nil)
+end
 function c100228001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(100228001,tp,ACTIVITY_SPSUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -79,10 +82,6 @@ function c100228001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100228001.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
-end
-function c100228001.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldCard(tp,LOCATION_PZONE,0) and Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-		and Duel.IsExistingMatchingCard(c100228001.exfilter,tp,LOCATION_EXTRA,0,1,nil)
 end
 function c100228001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -110,7 +109,7 @@ function c100228001.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE_CAL)
 		e1:SetValue(-gc*1000)
 		d:RegisterEffect(e1)
 	end

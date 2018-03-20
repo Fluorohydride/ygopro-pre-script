@@ -8,9 +8,13 @@ function c101005079.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetCondition(c101005079.condition)
 	e1:SetTarget(c101005079.target)
 	e1:SetOperation(c101005079.activate)
 	c:RegisterEffect(e1)
+end
+function c101005079.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function c101005079.filter(c,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(c101005079.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetAttack())

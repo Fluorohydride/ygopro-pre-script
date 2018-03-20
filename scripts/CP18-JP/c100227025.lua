@@ -1,4 +1,4 @@
---時械神 サンダイオン
+--時械神サンダイオン
 --Sandaion the Timelord
 function c100227025.initial_effect(c)
 	c:SetUniqueOnField(1,0,100227025)
@@ -42,6 +42,7 @@ function c100227025.initial_effect(c)
 	c:RegisterEffect(e8)
 	--LP
 	local e6=Effect.CreateEffect(c)
+	e6:SetDescription(aux.Stringid(100227025,1))
 	e6:SetCategory(CATEGORY_DAMAGE)
 	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -54,11 +55,10 @@ function c100227025.initial_effect(c)
 	c:RegisterEffect(e6)
 	--to deck
 	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(100227025,1))
+	e7:SetDescription(aux.Stringid(100227025,2))
 	e7:SetCategory(CATEGORY_TODECK)
 	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e7:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e7:SetProperty(EFFECT_FLAG_REPEAT)
 	e7:SetCountLimit(1)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCondition(c100227025.tdcon)
@@ -69,7 +69,7 @@ end
 function c100227025.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
-		and	Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
+		and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c100227025.damcon(e,tp,eg,ep,ev,re,r,rp)
@@ -94,7 +94,7 @@ function c100227025.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100227025.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and c:IsAbleToDeck() then
+	if c:IsRelateToEffect(e) then
 		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
 	end
 end
