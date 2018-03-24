@@ -1,7 +1,7 @@
 --ペンテスタッグ
 --Pentestag
 --Scripted by Eerie Code
-function c100318042.initial_effect(c)
+function c72336818.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2,2)
