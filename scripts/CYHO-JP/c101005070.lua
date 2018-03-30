@@ -47,7 +47,7 @@ function c101005070.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			c101005070.sptg(e,tp,eg,ep,ev,re,r,rp,1)
 		end
 end
-function c85638822.activate(e,tp,eg,ep,ev,re,r,rp)
+function c101005070.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		c:AddCounter(0x48,4)
