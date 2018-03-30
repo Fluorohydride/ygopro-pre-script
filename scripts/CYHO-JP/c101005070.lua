@@ -2,12 +2,14 @@
 --Link Turret
 --Scripted by Eerie Code
 function c101005070.initial_effect(c)
+	c:EnableCounterPermit(0x48)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(c101005070.target)
+	e1:SetOperation(c101005070.activate)
 	c:RegisterEffect(e1)
 	--counter
 	local e2=Effect.CreateEffect(c)
@@ -36,7 +38,6 @@ function c101005070.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c101005070.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsCanAddCounter(tp,0x48,4,c) end
-	c:AddCounter(0x48,4)
 	if c101005070.spcon(e,tp,eg,ep,ev,re,r,rp) and c101005070.spcost(e,tp,eg,ep,ev,re,r,rp,0)
 		and c101005070.sptg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(101005070,0)) then
 			e:SetCategory(CATEGORY_COUNTER+CATEGORY_SPECIAL_SUMMON)
@@ -45,6 +46,12 @@ function c101005070.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			c101005070.spcost(e,tp,eg,ep,ev,re,r,rp,1)
 			c101005070.sptg(e,tp,eg,ep,ev,re,r,rp,1)
 		end
+end
+function c85638822.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) then
+		c:AddCounter(0x48,4)
+	end
 end
 function c101005070.counterfilter(c)
 	return c:GetSummonLocation()~=LOCATION_EXTRA or (c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_DARK))
