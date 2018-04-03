@@ -9,7 +9,7 @@ function c101005073.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101005073)
 	e1:SetTarget(c101005073.target)
-	e1:SetOperation(101005073.activate)
+	e1:SetOperation(c101005073.activate)
 	c:RegisterEffect(e1)
 	--search
 	local e2=Effect.CreateEffect(c)
