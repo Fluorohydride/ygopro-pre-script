@@ -4,7 +4,7 @@ function c101005039.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0xfc),3)
 	c:EnableReviveLimit()
-	-- indes
+	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -46,7 +46,7 @@ function c101005039.initial_effect(c)
 end
 function c101005039.immval(e,te)
 	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER)
-		and te:GetOwner():GetAttack()<=e:GetHandler():GetAttack()
+		and te:GetOwner():GetAttack()<=e:GetHandler():GetAttack() and te:IsActivated()
 end
 function c101005039.negfilter(c,g)
 	return g:IsContains(c)
