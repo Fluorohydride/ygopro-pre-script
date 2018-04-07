@@ -3,23 +3,23 @@
 function c101005075.initial_effect(c)
 	--change effect
 	local e1=Effect.CreateEffect(c)
-	e1:SetCountLimit(1,101005075)
 	e1:SetDescription(aux.Stringid(101005075,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
+	e1:SetCountLimit(1,101005075)
 	e1:SetCondition(c101005075.cecondition)
 	e1:SetTarget(c101005075.cetarget)
 	e1:SetOperation(c101005075.ceoperation)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1,101005075)
 	e2:SetDescription(aux.Stringid(101005075,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCountLimit(1,101005075)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c101005075.sptarget)
 	e2:SetOperation(c101005075.spoperation)
@@ -49,7 +49,7 @@ function c101005075.ceoperation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeChainOperation(ev,c101005075.repop)
 end
 function c101005075.spfilter1(c,e,tp)
-	local zone = c:GetLinkedZone()&0x1f
+	local zone=bit.band(c:GetLinkedZone(),0x1f)
 	return c:IsFaceup() and c:IsType(TYPE_LINK) and Duel.IsExistingMatchingCard(c101005075.spfilter2,tp,0x13,0,1,c,e,tp,zone)
 end
 function c101005075.spfilter2(c,e,tp,zone)
@@ -57,7 +57,7 @@ function c101005075.spfilter2(c,e,tp,zone)
 end
 function c101005075.sptarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c101005075.spfilter1(chkc,e,tp) and chkc:IsLocation(LOCATION_MZONE) end
-	if chk == 0 then return Duel.IsExistingTarget(c101005075.spfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c101005075.spfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp) end
 	Duel.SelectTarget(tp,c101005075.spfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
 end
@@ -65,10 +65,11 @@ function c101005075.spoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		local zone = tc:GetLinkedZone()&0x1f
-		local sg = Duel.SelectMatchingCard(tp,c101005075.spfilter2,tp,0x13,0,1,1,c,e,tp,zone)
+		local zone=bit.band(tc:GetLinkedZone(),0x1f)
+		local sg=Duel.SelectMatchingCard(tp,c101005075.spfilter2,tp,0x13,0,1,1,c,e,tp,zone)
 		if sg then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE,zone)
+			Duel.ConfirmCards(1-tp,g)
 		end
 	end
 end

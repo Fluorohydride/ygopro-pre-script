@@ -41,19 +41,20 @@ function c101005016.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101005016.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,c101005016.eqfilter,tp,LOCATION_DECK,0,1,1,nil,c)
-	if g:GetCount()>0 then
-		Duel.Equip(tp,g:GetFirst(),c)
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local g=Duel.SelectMatchingCard(tp,c101005016.eqfilter,tp,LOCATION_DECK,0,1,1,nil,c)
+		if g:GetCount()>0 then
+			Duel.Equip(tp,g:GetFirst(),c)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_EQUIP_LIMIT)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetValue(c101005016.eqlimit)
+			e1:SetLabelObject(c)
+			g:GetFirst():RegisterEffect(e1)
+		end
 	end
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
-	e1:SetValue(c101005016.eqlimit)
-	e1:SetLabelObject(c)
-	g:GetFirst():RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)

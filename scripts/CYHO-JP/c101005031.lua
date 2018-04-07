@@ -27,39 +27,39 @@ function c101005031.initial_effect(c)
 end
 function c101005031.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetAttacker()==c and Duel.GetAttackTarget()~=nil end
-	local g=Duel.GetAttackTarget()
+	local d=Duel.GetAttackTarget()
+	if chk==0 then return Duel.GetAttacker()==c and d and d:IsAbleToHand() end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),0,0)
 end
 function c101005031.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetAttackTarget()
-	if g:GetCount()>0 and g:IsRelateToBattle()then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	local d=Duel.GetAttackTarget()
+	if d and d:IsRelateToBattle() then
+		Duel.SendtoHand(d,nil,REASON_EFFECT)
 	end
 end
 function c101005031.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetMZoneCount(tp,c)>0 and c:IsReleasable() end
+	Duel.Release(c,REASON_COST)
 end
 function c101005031.spfilter(c,e,tp)
 	return c:IsRace(RACE_CYBERSE) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101005031.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
-	if chk==0 then return ft>0 and Duel.IsExistingMatchingCard(c101005031.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101005031.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
 end
 function c101005031.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101005031.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp)
-	if g:GetCount()>0 and Duel.SpecialSummonStep(g,0,tp,tp,false,false,POS_FACEUP) then
+	local tc=g:GetFirst()
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		g:RegisterEffect(e1)
+		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()
 end

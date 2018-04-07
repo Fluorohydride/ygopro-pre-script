@@ -6,7 +6,7 @@ function c101004091.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(c101004091.cond)
+	e1:SetCondition(c101004091.condition)
 	e1:SetTarget(c101004091.target)
 	e1:SetOperation(c101004091.activate)
 	c:RegisterEffect(e1)
@@ -15,14 +15,14 @@ function c101004091.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCondition(c101004091.cond2)
+	e2:SetCondition(c101004091.condition2)
 	e2:SetCost(aux.bfgcost)
 	e2:SetOperation(c101004091.activate2)
 	c:RegisterEffect(e2)
 end
-function c101004091.cond(e,tp,eg,ep,ev,re,r,rp)
+function c101004091.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
-	and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function c101004091.filter(c,e,tp)
 	return c:IsSetCard(0x107) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -48,7 +48,7 @@ function c101004091.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function c101004091.cond2(e,tp,eg,ep,ev,re,r,rp)
+function c101004091.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldCard(tp,LOCATION_SZONE,5)==nil
 end
 function c101004091.filter2(c,e,tp)
@@ -56,11 +56,12 @@ function c101004091.filter2(c,e,tp)
 end
 function c101004091.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101004091.filter2),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,tp)
-	if g:GetCount()>0  then
+	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101004091.filter2),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
 		if tc then
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			Duel.RaiseEvent(tc,4179255,tc:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
 		end
 	end
 end

@@ -2,7 +2,7 @@
 --Sword of Toxic Solitude
 --Scripted by Eerie Code
 function c101005101.initial_effect(c)
-	c:SetUniqueOnField(LOCATION_ONFIELD,0,101005101)
+	c:SetUniqueOnField(1,0,101005101)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)

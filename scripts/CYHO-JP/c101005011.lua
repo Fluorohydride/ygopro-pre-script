@@ -1,4 +1,4 @@
---星異物-『星冠』
+--星遺物－『星冠』
 --World Legacy - "World Crown"
 --Scripted by ahtelel
 function c101005011.initial_effect(c)
@@ -41,9 +41,9 @@ function c101005011.initial_effect(c)
 end
 function c101005011.spcon(e,c)
 	if c==nil then return true end
-	local tp=e:GetHandlerPlayer()
+	local tp=c:GetControler()
 	local zone=Duel.GetLinkedZone(tp)
-	return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function c101005011.spval(e,c)
 	return 0,Duel.GetLinkedZone(c:GetControler())

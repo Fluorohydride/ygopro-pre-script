@@ -57,7 +57,7 @@ function c101005070.counterfilter(c)
 	return c:GetSummonLocation()~=LOCATION_EXTRA or (c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_DARK))
 end
 function c101005070.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and r&REASON_BATTLE~=0
+	return ep==tp and bit.band(r,REASON_BATTLE)
 end
 function c101005070.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x48,1)
@@ -66,9 +66,11 @@ function c101005070.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c101005070.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x48,1,REASON_EFFECT)
-		and Duel.GetCustomActivityCount(101005070,tp,ACTIVITY_SPSUMMON)==0 end
-	e:GetHandler():RemoveCounter(tp,0x48,1,REASON_EFFECT)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsCanRemoveCounter(tp,0x48,1,REASON_EFFECT)
+		and Duel.GetCustomActivityCount(101005070,tp,ACTIVITY_SPSUMMON)==0
+		and c:GetFlagEffect(101005070)==0 end
+	c:RemoveCounter(tp,0x48,1,REASON_EFFECT)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
@@ -77,6 +79,7 @@ function c101005070.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTarget(c101005070.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	c:RegisterFlagEffect(101005070,RESET_CHAIN,0,1)
 end
 function c101005070.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not (c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_DARK)) and c:IsLocation(LOCATION_EXTRA)
@@ -95,7 +98,7 @@ end
 function c101005070.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) 
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e)
 		and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

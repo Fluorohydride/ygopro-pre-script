@@ -13,10 +13,11 @@ function c101005015.initial_effect(c)
 	--level change
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101005015,0))
-	e2:SetCountLimit(1,101005015)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCountLimit(1,101005015)
+	e2:SetTarget(c101005015.lvtg)
 	e2:SetOperation(c101005015.lvop)
 	c:RegisterEffect(e2)
 	--to hand
@@ -30,6 +31,9 @@ function c101005015.initial_effect(c)
 	e3:SetTarget(c101005015.thtg)
 	e3:SetOperation(c101005015.thop)
 	c:RegisterEffect(e3)
+end
+function c101005015.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return not e:GetHandler():IsLevel(5) end
 end
 function c101005015.lvop(e,tp,eg,ep,ev,re,r,rp,c)
 	local c=e:GetHandler()

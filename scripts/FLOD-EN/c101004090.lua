@@ -27,7 +27,6 @@ function c101004090.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_CONFIRM)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1)
 	e3:SetCondition(c101004090.lvlcon)
 	e3:SetOperation(c101004090.lvlop)
 	c:RegisterEffect(e3)
@@ -48,16 +47,6 @@ function c101004090.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			return
 		end
 	end
-	if Duel.CheckEvent(EVENT_BATTLE_CONFIRM) then
-		if c101004090.lvlcon(e,tp,eg,ep,ev,re,r,rp)
-			and Duel.SelectYesNo(tp,94) then
-			e:SetCategory(CATEGORY_LVCHANGE+CATEGORY_DESTROY)
-			e:SetProperty(0)
-			e:SetOperation(c101004090.lvlop)
-			e:GetHandler():RegisterFlagEffect(0,RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,65)
-			return
-		end
-	end
 	e:SetCategory(0)
 	e:SetProperty(0)
 	e:SetOperation(nil)
@@ -73,25 +62,19 @@ function c101004090.spfilter(c,e,tp)
 	return c:IsSetCard(0x107) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function c101004090.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101004090.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101004090.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)~=0 then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101004090.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
-
-
-
 function c101004090.lvlcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local bc=Duel.GetAttackTarget()

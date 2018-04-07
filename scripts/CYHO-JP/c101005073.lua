@@ -24,7 +24,7 @@ function c101005073.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101005073.rmfilter(c)
-	return c:IsCode(70095154) and c:IsLevelAbove(1) and c:IsAbleToRemove()
+	return (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup()) and c:IsCode(70095154) and c:IsLevelAbove(1) and c:IsAbleToRemove()
 end
 function c101005073.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101005073.rmfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,0,1,nil)
@@ -37,9 +37,17 @@ function c101005073.rescon(sg,e,tp,mg)
 end
 function c101005073.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
+	local ct=dg:GetCount()
 	local g=Duel.GetMatchingGroup(c101005073.rmfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,0,nil)
-	if dg:GetCount()==0 or g:GetCount()==0 then return end
-	local rg=aux.SelectUnselectGroup(g,e,tp,1,dg:GetCount(),c101005073.rescon,1,tp,HINTMSG_REMOVE)
+	if ct==0 or g:GetCount()==0 then return end
+	local rg=Group.CreateGroup()
+	repeat
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local sg=g:Select(tp,1,1,nil)
+		rg:Merge(sg)
+		g:Remove(Card.IsLevel,nil,sg:GetFirst():GetLevel())
+		ct=ct-1
+	until ct==0 or g:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(101005073,0))
 	local rc=Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 	if rc>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -49,7 +57,7 @@ function c101005073.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101005073.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and r&REASON_EFFECT~=0
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and bit.band(r,REASON_EFFECT)~=0
 end
 function c101005073.thfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and (c:IsSetCard(0x94) or c:IsSetCard(0x93)) and c:IsAbleToHand()

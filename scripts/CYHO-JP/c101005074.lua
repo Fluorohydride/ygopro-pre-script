@@ -55,12 +55,12 @@ end
 function c101005074.eftg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
 		if e:GetLabel()==0 then return false
-		elseif e:GetLabel()==1 then return chkc:IsLocation(LOCATION_SZONE) and c101005074.spfilter(chkc,e,tp)
-		else return chkc:IsLocation(LOCATION_MZONE) and c101005074.eqfilter1(chkc,tp) end
+		elseif e:GetLabel()==1 then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c101005074.spfilter(chkc,e,tp)
+		else return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101005074.eqfilter1(chkc,tp) end
 	end
 	if chk==0 then return true end
-	local b1 = Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(c101005074.spfilter,tp,LOCATION_SZONE,0,1,nil,e,tp)
-	local b2 = Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(c101005074.eqfilter1,tp,LOCATION_MZONE,0,1,nil,tp)
+	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(c101005074.spfilter,tp,LOCATION_SZONE,0,1,nil,e,tp)
+	local b2=Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(c101005074.eqfilter1,tp,LOCATION_MZONE,0,1,nil,tp)
 	if (not b1 and not b2) or not Duel.SelectYesNo(tp,aux.Stringid(101005074,0)) then
 		e:SetProperty(0)
 		e:SetCategory(0)
@@ -73,8 +73,8 @@ end
 function c101005074.eftg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
 		if e:GetLabel()==0 then return false
-		elseif e:GetLabel()==1 then return chkc:IsLocation(LOCATION_SZONE) and c101005074.spfilter(chkc,e,tp)
-		else return chkc:IsLocation(LOCATION_MZONE) and c101005074.eqfilter1(chkc,tp) end
+		elseif e:GetLabel()==1 then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c101005074.spfilter(chkc,e,tp)
+		else return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101005074.eqfilter1(chkc,tp) end
 	end
 	local b1 = Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(c101005074.spfilter,tp,LOCATION_SZONE,0,1,nil,e,tp)
 	local b2 = Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(c101005074.eqfilter1,tp,LOCATION_MZONE,0,1,nil,tp)
@@ -94,7 +94,7 @@ function c101005074.efop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 		local ec=Duel.GetFirstTarget()
-		if c:IsRelateToEffect(e) and ec:IsFaceup() then
+		if ec:IsRelateToEffect(e) and ec:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 			local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101005074.eqfilter2),tp,LOCATION_GRAVE,0,1,1,nil,ec,tp)
 			local tc=g:GetFirst()
