@@ -1,5 +1,7 @@
 --トポロジック・ガンブラー・ドラゴン
 --Topologic Gamble Dragon
+--not fully implemented(need update ocgcore)
+--https://github.com/Fluorohydride/ygopro-core/pull/139
 function c100227043.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2)
