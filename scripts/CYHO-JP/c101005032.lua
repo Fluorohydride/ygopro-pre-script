@@ -29,7 +29,7 @@ function c101005032.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101005032.filter(c)
-	return c:IsSetCard(0x29) and not c:IsForbidden()
+	return c:IsSetCard(0x29) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
 end
 function c101005032.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101005032.filter(chkc) end

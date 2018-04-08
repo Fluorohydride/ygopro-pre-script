@@ -7,7 +7,7 @@ function c101005011.initial_effect(c)
 	e1:SetDescription(aux.Stringid(101005011,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetTargetRange(POS_FACEUP_DEFENSE,0)
 	e1:SetCountLimit(1,101005011)
@@ -34,6 +34,7 @@ function c101005011.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_RELEASE)
+	e1:SetCountLimit(1,101005011+100)
 	e3:SetCondition(c101005011.thcon)
 	e3:SetTarget(c101005011.thtg)
 	e3:SetOperation(c101005011.thop)
@@ -49,7 +50,7 @@ function c101005011.spval(e,c)
 	return 0,Duel.GetLinkedZone(c:GetControler())
 end
 function c101005011.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER) and re:GetSummonLocation()==LOCATION_EXTRA
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetSummonLocation()==LOCATION_EXTRA
 		and Duel.IsChainNegatable(ev)
 end
 function c101005011.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -71,7 +72,7 @@ end
 function c101005011.thfilter(c)
 	return c:IsSetCard(0xfe) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
-function c101005033.thcon(e,tp,eg,ep,ev,re,r,rp)
+function c101005011.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)
 end
 function c101005011.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

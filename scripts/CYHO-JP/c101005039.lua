@@ -46,7 +46,7 @@ function c101005039.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101005039.immval(e,te)
-	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER)
+	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 		and te:GetOwner():GetAttack()<=e:GetHandler():GetAttack() and te:IsActivated()
 end
 function c101005039.negfilter(c,g)
@@ -54,8 +54,8 @@ function c101005039.negfilter(c,g)
 end
 function c101005039.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
+	if rp==tp or c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
+	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local lg=e:GetHandler():GetLinkedGroup()
 	lg:AddCard(c)
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
