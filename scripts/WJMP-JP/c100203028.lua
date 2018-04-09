@@ -2,6 +2,7 @@
 --Relinquished Anima
 --Script by dest
 function c100203028.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,c100203028.matfilter,1)
 	--equip
@@ -27,7 +28,7 @@ function c100203028.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100203028.matfilter(c)
-	return c:IsLevel(1) and not c:IsType(TYPE_TOKEN)
+	return c:IsLevel(1) and not c:IsLinkType(TYPE_TOKEN)
 end
 function c100203028.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return c100203028.can_equip_monster(e:GetHandler())
