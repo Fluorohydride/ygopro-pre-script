@@ -83,7 +83,8 @@ function c101004090.lvlcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc:IsFaceup() and tc:IsFaceup() and tc:IsSetCard(0x107)
 end
 function c101004090.lvlop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetAttacker()
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
