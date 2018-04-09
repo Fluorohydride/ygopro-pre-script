@@ -26,13 +26,14 @@ function c101005046.initial_effect(c)
 	e2:SetCondition(c101005046.con)
 	e2:SetTarget(c101005046.target)
 	e2:SetOperation(c101005046.operation)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function c101005046.lcheck(g,lc)
 	return g:IsExists(Card.IsLinkCode,1,nil,70095154)
 end
 function c101005046.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated() and e:GetHandler():GetAttackAnnouncedCount()<1
+	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) and e:GetHandler():GetAttackAnnouncedCount()<1
 end
 function c101005046.filter(c)
 	return c:IsFaceup() and c:IsAttackAbove(2100) and c:IsRace(RACE_MACHINE)

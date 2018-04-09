@@ -12,6 +12,7 @@ function c101004089.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetCondition(c101004089.indcon)
 	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 	--banish
@@ -33,6 +34,12 @@ function c101004089.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetOperation(c101004089.winop)
 	c:RegisterEffect(e4)
+end
+function c101004089.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x107)
+end
+function c101004089.con(e)
+	return Duel.IsExistingMatchingCard(c101004089.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c101004089.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
