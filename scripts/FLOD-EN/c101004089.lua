@@ -38,7 +38,7 @@ end
 function c101004089.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107)
 end
-function c101004089.con(e)
+function c101004089.indcon(e)
 	return Duel.IsExistingMatchingCard(c101004089.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c101004089.rmcon(e,tp,eg,ep,ev,re,r,rp)
