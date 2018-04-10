@@ -71,7 +71,8 @@ function c100200147.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100200147.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		if not Duel.SpecialSummonStep(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then return end
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local c=e:GetHandler()
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
@@ -83,7 +84,7 @@ function c100200147.spop(e,tp,eg,ep,ev,re,r,rp)
 		if (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
 			and c:IsRelateToEffect(e) and c:IsFaceup()
 			and Duel.SelectYesNo(tp,aux.Stringid(100200147,3) then
-			Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		end
 	end
 end
