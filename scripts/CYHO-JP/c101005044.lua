@@ -1,5 +1,5 @@
 --アークロード・パラディオン
-
+--Arch-Lord Palladion
 --Script by nekrozar
 function c101005044.initial_effect(c)
 	--link summon
@@ -47,7 +47,7 @@ function c101005044.antg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)
 end
 function c101005044.cfilter(c,g)
-	return (c:IsSetCard(0xfe) or c:IsSetCard(0x216)) and g:IsContains(c)
+	return (c:IsSetCard(0xfe) or c:IsSetCard(0x217)) and g:IsContains(c)
 end
 function c101005044.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=e:GetHandler():GetLinkedGroup()
