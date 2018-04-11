@@ -26,7 +26,21 @@ function c100227001.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(atk)
 	e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END,2)
 	c:RegisterEffect(e1)
+	local res12=false
+	local res34=false
+	local res56=false
 	if d1==d2 and d2==d3 then
+		res12=true
+		res34=true
+		res56=true
+	elseif (d1==d2 and (d1==1 or d1==2)) or (d1==d3 and (d1==1 or d1==2)) or (d2==d3 and (d2==1 or d2==2)) then
+		res12=true
+	elseif (d1==d2 and (d1==3 or d1==4)) or (d1==d3 and (d1==3 or d1==4)) or (d2==d3 and (d2==3 or d2==4)) then
+		res34=true
+	elseif (d1==d2 and (d1==5 or d1==6)) or (d1==d3 and (d1==5 or d1==6)) or (d2==d3 and (d2==5 or d2==6)) then
+		res56=true
+	end
+	if res12 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -36,31 +50,16 @@ function c100227001.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		c:RegisterEffect(e2)
+	end
+	if res34 then
 		Duel.Draw(tp,2,REASON_EFFECT)
+	end
+	if res56 then
 		local e3=Effect.CreateEffect(c)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_DIRECT_ATTACK)
 		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e3)
-	elseif d1==d2==1 or d2==d3==1 or d1==d3==1 or d1==d2==2 or d2==d3==2 or d1==d3==2 then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
-		c:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-		c:RegisterEffect(e2)
-	elseif d1==d2==3 or d2==d3==3 or d1==d3==3 or d1==d2==4 or d2==d3==4 or d1==d3==4 then
-		Duel.Draw(tp,2,REASON_EFFECT)
-	elseif d1==d2==5 or d2==d3==5 or d1==d3==5 or d1==d2==5 or d2==d3==6 or d1==d3==6 then
-		local e1=Effect.CreateEffect(c)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e1)
 	end
 end
