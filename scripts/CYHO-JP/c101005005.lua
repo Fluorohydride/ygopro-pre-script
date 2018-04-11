@@ -1,5 +1,5 @@
 --剛鬼ヘルトレーナー
---Gouki Hell Trainer 
+--Gouki Hell Trainer
 --Script by nekrozar
 function c101005005.initial_effect(c)
 	--special summon
@@ -57,7 +57,7 @@ function c101005005.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-500)
 			e1:SetReset(RESET_EVENT+0x1fe0000)
-			bc:RegisterEffect(e1)
+			tc:RegisterEffect(e1)
 			Duel.SpecialSummonComplete()
 		end
 	end
