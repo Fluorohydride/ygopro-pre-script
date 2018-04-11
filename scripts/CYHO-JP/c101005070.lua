@@ -35,17 +35,8 @@ function c101005070.initial_effect(c)
 	Duel.AddCustomActivityCounter(101005070,ACTIVITY_SPSUMMON,c101005070.counterfilter)
 end
 function c101005070.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return c101005070.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsCanAddCounter(tp,0x48,4,c) end
-	if c101005070.spcon(e,tp,eg,ep,ev,re,r,rp) and c101005070.spcost(e,tp,eg,ep,ev,re,r,rp,0)
-		and c101005070.sptg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(101005070,0)) then
-			e:SetCategory(CATEGORY_COUNTER+CATEGORY_SPECIAL_SUMMON)
-			e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-			e:SetOperation(c101005070.spop)
-			c101005070.spcost(e,tp,eg,ep,ev,re,r,rp,1)
-			c101005070.sptg(e,tp,eg,ep,ev,re,r,rp,1)
-		end
 end
 function c101005070.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
