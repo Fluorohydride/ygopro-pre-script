@@ -2,6 +2,7 @@
 --Sword of Toxic Solitude
 --Scripted by Eerie Code
 function c101005101.initial_effect(c)
+	Duel.EnableGlobalFlag(GLOBALFLAG_SELF_TOGRAVE)
 	c:SetUniqueOnField(1,0,101005101)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -23,7 +24,7 @@ function c101005101.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
+	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EFFECT_SELF_TOGRAVE)
 	e3:SetCondition(c101005101.sdcon)
 	c:RegisterEffect(e3)

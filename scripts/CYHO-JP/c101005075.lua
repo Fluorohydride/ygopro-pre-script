@@ -69,7 +69,7 @@ function c101005075.spoperation(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.SelectMatchingCard(tp,c101005075.spfilter2,tp,0x13,0,1,1,c,e,tp,zone)
 		if sg then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE,zone)
-			Duel.ConfirmCards(1-tp,g)
+			Duel.ConfirmCards(1-tp,sg)
 		end
 	end
 end
