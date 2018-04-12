@@ -29,7 +29,7 @@ function c101005031.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local d=Duel.GetAttackTarget()
 	if chk==0 then return Duel.GetAttacker()==c and d and d:IsAbleToHand() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,d,1,0,0)
 end
 function c101005031.thop(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
