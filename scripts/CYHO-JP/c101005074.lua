@@ -31,7 +31,7 @@ function c101005074.eqfilter2(c,tc,tp)
 end
 function c101005074.eftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
-		if e:GetLabel()==1 then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c101005074.spfilter(chkc,e,tp)
+		if e:GetLabel()==0 then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c101005074.spfilter(chkc,e,tp)
 		else return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101005074.eqfilter1(chkc,tp) end
 	end
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(c101005074.spfilter,tp,LOCATION_SZONE,0,1,nil,e,tp)
@@ -52,7 +52,7 @@ function c101005074.eftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	else
 		e:SetCategory(CATEGORY_EQUIP)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		Duel.SelectTarget(tp,c101005074.eqfilter1,tp,LOCATION_MZONE,0,1,1,nil)
+		Duel.SelectTarget(tp,c101005074.eqfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 	end
 end

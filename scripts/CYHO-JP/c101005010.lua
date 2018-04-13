@@ -38,7 +38,7 @@ function c101005010.dbcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function c101005010.dbfilter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_SPELLCASTER) and c:GetFlagEffect(101005010)==0
+	return c:IsFaceup() and c:IsSetCard(0x217) and c:IsType(TYPE_LINK) and c:GetFlagEffect(101005010)==0
 end
 function c101005010.dbtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101005010.dbfilter(chkc) end
@@ -57,7 +57,7 @@ function c101005010.dbop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabel(tc:GetFieldID())
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		tc:RegisterFlagEffect(101005010,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
