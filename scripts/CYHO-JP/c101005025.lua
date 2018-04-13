@@ -90,6 +90,7 @@ function c101005025.ctop(e,tp,eg,ep,ev,re,r,rp)
 		if g1:GetCount()==2 then
 			local seq1=g1:GetFirst():GetSequence()
 			local seq2=g1:GetNext():GetSequence()
+			if seq1>seq2 then seq1,se2=seq2,seq1 end
 			local g2=Duel.GetMatchingGroup(c101005025.ctfilter3,tp,0,LOCATION_MZONE,nil,seq1,seq2)
 			if g2:GetCount()>0 then
 				Duel.BreakEffect()

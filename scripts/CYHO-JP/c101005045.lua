@@ -67,5 +67,5 @@ function c101005045.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101005045.tglimit(e,c)
-	return not e:GetHandler():GetColumnGroup():IsContains(c)
+	return not c:GetBattleTarget():GetColumnGroup():IsContains(c)
 end
