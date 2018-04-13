@@ -1,5 +1,5 @@
 --ハイ・キューピット
-
+--High Cupit
 --Script by nekrozar
 function c101005024.initial_effect(c)
 	--atkup

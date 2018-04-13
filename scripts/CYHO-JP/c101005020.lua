@@ -1,5 +1,5 @@
 --コスモブレイン
-
+--Cosmo Brain
 --Script by nekrozar
 function c101005020.initial_effect(c)
 	c:EnableReviveLimit()

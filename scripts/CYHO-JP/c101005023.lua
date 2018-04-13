@@ -1,5 +1,5 @@
 --サイコ・エース
-
+--Psycho Ace
 --Script by nekrozar
 function c101005023.initial_effect(c)
 	--search

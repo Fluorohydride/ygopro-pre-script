@@ -1,5 +1,5 @@
 --魔神童
-
+--Majindou
 --Script by nekrozar
 function c101005022.initial_effect(c)
 	--special summon

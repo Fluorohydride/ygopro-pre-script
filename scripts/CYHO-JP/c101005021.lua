@@ -1,5 +1,5 @@
 --魔晶龍ジルドラス
-
+--Zirdras, the Magicrystal Dragon
 --Script by nekrozar
 function c101005021.initial_effect(c)
 	--special summon

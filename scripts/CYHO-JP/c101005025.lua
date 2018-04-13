@@ -1,5 +1,5 @@
 --寝ガエル
-
+--Doublecross Frog
 --Script by nekrozar
 function c101005025.initial_effect(c)
 	--cannot material
