@@ -36,7 +36,7 @@ function c101005066.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingMatchingCard(c52085072.costfilter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp)
+		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingMatchingCard(c101005066.costfilter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp)
 	end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
