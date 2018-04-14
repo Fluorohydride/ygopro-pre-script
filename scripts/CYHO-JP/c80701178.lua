@@ -35,7 +35,7 @@ function c80701178.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c80701178.filter(c,e,tp)
-	return c:IsSetCard(0x216) and not c:IsCode(80701178) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x116) and not c:IsCode(80701178) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c80701178.costfilter(c)
 	return bit.band(c:GetType(),0x81)==0x81 and not c:IsPublic()

@@ -45,7 +45,7 @@ function c54525057.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return lg1 and lg1:IsContains(e:GetHandler())
 end
 function c54525057.thfilter(c)
-	return c:IsSetCard(0x217) and not c:IsCode(54525057) and c:IsAbleToHand()
+	return c:IsSetCard(0x117) and not c:IsCode(54525057) and c:IsAbleToHand()
 end
 function c54525057.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c54525057.thfilter(chkc) end

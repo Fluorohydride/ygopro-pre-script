@@ -38,7 +38,7 @@ function c28031913.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function c28031913.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x217) and c:IsType(TYPE_LINK) and not c:IsHasEffect(EFFECT_PIERCE)
+	return c:IsFaceup() and c:IsSetCard(0x117) and c:IsType(TYPE_LINK) and not c:IsHasEffect(EFFECT_PIERCE)
 end
 function c28031913.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end

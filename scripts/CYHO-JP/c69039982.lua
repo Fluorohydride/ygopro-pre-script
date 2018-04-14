@@ -28,10 +28,10 @@ function c69039982.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c69039982.atktg(e,c)
-	return c:IsSetCard(0x217) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x117) and c:IsType(TYPE_LINK)
 end
 function c69039982.eafilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x217) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(0x117) and c:IsType(TYPE_LINK)
 end
 function c69039982.eatg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c69039982.eafilter(chkc) end

@@ -45,7 +45,7 @@ function c55241609.descon(e,tp,eg,ep,ev,re,r,rp)
 	return lg1 and lg1:IsContains(e:GetHandler())
 end
 function c55241609.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x217)
+	return c:IsFaceup() and c:IsSetCard(0x117)
 end
 function c55241609.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

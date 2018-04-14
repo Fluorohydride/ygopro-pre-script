@@ -13,7 +13,7 @@ function c96434581.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c96434581.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x217)
+	return c:IsFaceup() and c:IsSetCard(0x117)
 end
 function c96434581.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c96434581.filter(chkc) end
