@@ -66,8 +66,8 @@ function c101005075.spoperation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		local zone=bit.band(tc:GetLinkedZone(),0x1f)
-		local sg=Duel.SelectMatchingCard(tp,c101005075.spfilter2,tp,0x13,0,1,1,c,e,tp,zone)
-		if sg then
+		local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101005075.spfilter2),tp,0x13,0,1,1,c,e,tp,zone)
+		if sg:GetCount()>0 then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE,zone)
 			Duel.ConfirmCards(1-tp,sg)
 		end
