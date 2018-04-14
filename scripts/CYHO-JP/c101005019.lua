@@ -40,14 +40,14 @@ function c101005019.spcon(e,c)
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
 		Duel.GetMatchingGroupCount(Card.IsAttribute,c:GetControler(),LOCATION_GRAVE,0,nil,ATTRIBUTE_DARK)==5
 end
-function c101005019.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101005019.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101005019.thfilter(c)
 	return c:IsAttackBelow(1500) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
-function c101005019.desop(e,tp,eg,ep,ev,re,r,rp)
+function c101005019.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101005019.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
