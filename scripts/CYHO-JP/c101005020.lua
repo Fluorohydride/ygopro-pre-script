@@ -25,7 +25,8 @@ function c101005020.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101005020.sprfilter(c,tp)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsType(TYPE_EFFECT) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsType(TYPE_EFFECT) and c:IsType(TYPE_MONSTER)
+		and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function c101005020.sprcon(e,c)
 	if c==nil then return true end
