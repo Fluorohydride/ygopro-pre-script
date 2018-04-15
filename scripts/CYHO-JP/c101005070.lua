@@ -48,7 +48,7 @@ function c101005070.counterfilter(c)
 	return c:GetSummonLocation()~=LOCATION_EXTRA or (c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_DARK))
 end
 function c101005070.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and bit.band(r,REASON_BATTLE)
+	return ep==tp and bit.band(r,REASON_BATTLE)==REASON_BATTLE
 end
 function c101005070.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x48,1)
