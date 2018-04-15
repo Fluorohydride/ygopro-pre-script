@@ -57,8 +57,8 @@ function c101005101.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101005101.sdcon(e)
-	local g=e:GetHandler():GetEquipGroup()
-	return g and g:GetCount()>0 and Duel.IsExistingMatchingCard(nil,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,g)
+	local tc=e:GetHandler():GetEquipTarget()
+	return tc and Duel.IsExistingMatchingCard(nil,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,tc)
 end
 function c101005101.adcon(e)
 	if Duel.GetCurrentPhase()~=PHASE_DAMAGE_CAL then return false end
