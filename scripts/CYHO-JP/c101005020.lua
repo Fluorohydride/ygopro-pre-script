@@ -53,7 +53,7 @@ function c101005020.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c101005020.spfilter(c,e,tp)
-	return c:IsType(SUMMON_TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101005020.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101005020.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
