@@ -84,8 +84,8 @@ function c100200147.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 		if (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
 			and c:IsRelateToEffect(e) and c:IsFaceup()
-			and Duel.SelectYesNo(tp,aux.Stringid(100200147,3)) then
-			Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
+			and Duel.SelectEffectYesNo(tp,c,aux.Stringid(100200147,3)) then
+			Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		end
 	end
 end
