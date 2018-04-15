@@ -39,12 +39,14 @@ function c101005007.repfilter(c,tp)
 end
 function c101005007.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return eg:IsExists(c101005007.repfilter,1,c,tp) and c:IsAbleToRemove() end
+	if chk==0 then return eg:IsExists(c101005007.repfilter,1,c,tp) and c:IsAbleToRemove()
+		and Duel.GetFlagEffect(tp,101005007)==0 end
 	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function c101005007.repval(e,c)
 	return c101005007.repfilter(c,e:GetHandlerPlayer())
 end
 function c101005007.repop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.RegisterFlagEffect(tp,101005007,RESET_PHASE+PHASE_END,0,1)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 end
