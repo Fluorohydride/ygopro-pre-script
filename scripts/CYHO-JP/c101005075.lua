@@ -49,8 +49,8 @@ function c101005075.ceoperation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeChainOperation(ev,c101005075.repop)
 end
 function c101005075.spfilter1(c,e,tp)
-	local zone=bit.band(c:GetLinkedZone(),0x1f)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and Duel.IsExistingMatchingCard(c101005075.spfilter2,tp,0x13,0,1,c,e,tp,zone)
+	local zone=bit.band(c:GetLinkedZone(tp),0x1f)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and zone>0 and Duel.IsExistingMatchingCard(c101005075.spfilter2,tp,0x13,0,1,c,e,tp,zone)
 end
 function c101005075.spfilter2(c,e,tp,zone)
 	return c:IsSetCard(0x104) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE,tp,zone)
@@ -58,6 +58,7 @@ end
 function c101005075.sptarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c101005075.spfilter1(chkc,e,tp) and chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return Duel.IsExistingTarget(c101005075.spfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c101005075.spfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
 end
@@ -65,7 +66,8 @@ function c101005075.spoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		local zone=bit.band(tc:GetLinkedZone(),0x1f)
+		local zone=bit.band(tc:GetLinkedZone(tp),0x1f)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101005075.spfilter2),tp,0x13,0,1,1,c,e,tp,zone)
 		if sg:GetCount()>0 then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE,zone)
