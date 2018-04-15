@@ -70,7 +70,7 @@ end
 function c100203028.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) then
 		if c:IsRelateToEffect(e) then
 			c100203028.equip_monster(c,tp,tc)
 		else Duel.SendtoGrave(tc,REASON_EFFECT) end
