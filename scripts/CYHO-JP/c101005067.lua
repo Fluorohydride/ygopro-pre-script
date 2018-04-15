@@ -48,7 +48,9 @@ function c101005067.thop(e,tp,eg,ep,ev,re,r,rp)
 	c:SetTurnCounter(ct)
 	if ct==3 then
 		local g=e:GetLabelObject()
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+		if g:GetCount()==3 then
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g)
+		end
 	end
 end
