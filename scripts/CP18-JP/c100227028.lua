@@ -11,11 +11,11 @@ function c100227028.initial_effect(c)
 	c:RegisterEffect(e1)
 	--indes
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetCountLimit(1)
-	e2:SetValue(aux.tgoval)
+	e2:SetCode(EFFECT_DESTROY_REPLACE)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetTarget(c100227028.reptg)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
@@ -43,6 +43,12 @@ function c100227028.initial_effect(c)
 	e4:SetOperation(c100227028.tdop)
 	c:RegisterEffect(e4)
 end
+function c100227028.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+    if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp and e:GetHandler():GetFlagEffect(100227028)==0 end
+    c:RegisterFlagEffect(100227028,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+	return true
+end
 function c100227028.acfilter(c)
 	return c:IsFaceup() and c:IsCode(100227027) and c:IsAbleToGraveAsCost()
 end
@@ -61,7 +67,7 @@ function c100227028.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b2=c100227028.tdcon(e,tp,eg,ep,ev,re,r,rp)
 		and c100227028.cost(e,tp,eg,ep,ev,re,r,rp,0)
 		and c100227028.tdtg(e,tp,eg,ep,ev,re,r,rp,0)
-	if (b1 or b2) and Duel.SelectYesNo(tp,96) then
+	if (b1 or b2) and Duel.SelectYesNo(tp,94) then
 		local op=0
 		if b1 and b2 then
 			op=Duel.SelectOption(tp,aux.Stringid(100227028,0),aux.Stringid(100227028,1))
@@ -78,7 +84,7 @@ function c100227028.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			c100227028.sptg(e,tp,eg,ep,ev,re,r,rp,1)
 		else
 			e:SetCategory(CATEGORY_TODECK)
-			e:SetProperty(0)
+			e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 			e:SetOperation(c100227028.tdop)
 			c100227028.cost(e,tp,eg,ep,ev,re,r,rp,1)
 			c100227028.tdtg(e,tp,eg,ep,ev,re,r,rp,1)
