@@ -12,12 +12,15 @@ function c101005071.initial_effect(c)
 	--atk limit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
+	e2:SetCode(EFFECT_ONLY_ATTACK_MONSTER)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetCondition(c101005071.atcon)
-	e2:SetValue(c101005071.atlimit)
 	c:RegisterEffect(e2)
+	local e3=e2:Clone()
+	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
+	e3:SetValue(c101005071.atlimit)
+	c:RegisterEffect(e3)
 end
 function c101005071.spfilter1(c,e,tp)
 	return (c:IsSetCard(0xfe) or c:IsSetCard(0x217)) and Duel.GetMZoneCount(tp,c)>0
