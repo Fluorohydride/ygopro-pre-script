@@ -50,7 +50,8 @@ function c101005011.spval(e,c)
 	return 0,Duel.GetLinkedZone(c:GetControler())
 end
 function c101005011.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetSummonLocation()==LOCATION_EXTRA
+	local loc=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetSummonLocation()==LOCATION_EXTRA and loc==LOCATION_MZONE
 		and Duel.IsChainNegatable(ev)
 end
 function c101005011.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
