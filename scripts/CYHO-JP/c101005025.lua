@@ -77,7 +77,7 @@ function c101005025.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) or not c:IsPosition(POS_FACEUP_DEFENSE) then return end
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) then return end
+	if not tc:IsRelateToEffect(e) or not tc:IsControler(1-tp) then return end
 	local seq=tc:GetSequence()
 	if seq>4 then return end
 	if (seq>0 and Duel.CheckLocation(1-tp,LOCATION_MZONE,seq-1))
