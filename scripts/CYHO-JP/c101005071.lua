@@ -12,7 +12,7 @@ function c101005071.initial_effect(c)
 	--atk limit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_ONLY_ATTACK_MONSTER)
+	e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetCondition(c101005071.atcon)
@@ -32,7 +32,7 @@ end
 function c101005071.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if Duel.CheckReleaseGroup(tp,c101005071.spfilter1,1,nil,e,tp)
-		and Duel.SelectYesNo(tp,aux.Stringid(101005071,0)) then
+		and Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(101005071,0)) then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e:SetOperation(c101005071.activate)
 		local rg=Duel.SelectReleaseGroup(tp,c101005071.spfilter1,1,1,nil,e,tp)
