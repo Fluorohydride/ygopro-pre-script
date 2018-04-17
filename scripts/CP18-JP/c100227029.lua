@@ -89,9 +89,9 @@ function c100227029.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	local g1=Duel.GetMatchingGroup(c100227029.spfilter,tp,LOCATION_HAND,0,nil)
-	local g2=Duel.GetMatchingGroup(c100227029.spfilter,tp,LOCATION_DECK,0,nil)
-	local g3=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100227029.spfilter) ,tp,LOCATION_GRAVE,0,nil)
+	local g1=Duel.GetMatchingGroup(c100227029.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
+	local g2=Duel.GetMatchingGroup(c100227029.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
+	local g3=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100227029.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 	local sg=Group.CreateGroup()
 	if g1:GetCount()>0 and ((g2:GetCount()==0 and g3:GetCount()==0) or Duel.SelectYesNo(tp,aux.Stringid(100227029,1))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -113,5 +113,5 @@ function c100227029.spop(e,tp,eg,ep,ev,re,r,rp)
 		local sg3=g3:Select(tp,1,1,nil)
 		sg:Merge(sg3)
 	end
-	Duel.SpecialSummon(rg,0,tp,tp,true,false,POS_FACEUP)
+	Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEUP)
 end
