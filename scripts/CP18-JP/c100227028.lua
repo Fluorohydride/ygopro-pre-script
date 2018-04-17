@@ -135,11 +135,13 @@ end
 function c100227028.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 then
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
+		and tc:IsLocation(LOCATION_DECK) then
 		local g=Duel.GetMatchingGroup(c100227028.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
 		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100227028,2)) then
 			local sc=g:Select(tp,1,1,nil):GetFirst()
 			Duel.SSet(tp,sc)
+			Duel.ConfirmCards(1-tp,sc)
 		end
 	end
 end

@@ -1,4 +1,4 @@
---時械神 ガブリオン
+--時械神ガブリオン
 --Gabrion, the Timelord
 --Scripted by ahtelel
 function c100227024.initial_effect(c)
@@ -51,7 +51,6 @@ function c100227024.initial_effect(c)
 	e7:SetCategory(CATEGORY_TODECK)
 	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e7:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e7:SetProperty(EFFECT_FLAG_REPEAT)
 	e7:SetCountLimit(1)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCondition(c100227024.rtdcon)
@@ -67,20 +66,20 @@ end
 function c100227024.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattledGroupCount()>0 or e:GetHandler():GetAttackedCount()>0
 end
-function c100227024.tdfilter(c)
-	return c:IsAbleToDeck()
-end
 function c100227024.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(c100227024.tdfilter,tp,0,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,g:GetCount())
 end
 function c100227024.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100227024.tdfilter,tp,0,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
 	if g:GetCount()>0 then
-		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
-		Duel.Draw(1-tp,g:GetCount(),REASON_EFFECT)
+		local ct=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		if ct>0 then
+			Duel.BreakEffect()
+			Duel.Draw(1-tp,ct,REASON_EFFECT)
+		end
 	end
 end
 function c100227024.rtdcon(e,tp,eg,ep,ev,re,r,rp)
@@ -92,7 +91,7 @@ function c100227024.rtdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100227024.rtdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and c:IsAbleToDeck() then
+	if c:IsRelateToEffect(e) then
 		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
 	end
 end

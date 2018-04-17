@@ -1,4 +1,4 @@
--- 地翔星ハヤテ
+--地翔星ハヤテ
 -- Hayate the Earth Star
 function c100227036.initial_effect(c)
 	--summon with no tribute
@@ -15,7 +15,7 @@ function c100227036.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100227036,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetTarget(c100227036.sptg)
 	e2:SetOperation(c100227036.spop)
@@ -35,13 +35,14 @@ function c100227036.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100227036.cfilter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) 
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT)
 end
 function c100227036.ntcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and ((Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0) or Duel.IsExistingMatchingCard(c100227036.cfilter,tp,LOCATION_MZONE,0,1,nil))
+		and ((Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0)
+		or Duel.IsExistingMatchingCard(c100227036.cfilter,tp,LOCATION_MZONE,0,1,nil))
 end
 function c100227036.filter1(c,e,tp)
 	return c:IsRace(RACE_WARRIOR) and c:IsLevel(5) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -59,50 +60,22 @@ function c100227036.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c100227036.filter2(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRACE(RACE_WARRIOR)
-end
-function c100227036.discon(e,tp,eg,ep,ev,re,r,rp)
-	local tgp,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainDisablable(ev)
-		and tgp~=tp and re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and eg:IsExists(c100227036.filter2,1,nil,tp)
-end
-function c100227036.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-end
-function c100227036.disop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsFacedown() or c:GetAttack()<500 or not c:IsRelateToEffect(e) or Duel.GetCurrentChain()~=ev+1 or c:IsStatus(STATUS_BATTLE_DESTROYED) then
-		return
-	end
-	if Duel.NegateActivation(ev) then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		e1:SetReset(RESET_EVENT+0x1ff0000)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(-500)
-		c:RegisterEffect(e1)
-		Duel.Destroy(eg,REASON_EFFECT)
-	end
-end
 function c100227036.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d and d:IsControler(tp) and d:IsFaceup() and d:IsRace(RACE_WARRIOR)
 end
 function c100227036.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFacedown() or c:GetAttack()<500 or not c:IsRelateToEffect(e) or c:IsStatus(STATUS_BATTLE_DESTROYED) then
-		return
-	end
-	if Duel.NegateAttack() then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and c:IsAttackAbove(500) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		e1:SetReset(RESET_EVENT+0x1ff0000)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-500)
+		e1:SetReset(RESET_EVENT+0x1ff0000)
 		c:RegisterEffect(e1)
+		if not c:IsHasEffect(EFFECT_REVERSE_UPDATE) then
+			Duel.NegateAttack()
+		end
 	end
 end

@@ -1,9 +1,9 @@
--- 覇道星シュラ
+--覇道星シュラ
 --Shura the Combat Star
 function c100227040.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,100227039,c100227040.ffilter)
+	aux.AddFusionProcCodeFun(c,100227039,c100227040.ffilter,1,true,true)
 	--atk to 0
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100227040,0))
@@ -20,6 +20,7 @@ function c100227040.initial_effect(c)
 	c:RegisterEffect(e1)
 	--atk up
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100227040,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetRange(LOCATION_MZONE)
@@ -28,18 +29,17 @@ function c100227040.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100227040,1))
-	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetDescription(aux.Stringid(100227040,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
+	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCondition(c100227040.spcon)
 	e3:SetTarget(c100227040.sptg)
 	e3:SetOperation(c100227040.spop)
 	c:RegisterEffect(e3)
 end
-function c100227040.ffilter(c,fc,sumtype,tp)
-	return c:IsRace(RACE_WARRIOR,fc,sumtype,tp) and c:GetLevel()>=5
+function c100227040.ffilter(c)
+	return c:IsRace(RACE_WARRIOR) and c:IsLevelAbove(5)
 end
 function c100227040.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
@@ -78,20 +78,19 @@ function c100227040.atkop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(a:GetLevel()*200)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE_CAL)
 		a:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(d:GetLevel()*200)
-		e2:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE_CAL)
 		d:RegisterEffect(e2)
 	end
 end
 function c100227040.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local crp=c:GetReasonPlayer()
-	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp and tp~=crp and crp~=PLAYER_NONE
+	return c:IsReason(REASON_DESTROY) and rp==1-tp and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100227040.spfilter(c,e,tp)
 	return cc:IsCode(100227039) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)

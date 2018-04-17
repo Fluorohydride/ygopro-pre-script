@@ -1,4 +1,4 @@
---時械神 ミチオン
+--時械神ミチオン
 --Michion, the Timelord
 --Scripted by ahtelel
 function c100227021.initial_effect(c)
@@ -35,8 +35,6 @@ function c100227021.initial_effect(c)
 	c:RegisterEffect(e5)
 	--lp
 	local e6=Effect.CreateEffect(c)
-	e6:SetCategory(CATEGORY_DAMAGE)
-	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
 	e6:SetCountLimit(1)
@@ -50,7 +48,6 @@ function c100227021.initial_effect(c)
 	e7:SetCategory(CATEGORY_TODECK)
 	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e7:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e7:SetProperty(EFFECT_FLAG_REPEAT)
 	e7:SetCountLimit(1)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCondition(c100227021.tdcon)
@@ -78,7 +75,7 @@ function c100227021.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100227021.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and c:IsAbleToDeck() then
+	if c:IsRelateToEffect(e) then
 		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
 	end
 end

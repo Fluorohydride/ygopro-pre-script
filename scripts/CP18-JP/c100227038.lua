@@ -1,20 +1,22 @@
---てんゆうせいカイキ
+--天融星カイキ
 --Kaiki the sky star
 function c100227038.initial_effect(c)
 	--Fusion Summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100227038,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,100227038)
+	e1:SetCondition(c100227038.fuscon)
 	e1:SetCost(c100227038.fuscost)
 	e1:SetTarget(c100227038.fustg)
 	e1:SetOperation(c100227038.fusop)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100227038,0))
+	e2:SetDescription(aux.Stringid(100227038,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -24,6 +26,10 @@ function c100227038.initial_effect(c)
 	e2:SetTarget(c100227038.sptg)
 	e2:SetOperation(c100227038.spop)
 	c:RegisterEffect(e2)
+end
+function c100227038.fuscon(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
+	return ph~=PHASE_DAMAGE and ph~=PHASE_DAMAGE_CAL
 end
 function c100227038.fuscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end

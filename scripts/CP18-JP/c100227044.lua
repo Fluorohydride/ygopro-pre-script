@@ -1,8 +1,8 @@
--- ヴァレルガード・ドラゴン
+--ヴァレルガード・ドラゴン
 --Borrelguard Dragon
 function c100227044.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),3)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),3)
 	c:EnableReviveLimit()
 	--cannot be destroyed
 	local e1=Effect.CreateEffect(c)
@@ -14,7 +14,7 @@ function c100227044.initial_effect(c)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(80727721,0))
+	e2:SetDescription(aux.Stringid(100227044,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -26,7 +26,7 @@ function c100227044.initial_effect(c)
 	c:RegisterEffect(e2)
 	--position
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(49513164,0))
+	e3:SetDescription(aux.Stringid(100227044,1))
 	e3:SetCategory(CATEGORY_POSITION)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -38,13 +38,10 @@ function c100227044.initial_effect(c)
 	e3:SetOperation(c100227044.posop)
 	c:RegisterEffect(e3)
 end
-function c100227044.costfilter(c)
-	return c:IsAbleToGraveAsCost()
-end
 function c100227044.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100227044.costfilter,tp,LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_SZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100227044.costfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_SZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100227044.spfilter(c,e,tp,tid)
@@ -73,37 +70,14 @@ function c100227044.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e2,true)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetCode(EVENT_PHASE+PHASE_END)
-		e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e3:SetCountLimit(1)
-		e3:SetCondition(c100227044.descon)
-		e3:SetOperation(c100227044.desop)
-		e3:SetLabelObject(tc)
-		Duel.RegisterEffect(e3,tp)
-		tc:RegisterFlagEffect(76232522,RESET_EVENT+0x1fe0000,0,1)
 		Duel.SpecialSummonComplete()
 	end
 end
-function c100227044.descon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc:GetFlagEffect(76232522)==0 then
-		e:Reset()
-		return false
-	end
-	return true
-end
-function c100227044.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.Destroy(tc,REASON_EFFECT)
-end
 function c100227044.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsDefensePos() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsDefensePos,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsDefensePos() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsDefensePos,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g=Duel.SelectTarget(tp,Card.IsDefensePos,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsDefensePos,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
 	Duel.SetChainLimit(c100227044.chlimit)
 end

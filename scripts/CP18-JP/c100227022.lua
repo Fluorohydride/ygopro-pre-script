@@ -1,4 +1,4 @@
---時械神 ハイロン
+--時械神ハイロン
 --Hairon, the Timelord
 --Scripted by ahtelel
 function c100227022.initial_effect(c)
@@ -51,7 +51,6 @@ function c100227022.initial_effect(c)
 	e7:SetCategory(CATEGORY_TODECK)
 	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e7:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e7:SetProperty(EFFECT_FLAG_REPEAT)
 	e7:SetCountLimit(1)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCondition(c100227022.tdcon)
@@ -65,12 +64,14 @@ function c100227022.spcon(e,c)
 			and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c100227022.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetBattledGroupCount()>0 or e:GetHandler():GetAttackedCount()>0 
+	return e:GetHandler():GetBattledGroupCount()>0 or e:GetHandler():GetAttackedCount()>0
 end
 function c100227022.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLP(tp)<Duel.GetLP(1-tp) end
+	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
+	local dam=0
+	if Duel.GetLP(tp)<Duel.GetLP(1-tp) then dam=Duel.GetLP(p)-Duel.GetLP(1-p) end
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function c100227022.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
@@ -88,7 +89,7 @@ function c100227022.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100227022.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and c:IsAbleToDeck() then
+	if c:IsRelateToEffect(e) then
 		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
 	end
 end
