@@ -70,12 +70,12 @@ function c100227022.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	local dam=0
-	if Duel.GetLP(tp)<Duel.GetLP(1-tp) then dam=Duel.GetLP(p)-Duel.GetLP(1-p) end
+	if Duel.GetLP(tp)<Duel.GetLP(1-tp) then dam=Duel.GetLP(1-tp)-Duel.GetLP(tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function c100227022.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local val=Duel.GetLP(p)-Duel.GetLP(1-p)
+	local val=Duel.GetLP(1-tp)-Duel.GetLP(tp)
 	if val>0 then
 		Duel.Damage(p,val,REASON_EFFECT)
 	end
