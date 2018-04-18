@@ -73,11 +73,14 @@ function c100227044.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 end
+function c100227044.posfilter(c)
+	return not c:IsPosition(POS_FACEUP_DEFENSE) and c:IsCanChangePosition()
+end
 function c100227044.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsDefensePos() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsDefensePos,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100227044.posfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100227044.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g=Duel.SelectTarget(tp,Card.IsDefensePos,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100227044.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
 	Duel.SetChainLimit(c100227044.chlimit)
 end
@@ -86,7 +89,7 @@ function c100227044.chlimit(e,ep,tp)
 end
 function c100227044.posop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		Duel.ChangePosition(tc,POS_FACEUP_ATTACK)
+	if tc:IsRelateToEffect(e) then
+		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
 	end
 end
