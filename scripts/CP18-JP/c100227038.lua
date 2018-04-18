@@ -95,7 +95,7 @@ function c100227038.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_WARRIOR)and c:IsLevelAbove(5) and c:GetAttack()~=c:GetBaseAttack()
 end
 function c100227038.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
+	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
 		and Duel.IsExistingMatchingCard(c100227038.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100227038.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
