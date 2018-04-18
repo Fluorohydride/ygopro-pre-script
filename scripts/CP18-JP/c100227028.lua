@@ -37,7 +37,6 @@ function c100227028.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetCondition(c100227028.tdcon)
 	e4:SetCost(c100227028.cost)
 	e4:SetTarget(c100227028.tdtg)
 	e4:SetOperation(c100227028.tdop)
@@ -64,8 +63,7 @@ function c100227028.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1=c100227028.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c100227028.cost(e,tp,eg,ep,ev,re,r,rp,0)
 		and c100227028.sptg(e,tp,eg,ep,ev,re,r,rp,0)
-	local b2=c100227028.tdcon(e,tp,eg,ep,ev,re,r,rp)
-		and c100227028.cost(e,tp,eg,ep,ev,re,r,rp,0)
+	local b2=c100227028.cost(e,tp,eg,ep,ev,re,r,rp,0)
 		and c100227028.tdtg(e,tp,eg,ep,ev,re,r,rp,0)
 	if (b1 or b2) and Duel.SelectYesNo(tp,94) then
 		local op=0
@@ -115,9 +113,6 @@ function c100227028.spop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function c100227028.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(nil,tp,LOCATION_SZONE,0,1,e:GetHandler())
 end
 function c100227028.tdfilter(c)
 	return c:IsSetCard(0x4a) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
