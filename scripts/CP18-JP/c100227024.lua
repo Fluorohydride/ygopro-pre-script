@@ -72,11 +72,15 @@ function c100227024.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,g:GetCount())
 end
+function c100227024.cfilter(c,p)
+	return c:IsLocation(LOCATION_DECK) and c:IsControler(p)
+end
 function c100227024.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
-	if g:GetCount()>0 then
-		local ct=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	if g:GetCount()>0 and Duel.SendtoDeck(g,nil,2,REASON_EFFECT)>0 then
+		local ct=g:FilterCount(c100227024.cfilter,nil,1-tp)
 		if ct>0 then
+			Duel.ShuffleDeck(1-tp)
 			Duel.BreakEffect()
 			Duel.Draw(1-tp,ct,REASON_EFFECT)
 		end
