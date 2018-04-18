@@ -24,12 +24,12 @@ end
 function c101005040.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101005040.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c101005040.cfilter(c,tp)
+function c101005040.costfilter(c,tp)
 	return c:IsLinkBelow(3) and Duel.GetMZoneCount(tp,c)>0
 end
 function c101005040.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c101005040.cfilter,1,nil,tp) end
-	local sg=Duel.SelectReleaseGroup(tp,c101005040.cfilter,1,1,nil,tp)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c101005040.costfilter,1,nil,tp) end
+	local sg=Duel.SelectReleaseGroup(tp,c101005040.costfilter,1,1,nil,tp)
 	e:SetLabel(sg:GetFirst():GetLink())
 	Duel.Release(sg,REASON_COST)
 end
