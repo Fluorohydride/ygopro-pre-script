@@ -58,9 +58,8 @@ function c100227032.xop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
-		local g=Group.FromCards(c)
 		local mg=c:GetOverlayGroup()
-		if mg:GetCount()>0 then g:Merge(mg) end
-		Duel.Overlay(tc,g)
+		if mg:GetCount()>0 then Duel.Overlay(tc,mg) end
+		Duel.Overlay(tc,Group.FromCards(c))
 	end
 end
