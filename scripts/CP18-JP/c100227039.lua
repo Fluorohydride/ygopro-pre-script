@@ -43,7 +43,7 @@ function c100227039.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c100227039.thfilter(c)
-	return c:IsLevelAbove(5) and c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
+	return c:IsLevel(5) and c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
 function c100227039.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100227039.thfilter,tp,LOCATION_DECK,0,1,nil) end
