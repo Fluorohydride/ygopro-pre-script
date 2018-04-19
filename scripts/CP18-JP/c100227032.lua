@@ -2,6 +2,7 @@
 --Number 75: Gossip Shadow of Confusion
 --Scripted by Eerie Code
 function c100227032.initial_effect(c)
+	--xyz summon
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,nil,3,2,nil,nil,7)
 	--change effect
@@ -56,9 +57,10 @@ end
 function c100227032.xop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+		local g=Group.FromCards(c)
 		local mg=c:GetOverlayGroup()
-		if #mg>0 then Duel.Overlay(tc,mg) end
-		Duel.Overlay(tc,Group.FromCards(c))
+		if mg:GetCount()>0 then g:Merge(mg) end
+		Duel.Overlay(tc,g)
 	end
 end
