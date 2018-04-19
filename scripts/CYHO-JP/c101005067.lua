@@ -50,7 +50,6 @@ function c101005067.thop(e,tp,eg,ep,ev,re,r,rp)
 		local g=e:GetLabelObject()
 		if g:GetCount()==3 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
 		end
 	end
 end
