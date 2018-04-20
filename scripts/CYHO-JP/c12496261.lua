@@ -61,7 +61,7 @@ end
 function c12496261.eqfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x29)
 end
-function c12496261.eqstg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c12496261.eqstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c12496261.eqfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(c12496261.eqfilter,tp,LOCATION_MZONE,0,1,nil) end

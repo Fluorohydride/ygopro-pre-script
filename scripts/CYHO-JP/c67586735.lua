@@ -29,7 +29,7 @@ function c67586735.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsSetCard(0xfc)
 end
 function c67586735.atkop(e,tp,eg,ep,ev,re,r,rp)
-		local c=e:GetHandler()
+	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	if rc:IsFaceup() and rc:IsLocation(LOCATION_MZONE) then
 		local e1=Effect.CreateEffect(c)

@@ -25,7 +25,7 @@ end
 function c20862918.costfilter2(c,tc,tp)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 		and c:GetOriginalRace()==tc:GetOriginalRace() and c:GetOriginalAttribute()==tc:GetOriginalAttribute() and c:GetOriginalCode()~=tc:GetOriginalCode()
-		and Duel.IsExistingMatchingCard(c20862918.thfilter,tp,LOCATION_DECK,0,1,nil,c,tc,tp)
+		and Duel.IsExistingMatchingCard(c20862918.thfilter,tp,LOCATION_DECK,0,1,nil,c,tc)
 end
 function c20862918.thfilter(c,tc1,tc2)
 	return c:GetOriginalRace()==tc1:GetOriginalRace() and c:GetOriginalAttribute()==tc1:GetOriginalAttribute()

@@ -30,13 +30,15 @@ function c32828635.cfilter(c,e,tp,m)
 end
 function c32828635.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local mg1=Duel.GetRitualMaterial(tp):Filter(Card.IsOnField,nil)
+		local mg1=Duel.GetRitualMaterial(tp)
+		mg1:Remove(Card.IsLocation,nil,LOCATION_HAND)
 		return Duel.IsExistingMatchingCard(c32828635.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp,mg1)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c32828635.activate(e,tp,eg,ep,ev,re,r,rp)
-	local mg1=Duel.GetRitualMaterial(tp):Filter(Card.IsOnField,nil)
+	local mg1=Duel.GetRitualMaterial(tp)
+	mg1:Remove(Card.IsLocation,nil,LOCATION_HAND)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tg=Duel.SelectMatchingCard(tp,c32828635.cfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg1)
 	local tc=tg:GetFirst()

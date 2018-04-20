@@ -23,12 +23,16 @@ function c69039982.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1)
+	e3:SetCondition(c69039982.condition)
 	e3:SetTarget(c69039982.eatg)
 	e3:SetOperation(c69039982.eaop)
 	c:RegisterEffect(e3)
 end
 function c69039982.atktg(e,c)
 	return c:IsSetCard(0x116) and c:IsType(TYPE_LINK)
+end
+function c69039982.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsAbleToEnterBP()
 end
 function c69039982.eafilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x116) and c:IsType(TYPE_LINK)

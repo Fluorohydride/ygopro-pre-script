@@ -35,7 +35,7 @@ function c91646304.spval(e,c)
 end
 function c91646304.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsSetCard(0x116) and not c:IsReason(REASON_REPLACE)
+		and c:IsSetCard(0x116) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function c91646304.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

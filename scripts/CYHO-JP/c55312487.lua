@@ -41,7 +41,6 @@ function c55312487.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 	else
 		e:SetCategory(0)
-		e:SetProperty(0)
 		e:SetOperation(nil)
 	end
 end

@@ -17,7 +17,7 @@ function c59281822.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(c59281822.spcon)
 	c:RegisterEffect(e2)
-	--destroy
+	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(59281822,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

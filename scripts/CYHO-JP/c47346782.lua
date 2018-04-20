@@ -67,7 +67,7 @@ function c47346782.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,e:GetHandler(),1,0,0)
 end
 function c47346782.ctfilter2(c)
-	return c:GetSequence()<4 and c:IsFaceup() and c:IsCode(47346782)
+	return c:GetSequence()<5 and c:IsFaceup() and c:IsCode(47346782)
 end
 function c47346782.ctfilter3(c,seq1,seq2)
 	local seq=c:GetSequence()
@@ -90,7 +90,7 @@ function c47346782.ctop(e,tp,eg,ep,ev,re,r,rp)
 		if g1:GetCount()==2 then
 			local seq1=g1:GetFirst():GetSequence()
 			local seq2=g1:GetNext():GetSequence()
-			if seq1>seq2 then seq1,se2=seq2,seq1 end
+			if seq1>seq2 then seq1,seq2=seq2,seq1 end
 			local g2=Duel.GetMatchingGroup(c47346782.ctfilter3,tp,0,LOCATION_MZONE,nil,seq1,seq2)
 			if g2:GetCount()>0 then
 				Duel.BreakEffect()
