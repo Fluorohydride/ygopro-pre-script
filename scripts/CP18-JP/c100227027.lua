@@ -43,8 +43,8 @@ function c100227027.initial_effect(c)
 end
 function c100227027.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-    if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp and e:GetHandler():GetFlagEffect(100227127)==0 end
-    c:RegisterFlagEffect(100227127,RESET_EVENT+0x1fe0000,0,1)
+	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp and e:GetHandler():GetFlagEffect(100227127)==0 end
+	c:RegisterFlagEffect(100227127,RESET_EVENT+0x1fe0000,0,1)
 	return true
 end
 function c100227027.cost(e,tp,eg,ep,ev,re,r,rp,chk)

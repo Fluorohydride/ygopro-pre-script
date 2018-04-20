@@ -44,8 +44,8 @@ function c100227028.initial_effect(c)
 end
 function c100227028.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-    if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp and e:GetHandler():GetFlagEffect(100227128)==0 end
-    c:RegisterFlagEffect(100227128,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp and e:GetHandler():GetFlagEffect(100227128)==0 end
+	c:RegisterFlagEffect(100227128,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 	return true
 end
 function c100227028.acfilter(c)
