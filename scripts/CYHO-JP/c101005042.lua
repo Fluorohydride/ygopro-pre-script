@@ -36,7 +36,7 @@ function c101005042.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101005042.matfilter(c)
-	return c:IsLinkSetCard(0x217) and not c:IsLinkCode(101005042)
+	return c:IsLinkSetCard(0x116) and not c:IsLinkCode(101005042)
 end
 function c101005042.atkval(e,c)
 	local g=e:GetHandler():GetLinkedGroup():Filter(Card.IsFaceup,nil)
@@ -53,7 +53,7 @@ function c101005042.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101005042.cfilter,1,nil,lg)
 end
 function c101005042.thfilter(c)
-	return c:IsSetCard(0x217) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x116) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101005042.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101005042.thfilter,tp,LOCATION_DECK,0,1,nil) end

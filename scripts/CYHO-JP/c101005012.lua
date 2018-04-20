@@ -35,7 +35,7 @@ function c101005012.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101005012.filter(c,e,tp)
-	return c:IsSetCard(0x216) and not c:IsCode(101005012) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x117) and not c:IsCode(101005012) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101005012.costfilter(c)
 	return c:GetType()==0x82 and not c:IsPublic()

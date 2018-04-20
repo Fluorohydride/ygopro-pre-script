@@ -28,10 +28,10 @@ function c101005054.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101005054.atktg(e,c)
-	return c:IsSetCard(0x217) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x116) and c:IsType(TYPE_LINK)
 end
 function c101005054.eafilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x217) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(0x116) and c:IsType(TYPE_LINK)
 end
 function c101005054.eatg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101005054.eafilter(chkc) end
