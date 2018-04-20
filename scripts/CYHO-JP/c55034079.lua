@@ -59,8 +59,7 @@ end
 function c55034079.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanRemoveCounter(tp,0x48,1,REASON_EFFECT)
-		and Duel.GetCustomActivityCount(55034079,tp,ACTIVITY_SPSUMMON)==0
-		and c:GetFlagEffect(55034079)==0 end
+		and Duel.GetCustomActivityCount(55034079,tp,ACTIVITY_SPSUMMON)==0 end
 	c:RemoveCounter(tp,0x48,1,REASON_EFFECT)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -70,7 +69,6 @@ function c55034079.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTarget(c55034079.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	c:RegisterFlagEffect(55034079,RESET_CHAIN,0,1)
 end
 function c55034079.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not (c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_DARK)) and c:IsLocation(LOCATION_EXTRA)
