@@ -56,7 +56,7 @@ function c100227030.spop(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsRelateToEffect(e) and c:IsControler(tp) and not c:IsImmuneToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c100227030.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,c)
-		local tc=tg:GetFirst()
+		local tc=g:GetFirst()
 		if tc then
 			local mg=c:GetOverlayGroup()
 			if mg:GetCount()~=0 then
