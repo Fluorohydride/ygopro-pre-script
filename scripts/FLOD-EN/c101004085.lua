@@ -67,7 +67,7 @@ function c101004085.lvop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function c101004085.drcon(e,tp,eg,ep,ev,re,r,rp)
+function c101004085.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
 	return rc==Duel.GetAttacker() and rc:IsStatus(STATUS_OPPO_BATTLE) and rc:IsFaceup()
 		and bit.band(rc:GetType(),0x81)==0x81 and rc:IsSetCard(0x106) and rc:IsControler(tp)
