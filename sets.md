@@ -2,17 +2,10 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **February 23, 2018** : The Valuable Book 20 (VB20-JP) : `100226XXX`
-- **February 24, 2018** : Deck Build Pack: Dark Savers (DBDS-JP) : `100408XXX`
-- **March 9, 2018** : Legendary Collection Kaiba (LC06-EN) : `100241XXX`
-- **March 10, 2018** : Structure Deck R: Curse of the Dark (SR06-JP) : `100306XXX`
-- **March 24, 2018** : Starter Deck 2018 (ST18-JP) : `100318XXX`
-- **March 24, 2018** : Special Pack 20th Anniversary Edition Vol.1 (18SP-JP) : `100242XXX`
-- **April 14, 2018** : Cybernetic Horizon (CYHO-JP) : `101005XXX`
 - **May 12, 2018** : Collectors Pack 2018 (CP18-JP) : `100227XXX`
+- **May 21, 2018** : 20th Anniversary Legendary Dragons (VP18-JP) : `100228XXX`
 
 # Announced
-- **May 21, 2018** : 20th Anniversary Legendary Dragons (VP18-JP) : `100228XXX`
 - **May 27, 2018** : Promotion Pack 2018 (????-JP) : `100231XXX`
 - **June 9, 2018** : Duelist Pack: Legend Duelist 3 (????-JP) : `100409XXX`
 - **July 14, 2018** : Soul Fusion (????-JP) : `101006XXX`
@@ -79,3 +72,10 @@
 - ~~PREMIUM PACK 20 (PP20-JP) : `100224XXX`~~
 - ~~LINK VRAINS Box (LVB1-JP) : `100225XXX`~~
 - ~~FLAMES OF DESTRUCTION (FLOD-JP) : `101004XXX`~~
+- ~~The Valuable Book 20 (VB20-JP) : `100226XXX`~~
+- ~~Deck Build Pack: Dark Savers (DBDS-JP) : `100408XXX`~~
+- ~~Legendary Collection Kaiba (LC06-EN) : `100241XXX`~~
+- ~~Structure Deck R: Curse of the Dark (SR06-JP) : `100306XXX`~~
+- ~~Starter Deck 2018 (ST18-JP) : `100318XXX`~~
+- ~~Special Pack 20th Anniversary Edition Vol.1 (18SP-JP) : `100242XXX`~~
+- ~~Cybernetic Horizon (CYHO-JP) : `101005XXX`~~
