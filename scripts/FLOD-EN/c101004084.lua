@@ -37,17 +37,19 @@ function c101004084.mfilterf(c,tp,mg,dg,rc)
 	else return false end
 end
 function c101004084.dlvfilter(c,tp,mg,rc,lv)
-	local lv=lv-c:GetRitualLevel()
-	return mg:CheckWithSumEqual(Card.GetRitualLevel,lv,0,99)
+	local lv2=lv-c:GetRitualLevel(rc)
+	return mg:CheckWithSumEqual(Card.GetRitualLevel,lv2,0,99,rc)
 end
-function c101004084.selcheck(c,mg,dg,mat,rc)
+function c101004084.selcheck(c,mg1,dg,mat1,rc)
+	local mat=mat1:Clone()
+	local mg=mg1:Clone()
 	mat:AddCard(c)
 	if c:IsLocation(LOCATION_DECK) then
 		mg:Sub(dg)
 	end
-	local sum=mat:GetSum(Card.GetRitualLevel)
+	local sum=mat:GetSum(Card.GetRitualLevel,rc)
 	local lv=rc:GetLevel()-sum
-	return sum<=rc:GetLevel() and mg:CheckWithSumEqual(Card.GetRitualLevel,lv,0,99)
+	return sum<=rc:GetLevel() and mg:CheckWithSumEqual(Card.GetRitualLevel,lv,0,99,rc)
 end
 function c101004084.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -75,7 +77,7 @@ function c101004084.activate(e,tp,eg,ep,ev,re,r,rp)
 		if ft<=0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 			local mat2=mg:FilterSelect(tp,c101004084.mfilterf,1,1,nil,tp,mg,dg,tc)
-			lv=lv-mat2:GetFirst():GetRitualLevel()
+			lv=lv-mat2:GetFirst():GetRitualLevel(tc)
 			mat:Merge(mat2)
 		end
 		while lv~=0 do
@@ -87,7 +89,7 @@ function c101004084.activate(e,tp,eg,ep,ev,re,r,rp)
 			else
 				mg:RemoveCard(tg)
 			end
-			lv=lv-tg:GetRitualLevel()
+			lv=lv-tg:GetRitualLevel(tc)
 		end
 		tc:SetMaterial(mat)
 		local mat3=mat:Filter(Card.IsLocation,nil,LOCATION_DECK)
