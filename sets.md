@@ -4,9 +4,9 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **May 12, 2018** : Collectors Pack 2018 (CP18-JP) : `100227XXX`
 - **May 21, 2018** : 20th Anniversary Legendary Dragons (VP18-JP) : `100228XXX`
+- **May 27, 2018** : Duelist Festival 2018 (18PR-JP) : `100231XXX`
 
 # Announced
-- **May 27, 2018** : Promotion Pack 2018 (????-JP) : `100231XXX`
 - **June 9, 2018** : Duelist Pack: Legend Duelist 3 (????-JP) : `100409XXX`
 - **July 14, 2018** : Soul Fusion (????-JP) : `101006XXX`
 
