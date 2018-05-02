@@ -33,7 +33,7 @@ function c101004084.mfilterf(c,tp,mg,dg,rc)
 	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
 		Duel.SetSelectedCard(c)
 		return mg:CheckWithSumEqual(Card.GetRitualLevel,rc:GetLevel(),0,99,rc)
-			or dg:IsExists(c101004084.dlvfilter,1,nil,tp,mg,rc,rc:GetLevel()-c:GetRitualLevel())
+			or dg:IsExists(c101004084.dlvfilter,1,nil,tp,mg,rc,rc:GetLevel()-c:GetRitualLevel(rc))
 	else return false end
 end
 function c101004084.dlvfilter(c,tp,mg,rc,lv)
