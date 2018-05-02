@@ -80,7 +80,8 @@ end
 function c100228004.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return ((c:IsLocation(LOCATION_HAND) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) or
+		(c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp)>0))
 		and Duel.IsExistingMatchingCard(c100228004.spfilter,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_LIGHT)
 		and Duel.IsExistingMatchingCard(c100228004.spfilter,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_DARK)
 end
@@ -116,9 +117,12 @@ function c100228004.gyop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()==0 or Duel.SendtoGrave(g,REASON_EFFECT)==0 then return end
 	local oc=Duel.GetOperatedGroup():FilterCount(c100228004.sgfilter,nil,tp)
 	if oc==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local og=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,oc,nil)
 	if Duel.SendtoGrave(og,REASON_EFFECT)>0 then
 		local dc=Duel.GetOperatedGroup():FilterCount(c100228004.sgfilter,nil,1-tp)
+		if dc==0 then return end
+		Duel.BreakEffect()
 		Duel.Damage(1-tp,dc*300,REASON_EFFECT)
 	end
 end
