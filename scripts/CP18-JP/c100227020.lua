@@ -37,16 +37,16 @@ function c100227020.activate(e,tp,eg,ep,ev,re,r,rp)
 					local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,aux.ExceptThisCard(e))
 					Duel.Destroy(sg,REASON_EFFECT)
 					local tg=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
-					if #tg>0 then
+					if tg:GetCount()>0 then
 						Duel.BreakEffect()
-						local dam=#tg*2000
+						local dam=tg:GetCount()*2000
 						Duel.Damage(1-tp,dam,REASON_EFFECT)
 					end
 				end
 			else
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-				local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_GRAVE,0,ct2,ct2,nil)
-				if #dg>0 then
+				local dg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Card.IsAbleToDeck),tp,LOCATION_GRAVE,0,ct2,ct2,nil)
+				if dg:GetCount()>0 then
 					Duel.SendtoDeck(dg,nil,2,REASON_EFFECT)
 				end
 			end
