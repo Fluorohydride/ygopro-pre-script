@@ -5,9 +5,9 @@
 - **May 12, 2018** : Collectors Pack 2018 (CP18-JP) : `100227XXX`
 - **May 21, 2018** : 20th Anniversary Legendary Dragons (VP18-JP) : `100228XXX`
 - **May 27, 2018** : Promotion Pack (18PR-JP) : `100231XXX`
+- **June 9, 2018** : Duelist Pack: Legend Duelist 3 (DP20-JP) : `100409XXX`
 
 # Announced
-- **June 9, 2018** : Duelist Pack: Legend Duelist 3 (????-JP) : `100409XXX`
 - **July 14, 2018** : Soul Fusion (????-JP) : `101006XXX`
 
 # Archived
