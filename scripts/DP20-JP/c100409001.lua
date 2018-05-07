@@ -69,11 +69,11 @@ function c100409001.posop(e,tp,eg,ep,ev,re,r,rp)
 		tc=tg:GetNext()
 	end
 	if c:IsRelateToEffect(e) then
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetCode(EFFECT_PIERCE)
-		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e2)
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetCode(EFFECT_PIERCE)
+		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e3)
 	end
 end
