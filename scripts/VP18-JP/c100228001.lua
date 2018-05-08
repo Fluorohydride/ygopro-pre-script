@@ -34,7 +34,7 @@ function c100228001.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100228001.ffilter(c,fc,sub,mg,sg)
-	return not sg or not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode())
+	return c:IsLocation(LOCATION_MZONE+LOCATION_HAND) and not sg or not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode())
 end
 function c100228001.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
@@ -42,11 +42,11 @@ end
 function c100228001.cfilter(c,fc)
 	return c:IsAbleToRemoveAsCost() and c:IsCanBeFusionMaterial(fc)
 end
-function c100228001.fselect(c,tp,mg,sg,...)
+function c100228001.fselect(c,tp,mg,sg)
 	sg:AddCard(c)
 	local res=false
 	if sg:GetCount()<3 then
-		res=mg:IsExists(c100228001.fselect,1,sg,tp,mg,sg,...)
+		res=mg:IsExists(c100228001.fselect,1,sg,tp,mg,sg)
 	elseif Duel.GetLocationCountFromEx(tp,tp,sg)>0 then
 		res=sg:GetClassCount(Card.GetFusionCode)==3
 	end
