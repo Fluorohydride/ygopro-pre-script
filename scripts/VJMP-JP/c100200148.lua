@@ -17,9 +17,9 @@ function c100200148.initial_effect(c)
 	e1:SetOperation(c100200148.spop)
 	c:RegisterEffect(e1)
 end
-function c100200148.spcheck(g,lc)
+function c100200148.spcheck(g)
 	return g:GetClassCount(Card.GetLinkRace)==1
-		and g:GetClassCount(Card.Attribute)==1
+		and g:GetClassCount(Card.GetLinkAttribute)==1
 end
 function c100200148.filter(c,e,tp,zone)
 	return (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
