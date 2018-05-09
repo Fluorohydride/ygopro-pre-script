@@ -7,7 +7,7 @@ function c100228003.initial_effect(c)
 	aux.AddXyzProcedure(c,nil,7,2,c100228003.ovfilter,aux.Stringid(100228003,0),99,c100228003.xyzop)
 	--destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100228003,0))
+	e1:SetDescription(aux.Stringid(100228003,1))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
