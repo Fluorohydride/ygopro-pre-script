@@ -2,19 +2,9 @@
 --Judgment, the Seraphic Dragon
 --Script by dest
 function c100228002.initial_effect(c)
-	c:EnableReviveLimit()
 	--synchro summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(1164)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetRange(LOCATION_EXTRA)
-	e1:SetCondition(c100228002.syncon)
-	e1:SetTarget(c100228002.syntg)
-	e1:SetOperation(c100228002.synop)
-	e1:SetValue(SUMMON_TYPE_SYNCHRO)
-	c:RegisterEffect(e1)
+	aux.AddSynchroMixProcedure(c,aux.Tuner(nil),nil,nil,aux.NonTuner(nil),1,99,c100228002.syncheck)
+	c:EnableReviveLimit()
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -40,82 +30,8 @@ function c100228002.initial_effect(c)
 	e3:SetOperation(c100228002.operation2)
 	c:RegisterEffect(e3)
 end
-function c100228002.ntfilter(c,att)
-	return c:IsNotTuner() and c:IsAttribute(att)
-end
-function c100228002.synfilter1(c,syncard,mg,smat)
-	local g=aux.GetMustMaterialGroup(tp,EFFECT_MUST_BE_SMATERIAL)
-	local att=nil
-	if g:GetCount()>0 then
-		att=g:GetFirst():GetAttribute()
-		if g:GetCount()>1 then
-			for tc in aux.Next(g) do
-				if tc:GetAttribute()~=att then return false end
-			end
-		end
-	end
-	return c:IsType(TYPE_TUNER) and (not att or c:IsAttribute(att))
-		and mg:IsExists(c100228002.synfilter2,1,nil,syncard,mg,smat,c,c:GetAttribute())
-end
-function c100228002.synfilter2(c,syncard,mg,smat,c1,att)
-	local sg=Group.CreateGroup()
-	sg:AddCard(c1)
-	local mg2=mg:Clone()
-	mg2=mg:Filter(c100228002.ntfilter,nil,att)
-	return aux.SynMixCheck(mg2,sg,1,99,syncard,smat)
-end
-function c100228002.syncon(e,c,smat,mg1)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local mg
-	if mg1 then
-		mg=mg1
-	else
-		mg=aux.GetSynMaterials(tp,c)
-	end
-	if smat~=nil then mg:AddCard(smat) end
-	return mg:IsExists(c100228002.synfilter1,1,nil,c,mg,smat)
-end
-function c100228002.syntg(e,tp,eg,ep,ev,re,r,rp,chk,c,smat,mg1)
-	local g=Group.CreateGroup()
-	local mg
-	if mg1 then
-		mg=mg1
-	else
-		mg=aux.GetSynMaterials(tp,c)
-	end
-	if smat~=nil then mg:AddCard(smat) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
-	local c1=mg:FilterSelect(tp,c100228002.synfilter1,1,1,nil,c,mg,smat):GetFirst()
-	g:AddCard(c1)
-	local att=c1:GetAttribute()
-	mg=mg:Filter(c100228002.ntfilter,nil,att)
-	local g2=Group.CreateGroup()
-	for i=0,99 do
-		local mg2=mg:Clone()
-		local cg=mg2:Filter(aux.SynMixCheckRecursive,g2,tp,g2,mg2,i,1,99,c,g,smat)
-		if cg:GetCount()==0 then break end
-		local minct=1
-		if aux.SynMixCheckGoal(tp,g2,1,i,c,g,smat) then
-			minct=0
-		end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
-		local tg=cg:Select(tp,minct,1,nil)
-		if tg:GetCount()==0 then break end
-		g2:Merge(tg)
-	end
-	g:Merge(g2)
-	if g:GetCount()>0 then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-		return true
-	else return false end
-end
-function c100228002.synop(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
-	local g=e:GetLabelObject()
-	c:SetMaterial(g)
-	Duel.SendtoGrave(g,REASON_MATERIAL+REASON_SYNCHRO)
-	g:DeleteGroup()
+function c100228002.syncheck(g)
+	return g:GetClassCount(Card.GetAttribute)==1
 end
 function c100228002.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_TUNER)

@@ -1,7 +1,5 @@
 --トポロジック・ガンブラー・ドラゴン
 --Topologic Gamble Dragon
---not fully implemented(need update ocgcore)
---https://github.com/Fluorohydride/ygopro-core/pull/139
 function c100227043.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2)
@@ -29,31 +27,6 @@ function c100227043.initial_effect(c)
 	e2:SetTarget(c100227043.hdtg2)
 	e2:SetOperation(c100227043.hdop2)
 	c:RegisterEffect(e2)
-	if not Card.IsExtraLinked then
-		function Duel.GetExtraLinkedGroup(tp)
-			local card1=Duel.GetFieldCard(tp,LOCATION_MZONE,1)
-			local card2=Duel.GetFieldCard(tp,LOCATION_MZONE,2)
-			local card3=Duel.GetFieldCard(tp,LOCATION_MZONE,3)
-			local card5=Duel.GetFieldCard(tp,LOCATION_MZONE,5)
-			local card6=Duel.GetFieldCard(tp,LOCATION_MZONE,6)
-			if not card1 or not card2 or not card3 or not card5 or not card6 then return nil end
-			if bit.band(card1:GetMutualLinkedZone(),0x24)~=0x24 then return nil end
-			if bit.band(card2:GetMutualLinkedZone(),0xa)~=0xa then return nil end
-			if bit.band(card3:GetMutualLinkedZone(),0x44)~=0x44 then return nil end
-			if bit.band(card5:GetMutualLinkedZone(),0x2)~=0x2 then return nil end
-			if bit.band(card6:GetMutualLinkedZone(),0x8)~=0x8 then return nil end
-			local elg=Group:FromCards(card1,card2,card3,card5,card6)
-			local card0=Duel.GetFieldCard(tp,LOCATION_MZONE,0)
-			local card4=Duel.GetFieldCard(tp,LOCATION_MZONE,4)
-			if card0 and bit.band(card0:GetMutualLinkedZone(),0x2)==0x2 then elg:AddCard(card0) end
-			if card4 and bit.band(card4:GetMutualLinkedZone(),0x8)==0x8 then elg:AddCard(card4) end
-			return elg
-		end
-		function Card.IsExtraLinked(c)
-			local elg=Duel.GetExtraLinkedGroup(c:GetControler())
-			return elg and elg:IsContains(c)
-		end
-	end
 end
 function c100227043.cfilter(c,zone)
 	local seq=c:GetSequence()
@@ -80,7 +53,7 @@ function c100227043.hdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardHand(1-tp,nil,ct3,ct3,REASON_EFFECT+REASON_DISCARD)
 end
 function c100227043.hdcon2(e)
-	return e:GetHandler():IsExtraLinked()
+	return e:GetHandler():IsExtraLinkState()
 end
 function c100227043.hdtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)>0 end
