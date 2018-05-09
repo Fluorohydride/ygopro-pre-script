@@ -10,7 +10,7 @@ function c100228001.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(c100228001.splimit)
+	e1:SetValue(aux.fuslimit)
 	c:RegisterEffect(e1)
 	--special summon rule
 	local e2=Effect.CreateEffect(c)
@@ -35,9 +35,6 @@ function c100228001.initial_effect(c)
 end
 function c100228001.ffilter(c,fc,sub,mg,sg)
 	return c:IsLocation(LOCATION_MZONE+LOCATION_HAND) and not sg or not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode())
-end
-function c100228001.splimit(e,se,sp,st)
-	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function c100228001.cfilter(c,fc)
 	return c:IsAbleToRemoveAsCost() and c:IsCanBeFusionMaterial(fc)
@@ -68,7 +65,8 @@ function c100228001.spop(e,tp,eg,ep,ev,re,r,rp,c)
 		local g=mg:FilterSelect(tp,c100228001.fselect,1,1,sg,tp,mg,sg)
 		sg:Merge(g)
 	end
-	Duel.Remove(sg,POS_FACEUP,REASON_COST)
+	c:SetMaterial(sg)
+	Duel.Remove(sg,POS_FACEUP,REASON_COST+REASON_FUSION+REASON_MATERIAL)
 end
 function c100228001.mfilter(c)
 	return not c:IsRace(RACE_DRAGON)

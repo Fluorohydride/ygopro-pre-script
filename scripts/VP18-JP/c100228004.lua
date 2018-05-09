@@ -32,7 +32,7 @@ function c100228004.initial_effect(c)
 	e3:SetCondition(c100228004.spcon)
 	e3:SetOperation(c100228004.spop)
 	c:RegisterEffect(e3)
-	--gy and damage
+	--to grave and damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100228004,1))
 	e4:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DAMAGE)
@@ -70,7 +70,7 @@ end
 function c100228004.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)~=0 then
+	if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)~=0 and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

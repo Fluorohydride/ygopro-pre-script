@@ -7,9 +7,9 @@ function c100228002.initial_effect(c)
 	c:EnableReviveLimit()
 	--destroy
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100228002,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetDescription(aux.Stringid(100228002,0))
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(c100228002.condition)
@@ -19,9 +19,9 @@ function c100228002.initial_effect(c)
 	c:RegisterEffect(e2)
 	--discard deck
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100228002,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCategory(CATEGORY_REMOVE)
-	e3:SetDescription(aux.Stringid(100228002,1))
 	e3:SetCountLimit(1)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_MZONE)
@@ -42,8 +42,9 @@ function c100228002.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
 function c100228002.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,aux.ExceptThisCard(e)) end
-	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,aux.ExceptThisCard(e))
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
+	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,sg:GetCount(),0,0)
 end
 function c100228002.operation(e,tp,eg,ep,ev,re,r,rp)
