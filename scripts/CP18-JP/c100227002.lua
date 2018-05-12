@@ -51,6 +51,8 @@ function c100227002.activate(e,tp,eg,ep,ev,re,r,rp)
 			local tc=g:Select(tp,1,1,nil):GetFirst()
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
+	elseif d==7 then
+		return
 	else
 		local g=Duel.GetMatchingGroup(c100227002.filter3,tp,LOCATION_HAND,0,nil,e,tp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100227002,2)) then
