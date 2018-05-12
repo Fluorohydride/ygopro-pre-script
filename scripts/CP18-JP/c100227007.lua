@@ -32,18 +32,14 @@ function c100227007.filter(c)
 	return c:IsFaceup() and c:IsCode(100227006)
 end
 function c100227007.atkcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.IsExistingMatchingCard(c100227007.filter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100227007.filter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100227007.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100227007.thfilter(c)
-	if Duel.IsEnvironment(100227010) then
-		return c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
-	else
-		return c:IsCode(100227006) and c:IsAbleToHand()
-	end
+	return (c:IsCode(100227006) or (Duel.IsEnvironment(100227010) and c:IsRace(RACE_WARRIOR))) and c:IsAbleToHand()
 end
 function c100227007.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100227007.thfilter,tp,LOCATION_DECK,0,1,nil) end

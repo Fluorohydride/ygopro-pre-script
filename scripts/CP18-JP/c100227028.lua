@@ -11,11 +11,12 @@ function c100227028.initial_effect(c)
 	c:RegisterEffect(e1)
 	--indes
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetCode(EFFECT_DESTROY_REPLACE)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTarget(c100227028.reptg)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+	e2:SetCountLimit(1)
+	e2:SetValue(c100227028.valcon)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
@@ -42,11 +43,8 @@ function c100227028.initial_effect(c)
 	e4:SetOperation(c100227028.tdop)
 	c:RegisterEffect(e4)
 end
-function c100227028.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp and e:GetHandler():GetFlagEffect(100227128)==0 end
-	c:RegisterFlagEffect(100227128,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
-	return true
+function c100227028.valcon(e,re,r,rp)
+	return bit.band(r,REASON_EFFECT)~=0 and rp~=e:GetHandlerPlayer()
 end
 function c100227028.acfilter(c)
 	return c:IsFaceup() and c:IsCode(100227027) and c:IsAbleToGraveAsCost()

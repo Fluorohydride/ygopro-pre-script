@@ -7,13 +7,14 @@ function c100227027.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--insd via destroy replace (workaround)
+	--indes
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetCode(EFFECT_DESTROY_REPLACE)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_NO_TURN_RESET)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTarget(c100227027.reptg)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+	e2:SetCountLimit(1)
+	e2:SetValue(c100227027.valcon)
 	c:RegisterEffect(e2)
 	--draw
 	local e3=Effect.CreateEffect(c)
@@ -41,11 +42,8 @@ function c100227027.initial_effect(c)
 	e4:SetOperation(c100227027.tdop)
 	c:RegisterEffect(e4)
 end
-function c100227027.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp and e:GetHandler():GetFlagEffect(100227127)==0 end
-	c:RegisterFlagEffect(100227127,RESET_EVENT+0x1fe0000,0,1)
-	return true
+function c100227027.valcon(e,re,r,rp)
+	return bit.band(r,REASON_EFFECT)~=0 and rp~=e:GetHandlerPlayer()
 end
 function c100227027.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

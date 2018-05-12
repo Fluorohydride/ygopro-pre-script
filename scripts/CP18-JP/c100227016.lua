@@ -26,7 +26,7 @@ function c100227016.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100227016.filter(c)
-	return (c:IsSetCard(0x1093) or (c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) and not c:IsSummonableCard()))
+	return ((c:IsSetCard(0x1093) and c:IsType(TYPE_MONSTER)) or (c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) and not c:IsSummonableCard()))
 		and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100227016.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -36,7 +36,7 @@ end
 function c100227016.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100227016.filter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then 
+	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
