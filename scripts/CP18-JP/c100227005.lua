@@ -15,7 +15,7 @@ function c100227005.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,0)
-	e2:SetTarget(c11167052.intg)
+	e2:SetTarget(c100227005.indtg)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -24,6 +24,6 @@ function c100227005.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 c100227005.card_code_list={100227010}
-function c11167052.intg(e,c)
+function c100227005.indtg(e,c)
 	return c:IsFaceup() and c:IsCode(100227010)
 end

@@ -80,10 +80,10 @@ function c100227010.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c21598948.atkcon(e,tp,eg,ep,ev,re,r,rp)
+function c100227010.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
-function c21598948.atktg2(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100227010.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local tc=Duel.GetAttacker()
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
