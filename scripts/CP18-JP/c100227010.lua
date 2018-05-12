@@ -46,6 +46,7 @@ end
 function c100227010.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,10)
 	if g:FilterCount(Card.IsAbleToRemoveAsCost,nil)==10 then
+		Duel.DisableShuffleCheck()
 		Duel.Remove(g,POS_FACEDOWN,REASON_COST)
 	else
 		Duel.Destroy(e:GetHandler(),REASON_COST)
@@ -86,12 +87,13 @@ end
 function c100227010.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local tc=Duel.GetAttacker()
+	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,tc:GetAttack()/2)
 end
 function c100227010.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local tc=Duel.GetAttacker()
+	local tc=Duel.GetFirstTarget()
 	local atk=math.ceil(tc:GetAttack()/2)
 	if tc:IsRelateToEffect(e) and not tc:IsStatus(STATUS_ATTACK_CANCELED) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.Damage(1-tp,atk,REASON_EFFECT)

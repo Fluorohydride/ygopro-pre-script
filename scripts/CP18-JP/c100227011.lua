@@ -35,6 +35,13 @@ function c100227011.initial_effect(c)
 	e4:SetTarget(c100227011.eqtg)
 	e4:SetOperation(c100227011.operation)
 	c:RegisterEffect(e4)
+	--Equip limit
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_EQUIP_LIMIT)
+	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e5:SetValue(1)
+	c:RegisterEffect(e5)
 end
 function c100227011.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
