@@ -72,5 +72,6 @@ function c100228002.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100228002.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Duel.GetDecktopGroup(tp,4)
+	Duel.DisableShuffleCheck()
 	Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 end
