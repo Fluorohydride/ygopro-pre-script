@@ -13,10 +13,10 @@ function c100409014.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100409014.filter0(c)
-	return c:IsFaceup() and c:IsCanBeFusionMaterial() and c:IsAbleToDeck()
+	return (c:IsLocation(LOCATION_MZONE) or c:IsFaceup()) and c:IsCanBeFusionMaterial() and c:IsAbleToDeck()
 end
 function c100409014.filter1(c,e)
-	return c:IsFaceup() and c:IsCanBeFusionMaterial() and c:IsAbleToDeck() and not c:IsImmuneToEffect(e)
+	return (c:IsLocation(LOCATION_MZONE) or c:IsFaceup()) and c:IsCanBeFusionMaterial() and c:IsAbleToDeck() and not c:IsImmuneToEffect(e)
 end
 function c100409014.filter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and aux.IsMaterialListSetCard(c,0x1093) and (not f or f(c))
@@ -65,6 +65,10 @@ function c100409014.activate(e,tp,eg,ep,ev,re,r,rp)
 		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
 			local mat=Duel.SelectFusionMaterial(tp,tc,mg,nil,chkf)
 			tc:SetMaterial(mat)
+			if mat:IsExists(Card.IsFacedown,1,nil) then
+				local cg=mat:Filter(Card.IsFacedown,nil)
+				Duel.ConfirmCards(1-tp,cg)
+			end
 			Duel.SendtoDeck(mat,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 			Duel.BreakEffect()
 			Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)

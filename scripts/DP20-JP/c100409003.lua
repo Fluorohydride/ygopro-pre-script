@@ -1,8 +1,8 @@
---ビンゴマシーンGO! GO!
+--ビンゴマシーンGO!GO!
 --Bingo Machine GO! GO!
 --Script by dest
 function c100409003.initial_effect(c)
-	--to hand
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,8 +12,9 @@ function c100409003.initial_effect(c)
 	e1:SetOperation(c100409003.thop)
 	c:RegisterEffect(e1)
 end
+c100409003.card_code_list={89631139,23995346}
 function c100409003.thfilter(c)
-	return (((aux.IsCodeListed(c,89631139) or aux.IsCodeListed(c,23995346)) and c:IsType(TYPE_SPELL+TYPE_TRAP))
+	return (((aux.IsCodeListed(c,89631139) or aux.IsCodeListed(c,23995346)) and not c:IsCode(100409003) and c:IsType(TYPE_SPELL+TYPE_TRAP))
 		or (c:IsSetCard(0xdd) and c:IsType(TYPE_MONSTER))) and c:IsAbleToHand()
 end
 function c100409003.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
