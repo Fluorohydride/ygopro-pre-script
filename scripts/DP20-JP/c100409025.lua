@@ -1,22 +1,22 @@
 --BF－南風のアウステル
 --Blackwing - Auster the South Wind
---Script by nekrozar
+--Script by dest
 function c100409025.initial_effect(c)
 	--cannot special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100409025,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetTarget(c100409025.sptg)
-	e2:SetOperation(c100409025.spop)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetTarget(c100409025.sumtg)
+	e2:SetOperation(c100409025.sumop)
 	c:RegisterEffect(e2)
 	--counter
 	local e3=Effect.CreateEffect(c)
@@ -25,27 +25,22 @@ function c100409025.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCost(aux.bfgcost)
-	e3:SetTarget(c100409025.cttg1)
-	e3:SetOperation(c100409025.ctop1)
+	e3:SetTarget(c100409025.target)
+	e3:SetOperation(c100409025.operation)
 	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetDescription(aux.Stringid(100409025,2))
-	e4:SetTarget(c100409025.cttg2)
-	e4:SetOperation(c100409025.ctop2)
-	c:RegisterEffect(e4)
 end
-function c100409025.spfilter(c,e,tp)
+function c100409025.filter(c,e,tp)
 	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsSetCard(0x33) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
-function c100409025.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and c100409025.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c100409025.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
+function c100409025.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c100409025.filter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100409025.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100409025.filter,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
-function c100409025.spop(e,tp,eg,ep,ev,re,r,rp)
+function c100409025.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)

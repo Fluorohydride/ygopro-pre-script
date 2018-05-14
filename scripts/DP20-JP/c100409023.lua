@@ -1,6 +1,6 @@
 --BF－フルアーマード・ウィング
 --Blackwing Full Armored Master
---Script by nekrozar
+--Script by dest
 function c100409023.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x33),aux.NonTuner(nil),1)
@@ -15,19 +15,17 @@ function c100409023.initial_effect(c)
 	c:RegisterEffect(e1)
 	--add counter
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(aux.chainreg)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_TOHAND)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetCode(EVENT_CHAIN_SOLVED)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(c100409023.ctcon1)
-	e3:SetOperation(c100409023.ctop1)
+	e3:SetOperation(c100409023.acop)
 	c:RegisterEffect(e3)
 	--control
 	local e4=Effect.CreateEffect(c)
@@ -37,45 +35,44 @@ function c100409023.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetTarget(c100409023.cttg2)
-	e4:SetOperation(c100409023.ctop2)
+	e4:SetTarget(c100409023.cttg)
+	e4:SetOperation(c100409023.ctop)
 	c:RegisterEffect(e4)
 	--destroy
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100409023,2))
-	e3:SetCategory(CATEGORY_DESTROY)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_END)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1)
-	e3:SetCondition(c100409023.descon)
-	e3:SetTarget(c100409023.destg)
-	e3:SetOperation(c100409023.desop)
-	c:RegisterEffect(e3)
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(100409023,1))
+	e5:SetCategory(CATEGORY_RELEASE+CATEGORY_DESTROY)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCountLimit(1)
+	e5:SetCode(EVENT_PHASE+PHASE_END)
+	e5:SetCondition(c100409023.descon)
+	e5:SetTarget(c100409023.destg)
+	e5:SetOperation(c100409023.desop)
+	c:RegisterEffect(e5)
 end
 function c100409023.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
-function c100409023.ctcon1(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetFlagEffect(1)>0
-end
-function c100409023.ctop1(e,tp,eg,ep,ev,re,r,rp)
+function c100409023.acop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=re:GetHandler()
-	if tc:IsFaceup() and tc:GetCounter(0x1002)==0 then
+	if not re:IsActiveType(TYPE_MONSTER) or not tc:IsFaceup() or tc:GetCounter(0x1002)>0 then return end
+	local p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER)
+	if p~=tp and e:GetHandler():GetFlagEffect(1)>0 then
 		tc:AddCounter(0x1002,1)
 	end
 end
 function c100409023.ctfilter(c)
 	return c:GetCounter(0x1002)>0 and c:IsControlerCanBeChanged()
 end
-function c100409023.cttg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c100409023.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100409023.ctfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100409023.ctfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectTarget(tp,c100409023.ctfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end
-function c100409023.ctop2(e,tp,eg,ep,ev,re,r,rp)
+function c100409023.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.GetControl(tc,tp)
@@ -85,7 +82,7 @@ function c100409023.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function c100409023.desfilter(c)
-	return c:GetCounter(0x1002)~=0
+	return c:GetCounter(0x1002)>0
 end
 function c100409023.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100409023.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
