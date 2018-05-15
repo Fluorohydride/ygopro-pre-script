@@ -30,9 +30,9 @@ function c100409013.initial_effect(c)
 	e3:SetCode(EVENT_BATTLE_DESTROYED)
 	e3:SetCountLimit(1,100409013)
 	e3:SetCost(aux.bfgcost)
-	e3:SetCondition(c100409013.condition)
-	e3:SetTarget(c100409013.target)
-	e3:SetOperation(c100409013.operation)
+	e3:SetCondition(c100409013.thcon)
+	e3:SetTarget(c100409013.thtg)
+	e3:SetOperation(c100409013.thop)
 	c:RegisterEffect(e3)
 end
 function c100409013.spfilter(c,tp)
@@ -109,7 +109,7 @@ end
 function c100409013.cfilter(c,e,tp)
 	return c:IsType(TYPE_FUSION) and c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
 end
-function c100409013.condition(e,tp,eg,ep,ev,re,r,rp)
+function c100409013.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100409013.cfilter,1,nil,e,tp)
 end
 function c100409013.thfilter(c)
