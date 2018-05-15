@@ -16,7 +16,7 @@ function c100227022.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SUMMON_PROC)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetCondition(c100227022.spcon)
+	e2:SetCondition(c100227022.ntcon)
 	c:RegisterEffect(e2)
 	--indes
 	local e3=Effect.CreateEffect(c)
@@ -58,10 +58,11 @@ function c100227022.initial_effect(c)
 	e7:SetOperation(c100227022.tdop)
 	c:RegisterEffect(e7)
 end
-function c100227022.spcon(e,c)
+function c100227022.ntcon(e,c,minc)
 	if c==nil then return true end
-	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
-			and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return minc==0 and c:GetLevel()>4
+		and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
+		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c100227022.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattledGroupCount()>0 or e:GetHandler():GetAttackedCount()>0
