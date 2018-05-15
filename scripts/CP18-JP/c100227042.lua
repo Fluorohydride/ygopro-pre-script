@@ -44,8 +44,15 @@ end
 function c100227042.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=bit.band(c:GetReasonCard():GetLinkedZone(tp),0x1f)
-	if c:IsRelateToEffect(e) and zone~=0 then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_ATTACK,zone)
+	if c:IsRelateToEffect(e) and zone~=0 and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP_ATTACK,zone) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
+		c:RegisterEffect(e1,true)
+		Duel.SpecialSummonComplete()
 	end
 end
 function c100227042.drcon(e,tp,eg,ep,ev,re,r,rp)
