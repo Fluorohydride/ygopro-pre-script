@@ -6,6 +6,7 @@
 - **May 21, 2018** : 20th Anniversary Legendary Dragons (VP18-JP) : `100228XXX`
 - **May 27, 2018** : Promotion Pack (18PR-JP) : `100231XXX`
 - **June 9, 2018** : Duelist Pack: Legend Duelist 3 (DP20-JP) : `100409XXX`
+- **June 23, 2018** : Structure Deck: Master Link (SD34-JP) : `100334XXX`
 
 # Announced
 - **July 14, 2018** : Soul Fusion (????-JP) : `101006XXX`
