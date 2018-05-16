@@ -39,6 +39,7 @@ function c100409024.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0
 			or not Duel.IsExistingMatchingCard(c100409024.acfilter,tp,LOCATION_DECK,0,1,nil,tp) then return false end
+		local c=e:GetHandler()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
