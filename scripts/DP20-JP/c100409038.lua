@@ -89,6 +89,7 @@ function c100409038.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(c100409038.thfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	local b3=Duel.IsExistingMatchingCard(c100409038.costfilter3,tp,LOCATION_MZONE,0,1,nil,e,tp)
+	local op=0
 	if b1 and b2 and b3 then
 		op=Duel.SelectOption(tp,aux.Stringid(100409038,1),aux.Stringid(100409038,2),aux.Stringid(100409038,3))
 	elseif b1 and b2 then
