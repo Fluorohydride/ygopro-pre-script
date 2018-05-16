@@ -56,9 +56,9 @@ function c100409023.efilter(e,te)
 end
 function c100409023.acop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=re:GetHandler()
-	if not re:IsActiveType(TYPE_MONSTER) or not tc:IsFaceup() or tc:GetCounter(0x1002)>0 then return end
-	local p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER)
-	if p~=tp and e:GetHandler():GetFlagEffect(1)>0 then
+	if not tc:IsRelateToEffect(re) or not re:IsActiveType(TYPE_MONSTER) or not tc:IsFaceup() or tc:GetCounter(0x1002)>0 then return end
+	local p,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
+	if p~=tp and loc==LOCATION_MZONE and e:GetHandler():GetFlagEffect(1)>0 then
 		tc:AddCounter(0x1002,1)
 	end
 end
