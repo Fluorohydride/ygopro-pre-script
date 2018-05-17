@@ -27,8 +27,9 @@ end
 function c100227020.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
 	if ct>0 and Duel.DiscardDeck(tp,ct,REASON_EFFECT)~=0 then
-		Duel.BreakEffect()
 		local ct2=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE):GetCount()
+		if ct2==0 then return end
+		Duel.BreakEffect()
 		if Duel.Draw(tp,1,REASON_EFFECT)~=0 then
 			local tc=Duel.GetOperatedGroup():GetFirst()
 			Duel.ConfirmCards(1-tp,tc)
