@@ -51,7 +51,7 @@ function c100227027.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(100227027,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c100227027.drfilter(c)
-	return c:GetLevel()==10 and c:IsDiscardable()
+	return c:IsLevel(10) and c:IsDiscardable()
 end
 function c100227027.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100227027.drfilter,tp,LOCATION_HAND,0,1,nil)

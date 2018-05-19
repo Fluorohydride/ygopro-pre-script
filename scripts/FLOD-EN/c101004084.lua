@@ -49,7 +49,7 @@ function c101004084.selcheck(c,mg1,dg,mat1,rc)
 	end
 	local sum=mat:GetSum(Card.GetRitualLevel,rc)
 	local lv=rc:GetLevel()-sum
-	return sum<=rc:GetLevel() and mg:CheckWithSumEqual(Card.GetRitualLevel,lv,0,99,rc)
+	return rc:IsLevelAbove(sum) and mg:CheckWithSumEqual(Card.GetRitualLevel,lv,0,99,rc)
 end
 function c101004084.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

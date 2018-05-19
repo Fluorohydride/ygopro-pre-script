@@ -37,7 +37,7 @@ end
 c100227009.card_code_list={100227010}
 function c100227009.ntcon(e,c,minc)
 	if c==nil then return true end
-	return minc==0 and c:GetLevel()>4 and Duel.IsEnvironment(100227010)
+	return minc==0 and c:IsLevelAbove(5) and Duel.IsEnvironment(100227010)
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c100227009.descon(e,tp,eg,ep,ev,re,r,rp)
