@@ -60,7 +60,7 @@ end
 function c100227006.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA)
 end
-function c100227006.atkcon(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100227006.atkcon(e)
 	return Duel.IsEnvironment(100227010)
 end
 function c100227006.atkfilter(c)
