@@ -26,6 +26,9 @@ function c100334042.initial_effect(c)
 	e2:SetOperation(c100334042.spop)
 	c:RegisterEffect(e2)
 end
+function c100334042.mfilter(c)
+	return c:IsLevelAbove(3) and c:IsLinkRace(RACE_CYBERSE)
+end
 function c100334042.atkval(e,c)
 	return c:GetLinkedGroupCount()*300
 end
