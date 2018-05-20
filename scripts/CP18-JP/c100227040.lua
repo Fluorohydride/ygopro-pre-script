@@ -25,6 +25,7 @@ function c100227040.initial_effect(c)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c100227040.atkcon2)
+	e2:SetCost(c100227040.atkcost2)
 	e2:SetOperation(c100227040.atkop2)
 	c:RegisterEffect(e2)
 	--spsummon
@@ -63,6 +64,11 @@ function c100227040.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		tc=g:GetNext()
 	end
+end
+function c100227040.atkcost2(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(100227040)==0 end
+	c:RegisterFlagEffect(100227040,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
 end
 function c100227040.atkcon2(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

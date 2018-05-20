@@ -43,8 +43,8 @@ c100409012.material_setcode=0x1093
 function c100409012.cfilter(c)
 	return c:IsType(TYPE_FUSION) and c:IsRace(RACE_MACHINE)
 end
-function c100409012.indcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100409012.cfilter,tp,LOCATION_GRAVE,0,1,nil)
+function c100409012.indcon(e)
+	return Duel.IsExistingMatchingCard(c100409012.cfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
 end
 function c100409012.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
