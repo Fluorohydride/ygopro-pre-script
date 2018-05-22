@@ -64,20 +64,20 @@ function c100409038.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RegisterFlagEffect(100409038,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c100409038.costfilter1(c,e,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsFaceup() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and Duel.GetMZoneCount(tp,c)>0 and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(c100409038.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalCode())
 end
 function c100409038.spfilter1(c,e,tp,code)
 	return c:IsSetCard(0x55) and c:GetOriginalCode()~=code and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100409038.costfilter2(c)
-	return c:IsFaceup() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b))
+	return c:IsFaceup() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and c:IsAbleToGraveAsCost()
 end
 function c100409038.thfilter(c)
 	return c:IsSetCard(0x55) and not c:IsCode(100409038) and c:IsAbleToHand()
 end
 function c100409038.costfilter3(c,e,tp)
-	return c:IsFaceup() and c:IsCode(93717133) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsFaceup() and c:IsCode(93717133) and Duel.GetMZoneCount(tp,c)>0 and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(c100409038.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalCode())
 end
 function c100409038.spfilter2(c,e,tp,code)
