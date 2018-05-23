@@ -35,7 +35,7 @@ function c100228001.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100228001.ffilter(c,fc,sub,mg,sg)
-	return c:IsLocation(LOCATION_MZONE+LOCATION_HAND) and (sg==nil or not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode()))
+	return c:IsControler(fc:GetControler()) and c:IsLocation(LOCATION_MZONE+LOCATION_HAND) and (not sg or not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode()))
 end
 function c100228001.cfilter(c,fc)
 	return c:IsAbleToRemoveAsCost() and c:IsCanBeFusionMaterial(fc)
