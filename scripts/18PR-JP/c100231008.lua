@@ -1,5 +1,5 @@
 --レイン・ボーズ
-
+--Rain Bozu
 --Script by nekrozar
 function c100231008.initial_effect(c)
 	--pendulum summon
@@ -77,7 +77,7 @@ function c100231008.atkcon2(e)
 end
 function c100231008.atkval(e,c)
 	local tp=c:GetControler()
-	return math.abs(Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)-Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA))
+	return math.abs(Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)-Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA))*200
 end
 function c100231008.defcon(e)
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()

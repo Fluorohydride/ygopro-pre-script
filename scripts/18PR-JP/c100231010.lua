@@ -1,5 +1,5 @@
 --リンク・パーティー
-
+--Link Party
 --Script by nekrozar
 function c100231010.initial_effect(c)
 	--Activate
@@ -7,6 +7,7 @@ function c100231010.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_RECOVER+CATEGORY_DAMAGE+CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,100231010+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100231010.target)
 	e1:SetOperation(c100231010.activate)
 	c:RegisterEffect(e1)
@@ -26,7 +27,7 @@ end
 function c100231010.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroup(c100231010.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetClassCount(Card.GetAttribute)
 	local g1=Duel.GetMatchingGroup(c100231010.filter,tp,LOCATION_MZONE,0,nil)
-	if ct>=1 and g1:GetCount()>0 then
+	if ct==1 and g1:GetCount()>0 then
 		local tc1=g1:GetFirst()
 		while tc1 do
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -39,7 +40,7 @@ function c100231010.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	local g2=Duel.GetMatchingGroup(c100231010.filter,tp,0,LOCATION_MZONE,nil)
-	if ct>=2 and g2:GetCount()>0 then
+	if ct==2 and g2:GetCount()>0 then
 		Duel.BreakEffect()
 		local tc2=g2:GetFirst()
 		while tc2 do
@@ -52,16 +53,16 @@ function c100231010.activate(e,tp,eg,ep,ev,re,r,rp)
 			tc2=g2:GetNext()
 		end
 	end
-	if ct>=3 then
+	if ct==3 then
 		Duel.BreakEffect()
 		Duel.Recover(tp,1500,REASON_EFFECT)
 	end
-	if ct>=4 then
+	if ct==4 then
 		Duel.BreakEffect()
 		Duel.Damage(1-tp,2000,REASON_EFFECT)
 	end
 	local g3=Duel.GetMatchingGroup(c100231010.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	if ct>=5 and g3:GetCount()>0 then
+	if ct==5 and g3:GetCount()>0 then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g3:Select(tp,1,1,nil)

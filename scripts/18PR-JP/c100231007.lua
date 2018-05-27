@@ -1,5 +1,5 @@
 --アストラグールズ
-
+--Astra Ghouls
 --Script by nekrozar
 function c100231007.initial_effect(c)
 	--special summon
@@ -7,7 +7,7 @@ function c100231007.initial_effect(c)
 	e1:SetDescription(aux.Stringid(100231007,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(c100231007.sptg)
 	e1:SetOperation(c100231007.spop)
@@ -90,7 +90,7 @@ function c100231007.dcop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
 		e1:SetValue(dc)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		tc=g:GetNext()
 	end
