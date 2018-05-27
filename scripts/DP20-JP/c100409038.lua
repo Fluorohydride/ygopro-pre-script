@@ -36,7 +36,7 @@ function c100409038.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCondition(c100409038.descon)
 	e1:SetOperation(c100409038.desop)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,3)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,3)
 	c:SetTurnCounter(0)
 	c:RegisterEffect(e1)
 	if c100409038.effcost(e,tp,eg,ep,ev,re,r,rp,0)
@@ -61,7 +61,7 @@ function c100409038.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100409038.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(100409038)==0 end
-	e:GetHandler():RegisterFlagEffect(100409038,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(100409038,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function c100409038.costfilter1(c,e,tp)
 	return c:IsFaceup() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and Duel.GetMZoneCount(tp,c)>0 and c:IsAbleToGraveAsCost()

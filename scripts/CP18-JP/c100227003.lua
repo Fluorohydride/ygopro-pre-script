@@ -25,7 +25,7 @@ function c100227003.valcon(e,re,r,rp)
 	local res=false
 	if bit.band(r,REASON_EFFECT)~=0 and rp~=e:GetHandlerPlayer() then
 		res=true
-		e:GetHandler():RegisterFlagEffect(100227003,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(100227003,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 	return res
 end
@@ -42,7 +42,7 @@ function c100227003.effop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_BATTLE_DAMAGE)
 	e1:SetCondition(c100227003.wincon)
 	e1:SetOperation(c100227003.winop)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN)
 	c:RegisterEffect(e1)
 end
 function c100227003.wincon(e,tp,eg,ep,ev,re,r,rp)

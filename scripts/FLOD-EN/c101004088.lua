@@ -61,7 +61,7 @@ function c101004088.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetValue(1)
 		e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e4:SetRange(LOCATION_MZONE)
-		e4:SetReset(RESET_EVENT+0x1ff0000)
+		e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e4)
 	end
 end
@@ -84,7 +84,7 @@ function c101004088.negop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
-	e1:SetReset(RESET_EVENT+0x1ff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 	e1:SetValue(-2)
 	c:RegisterEffect(e1)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then

@@ -46,7 +46,7 @@ function c100334041.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e1:SetValue(e:GetHandler():GetLinkedGroupCount())
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
@@ -55,7 +55,7 @@ function c100334041.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCondition(c100334041.atkcon)
 		e2:SetValue(-400)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e2)
 	end
 end
@@ -75,7 +75,7 @@ function c100334041.regop(e,tp,eg,ep,ev,re,r,rp)
 	if ct then
 		c:SetFlagEffectLabel(100334041,ct+1)
 	else
-		c:RegisterFlagEffect(100334041,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1,1)
+		c:RegisterFlagEffect(100334041,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,1)
 	end
 end
 function c100334041.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

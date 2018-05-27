@@ -39,7 +39,7 @@ function c100227012.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_MZONE,loc,1,1,nil):GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
-		tc:RegisterFlagEffect(100227012,RESET_EVENT+0x1fe0000,0,0)
+		tc:RegisterFlagEffect(100227012,RESET_EVENT+RESETS_STANDARD,0,0)
 		e:SetLabelObject(tc)
 	end
 end

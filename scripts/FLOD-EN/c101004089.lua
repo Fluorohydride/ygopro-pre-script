@@ -61,7 +61,7 @@ function c101004089.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	if tc and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0
 		and tc:IsSetCard(0x107) and tc:IsType(TYPE_FIELD) then
-		tc:RegisterFlagEffect(101004089,RESET_EVENT+0x1fe0000,0,0)
+		tc:RegisterFlagEffect(101004089,RESET_EVENT+RESETS_STANDARD,0,0)
 	end
 end
 function c101004089.winfilter(c)
