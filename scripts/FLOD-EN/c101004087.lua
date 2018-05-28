@@ -58,7 +58,7 @@ function c101004087.spcon(e,c)
 	local tp=c:GetControler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or Duel.IsExistingMatchingCard(c101004087.spfilter1,tp,LOCATION_MZONE,0,1,nil) then return false end
-	return Duel.IsExistingMatchingCard(c101004087.spfilter2,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c101004087.spfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function c101004087.atkval(e,c)
 	return c:GetLevel()*300
