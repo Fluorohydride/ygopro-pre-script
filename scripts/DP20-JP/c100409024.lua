@@ -72,6 +72,7 @@ function c100409024.sumop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetOperation(c100409024.tgop)
 		tc:RegisterEffect(e1)
+		if not c:IsRelateToEffect(e) then return end
 		Duel.BreakEffect()
 		--summon
 		local e2=Effect.CreateEffect(c)
