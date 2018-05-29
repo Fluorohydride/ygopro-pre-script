@@ -7,9 +7,13 @@
 - **May 27, 2018** : Promotion Pack (18PR-JP) : `100231XXX`
 - **June 9, 2018** : Duelist Pack: Legend Duelist 3 (DP20-JP) : `100409XXX`
 - **June 23, 2018** : Structure Deck: Master Link (SD34-JP) : `100334XXX`
+- **July 16, 2018** : Jump Victory Carnival 2018 (VF18-JP) : `100232XXX`
 
 # Announced
 - **July 14, 2018** : Soul Fusion (????-JP) : `101006XXX`
+- **August 4, 2018** : Deck Build Pack: Hidden Summoners (????-JP) : `100410XXX`
+- **September 8, 2018** : Extra Pack 2018 (EP18-JP) : `100421XXX`
+- **September 22, 2018** : Structure Deck R: Undead World (SR07-JP) : `100307XXX`
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
