@@ -56,5 +56,5 @@ function c100409027.cfilter(c)
 	return c:IsFaceup() and ((c:IsSetCard(0x33) and c:IsType(TYPE_SYNCHRO)) or c:IsCode(9012916))
 end
 function c100409027.handcon(e)
-	return Duel.IsExistingMatchingCard(c100409027.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100409027.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
