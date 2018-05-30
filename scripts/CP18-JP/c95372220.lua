@@ -7,7 +7,7 @@ function c95372220.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_DRAGON),2)
 	--zone limit
-	--destroy	
+	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(95372220,0))
 	e3:SetCategory(CATEGORY_REMOVE+CATEGORY_DAMAGE)

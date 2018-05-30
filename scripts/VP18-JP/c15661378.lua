@@ -70,7 +70,7 @@ function c15661378.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Remove(sg,POS_FACEUP,REASON_COST+REASON_FUSION+REASON_MATERIAL)
 end
 function c15661378.mfilter(c)
-	return not c:IsRace(RACE_DRAGON)
+	return c:GetOriginalRace()~=RACE_DRAGON
 end
 function c15661378.remcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -91,11 +91,10 @@ function c15661378.remop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg1=g1:Select(tp,1,1,nil)
 		Duel.ConfirmDecktop(1-tp,1)
-		local sg2=g2:GetFirst()
 		Duel.ConfirmCards(tp,g3)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg3=g3:Select(tp,1,1,nil)
-		sg1:AddCard(sg2)
+		sg1:Merge(g2)
 		sg1:Merge(sg3)
 		Duel.Remove(sg1,POS_FACEUP,REASON_EFFECT)
 	end

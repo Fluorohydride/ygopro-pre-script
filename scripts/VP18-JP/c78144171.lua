@@ -25,9 +25,6 @@ function c78144171.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,78144171)==0 end
 	Duel.RegisterFlagEffect(tp,78144171,RESET_PHASE+PHASE_END,0,1)
 end
-function c78144171.costfilter(c)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToRemoveAsCost()
-end
 function c78144171.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -52,7 +49,7 @@ function c78144171.activate(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,1,1,nil)

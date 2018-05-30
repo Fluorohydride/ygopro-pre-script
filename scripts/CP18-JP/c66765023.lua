@@ -49,6 +49,6 @@ function c66765023.wincon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttackTarget()==nil
 end
 function c66765023.winop(e,tp,eg,ep,ev,re,r,rp)
-	local WIN_REASON_FLYING_ELEPHANT=0x1d
+	local WIN_REASON_FLYING_ELEPHANT=0x1e
 	Duel.Win(tp,WIN_REASON_FLYING_ELEPHANT)
 end
