@@ -62,7 +62,7 @@ function c100409002.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100409002.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp
+	return rp==1-tp
 end
 function c100409002.spfilter(c,e,tp)
 	return c:IsCode(89631139) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

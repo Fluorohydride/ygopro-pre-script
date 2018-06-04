@@ -29,7 +29,7 @@ function c100409037.geffilter(c)
 	return c:IsFaceup() and c:IsCode(93717133)
 end
 function c100409037.filter(c,tp)
-	return (Duel.IsExistingMatchingCard(c100409037.geffilter,tp,LOCATION_MZONE,0,1,nil)
+	return (Duel.IsExistingMatchingCard(c100409037.geffilter,tp,LOCATION_ONFIELD,0,1,nil)
 		or (c:IsFaceup() and c:IsType(TYPE_XYZ))) and c:IsControlerCanBeChanged()
 end
 function c100409037.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

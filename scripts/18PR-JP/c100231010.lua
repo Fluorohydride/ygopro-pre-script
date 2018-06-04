@@ -16,7 +16,12 @@ function c100231010.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_LINK)
 end
 function c100231010.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100231010.filter,tp,LOCATION_MZONE,0,1,nil) end
+	local ct=Duel.GetMatchingGroup(c100231010.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetClassCount(Card.GetAttribute)
+	if chk==0 then return (ct==1 and Duel.IsExistingMatchingCard(c100231010.filter,tp,LOCATION_MZONE,0,1,nil))
+	 	or (ct==2 and Duel.IsExistingMatchingCard(c100231010.filter,tp,0,LOCATION_MZONE,1,nil))
+		or ct==3 or ct==4
+		or (ct==5 and Duel.IsExistingMatchingCard(c100231010.spfilter,tp,LOCATION_DECK,0,1,nil))
+		or (ct==6 and Duel.IsExistingMatchingCard(c100231010.desfilter,tp,0,LOCATION_MZONE,1,nil)) end
 end
 function c100231010.spfilter(c,e,tp)
 	return c:IsAttackAbove(2500) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
