@@ -42,7 +42,7 @@ function c100200149.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100200149.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:GetClassCount(Card.GetCode)==g:GetCount() and g:IsExists(Card.IsLinkAttribute(),2,nil,ATTRIBUTE_DARK) then
+	if g:GetClassCount(Card.GetCode)==g:GetCount() and g:IsExists(Card.IsLinkAttribute,2,nil,ATTRIBUTE_DARK) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
