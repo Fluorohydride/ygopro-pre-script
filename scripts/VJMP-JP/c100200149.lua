@@ -82,7 +82,7 @@ function c100200149.ctop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100200149.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsReason(REASON_BATTLE+REASON_EFFECT) not c:IsReason(REASON_REPLACE)
+	if chk==0 then return c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 		and c:IsCanRemoveCounter(tp,0x1049,1,REASON_EFFECT) end
 	return true
 end
