@@ -7,12 +7,11 @@ function c100409046.initial_effect(c)
 	--control
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100409046,0))
-	e1:SetCategory(CATEGORY_CONTROL)
+	e1:SetCategory(CATEGORY_CONTROL+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetCountLimit(1,100409045)
-	e1:SetCost(c100409046.ctcost)
+	e1:SetCountLimit(1,100409046)
 	e1:SetTarget(c100409046.cttg)
 	e1:SetOperation(c100409046.ctop)
 	c:RegisterEffect(e1)
@@ -49,38 +48,35 @@ function c100409046.initial_effect(c)
 	e5:SetOperation(c100409046.desop)
 	c:RegisterEffect(e5)
 end	
-function c100409046.ctfilter1(c)
-	return c:IsAbleToChangeControler()
-end
-function c100409046.ctfilter2(c)
+function c100409046.ctfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsAbleToChangeControler()
 end
 function c100409046.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c100409046.ctfilter1,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingTarget(c100409046.ctfilter2,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToChangeControler,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingTarget(c100409046.ctfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g1=Duel.SelectTarget(tp,c100409046.ctfilter1,tp,0,LOCATION_MZONE,1,1,nil)
+	local g1=Duel.SelectTarget(tp,Card.IsAbleToChangeControler,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g2=Duel.SelectTarget(tp,c100409046.ctfilter2,tp,LOCATION_MZONE,0,1,1,nil)
+	local g2=Duel.SelectTarget(tp,c100409046.ctfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g1,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
 function c100409046.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local a=g:GetFirst()
 	local b=g:GetNext()
-	if a:IsRelateToEffect(e) and b:IsRelateToEffect(e) then
-		Duel.SwapControl(a,b)
+	if a:IsRelateToEffect(e) and b:IsRelateToEffect(e) and Duel.SwapControl(a,b)~=0 then
+		Duel.BreakEffect()
+		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	end
-	Duel.BreakEffect()
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function c100409046.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
 function c100409046.cttg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return e:GetHandler():IsControlerCanBeChanged() end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,e:GetHandler(),1,0,0)
 end
 function c100409046.ctop2(e,tp,eg,ep,ev,re,r,rp)

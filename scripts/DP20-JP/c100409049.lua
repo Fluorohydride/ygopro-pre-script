@@ -48,22 +48,23 @@ function c100409049.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ct<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local hg=Duel.SelectMatchingCard(tp,c100409049.thfilter,tp,LOCATION_EXTRA,0,1,ct,nil)
-	if #hg>1 and Duel.SendtoHand(hg,nil,REASON_EFFECT)~=0 then
+	if #hg>0 and Duel.SendtoHand(hg,nil,REASON_EFFECT)~=0 then
 		local sct=Duel.GetOperatedGroup():FilterCount(Card.IsControler,nil,tp)
 		local sg=Duel.GetMatchingGroup(c100409049.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
-		local ft=math.min(Duel.GetUsableMZoneCount(tp),#g)
+		local ft=math.min(Duel.GetUsableMZoneCount(tp),#sg)
 		if sct>0 and ft>0 and Duel.SelectYesNo(tp,aux.Stringid(100409049,0)) then
 			Duel.BreakEffect()
 			if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-			local sg=aux.SelectUnselectGroup(sg,e,tp,nil,ft,c100409049.rescon(ft),1,tp,HINTMSG_SPSUMMON,c100409049.rescon(ft))
-			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+			local g=Group.CreateGroup()
+			repeat
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+				local tc=sg:Select(tp,1,1,nil):GetFirst()
+				g:AddCard(tc)
+				sg:Remove(Card.IsCode,nil,tc:GetCode())
+			until sct==#g or ft==#g or not Duel.SelectYesNo(tp,210)
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
-end
-function c100409049.rescon(ft)
-	return function(sg,e,tp,mg)
-				return ft>=sg:GetCount() and sg:GetClassCount(Card.GetCode)>=sg:GetCount()
-			end
 end
 function c100409049.splimit(e,c)
 	return not (c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM))

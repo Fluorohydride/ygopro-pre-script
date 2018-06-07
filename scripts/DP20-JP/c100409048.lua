@@ -40,9 +40,9 @@ function c100409048.cfilter(c)
 end
 function c100409048.cfilter2(c)
 	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and not c:IsPublic()
-		and Duel.IsExistingMatchingCard(c100409048.cfilter3,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())		
+		and Duel.IsExistingMatchingCard(c100409048.cfilter3,tp,LOCATION_DECK,0,1,nil,c:GetCode())		
 end
-function c100409048.cfilter3(c)
+function c100409048.cfilter3(c,code)
 	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and not c:IsCode(code) and c:IsAbleToHand()
 end
 function c100409048.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -51,24 +51,25 @@ function c100409048.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g1=Duel.SelectMatchingCard(tp,c100409048.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	local g2=Duel.SelectMatchingCard(tp,c100409048.cfilter2,tp,LOCATION_HAND,0,1,1,nil)
-	g1:AddCard(g2)
+	e:SetLabel(g2:GetFirst():GetCode())
+	g1:Merge(g2)
 	Duel.ConfirmCards(1-tp,g1)
 	Duel.ShuffleHand(tp)
 end
 function c100409048.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100409048.cfilter3,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100409048.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100409048.cfilter3,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100409048.cfilter3,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function c100409048.chcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:GetHandler():GetType()==TYPE_MONSTER and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return ep~=tp and re:IsActiveType(TYPE_MONSTER)
 		and Duel.IsExistingMatchingCard(c100409048.confilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100409048.chop1(e,tp,eg,ep,ev,re,r,rp)
