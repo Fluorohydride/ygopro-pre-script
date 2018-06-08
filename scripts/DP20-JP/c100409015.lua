@@ -23,6 +23,7 @@ function c100409015.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(0,1)
 	e3:SetCondition(c100409015.actcon)
 	e3:SetValue(c100409015.actlimit)
@@ -86,7 +87,7 @@ function c100409015.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100409015.actcon(e)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==tp and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.GetTurnPlayer()==e:GetHandler():GetControler() and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function c100409015.actlimit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e)
