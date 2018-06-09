@@ -22,7 +22,7 @@ function c100409049.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(100409049,tp,ACTIVITY_CHAIN)>0
 end
 function c100409049.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsAbleTohand()
+	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c100409049.spfilter(c,e,tp)
 	return c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

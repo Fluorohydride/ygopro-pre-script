@@ -24,11 +24,11 @@ function c100231010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		or (ct==6 and Duel.IsExistingMatchingCard(c100231010.desfilter,tp,0,LOCATION_MZONE,1,nil)) end
 	if ct==3 then
 		Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,1500)
-	else if ct==4 then
+	elseif ct==4 then
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,2000)
-	else if ct==5 then
+	elseif ct==5 then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
-	else if ct==6 then
+	elseif ct==6 then
 		local g=Duel.GetMatchingGroup(c100231010.desfilter,tp,0,LOCATION_MZONE,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 	end
