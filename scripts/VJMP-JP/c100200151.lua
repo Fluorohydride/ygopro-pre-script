@@ -38,10 +38,9 @@ function c100200151.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100200151.costfilter1(c,e,tp)
-	local lv=c:GetLevel()
-	return lv>0 and (c:IsSetCard(0xa9) or c:IsSetCard(0xad) or c:IsSetCard(0xc3))
+	return c:IsLevelBelow(4) and (c:IsSetCard(0xa9) or c:IsSetCard(0xad) or c:IsSetCard(0xc3))
 		and Duel.GetMZoneCount(tp,c)>0 and (c:IsControler(tp) or c:IsFaceup())
-		and Duel.IsExistingMatchingCard(c100200151.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp,lv,c:GetCode())
+		and Duel.IsExistingMatchingCard(c100200151.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel(),c:GetCode())
 end
 function c100200151.spfilter1(c,e,tp,lv,code)
 	return c:IsRace(RACE_FIEND) and c:IsLevel(lv) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
