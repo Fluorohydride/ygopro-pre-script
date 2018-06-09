@@ -11,7 +11,7 @@ function c100409004.initial_effect(c)
 	e1:SetCost(c100409004.cost)
 	e1:SetTarget(c100409004.target)
 	e1:SetOperation(c100409004.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(100409004,ACTIVITY_SUMMON,c100409004.counterfilter)
 	Duel.AddCustomActivityCounter(100409004,ACTIVITY_SPSUMMON,c100409004.counterfilter)
 end
@@ -40,15 +40,18 @@ end
 function c100409004.spfilter(c,e,tp)
 	return c:IsCode(89631139) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
+function c100409004.rmfilter(c)
+	return c:IsAbleToRemove() and not c:IsType(TYPE_TOKEN)
+end
 function c100409004.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(c100409004.rmfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100409004.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 		and g:GetCount()>0 and Duel.GetMZoneCount(tp,g)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c16832845.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(c100409004.rmfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	if Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)>0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if ft<=0 then return end

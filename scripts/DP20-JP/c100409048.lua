@@ -38,19 +38,19 @@ end
 function c100409048.cfilter(c)
 	return c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and not c:IsPublic()
 end
-function c100409048.cfilter2(c)
+function c100409048.cfilter2(c,tp)
 	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and not c:IsPublic()
-		and Duel.IsExistingMatchingCard(c100409048.cfilter3,tp,LOCATION_DECK,0,1,nil,c:GetCode())		
+		and Duel.IsExistingMatchingCard(c100409048.cfilter3,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function c100409048.cfilter3(c,code)
 	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and not c:IsCode(code) and c:IsAbleToHand()
 end
 function c100409048.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100409048.cfilter,tp,LOCATION_HAND,0,1,nil)
-		and Duel.IsExistingMatchingCard(c100409048.cfilter2,tp,LOCATION_HAND,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c100409048.cfilter2,tp,LOCATION_HAND,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g1=Duel.SelectMatchingCard(tp,c100409048.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	local g2=Duel.SelectMatchingCard(tp,c100409048.cfilter2,tp,LOCATION_HAND,0,1,1,nil)
+	local g2=Duel.SelectMatchingCard(tp,c100409048.cfilter2,tp,LOCATION_HAND,0,1,1,nil,tp)
 	e:SetLabel(g2:GetFirst():GetCode())
 	g1:Merge(g2)
 	Duel.ConfirmCards(1-tp,g1)

@@ -27,7 +27,7 @@ function c100409047.thfilter(c,e,tp)
 end
 function c100409047.spfilter(c,e,tp,hc)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec)
-		and c:GetOriginalCode()~=hc:GetOriginalCode() and c:IsCanBeSpecialSummon(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+		and c:GetOriginalCode()~=hc:GetOriginalCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and Duel.GetLocationCountFromEx(tp,tp,c,hc)>0
 end
 function c100409047.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -38,10 +38,12 @@ end
 function c100409047.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local hc=Duel.SelectMatchingCard(tp,c100409047.thfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp):GetFirst()
-	if hc and Duel.SendtoHand(hc,nil,REASON_EFFECT)~=0 then
+	if hc and Duel.SendtoHand(hc,nil,REASON_EFFECT)~=0 and hc:IsLocation(LOCATION_HAND) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c100409047.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,hc)
-		if #g>0 then Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE) end
+		if g:GetCount()>0 then
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		end
 	end
 end
 function c100409047.filter2(c)
@@ -57,12 +59,12 @@ function c100409047.setfilter(c)
 	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and c:IsSSetable()
 end
 function c100409047.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingMatchingCard(c100409047.setfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100409047.setfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function c100409047.setop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100409047.setfilter,tp,LOCATION_DECK,0,nil)
-	local ct=math.min(Duel.GetLocationCount(tp,LOCATION_SZONE),#g)
-	if ct<1 then return end
+	local ct=math.min(Duel.GetLocationCount(tp,LOCATION_SZONE),g:GetCount())
+	if ct<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local sg=g:Select(tp,1,ct,nil)
 	Duel.SSet(tp,sg)

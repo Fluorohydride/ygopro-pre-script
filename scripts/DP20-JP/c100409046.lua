@@ -24,7 +24,7 @@ function c100409046.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e3:SetValue(1)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 	--control
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100409046,1))
@@ -47,7 +47,7 @@ function c100409046.initial_effect(c)
 	e5:SetTarget(c100409046.destg)
 	e5:SetOperation(c100409046.desop)
 	c:RegisterEffect(e5)
-end	
+end
 function c100409046.ctfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsAbleToChangeControler()
 end
@@ -81,9 +81,8 @@ function c100409046.cttg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100409046.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		local zone=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0)>>16
-		Duel.GetControl(c,1-tp,0,0,zone)
+	if c:IsRelateToEffect(e) then
+		Duel.GetControl(c,1-tp)
 	end
 end
 function c100409046.desfilter(c)
@@ -96,7 +95,7 @@ end
 function c100409046.desop(e,tp,eg,ep,ev,re,r,rp)
 	local p=e:GetHandler():GetOwner()
 	local g=Duel.GetMatchingGroup(c100409046.desfilter,p,LOCATION_SZONE,0,nil)
-	if #g>0 and Duel.SelectYesNo(p,aux.Stringid(100409046,3)) then
+	if g:GetCount()>0 and Duel.SelectYesNo(p,aux.Stringid(100409046,3)) then
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_DESTROY)
 		local sg=g:Select(p,1,1,nil)
 		Duel.Destroy(sg,REASON_EFFECT)
