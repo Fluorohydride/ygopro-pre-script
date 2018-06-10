@@ -30,7 +30,7 @@ function c100409015.initial_effect(c)
 	c:RegisterEffect(e3)
 	--chain attack
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(20007374,0))
+	e4:SetDescription(aux.Stringid(100409015,0))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_DAMAGE_STEP_END)
 	e4:SetRange(LOCATION_SZONE)
@@ -119,7 +119,8 @@ function c100409015.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
 function c100409015.catg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetEquipTarget():IsChainAttackable(0,true) end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+		and e:GetHandler():GetEquipTarget():IsChainAttackable(0,true) end
 end
 function c100409015.caop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

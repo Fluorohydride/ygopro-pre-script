@@ -95,7 +95,8 @@ function c100409024.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_DARK) and c:IsLocation(LOCATION_EXTRA)
 end
 function c100409024.tgop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)~=0 then
+	local c=e:GetHandler()
+	if Duel.SendtoGrave(c,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_GRAVE) then
 		Duel.Damage(tp,1000,REASON_EFFECT)
 	end
 end
