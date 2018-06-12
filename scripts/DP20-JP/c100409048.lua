@@ -69,21 +69,23 @@ function c100409048.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100409048.chcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_MONSTER)
+	return ep==1-tp and re:IsActiveType(TYPE_MONSTER)
 		and Duel.IsExistingMatchingCard(c100409048.confilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100409048.chop1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():RegisterFlagEffect(100409048,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	re:GetHandler():RegisterFlagEffect(100409048,RESET_CHAIN,0,1)
 end
 function c100409048.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c100409048.chcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ev==1 and e:GetHandler():GetFlagEffect(100409048)>0
+	return re:GetHandler():GetFlagEffect(100409048)>0
 		and Duel.IsExistingMatchingCard(c100409048.confilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100409048.chop2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.ChangeChainOperation(1,c100409048.repop)
+	local g=Group.CreateGroup()
+	Duel.ChangeTargetCard(ev,g)
+	return Duel.ChangeChainOperation(ev,c100409048.repop)
 end
 function c100409048.desfilter(c)
 	return c:IsFacedown() and c:IsType(TYPE_SPELL+TYPE_TRAP)
