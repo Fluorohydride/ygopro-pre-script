@@ -69,7 +69,7 @@ function c100200149.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		tc:AddCounter(0x1049,1)
-		if tc:GetFlagEffect(100200149)~=0 then return end
+		if tc:GetFlagEffect(100200249)~=0 then return end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EFFECT_DESTROY_REPLACE)
@@ -77,7 +77,7 @@ function c100200149.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(c100200149.repop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(100200149,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(100200249,RESET_EVENT+RESETS_STANDARD,0,0)
 	end
 end
 function c100200149.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
