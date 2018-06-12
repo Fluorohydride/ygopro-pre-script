@@ -28,7 +28,7 @@ end
 function c100409047.spfilter(c,e,tp,hc)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec)
 		and c:GetOriginalCode()~=hc:GetOriginalCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-		and Duel.GetLocationCountFromEx(tp,tp,c,hc)>0
+		and Duel.GetLocationCountFromEx(tp,tp,hc,c)>0
 end
 function c100409047.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100409047.thfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
