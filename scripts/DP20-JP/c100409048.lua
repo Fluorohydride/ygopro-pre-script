@@ -89,6 +89,7 @@ function c100409048.desfilter(c)
 	return c:IsFacedown() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c100409048.repop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,100409048)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,c100409048.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	if g:GetCount()>0 then
