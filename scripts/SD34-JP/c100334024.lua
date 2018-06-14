@@ -19,12 +19,15 @@ function c100334024.initial_effect(c)
 	e2:SetTarget(c100334024.thtg)
 	e2:SetOperation(c100334024.thop)
 	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-	e3:SetOperation(c100334024.clear)
-	Duel.RegisterEffect(e3,0)
+	if not c100334024.global_check then
+		c100334024.global_check=true
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+		e3:SetOperation(c100334024.clear)
+		Duel.RegisterEffect(e3,0)
+	end
 end
 c100334024.attlimit=0
 function c100334024.clear(e,tp,eg,ep,ev,re,r,rp)
