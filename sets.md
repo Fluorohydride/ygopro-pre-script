@@ -6,10 +6,10 @@
 - **June 9, 2018** : Duelist Pack: Legend Duelist 3 (DP20-JP) : `100409XXX`
 - **June 23, 2018** : Structure Deck: Master Link (SD34-JP) : `100334XXX`
 - **July 16, 2018** : Jump Victory Carnival 2018 (VF18-JP) : `100232XXX`
+- **August 4, 2018** : Deck Build Pack: Hidden Summoners (DBHS-JP) : `100410XXX`
 
 # Announced
 - **July 14, 2018** : Soul Fusion (????-JP) : `101006XXX`
-- **August 4, 2018** : Deck Build Pack: Hidden Summoners (????-JP) : `100410XXX`
 - **September 8, 2018** : Extra Pack 2018 (EP18-JP) : `100421XXX`
 - **September 22, 2018** : Structure Deck R: Undead World (SR07-JP) : `100307XXX`
 
@@ -66,7 +66,7 @@
 - ~~Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 2 promotional card (YS02-JP) : `100221XXX`~~
 - ~~Yu-Gi-Oh! ARC-V Volume 4 promotional card (YA04-JP) : `100222XXX`~~
 - ~~Legendary Dragon Decks (LEDD-EN) : `100240XXX`~~
-- ~~Promotion Pack 2017 (17PR-JP) : `100230XXX`~~	
+- ~~Promotion Pack 2017 (17PR-JP) : `100230XXX`~~
 - ~~Circuit Break (CIBR-EN) : `101002XXX`~~
 - ~~EXTREME FORCE (EXFO-JP) : `101003XXX`~~
 - ~~Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX`~~
