@@ -1,5 +1,5 @@
 --焔凰神－ネフティス
-
+--Nephthys the Blazing Sacred Phoenix
 --Script by nekrozar
 function c100410008.initial_effect(c)
 	--link summon
@@ -73,7 +73,7 @@ function c100410008.regop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100410008,2))
 	end
 end
-function c100410008.atccon(e)
+function c100410008.atcon(e)
 	return e:GetHandler():GetSequence()>4
 end
 function c100410008.atlimit(e,c)

@@ -2,6 +2,7 @@
 --Swap Cleric
 --Script by dest
 function c100334002.initial_effect(c)
+	--reduce atk and draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100334002,0))
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_ATKCHANGE)
