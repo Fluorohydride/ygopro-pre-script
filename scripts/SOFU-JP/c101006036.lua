@@ -43,7 +43,7 @@ end
 function c101006036.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
-function c101006036.spfilter(c,fc)
+function c101006036.spfilter(c,fc,tp)
 	return c:IsRace(RACE_THUNDER) and c:IsType(TYPE_EFFECT) and not c:IsType(TYPE_FUSION)
 		and c:IsCanBeFusionMaterial(fc) and c:IsAbleToGraveAsCost() and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
@@ -51,13 +51,12 @@ function c101006036.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetCustomActivityCount(101006036,tp,ACTIVITY_CHAIN)~=0
-		and Duel.IsExistingMatchingCard(c101006036.spfilter,tp,LOCATION_MZONE,0,1,nil,c)
+		and Duel.CheckReleaseGroup(tp,c101006036.spfilter,1,nil,c,tp)
 end
 function c101006036.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c101006036.spfilter,tp,LOCATION_MZONE,0,1,1,nil,c)
+	local g=Duel.SelectReleaseGroup(tp,c101006036.spfilter,1,1,nil,c,tp)
 	c:SetMaterial(g)
-	Duel.SendtoGrave(g,REASON_COST)
+	Duel.Release(g,REASON_COST)
 end
 function c101006036.repfilter(c)
 	return c:IsRace(RACE_THUNDER) and c:IsAbleToRemove()
