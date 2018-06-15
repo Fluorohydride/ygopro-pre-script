@@ -80,6 +80,13 @@ function c100204007.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c100204007.desop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetCode(EFFECT_CANNOT_ATTACK)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e1)
 	if e:GetLabel()==1 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -88,6 +95,7 @@ function c100204007.desop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)
 		end
 	elseif e:GetLabel()==2 then
+		if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)<=0 then return end
 		local g2=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,1)
 		Duel.SendtoDeck(g2,nil,2,REASON_EFFECT)
 	else
