@@ -5,7 +5,7 @@ function c101006040.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,c101006040.matfilter,2)
-	--to grave
+	--to deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101006040,0))
 	e1:SetCategory(CATEGORY_TODECK)
