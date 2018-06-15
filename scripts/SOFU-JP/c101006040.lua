@@ -37,7 +37,7 @@ function c101006040.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c101006040.tdfilter(c)
-	return c:GetSequence()<5
+	return c:GetSequence()<5 and c:IsAbleToDeck()
 end
 function c101006040.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c101006040.tdfilter(chkc) end
