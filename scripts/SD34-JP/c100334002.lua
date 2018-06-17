@@ -32,7 +32,7 @@ function c100334002.drop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(-500)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e1)
-	if rc:IsHasEffect(EFFECT_REVERSE_UPDATE) then
+	if not rc:IsHasEffect(EFFECT_REVERSE_UPDATE) then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
