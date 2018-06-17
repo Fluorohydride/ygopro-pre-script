@@ -14,11 +14,10 @@ function c101006025.initial_effect(c)
 	e1:SetOperation(c101006025.spop)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	e1:SetLabelObject(e2)
 	--Destroy/Shuffle/Special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101006025)
 	e2:SetLabel(0)
@@ -26,14 +25,15 @@ function c101006025.initial_effect(c)
 	e2:SetTarget(c101006025.destg)
 	e2:SetOperation(c101006025.desop)
 	c:RegisterEffect(e2)
+	e1:SetLabelObject(e2)
 end
 function c101006025.spcostfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
 end
 function c101006025.spcon(e,c)
 	if c==nil then return true end
-	if Duel.GetMZoneCount(tp)<=0 then return false end
 	local tp=c:GetControler()
+	if Duel.GetMZoneCount(tp)<=0 then return false end
 	return Duel.IsExistingMatchingCard(c101006025.spcostfilter,tp,LOCATION_GRAVE,0,3,nil)
 end
 function c101006025.spop(e,tp,eg,ep,ev,re,r,rp,c)
@@ -103,7 +103,7 @@ function c101006025.desop(e,tp,eg,ep,ev,re,r,rp)
 		if g3:GetCount()>0 then
 			local ct=math.min(g3:GetCount(),2)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local sg=g:Select(tp,1,ct,nil)
+			local sg=g3:Select(tp,1,ct,nil)
 			Duel.HintSelection(sg)
 			Duel.Destroy(sg,REASON_EFFECT)
 		end
