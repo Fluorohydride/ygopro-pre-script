@@ -22,6 +22,7 @@ function c100334003.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(c100334003.condition)
+	e2:SetTarget(c100334003.target)
 	e2:SetOperation(c100334003.activate)
 	c:RegisterEffect(e2)
 end
@@ -46,18 +47,22 @@ function c100334003.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	return at and at:IsControler(tp) and at:IsRace(RACE_CYBERSE)
 end
+function c100334003.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.GetAttackTarget():CreateEffectRelation(e)
+end
 function c100334003.activate(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	if at:IsRelateToEffect(e) and at:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetValue(tc:GetBaseAttack()*2)
+		e1:SetValue(at:GetBaseAttack()*2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 		at:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
-		e2:SetValue(tc:GetBaseDefense()*2)
+		e2:SetValue(at:GetBaseAttack()*2)
 		at:RegisterEffect(e2)
 		if at:IsAttackPos() and at:IsCanChangePosition() and Duel.SelectYesNo(tp,aux.Stringid(100334003,2)) then
 			Duel.BreakEffect()
