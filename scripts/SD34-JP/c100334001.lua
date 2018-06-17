@@ -38,7 +38,7 @@ function c100334001.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(c100334001.drcon)
 		e1:SetTarget(c100334001.drtg)
 		e1:SetOperation(c100334001.drop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOGRAVE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_LEAVE-RESET_TOGRAVE)
 		c:RegisterEffect(e1)
 	end
 end

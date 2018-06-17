@@ -14,18 +14,26 @@ function c100334002.initial_effect(c)
 	e1:SetTarget(c100334002.drtg)
 	e1:SetOperation(c100334002.drop)
 	c:RegisterEffect(e1)
+	--reg
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_BE_MATERIAL)
+	e2:SetCondition(c100334002.drcon)
+	e2:SetOperation(c100334002.regop)
+	c:RegisterEffect(e2)
 end
 function c100334002.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_LINK
 end
 function c100334002.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and e:GetHandler():GetReasonCard():IsAttackAbove(500) end
+	local rc=e:GetHandler():GetReasonCard()
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and rc:IsAttackAbove(500) and rc:GetFlagEffect(100334002)~=0 end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c100334002.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	if rc:GetAttack()<500 or rc:IsFacedown() or rc:IsImmuneToEffect(e) or not rc:IsRelateToEffect(e) then return end
+	if not rc:IsAttackAbove(500) or rc:IsImmuneToEffect(e) or rc:GetFlagEffect(100334002)==0 then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -36,4 +44,8 @@ function c100334002.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
+end
+function c100334002.regop(e,tp,eg,ep,ev,re,r,rp)
+	local rc=e:GetHandler():GetReasonCard()
+	rc:RegisterFlagEffect(100334002,RESET_EVENT+RESETS_STANDARD,0,1)
 end
