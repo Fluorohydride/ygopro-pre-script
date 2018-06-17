@@ -53,7 +53,7 @@ end
 function c101006025.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
-function c100204007.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101006025.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==1 then
 			return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -79,7 +79,7 @@ function c100204007.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	end
 end
-function c100204007.desop(e,tp,eg,ep,ev,re,r,rp)
+function c101006025.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -15,7 +15,7 @@ function c100334022.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,3,nil,RACE_CYBERSE)
 end
-function c73915051.activate(e,tp,eg,ep,ev,re,r,rp)
+function c100334022.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=math.min((Duel.GetLocationCount(tp,LOCATION_MZONE)),3)
 	if Duel.NegateAttack() and ft>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,100334122,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE)

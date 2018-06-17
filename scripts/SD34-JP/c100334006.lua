@@ -56,7 +56,7 @@ function c100334006.disfilter(c)
 	return c:IsFaceup() and not (c:IsAttack(0) and c:IsDisabled())
 end
 function c100334006.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100334006.disfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100334006.disfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100334006.disfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100334006.disfilter,tp,0,LOCATION_MZONE,1,1+e:GetLabel(),nil)
