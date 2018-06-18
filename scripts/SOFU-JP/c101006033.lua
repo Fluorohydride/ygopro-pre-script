@@ -20,14 +20,14 @@ function c101006033.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 	--eff gain
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101006033,1))
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
-	e2:SetCost(c101006033.effcost)
-	e2:SetOperation(c101006033.effop)
-	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(101006033,1))
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1)
+	e3:SetCost(c101006033.effcost)
+	e3:SetOperation(c101006033.effop)
+	c:RegisterEffect(e3)
 end
 function c101006033.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) and e:GetLabel()==1
@@ -41,12 +41,13 @@ function c101006033.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsSummonType,tp,0,LOCATION_MZONE,nil,SUMMON_TYPE_SPECIAL)
 	Duel.Destroy(g,REASON_EFFECT)
 end
-function c101006033.valfilter(c)
-	return c:IsCode(101006033) and c:IsPreviousLocation(LOCATION_MZONE)
+function c101006033.valfilter(c,tp)
+	return c:IsCode(101006033) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function c101006033.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(c101006033.valfilter,1,nil) then
+	local tp=c:GetControler()
+	if g:IsExists(c101006033.valfilter,1,nil,tp) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
