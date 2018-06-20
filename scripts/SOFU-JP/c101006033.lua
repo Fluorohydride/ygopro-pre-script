@@ -42,7 +42,7 @@ function c101006033.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(g,REASON_EFFECT)
 end
 function c101006033.valfilter(c,tp)
-	return c:IsCode(101006033) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
+	return c:IsCode(101006033) and c:IsLocation(LOCATION_ONFIELD) and c:IsControler(tp)
 end
 function c101006033.valcheck(e,c)
 	local g=c:GetMaterial()
@@ -72,7 +72,7 @@ function c101006033.effop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(c101006033.descon2)
 		e1:SetTarget(c101006033.destg2)
 		e1:SetOperation(c101006033.desop2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

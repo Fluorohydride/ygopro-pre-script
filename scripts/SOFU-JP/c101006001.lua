@@ -29,10 +29,11 @@ function c101006001.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetValue(c:GetAttack()/2)
+		e1:SetValue(math.ceil(c:GetAttack()/2))
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,101006101,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_WIND) then
+		if not c:IsHasEffect(EFFECT_REVERSE_UPDATE) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,101006101,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_WIND) then
 			local token=Duel.CreateToken(tp,101006101)
 			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 		end

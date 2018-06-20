@@ -10,7 +10,7 @@ function c101006036.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(c101006036.splimit)
+	e1:SetValue(aux.fuslimit)
 	c:RegisterEffect(e1)
 	--special summon rule
 	local e2=Effect.CreateEffect(c)
@@ -40,21 +40,18 @@ function c101006036.chainfilter(re,tp,cid)
 	return not (re:GetHandler():IsRace(RACE_THUNDER) and re:IsActiveType(TYPE_MONSTER)
 		and Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)==LOCATION_HAND)
 end
-function c101006036.splimit(e,se,sp,st)
-	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
-end
 function c101006036.spfilter(c,fc,tp)
 	return c:IsRace(RACE_THUNDER) and c:IsType(TYPE_EFFECT) and not c:IsType(TYPE_FUSION)
-		and c:IsCanBeFusionMaterial(fc) and c:IsAbleToGraveAsCost() and Duel.GetLocationCountFromEx(tp,tp,c)>0
+		and c:IsReleasable() and Duel.GetLocationCountFromEx(tp,tp,c,fc)>0
 end
 function c101006036.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetCustomActivityCount(101006036,tp,ACTIVITY_CHAIN)~=0
-		and Duel.CheckReleaseGroup(tp,c101006036.spfilter,1,nil,c,tp)
+		and Duel.CheckReleaseGroup(tp,c101006036.spfilter,1,nil,c,fc,tp)
 end
 function c101006036.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,c101006036.spfilter,1,1,nil,c,tp)
+	local g=Duel.SelectReleaseGroup(tp,c101006036.spfilter,1,1,nil,c,fc,tp)
 	c:SetMaterial(g)
 	Duel.Release(g,REASON_COST)
 end

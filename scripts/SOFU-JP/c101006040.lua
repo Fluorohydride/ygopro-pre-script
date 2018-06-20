@@ -31,7 +31,7 @@ function c101006040.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101006040.matfilter(c)
-	return c:IsType(TYPE_EFFECT) and c:IsAttribute(ATTRIBUTE_FIRE)
+	return c:IsLinkType(TYPE_EFFECT) and c:IsLinkAttribute(ATTRIBUTE_FIRE)
 end
 function c101006040.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
@@ -68,25 +68,27 @@ function c101006040.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
-function c101006040.atkfilter(c,tc)
+function c101006040.atkfilter1(c,tp)
+	return c:IsFaceup() and Duel.IsExistingTarget(c101006040.atkfilter2,tp,LOCATION_GRAVE,0,1,nil,tc)
+end
+function c101006040.atkfilter2(c,tc)
 	return c:IsType(TYPE_MONSTER) and c:GetAttack()~=tc:GetAttack()
 end
 function c101006040.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101006040.atkfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101006040.atkfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
 	e:SetLabelObject(g:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c101006040.atkfilter,tp,LOCATION_GRAVE,0,1,1,nil,g:GetFirst())
+	Duel.SelectTarget(tp,c101006040.atkfilter2,tp,LOCATION_GRAVE,0,1,1,nil,g:GetFirst())
 end
 function c101006040.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tc=g:GetFirst()
-	local sc=g:GetNext()
-	if tc:IsFacedown() or not tc:IsRelateToEffect(e) 
-		or sc:IsFacedown() or not sc:IsRelateToEffect(e) then return end
+	local sc=g:GetFirst()
+	if sc==tc then sc=g:GetNext() end
+	if tc:IsFacedown() or not tc:IsRelateToEffect(e) or not sc:IsRelateToEffect(e) then return end
 	local ac=e:GetLabelObject()
 	if tc==ac then tc=sc end
 	local atk=tc:GetAttack()

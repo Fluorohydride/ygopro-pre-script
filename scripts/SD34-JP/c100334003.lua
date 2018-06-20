@@ -23,7 +23,7 @@ function c100334003.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetCondition(c100334003.condition)
 	e2:SetTarget(c100334003.target)
-	e2:SetOperation(c100334003.activate)
+	e2:SetOperation(c100334003.opetation)
 	c:RegisterEffect(e2)
 end
 function c100334003.cfilter(c)
@@ -45,13 +45,13 @@ function c100334003.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100334003.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
-	return at and at:IsControler(tp) and at:IsRace(RACE_CYBERSE)
+	return at and at:IsControler(tp) and at:IsFaceup() and at:IsRace(RACE_CYBERSE)
 end
 function c100334003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.GetAttackTarget():CreateEffectRelation(e)
 end
-function c100334003.activate(e,tp,eg,ep,ev,re,r,rp)
+function c100334003.opetation(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	if at:IsRelateToEffect(e) and at:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())

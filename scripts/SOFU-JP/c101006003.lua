@@ -59,9 +59,7 @@ function c101006003.cfilter(c)
 end
 function c101006003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101006003.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local g=Duel.SelectMatchingCard(tp,c101006003.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,c101006003.cfilter,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function c101006003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -70,8 +68,7 @@ function c101006003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101006003.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local g=Duel.GetMatchingGroup(c101006003.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101006003,3)) then
 			Duel.BreakEffect()
