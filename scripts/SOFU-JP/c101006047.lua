@@ -2,6 +2,7 @@
 --Folgo, Leader Fur Hire
 --Scripted by Eerie Code
 function c101006047.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,nil,3,3,c101006047.lcheck)
 	--cannot link material
@@ -41,32 +42,33 @@ function c101006047.initial_effect(c)
 	e4:SetOperation(c101006047.drop)
 	c:RegisterEffect(e4)
 end
-function c101006047.lcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetRace,lc,SUMMON_TYPE_LINK,tp)==#g
+function c101006047.lcheck(g)
+	return g:GetClassCount(Card.GetLinkRace)==g:GetCount()
 end
 function c101006047.valcheck(e,c)
 	local g=c:GetMaterial()
 	local val=0
 	for tc in aux.Next(g) do
-		val=val|tc:GetRace()
+		val=bit.bor(val,tc:GetRace())
 	end
 	e:GetLabelObject():SetLabel(val)
 end
 function c101006047.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and #(e:GetHandler():GetMaterial())==3
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and e:GetHandler():GetMaterialCount()==3
 end
 function c101006047.spfilter(c,e,tp,rc)
 	return c:IsSetCard(0x114) and not c:IsRace(rc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101006047.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101006047.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,e:GetLabel()) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101006047.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,e:GetLabel()) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101006047.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101006047.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,e:GetLabel())
-	if #g>0 then
+	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
