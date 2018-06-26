@@ -92,7 +92,7 @@ function c101006025.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g1=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101006025.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if g1:GetCount()>0 then
-			Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)
+			Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 			Duel.ConfirmCards(1-tp,g1)
 		end
 	elseif e:GetLabel()==2 then
