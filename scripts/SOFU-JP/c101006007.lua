@@ -45,7 +45,7 @@ function c101006007.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101006007.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsDefensePos() and Duel.GetTurnPlayer()~=tp
+	return e:GetHandler():IsDefensePos()
 end
 function c101006007.spfilter(c,e,tp)
 	return c:IsCode(101006007) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
