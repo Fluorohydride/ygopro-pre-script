@@ -1,5 +1,5 @@
 --ダイナレスラー・カポエラプトル
-
+--Dinowrestler Capoeiraptor
 --Script by nekrozar
 function c101006007.initial_effect(c)
 	--indes

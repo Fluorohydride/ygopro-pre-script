@@ -1,5 +1,5 @@
 --ダイナレスラー・システゴ
-
+--Dinowrestler Systego
 --Script by nekrozar
 function c101006008.initial_effect(c)
 	--search

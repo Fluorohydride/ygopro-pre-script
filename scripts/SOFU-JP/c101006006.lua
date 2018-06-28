@@ -1,5 +1,5 @@
 --ダイナレスラー・カパプテラ
-
+--Dinowrestler Capaptera
 --Script by nekrozar
 function c101006006.initial_effect(c)
 	--to grave
@@ -19,6 +19,7 @@ function c101006006.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101006006,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_BE_MATERIAL)
 	e2:SetCondition(c101006006.atkcon)
 	e2:SetOperation(c101006006.atkop)

@@ -1,5 +1,5 @@
 --空牙団の大義 フォルゴ
---Folgo, Leader Fur Hire
+--Folgo, Justice Fur Hire
 --Scripted by Eerie Code
 function c101006047.initial_effect(c)
 	--link summon

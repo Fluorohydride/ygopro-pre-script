@@ -1,5 +1,5 @@
 --ワールド・ダイナ・レスリング
-
+--World Dino Wrestling
 --Script by nekrozar
 function c101006054.initial_effect(c)
 	--activate

@@ -1,5 +1,5 @@
 --ダイナレスラー・キング・Tレックス
-
+--Dinowrestler King T Wrextle
 --Script by nekrozar
 function c101006041.initial_effect(c)
 	--link summon
@@ -58,14 +58,15 @@ function c101006041.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		tc:RegisterFlagEffect(101006041,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,101006041,RESET_PHASE+PHASE_BATTLE,0,1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetTargetRange(0,LOCATION_MZONE)
-		e1:SetCondition(c50078320.atkcon2)
+		e1:SetLabelObject(tc)
+		e1:SetCondition(c101006041.descon)
 		e1:SetTarget(c101006041.atktg2)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE+PHASE_BATTLE)
 		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(aux.Stringid(101006041,1))
@@ -75,20 +76,16 @@ function c101006041.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabelObject(tc)
 		e2:SetCondition(c101006041.descon)
 		e2:SetOperation(c101006041.desop)
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE+PHASE_BATTLE)
 		Duel.RegisterEffect(e2,tp)
 	end
-end
-function c101006041.descon(e)
-	local tc=e:GetLabelObject()
-	return tc:GetFlagEffect(101006041)~=0 and tc:GetAttackAnnouncedCount()==0
 end
 function c101006041.atktg2(e,c)
 	return c~=e:GetLabelObject()
 end
 function c101006041.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	return tc:GetFlagEffect(101006041)~=0 and tc:GetAttackAnnouncedCount()==0
+	return Duel.GetFlagEffect(tp,101006041)~=0 and tc:GetAttackAnnouncedCount()==0
 end
 function c101006041.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

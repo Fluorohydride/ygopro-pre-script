@@ -48,10 +48,10 @@ function c101006036.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetCustomActivityCount(101006036,tp,ACTIVITY_CHAIN)~=0
-		and Duel.CheckReleaseGroup(tp,c101006036.spfilter,1,nil,c,fc,tp)
+		and Duel.CheckReleaseGroup(tp,c101006036.spfilter,1,nil,c,tp)
 end
 function c101006036.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,c101006036.spfilter,1,1,nil,c,fc,tp)
+	local g=Duel.SelectReleaseGroup(tp,c101006036.spfilter,1,1,nil,c,tp)
 	c:SetMaterial(g)
 	Duel.Release(g,REASON_COST)
 end
