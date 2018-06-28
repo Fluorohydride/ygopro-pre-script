@@ -59,7 +59,7 @@ function c101006073.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c101006073.rmfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 and tc:IsRelateToEffect(e) then
+	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_REMOVED) and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

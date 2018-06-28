@@ -34,7 +34,7 @@ function c101006021.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c101006021.filter(c)
-	return c:IsSetCard(0x222) and not c:IsCode(101006021) and c:IsAbleToHand()
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSetCard(0x222) and not c:IsCode(101006021) and c:IsAbleToHand()
 end
 function c101006021.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101006021.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
@@ -62,7 +62,7 @@ end
 function c101006021.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101006021.spfilter),tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,c101006021.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		local fid=e:GetHandler():GetFieldID()
