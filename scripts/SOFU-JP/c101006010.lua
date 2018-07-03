@@ -43,12 +43,12 @@ function c101006010.matop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(tc,Group.FromCards(c))
 	end
 end
-function c101006010.filter(c)
+function c101006010.filter(c,e)
 	return (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
 function c101006010.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101006010.filter(chkc) end
-	local g=Duel.GetMatchingGroup(c101006010.filter,tp,LOCATION_GRAVE,0,nil)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101006010.filter(chkc,e) end
+	local g=Duel.GetMatchingGroup(c101006010.filter,tp,LOCATION_GRAVE,0,nil,e)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>=5 and Duel.IsPlayerCanDraw(tp,2) end
 	local sg=Group.CreateGroup()
 	for i=1,5 do
@@ -70,7 +70,7 @@ function c101006010.drop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
-	if ct==5 then
+	if ct>0 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,2,REASON_EFFECT)
 	end

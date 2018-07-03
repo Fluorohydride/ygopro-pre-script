@@ -61,6 +61,7 @@ function c101006040.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(101006040,1))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetTarget(c101006040.atktg)
@@ -69,14 +70,14 @@ function c101006040.operation(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function c101006040.atkfilter1(c,tp)
-	return c:IsFaceup() and Duel.IsExistingTarget(c101006040.atkfilter2,tp,LOCATION_GRAVE,0,1,nil,tc)
+	return c:IsFaceup() and Duel.IsExistingTarget(c101006040.atkfilter2,tp,LOCATION_GRAVE,0,1,nil,c)
 end
 function c101006040.atkfilter2(c,tc)
 	return c:IsType(TYPE_MONSTER) and c:GetAttack()~=tc:GetAttack()
 end
 function c101006040.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c101006040.atkfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101006040.atkfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,c101006040.atkfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
 	e:SetLabelObject(g:GetFirst())
@@ -101,7 +102,7 @@ function c101006040.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101006040.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsCode,1,nil,101006040) then
+	if g:IsExists(Card.IsLinkCode,1,nil,101006040) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)

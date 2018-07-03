@@ -53,7 +53,7 @@ end
 function c101006053.filter(c)
 	if not c:IsSummonType(SUMMON_TYPE_LINK) then return false end
 	local mat=c:GetMaterial()
-	return c:IsFaceup() and c:IsSetCard(0x220) and mat:IsExists(Card.IsCode,1,nil,c:GetCode())
+	return c:IsFaceup() and c:IsSetCard(0x220) and mat:IsExists(Card.IsLinkCode,1,nil,c:GetCode())
 end
 function c101006053.spfilter2(c,e,tp)
 	return c:IsSetCard(0x220) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

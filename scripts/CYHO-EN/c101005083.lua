@@ -17,15 +17,11 @@ function c101005083.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCode(EVENT_DISCARD)
 	e2:SetCountLimit(1,101005083)
-	e2:SetCondition(c101005083.thcon)
 	e2:SetTarget(c101005083.thtg)
 	e2:SetOperation(c101005083.thop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e3)
 end
 function c101005083.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
@@ -57,9 +53,6 @@ function c101005083.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	end
-end
-function c101005083.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and bit.band(r,REASON_DISCARD)~=0
 end
 function c101005083.thfilter(c)
 	return c:IsSetCard(0x223) and not c:IsCode(101005083) and c:IsAbleToHand()

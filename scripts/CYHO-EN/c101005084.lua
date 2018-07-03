@@ -17,15 +17,11 @@ function c101005084.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCode(EVENT_DISCARD)
 	e2:SetCountLimit(1,101005084)
-	e2:SetCondition(c101005084.spcon)
 	e2:SetTarget(c101005084.sptg2)
 	e2:SetOperation(c101005084.spop2)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e3)
 end
 function c101005084.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
@@ -57,9 +53,6 @@ function c101005084.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	end
-end
-function c101005084.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and bit.band(r,REASON_DISCARD)~=0
 end
 function c101005084.spfilter2(c,e,tp)
 	return c:IsSetCard(0x223) and not c:IsCode(101005084) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

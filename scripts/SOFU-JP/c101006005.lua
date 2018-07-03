@@ -1,4 +1,4 @@
---転生炎獣Ｊジャガー
+--転生炎獣Jジャガー
 --Salamangreat Jack Jaguar
 --Script by dest
 function c101006005.initial_effect(c)
@@ -21,13 +21,13 @@ function c101006005.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101006005.filter(c)
-	return c:IsSetCard(0x220) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(0x220) and c:IsType(TYPE_LINK)
 end
 function c101006005.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101006005.filter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c101006005.tdfilter(c)
-	return c:IsSetCard(0x220) and c:IsType(TYPE_MONSTER) and not c:IsCode(101006005) and c:IsAbleToDeck()
+function c101006005.tdfilter(c,e)
+	return c:IsSetCard(0x220) and c:IsType(TYPE_MONSTER) and not c:IsCode(101006005) and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
 function c101006005.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101006005.tdfilter(chkc) end
@@ -48,7 +48,7 @@ function c101006005.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101006005.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and e:GetHandler():IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) and e:GetHandler():IsRelateToEffect(e) then
 		local g=Duel.GetMatchingGroup(c101006005.filter,tp,LOCATION_MZONE,0,nil)
 		if g:GetCount()<=0 then return end
 		local zone=0
