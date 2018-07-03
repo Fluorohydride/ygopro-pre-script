@@ -68,7 +68,7 @@ function c101005083.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101005083.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function c101005083.tgop(e,tp,eg,ep,ev,re,r,rp)
+function c101005083.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101005083.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then

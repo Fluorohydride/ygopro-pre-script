@@ -27,7 +27,7 @@ function c101005087.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(p)
 		Duel.BreakEffect()
 		local g=Duel.GetFieldGroup(p,LOCATION_HAND,0)
-		if g:IsExists(Card.IsSetCard,1,nil,0x223)
+		if g:IsExists(Card.IsSetCard,1,nil,0x223) then
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_DISCARD)
 			local g1=g:Select(p,1,1,nil)
 			if g1:GetFirst():IsSetCard(0x223) then
