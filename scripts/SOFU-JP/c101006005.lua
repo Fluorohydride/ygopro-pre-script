@@ -26,8 +26,8 @@ end
 function c101006005.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101006005.filter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c101006005.tdfilter(c,e)
-	return c:IsSetCard(0x220) and c:IsType(TYPE_MONSTER) and not c:IsCode(101006005) and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
+function c101006005.tdfilter(c)
+	return c:IsSetCard(0x220) and c:IsType(TYPE_MONSTER) and not c:IsCode(101006005) and c:IsAbleToDeck()
 end
 function c101006005.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101006005.tdfilter(chkc) end
