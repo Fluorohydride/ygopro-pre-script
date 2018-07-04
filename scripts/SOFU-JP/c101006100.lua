@@ -1,5 +1,5 @@
 --永遠なる銀河
-
+--Eternal Galaxy
 --Script by nekrozar
 function c101006100.initial_effect(c)
 	--Activate
@@ -44,7 +44,7 @@ function c101006100.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCountFromEx(tp,tp,tc)<=0 or not aux.MustMaterialCheck(tc,tp,EFFECT_MUST_BE_XMATERIAL) then return end
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c101006100.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1)
+	local g=Duel.SelectMatchingCard(tp,c101006100.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+4)
 	local sc=g:GetFirst()
 	if sc then
 		local mg=tc:GetOverlayGroup()

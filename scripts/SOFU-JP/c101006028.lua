@@ -1,5 +1,5 @@
 --失楽の魔女
-
+--Condemned Witch
 --Script by nekrozar
 function c101006028.initial_effect(c)
 	--search
