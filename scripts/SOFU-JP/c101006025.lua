@@ -20,12 +20,10 @@ function c101006025.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101006025)
-	e2:SetLabel(0)
 	e2:SetCondition(c101006025.descon)
 	e2:SetTarget(c101006025.destg)
 	e2:SetOperation(c101006025.desop)
 	c:RegisterEffect(e2)
-	e1:SetLabelObject(e2)
 end
 function c101006025.spcostfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
@@ -39,12 +37,14 @@ end
 function c101006025.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c101006025.spcostfilter,tp,LOCATION_GRAVE,0,3,3,nil)
+	local label=0
 	if g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_LIGHT) then
-		e:GetLabelObject():SetLabel(e:GetLabelObject():GetLabel()+1)
+		label=label+1
 	end
 	if g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_DARK) then
-		e:GetLabelObject():SetLabel(e:GetLabelObject():GetLabel()+2)
+		label=label+2
 	end
+	c:RegisterFlagEffect(101006025,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1,label)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c101006025.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -54,21 +54,22 @@ function c101006025.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101006025.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local label=e:GetHandler():GetFlagEffectLabel(101006025)
 	if chk==0 then
-		if e:GetLabel()==1 then
+		if label==1 then
 			return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 				and Duel.IsExistingMatchingCard(c101006025.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-		elseif e:GetLabel()==2 then
+		elseif label==2 then
 			return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0
 		else
 			return true
 		end
 	end
-	if e:GetLabel()==1 then
+	if label==1 then
 		Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(101006025,1))
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
-	elseif e:GetLabel()==2 then
+	elseif label==2 then
 		Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(101006025,2))
 		e:SetCategory(CATEGORY_TODECK)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,1-tp,LOCATION_HAND)
@@ -87,14 +88,15 @@ function c101006025.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
-	if e:GetLabel()==1 then
+	local label=c:GetFlagEffectLabel(101006025)
+	if label==1 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g1=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101006025.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if g1:GetCount()>0 then
 			Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		end
-	elseif e:GetLabel()==2 then
+	elseif label==2 then
 		if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)<=0 then return end
 		local g2=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,1)
 		Duel.SendtoDeck(g2,nil,2,REASON_EFFECT)
