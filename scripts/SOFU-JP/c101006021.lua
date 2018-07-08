@@ -2,10 +2,10 @@
 --Beastial Thunder Dragon
 --Script by dest
 function c101006021.initial_effect(c)
-	--spsummon
+	--recycle
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101006021,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101006021)
@@ -13,10 +13,10 @@ function c101006021.initial_effect(c)
 	e1:SetTarget(c101006021.target)
 	e1:SetOperation(c101006021.operation)
 	c:RegisterEffect(e1)
-	--shuffle and draw
+	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101006021,1))
-	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
