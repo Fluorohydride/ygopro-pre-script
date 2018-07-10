@@ -2,9 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **May 27, 2018** : Promotion Pack (18PR-JP) : `100231XXX`
-- **June 9, 2018** : Duelist Pack: Legend Duelist 3 (DP20-JP) : `100409XXX`
-- **June 23, 2018** : Structure Deck: Master Link (SD34-JP) : `100334XXX`
 - **July 14, 2018** : Soul Fusion (SOFU-JP) : `101006XXX`
 - **July 16, 2018** : Jump Victory Carnival 2018 (VF18-JP) : `100232XXX`
 - **August 4, 2018** : Deck Build Pack: Hidden Summoners (DBHS-JP) : `100410XXX`
@@ -84,3 +81,6 @@
 - ~~Cybernetic Horizon (CYHO-JP) : `101005XXX`~~
 - ~~Collectors Pack 2018 (CP18-JP) : `100227XXX`~~
 - ~~20th Anniversary Legendary Dragons (VP18-JP) : `100228XXX`~~
+- ~~Promotion Pack (18PR-JP) : `100231XXX`~~
+- ~~Duelist Pack: Legend Duelist 3 (DP20-JP) : `100409XXX`~~
+- ~~Structure Deck: Master Link (SD34-JP) : `100334XXX`~~
