@@ -75,7 +75,7 @@ function c101006068.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:IsReason(REASON_DESTROY+REASON_EFFECT) and c:GetPreviousControler()==tp
 end
 function c101006068.setfilter(c)
-	return c:IsSetCard(0x2e) and not c:IsCode(101006068) and c:IsSSetable()
+	return c:IsSetCard(0x91) and not c:IsCode(101006068) and c:IsSSetable()
 end
 function c101006068.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101006068.setfilter,tp,LOCATION_DECK,0,1,nil) end
