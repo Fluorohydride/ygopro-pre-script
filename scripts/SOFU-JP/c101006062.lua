@@ -54,10 +54,14 @@ function c101006062.dmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,c101006062.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) and tc:IsType(TYPE_NORMAL) then
-		local g=Duel.GetMatchingGroup(c101006062.spfilter,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp,tc:GetCode())
-		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101006062,1)) then
+		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101006062.spfilter),tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp,tc:GetCode())
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+		if g:GetCount()>0 and ft>0 and Duel.SelectYesNo(tp,aux.Stringid(101006062,1)) then
 			Duel.BreakEffect()
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sg=g:Select(tp,1,ft,nil)
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 end
