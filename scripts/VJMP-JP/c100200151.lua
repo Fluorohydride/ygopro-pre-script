@@ -95,6 +95,9 @@ end
 function c100200151.splimit(e,c)
 	return not c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_EXTRA)
 end
+function c100200151.costfilter(c)
+	return c:IsLevelAbove(1) and c:IsRace(RACE_FIEND)
+end
 function c100200151.fselect(c,e,tp,rg,sg)
 	sg:AddCard(c)
 	local res=c100200151.fgoal(e,tp,sg) or rg:IsExists(c100200151.fselect,1,sg,e,tp,rg,sg)
@@ -114,7 +117,7 @@ function c100200151.fgoal(e,tp,sg)
 	if sg:GetCount()>1 and Duel.GetLocationCountFromEx(tp,tp,sg)>0 then
 		local lv=c100200151.lvcheck(sg)
 		Duel.SetSelectedCard(sg)
-		return Duel.CheckReleaseGroup(tp,nil,0,nil) and Duel.IsExistingMatchingCard(c100200151.spfilter3,tp,LOCATION_DECK,0,1,nil,e,tp,lv)
+		return Duel.CheckReleaseGroup(tp,nil,0,nil) and Duel.IsExistingMatchingCard(c100200151.spfilter3,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv)
 	else return false end
 end
 function c100200151.spfilter3(c,e,tp,lv)
@@ -124,11 +127,11 @@ function c100200151.relfilter(c,g)
 	return g:IsContains(c)
 end
 function c100200151.spcost3(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetReleaseGroup(tp):Filter(Card.IsRace,nil,RACE_FIEND)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c100200151.costfilter,nil)
 	local g=Group.CreateGroup()
 	if chk==0 then return rg:IsExists(c100200151.fselect,1,nil,e,tp,rg,g) end
 	while true do
-		local mg=rg:Filter(c100200151.fselect,e,g,tp,rg,g)
+		local mg=rg:Filter(c100200151.fselect,g,e,tp,rg,g)
 		if mg:GetCount()==0 or (c100200151.fgoal(e,tp,g) and not Duel.SelectYesNo(tp,210)) then break end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		local sg=Duel.SelectReleaseGroup(tp,c100200151.relfilter,1,1,nil,mg)
@@ -146,7 +149,7 @@ function c100200151.spop3(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCountFromEx(tp)<=0 or not aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_FMATERIAL) then return end
 	local lv=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c100200151.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,lv)
+	local g=Duel.SelectMatchingCard(tp,c100200151.spfilter3,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,lv)
 	local tc=g:GetFirst()
 	if tc then
 		tc:SetMaterial(nil)
