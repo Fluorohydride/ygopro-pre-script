@@ -15,7 +15,7 @@ function c101006045.initial_effect(c)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
-	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFEECT)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e2)
 	--todeck
 	local e3=Effect.CreateEffect(c)
