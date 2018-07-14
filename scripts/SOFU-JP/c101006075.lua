@@ -40,7 +40,7 @@ function c101006075.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101006075.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp
-	local mg1=Duel.GetMatchingGroup(aux.NecroValleyFIlter(c101006075.filter1),tp,LOCATION_GRAVE,0,nil)
+	local mg1=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101006075.filter1),tp,LOCATION_GRAVE,0,nil)
 	local sg1=Duel.GetMatchingGroup(c101006075.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	local mg2=nil
 	local sg2=nil

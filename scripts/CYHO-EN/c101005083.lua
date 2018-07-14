@@ -39,7 +39,7 @@ function c101005083.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	local tc=g:RandomSelect(1-tp,1):GetFirst()
-	if Duel.SendtoGrave(tc,REASON_DISCARD+REASON_EFFECT)~=0 and not tc:IsCode(101005083)
+	if tc and Duel.SendtoGrave(tc,REASON_DISCARD+REASON_EFFECT)~=0 and not tc:IsCode(101005083)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		local spg=Duel.GetMatchingGroup(c101005083.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 		if spg:GetCount()<=0 then return end

@@ -13,7 +13,7 @@ function c101005090.initial_effect(c)
 	e1:SetOperation(c101005090.desop)
 	c:RegisterEffect(e1)
 end
-function c101005090.desfilter(c)
+function c101005090.desfilter(c,g)
 	return c:IsFaceup() and c:IsSetCard(0x207a) and g:IsContains(c)
 end
 function c101005090.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
