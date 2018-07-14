@@ -70,9 +70,11 @@ function c101006046.seqop(e,tp,eg,ep,ev,re,r,rp)
 		p1=LOCATION_MZONE
 		p2=0
 	else
-		p2=LOCATION_MZONE
 		p1=0
+		p2=LOCATION_MZONE
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	Duel.MoveSequence(tc,math.log(Duel.SelectDisableField(tp,1,p1,p2,0),2))
+	local seq=math.log(Duel.SelectDisableField(tp,1,p1,p2,0),2)
+	if tc:IsControler(1-tp) then seq=seq-16 end
+	Duel.MoveSequence(tc,seq)
 end
