@@ -41,11 +41,10 @@ function c101006074.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101006074.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if c:GetSummonType()~=SUMMON_TYPE_SPECIAL+1 then return false end
 	local lg1=Duel.GetLinkedGroup(tp,1,1)
 	local lg2=Duel.GetLinkedGroup(1-tp,1,1)
-	lg1:Merge(lg2)
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL+1
-		and lg1 and lg1:IsContains(c)
+	return (lg1 and lg1:IsContains(c)) or (lg2 and lg2:IsContains(c))
 end
 function c101006074.filter(c)
 	return c:IsSetCard(0xfe) and c:IsAbleToHand()
