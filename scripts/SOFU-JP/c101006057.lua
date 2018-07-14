@@ -12,7 +12,7 @@ function c101006057.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(101006057)
-	e2:SetRange(LOCATION_SZONE)
+	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(1,0)
 	c:RegisterEffect(e2)
 	--to hand
