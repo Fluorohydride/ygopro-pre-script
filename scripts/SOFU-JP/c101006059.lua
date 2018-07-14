@@ -27,6 +27,9 @@ end
 function c101006059.cfilter(c,tp)
 	return c:GetSummonPlayer()==tp
 end
+function c101006059.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c101006059.cfilter,1,nil,1-tp)
+end
 function c101006059.tgfilter(c)
 	return (c:IsSetCard(0xfe) or c:IsSetCard(0x225)) and c:IsType(TYPE_MONSTER) and (c:IsAbleToGrave() or c:IsAbleToRemove())
 end
