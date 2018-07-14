@@ -2,7 +2,7 @@
 --Two-Man Salesman
 --Scripted by Eerie Code
 function c101006032.initial_effect(c)
-	--
+	--confirm
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -31,7 +31,7 @@ function c101006032.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc1:IsType(TYPE_MONSTER) and tc2:IsType(TYPE_MONSTER) then
 		for p=0,1 do
 			local tc=tg[p]
-			if Duel.GetLocationCount(p,LOCATION_MZONE)>0 
+			if Duel.GetLocationCount(p,LOCATION_MZONE)>0
 				and tc:IsCanBeSpecialSummoned(e,0,p,false,false)
 				and Duel.SelectYesNo(p,aux.Stringid(101006032,1)) then
 				Duel.SpecialSummon(tc,0,p,p,false,false,POS_FACEUP)
@@ -45,7 +45,7 @@ function c101006032.operation(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_DECK,0,2,nil)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_DECK,2,nil) then
 		for p=0,1 do
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOGRAVE)
 			local g=Duel.SelectMatchingCard(p,Card.IsAbleToGrave,p,LOCATION_DECK,0,2,2,nil)
 			Duel.SendtoGrave(g,REASON_EFFECT)
 		end

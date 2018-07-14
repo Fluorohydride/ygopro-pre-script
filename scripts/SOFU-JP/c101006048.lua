@@ -2,8 +2,9 @@
 --Dragon Agave
 --Scripted by Eerie Code
 function c101006048.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.Not(aux.FilterBoolFunctionEx(Card.IsType,TYPE_TOKEN)),2)
+	aux.AddLinkProcedure(c,aux.NOT(aux.FilterBoolFunction(Card.IsLinkType,TYPE_TOKEN)),2)
 	--apply effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101006048,0))
@@ -38,15 +39,17 @@ function c101006048.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(1-tp,ct1*100,REASON_EFFECT)
 	end
 	if ct2>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
+		if ct1>0 then Duel.BreakEffect() end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct2*200)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e1)
 	end
 	local og=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if ct3>0 and #og>0 then
+		if ct1>0 or ct2>0 then Duel.BreakEffect() end
 		for tc in aux.Next(og) do
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
@@ -57,6 +60,7 @@ function c101006048.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if ct4>0 then
+		if ct1>0 or ct2>0 or ct3>0 then Duel.BreakEffect() end
 		Duel.Recover(tp,ct4*400,REASON_EFFECT)
 	end
 end

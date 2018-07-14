@@ -1,4 +1,4 @@
---
+--ネクロバレーの玉座
 --Royal Throne of Necrovalley
 --Script by dest
 function c101006055.initial_effect(c)
