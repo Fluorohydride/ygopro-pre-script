@@ -17,7 +17,7 @@ function c101006068.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetCondition(c101006068.atkcon)
-	e2:SetValue(500)
+	e2:SetValue(-500)
 	c:RegisterEffect(e2)
 	--activate Necrovalley
 	local e3=Effect.CreateEffect(c)
