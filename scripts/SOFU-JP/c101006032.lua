@@ -26,16 +26,20 @@ function c101006032.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=hg1:Select(tp,1,1,nil):GetFirst()
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_CONFIRM)
 	local tc2=hg2:Select(1-tp,1,1,nil):GetFirst()
-	local tg={tc1,tc2}
-	if tc2:IsControler(0) then tc={tc2,tc1} end
+	local tg=Group.FromCards(tc1,tc2)
+	Duel.ConfirmCards(tp,tg)
 	if tc1:IsType(TYPE_MONSTER) and tc2:IsType(TYPE_MONSTER) then
-		for p=0,1 do
-			local tc=tg[p]
+		local i=0
+		local p=tp
+		while i<=1 do
+			local tc=tg:Filter(Card.IsControler,nil,p):GetFirst()
 			if Duel.GetLocationCount(p,LOCATION_MZONE)>0
 				and tc:IsCanBeSpecialSummoned(e,0,p,false,false)
 				and Duel.SelectYesNo(p,aux.Stringid(101006032,1)) then
 				Duel.SpecialSummon(tc,0,p,p,false,false,POS_FACEUP)
 			end
+			i=i+1
+			p=1-tp
 		end
 	elseif tc1:IsType(TYPE_SPELL) and tc2:IsType(TYPE_SPELL)
 		and Duel.IsPlayerCanDraw(tp,2) and Duel.IsPlayerCanDraw(1-tp,2) then
@@ -50,4 +54,6 @@ function c101006032.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(g,REASON_EFFECT)
 		end
 	end
+	Duel.ShuffleHand(tp)
+	Duel.ShuffleHand(1-tp)
 end
