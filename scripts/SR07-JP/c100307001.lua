@@ -27,7 +27,6 @@ function c100307001.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100307001.disrmcon(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	local c=re:GetHandler()
 	return c:IsRace(RACE_ZOMBIE) and not c:IsCode(100307001)
 end
@@ -39,7 +38,7 @@ function c100307001.disrmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100307001.disrmop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.IsChainDisablable(ev) and Duel.GetFlagEffect(tp,100307001)==0
-	local b2=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
+	local b2=Duel.IsExistingMatchingCard(aux.NecroValleyFilter(Card.IsAbleToRemove),tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
 		and Duel.GetFlagEffect(tp,100307001+100)==0
 	local op=0
 	if b1 and b2 then op=Duel.SelectOption(tp,aux.Stringid(100307001,1),aux.Stringid(100307001,2))
