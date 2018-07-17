@@ -26,7 +26,7 @@ function c101006066.initial_effect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1)
+	e3:SetCountLimit(1,101006066)
 	e3:SetCost(c101006066.descost)
 	e3:SetTarget(c101006066.destg)
 	e3:SetOperation(c101006066.desop)
@@ -69,7 +69,7 @@ function c101006066.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local ec=c:GetEquipTarget()
-	if not ec or not ec:IsRelateToEffect(e) or ec:IsImmuneToEffect(e) then return end
+	if not ec or ec:IsImmuneToEffect(e) then return end
 	local p=ec:GetControler()
 	local zone=bit.band(ec:GetLinkedZone(),0x1f)
 	if Duel.GetLocationCount(p,LOCATION_MZONE,p,LOCATION_REASON_CONTROL,zone)>0 then
