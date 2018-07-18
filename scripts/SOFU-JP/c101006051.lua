@@ -54,7 +54,7 @@ function c101006051.linkop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.RegisterFlagEffect(tp,101006051,RESET_PHASE+PHASE_END,0,1)
 end
 function c101006051.mattg(e,c)
-	return c:IsSetCard(0x220) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK)
 end
 function c101006051.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

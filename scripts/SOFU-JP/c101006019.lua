@@ -54,7 +54,7 @@ function c101006019.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c101006019.thfilter(c)
-	return c:IsSetCard(0x222) and not c:IsCode(101006019) and c:IsAbleToHand()
+	return c:IsSetCard(0x11c) and not c:IsCode(101006019) and c:IsAbleToHand()
 end
 function c101006019.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101006019.thfilter,tp,LOCATION_DECK,0,1,nil) end

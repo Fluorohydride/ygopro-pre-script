@@ -31,7 +31,7 @@ function c101006009.spcon(e,c)
 		and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)<Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE,nil)
 end
 function c101006009.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x221)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x11a)
 end
 function c101006009.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c101006009.cfilter,1,nil) end

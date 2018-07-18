@@ -33,7 +33,7 @@ function c101006043.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101006043.lcheck(g)
-	return g:IsExists(Card.IsLinkSetCard,1,nil,0x225)
+	return g:IsExists(Card.IsLinkSetCard,1,nil,0x11b)
 end
 function c101006043.indcon(e)
 	return e:GetHandler():IsLinkState()
@@ -55,7 +55,7 @@ function c101006043.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end
 function c101006043.setfilter(c)
-	return c:IsSetCard(0x225) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x11b) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function c101006043.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

@@ -34,7 +34,7 @@ function c101006020.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c101006020.spfilter(c,e,tp)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSetCard(0x222) and not c:IsCode(101006020) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSetCard(0x11c) and not c:IsCode(101006020) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101006020.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

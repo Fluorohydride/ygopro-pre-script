@@ -23,7 +23,7 @@ function c101006052.initial_effect(c)
 end
 c101006052.fit_monster={101006033}
 function c101006052.filter(c,e,tp,m,m2,ft)
-	if not c:IsSetCard(0x220) or bit.band(c:GetType(),0x81)~=0x81
+	if not c:IsSetCard(0x119) or bit.band(c:GetType(),0x81)~=0x81
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
 	mg:Merge(m2)
@@ -40,7 +40,7 @@ function c101006052.filterF(c,tp,mg,rc)
 	else return false end
 end
 function c101006052.mfilter(c)
-	return c:GetLevel()>0 and c:IsSetCard(0x220) and c:IsAbleToDeck()
+	return c:GetLevel()>0 and c:IsSetCard(0x119) and c:IsAbleToDeck()
 end
 function c101006052.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_FIRE)

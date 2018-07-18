@@ -43,7 +43,7 @@ function c101006006.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101006006.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsSetCard(0x221)
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsSetCard(0x11a)
 end
 function c101006006.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

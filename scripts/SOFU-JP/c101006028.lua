@@ -28,7 +28,7 @@ function c101006028.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101006028.thfilter(c)
-	return (c:IsSetCard(0x224) or c:IsCode(25789292,27243130,54773234,96864811)) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
+	return (c:IsSetCard(0x11d) or c:IsCode(25789292,27243130,54773234,96864811)) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
 end
 function c101006028.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101006028.thfilter,tp,LOCATION_DECK,0,1,nil) end

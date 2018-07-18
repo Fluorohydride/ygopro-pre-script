@@ -38,7 +38,7 @@ function c101006045.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101006045.lcheck(g)
-	return g:IsExists(Card.IsLinkSetCard,1,nil,0x225)
+	return g:IsExists(Card.IsLinkSetCard,1,nil,0x11b)
 end
 function c101006045.indcon(e)
 	return e:GetHandler():IsLinkState()

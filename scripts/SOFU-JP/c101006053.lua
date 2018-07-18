@@ -31,7 +31,7 @@ function c101006053.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101006053.spfilter(c,e,tp)
-	return c:IsSetCard(0x220) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x119) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101006053.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -53,10 +53,10 @@ end
 function c101006053.filter(c)
 	if not c:IsSummonType(SUMMON_TYPE_LINK) then return false end
 	local mat=c:GetMaterial()
-	return c:IsFaceup() and c:IsSetCard(0x220) and mat:IsExists(Card.IsLinkCode,1,nil,c:GetCode())
+	return c:IsFaceup() and c:IsSetCard(0x119) and mat:IsExists(Card.IsLinkCode,1,nil,c:GetCode())
 end
 function c101006053.spfilter2(c,e,tp)
-	return c:IsSetCard(0x220) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(0x119) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101006053.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101006005.filter(chkc) end

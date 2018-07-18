@@ -45,7 +45,7 @@ function c101006002.spop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c101006002.cfilter(c)
-	return c:IsSetCard(0x220) and c:IsDiscardable()
+	return c:IsSetCard(0x119) and c:IsDiscardable()
 end
 function c101006002.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101006002.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end

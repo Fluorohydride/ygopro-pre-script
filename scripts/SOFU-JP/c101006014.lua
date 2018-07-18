@@ -28,7 +28,7 @@ function c101006014.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsPlayerAffectedByEffect(tp,101006057)
 end
 function c101006014.spfilter(c,e,tp)
-	return c:IsSetCard(0x225) and not c:IsCode(101006014) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x11b) and not c:IsCode(101006014) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101006014.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

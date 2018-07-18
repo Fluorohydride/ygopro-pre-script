@@ -14,7 +14,7 @@ function c101006070.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101006070.cfilter(c)
-	return c:IsSetCard(0xfe) or c:IsSetCard(0x225)
+	return c:IsSetCard(0xfe) or c:IsSetCard(0x11b)
 end
 function c101006070.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c101006070.cfilter,1,nil) end

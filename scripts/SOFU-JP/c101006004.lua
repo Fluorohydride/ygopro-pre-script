@@ -25,7 +25,7 @@ function c101006004.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101006004.filter(c)
-	return c:IsSetCard(0x220) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x119) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function c101006004.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101006004.filter(chkc) end
@@ -42,7 +42,7 @@ function c101006004.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101006004.thfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x220) and not c:IsCode(101006004) and c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)
+	return c:IsFaceup() and c:IsSetCard(0x119) and not c:IsCode(101006004) and c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)
 end
 function c101006004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101006004.thfilter(chkc,tp) end

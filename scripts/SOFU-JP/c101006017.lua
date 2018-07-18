@@ -56,7 +56,7 @@ function c101006017.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101006017.spfilter2(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x225) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(0x11b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101006017.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101006017.spfilter2(chkc,e,tp) end

@@ -37,7 +37,7 @@ function c101006073.efilter(e,ct)
 	return p==tp and te:IsActiveType(TYPE_MONSTER) and te:GetHandler():IsRace(RACE_THUNDER)
 end
 function c101006073.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x222) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x11c) and c:IsControler(tp)
 end
 function c101006073.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101006073.cfilter,1,nil,tp)

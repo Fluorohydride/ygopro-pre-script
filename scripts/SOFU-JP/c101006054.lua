@@ -49,7 +49,7 @@ function c101006054.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c101006054.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x221)
+	return c:IsFaceup() and c:IsSetCard(0x11a)
 end
 function c101006054.atklimcon(e)
 	return e:GetHandler():GetFlagEffect(101006054)~=0 and Duel.IsExistingMatchingCard(c101006054.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
@@ -69,13 +69,13 @@ function c101006054.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and d and d:IsControler(1-tp)
 end
 function c101006054.atktg(e,c)
-	return c==Duel.GetAttacker() and c:IsSetCard(0x221)
+	return c==Duel.GetAttacker() and c:IsSetCard(0x11a)
 end
 function c101006054.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 end
 function c101006054.spfilter(c,e,tp)
-	return c:IsSetCard(0x221) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x11a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101006054.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

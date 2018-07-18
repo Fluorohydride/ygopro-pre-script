@@ -54,7 +54,7 @@ function c101006033.valcheck(e,c)
 	end
 end
 function c101006033.cfilter(c)
-	return c:IsSetCard(0x220) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK)
 end
 function c101006033.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c101006033.cfilter,1,nil) end

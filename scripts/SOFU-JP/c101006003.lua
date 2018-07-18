@@ -33,7 +33,7 @@ function c101006003.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function c101006003.thfilter(c)
-	return c:IsSetCard(0x220) and c:IsAbleToHand()
+	return c:IsSetCard(0x119) and c:IsAbleToHand()
 end
 function c101006003.thop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
@@ -55,7 +55,7 @@ function c101006003.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101006003.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function c101006003.cfilter(c)
-	return c:IsSetCard(0x220) and c:IsDiscardable()
+	return c:IsSetCard(0x119) and c:IsDiscardable()
 end
 function c101006003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101006003.cfilter,tp,LOCATION_HAND,0,1,nil) end
