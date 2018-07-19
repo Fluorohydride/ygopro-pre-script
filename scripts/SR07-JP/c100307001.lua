@@ -50,7 +50,7 @@ function c100307001.disrmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterFlagEffect(tp,100307001,RESET_PHASE+PHASE_END,0,1)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c100307001.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		Duel.RegisterFlagEffect(tp,100307001+100,RESET_PHASE+PHASE_END,0,1)
 	end
@@ -67,4 +67,7 @@ function c100307001.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+end
+function c100307001.filter(c)
+return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
