@@ -48,7 +48,7 @@ function c100410018.spfilter(c,e,tp)
 end
 function c100410018.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetMatchingGroup(c100410017.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(c100410018.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
 	if chk==0 then return ft>1 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
