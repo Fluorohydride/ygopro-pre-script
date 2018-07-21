@@ -1,10 +1,11 @@
 --ネフティスの蒼凰神
---Sacred Azure Phoenix of Nephthys
+--Sacred Blue Phoenix of Nephthys
 --Scripted by Eerie Code
 function c100410006.initial_effect(c)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,100410006)
@@ -21,7 +22,7 @@ function c100410006.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100410006,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e3:SetCountLimit(1,100410006+100)
@@ -47,6 +48,7 @@ function c100410006.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,1,#og,nil)
 	local oc=Duel.Destroy(sg,REASON_EFFECT)
 	if oc==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local sg2=og:Select(tp,oc,oc,nil)
 	Duel.Destroy(sg2,REASON_EFFECT)
 end
@@ -66,8 +68,8 @@ function c100410006.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and e:GetLabelObject():GetLabel()~=Duel.GetTurnCount() and tp==Duel.GetTurnPlayer() and c:GetFlagEffect(100410006)>0
 end
 function c100410006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
 	local c=e:GetHandler()
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	c:ResetFlagEffect(100410006)
 end

@@ -1,5 +1,5 @@
 --ネフティスの祀り手
---Enshrining Hand of Nephthys
+--Avatar of Nephthys
 --Scripted by Eerie Code
 function c100410005.initial_effect(c)
 	c:EnableReviveLimit()
@@ -40,7 +40,6 @@ end
 function c100410005.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(23289281,1))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetRange(LOCATION_MZONE)

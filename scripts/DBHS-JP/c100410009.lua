@@ -1,5 +1,5 @@
 --ネフティスの輪廻
--- Rebirth of Nephthys
+--Rebirth of Nephthys
 function c100410009.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -61,14 +61,14 @@ function c100410009.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:SetMaterial(mat)
 		Duel.ReleaseRitualMaterial(mat)
 		Duel.BreakEffect()
-			Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
+		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 		tc:CompleteProcedure()
-		Duel.BreakEffect()
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
-			if mat:IsExists(c100410009.mfilter,1,nil) and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(100410009,0)) then
+		if mat:IsExists(c100410009.mfilter,1,nil) and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(100410009,0)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=g:Select(tp,1,1,e:GetHandler())
 			Duel.Destroy(sg,REASON_EFFECT)
-	end
+		end
 	end
 end
