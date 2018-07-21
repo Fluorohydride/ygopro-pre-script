@@ -38,6 +38,7 @@ end
 function c101005082.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+	if g:GetCount()<=0 then return end
 	local tc=g:RandomSelect(1-tp,1):GetFirst()
 	if Duel.SendtoGrave(tc,REASON_DISCARD+REASON_EFFECT)~=0 and not tc:IsCode(101005082)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
