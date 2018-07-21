@@ -1,9 +1,9 @@
 --プランキッズ・ハウスバトラー
---Prankids Housebutler
+--Prankids House Battle Butler
 function c100410019.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,100410014,100410015,100410016)
+	aux.AddFusionProcCode3(c,100410014,100410015,100410016,true,true)
 	--spsummon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -13,9 +13,10 @@ function c100410019.initial_effect(c)
 	c:RegisterEffect(e0)
 	--destroy
 	local e1=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100410019,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCost(c100410019.descost)
@@ -24,7 +25,7 @@ function c100410019.initial_effect(c)
 	c:RegisterEffect(e1)
 	--spsum
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(77135531,1))
+	e2:SetDescription(aux.Stringid(100410019,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
@@ -50,10 +51,10 @@ function c100410019.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100410019.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:GetPreviousControler()==tp
+	return rp==1-tp and c:GetPreviousControler()==tp
 end
 function c100410019.spfilter(c,e,tp)
-	return (not c:IsType(TYPE_FUSION)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return not c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100410019.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100410019.spfilter(chkc,e,tp) end

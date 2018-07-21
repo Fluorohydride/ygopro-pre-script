@@ -1,5 +1,5 @@
--- プランキッズ・パルス
--- Prankids Pulse 
+--プランキッズ・パルス
+--Prankids Pulse 
 function c100410014.initial_effect(c)
 	--indes
 	local e1=Effect.CreateEffect(c)
@@ -21,13 +21,12 @@ end
 function c100410014.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100410014.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_DECK+LOCATION_HAND)
 end
 function c100410014.tgfilter(c)
 	return c:IsSetCard(0x226) and c:IsAbleToGrave() and not c:IsCode(100410014)
 end
 function c100410014.spfilter(c,e,tp)
-	return c:IsSetCard(0x226) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)  and not c:IsCode(100410014)
+	return c:IsSetCard(0x226) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(100410014)
 end
 function c100410014.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -35,7 +34,7 @@ function c100410014.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.GetMatchingGroup(c100410014.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,g:GetFirst(),e,tp)
 	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE)
 		and #g2>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.SelectYesNo(tp,aux.Stringid(100410014,1)) then
+		and Duel.SelectYesNo(tp,aux.Stringid(100410014,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g2:Select(tp,1,1,nil)

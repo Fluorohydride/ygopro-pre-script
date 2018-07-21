@@ -54,7 +54,7 @@ function c100410022.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100410022.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:GetPreviousControler()==tp
+	return rp==1-tp and c:GetPreviousControler()==tp
 end
 function c100410022.thfilter(c)
 	return not c:IsType(TYPE_LINK) and c:IsAbleToHand()

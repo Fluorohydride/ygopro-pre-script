@@ -1,5 +1,5 @@
 --魔妖廻天
--- Mayakashi Kaiten
+--Mayakashi Revolt
 function c100410038.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -20,8 +20,9 @@ end
 function c100410038.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100410038.filter,tp,LOCATION_DECK,0,1,1,nil)
+	if g:GetCount()<=0 then return end
 	local tc=g:GetFirst()
-	if tc and tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(100410038,0))) then
+	if tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(100410038,0))) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 	else

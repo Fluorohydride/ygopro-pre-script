@@ -3,13 +3,14 @@
 --Scripted by Eerie Code
 function c100410017.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,aux.FilterBoolFunction(Card.IsFusionSetCard,0x226),2)
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x226),2,true)
 	--direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100410017,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,100410017)
 	e1:SetCondition(c100410017.atkcon)
 	e1:SetOperation(c100410017.atkop)
@@ -55,19 +56,21 @@ function c100410017.spfilter(c,e,tp)
 	return c:IsSetCard(0x226) and not c:IsType(TYPE_FUSION) 
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100410017.spcheck(sg,e,tp)
-	return sg:GetClassCount(Card.GetCode)==2
-end
 function c100410017.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local g=Duel.GetMatchingGroup(c100410017.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
 	if chk==0 then return ft>1 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
-		and aux.SelectUnselectGroup(g,e,tp,2,2,c100410017.spcheck,0) end
-	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,c100410017.spcheck,1,tp,HINTMSG_SPSUMMON)
-	Duel.SetTargetCard(tg)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tg,#tg,0,0)
+		and g:GetClassCount(Card.GetCode)>=2 end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g1=g:Select(tp,1,1,nil)
+	g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g2=g:Select(tp,1,1,nil)
+	g1:Merge(g2)
+	Duel.SetTargetCard(g1)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,2,0,0)
 end
 function c100410017.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
@@ -78,7 +81,7 @@ function c100410017.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 		tc=g:GetNext()

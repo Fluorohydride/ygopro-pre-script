@@ -6,10 +6,14 @@ function c100410025.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetCondition(c100410025.condition)
 	e1:SetTarget(c100410025.target)
 	e1:SetOperation(c100410025.activate)
 	c:RegisterEffect(e1)
+end
+function c100410025.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c100410025.filter1(c,e)
 	return not c:IsImmuneToEffect(e)
