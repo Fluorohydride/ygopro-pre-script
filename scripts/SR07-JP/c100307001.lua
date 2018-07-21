@@ -36,9 +36,12 @@ function c100307001.disrmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetFlagEffect(tp,100307001+100)==0
 	if chk==0 then return b1 or b2 end
 end
+function c100307001.filter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+end
 function c100307001.disrmop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.IsChainDisablable(ev) and Duel.GetFlagEffect(tp,100307001)==0
-	local b2=Duel.IsExistingMatchingCard(aux.NecroValleyFilter(Card.IsAbleToRemove),tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
+	local b2=Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100307001.filter),tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
 		and Duel.GetFlagEffect(tp,100307001+100)==0
 	local op=0
 	if b1 and b2 then op=Duel.SelectOption(tp,aux.Stringid(100307001,1),aux.Stringid(100307001,2))
@@ -50,7 +53,7 @@ function c100307001.disrmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterFlagEffect(tp,100307001,RESET_PHASE+PHASE_END,0,1)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c100307001.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		Duel.RegisterFlagEffect(tp,100307001+100,RESET_PHASE+PHASE_END,0,1)
 	end
