@@ -1,4 +1,4 @@
--- ネフティスの希望
+--ネフティスの希望
 --Hope of Nephthys
 function c100410010.initial_effect(c)
 	--Activate

@@ -1,4 +1,4 @@
--- 魔妖変生
+--魔妖変生
 --Return of the Mayakashi
 function c100410039.initial_effect(c)
 	--activate

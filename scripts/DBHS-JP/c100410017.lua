@@ -53,7 +53,7 @@ function c100410017.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c100410017.spfilter(c,e,tp)
-	return c:IsSetCard(0x226) and not c:IsType(TYPE_FUSION) 
+	return c:IsSetCard(0x226) and not c:IsType(TYPE_FUSION)
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100410017.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

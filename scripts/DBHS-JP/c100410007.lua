@@ -60,12 +60,14 @@ function c100410007.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100410007.thfilter1,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
+		Duel.ConfirmCards(1-tp,g)
 		local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100410007.thfilter2),tp,LOCATION_GRAVE,0,nil)
 		if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(100410007,3)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg2=g2:Select(tp,1,1,nil)
 			Duel.SendtoHand(sg2,nil,REASON_EFFECT)
 		end
+		Duel.ShuffleHand(tp)
 	end
 end
 function c100410007.desop(e,tp,eg,ep,ev,re,r,rp)

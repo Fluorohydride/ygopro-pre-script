@@ -1,8 +1,8 @@
---氷の魔妖-雪女　リンク
+--氷の魔妖-雪女
 --Icicle Mayakashi - Yukionna
 function c100410037.initial_effect(c)
 	c:SetUniqueOnField(1,0,100410037)
-	-- link summon
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x227),2,2)
 	--untargetable
