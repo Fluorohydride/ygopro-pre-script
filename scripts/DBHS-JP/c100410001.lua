@@ -50,7 +50,7 @@ function c100410001.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local tc=Duel.GetFirstTarget()
 	if Duel.Destroy(g,REASON_EFFECT)~=0 and tc:IsRelateToEffect(e)
-		and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0 then
+		and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
