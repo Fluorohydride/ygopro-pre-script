@@ -2,7 +2,7 @@
 --F.A. Shining Star GT
 --Scripted by ahtelel
 function c100421020.initial_effect(c)
-	c:EnableCounterPermit(0x100)
+	c:EnableCounterPermit(0x50)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_MACHINE),2,2)
