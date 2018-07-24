@@ -58,7 +58,9 @@ function c100410021.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100410021.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if #g<=0 or Duel.SendtoHand(g,nil,REASON_EFFECT)<=0 then return end
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
