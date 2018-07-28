@@ -14,7 +14,7 @@ function c100410037.initial_effect(c)
 	e1:SetCondition(c100410037.imcon)
 	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
-	--atk up
+	--atk/def down
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100410037,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -35,8 +35,8 @@ function c100410037.imcon(e)
 	return e:GetHandler():GetLinkedGroup():IsExists(c100410037.imfilter,1,nil)
 end
 function c100410037.atkfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsType(TYPE_SYNCHRO)
-		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and rp==1-tp
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:GetPreviousTypeOnField()&TYPE_SYNCHRO~=0
+		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)
 end
 function c100410037.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100410037.atkfilter,1,nil,tp)
