@@ -2,7 +2,7 @@
 --F.A. Shining Star GT
 --Scripted by ahtelel
 function c100421020.initial_effect(c)
-	c:EnableCounterPermit(0x50)
+	c:EnableCounterPermit(0x4a)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_MACHINE),2,2)
@@ -70,12 +70,12 @@ function c100421020.ctcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100421020.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x1000)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x4a)
 end
 function c100421020.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		c:AddCounter(0x50,1)
+		c:AddCounter(0x4a,1)
 	end
 end
 function c100421020.discon(e,tp,eg,ep,ev,re,r,rp)
@@ -83,7 +83,7 @@ function c100421020.discon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function c100421020.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x50,1,REASON_COST) end
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x4a,1,REASON_COST) end
 	Duel.RemoveCounter(tp,1,1,0x50,1,REASON_COST)
 end
 function c100421020.distg(e,tp,eg,ep,ev,re,r,rp,chk)
