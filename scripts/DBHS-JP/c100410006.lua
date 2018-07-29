@@ -48,13 +48,14 @@ function c100410006.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,1,#og,nil)
 	local oc=Duel.Destroy(sg,REASON_EFFECT)
 	if oc==0 then return end
+	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local sg2=og:Select(tp,oc,oc,nil)
 	Duel.Destroy(sg2,REASON_EFFECT)
 end
 function c100410006.spr(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if r & REASON_DESTROY==0 or r & REASON_BATTLE+REASON_EFFECT ==0 then return end
+	if c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) then return end
 	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
 		e:SetLabel(Duel.GetTurnCount())
 		c:RegisterFlagEffect(100410006,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,2)
@@ -69,13 +70,14 @@ function c100410006.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100410006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	c:ResetFlagEffect(100410006)
 end
 function c100410006.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

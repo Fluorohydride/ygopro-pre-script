@@ -1,4 +1,4 @@
---麗の魔妖-妖狐
+--麗の魔妖－妖狐
 --Beautiful Mayakashi – Youko
 function c100410035.initial_effect(c)
 	c:SetUniqueOnField(1,0,100410035)
@@ -10,7 +10,7 @@ function c100410035.initial_effect(c)
 	e1:SetDescription(aux.Stringid(100410035,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,100410035)
 	e1:SetCondition(c100410035.condition)

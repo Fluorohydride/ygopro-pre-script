@@ -1,5 +1,5 @@
---守護神-ネフティス
---Nephthys the Palladium Deity
+--守護神－ネフティス
+--Sacred Guardian - Nephthys
 --Scripted by Eerie Code
 function c100410007.initial_effect(c)
 	c:EnableReviveLimit()
@@ -7,9 +7,8 @@ function c100410007.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100410007,0))
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,100410007)
 	e1:SetCondition(c100410007.condition)
 	e1:SetTarget(c100410007.target)
@@ -24,18 +23,16 @@ end
 function c100410007.thfilter2(c)
 	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
 end
-function c100410007.desfilter(c,e,tp,g,nc)
-	local f=c100410007.spfilter
-	if nc then f=aux.NecroValleyFilter(f) end
-	return c:IsFaceup() and c:IsSetCard(0x219) and g:IsContains(c)
-		and Duel.IsExistingMatchingCard(f,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
+function c100410007.desfilter(c,e,tp,g)
+	return c:IsFaceup() and c:IsSetCard(0x219) and g:IsContains(c) and Duel.GetMZoneCount(tp,c)>0
+		and Duel.IsExistingMatchingCard(c100410007.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function c100410007.spfilter(c,e,tp,dc)
-	return c:IsSetCard(0x219) and c:GetOriginalCode()~=dc:GetOriginalCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMZoneCount(tp,dc)>0
+	return c:IsSetCard(0x219) and c:GetOriginalCode()~=dc:GetOriginalCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100410007.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(c100410007.thfilter1,tp,LOCATION_DECK,0,1,nil)
-	local b2=Duel.IsExistingMatchingCard(c100410007.desfilter,tp,LOCATION_MZONE,0,1,nil,e,tp,e:GetHandler():GetLinkedGroup(),false)
+	local b2=Duel.IsExistingMatchingCard(c100410007.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp,e:GetHandler():GetLinkedGroup())
 	if chk==0 then return b1 or b2 end
 	local op=-1
 	if b1 and b2 then
@@ -49,32 +46,33 @@ function c100410007.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e:SetOperation(c100410007.thop)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	else
+	elseif op==1 then
 		e:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 		e:SetOperation(c100410007.desop)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_MZONE)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
+	else
+		e:SetCategory(0)
+		e:SetOperation(nil)
 	end
 end
 function c100410007.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100410007.thfilter1,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
-		Duel.ConfirmCards(1-tp,g)
+	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
 		local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100410007.thfilter2),tp,LOCATION_GRAVE,0,nil)
-		if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(100410007,3)) then
+		if g2:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100410007,3)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg2=g2:Select(tp,1,1,nil)
 			Duel.SendtoHand(sg2,nil,REASON_EFFECT)
 		end
-		Duel.ShuffleHand(tp)
 	end
 end
 function c100410007.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local lg=e:GetHandler():GetLinkedGroup()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dc=Duel.SelectMatchingCard(tp,c100410007.desfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,lg,true):GetFirst()
+	local dc=Duel.SelectMatchingCard(tp,c100410007.desfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,lg):GetFirst()
 	if dc and Duel.Destroy(dc,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100410007.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp,dc):GetFirst()

@@ -48,6 +48,7 @@ function c100410004.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100410004.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g==0 then return end
 	if Duel.Destroy(g,REASON_EFFECT)~=0 then
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g2=Duel.SelectMatchingCard(tp,c100410004.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 		if g2:GetCount()>0 then

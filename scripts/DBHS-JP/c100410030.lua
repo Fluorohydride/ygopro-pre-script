@@ -1,4 +1,4 @@
---轍の魔妖-俥夫
+--轍の魔妖－俥夫
 --Rickshaw Mayakashi – Shafu
 function c100410030.initial_effect(c)
 	--spsummon

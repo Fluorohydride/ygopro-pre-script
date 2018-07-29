@@ -1,4 +1,4 @@
---麗の魔妖-妲姫
+--麗の魔妖－妲姫
 --Beautiful Mayakashi – Dakki
 function c100410027.initial_effect(c)
 	c:SetUniqueOnField(1,0,100410027)

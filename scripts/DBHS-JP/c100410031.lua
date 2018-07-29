@@ -1,4 +1,4 @@
---骸魔妖ー夜叉 
+--骸の魔妖－夜叉
 --Skeleton Mayakashi - Yasha
 --Scripted by AlphaKretin
 function c100410031.initial_effect(c)

@@ -2,6 +2,7 @@
 --Prankids Bowwow
 --Script by Kedy
 function c100410021.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x226),2,2)
 	--atk gain
@@ -39,7 +40,7 @@ function c100410021.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c100410021.thfilter(c,e)
-	return c:IsSetCard(0x226) and not c:IsType(TYPE_LINK) 
+	return c:IsSetCard(0x226) and not c:IsType(TYPE_LINK)
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function c100410021.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

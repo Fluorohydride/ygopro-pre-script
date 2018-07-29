@@ -1,4 +1,4 @@
---氷の魔妖-雪女
+--氷の魔妖－雪女
 --Icicle Mayakashi - Yukionna
 function c100410037.initial_effect(c)
 	c:SetUniqueOnField(1,0,100410037)
@@ -35,7 +35,8 @@ function c100410037.imcon(e)
 	return e:GetHandler():GetLinkedGroup():IsExists(c100410037.imfilter,1,nil)
 end
 function c100410037.atkfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:GetPreviousTypeOnField()&TYPE_SYNCHRO~=0
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousTypeOnField()&TYPE_SYNCHRO~=0
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)
 end
 function c100410037.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -49,16 +50,18 @@ function c100410037.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100410037.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetValue(math.ceil(tc:GetAttack()/2))
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetValue(tc:GetAttack()/2)
 		tc:RegisterEffect(e1)
-		local e2=e1:Clone()
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
-		e2:SetValue(tc:GetDefense()/2)
+		e2:SetValue(math.ceil(tc:GetDefense()/2))
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

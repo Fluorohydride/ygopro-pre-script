@@ -2,6 +2,7 @@
 --Prankids Super Scheme
 --Scripted by Eerie Code
 function c100410026.initial_effect(c)
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -100,12 +101,13 @@ function c100410026.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=math.min(#g,math.floor(tc:GetAttack()/100))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=g:Select(tp,1,ct,nil)
-	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)>0 and tc:IsFaceup() and tc:IsRelateToBattle() then
-		local oc=#(Duel.GetOperatedGroup())
+	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)==0 then return end
+	local ct=Duel.GetOperatedGroup():GetCount()
+	if tc:IsFaceup() and tc:IsRelateToBattle() and ct>0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(oc*-100)
+		e1:SetValue(ct*-100)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end

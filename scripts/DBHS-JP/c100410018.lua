@@ -2,6 +2,7 @@
 --Prankids Weather
 --Scripted by Eerie Code
 function c100410018.initial_effect(c)
+	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x226),2,true)
 	--actlimit
@@ -19,6 +20,7 @@ function c100410018.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100410018,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100410018)
@@ -49,9 +51,7 @@ end
 function c100410018.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local g=Duel.GetMatchingGroup(c100410018.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
-	if chk==0 then return ft>1 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>1 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and g:GetClassCount(Card.GetCode)>=2 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g1=g:Select(tp,1,1,nil)
@@ -63,8 +63,14 @@ function c100410018.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,2,0,0)
 end
 function c100410018.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<g:GetCount() or (#g>1 and Duel.IsPlayerAffectedByEffect(tp,59822133)) then return end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local g=tg:Filter(Card.IsRelateToEffect,nil,e)
+	if g:GetCount()==0 or ft<=0 or (g:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133)) then return end
+	if ft<g:GetCount() then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		g=g:Select(tp,ft,ft,nil)
+	end
 	local tc=g:GetFirst()
 	while tc do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
