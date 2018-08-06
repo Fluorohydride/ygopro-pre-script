@@ -59,7 +59,7 @@ end
 function c100410020.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local g=Duel.GetMatchingGroup(c100410020.thfilter2,tp,LOCATION_GRAVE,0,nil,e,tp)
-	if chk==0 then g:GetClassCount(Card.GetCode)>=2 end
+	if chk==0 then return g:GetClassCount(Card.GetCode)>=2 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g1=g:Select(tp,1,1,nil)
 	g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
