@@ -23,8 +23,8 @@ function c100243015.cfilter(c)
 	return c:IsSetCard(0x2b)
 end
 function c100243015.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,c100243015.cfilter,1,false,aux.ReleaseCheckMMZ,nil) end
-	local g=Duel.SelectReleaseGroupCost(tp,c100243015.cfilter,1,1,false,aux.ReleaseCheckMMZ,nil,dg)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c100243015.cfilter,1,nil) end
+	local g=Duel.SelectReleaseGroup(tp,c100243015.cfilter,1,1,nil)
 	Duel.Release(g,REASON_COST)
 end
 function c100243015.spfilter(c,e,tp)
