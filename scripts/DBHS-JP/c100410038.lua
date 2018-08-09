@@ -12,7 +12,7 @@ function c100410038.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100410038.filter(c)
-	return c:IsSetCard(0x227) and not c:IsCode(100410038) and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return c:IsSetCard(0x121) and not c:IsCode(100410038) and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function c100410038.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100410038.filter,tp,LOCATION_DECK,0,1,nil) end

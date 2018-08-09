@@ -56,7 +56,7 @@ function c101005085.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101005085.spfilter2(c,e,tp)
-	return c:IsSetCard(0x223) and not c:IsCode(101005085) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(0x11e) and not c:IsCode(101005085) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101005085.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

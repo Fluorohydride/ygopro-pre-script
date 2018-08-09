@@ -12,7 +12,7 @@ function c100410009.initial_effect(c)
 end
 c100410009.fit_monster={100410005,100410006}
 function c100410009.filter(c,e,tp,m,ft)
-	if not c:IsSetCard(0x219) or bit.band(c:GetType(),0x81)~=0x81
+	if not c:IsSetCard(0x11f) or bit.band(c:GetType(),0x81)~=0x81
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
 	if ft>0 then

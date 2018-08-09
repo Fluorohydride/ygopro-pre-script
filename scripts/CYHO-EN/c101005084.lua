@@ -56,7 +56,7 @@ function c101005084.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101005084.spfilter2(c,e,tp)
-	return c:IsSetCard(0x223) and not c:IsCode(101005084) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x11e) and not c:IsCode(101005084) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101005084.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101005084.spfilter2(chkc,e,tp) end

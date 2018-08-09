@@ -26,7 +26,7 @@ function c100410030.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100410030.spfilter(c,e,tp)
-	return c:IsSetCard(0x227) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(100410030)
+	return c:IsSetCard(0x121) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(100410030)
 end
 function c100410030.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100410030.spfilter(chkc,e,tp) end
@@ -55,5 +55,5 @@ function c100410030.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c100410030.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x227)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
 end

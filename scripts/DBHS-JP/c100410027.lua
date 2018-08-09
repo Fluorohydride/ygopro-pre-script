@@ -17,10 +17,10 @@ function c100410027.initial_effect(c)
 	Duel.AddCustomActivityCounter(100410027,ACTIVITY_SPSUMMON,c100410027.counterfilter)
 end
 function c100410027.counterfilter(c)
-	return c:GetSummonLocation()~=LOCATION_EXTRA or c:IsSetCard(0x227)
+	return c:GetSummonLocation()~=LOCATION_EXTRA or c:IsSetCard(0x121)
 end
 function c100410027.cfilter(c,tp)
-	return c:IsSetCard(0x227) and c:GetSummonLocation()==LOCATION_EXTRA and c:IsControler(tp)
+	return c:IsSetCard(0x121) and c:GetSummonLocation()==LOCATION_EXTRA and c:IsControler(tp)
 end
 function c100410027.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100410027.cfilter,1,nil,tp)
@@ -48,5 +48,5 @@ function c100410027.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100410027.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x227)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
 end

@@ -77,5 +77,5 @@ function c100410008.atcon(e)
 	return e:GetHandler():GetSequence()>4
 end
 function c100410008.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x219) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(0x11f) and c:GetSequence()<5
 end

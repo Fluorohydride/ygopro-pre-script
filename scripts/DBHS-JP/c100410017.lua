@@ -4,7 +4,7 @@
 function c100410017.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x226),2,true)
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x120),2,true)
 	--direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100410017,0))
@@ -55,7 +55,7 @@ function c100410017.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c100410017.spfilter(c,e,tp)
-	return c:IsSetCard(0x226) and not c:IsType(TYPE_FUSION)
+	return c:IsSetCard(0x120) and not c:IsType(TYPE_FUSION)
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100410017.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

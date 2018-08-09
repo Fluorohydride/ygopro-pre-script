@@ -33,7 +33,7 @@ function c100410003.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100410003.filter(c)
-	return c:IsSetCard(0x219) and c:IsAbleToHand() and not c:IsCode(100410003)
+	return c:IsSetCard(0x11f) and c:IsAbleToHand() and not c:IsCode(100410003)
 end
 function c100410003.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100410003.filter(chkc) end

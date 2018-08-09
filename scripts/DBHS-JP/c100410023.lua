@@ -38,7 +38,7 @@ function c100410023.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100410023.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x226) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x120) and c:IsAbleToHand()
 end
 function c100410023.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -51,7 +51,7 @@ function c100410023.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100410023.cfilter(c,tp,sumt)
-	return c:IsFaceup() and c:IsSetCard(0x226) and c:IsSummonType(sumt) and c:GetSummonPlayer()==tp
+	return c:IsFaceup() and c:IsSetCard(0x120) and c:IsSummonType(sumt) and c:GetSummonPlayer()==tp
 end
 function c100410023.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100410023.cfilter,1,nil,tp,SUMMON_TYPE_FUSION)

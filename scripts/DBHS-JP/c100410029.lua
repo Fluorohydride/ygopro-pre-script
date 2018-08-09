@@ -27,7 +27,7 @@ function c100410029.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100410029.filter(c,e,tp)
-	return c:IsSetCard(0x227) and not c:IsCode(100410029) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x121) and not c:IsCode(100410029) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100410029.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -43,5 +43,5 @@ function c100410029.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100410029.sslimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x227)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
 end

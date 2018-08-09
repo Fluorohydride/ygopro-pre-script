@@ -24,7 +24,7 @@ function c100410031.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100410031.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x227) and c:IsDiscardable()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x121) and c:IsDiscardable()
 end
 function c100410031.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100410031.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -42,5 +42,5 @@ function c100410031.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100410031.sslimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x227)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
 end

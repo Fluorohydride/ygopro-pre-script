@@ -19,7 +19,7 @@ function c101005087.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
 end
 function c101005087.filter(c)
-	return not c:IsSetCard(0x223)
+	return not c:IsSetCard(0x11e)
 end
 function c101005087.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
@@ -27,10 +27,10 @@ function c101005087.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(p)
 		Duel.BreakEffect()
 		local g=Duel.GetFieldGroup(p,LOCATION_HAND,0)
-		if g:IsExists(Card.IsSetCard,1,nil,0x223) then
+		if g:IsExists(Card.IsSetCard,1,nil,0x11e) then
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_DISCARD)
 			local g1=g:Select(p,1,1,nil)
-			if g1:GetFirst():IsSetCard(0x223) then
+			if g1:GetFirst():IsSetCard(0x11e) then
 				g:RemoveCard(g1:GetFirst())
 			else
 				g:Remove(c101005087.filter,nil)

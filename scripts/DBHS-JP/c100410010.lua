@@ -13,7 +13,7 @@ function c100410010.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100410010.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x219)
+	return c:IsFaceup() and c:IsSetCard(0x11f)
 end
 function c100410010.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

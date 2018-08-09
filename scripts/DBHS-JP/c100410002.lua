@@ -32,7 +32,7 @@ function c100410002.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100410002.filter(c,e,tp)
-	return c:IsSetCard(0x219) and c:IsType(TYPE_MONSTER) and not c:IsCode(100410002) and c:IsAbleToHand()
+	return c:IsSetCard(0x11f) and c:IsType(TYPE_MONSTER) and not c:IsCode(100410002) and c:IsAbleToHand()
 end
 function c100410002.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100410002.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
@@ -65,7 +65,7 @@ function c100410002.spr(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100410002.thfilter(c,e,tp)
-	return c:IsSetCard(0x219) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x11f) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100410002.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

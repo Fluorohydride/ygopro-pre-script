@@ -33,7 +33,7 @@ function c100410006.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100410006.desfilter(c)
-	return c:IsSetCard(0x219) and (c:IsFaceup() or not c:IsOnField())
+	return c:IsSetCard(0x11f) and (c:IsFaceup() or not c:IsOnField())
 end
 function c100410006.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0

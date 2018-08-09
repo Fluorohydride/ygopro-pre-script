@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c100410007.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x219),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x11f),2,2)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100410007,0))
@@ -24,11 +24,11 @@ function c100410007.thfilter2(c)
 	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
 end
 function c100410007.desfilter(c,e,tp,g)
-	return c:IsFaceup() and c:IsSetCard(0x219) and g:IsContains(c) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsFaceup() and c:IsSetCard(0x11f) and g:IsContains(c) and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(c100410007.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function c100410007.spfilter(c,e,tp,dc)
-	return c:IsSetCard(0x219) and c:GetOriginalCode()~=dc:GetOriginalCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x11f) and c:GetOriginalCode()~=dc:GetOriginalCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100410007.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(c100410007.thfilter1,tp,LOCATION_DECK,0,1,nil)

@@ -15,7 +15,7 @@ function c100410039.initial_effect(c)
 	Duel.AddCustomActivityCounter(100410039,ACTIVITY_SPSUMMON,c100410039.counterfilter)
 end
 function c100410039.counterfilter(c)
-	return c:GetSummonLocation()~=LOCATION_EXTRA or c:IsSetCard(0x227)
+	return c:GetSummonLocation()~=LOCATION_EXTRA or c:IsSetCard(0x121)
 end
 function c100410039.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(100410039,tp,ACTIVITY_SPSUMMON)==0 and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
@@ -31,10 +31,10 @@ function c100410039.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100410039.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x227)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
 end
 function c100410039.spfilter(c,e,tp)
-	return c:IsSetCard(0x227) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(0x121) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100410039.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c100410039.spfilter(chkc,e,tp) end

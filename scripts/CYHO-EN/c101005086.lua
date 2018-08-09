@@ -39,10 +39,10 @@ function c101005086.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c101005086.target(e,c)
-	return c:IsSetCard(0x223) and c:IsStatus(STATUS_SPSUMMON_TURN)
+	return c:IsSetCard(0x11e) and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function c101005086.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x223)
+	return c:IsFaceup() and c:IsSetCard(0x11e)
 end
 function c101005086.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c101005086.filter(chkc) end

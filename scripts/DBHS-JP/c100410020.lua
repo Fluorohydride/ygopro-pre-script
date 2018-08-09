@@ -3,7 +3,7 @@
 --Script by dest
 function c100410020.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x226),2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x120),2)
 	c:EnableReviveLimit()
 	--search
 	local e1=Effect.CreateEffect(c)
@@ -34,7 +34,7 @@ function c100410020.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c100410020.thfilter(c)
-	return c:IsSetCard(0x226) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x120) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100410020.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100410020.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -53,7 +53,7 @@ function c100410020.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c100410020.thfilter2(c,e,tp)
-	return c:IsSetCard(0x226) and not c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x120) and not c:IsType(TYPE_LINK)
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function c100410020.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

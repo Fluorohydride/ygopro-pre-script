@@ -36,10 +36,10 @@ function c100410026.lkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c100410026.matfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x226)
+	return c:IsFaceup() and c:IsSetCard(0x120)
 end
 function c100410026.lkfilter(c)
-	return c:IsSetCard(0x226) and c:IsType(TYPE_LINK) and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
+	return c:IsSetCard(0x120) and c:IsType(TYPE_LINK) and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
 end
 function c100410026.lktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -88,7 +88,7 @@ function c100410026.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
 function c100410026.tdfilter(c)
-	return c:IsSetCard(0x226) and c:IsAbleToDeck()
+	return c:IsSetCard(0x120) and c:IsAbleToDeck()
 end
 function c100410026.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100410026.tdfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end

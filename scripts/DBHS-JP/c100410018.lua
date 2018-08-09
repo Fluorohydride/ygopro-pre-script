@@ -4,7 +4,7 @@
 function c100410018.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x226),2,true)
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x120),2,true)
 	--actlimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -35,7 +35,7 @@ function c100410018.aclimit(e,re,tp)
 end
 function c100410018.actcon(e)
 	local a=Duel.GetAttacker()
-	return a and a:IsControler(e:GetHandlerPlayer()) and a:IsSetCard(0x226)
+	return a and a:IsControler(e:GetHandlerPlayer()) and a:IsSetCard(0x120)
 end
 function c100410018.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
@@ -45,7 +45,7 @@ function c100410018.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c100410018.spfilter(c,e,tp)
-	return c:IsSetCard(0x226) and not c:IsType(TYPE_FUSION)
+	return c:IsSetCard(0x120) and not c:IsType(TYPE_FUSION)
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100410018.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

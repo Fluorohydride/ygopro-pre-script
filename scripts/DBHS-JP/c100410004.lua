@@ -32,7 +32,7 @@ function c100410004.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100410004.spfilter(c,e,tp)
-	return c:IsSetCard(0x219) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(100410004)
+	return c:IsSetCard(0x11f) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(100410004)
 end
 function c100410004.filter(c,e,tp)
 	return Duel.IsExistingMatchingCard(c100410004.spfilter,tp,LOCATION_HAND,0,1,c,e,tp)
@@ -72,7 +72,7 @@ function c100410004.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetLabel()~=Duel.GetTurnCount() and tp==Duel.GetTurnPlayer() and c:GetFlagEffect(100410004)>0
 end
 function c100410004.desfilter(c)
-	return c:IsSetCard(0x219) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x11f) and c:IsType(TYPE_MONSTER)
 end
 function c100410004.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

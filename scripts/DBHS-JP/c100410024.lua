@@ -33,7 +33,7 @@ function c100410024.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100410024.cfilter(c)
-	return c:IsSetCard(0x226) and c:IsDiscardable()
+	return c:IsSetCard(0x120) and c:IsDiscardable()
 end
 function c100410024.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100410024.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -41,7 +41,7 @@ function c100410024.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100410024.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,100410024+100,0x226,0x4011,0,0,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100410024+100,0x120,0x4011,0,0,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
@@ -49,7 +49,7 @@ function c100410024.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100410024+100,0x226,0x4011,0,0,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100410024+100,0x120,0x4011,0,0,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP) then return end
 	local token=Duel.CreateToken(tp,100410024+100)
 	Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 	local e1=Effect.CreateEffect(c)
@@ -68,7 +68,7 @@ function c100410024.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function c100410024.tdfilter(c)
-	return c:IsSetCard(0x226) and not c:IsCode(100410024) and c:IsAbleToDeck()
+	return c:IsSetCard(0x120) and not c:IsCode(100410024) and c:IsAbleToDeck()
 end
 function c100410024.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100410024.tdfilter(chkc) end
