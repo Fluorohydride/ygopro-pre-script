@@ -79,17 +79,17 @@ function c100243014.repfilter(c,tp)
 		and not c:IsReason(REASON_REPLACE) and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)
 end
 function c100243014.rmfilter(c)
-	return c:IsSetCard(0x2b) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(0x2b) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c100243014.repval(e,c)
 	return c100243014.repfilter(c,e:GetHandlerPlayer())
 end
 function c100243014.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c100243014.repfilter,1,nil,tp) and
-		Duel.IsExistingMatchingCard(c100243014.rmfilter,tp,LOCATION_GRAVE,0,1,eg) end
+		Duel.IsExistingMatchingCard(c100243014.rmfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local tg=Duel.SelectMatchingCard(tp,c100243014.rmfilter,tp,LOCATION_GRAVE,0,1,1,eg)
+		local tg=Duel.SelectMatchingCard(tp,c100243014.rmfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		e:SetLabelObject(tg:GetFirst())
 		return true
 	end
