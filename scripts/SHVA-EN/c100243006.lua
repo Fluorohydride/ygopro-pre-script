@@ -38,8 +38,7 @@ function c100243006.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Group.CreateGroup()
 	repeat
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:Select(tp,1,1,nil)
-		local tc=sg:GetFirst()
+		local tc=g:Select(tp,1,1,nil):GetFirst()
 		sg:AddCard(tc)
 		g:Remove(Card.IsCode,nil,tc:GetCode())
 		ft=ft-1
@@ -80,7 +79,7 @@ function c100243006.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100243006.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.GetFirstMatchingCard(c100243006.thfilter,tp,LOCATION_DECK,0,nil)
+	local g=Duel.SelectMatchingCard(tp,c100243006.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
