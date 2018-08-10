@@ -47,6 +47,13 @@ function c100243005.initial_effect(c)
 	e6:SetCondition(c100243005.rdcon)
 	e6:SetOperation(c100243005.rdop)
 	c:RegisterEffect(e6)
+	--eqlimit
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetCode(EFFECT_EQUIP_LIMIT)
+	e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e7:SetValue(c100243005.eqlimit)
+	c:RegisterEffect(e7)
 end
 function c100243005.filter(c)
 	local ct1,ct2=c:GetUnionCount()
@@ -105,4 +112,7 @@ function c100243005.rdop(e,tp,eg,ep,ev,re,r,rp)
 	if c==ec then
 		Duel.ChangeBattleDamage(ep,Duel.GetBattleDamage(ep)/2)
 	end
+end
+function c100243005.eqlimit(e,c)
+	return c:IsRace(RACE_FAIRY) or e:GetHandler():GetEquipTarget()==c
 end
