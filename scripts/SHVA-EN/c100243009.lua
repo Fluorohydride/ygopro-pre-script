@@ -67,5 +67,6 @@ function c100243009.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,g)
 	else
 		Duel.SendtoHand(g,1-tp,REASON_EFFECT)
+		Duel.ShuffleHand(1-tp)
 	end
 end
