@@ -53,13 +53,16 @@ end
 function c100243003.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100243003.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
+function c100243003.rmfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+end
 function c100243003.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanRemove,tp,0,LOCATION_GRAVE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100243003.rmfilter,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,0)
 end
 function c100243003.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local rc=Duel.SelectMatchingCard(tp,Card.IsCanRemove,tp,0,LOCATION_GRAVE,1,1,nil):GetFirst()
+	local rc=Duel.SelectMatchingCard(tp,c100243003.rmfilter,tp,0,LOCATION_GRAVE,1,1,nil):GetFirst()
 	if rc then
 		if Duel.Remove(rc,POS_FACEUP,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 			Duel.BreakEffect()
