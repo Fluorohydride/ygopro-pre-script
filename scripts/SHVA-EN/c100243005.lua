@@ -42,7 +42,8 @@ function c100243005.initial_effect(c)
 	c:RegisterEffect(e5)
 	--damage reduce
 	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_EQUIP+EFFECT_TYPE_CONTINUOUS)
+	e6:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e6:SetRange(LOCATION_SZONE)
 	e6:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e6:SetCondition(c100243005.rdcon)
 	e6:SetOperation(c100243005.rdop)
@@ -96,22 +97,12 @@ function c100243005.repval(e,re,r,rp)
 	return bit.band(r,REASON_BATTLE)~=0 or bit.band(r,REASON_EFFECT)~=0
 end
 function c100243005.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetAttackTarget()==nil
-		and e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
-		and Duel.IsExistingMatchingCard(aux.NOT(Card.IsHasEffect),tp,0,LOCATION_MZONE,1,nil,EFFECT_IGNORE_BATTLE_TARGET)
+	local c=e:GetHandler():GetEquipTarget()
+	return ep~=tp and c==Duel.GetAttacker() and Duel.GetAttackTarget()==nil
+		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function c100243005.rdop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local effs={c:GetCardEffect(EFFECT_DIRECT_ATTACK)}
-	local eg=Group.CreateGroup()
-	for _,eff in ipairs(effs) do
-		eg:AddCard(eff:GetOwner())
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	local ec = #eg==1 and eg:GetFirst() or eg:Select(tp,1,1,nil):GetFirst()
-	if c==ec then
-		Duel.ChangeBattleDamage(ep,Duel.GetBattleDamage(ep)/2)
-	end
+	Duel.ChangeBattleDamage(ep,ev/2)
 end
 function c100243005.eqlimit(e,c)
 	return c:IsRace(RACE_FAIRY) or e:GetHandler():GetEquipTarget()==c
