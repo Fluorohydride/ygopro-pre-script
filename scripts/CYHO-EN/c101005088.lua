@@ -29,6 +29,7 @@ function c101005088.sprcon(e,c)
 end
 function c101005088.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_SYNCHRO+REASON_XYZ+REASON_LINK)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+		and e:GetHandler():GetReasonCard():IsSetCard(0x107a)
 end
 function c101005088.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
