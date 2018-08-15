@@ -25,7 +25,7 @@ function c100243009.thcfilter(c)
 end
 function c100243009.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
-		and not Duel.IsExistingMatchingCard(c100243009.thcfilter,tp,LOCATION_MZONE,0,1,nil) 
+		and not Duel.IsExistingMatchingCard(c100243009.thcfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100243009.thfilter(c)
 	return c:IsCode(100243010) and c:IsAbleToHand()
@@ -61,7 +61,7 @@ function c100243009.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	elseif (opt==1 and tc:IsType(TYPE_SPELL)) then
 		Duel.SSet(1-tp,tc)
-		Duel.ConfirmCards(tp,g) 
+		Duel.ConfirmCards(tp,g)
 	elseif (opt==2 and tc:IsType(TYPE_TRAP))then
 		Duel.SSet(1-tp,tc)
 		Duel.ConfirmCards(tp,g)
