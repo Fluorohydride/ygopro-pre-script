@@ -35,6 +35,9 @@ function c100307001.disrmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b2=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
 		and Duel.GetFlagEffect(tp,100307001+100)==0
 	if chk==0 then return b1 or b2 end
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c100307001.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
