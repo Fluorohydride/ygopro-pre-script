@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **August 4, 2018** : Deck Build Pack: Hidden Summoners (DBHS-JP) : `100410XXX`
 - **September 8, 2018** : Extra Pack 2018 (EP18-JP) : `100421XXX`
 - **September 22, 2018** : Structure Deck R: Undead World (SR07-JP) : `100307XXX`
 
@@ -84,3 +83,4 @@
 - ~~Structure Deck: Master Link (SD34-JP) : `100334XXX`~~
 - ~~Soul Fusion (SOFU-JP) : `101006XXX`~~
 - ~~Jump Victory Carnival 2018 (VF18-JP) : `100232XXX`~~
+- ~~Deck Build Pack: Hidden Summoners (DBHS-JP) : `100410XXX`~~
