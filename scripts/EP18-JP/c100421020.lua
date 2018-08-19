@@ -84,7 +84,7 @@ function c100421020.discon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100421020.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x4a,1,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x50,1,REASON_COST)
+	Duel.RemoveCounter(tp,1,1,0x4a,1,REASON_COST)
 end
 function c100421020.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
