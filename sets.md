@@ -2,7 +2,8 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **August 30, 2018** : 2018 Mega-Tins (CT15-EN) : `100243XXX`
+- **August 17, 2018** : Shadows in Valhalla (SHVA-EN) : `100243XXX`
+- **August 30, 2018** : 2018 Mega-Tins (CT15-EN) : `100244XXX`
 - **September 8, 2018** : Extra Pack 2018 (EP18-JP) : `100421XXX`
 - **September 22, 2018** : Structure Deck R: Undead World (SR07-JP) : `100307XXX`
 
