@@ -2,10 +2,8 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **August 17, 2018** : Shadows in Valhalla (SHVA-EN) : `100243XXX`
-- **August 30, 2018** : 2018 Mega-Tins (CT15-EN) : `100244XXX`
-- **September 8, 2018** : Extra Pack 2018 (EP18-JP) : `100421XXX`
 - **September 22, 2018** : Structure Deck R: Undead World (SR07-JP) : `100307XXX`
+- **October 13, 2018** : SAVAGE STRIKE (SAST-JP) : `101007XXX`
 
 # Announced
 
@@ -86,3 +84,6 @@
 - ~~Soul Fusion (SOFU-JP) : `101006XXX`~~
 - ~~Jump Victory Carnival 2018 (VF18-JP) : `100232XXX`~~
 - ~~Deck Build Pack: Hidden Summoners (DBHS-JP) : `100410XXX`~~
+- ~~Shadows in Valhalla (SHVA-EN) : `100243XXX`~~
+- ~~2018 Mega-Tins (CT15-EN) : `100244XXX`~~
+- ~~Extra Pack 2018 (EP18-JP) : `100421XXX`~~
