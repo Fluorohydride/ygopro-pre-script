@@ -4,6 +4,7 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **September 22, 2018** : Structure Deck R: Undead World (SR07-JP) : `100307XXX`
 - **October 13, 2018** : SAVAGE STRIKE (SAST-JP) : `101007XXX`
+- **November 10, 2018** : Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX`
 
 # Announced
 
