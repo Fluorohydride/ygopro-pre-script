@@ -7,6 +7,11 @@
 - **November 10, 2018** : Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX`
 
 # Announced
+- **October 4, 2018** : Arc-V Volume 6 (YA06-JP) : `100233XXX`
+- **October 10, 2018** : Legendary Hero Decks (????-EN) : `100234XXX`
+- **November 23, 2018** : LINK VRAINS PACK 2 (LVP2-JP) : `100235XXX`
+- **December 8, 2018** : Structure Deck: Soulburner (SD35-JP) : `100335XXX`
+- **December 22, 2018** : ANNIVERSARY DUELIST BOX (20TH-JP) : `100236XXX`
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
