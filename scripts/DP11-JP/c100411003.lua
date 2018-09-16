@@ -31,7 +31,7 @@ function c100411003.initial_effect(c)
 	e3:SetOperation(c100411003.spop2)
 	c:RegisterEffect(e3)
 end
-c100411001.card_code_list={12206212}
+c100411003.card_code_list={12206212}
 function c100411003.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE) and (c:GetPreviousCodeOnField()==76812113 or c:GetPreviousCodeOnField()==12206212)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)

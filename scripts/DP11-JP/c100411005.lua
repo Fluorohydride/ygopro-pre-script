@@ -23,7 +23,7 @@ function c100411005.initial_effect(c)
 	e2:SetOperation(c100411005.thop)
 	c:RegisterEffect(e2)
 end
-c100411001.card_code_list={12206212}
+c100411005.card_code_list={12206212}
 function c100411005.tdfilter(c,e,tp)
 	return c:IsCode(12206212) and c:IsAbleToDeck() 
 end

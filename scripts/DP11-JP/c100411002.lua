@@ -33,7 +33,7 @@ function c100411002.initial_effect(c)
 	e4:SetOperation(c100411002.ssop)
 	c:RegisterEffect(e4)
 end
-c100411001.card_code_list={12206212}
+c100411002.card_code_list={12206212}
 function c100411002.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
