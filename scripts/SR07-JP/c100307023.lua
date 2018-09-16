@@ -4,7 +4,7 @@
 function c100307023.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(35498188,0))
+	e1:SetDescription(aux.Stringid(100307023,0))
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -16,7 +16,7 @@ function c100307023.initial_effect(c)
 	c:RegisterEffect(e1)
 	--set
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(35498188,1))
+	e2:SetDescription(aux.Stringid(100307023,1))
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
