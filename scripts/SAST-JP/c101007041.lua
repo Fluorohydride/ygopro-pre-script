@@ -18,13 +18,16 @@ function c101007041.initial_effect(c)
 	e1:SetOperation(c101007041.operation)
 	c:RegisterEffect(e1)
 end
+function c101007041.filter(c)
+	return c:IsAbleToRemove() and c:IsType(TYPE_MONSTER)
+end
 function c101007041.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101007041.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_MZONE+LOCATION_GRAVE)
 end
 function c101007041.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101007041.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 then
 		local b1=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
