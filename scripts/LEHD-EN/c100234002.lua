@@ -1,5 +1,5 @@
 --The Phantom Knights of Rusty Bardiche
-function c100234001.initial_effect(c)
+function c100234002.initial_effect(c)
     --link summon
     aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),2)
     c:EnableReviveLimit()
