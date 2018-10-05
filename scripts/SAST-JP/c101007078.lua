@@ -1,3 +1,4 @@
+--闇の増産工場
 --Dark Factory of Increased Production
 --Scripted by Eerie Code
 function c101007078.initial_effect(c)

@@ -1,3 +1,4 @@
+--強欲で金満な壺
 --Pot of Indulgence
 --Scripted by Eerie Code
 function c101007067.initial_effect(c)
@@ -30,17 +31,17 @@ function c101007067.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabel(0)
 		return Duel.IsPlayerCanDraw(tp,1) and #g>=3
 	end
-	local op=1
+	local op=0
 	if Duel.IsPlayerCanDraw(tp,2) and #g>=6 then
-		op=Duel.SelectOption(tp,aux.Stringid(101007067,0),aux.Stringid(101007067,1))+1
+		op=Duel.SelectOption(tp,aux.Stringid(101007067,0),aux.Stringid(101007067,1))
 	else
-		op=Duel.SelectOption(tp,aux.Stringid(101007067,0))+1
+		op=Duel.SelectOption(tp,aux.Stringid(101007067,0))
 	end
-	local rg=g:RandomSelect(tp,op*3)
+	local rg=g:RandomSelect(tp,3+op*3)
 	Duel.Remove(rg,POS_FACEDOWN,REASON_COST)
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(op)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,op)
+	Duel.SetTargetParam(op+1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,op+1)
 end
 function c101007067.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
