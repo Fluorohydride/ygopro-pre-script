@@ -49,6 +49,7 @@ function c101007036.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 c101007036.material_setcode=0x8
+c101007036.card_code_list={89943723}
 function c101007036.ffilter(c,fc,sub,mg,sg)
 	return c:IsFusionSetCard(0x1f) and (not sg or not sg:IsExists(Card.IsFusionAttribute,1,c,c:GetFusionAttribute()))
 end

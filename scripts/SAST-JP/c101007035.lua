@@ -32,6 +32,7 @@ function c101007035.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 c101007035.material_setcode=0x8
+c101007035.card_code_list={89943723}
 function c101007035.ffilter(c)
 	return c:IsLevelBelow(4) and c:IsFusionType(TYPE_EFFECT)
 end
