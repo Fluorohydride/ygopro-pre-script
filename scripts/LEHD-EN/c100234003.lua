@@ -1,97 +1,79 @@
---Gullveig of the Nordic Ascendant
---Scripted by Eerie Code
+--The Phantom Knights of Rusty Bardiche
 function c100234003.initial_effect(c)
+    --link summon
+    aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),2)
     c:EnableReviveLimit()
-    aux.AddLinkProcedure(c,c100234003.matfilter,1,1)
-    --banish and summon
+    --to grave
     local e1=Effect.CreateEffect(c)
-    e1:SetDescription(aux.Stringid(100234003,0))
-    e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
-    e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-    e1:SetProperty(EFFECT_FLAG_DELAY)
+    e1:SetCategory(CATEGORY_TOGRAVE)
+    e1:SetType(EFFECT_TYPE_IGNITION)
+    e1:SetRange(LOCATION_MZONE)
     e1:SetCountLimit(1,100234003)
-    e1:SetCondition(c100234003.spcon)
-    e1:SetTarget(c100234003.sptg)
-    e1:SetOperation(c100234003.spop)
-    c:RegisterEffect(e1)
-    --cannot be target
+    e1:SetTarget(c100234003.target)
+    e1:SetOperation(c100234003.operation)
+    c:RegisterEffect(e1)    
+    --destroy
     local e2=Effect.CreateEffect(c)
-    e2:SetType(EFFECT_TYPE_FIELD)
-    e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-    e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+    e2:SetCategory(CATEGORY_DESTROY)
+    e2:SetDescription(aux.Stringid(100234102,0))
+    e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+    e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+    e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
     e2:SetRange(LOCATION_MZONE)
-    e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-    e2:SetCondition(c100234003.tgcon)
-    e2:SetTarget(c100234003.tgtg)
-    e2:SetValue(aux.tgoval)
+    e2:SetCountLimit(1,100234003+100)
+    e2:SetCondition(c100234003.descon)
+    e2:SetTarget(c100234003.destg)
+    e2:SetOperation(c100234003.desop)
     c:RegisterEffect(e2)
+    --cannot link material
     local e3=Effect.CreateEffect(c)
     e3:SetType(EFFECT_TYPE_SINGLE)
-    e3:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
-    e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-    e3:SetRange(LOCATION_MZONE)
-    e3:SetCondition(c100234003.tgcon)
-    e3:SetValue(aux.imval1)
+    e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+    e3:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+    e3:SetValue(1)
     c:RegisterEffect(e3)
 end
-function c100234003.matfilter(c)
-    return c:IsLinkSetCard(0x42) and c:IsLevelBelow(5)
-end
-function c100234003.spcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
-end
-function c100234003.spfilter(c,e,tp)
-    return c:IsSetCard(0x42) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-end
-function c100234003.spcheck(sg,e,tp,mg)
-    return Duel.GetMZoneCount(tp,sg,tp,LOCATION_REASON_TOFIELD)>=#sg and Duel.IsExistingMatchingCard(c100234003.spfilter,tp,LOCATION_DECK,0,#sg,nil,e,tp)
-end
-function c100234003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
-    if chk==0 then return aux.SelectUnselectGroup(g,e,tp,1,3,c100234003.spcheck,0) end
-    Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
-end
-function c100234003.spop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
-    local ct=3
-    if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
-    local rg=aux.SelectUnselectGroup(g,e,tp,1,ct,c100234003.spcheck,1,tp,HINTMSG_REMOVE)
-    if #rg>0 and Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)~=0 then
-        ct=math.min(#(Duel.GetOperatedGroup()),Duel.GetLocationCount(tp,LOCATION_MZONE))
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-        local sg=Duel.SelectMatchingCard(tp,c100234003.spfilter,tp,LOCATION_DECK,0,ct,ct,nil,e,tp)
-        Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-    end
-    local e1=Effect.CreateEffect(e:GetHandler())
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-    e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-    e1:SetReset(RESET_PHASE+PHASE_END)
-    e1:SetTargetRange(1,0)
-    e1:SetTarget(c100234003.splimit)
-    Duel.RegisterEffect(e1,tp)
-    local e2=Effect.CreateEffect(e:GetHandler())
-    e2:SetType(EFFECT_TYPE_FIELD)
-    e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-    e2:SetCode(EFFECT_CANNOT_SUMMON)
-    e2:SetReset(RESET_PHASE+PHASE_END)
-    e2:SetTargetRange(1,0)
-    Duel.RegisterEffect(e2,tp)
-    local e3=e2:Clone()
-    e3:SetCode(EFFECT_CANNOT_SET)
-    Duel.RegisterEffect(e3,tp)
-end
-function c100234003.splimit(e,c)
-    return not c:IsSetCard(0x4b)
-end
 function c100234003.tgfilter(c)
-    return c:IsFaceup() and c:IsSetCard(0x4b)
+    return c:IsSetCard(0x10db) and c:IsAbleToGrave() and c:IsType(TYPE_MONSTER)
+        and Duel.IsExistingMatchingCard(c100234003.setfilter,tp,LOCATION_DECK,0,1,c)
 end
-function c100234003.tgcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetLinkedGroup():IsExists(c100234003.tgfilter,1,nil)
+function c100234003.setfilter(c)
+    return c:IsSetCard(0xdb) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
-function c100234003.tgtg(e,c)
-    return c100234003.tgfilter(c) and e:GetHandler():GetLinkedGroup():IsContains(c)
+function c100234003.target(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.IsExistingMatchingCard(c100234003.tgfilter,tp,LOCATION_DECK,0,1,nil)
+        and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+    Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+end
+function c100234003.operation(e,tp,eg,ep,ev,re,r,rp)
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+    local g=Duel.SelectMatchingCard(tp,c100234003.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+    if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(c100234003.setfilter,tp,LOCATION_DECK,0,1,nil) then
+        local tc=Duel.SelectMatchingCard(tp,c100234003.setfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+        if tc then
+            Duel.BreakEffect()
+            Duel.SSet(tp,tc)
+            Duel.ConfirmCards(1-tp,tc)
+        end
+    end
+end
+function c100234003.descfilter(c,lg)
+    return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK) and lg:IsContains(c)
+end
+function c100234003.descon(e,tp,eg,ep,ev,re,r,rp)
+    local lg=e:GetHandler():GetLinkedGroup()
+    return eg:IsExists(c100234003.descfilter,1,nil,lg)
+end
+function c100234003.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+    if chkc then return chkc:IsOnField() end
+    if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+    local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+    Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,PLAYER_ALL,LOCATION_ONFIELD)
+end
+function c100234003.desop(e,tp,eg,ep,ev,re,r,rp)
+    local tc=Duel.GetFirstTarget()
+    if tc and tc:IsRelateToEffect(e) then
+        Duel.Destroy(tc,REASON_EFFECT)
+    end
 end
