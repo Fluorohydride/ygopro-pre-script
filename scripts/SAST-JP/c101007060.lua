@@ -70,8 +70,8 @@ function c101007060.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101007060.repfilter(c,tp)
-	return c:IsFaceup() and aux.IsMaterialListCode(c,89943723) and c:IsLocation(LOCATION_MZONE)
-		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_FUSION)
+		and aux.IsMaterialListCode(c,89943723) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function c101007060.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c101007060.repfilter,1,nil,tp) end
