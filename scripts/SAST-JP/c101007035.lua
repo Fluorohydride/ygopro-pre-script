@@ -33,6 +33,7 @@ function c101007035.initial_effect(c)
 end
 c101007035.material_setcode=0x8
 c101007035.card_code_list={89943723}
+c101007035.neos_fusion=true
 function c101007035.ffilter(c)
 	return c:IsLevelBelow(4) and c:IsFusionType(TYPE_EFFECT)
 end
