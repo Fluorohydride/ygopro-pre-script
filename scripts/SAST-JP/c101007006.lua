@@ -34,7 +34,7 @@ function c101007006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,ev)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,ev)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,math.ceil(ev/2))
 end
 function c101007006.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
