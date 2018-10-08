@@ -1,7 +1,7 @@
 --The Phantom Knights of Rusty Bardiche
 function c100234003.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkAttribute,ATTRIBUTE_DARK),2)
 	c:EnableReviveLimit()
 	--to grave
 	local e1=Effect.CreateEffect(c)
@@ -15,7 +15,7 @@ function c100234003.initial_effect(c)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetDescription(aux.Stringid(100234102,0))
+	e2:SetDescription(aux.Stringid(100234003,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
