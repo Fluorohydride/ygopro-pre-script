@@ -42,7 +42,7 @@ function c101007006.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local val=Duel.Damage(tp,atk,REASON_EFFECT)
 		if val>0 then
-			Duel.Recover(tp,val,REASON_EFFECT)
+			Duel.Recover(tp,math.ceil(val/2),REASON_EFFECT)
 		end
 	end
 end
