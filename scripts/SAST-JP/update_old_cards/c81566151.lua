@@ -94,7 +94,23 @@ function c81566151.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c81566151.retop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) or e:GetHandler():IsFacedown() then return end
-	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
+	local rg=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_GRAVE,0,nil,101007060)
+	local rep=false
+	for rc in Auxiliary.Next(rg) do
+		local rpeg={rc:IsHasEffect(101007060)}
+		for _,rpe in pairs(rpeg) do
+			if Duel.SelectEffectYesNo(tp,rc,rpe:GetDescription()) then
+				rep=true
+				local op=rpe:GetOperation()
+				op(rpe,tp,eg,ep,ev,re,r,rp)
+				break
+			end
+		end
+		if rep then break end
+	end
+	if not rep then
+		Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
+	end
 end
 function c81566151.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)*400
