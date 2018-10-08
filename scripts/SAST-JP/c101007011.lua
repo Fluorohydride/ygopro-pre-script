@@ -39,5 +39,5 @@ function c101007011.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,101007111,0x27,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH) then return end
 	local token=Duel.CreateToken(tp,101007111)
-	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
+	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 end
