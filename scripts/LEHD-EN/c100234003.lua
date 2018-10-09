@@ -33,7 +33,7 @@ function c100234003.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-function c100234003.tgfilter(c)
+function c100234003.tgfilter(c,tp)
 	return c:IsSetCard(0x10db) and c:IsAbleToGrave() and c:IsType(TYPE_MONSTER)
 		and Duel.IsExistingMatchingCard(c100234003.setfilter,tp,LOCATION_DECK,0,1,c)
 end
@@ -41,13 +41,13 @@ function c100234003.setfilter(c)
 	return c:IsSetCard(0xdb) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function c100234003.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100234003.tgfilter,tp,LOCATION_DECK,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100234003.tgfilter,tp,LOCATION_DECK,0,1,nil,tp)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c100234003.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100234003.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100234003.tgfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
 	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(c100234003.setfilter,tp,LOCATION_DECK,0,1,nil) then
 		local tc=Duel.SelectMatchingCard(tp,c100234003.setfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 		if tc then
