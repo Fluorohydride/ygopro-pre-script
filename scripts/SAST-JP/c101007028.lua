@@ -35,7 +35,7 @@ end
 function c101007028.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=eg:IsExists(c101007028.damfilter,1,nil,tp)
+	local g=eg:Filter(c101007028.damfilter,nil,tp)
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0
 		and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101007028,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)

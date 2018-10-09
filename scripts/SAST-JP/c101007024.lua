@@ -38,7 +38,7 @@ function c101007024.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO
 end
 function c101007024.desfilter(c,atk)
-	return c:IsFaceup() and c:IsAttackBellow(atk-1)
+	return c:IsFaceup() and c:IsAttackBelow(atk-1)
 end
 function c101007024.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local atk=e:GetHandler():GetReasonCard():GetAttack()

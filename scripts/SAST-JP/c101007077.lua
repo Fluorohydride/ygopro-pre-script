@@ -48,9 +48,10 @@ function c101007077.activate(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g1=Duel.SelectMatchingCard(tp,c101007077.tgfilter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,tp)
-		if g1:GetCount()>0 and Duel.SendtoGrave(g1,REASON_EFFECT)~=0 and g1:GetFirst():IsLocation(LOCATION_GRAVE) then
+		local tc1=g1:GetFirst()
+		if tc1 and Duel.SendtoGrave(tc1,REASON_EFFECT)~=0 and tc1:IsLocation(LOCATION_GRAVE) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local g2=Duel.SelectMatchingCard(tp,c101007077.thfilter1,tp,LOCATION_DECK,0,1,1,nil,c:GetAttribute(),c:GetCode())
+			local g2=Duel.SelectMatchingCard(tp,c101007077.thfilter1,tp,LOCATION_DECK,0,1,1,nil,tc1:GetAttribute(),tc1:GetCode())
 			if g2:GetCount()>0 then
 				Duel.SendtoHand(g2,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,g2)
@@ -59,9 +60,10 @@ function c101007077.activate(e,tp,eg,ep,ev,re,r,rp)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g1=Duel.SelectMatchingCard(tp,c101007077.tgfilter2,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,tp)
-		if g1:GetCount()>0 and Duel.SendtoGrave(g1,REASON_EFFECT)~=0 and g1:GetFirst():IsLocation(LOCATION_GRAVE) then
+		local tc1=g1:GetFirst()
+		if tc1 and Duel.SendtoGrave(tc1,REASON_EFFECT)~=0 and tc1:IsLocation(LOCATION_GRAVE) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local g2=Duel.SelectMatchingCard(tp,c101007077.thfilter2,tp,LOCATION_DECK,0,1,1,nil,c:GetAttribute(),c:GetOriginalLevel())
+			local g2=Duel.SelectMatchingCard(tp,c101007077.thfilter2,tp,LOCATION_DECK,0,1,1,nil,tc1:GetAttribute(),tc1:GetOriginalLevel())
 			if g2:GetCount()>0 then
 				Duel.SendtoHand(g2,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,g2)
