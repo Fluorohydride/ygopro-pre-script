@@ -41,7 +41,7 @@ function c100233001.initial_effect(c)
 	e5:SetOperation(c100233001.spop)
 	c:RegisterEffect(e5)
 end
-function c100233001.rmcond(e)
+function c100233001.rmcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonLocation()&LOCATION_EXTRA==LOCATION_EXTRA
 end
 function c100233001.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)

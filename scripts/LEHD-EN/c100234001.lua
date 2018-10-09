@@ -19,7 +19,7 @@ function c100234001.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100234001.atktg(e,c)
-	return (e:GetHandler():GetLinkedGroup():IsContains(c) or c==e:GetHandler()) and c:IsSetCard(0x8) and c:IsFaceup()
+	return (c==e:GetHandler() or (e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x8) and c:IsFaceup()))
 end
 function c100234001.atkfilter(c)
 	return c:IsSetCard(0x8) and c:IsType(TYPE_MONSTER)

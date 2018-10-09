@@ -26,7 +26,7 @@ function c101007033.initial_effect(c)
 	--recycle
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101007033,1))
-	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_LEAVE_GRAVE)
+	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_MZONE)
@@ -37,7 +37,6 @@ function c101007033.initial_effect(c)
 	e3:SetOperation(c101007033.operation)
 	c:RegisterEffect(e3)
 end
-c101007033.material_setcode={0xfb}
 function c101007033.matfilter(c)
 	return c:IsFusionType(TYPE_LINK) and c:IsFusionSetCard(0xfb)
 end
@@ -73,15 +72,7 @@ function c101007033.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetAttackedCount()>0
 end
 function c101007033.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local effs={e:GetHandler():IsHasEffect(EFFECT_UPDATE_ATTACK)}
-		for _,eff in ipairs(effs) do
-			if eff:GetLabelObject()==e:GetLabelObject() then
-				return true
-			end
-		end
-		return false
-	end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function c101007033.operation(e,tp,eg,ep,ev,re,r,rp)
