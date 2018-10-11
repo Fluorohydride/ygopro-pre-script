@@ -11,6 +11,7 @@
 - **November 23, 2018** : LINK VRAINS PACK 2 (LVP2-JP) : `100235XXX`
 - **December 8, 2018** : Structure Deck: Soulburner (SD35-JP) : `100335XXX`
 - **December 22, 2018** : ANNIVERSARY DUELIST BOX (20TH-JP) : `100236XXX`
+- **January 12, 2019** : DARK NEOSTORM (????-JP) : `101008XXX`
 
 # Archived
 - ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
