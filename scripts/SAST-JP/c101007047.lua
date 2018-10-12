@@ -10,7 +10,6 @@ function c101007047.initial_effect(c)
 	e1:SetDescription(aux.Stringid(101007047,0))
 	e1:SetCategory(CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCost(c101007047.spcost)
 	e1:SetTarget(c101007047.sptg)
@@ -60,16 +59,16 @@ function c101007047.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local chkf=tp
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101007047.spfilter3(chkc,e,tp,chkf) end
 	if chk==0 then return Duel.GetLocationCountFromEx(tp,e:GetHandler())>0
-		and Duel.IsExistingTarget(c101007047.spfilter3,tp,LOCATION_GRAVE,0,1,nil,e,tp,chkf) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c101007047.spfilter3,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,chkf)
-	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,g,1,0,0)
+		and Duel.IsExistingMatchingCard(c101007047.spfilter3,tp,LOCATION_GRAVE,0,1,nil,e,tp,chkf) end
+	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c101007047.spop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) then
-		local chkf=tp
+	local chkf=tp
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101007047.spfilter3),tp,LOCATION_GRAVE,0,1,1,nil,e,tp,chkf)
+	local tc=g:GetFirst()
+	if tc and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) then
 		local mg1=Duel.GetMatchingGroup(c101007047.spfilter1,tp,LOCATION_GRAVE,0,nil,e)
 		local mgchk1=c101007047.spfilter2(tc,e,tp,mg1,nil,chkf)
 		local mg2=nil
