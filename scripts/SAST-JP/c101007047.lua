@@ -55,9 +55,8 @@ function c101007047.spfilter3(c,e,tp,chkf)
 	end
 	return res
 end
-function c101007047.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c101007047.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local chkf=tp
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101007047.spfilter3(chkc,e,tp,chkf) end
 	if chk==0 then return Duel.GetLocationCountFromEx(tp,e:GetHandler())>0
 		and Duel.IsExistingMatchingCard(c101007047.spfilter3,tp,LOCATION_GRAVE,0,1,nil,e,tp,chkf) end
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_GRAVE)
