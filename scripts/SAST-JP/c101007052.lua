@@ -26,6 +26,19 @@ function c101007052.initial_effect(c)
 	e2:SetTarget(c101007052.sptg)
 	e2:SetOperation(c101007052.spop)
 	c:RegisterEffect(e2)
+	if aux.GetMultiLinkedZone==nil then
+		function aux.GetMultiLinkedZone(tp)
+			local lg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)
+			local multi_linked_zone=0
+			local single_linked_zone=0
+			for tc in aux.Next(lg) do
+				local zone=tc:GetLinkedZone(tp)&0x7f
+				multi_linked_zone=single_linked_zone&zone|multi_linked_zone
+				single_linked_zone=single_linked_zone~zone
+			end
+			return multi_linked_zone
+		end
+	end
 end
 function c101007052.matfilter(c)
 	return c:IsLevelBelow(4) and c:IsLinkRace(RACE_DRAGON)
@@ -40,18 +53,7 @@ function c101007052.spfilter(c,e,tp,zone)
 	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsRace(RACE_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c101007052.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local lg1=Duel.GetMatchingGroup(c101007052.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local zone=0
-	for tc1 in aux.Next(lg1) do
-		local zone1=bit.band(tc1:GetLinkedZone(tp),0x1f)
-		local lg2=Duel.GetMatchingGroup(c101007052.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,tc1)
-		for tc2 in aux.Next(lg2) do
-			local zone2=bit.band(zone1,bit.band(tc2:GetLinkedZone(tp),0x1f))
-			if zone2~=0 then
-				zone=bit.bor(zone,zone2)
-			end
-		end
-	end
+	local zone=aux.GetMultiLinkedZone(tp)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c101007052.spfilter(chkc,e,tp,zone) end
 	if chk==0 then return zone~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c101007052.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp,zone) end
@@ -60,18 +62,7 @@ function c101007052.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101007052.spop(e,tp,eg,ep,ev,re,r,rp)
-	local lg1=Duel.GetMatchingGroup(c101007052.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local zone=0
-	for tc1 in aux.Next(lg1) do
-		local zone1=bit.band(tc1:GetLinkedZone(tp),0x1f)
-		local lg2=Duel.GetMatchingGroup(c101007052.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,tc1)
-		for tc2 in aux.Next(lg2) do
-			local zone2=bit.band(zone1,bit.band(tc2:GetLinkedZone(tp),0x1f))
-			if zone2~=0 then
-				zone=bit.bor(zone,zone2)
-			end
-		end
-	end
+	local zone=aux.GetMultiLinkedZone(tp)
 	local tc=Duel.GetFirstTarget()
 	if zone~=0 and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
