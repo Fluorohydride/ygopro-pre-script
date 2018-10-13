@@ -78,9 +78,9 @@ function c101007065.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x117) and not c:IsCode(101007065) and c:IsAbleToGraveAsCost()
 end
 function c101007065.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101007032.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101007065.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c101007032.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101007065.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c101007065.spfilter(c,e,tp)

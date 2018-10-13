@@ -1,4 +1,4 @@
---生炎獣ウルヴィー
+--転生炎獣ウルヴィー
 --Salamangreat Wolvie
 --scripted by LogicalNonsense
 function c101007003.initial_effect(c)
