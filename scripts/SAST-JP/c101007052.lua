@@ -43,10 +43,10 @@ function c101007052.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lg1=Duel.GetMatchingGroup(c101007052.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local zone=0
 	for tc1 in aux.Next(lg1) do
-		local zone1=bit.band(tc1:GetLinkedZone(),0x1f)
+		local zone1=bit.band(tc1:GetLinkedZone(tp),0x1f)
 		local lg2=Duel.GetMatchingGroup(c101007052.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,tc1)
 		for tc2 in aux.Next(lg2) do
-			local zone2=bit.band(zone1,bit.band(tc2:GetLinkedZone(),0x1f))
+			local zone2=bit.band(zone1,bit.band(tc2:GetLinkedZone(tp),0x1f))
 			if zone2~=0 then
 				zone=bit.bor(zone,zone2)
 			end
@@ -63,10 +63,10 @@ function c101007052.spop(e,tp,eg,ep,ev,re,r,rp)
 	local lg1=Duel.GetMatchingGroup(c101007052.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local zone=0
 	for tc1 in aux.Next(lg1) do
-		local zone1=bit.band(tc1:GetLinkedZone(),0x1f)
+		local zone1=bit.band(tc1:GetLinkedZone(tp),0x1f)
 		local lg2=Duel.GetMatchingGroup(c101007052.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,tc1)
 		for tc2 in aux.Next(lg2) do
-			local zone2=bit.band(zone1,bit.band(tc2:GetLinkedZone(),0x1f))
+			local zone2=bit.band(zone1,bit.band(tc2:GetLinkedZone(tp),0x1f))
 			if zone2~=0 then
 				zone=bit.bor(zone,zone2)
 			end
