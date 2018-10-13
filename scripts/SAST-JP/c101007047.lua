@@ -95,6 +95,10 @@ function c101007047.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function c101007047.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsFaceup() and c:IsPreviousLocation(LOCATION_GRAVE)
+end
 function c101007047.atkfilter(c)
 	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
