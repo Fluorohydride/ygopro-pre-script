@@ -31,7 +31,7 @@ function c101007030.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101007030.cfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(c101007030.tgfilter,tp,0,LOCATION_DECK,1,nil,c)
+		and Duel.IsExistingMatchingCard(c101007030.tgfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function c101007030.tgfilter(c,rc)
 	return c:IsAbleToRemove() and c:IsRace(rc:GetRace())
