@@ -1,4 +1,6 @@
 --トリックスター・ライブステージ
+--
+--Script by mercury233
 function c101007058.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -70,6 +72,7 @@ end
 function c101007058.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,101007158,0xfb,0x4011,0,0,1,RACE_FAIRY,ATTRIBUTE_LIGHT,POS_FACEUP) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end

@@ -6,6 +6,7 @@ function c101007062.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,101007062)
 	e1:SetTarget(c101007062.target)
 	c:RegisterEffect(e1)
 	--move
