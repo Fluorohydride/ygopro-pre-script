@@ -94,12 +94,12 @@ function c100233001.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100233001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(c100233001.spfilter,tp,0,LOCATION_REMOVED,nil,e,tp)
+	local g=Duel.GetMatchingGroup(c100233001.spfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,#g,tp,LOCATION_REMOVED)
 end
 function c100233001.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local tg=Duel.GetMatchingGroup(c100233001.spfilter,tp,0,LOCATION_REMOVED,nil,e,tp)
+	local tg=Duel.GetMatchingGroup(c100233001.spfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil,e,tp)
 	if ft<=0 or #tg==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
