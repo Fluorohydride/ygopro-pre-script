@@ -8,19 +8,19 @@ function c101007077.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101007077+EFFECT_COUNT_CODE_OATH)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetTarget(c101007077.target)
 	e1:SetOperation(c101007077.activate)
 	c:RegisterEffect(e1)
 end
-function c101007077.tgfilter1(c)
+function c101007077.tgfilter1(c,tp)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 		and Duel.IsExistingMatchingCard(c101007077.thfilter1,tp,LOCATION_DECK,0,1,nil,c:GetAttribute(),c:GetCode())
 end
 function c101007077.thfilter1(c,att,code)
 	return c:IsAttribute(att) and not c:IsCode(code) and c:IsType(TYPE_FLIP) and c:IsAbleToHand()
 end
-function c101007077.tgfilter2(c)
+function c101007077.tgfilter2(c,tp)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_FLIP) and c:IsAbleToGrave()
 		and Duel.IsExistingMatchingCard(c101007077.thfilter2,tp,LOCATION_DECK,0,1,nil,c:GetAttribute(),c:GetOriginalLevel())
 end

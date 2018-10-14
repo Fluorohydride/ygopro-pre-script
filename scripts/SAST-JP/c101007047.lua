@@ -56,7 +56,7 @@ function c101007047.spfilter3(c,e,tp,chkf)
 	return res
 end
 function c101007047.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local chkf=tp
+	local chkf=PLAYER_NONE
 	if chk==0 then return Duel.GetLocationCountFromEx(tp,e:GetHandler())>0
 		and Duel.IsExistingMatchingCard(c101007047.spfilter3,tp,LOCATION_GRAVE,0,1,nil,e,tp,chkf) end
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_GRAVE)
@@ -104,12 +104,12 @@ function c101007047.atkfilter(c)
 end
 function c101007047.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,1,nil,RACE_CYBERSE)
-	and Duel.IsExistingMatchingCard(c101007047.atkfilter,tp,0,LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingMatchingCard(c101007047.atkfilter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function c101007047.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101007047.atkfilter,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()==0 then return end
-	local atk=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,nil)*400
+	local atk=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,nil,RACE_CYBERSE)*400
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(e:GetHandler())

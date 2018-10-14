@@ -27,6 +27,7 @@ function c101007065.filter(c,e,tp,m,ft)
 	if bit.band(c:GetType(),0x81)~=0x81
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
+	if c:IsCode(21105106) then return c:ritual_custom_condition(mg,ft) end
 	if ft>0 then
 		return mg:CheckWithSumGreater(Card.GetRitualLevel,c:GetLevel(),c)
 	else
