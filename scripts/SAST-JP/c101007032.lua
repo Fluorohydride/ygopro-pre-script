@@ -73,7 +73,7 @@ function c101007032.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(tp,Duel.GetLP(tp)-2500)
 end
 function c101007032.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x117) and c:IsAbleToGraveAsCost()
+	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsSetCard(0x117) and c:IsAbleToGraveAsCost()
 end
 function c101007032.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101007032.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end

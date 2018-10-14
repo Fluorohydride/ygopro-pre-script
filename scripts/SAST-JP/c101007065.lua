@@ -75,7 +75,7 @@ function c101007065.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101007065.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x117) and not c:IsCode(101007065) and c:IsAbleToGraveAsCost()
+	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsSetCard(0x117) and not c:IsCode(101007065) and c:IsAbleToGraveAsCost()
 end
 function c101007065.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101007065.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
