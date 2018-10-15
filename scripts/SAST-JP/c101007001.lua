@@ -1,4 +1,4 @@
---キャシー・イヴＬ２
+--キャシー・イヴL2
 --Catche Eve L2
 --scripted by Larry126
 function c101007001.initial_effect(c)

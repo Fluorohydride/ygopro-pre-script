@@ -5,7 +5,7 @@ function c101007020.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101007020,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -46,7 +46,7 @@ function c101007020.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.BreakEffect()
 		local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_MZONE,nil,TYPE_LINK)
-		Duel.Draw(tp,ct+1,REASON_EFFECT)
+		if Duel.Draw(tp,ct+1,REASON_EFFECT)==0 then return end
 		Duel.ShuffleHand(tp)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,ct,ct,nil)
 		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)

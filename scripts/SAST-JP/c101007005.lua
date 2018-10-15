@@ -55,14 +55,14 @@ function c101007005.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c101007005.filter,tp,0,LOCATION_SZONE,1,1,nil)
 	e:SetLabelObject(g:GetFirst())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,1-tp,LOCATION_SZONE)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,lg,1,tp,LOCATION_GRAVE) 
+	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,lg,1,tp,LOCATION_GRAVE)
 end
 function c101007005.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sc=e:GetLabelObject()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local lc=g:GetFirst()
 	if lc==sc then lc=g:GetNext() end
-	if lc and lc:IsRelateToEffect(e) and Duel.SendtoDeck(lc,nil,2,REASON_EFFECT)>0 and sc and sc:IsRelateToEffect(e) then
+	if lc and lc:IsRelateToEffect(e) and Duel.SendtoDeck(lc,nil,2,REASON_EFFECT)>0 and lc:IsLocation(LOCATION_EXTRA) and sc and sc:IsRelateToEffect(e) then
 		Duel.Destroy(sc,REASON_EFFECT)
 	end
 end
@@ -75,7 +75,7 @@ function c101007005.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101007005.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,LOCATION_GRAVE)
 end
 function c101007005.spop(e,tp,eg,ep,ev,re,r,rp)

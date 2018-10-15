@@ -30,7 +30,7 @@ function c101007031.cfilter(c)
 	return d:IsRelateToBattle() and d:GetSequence()<=5 or not d:IsRelateToBattle() and d:GetPreviousSequence()<=5
 end
 function c101007031.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists()
+	return eg:IsExists(c101007031.cfilter,1,nil)
 end
 function c101007031.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:Filter(c101007031.cfilter,nil):GetFirst()

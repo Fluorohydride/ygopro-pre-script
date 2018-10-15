@@ -5,7 +5,7 @@ function c101007030.initial_effect(c)
 	--banish
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101007030,0))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,101007030)

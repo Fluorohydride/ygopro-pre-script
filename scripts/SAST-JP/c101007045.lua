@@ -37,16 +37,16 @@ end
 function c101007045.mfilter(c)
 	return c:IsLevelAbove(2) and c:IsLinkRace(RACE_CYBERSE)
 end
-function c101007045.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(101007045)==0 end
-	c:RegisterFlagEffect(101007045,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
-end
 function c101007045.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	return a:GetControler()==tp and a:IsRace(RACE_CYBERSE)
 		or d and d:GetControler()==tp and d:IsRace(RACE_CYBERSE)
+end
+function c101007045.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(101007045)==0 end
+	c:RegisterFlagEffect(101007045,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
 end
 function c101007045.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -78,7 +78,8 @@ function c101007045.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local ad=a:GetTextDefense()
 		if a:IsImmuneToEffect(e) then
 			aa=a:GetBaseAttack()
-			ad=a:GetBaseDefense() end
+			ad=a:GetBaseDefense()
+		end
 		if aa<0 then aa=0 end
 		if ad<0 then ad=0 end
 		local e4=Effect.CreateEffect(c)
@@ -101,9 +102,10 @@ function c101007045.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if d and d:IsRelateToBattle() then
 		local da=d:GetTextAttack()
 		local dd=d:GetTextDefense()
-		if d:IsImmuneToEffect(e) then 
+		if d:IsImmuneToEffect(e) then
 			da=d:GetBaseAttack()
-			dd=d:GetBaseDefense() end
+			dd=d:GetBaseDefense()
+		end
 		if da<0 then da=0 end
 		if dd<0 then dd=0 end
 		local e6=Effect.CreateEffect(c)
@@ -156,12 +158,12 @@ function c101007045.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_LINK
 end
 function c101007045.eftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetReasonCard():GetFlagEffect(101007045)~=0 end
+	if chk==0 then return e:GetHandler():GetReasonCard():GetFlagEffect(101007045)==0 end
 end
 function c101007045.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	if rc:GetFlagEffect(101007045)==0 then return end
+	if rc:GetFlagEffect(101007045)~=0 then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101007045,2))
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)

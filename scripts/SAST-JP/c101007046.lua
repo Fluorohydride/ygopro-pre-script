@@ -38,7 +38,7 @@ function c101007046.desop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101007046.cfilter(c,g)
-	return g:IsContains(c) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return g:IsContains(c)
 end
 function c101007046.descost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=e:GetHandler():GetLinkedGroup()

@@ -1,5 +1,4 @@
---
---card name cant be recognized
+--封狼雷坊
 --Script by mercury233
 function c101007100.initial_effect(c)
 	--Negate
@@ -9,6 +8,7 @@ function c101007100.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1,101007100)
 	e1:SetCondition(c101007100.condition)
 	e1:SetCost(c101007100.cost)
 	e1:SetTarget(c101007100.target)
@@ -20,6 +20,7 @@ function c101007100.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCountLimit(1,101007200)
 	e2:SetCondition(c101007100.spcon)
 	e2:SetTarget(c101007100.sptg)
 	e2:SetOperation(c101007100.spop)

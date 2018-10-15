@@ -18,10 +18,11 @@ function c101007021.initial_effect(c)
 	e2:SetTarget(c101007021.atktg)
 	e2:SetOperation(c101007021.atkop)
 	c:RegisterEffect(e2)
-	local e3=e1:Clone()
+	local e3=e2:Clone()
 	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(0,TIMING_END_PHASE)
+	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMING_END_PHASE)
 	e3:SetCondition(c101007021.atkcon2)
 	c:RegisterEffect(e3)
 end
@@ -29,10 +30,10 @@ function c101007021.indval(e,c)
 	return c:IsType(TYPE_LINK)
 end
 function c101007021.atkcon1(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsPlayerAffectedByEffect(tp,101007021)
+	return not Duel.IsPlayerAffectedByEffect(tp,90351981)
 end
 function c101007021.atkcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsPlayerAffectedByEffect(tp,101007021)
+	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) and Duel.IsPlayerAffectedByEffect(tp,90351981)
 end
 function c101007021.tgfilter(c)
 	return c:IsFaceup()
@@ -43,7 +44,7 @@ end
 function c101007021.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101007021.tgfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101007021.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-		 and Duel.IsExistingMatchingCard(c101007021.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil) end
+		 and Duel.IsExistingMatchingCard(c101007021.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c101007021.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
@@ -51,7 +52,7 @@ function c101007021.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c101007021.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101007021.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		local gc=g:GetFirst()
 		if Duel.SendtoGrave(gc,REASON_EFFECT)~=0 and gc:IsLocation(LOCATION_GRAVE)
