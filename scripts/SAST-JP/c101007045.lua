@@ -163,7 +163,7 @@ function c101007045.eftg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101007045.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local rc=e:GetHandler():GetReasonCard()
+	local rc=c:GetReasonCard()
 	if rc:GetFlagEffect(101007045)==0 then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101007045,2))
