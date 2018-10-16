@@ -62,7 +62,7 @@ function c101007016.cfilter(c,tp)
 	return c:GetSummonPlayer()==tp and c:IsPreviousLocation(LOCATION_EXTRA)
 end
 function c101007016.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101007016.cfilter,1,nil,1-tp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL) and eg:IsExists(c101007016.cfilter,1,nil,1-tp)
 end
 function c101007016.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
