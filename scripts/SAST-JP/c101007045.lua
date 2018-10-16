@@ -21,7 +21,6 @@ function c101007045.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_BE_MATERIAL)
-	e2:SetCountLimit(1,101007045)
 	e2:SetCondition(c101007045.efcon)
 	e2:SetTarget(c101007045.eftg)
 	e2:SetOperation(c101007045.efop)
@@ -158,12 +157,14 @@ function c101007045.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_LINK
 end
 function c101007045.eftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetReasonCard():GetFlagEffect(101007045)==0 end
+	local rc=e:GetHandler():GetReasonCard()
+	if chk==0 then return rc:GetFlagEffect(101007045)~=0 and rc:GetFlagEffect(101007145)==0 end
+	rc:RegisterFlagEffect(101007145,RESET_EVENT+RESETS_STANDARD,0,1)
 end
 function c101007045.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local rc=c:GetReasonCard()
-	if rc:GetFlagEffect(101007045)~=0 then return end
+	local rc=e:GetHandler():GetReasonCard()
+	if rc:GetFlagEffect(101007045)==0 then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101007045,2))
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
