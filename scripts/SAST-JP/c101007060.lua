@@ -22,12 +22,12 @@ function c101007060.initial_effect(c)
 	c:RegisterEffect(e2)
 	--return replace
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(101007060,1))
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(101007060)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EFFECT_SEND_REPLACE)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCondition(c101007060.repcon2)
+	e3:SetTarget(c101007060.reptg2)
 	e3:SetOperation(c101007060.repop2)
+	e3:SetValue(c101007060.repval2)
 	c:RegisterEffect(e3)
 end
 c101007060.card_code_list={89943723}
@@ -83,9 +83,20 @@ end
 function c101007060.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 end
-function c101007060.repcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsAbleToRemove()
+function c101007060.repfilter2(c,tp,re)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and aux.IsMaterialListCode(c,89943723) and c:IsType(TYPE_MONSTER)
+		and c:GetDestination()==LOCATION_DECK and re:GetOwner()==c
+end
+function c101007060.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return bit.band(r,REASON_EFFECT)~=0 and re
+		and e:GetHandler():IsAbleToRemove() and eg:IsExists(c101007060.repfilter2,1,nil,tp,re) end
+	if Duel.SelectEffectYesNo(tp,e:GetHandler(),95) then
+		return true
+	else return false end
 end
 function c101007060.repop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
+end
+function c101007060.repval2(e,c)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and aux.IsMaterialListCode(c,89943723) and c:IsType(TYPE_MONSTER)
 end

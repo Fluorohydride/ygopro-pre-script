@@ -111,26 +111,10 @@ end
 function c101007036.retop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local rg=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_GRAVE,0,nil,101007060)
-	local rep=false
-	for rc in Auxiliary.Next(rg) do
-		local rpeg={rc:IsHasEffect(101007060)}
-		for _,rpe in pairs(rpeg) do
-			if Duel.SelectEffectYesNo(tp,rc,rpe:GetDescription()) then
-				rep=true
-				local op=rpe:GetOperation()
-				op(rpe,tp,eg,ep,ev,re,r,rp)
-				break
-			end
-		end
-		if rep then break end
-	end
-	if not rep then
-		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
-		if c:IsLocation(LOCATION_EXTRA) then
-			local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,1,1,nil)
-			Duel.Destroy(g,REASON_EFFECT)
-		end
+	Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
+	if c:IsLocation(LOCATION_EXTRA) then
+		local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,1,1,nil)
+		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
 function c101007036.limcon(e,tp,eg,ep,ev,re,r,rp)
