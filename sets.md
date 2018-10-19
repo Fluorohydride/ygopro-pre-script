@@ -7,9 +7,9 @@
 - **October 10, 2018** : Legendary Hero Decks (LEHD-EN) : `100234XXX`
 - **November 10, 2018** : Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX`
 - **November 23, 2018** : LINK VRAINS PACK 2 (LVP2-JP) : `100235XXX`
+- **December 8, 2018** : Structure Deck: Soulburner (SD35-JP) : `100335XXX`
 
 # Announced
-- **December 8, 2018** : Structure Deck: Soulburner (SD35-JP) : `100335XXX`
 - **December 22, 2018** : ANNIVERSARY DUELIST BOX (20TH-JP) : `100236XXX`
 - **January 12, 2019** : DARK NEOSTORM (????-JP) : `101008XXX`
 
