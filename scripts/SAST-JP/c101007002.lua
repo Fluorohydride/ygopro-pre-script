@@ -42,7 +42,7 @@ function c101007002.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101007002.repfilter(c,tp)
-	return c:GetSequence()>=5 and c:IsControler(tp)
+	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()>=5 and c:IsControler(tp)
 		and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function c101007002.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
