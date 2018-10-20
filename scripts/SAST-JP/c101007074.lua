@@ -68,5 +68,5 @@ function c101007074.immop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101007074.efilter(e,te)
-	return te:GetOwner()~=e:GetOwner()
+	return te:GetOwner()~=e:GetHandler()
 end
