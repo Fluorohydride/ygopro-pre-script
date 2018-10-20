@@ -23,7 +23,7 @@ function c101007011.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101007011.tnval(e,c)
-	return c:IsSetCard(0x27)
+	return e:GetHandler():IsControler(c:GetControler()) and c:IsSetCard(0x27)
 end
 function c101007011.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO
