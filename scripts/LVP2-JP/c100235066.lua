@@ -56,7 +56,7 @@ function c100235066.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=g1:GetFirst()
 	if not tc1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local g2=Duel.SelectMatchingCard(tp,c100235066.setfilter2,tp,LOCATION_DECK,0,1,1,nil,tc:GetCode())
+	local g2=Duel.SelectMatchingCard(tp,c100235066.setfilter2,tp,LOCATION_DECK,0,1,1,nil,tc1:GetCode())
 	local tc2=g2:GetFirst()
 	Duel.MoveToField(tc1,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	Duel.MoveToField(tc2,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
@@ -71,7 +71,7 @@ function c100235066.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and (c:IsReason(REASON_EFFECT) and rp==1-tp or c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp))
 end
 function c100235066.spfilter(c,e,tp)
-	return c:IsSetCard(0xaf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xaf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100235066.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=0
@@ -87,6 +87,6 @@ function c100235066.spop(e,tp,eg,ep,ev,re,r,rp)
 	if loc==0 then return end
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100235066.spfilter),tp,loc,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
