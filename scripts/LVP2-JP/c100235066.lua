@@ -71,7 +71,7 @@ function c100235066.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and (c:IsReason(REASON_EFFECT) and rp==1-tp or c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp))
 end
 function c100235066.spfilter(c,e,tp)
-	return c:IsSetCard(0xaf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xaf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100235066.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=0
