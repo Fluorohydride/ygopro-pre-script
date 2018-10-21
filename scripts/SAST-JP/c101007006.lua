@@ -40,7 +40,7 @@ function c101007006.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		Duel.BreakEffect()
-		local val=Duel.Damage(tp,atk,REASON_EFFECT)
+		local val=Duel.Damage(1-tp,ev,REASON_EFFECT)
 		if val>0 then
 			Duel.Recover(tp,math.ceil(val/2),REASON_EFFECT)
 		end
