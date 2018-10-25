@@ -1,0 +1,59 @@
+--ハーピィの羽根休め
+--Harpie's Feather Roosting
+--scripted by Logical Nonsense
+function c100411004.initial_effect(c)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(c100411004.drtg)
+	e1:SetOperation(c100411004.drop)
+	e1:SetCountLimit(1,100411004+EFFECT_COUNT_CODE_OATH)
+	c:RegisterEffect(e1)
+end
+c100411004.card_code_list={12206212}
+function c100411004.drfilter(c)
+	return c:IsCode(76812113,12206212) and c:IsAbleToDeck()
+end
+function c100411004.ctfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x64) and c:IsLevelAbove(5)
+end
+function c100411004.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local ct=1
+	if Duel.IsExistingMatchingCard(c100411004.ctfilter,tp,LOCATION_MZONE,0,1,nil) then ct=2 end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100411004.drfilter(chkc) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,ct) and Duel.IsExistingTarget(c100411004.drfilter,tp,LOCATION_GRAVE,0,3,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectTarget(tp,c100411004.drfilter,tp,LOCATION_GRAVE,0,3,3,nil)
+	e:SetLabel(ct)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
+end
+function c100411004.drop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 then return end
+	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	local g=Duel.GetOperatedGroup()
+	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	if ct>0 then
+		Duel.BreakEffect()
+		Duel.Draw(tp,e:GetLabel(),REASON_EFFECT)
+	end
+	local c=e:GetHandler()
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(c100411004.splimit)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+	end
+end
+function c100411004.splimit(e,c)
+	return not c:IsAttribute(ATTRIBUTE_WIND)
+end
