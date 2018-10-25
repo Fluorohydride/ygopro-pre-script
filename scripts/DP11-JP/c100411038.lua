@@ -55,6 +55,7 @@ function c100411038.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	while ct<rt do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DEATTACHFROM)
 		local sg=Duel.SelectMatchingCard(tp,Card.CheckRemoveOverlayCard,tp,LOCATION_MZONE,0,min,1,nil,tp,1,REASON_COST)
+		if #sg==0 then break end
 		sg:GetFirst():RemoveOverlayCard(tp,1,1,REASON_COST)
 		ct=ct+1
 		min=0

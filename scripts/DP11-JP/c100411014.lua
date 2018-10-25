@@ -48,5 +48,5 @@ function c100411014.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100411014.splimit(e,c)
-	return not c:IsRitualMonster()
+	return c:GetType()&0x81~=0x81
 end
