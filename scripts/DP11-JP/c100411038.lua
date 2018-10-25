@@ -14,7 +14,7 @@ function c100411038.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetLabel(1)
+	e2:SetCountLimit(1)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCost(c100411038.descost)
 	e2:SetTarget(c100411038.destg)
@@ -33,8 +33,8 @@ function c100411038.initial_effect(c)
 	e3:SetOperation(c100411038.damop)
 	c:RegisterEffect(e3)
 end
-function c100411038.rmfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_XYZ)
+function c100411038.rmfilter(c,tp)
+	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_XYZ) and c:CheckRemoveOverlayCard(tp,1,REASON_COST)
 end
 function c100411038.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -45,7 +45,7 @@ function c100411038.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==100 then
 			e:SetLabel(0)
-			return Duel.CheckRemoveOverlayCard(tp,1,0,1,REASON_COST)
+			return Duel.IsExistingMatchingCard(c100411038.rmfilter,tp,LOCATION_MZONE,0,1,tp)
 				and Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())
 		else return false end
 	end
@@ -54,7 +54,7 @@ function c100411038.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local min=1
 	while ct<rt do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DEATTACHFROM)
-		local sg=Duel.SelectMatchingCard(tp,Card.CheckRemoveOverlayCard,tp,LOCATION_MZONE,0,min,1,nil,tp,1,REASON_COST)
+		local sg=Duel.SelectMatchingCard(tp,c100411038.rmfilter,tp,LOCATION_MZONE,0,min,1,nil,tp)
 		if #sg==0 then break end
 		sg:GetFirst():RemoveOverlayCard(tp,1,1,REASON_COST)
 		ct=ct+1
