@@ -1,5 +1,5 @@
 --ガーデン・ローズ・メイデン
---Garden Rose Ma100411023en
+--Garden Rose Maiden
 --Scripted by Eerie Code
 function c100411023.initial_effect(c)
 	--synchro summon
@@ -48,7 +48,7 @@ function c100411023.spfilter(c,e,tp)
 end
 function c100411023.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100411023.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c100411023.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100411023.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)

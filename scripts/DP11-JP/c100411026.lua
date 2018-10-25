@@ -29,9 +29,9 @@ function c100411026.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local chk2=Duel.IsExistingMatchingCard(c100411026.cfilter,tp,LOCATION_MZONE,0,1,nil,0,false)
 		and Duel.IsExistingMatchingCard(c100411026.thfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then
-        if e:GetLabel()~=100 then return false end
-        e:SetLabel(0)
-        return e:IsHasType(EFFECT_TYPE_ACTIVATE) and chk1 or chk2
+		if e:GetLabel()~=100 then return false end
+		e:SetLabel(0)
+		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and chk1 or chk2
 	end
 	e:SetLabel(0)
 	e:SetCategory(0)

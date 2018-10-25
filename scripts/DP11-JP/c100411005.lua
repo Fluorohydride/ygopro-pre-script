@@ -25,7 +25,7 @@ function c100411005.initial_effect(c)
 end
 c100411005.card_code_list={12206212}
 function c100411005.tdfilter(c,e,tp)
-	return c:IsCode(12206212) and c:IsAbleToDeck() 
+	return c:IsCode(12206212) and c:IsAbleToDeck()
 end
 function c100411005.spfilter(c,e,tp)
 	return c:IsSetCard(0x64) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
