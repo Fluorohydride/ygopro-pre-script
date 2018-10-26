@@ -98,7 +98,8 @@ function c100235001.effop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EXTRA_ATTACK)
 			e1:SetCondition(c100235001.eacon)
-			e1:SetLabel(Duel.GetTurnCount()+tct)
+			e1:SetLabel(Duel.GetTurnCount())
+			e1:SetValue(1)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,1+tct)
 			c:RegisterEffect(e1)
 			c:RegisterFlagEffect(100235101,RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END,0,1+tct)
@@ -112,7 +113,7 @@ function c100235001.effop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100235001.eacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnCount()==e:GetLabel()
+	return Duel.GetTurnCount()~=e:GetLabel()
 end
 function c100235001.valcheck(e,c)
 	local g=c:GetMaterial()
