@@ -13,7 +13,7 @@ function c100235026.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,100235026)
-	e1:SetTarget(c100235026.ctcost)
+	e1:SetCost(c100235026.ctcost)
 	e1:SetTarget(c100235026.cttg)
 	e1:SetOperation(c100235026.ctop)
 	c:RegisterEffect(e1)
@@ -73,7 +73,7 @@ end
 function c100235026.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
-	local g=Duel.GetMatchingGroup(aux.NecrovalleyFilter(c100235026.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100235026.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 	local ct=Duel.GetMatchingGroupCount(c100235026.ctfilter,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()==0 or ct==0 then return end
 	repeat
