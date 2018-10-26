@@ -62,7 +62,7 @@ function c100235001.tgcon(e)
 end
 function c100235001.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local b2=c:GetFlagEffect(100235001)==0
+	local b2=c:GetFlagEffect(100235101)==0
 	local b3=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	if chk==0 then return true end
 	local op=0
@@ -101,7 +101,7 @@ function c100235001.effop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetLabel(Duel.GetTurnCount()+tct)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,1+tct)
 			c:RegisterEffect(e1)
-			c:RegisterFlagEffect(100235001,RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END,0,1+tct)
+			c:RegisterFlagEffect(100235101,RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END,0,1+tct)
 		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

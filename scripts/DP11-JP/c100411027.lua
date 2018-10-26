@@ -22,9 +22,12 @@ function c100411027.initial_effect(c)
 	e2:SetOperation(c100411027.tdop)
 	c:RegisterEffect(e2)
 end
+function c100411027.cfilter(c)
+	return c:GetSequence()==5
+end
 function c100411027.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local ct=Duel.GetMatchingGroupCount(Card.IsSequence,tp,LOCATION_SZONE,LOCATION_SZONE,nil,5)
+		local ct=Duel.GetMatchingGroupCount(c100411027.cfilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
 		ct=ct+Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,TYPE_FIELD)
 		if ct==0 then return false end
 		for p=0,1 do
@@ -36,7 +39,7 @@ function c100411027.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,0,PLAYER_ALL,0)
 end
 function c100411027.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(Card.IsSequence,tp,LOCATION_SZONE,LOCATION_SZONE,nil,5)
+	local ct=Duel.GetMatchingGroupCount(c100411027.cfilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
 	ct=ct+Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,TYPE_FIELD)
 	if ct==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end

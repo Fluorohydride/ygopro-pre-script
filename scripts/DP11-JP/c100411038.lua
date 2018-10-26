@@ -46,10 +46,10 @@ function c100411038.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if e:GetLabel()==100 then
 			e:SetLabel(0)
 			return Duel.IsExistingMatchingCard(c100411038.rmfilter,tp,LOCATION_MZONE,0,1,tp)
-				and Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())
+				and Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		else return false end
 	end
-	local rt=Duel.GetTargetCount(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+	local rt=Duel.GetTargetCount(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local ct=0
 	local min=1
 	while ct<rt do
@@ -61,7 +61,7 @@ function c100411038.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		min=0
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,ct,ct,e:GetHandler())
+	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,ct,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c100411038.desop(e,tp,eg,ep,ev,re,r,rp)
