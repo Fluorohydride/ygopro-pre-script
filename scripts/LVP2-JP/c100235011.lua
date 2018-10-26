@@ -32,9 +32,10 @@ end
 function c100235011.efffilter(c,e,tp,eg,ep,ev,re,r,rp)
 	local m=_G["c"..c:GetCode()]
 	local te=m.discard_effect
+	if not te then return false end
 	local tg=te:GetTarget()
 	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSetCard(0x11c) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
-		and te and (not tg or tg and tg(e,tp,eg,ep,ev,re,r,rp,0))
+		and (not tg or tg and tg(e,tp,eg,ep,ev,re,r,rp,0))
 end
 function c100235011.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c100235011.efffilter(chkc,e,tp,eg,ep,ev,re,r,rp) end
