@@ -20,7 +20,7 @@ function c100411015.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCategory(CATEGORY_DAMAGE)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCode(EVENT_DAMAGE)
 	e3:SetCountLimit(1,100411015)
@@ -44,8 +44,8 @@ function c100411015.spfilter(c,e,tp)
 	return c:GetType()&0x81==0x81 and c:IsSetCard(0x2093) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false)
 end
 function c100411015.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c100411015.cfilter,1,nil,e,tp) end
-	local g=Duel.SelectReleaseGroup(tp,c100411015.cfilter,1,1,nil,e,tp)
+	if chk==0 then return Duel.CheckReleaseGroupEx(tp,c100411015.cfilter,1,nil,e,tp) end
+	local g=Duel.SelectReleaseGroupEx(tp,c100411015.cfilter,1,1,nil,e,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c100411015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
