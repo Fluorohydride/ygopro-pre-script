@@ -36,7 +36,7 @@ function c100235016.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c100235016.thfilter(c,thchk)
-	return (c:IsCode(56433456) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and aux.IsCodeListed(c,56433456)) or (thchk and c:IsRace(RACE_FAIRY))) and c:IsAbleToHand()
+	return (c:IsCode(56433456) or aux.IsCodeListed(c,56433456) or (thchk and c:IsRace(RACE_FAIRY))) and c:IsAbleToHand()
 end
 function c100235016.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local thchk=Duel.IsEnvironment(56433456)
