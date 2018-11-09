@@ -31,7 +31,7 @@ function c100411047.thfilter1(c,tp)
 end
 function c100411047.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c100411047.thfilter1(chkc,tp) end
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and Duel.IsExistingTarget(c100411047.thfilter1,tp,LOCATION_ONFIELD,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,c100411047.thfilter1,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
