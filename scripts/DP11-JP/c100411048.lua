@@ -59,7 +59,7 @@ function c100411048.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c100411048.filter1,nil,e)
 	local exmat=false
 	if Duel.IsExistingMatchingCard(c100411048.cfilter,tp,0,LOCATION_MZONE,1,nil) then
-		local mg2=Duel.GetMatchingGroup(c100411048.filter0,tp,LOCATION_DECK,0,nil)
+		local mg2=Duel.GetMatchingGroup(c100411048.filter0,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil)
 		if mg2:GetCount()>0 then
 			mg1:Merge(mg2)
 			exmat=true
