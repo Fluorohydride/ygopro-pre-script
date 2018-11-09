@@ -34,7 +34,7 @@ function c100411016.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100411016.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100411016.filter(chkc) end
-	if chk==0 then true end
+	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c100411016.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
