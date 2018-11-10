@@ -51,10 +51,10 @@ function c100411037.spfilter(c,e,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100411037.spfilter1(c,e,tp)
-	return c100411037.spfilter(c,e,tp) and c:IsLevelBelow(4)
+	return c100411037.spfilter(c,e,tp) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100411037.spfilter2(c,e,tp)
-	return c100411037.spfilter(c,e,tp) and c:IsLevelAbove(5)
+	return c100411037.spfilter(c,e,tp) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100411037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100411037.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
