@@ -30,13 +30,13 @@ function c100235011.effcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c100235011.efffilter(c,e,tp,eg,ep,ev,re,r,rp)
+	if not (c:IsSetCard(0x11c) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())) then return false end
 	local m=_G["c"..c:GetCode()]
 	if not m then return false end
 	local te=m.discard_effect
 	if not te then return false end
 	local tg=te:GetTarget()
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSetCard(0x11c) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
-		and (not tg or tg and tg(e,tp,eg,ep,ev,re,r,rp,0))
+	return not tg or tg and tg(e,tp,eg,ep,ev,re,r,rp,0)
 end
 function c100235011.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c100235011.efffilter(chkc,e,tp,eg,ep,ev,re,r,rp) end
@@ -46,17 +46,20 @@ function c100235011.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 	local m=_G["c"..g:GetFirst():GetCode()]
 	local te=m.discard_effect
+	Duel.ClearTargetCard()
+	g:GetFirst():CreateEffectRelation(e)
+	e:SetLabelObject(te)
 	local tg=te:GetTarget()
 	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 end
 function c100235011.effop(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=Duel.GetFirstTarget()
+	local te=e:GetLabelObject()
+	if not te then return end
+	local tc=te:GetHandler()
 	if tc:IsRelateToEffect(e) then
-		local m=_G["c"..tc:GetCode()]
-		local te=m.discard_effect
-		if not te then return end
 		local op=te:GetOperation()
 		if op then op(e,tp,eg,ep,ev,re,r,rp) end
+		Duel.BreakEffect()
 		local opt=Duel.SelectOption(tp,aux.Stringid(100235011,1),aux.Stringid(100235011,2))
 		if opt==0 then
 			Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
