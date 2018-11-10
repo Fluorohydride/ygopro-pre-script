@@ -31,6 +31,7 @@ function c100235011.effcon(e)
 end
 function c100235011.efffilter(c,e,tp,eg,ep,ev,re,r,rp)
 	local m=_G["c"..c:GetCode()]
+	if not m then return false end
 	local te=m.discard_effect
 	if not te then return false end
 	local tg=te:GetTarget()
