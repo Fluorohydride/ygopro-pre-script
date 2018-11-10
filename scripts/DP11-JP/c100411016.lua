@@ -57,10 +57,10 @@ function c100411016.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 		e3:SetOperation(c100411016.disop)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		sc:RegisterEffect(e3)
+		tc:RegisterEffect(e3)
 		local e4=e3:Clone()
 		e4:SetCode(EVENT_BE_BATTLE_TARGET)
-		sc:RegisterEffect(e4)
+		tc:RegisterEffect(e4)
 	end
 end
 function c100411016.disop(e,tp,eg,ep,ev,re,r,rp)
