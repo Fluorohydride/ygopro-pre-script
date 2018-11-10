@@ -19,7 +19,7 @@ end
 function c100411016.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
-function c100411016.cfilter(c)
+function c100411016.cfilter(c,tp)
 	return c:IsSetCard(0x2093) and c:IsType(TYPE_RITUAL) and c:IsLevelAbove(1)
 		and Duel.IsExistingTarget(c100411016.filter,tp,LOCATION_MZONE,0,1,c)
 end
@@ -53,29 +53,23 @@ function c100411016.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e3:SetCode(EVENT_ATTACK_ANNOUNCE)
-		e3:SetOperation(c100411016.disop)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e3)
+		e3:SetType(EFFECT_TYPE_FIELD)
+		e3:SetCode(EFFECT_DISABLE)
+		e3:SetTargetRange(0,LOCATION_MZONE)
+		e3:SetTarget(c100411016.distg)
+		e3:SetLabel(tc:GetFieldID())
+		e3:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e3,tp)
 		local e4=e3:Clone()
-		e4:SetCode(EVENT_BE_BATTLE_TARGET)
-		tc:RegisterEffect(e4)
+		e4:SetCode(EFFECT_DISABLE_EFFECT)
+		Duel.RegisterEffect(e4,tp)
 	end
 end
-function c100411016.disop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	if bc then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
-		bc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
-		bc:RegisterEffect(e2)
+function c100411016.distg(e,c)
+	if c:GetFlagEffect(100411016)>0 then return true end
+	if c:GetSummonLocation()==LOCATION_EXTRA and c:GetBattleTarget()~=nil and c:GetBattleTarget():GetFieldID()==e:GetLabel() then
+		c:RegisterFlagEffect(100411016,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
+		return true
 	end
+	return false
 end
