@@ -6,6 +6,7 @@
 - **October 13, 2018** : SAVAGE STRIKE (SAST-JP) : `101007XXX`
 - **October 10, 2018** : Legendary Hero Decks (LEHD-EN) : `100234XXX`
 - **November 10, 2018** : Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX`
+- **November 12, 2018** : Yu-Gi-Oh! Chips (YCPC-JP) : `100237XXX`
 - **November 23, 2018** : LINK VRAINS PACK 2 (LVP2-JP) : `100235XXX`
 - **December 8, 2018** : Structure Deck: Soulburner (SD35-JP) : `100335XXX`
 
