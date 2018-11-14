@@ -35,14 +35,16 @@ function c100235096.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c100235096.thfilter(c)
-	return c:IsSetCard(0x108) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x108) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100235096.spfilter(c,e,tp)
 	return c:IsSetCard(0x108) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100235096.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.IsExistingMatchingCard(c100235096.thfilter,tp,LOCATION_DECK,0,1,nil)
-	local b2=Duel.IsExistingMatchingCard(c100235096.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
+	local b1=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c100235096.thfilter,tp,LOCATION_DECK,0,1,nil)
+	local b2=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)>0
+		and Duel.IsExistingMatchingCard(c100235096.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 	if chk==0 then return b1 or b2 end
 	local op=0
 	if b1 and b2 then op=Duel.SelectOption(tp,aux.Stringid(100235096,0),aux.Stringid(100235096,1))
@@ -65,8 +67,8 @@ function c100235096.effop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Group.CreateGroup()
 		repeat
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg=g:Select(tp,1,1,nil)
-			local tc=sg:GetFirst()
+			local sg1=g:Select(tp,1,1,nil)
+			local tc=sg1:GetFirst()
 			sg:AddCard(tc)
 			g:Remove(Card.IsCode,nil,tc:GetCode())
 			ct=ct-1
