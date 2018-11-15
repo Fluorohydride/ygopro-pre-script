@@ -38,13 +38,13 @@ function c100236032.initial_effect(c)
 end
 function c100236032.valcheck(e,c)
 	local g=c:GetMaterial()
-	e:SetLabel(false)
+	e:SetLabel(0)
 	if g:IsExists(Card.IsCode,1,nil,63528891) then
-		e:SetLabel(true)
+		e:SetLabel(1)
 	end
 end
 function c100236032.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetLabelObject():GetLabel() then return false end
+	if e:GetLabelObject():GetLabel()~=1 then return false end
 	local lg=e:GetHandler():GetLinkedGroup()
 	local a=Duel.GetAttacker()
 	local b=a:GetBattleTarget()

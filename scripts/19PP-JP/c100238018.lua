@@ -32,14 +32,13 @@ function c100238018.spfilter(c,e,tp)
 end
 function c100238018.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(c100238018.filter2,nil,e,1-tp)
-	if #g>0 then
-		Duel.Destroy(g,REASON_EFFECT)
+	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
 		local g1=Duel.GetMatchingGroup(c100238018.rmfilter,tp,LOCATION_GRAVE,0,nil)
 		local g2=Duel.GetMatchingGroup(c100238018.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 		if #g1>4 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local rg=g1:Select(tp,5,5,nil)
-			if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)==5 then
+			if Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)==5 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local sg=g2:Select(tp,1,1,nil)
 				if #sg>0 then
