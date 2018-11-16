@@ -2,6 +2,7 @@
 --Backup Supervisor
 --script by Logical Nonsense
 function c100236032.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,nil,2,2)
 	--mat check
@@ -39,7 +40,7 @@ end
 function c100236032.valcheck(e,c)
 	local g=c:GetMaterial()
 	e:SetLabel(0)
-	if g:IsExists(Card.IsCode,1,nil,63528891) then
+	if g:IsExists(Card.IsLinkCode,1,nil,63528891) then
 		e:SetLabel(1)
 	end
 end
@@ -53,7 +54,7 @@ function c100236032.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return lg:IsContains(a)
 end
 function c100236032.filter(c,e,tp)
-	return c:IsRace(RACE_CYBERSE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsRace(RACE_CYBERSE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100236032.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

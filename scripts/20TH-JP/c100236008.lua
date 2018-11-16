@@ -27,7 +27,7 @@ function c100236008.initial_effect(c)
 	c:RegisterEffect(e2)
 	--special summon
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetDescription(aux.Stringid(100236008,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_DESTROYING)
@@ -37,7 +37,7 @@ function c100236008.initial_effect(c)
 	e3:SetOperation(c100236008.spop)
 	c:RegisterEffect(e3)
 end
-c100236008.material_setcode={0x8}
+c100236008.material_setcode=0x8
 function c100236008.ffilter(c)
 	return c:IsFusionType(TYPE_NORMAL) and c:IsFusionSetCard(0x8)
 end
@@ -87,7 +87,7 @@ function c100236008.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100236008.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	local c=e:GetHandler()
-	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP)~=0 then
+	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)~=0 then
 		--atklimit
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -1,7 +1,8 @@
---転生炎獣ベイルリンクス
+--転生炎獣アルミラージ
 --Salamangreat Almiraj
 --Scripted by Eerie Code
 function c100238006.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,c100238006.matfilter,1,1)
 	--immunity
