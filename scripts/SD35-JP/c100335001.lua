@@ -6,9 +6,9 @@ function c100335001.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100335001,0))
 	e1:SetCategory(CATEGORY_RECOVER)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(c100335001.reccon)
 	e1:SetCost(c100335001.reccost)
@@ -36,7 +36,7 @@ function c100335001.reccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
-function c100335001.rectg(e,tp,eg,ep,ev,re,r,rp,chkc)
+function c100335001.rectg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.GetAttacker():IsOnField()
 		and Duel.GetAttackTarget():IsOnField() end
