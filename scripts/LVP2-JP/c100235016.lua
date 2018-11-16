@@ -31,6 +31,7 @@ function c100235016.initial_effect(c)
 	e2:SetOperation(c100235016.spop)
 	c:RegisterEffect(e2)
 end
+c100235016.card_code_list={56433456}
 function c100235016.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)

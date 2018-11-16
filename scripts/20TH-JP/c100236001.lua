@@ -56,7 +56,7 @@ function c100236001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_RITUAL) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function c100236001.spfilter(c,e,tp)
-	return c:IsSetCard(0xcf) and c:IsType(TYPE_RITUAL) and not c:IsCode(100236001) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(0xcf) and bit.band(c:GetType(),0x81)==0x81 and not c:IsCode(100236001) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100236001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -96,6 +96,7 @@ function c100236008.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(c100236008.bttg)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
+		Duel.SpecialSummonComplete()
 	end
 end
 function c100236008.bttg(e,c)
