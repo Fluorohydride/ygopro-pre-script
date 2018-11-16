@@ -29,7 +29,7 @@ function c100335005.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100335005.spfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x119)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x119) and not c:IsCode(100335005)
 end
 function c100335005.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100335005.spfilter,1,nil,tp)
