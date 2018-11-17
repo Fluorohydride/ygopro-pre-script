@@ -71,6 +71,7 @@ function c100235081.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sg=Duel.SelectMatchingCard(tp,c100235081.costfilter,tp,LOCATION_EXTRA,0,1,1,nil,g)
 	e:SetLabel(sg:GetFirst():GetLevel())
+	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100235081.thop(e,tp,eg,ep,ev,re,r,rp)
