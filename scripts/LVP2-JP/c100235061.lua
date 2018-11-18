@@ -54,6 +54,9 @@ end
 function c100235061.imcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
+function c100235061.efilter(e,te)
+	return te:IsActiveType(TYPE_TRAP)
+end
 function c100235061.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetActiveType()==TYPE_TRAP and e:GetHandler():GetFlagEffect(1)
 end
