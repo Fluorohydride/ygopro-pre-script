@@ -84,7 +84,7 @@ function c100235071.setfilter(c)
 end
 function c100235071.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectMatchingCard(tp,c100235071.setfilter,tpLOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100235071.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SSet(tp,tc)

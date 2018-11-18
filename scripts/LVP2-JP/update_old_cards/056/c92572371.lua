@@ -16,7 +16,7 @@ function c92572371.cfilter(c)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and (c:IsSetCard(0x79) or c:IsSetCard(0x7c)) and c:IsAbleToGraveAsCost()
 end
 function c92572371.cfilter1(c,g,tp)
-	return g:IsExists(c92572371.cfilter1,1,c,c,tp)
+	return g:IsExists(c92572371.cfilter2,1,c,c,tp)
 end
 function c92572371.cfilter2(c,mc,tp)
 	return Duel.GetMZoneCount(tp,Group.FromCards(c,mc))>0
