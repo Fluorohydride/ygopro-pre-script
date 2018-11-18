@@ -76,7 +76,7 @@ function c100235061.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c100235061.ddcon(e,tp,eg,ep,ev,re,r,rp)
+function c100235061.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	return re:IsActiveType(TYPE_MONSTER) and rc~=c and rc:IsSetCard(0x108a) and rc:IsControler(tp) and c:GetFlagEffect(1)>0
