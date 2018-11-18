@@ -30,7 +30,7 @@ function c100235071.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_CHAIN_SOLVED)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,100235071)
+	e3:SetCountLimit(1,100235071+100)
 	e3:SetCondition(c100235071.setcon)
 	e3:SetOperation(c100235071.setop)
 	c:RegisterEffect(e3)
@@ -96,5 +96,6 @@ function c100235071.setop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
