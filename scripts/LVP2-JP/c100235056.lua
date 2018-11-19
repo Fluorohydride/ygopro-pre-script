@@ -34,10 +34,10 @@ function c100235056.tgfilter(c)
 end
 function c100235056.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c100235056.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100235056.thfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(c100235056.thfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c100235056.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,c100235056.thfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100235056.thfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c100235056.thop(e,tp,eg,ep,ev,re,r,rp)

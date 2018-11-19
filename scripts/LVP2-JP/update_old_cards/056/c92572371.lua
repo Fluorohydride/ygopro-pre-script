@@ -30,7 +30,7 @@ function c92572371.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g1=sg:FilterSelect(tp,c92572371.cfilter1,1,1,nil,sg,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g2=sg:FilterSelect(tp,c92572371.cfilter2,1,1,g2:GetFirst(),g2:GetFirst(),tp)
+		local g2=sg:FilterSelect(tp,c92572371.cfilter2,1,1,g1:GetFirst(),g1:GetFirst(),tp)
 		g1:Merge(g2)
 		Duel.SendtoGrave(g1,REASON_COST)
 	end
