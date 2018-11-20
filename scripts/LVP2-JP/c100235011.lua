@@ -44,19 +44,20 @@ function c100235011.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,c100235011.efffilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
-	local m=_G["c"..g:GetFirst():GetCode()]
-	local te=m.discard_effect
+	local tc=g:GetFirst()
 	Duel.ClearTargetCard()
-	g:GetFirst():CreateEffectRelation(e)
-	e:SetLabelObject(te)
+	tc:CreateEffectRelation(e)
+	e:SetLabelObject(tc)
+	local m=_G["c"..tc:GetCode()]
+	local te=m.discard_effect
 	local tg=te:GetTarget()
 	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 end
 function c100235011.effop(e,tp,eg,ep,ev,re,r,rp,chk)
-	local te=e:GetLabelObject()
-	if not te then return end
-	local tc=te:GetHandler()
+	local tc=e:GetLabelObject()
 	if tc:IsRelateToEffect(e) then
+		local m=_G["c"..tc:GetCode()]
+		local te=m.discard_effect
 		local op=te:GetOperation()
 		if op then op(e,tp,eg,ep,ev,re,r,rp) end
 		Duel.BreakEffect()
