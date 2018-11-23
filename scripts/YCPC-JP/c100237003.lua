@@ -23,10 +23,10 @@ function c100237003.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsAbleToDeck()
 end
 function c100237003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_REMOVE) and chkc:IsControler(tp) and c100237003.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100237003.filter,tp,LOCATION_REMOVE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c100237003.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100237003.filter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c100237003.filter,tp,LOCATION_REMOVE,0,1,3,nil)
+	local g=Duel.SelectTarget(tp,c100237003.filter,tp,LOCATION_REMOVED,0,1,3,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 end
 function c100237003.activate(e,tp,eg,ep,ev,re,r,rp)

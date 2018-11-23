@@ -60,7 +60,7 @@ function c100235031.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100235031.cfilter,1,nil,lg)
 end
 function c100235031.spfilter(c,e,tp)
-	return c:IsRace(RACE_DRAGON+RACE_WINDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_DRAGON+RACE_WINDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100235031.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

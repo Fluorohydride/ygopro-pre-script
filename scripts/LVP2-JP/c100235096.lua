@@ -7,7 +7,6 @@ function c100235096.initial_effect(c)
 	aux.AddLinkProcedure(c,c100235096.matfilter,1,1)
 	--effect
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100235096,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -52,9 +51,11 @@ function c100235096.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else op=Duel.SelectOption(tp,aux.Stringid(100235096,1))+1 end
 	e:SetLabel(op)
 	if op==0 then
+		Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(100235096,0))
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	else
+		Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(100235096,1))
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	end

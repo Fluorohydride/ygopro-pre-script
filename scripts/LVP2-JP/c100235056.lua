@@ -17,10 +17,10 @@ function c100235056.initial_effect(c)
 	--tohand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100235056,1))
-	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_DECKDES)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1)
+	e2:SetCountLimit(1,100235056)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(c100235056.thtg)
 	e2:SetOperation(c100235056.thop)
@@ -28,17 +28,19 @@ function c100235056.initial_effect(c)
 end
 function c100235056.thfilter(c)
 	return c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function c100235056.tgfilter(c)
 	return c:IsSetCard(0x79) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function c100235056.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c100235056.thfilter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and c100235056.thfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100235056.thfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c100235056.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,c100235056.thfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c100235056.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

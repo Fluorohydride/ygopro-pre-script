@@ -41,7 +41,7 @@ end
 function c100235011.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c100235011.efffilter(chkc,e,tp,eg,ep,ev,re,r,rp) end
 	if chk==0 then return Duel.IsExistingTarget(c100235011.efffilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp,eg,ep,ev,re,r,rp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c100235011.efffilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 	local tc=g:GetFirst()

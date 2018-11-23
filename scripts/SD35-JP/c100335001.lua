@@ -38,8 +38,8 @@ function c100335001.reccost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100335001.rectg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.GetAttacker():IsOnField()
-		and Duel.GetAttackTarget():IsOnField() end
+	if chk==0 then return Duel.GetAttacker():IsOnField() and Duel.GetAttacker():IsCanBeEffectTarget(e)
+		and Duel.GetAttackTarget():IsOnField() and Duel.GetAttackTarget():IsCanBeEffectTarget(e) end
 	local g=Group.FromCards(Duel.GetAttacker(),Duel.GetAttackTarget())
 	Duel.SetTargetCard(g)
 	e:SetLabelObject(Duel.GetAttacker())
