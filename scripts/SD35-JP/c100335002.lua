@@ -32,7 +32,7 @@ function c100335002.lkfilter(c)
 	return not (c:IsType(TYPE_LINK) and c:IsSummonType(SUMMON_TYPE_LINK))
 end
 function c100335002.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)>0
+	return Duel.GetCustomActivityCount(100335002,tp,ACTIVITY_SPSUMMON)>0
 end
 function c100335002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
