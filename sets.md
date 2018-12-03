@@ -12,6 +12,7 @@
 
 # Announced
 - **December 22, 2018** : ANNIVERSARY DUELIST BOX (20TH-JP) : `100236XXX`
+- **December 22, 2018** : Jump Festa Limited Pack 2019 (JF19-JP) : `100238XXX`
 - **January 12, 2019** : DARK NEOSTORM (????-JP) : `101008XXX`
 - **February 9, 2019** : 20th Anniversary Legendary Collection (????-JP) : `100229XXX`
 - **February 23, 2019** : Deck Build Pack: Infinity Chasers (????-JP) : `100412XXX`
