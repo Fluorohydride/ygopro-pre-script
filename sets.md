@@ -2,12 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **October 4, 2018** : Arc-V Volume 6 (YA06-JP) : `100233XXX`
-- **October 13, 2018** : SAVAGE STRIKE (SAST-JP) : `101007XXX`
-- **October 10, 2018** : Legendary Hero Decks (LEHD-EN) : `100234XXX`
-- **November 10, 2018** : Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX`
-- **November 12, 2018** : Yu-Gi-Oh! Chips (YCPC-JP) : `100237XXX`
-- **November 23, 2018** : LINK VRAINS PACK 2 (LVP2-JP) : `100235XXX`
 - **December 8, 2018** : Structure Deck: Soulburner (SD35-JP) : `100335XXX`
 - **December 22, 2018** : ANNIVERSARY DUELIST BOX (20TH-JP) : `100236XXX`
 - **December 22, 2018** : Jump Festa Limited Pack 2019 (JF19-JP) : `100239XXX`
@@ -99,3 +93,9 @@
 - ~~2018 Mega-Tins (CT15-EN) : `100244XXX`~~
 - ~~Extra Pack 2018 (EP18-JP) : `100421XXX`~~
 - ~~Structure Deck R: Undead World (SR07-JP) : `100307XXX`~~
+- ~~Arc-V Volume 6 (YA06-JP) : `100233XXX`~~
+- ~~SAVAGE STRIKE (SAST-JP) : `101007XXX`~~
+- ~~Legendary Hero Decks (LEHD-EN) : `100234XXX`~~
+- ~~Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX`~~
+- ~~Yu-Gi-Oh! Chips (YCPC-JP) : `100237XXX`~~
+- ~~LINK VRAINS PACK 2 (LVP2-JP) : `100235XXX`~~
