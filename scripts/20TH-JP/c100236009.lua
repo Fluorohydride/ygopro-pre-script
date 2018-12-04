@@ -14,6 +14,7 @@ function c100236009.initial_effect(c)
 	e1:SetOperation(c100236009.activate)
 	c:RegisterEffect(e1)
 end
+c100236009.card_code_list={89943723}
 function c100236009.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,89943723)
 end
