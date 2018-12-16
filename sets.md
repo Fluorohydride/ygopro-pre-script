@@ -2,13 +2,12 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **December 8, 2018** : Structure Deck: Soulburner (SD35-JP) : `100335XXX`
 - **December 22, 2018** : ANNIVERSARY DUELIST BOX (20TH-JP) : `100236XXX`
 - **December 22, 2018** : Jump Festa Limited Pack 2019 (JF19-JP) : `100239XXX`
 - **March 3, 2019** : Premium Pack 2019 (19PP-JP) : `100238XXX`
+- **January 12, 2019** : DARK NEOSTORM (DANE-JP) : `101008XXX`
 
 # Announced
-- **January 12, 2019** : DARK NEOSTORM (????-JP) : `101008XXX`
 - **February 9, 2019** : 20th Anniversary Legendary Collection (????-JP) : `100229XXX`
 - **February 23, 2019** : Deck Build Pack: Infinity Chasers (????-JP) : `100412XXX`
 
@@ -99,3 +98,4 @@
 - ~~Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX`~~
 - ~~Yu-Gi-Oh! Chips (YCPC-JP) : `100237XXX`~~
 - ~~LINK VRAINS PACK 2 (LVP2-JP) : `100235XXX`~~
+- ~~Structure Deck: Soulburner (SD35-JP) : `100335XXX`~~
