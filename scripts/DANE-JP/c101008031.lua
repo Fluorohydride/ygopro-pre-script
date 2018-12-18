@@ -36,6 +36,7 @@ function c101008031.initial_effect(c)
 	e3:SetOperation(c101008031.spop)
 	c:RegisterEffect(e3)
 end
+c101008031.material_setcode=0xc008
 function c101008031.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5
 	local b2=Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)>=5
