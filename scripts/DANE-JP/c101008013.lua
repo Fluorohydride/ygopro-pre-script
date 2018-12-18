@@ -57,18 +57,19 @@ function c101008013.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-function c101008013.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x10dc) and c:IsAbleToGrave()
+function c101008013.tgfilter(c,ec)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xdc) and c:IsAbleToGrave()
+		and (not c:IsAttribute(ec:GetAttribute()) or not c:IsLevel(ec:GetLevel()))
 end
 function c101008013.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101008013.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101008013.tgfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c101008013.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tc=Duel.SelectMatchingCard(tp,c101008013.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,c101008013.tgfilter,tp,LOCATION_DECK,0,1,1,nil,c):GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) then
-		local c=e:GetHandler()
 		local lv=tc:GetLevel()
 		local att=tc:GetAttribute()
 		local e1=Effect.CreateEffect(c)
