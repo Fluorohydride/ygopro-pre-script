@@ -69,7 +69,7 @@ function c101008018.thfilter(c,ec)
 		and not c:IsRace(ec:GetRace()) and not c:IsAttribute(ec:GetAttribute())
 end
 function c101008018.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101008018.thfilter2,tp,LOCATION_GRAVE,0,1,nil,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101008018.thfilter,tp,LOCATION_GRAVE,0,1,nil,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,LOCATION_GRAVE)
 end
