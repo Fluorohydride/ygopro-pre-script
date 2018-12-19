@@ -60,9 +60,9 @@ function c101008036.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local seq=e:GetHandler():GetSequence()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101008036.filter(chkc,e,tp,seq) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c101008036.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,seq) end
+		and Duel.IsExistingTarget(c101008036.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,seq) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c101008036.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,seq)
+	local g=Duel.SelectTarget(tp,c101008036.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,seq)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101008036.operation(e,tp,eg,ep,ev,re,r,rp)
