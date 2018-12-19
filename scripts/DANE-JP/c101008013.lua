@@ -44,8 +44,10 @@ function c101008013.cfilter(c)
 		and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and Duel.GetMZoneCount(tp,c)>0
 end
 function c101008013.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101008013.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c101008013.cfilter,1,1,REASON_COST)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101008013.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c101008013.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function c101008013.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
