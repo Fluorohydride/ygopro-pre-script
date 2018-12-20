@@ -13,7 +13,7 @@ function c101008077.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101008077.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()>0 and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+	return Duel.GetCurrentChain()>1 and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
 end
 function c101008077.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
