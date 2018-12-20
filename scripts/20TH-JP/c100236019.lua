@@ -8,7 +8,7 @@ function c100236019.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100236019,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
@@ -28,7 +28,7 @@ function c100236019.thfilter(c)
 	return c:IsCode(94770493) and c:IsAbleToHand()
 end
 function c100236019.spfilter(c,e,tp,mc)
-	return not c:IsCode(100236019) and c:IsSetCard(0x107f) and mc:IsCanBeXyzMaterial(c)
+	return not c:IsCode(100236019) and c:IsType(TYPE_XYZ) and c:IsSetCard(0x107f) and mc:IsCanBeXyzMaterial(c)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function c100236019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -66,6 +66,8 @@ function c100238011.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x1151)
 end
 function c100238011.ctop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(c100238011.ctfilter,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	while tc do

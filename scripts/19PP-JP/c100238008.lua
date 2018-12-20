@@ -34,6 +34,7 @@ function c100238008.initial_effect(c)
 end
 function c100238008.tdfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsType(TYPE_SYNCHRO) and c:IsAbleToExtra()
+		 and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function c100238008.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c100238008.tdfilter(chkc) end

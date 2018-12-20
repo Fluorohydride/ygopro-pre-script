@@ -40,6 +40,7 @@ function c101008056.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101008056.spfilter2),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp,tc)
 		if #g2<=0 or not Duel.SelectYesNo(tp,aux.Stringid(101008056,0)) then return end
+		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc2=g2:Select(tp,1,1,nil):GetFirst()
 		if tc2 and Duel.SpecialSummonStep(tc2,0,tp,tp,false,false,POS_FACEUP) then

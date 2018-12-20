@@ -34,10 +34,12 @@ function c100238007.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.GetAttackTarget():CreateEffectRelation(e)
 end
 function c100238007.opetation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	local at=Duel.GetAttackTarget()
 	if at:IsRelateToEffect(e) then
 		Duel.ChangePosition(at,POS_FACEUP_ATTACK)
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

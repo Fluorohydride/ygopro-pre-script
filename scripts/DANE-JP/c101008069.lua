@@ -50,6 +50,7 @@ function c101008069.adtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101008069.adfilter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function c101008069.adop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(c101008069.adfilter,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	while tc do

@@ -72,6 +72,7 @@ function c101008059.activate2(e,tp,eg,ep,ev,re,r,rp)
 		local g2=g:Select(tp,1,1,nil)
 		g1:Merge(g2)
 		Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)
+		local fid=c:GetFieldID()
 		local sc=g1:GetFirst()
 		while sc do
 			local e1=Effect.CreateEffect(c)

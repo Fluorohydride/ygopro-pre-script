@@ -52,7 +52,7 @@ function c101008036.get_zone(c,seq)
 	return zone
 end
 function c101008036.spfilter(c,e,tp,seq)
-	if not (c:IsType(TYPE_LINK) and c:IsRace(RACE_CYBERSE)) then return false end
+	if not (c:IsType(TYPE_LINK) and c:IsRace(RACE_CYBERSE) and c:GetLink()==4) then return false end
 	local zone=c101008036.get_zone(c,seq)
 	return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end

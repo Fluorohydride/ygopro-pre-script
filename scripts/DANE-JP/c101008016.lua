@@ -24,10 +24,10 @@ function c101008016.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101008016.cfilter(c)
-	return c:IsSetCard(0x121) and not c:IsCode(101008016)
+	return c:IsFaceup() and c:IsSetCard(0x121) and not c:IsCode(101008016)
 end
 function c101008016.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101008016.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c101008016.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c101008016.tgfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsAbleToGrave()

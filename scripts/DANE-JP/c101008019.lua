@@ -60,7 +60,7 @@ function c101008019.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c101008019.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)then
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
@@ -91,5 +91,6 @@ function c101008019.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c101008019.thfilter,tp,LOCATION_DECK,0,1,1,nil,e:GetHandler())
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end

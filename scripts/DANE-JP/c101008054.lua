@@ -89,6 +89,7 @@ function c101008054.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(tc)
 		Duel.RegisterEffect(e1,tp)
 	end
+	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)

@@ -59,7 +59,7 @@ function c101008018.atkfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON)
 end
 function c101008018.atkval(e,c)
-	return Duel.GetMatchingGroupCount(c101008018.atkfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil)*-500
+	return Duel.GetMatchingGroupCount(c101008018.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)*-500
 end
 function c101008018.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

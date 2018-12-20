@@ -31,7 +31,7 @@ end
 function c100236015.filter(c,e,tp,re)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsSetCard(0xa3) and c:IsType(TYPE_SYNCHRO) and c:IsReason(REASON_COST) and c==re:GetHandler()
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100236015.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -46,12 +46,15 @@ function c100236015.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tg,1,0,0)
+	Duel.SetChainLimit(c100236015.chlimit)
+end
+function c100236015.chlimit(e,ep,tp)
+	return tp==ep
 end
 function c100236015.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		tc:RegisterFlagEffect(100236015,RESET_EVENT+RESETS_STANDARD,0,1,e:GetHandler():GetFieldID())
 	end
 end
