@@ -69,8 +69,8 @@ function c101008019.flipop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101008019.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or e:GetHandler():GetFlagEffect(101008019)==0 then return false end
-	local p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER)
-	return re:IsActiveType(TYPE_MONSTER) and p==1-tp
+	local p,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
+	return re:IsActiveType(TYPE_MONSTER) and p==1-tp and loc==LOCATION_MZONE
 end
 function c101008019.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
