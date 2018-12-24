@@ -44,7 +44,17 @@ function c100239004.atkfilter(c)
 end
 function c100239004.atkval(e,c)
 	local g=Duel.GetMatchingGroup(c100239004.atkfilter,c:GetControler(),LOCATION_MZONE,0,nil)
-	local ct=g:GetClassCount(Card.GetAttribute)
+	local att=0
+	local tc=g:GetFirst()
+	while tc do
+		att=bit.bor(att,tc:GetAttribute())
+		tc=g:GetNext()
+	end
+	local ct=0
+	while att~=0 do
+		if bit.band(att,0x1)~=0 then ct=ct+1 end
+		att=bit.rshift(att,1)
+	end
 	return ct*300
 end
 function c100239004.target(e,c)
