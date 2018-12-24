@@ -35,8 +35,8 @@ function c100238005.initial_effect(c)
 	e3:SetOperation(c100238005.spop)
 	c:RegisterEffect(e3)
 end
-function c100238005.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)==0
+function c100238005.condition(e)
+	return Duel.GetMatchingGroupCount(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)==0
 end
 function c100238005.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
