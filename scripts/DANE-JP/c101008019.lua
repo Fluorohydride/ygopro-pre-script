@@ -26,10 +26,9 @@ function c101008019.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_CHAIN_SOLVING)
-	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(c101008019.discon)
 	e3:SetOperation(c101008019.disop)
-	c:RegisterEffect(e3)
+	Duel.RegisterEffect(e3,0)
 	--to hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101008019,1))
@@ -67,10 +66,13 @@ end
 function c101008019.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(101008019,RESET_EVENT+RESETS_STANDARD,0,1)
 end
+function c101008019.disfilter(c)
+	return c:IsFaceup() and c:GetFlagEffect(101008019)>0 and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+end
 function c101008019.discon(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or e:GetHandler():GetFlagEffect(101008019)==0 then return false end
 	local p,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
-	return re:IsActiveType(TYPE_MONSTER) and p==1-tp and loc==LOCATION_MZONE
+	return re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE
+		and Duel.IsExistingMatchingCard(c101008019.disfilter,p,0,LOCATION_MZONE,1,nil)
 end
 function c101008019.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
