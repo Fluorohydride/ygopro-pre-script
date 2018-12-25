@@ -67,7 +67,7 @@ function c101008019.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(101008019,RESET_EVENT+RESETS_STANDARD,0,1)
 end
 function c101008019.disfilter(c)
-	return c:IsFaceup() and c:GetFlagEffect(101008019)>0 and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c:IsFaceup() and c:GetFlagEffect(101008019)>0 and not c:IsStatus(STATUS_BATTLE_DESTROYED) and not c:IsDisabled()
 end
 function c101008019.discon(e,tp,eg,ep,ev,re,r,rp)
 	local p,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
