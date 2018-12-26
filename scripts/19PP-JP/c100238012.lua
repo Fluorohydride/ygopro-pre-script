@@ -2,7 +2,7 @@
 --
 --Scripted by Djeeta
 function c100238012.initial_effect(c)
-	aux.AddFusionProcFunFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0xc3),c100238012.matfilter,2,99,false)
+	aux.AddFusionProcFunFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0xc3),aux.FilterBoolFunction(Card.IsFusionSetCard,0xa9),2,99,false)
 	--atkup
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -32,19 +32,16 @@ function c100238012.initial_effect(c)
 	e3:SetOperation(c100238012.disop)
 	c:RegisterEffect(e3)
 end
-function c100238012.matfilter(c)
-	return c:IsSetCard(0xa9)
-end
 function c100238012.atkfilter(c)
-	return c:IsRace(RACE_FAIRY) or c:IsRace(RACE_FIEND)
+	return c:IsRace(RACE_FAIRY+RACE_FIEND)
 end
 function c100238012.value(e,c)
 	local tp=c:GetControler()
-	if Duel.GetTurnPlayer()==1-tp then return 0 else return Duel.GetMatchingGroupCount(c100238012.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*500 end
+	if Duel.GetTurnPlayer()~=tp then return 0 end
+	return Duel.GetMatchingGroupCount(c100238012.atkfilter,tp,LOCATION_GRAVE,0,nil)*500
 end
 function c100238012.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and aux.bdocon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100238012.tgfilter(c)
 	return (c:IsSetCard(0xc3) or c:IsSetCard(0xa9) or c:IsSetCard(0xad)) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
@@ -69,7 +66,7 @@ function c100238012.costfilter(c)
 end
 function c100238012.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100238012.costfilter,tp,LOCATION_EXTRA,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c100238012.costfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end

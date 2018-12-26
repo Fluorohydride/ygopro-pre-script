@@ -9,7 +9,6 @@ function c100239005.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to hand & todeck or to GY & selfdestroy
 	local e2=Effect.CreateEffect(c)
---	e2:SetDescription(aux.Stringid(100239005,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_TODECK+CATEGORY_SEARCH+CATEGORY_DECKDES+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -30,10 +29,10 @@ end
 function c100239005.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=0 then return end
+	Duel.ConfirmDecktop(tp,1)
 	local tc=Duel.GetFirstTarget()
 	local g=Duel.GetDecktopGroup(tp,1)
 	if tc:IsRelateToEffect(e) then
-		Duel.ConfirmDecktop(tp,1)
 		if g:GetFirst():GetAttribute()&tc:GetAttribute()~=0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)

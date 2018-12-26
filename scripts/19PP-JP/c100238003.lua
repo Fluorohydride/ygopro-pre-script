@@ -3,7 +3,7 @@
 --scripted by Djeeta
 function c100238003.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,nil,2,4,c100238003.lcheck)
+	aux.AddLinkProcedure(c,nil,2,99,c100238003.lcheck)
 	c:EnableReviveLimit()
 	--duel dragon
 	local e1=Effect.CreateEffect(c)
@@ -13,7 +13,9 @@ function c100238003.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,100238003)
+	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(c100238003.spcon)
+	e1:SetCost(c100238003.spcost)
 	e1:SetTarget(c100238003.sptg)
 	e1:SetOperation(c100238003.spop)
 	c:RegisterEffect(e1)
@@ -38,29 +40,35 @@ function c100238003.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
-function c100238003.costfilter(c)
-	return c:IsSetCard(0xc2) or (c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO) and (c:IsLevel(7) or c:IsLevel(8))) and c:IsAbleToRemoveAsCost() 
+function c100238003.costfilter(c,e,tp)
+	return c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemoveAsCost()
+		and c:IsSetCard(0xc2) or (c:IsRace(RACE_DRAGON) and (c:IsLevel(7) or c:IsLevel(8)))
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100238103,0,0x4011,c:GetAttack(),c:GetDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute())
+end
+function c100238003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100238003.costfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,c100238003.costfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	e:SetLabelObject(g:GetFirst())
 end
 function c100238003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=bit.band(e:GetHandler():GetLinkedZone(tp),0x1f)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100238003.costfilter,tp,LOCATION_EXTRA,0,1,nil,g) and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0 and zone~=0 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local sg=Duel.SelectMatchingCard(tp,c100238003.costfilter,tp,LOCATION_EXTRA,0,1,1,nil,g)
-	Duel.Remove(sg,POS_FACEUP,REASON_COST)
-	Duel.SetTargetCard(sg)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0 and zone~=0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 end
 function c100238003.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=bit.band(c:GetLinkedZone(tp),0x1f)
-	local tc=Duel.GetFirstTarget()
+	local tc=e:GetLabelObject()
 	local atk=tc:GetTextAttack()
 	local def=tc:GetTextDefense()
 	local lv=tc:GetOriginalLevel()
 	local race=tc:GetOriginalRace()
 	local att=tc:GetOriginalAttribute() 
-	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,100238103,0,0x4011,atk,def,lv,race,att) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)<=0
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100238103,0,0x4011,atk,def,lv,race,att) then return end
 	local token=Duel.CreateToken(tp,100238103)
 	Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP,zone)
 	local e1=Effect.CreateEffect(c)
@@ -96,5 +104,5 @@ function c100238003.tgfilter(c)
 	return c:GetOriginalCode()==100238103
 end
 function c100238003.tgcon(e)
-	return Duel.IsExistingMatchingCard(c100238003.tgfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(c100238003.tgfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
