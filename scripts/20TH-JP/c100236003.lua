@@ -1,4 +1,5 @@
---命运之抽卡
+--運命のドロー
+--
 --Script by Djeeta
 function c100236003.initial_effect(c)
 	--Activate
@@ -10,7 +11,7 @@ function c100236003.initial_effect(c)
 	e1:SetCondition(c100236003.condition)
 	e1:SetTarget(c100236003.target)
 	e1:SetOperation(c100236003.activate)
-	c:RegisterEffect(e1)    
+	c:RegisterEffect(e1)
 end
 function c100236003.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -18,17 +19,23 @@ function c100236003.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tg=g:GetMaxGroup(Card.GetAttack)
 	return tg:IsExists(Card.IsControler,1,nil,1-tp) and Duel.GetLP(tp)<Duel.GetLP(1-tp)
 end
+function c100236003.check(g)
+	return g:GetClassCount(Card.GetCode)==#g
+end
 function c100236003.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_DECK,0,3,nil) end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1)
+	if chk==0 then
+		if not Duel.IsPlayerCanDraw(tp,1) then return false end
+		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_DECK,0,nil)
+		return g:CheckSubGroup(c100236003.check,3,3)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c100236003.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_DECK,0,nil)
+	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_DECK,0,nil)
 	if g:GetCount()>=3 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-		local sg=g:Select(tp,3,3,nil)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+		local sg=g:SelectSubGroup(tp,c100236003.check,false,3,3)
 		Duel.ConfirmCards(1-tp,sg)
 		if Duel.ShuffleDeck(tp)~=0 then
 			for i=1,3 do
@@ -44,21 +51,21 @@ function c100236003.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SSET)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
-	local e2=Effect.CreateEffect(e:GetHandler())
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetCondition(c100236003.regcon)
 	e2:SetOperation(c100236003.regop)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
-	local e3=Effect.CreateEffect(e:GetHandler())
+	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
