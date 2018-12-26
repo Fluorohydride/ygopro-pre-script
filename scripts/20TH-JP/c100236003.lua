@@ -16,7 +16,7 @@ function c100236003.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if g:GetCount()==0 then return false end
 	local tg=g:GetMaxGroup(Card.GetAttack)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tg:IsExists(Card.IsControler,1,nil,1-tp) and Duel.GetLP(tp)<Duel.GetLP(1-tp)
+	return tg:IsExists(Card.IsControler,1,nil,1-tp) and Duel.GetLP(tp)<Duel.GetLP(1-tp)
 end
 function c100236003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_DECK,0,3,nil) end
