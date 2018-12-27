@@ -33,7 +33,7 @@ function c101008004.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0
 		and e:GetLabel()>=2 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,101008104,0,0x4011,0,0,1,RACE_DRAGON,ATTRIBUTE_DARK,POS_FACEUP)
-		and Duel.SelectYesNo(tp,aux.Stringid(101008104,1)) then
+		and Duel.SelectYesNo(tp,aux.Stringid(101008004,1)) then
 		Duel.BreakEffect()
 		local token=Duel.CreateToken(tp,101008104)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
