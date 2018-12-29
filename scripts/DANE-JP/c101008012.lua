@@ -1,4 +1,5 @@
---科技属 戟炮手/爆裂体
+--TG ハルバード・キャノン/バスター
+--
 --Script by Djeeta
 function c101008012.initial_effect(c)
 	c:EnableReviveLimit()
@@ -24,7 +25,7 @@ function c101008012.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON)
-	c:RegisterEffect(e3)  
+	c:RegisterEffect(e3)
 	--Special summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101008012,2))
@@ -32,7 +33,7 @@ function c101008012.initial_effect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_DESTROYED)
-	e4:SetCountLimit(1,101008013)
+	e4:SetCountLimit(1,101008012+100)
 	e4:SetCondition(c101008012.spcon)
 	e4:SetTarget(c101008012.sptg)
 	e4:SetOperation(c101008012.spop)
