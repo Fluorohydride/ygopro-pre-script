@@ -22,7 +22,7 @@ function c101008068.initial_effect(c)
 	e2:SetTarget(c101008068.distg)
 	e2:SetOperation(c101008068.disop)
 	c:RegisterEffect(e2)
-	--act in set turn (not working)
+	--act in set turn
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
@@ -70,6 +70,5 @@ function c101008068.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101008068.actcon(e)
-	local re=e:GetHandler():GetReasonEffect()
-	return re and re:GetHandler():IsSetCard(0x103)
+	return e:GetHandler():GetFlagEffect(101008068)>0
 end
