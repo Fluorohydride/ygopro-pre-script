@@ -37,9 +37,9 @@ function c101008033.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsAbleToHandAsCost()
 end
 function c101008033.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101008033.cfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101008033.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectMatchingCard(tp,c101008033.cfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101008033.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SendtoHand(g,nil,REASON_COST)
 end
 function c101008033.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -49,7 +49,8 @@ function c101008033.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_RELEASE)
 end
 function c101008033.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101008033.spop(e,tp,eg,ep,ev,re,r,rp)

@@ -7,6 +7,7 @@ function c101008070.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetLabel(0)
 	e1:SetCountLimit(1,101008070)
 	e1:SetCost(c101008070.cost)
@@ -46,13 +47,13 @@ function c101008070.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return Duel.CheckReleaseGroup(tp,c101008070.cfilter,1,nil,e,tp)
 	end
 	local rg=Duel.SelectReleaseGroup(tp,c101008070.cfilter,1,1,nil,e,tp)
-	e:SetLabel(rg:GetFirst():GetCode())
+	Duel.SetTargetParam(rg:GetFirst():GetCode())
 	Duel.Release(rg,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101008070.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local code=e:GetLabel()
+	local code=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101008070.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,code)
 	if g:GetCount()>0 then

@@ -4,14 +4,14 @@
 function c101008012.initial_effect(c)
 	c:EnableReviveLimit()
 	--Cannot special summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	c:RegisterEffect(e1) 
+	local e0=Effect.CreateEffect(c)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	c:RegisterEffect(e0)
 	--anti summon and remove
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_SUMMON)
 	e1:SetRange(LOCATION_MZONE)
@@ -37,7 +37,7 @@ function c101008012.initial_effect(c)
 	e4:SetCondition(c101008012.spcon)
 	e4:SetTarget(c101008012.sptg)
 	e4:SetOperation(c101008012.spop)
-	c:RegisterEffect(e4) 
+	c:RegisterEffect(e4)
 end
 c101008012.card_code_list={80280737}
 c101008012.assault_name=97836203

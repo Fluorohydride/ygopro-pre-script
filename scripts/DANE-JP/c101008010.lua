@@ -32,6 +32,7 @@ end
 c101008010.card_code_list={80280737}
 function c101008010.thfilter(c)
 	return aux.IsCodeListed(c,80280737) and not c:IsCode(101008010) or c:IsCode(80280737)
+		and c:IsAbleToHand()
 end
 function c101008010.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101008010.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -56,7 +57,8 @@ function c101008010.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c101008010.spfilter(c,e,tp)
-	return aux.IsCodeListed(c,80280737) and not c:IsCode(101008010) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return aux.IsCodeListed(c,80280737) and not c:IsCode(101008010) and c:IsLevelAbove(1)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101008010.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101008010.spfilter(chkc,e,tp) end

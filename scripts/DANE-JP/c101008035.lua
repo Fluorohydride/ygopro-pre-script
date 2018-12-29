@@ -24,7 +24,7 @@ function c101008035.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetCountLimit(1,101008135)
+	e2:SetCountLimit(1,101008035+100)
 	e2:SetCondition(c101008035.spcon)
 	e2:SetTarget(c101008035.sptg)
 	e2:SetOperation(c101008035.spop)
@@ -33,11 +33,11 @@ end
 function c101008035.matfilter1(c)
 	return c:IsSynchroType(TYPE_TUNER) or (c:IsSynchroType(TYPE_NORMAL) and c:IsSetCard(0xfd))
 end
-function c101008035.thfilter(c)
-	return c:IsSetCard(0xfe) and c:IsAbleToHand()
-end
 function c101008035.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+end
+function c101008035.thfilter(c)
+	return c:IsSetCard(0xfe) and c:IsAbleToHand()
 end
 function c101008035.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101008035.thfilter,tp,LOCATION_DECK,0,1,nil) end

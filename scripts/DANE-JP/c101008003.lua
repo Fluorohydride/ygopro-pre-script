@@ -55,7 +55,8 @@ function c101008003.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101008003.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():GetLink()>=2
+	local rc=c:GetReasonCard()
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and rc:IsRace(RACE_CYBERSE) and rc:GetLink()>=2
 end
 function c101008003.thfilter(c)
 	return c:GetType()==TYPE_SPELL and c:IsSetCard(0x119) and c:IsAbleToHand()
@@ -68,7 +69,7 @@ function c101008003.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101008003.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.SendtoHand(g,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end

@@ -26,7 +26,7 @@ function c101008041.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,101008041)
+	e2:SetCountLimit(1,101008041+100)
 	e2:SetCondition(c101008041.spcon)
 	e2:SetTarget(c101008041.sptg)
 	e2:SetOperation(c101008041.spop)
@@ -46,7 +46,7 @@ function c101008041.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c101008041.desfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,c101008041.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
-	local atk=g:GetFirst():GetTextAttack()
+	local atk=g:GetFirst():GetBaseAttack()
 	if atk<0 then atk=0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,atk)
@@ -54,7 +54,7 @@ end
 function c101008041.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		local atk=tc:GetTextAttack()
+		local atk=tc:GetBaseAttack()
 		if atk<0 then atk=0 end
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
 			Duel.Damage(1-tp,atk,REASON_EFFECT)

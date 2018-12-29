@@ -46,8 +46,11 @@ function c101008046.indcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c101008046.cfilter(c,lg,tp)
-	return c:IsSetCard(0xdc) and bit.band(c:GetSummonLocation(),LOCATION_EXTRA)~=0 and lg:IsContains(c)
-		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,c,c:GetCode())
+	return c:IsSetCard(0xdc) and c:IsType(TYPE_XYZ) and bit.band(c:GetSummonLocation(),LOCATION_EXTRA)~=0 and lg:IsContains(c)
+		and not Duel.IsExistingMatchingCard(c101008046.drfilter,tp,LOCATION_MZONE,0,1,c,c:GetCode())
+end
+function c101008046.drfilter(c,code)
+	return c:IsFaceup() and c:IsCode(code)
 end
 function c101008046.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local lg=e:GetHandler():GetLinkedGroup()

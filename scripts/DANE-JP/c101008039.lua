@@ -57,7 +57,7 @@ function c101008039.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101008039.efilter(e,re)
-	return e:GetHandler()~=re:GetOwner()
+	return e:GetHandler()~=re:GetOwner() and re:IsActiveType(TYPE_MONSTER)
 end
 function c101008039.tgfilter(c,tp)
 	return c:IsControler(tp) and c:IsSetCard(0x71)

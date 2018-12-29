@@ -44,14 +44,15 @@ function c101008055.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return Duel.CheckReleaseGroup(tp,c101008055.filter1,1,nil,e,tp)
 	end
 	local rg=Duel.SelectReleaseGroup(tp,c101008055.filter1,1,1,nil,e,tp)
-	e:SetLabel(rg:GetFirst():GetCode())
+	Duel.SetTargetParam(rg:GetFirst():GetCode())
 	Duel.Release(rg,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c101008055.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	local code=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,c101008055.filter2,tp,LOCATION_HAND,0,1,1,nil,e,tp,e:GetLabel()):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,c101008055.filter2,tp,LOCATION_HAND,0,1,1,nil,e,tp,code):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)>0 then
 		tc:CompleteProcedure()
 	end

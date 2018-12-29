@@ -10,6 +10,7 @@ function c101008029.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101008029)
+	e1:SetCondition(c101008029.spcon)
 	e1:SetCost(c101008029.spcost)
 	e1:SetTarget(c101008029.sptg)
 	e1:SetOperation(c101008029.spop)
@@ -27,6 +28,10 @@ function c101008029.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetValue(2000)
 	c:RegisterEffect(e3)
+end
+function c101008029.spcon(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
+	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c101008029.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
@@ -50,6 +55,7 @@ end
 function c101008029.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)>0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		if ft<=0 then return end
 		if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 		local g=Duel.GetMatchingGroup(c101008029.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

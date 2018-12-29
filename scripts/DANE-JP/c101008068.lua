@@ -4,6 +4,7 @@
 function c101008068.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101008068)
@@ -38,6 +39,7 @@ function c101008068.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 end
 function c101008068.operation(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101008068.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if g:GetCount()>0 then
@@ -45,14 +47,12 @@ function c101008068.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101008068.discon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	return ep==1-tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function c101008068.discfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x103) and c:IsAbleToGraveAsCost()
 end
 function c101008068.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c101008068.discfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,c101008068.discfilter,1,1,REASON_COST,nil)
 end
