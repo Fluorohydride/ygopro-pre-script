@@ -29,9 +29,9 @@ function c101008035.initial_effect(c)
     e2:SetOperation(c101008035.spop)
     c:RegisterEffect(e2)    
 end
-function c101008035.matfilter1(c)EFFECT_FLAG_DAMAGE_STEP
+function c101008035.matfilter1(c)
     return c:IsType(TYPE_TUNER) or (c:IsType(TYPE_NORMAL) and c:IsSetCard(0xfd))
-endEFFECT_FLAG_DAMAGE_STEP
+end
 function c101008035.thfilter(c)
     return c:IsSetCard(0xfe) and c:IsAbleToHand()
 end
