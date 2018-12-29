@@ -1,9 +1,10 @@
 --星杯の神子イヴ
+--
 --Script by Djeeta
 function c101008035.initial_effect(c)
 	--synchro summon
 	c:EnableReviveLimit()
-	aux.AddSynchroMixProcedure(c,c101008035.matfilter,nil,nil,aux.NonTuner(nil),1,99)
+	aux.AddSynchroMixProcedure(c,c101008035.matfilter1,nil,nil,aux.NonTuner(nil),1,99)
 	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101008035,0))
@@ -29,7 +30,7 @@ function c101008035.initial_effect(c)
 	e2:SetOperation(c101008035.spop)
 	c:RegisterEffect(e2)
 end
-function c101008035.matfilter(c)
+function c101008035.matfilter1(c)
 	return c:IsSynchroType(TYPE_TUNER) or (c:IsSynchroType(TYPE_NORMAL) and c:IsSetCard(0xfd))
 end
 function c101008035.thfilter(c)
@@ -55,7 +56,7 @@ function c101008035.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c101008035.spfilter(c,e,tp)
-	return c:IsSetCard(0xfd) and not c:IsCode(101008035) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xfd) and c:IsType(TYPE_MONSTER) and not c:IsCode(101008035) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101008035.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
