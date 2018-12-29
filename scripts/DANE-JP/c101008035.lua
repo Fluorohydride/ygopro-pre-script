@@ -30,7 +30,7 @@ function c101008035.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101008035.matfilter(c)
-	return c:IsSynchroType(TYPE_TUNER) or (c:IsType(TYPE_NORMAL) and c:IsSetCard(0xfd))
+	return c:IsSynchroType(TYPE_TUNER) or (c:IsSynchroType(TYPE_NORMAL) and c:IsSetCard(0xfd))
 end
 function c101008035.thfilter(c)
 	return c:IsSetCard(0xfe) and c:IsAbleToHand()
