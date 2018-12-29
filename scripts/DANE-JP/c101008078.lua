@@ -1,4 +1,6 @@
 --大捕り物
+--
+--Script by mercury233
 function c101008078.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -22,7 +24,7 @@ function c101008078.filter(c)
 	return c:IsFaceup() and c:IsControlerCanBeChanged()
 end
 function c101008078.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return c101008078.filter(chkc) and chkc:IsControler(1-tp) end
+	if chkc then return c101008078.filter(chkc) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(c101008078.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectTarget(tp,c101008078.filter,tp,0,LOCATION_MZONE,1,1,nil)
