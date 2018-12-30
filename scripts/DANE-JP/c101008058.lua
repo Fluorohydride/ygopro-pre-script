@@ -46,7 +46,7 @@ end
 function c101008058.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		tc:AddCounter(COUNTER_NEED_ENABLE+0x1019,e:GetLabel())
+		tc:AddCounter(0x1019,e:GetLabel())
 	end
 end
 function c101008058.cfilter(c)
