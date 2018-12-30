@@ -52,13 +52,13 @@ function c101008036.get_zone(c,seq)
 	return zone
 end
 function c101008036.spfilter(c,e,tp,seq)
-	if not (c:IsType(TYPE_LINK) and c:IsRace(RACE_CYBERSE) and c:GetLink()==4) then return false end
+	if not (c:IsType(TYPE_LINK) and c:IsRace(RACE_CYBERSE) and c:IsLink(4)) then return false end
 	local zone=c101008036.get_zone(c,seq)
 	return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c101008036.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local seq=e:GetHandler():GetSequence()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101008036.filter(chkc,e,tp,seq) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101008036.spfilter(chkc,e,tp,seq) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c101008036.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,seq) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

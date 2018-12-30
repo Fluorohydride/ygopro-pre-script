@@ -16,9 +16,9 @@ function c101008014.initial_effect(c)
 	e1:SetTarget(c101008014.rmtg)
 	e1:SetOperation(c101008014.rmop)
 	c:RegisterEffect(e1)
-	--tohand
+	--tograve
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101008014,0))
+	e2:SetDescription(aux.Stringid(101008014,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)

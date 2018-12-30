@@ -1,4 +1,4 @@
---ダイナレスラー・キメラ・Ｔレッスル
+--ダイナレスラー・キメラ・Tレッスル
 --
 --Script by mercury233
 function c101008030.initial_effect(c)
@@ -29,6 +29,7 @@ function c101008030.initial_effect(c)
 	c:RegisterEffect(e3)
 	--atkup
 	local e4=Effect.CreateEffect(c)
+	e4:SetCategory(CATEGORY_ATKCHANGE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_BATTLE_DESTROYING)
 	e4:SetCondition(c101008030.atkcon)

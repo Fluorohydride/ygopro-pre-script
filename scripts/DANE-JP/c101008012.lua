@@ -1,4 +1,4 @@
---TG ハルバード・キャノン/バスター
+--TG ハルバード・キャノン／バスター
 --
 --Script by Djeeta
 function c101008012.initial_effect(c)

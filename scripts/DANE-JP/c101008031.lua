@@ -39,22 +39,20 @@ function c101008031.initial_effect(c)
 end
 c101008031.material_setcode=0xc008
 function c101008031.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5
-	local b2=Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)>=5
-	if chk==0 then return b1 or b2 end
-	if b1 and b2 then
-		e:SetLabel(Duel.SelectOption(tp,aux.Stringid(101008031,0),aux.Stringid(101008031,1)))
-	elseif b1 then
-		Duel.SelectOption(tp,aux.Stringid(101008031,0))
-		e:SetLabel(0)
-	else
-		Duel.SelectOption(tp,aux.Stringid(101008031,1))
-		e:SetLabel(1)
-	end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5 or Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)>=5 end
 end
 function c101008031.operation(e,tp,eg,ep,ev,re,r,rp)
-	local p=e:GetLabel()==0 and tp or 1-tp
-	if Duel.GetFieldGroupCount(p,LOCATION_DECK,0)<5 then return end
+	local b1=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5
+	local b2=Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)>=5
+	local op=nil
+	if b1 and b2 then
+		op=Duel.SelectOption(tp,aux.Stringid(101008031,0),aux.Stringid(101008031,1))
+	elseif b1 then
+		op=Duel.SelectOption(tp,aux.Stringid(101008031,0))
+	else
+		op=Duel.SelectOption(tp,aux.Stringid(101008031,1))+1
+	end
+	local p=op==0 and tp or 1-tp
 	Duel.SortDecktop(tp,p,5)
 end
 function c101008031.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

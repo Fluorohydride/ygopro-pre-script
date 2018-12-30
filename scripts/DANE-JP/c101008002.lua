@@ -26,9 +26,7 @@ function c101008002.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101008002.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local f1=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	local f2=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	return (f1~=nil and f1:IsFaceup()) or (f2~=nil and f2:IsFaceup())
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function c101008002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

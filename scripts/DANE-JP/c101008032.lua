@@ -30,7 +30,7 @@ function c101008032.initial_effect(c)
 	c:RegisterEffect(e3)
 	--attack
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(101008032,1))
+	e4:SetDescription(aux.Stringid(101008032,0))
 	e4:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -84,7 +84,7 @@ function c101008032.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tc and tc:IsFaceup() and tc:IsControler(1-tp) and tc:IsType(TYPE_LINK)
 end
 function c101008032.cfilter(c,lk)
-	return c:IsType(TYPE_LINK) and c:GetLink()==lk and c:IsAbleToRemoveAsCost()
+	return c:IsType(TYPE_LINK) and c:IsLink(lk) and c:IsAbleToRemoveAsCost()
 end
 function c101008032.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
