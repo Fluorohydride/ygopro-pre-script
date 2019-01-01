@@ -27,26 +27,27 @@ function c101008058.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101008058.costfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x18) and c:IsLevelAbove(1) and c:IsDiscardable()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x18) and c:IsDiscardable()
 end
 function c101008058.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101008058.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local g=Duel.SelectMatchingCard(tp,c101008058.costfilter,tp,LOCATION_HAND,0,1,1,nil)
-	e:SetLabel(g:GetFirst():GetLevel())
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,c101008058.costfilter,1,1,REASON_COST+REASON_DISCARD)
+end
+function c101008058.filter(c)
+	return c:IsFaceup() and c:IsLevelAbove(1)
 end
 function c101008058.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101008058.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101008058.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,g,e:GetLabel(),0x1019,1)
+	local g=Duel.SelectTarget(tp,c101008058.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,g,1,0x1019,g:GetFirst():GetLevel())
 end
 function c101008058.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		tc:AddCounter(0x1019,e:GetLabel())
+	local ct=tc:GetLevel()
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and ct>0 then
+		tc:AddCounter(0x1019,ct)
 	end
 end
 function c101008058.cfilter(c)
