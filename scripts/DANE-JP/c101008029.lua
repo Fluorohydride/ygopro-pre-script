@@ -60,7 +60,7 @@ function c101008029.spop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(c101008029.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:SelectSubGroup(tp,c101008029.spcheck,false,1,ft)
-		if sg:GetCount()>0 then
+		if sg then
 			local c=e:GetHandler()
 			local fid=c:GetFieldID()
 			local tc=sg:GetFirst()
