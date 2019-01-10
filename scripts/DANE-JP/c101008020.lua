@@ -58,7 +58,8 @@ function c101008020.thfilter(c,tc)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 		and c:IsRace(tc:GetRace()) and c:IsAttribute(tc:GetAttribute()) and not c:IsCode(tc:GetCode())
 end
-function c101008020.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101008020.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101008020.tgfilter(chkc,tp) end
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0
 		and Duel.IsExistingTarget(c101008020.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)

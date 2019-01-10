@@ -48,7 +48,6 @@ function c100412032.initial_effect(c)
 	e7:SetCode(EVENT_CHAIN_SOLVED)
 	e7:SetRange(LOCATION_SZONE)
 	e7:SetCondition(c100412032.atkcon)
-	e7:SetTarget(c100412032.atktg)
 	e7:SetOperation(c100412032.atkop)
 	c:RegisterEffect(e7)
 	--set
