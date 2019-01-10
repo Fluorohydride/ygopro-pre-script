@@ -1,4 +1,6 @@
 --宵星的机神 丁吉尔苏
+--
+--Scripted by Justfish
 function c101008038.initial_effect(c)
 	--xyz summon
 	c:SetSPSummonOnce(101008038+100)
