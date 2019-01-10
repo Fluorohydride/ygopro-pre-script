@@ -1,17 +1,16 @@
---宵星的机神 丁吉尔苏
+--宵星の機神ディンギルス
 --
 --Scripted by Justfish
 function c101008038.initial_effect(c)
 	--xyz summon
-	c:SetSPSummonOnce(101008038+100)
+	c:SetSPSummonOnce(101008038)
 	aux.AddXyzProcedure(c,nil,8,2,c101008038.ovfilter,aux.Stringid(101008038,0))
 	c:EnableReviveLimit()
 	--search and changelevel
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(101008038,3))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetTarget(c101008038.tg)
 	e1:SetOperation(c101008038.op)
 	c:RegisterEffect(e1)
@@ -39,27 +38,28 @@ function c101008038.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ops,opval={},{}
 	if b1 then
 		ops[off]=aux.Stringid(101008038,1)
-		opval[off-1]=1
+		opval[off]=0
 		off=off+1
 	end
 	if b2 then
 		ops[off]=aux.Stringid(101008038,2)
-		opval[off-1]=2
+		opval[off]=1
 		off=off+1
 	end
-	local op=Duel.SelectOption(tp,table.unpack(ops))
+	local op=Duel.SelectOption(tp,table.unpack(ops))+1
 	local sel=opval[op]
 	e:SetLabel(sel)
 	if sel==0 then
 		e:SetCategory(CATEGORY_TOGRAVE)
-		e:SetProperty(0)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_ONFIELD)
+	else
+		e:SetCategory(0)
 	end
 end
 function c101008038.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sel=e:GetLabel()
-	if sel==1 then
+	if sel==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,0,LOCATION_ONFIELD,1,1,nil)
 		if g:GetCount()>0 then
@@ -68,7 +68,7 @@ function c101008038.op(e,tp,eg,ep,ev,re,r,rp)
 		end
 	else
 		if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101008038,3))
 		local g=Duel.SelectMatchingCard(tp,c101008038.ofilter,tp,LOCATION_REMOVED,0,1,1,nil)
 		if g:GetCount()>0 then
 			Duel.Overlay(c,g)
@@ -89,6 +89,6 @@ function c101008038.desrepval(e,c)
 	return c101008038.repfilter(c,e:GetHandlerPlayer())
 end
 function c101008038.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,1-tp,101008038)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
+	Duel.Hint(HINT_CARD,1-tp,101008038)
 end
