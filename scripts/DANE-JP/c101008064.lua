@@ -43,28 +43,38 @@ function c101008064.initial_effect(c)
 	c:RegisterEffect(e5)
 	--damage
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(81109178,1))
+	e6:SetDescription(aux.Stringid(101008064,0))
 	e6:SetCategory(CATEGORY_DESTROY)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetCode(EVENT_PHASE+PHASE_END)
 	e6:SetRange(LOCATION_FZONE)
 	e6:SetCountLimit(1)
-	e6:SetTarget(c101008064.actconc)
+	e6:SetCondition(c101008064.descon)
+	e6:SetTarget(c101008064.destg)
 	e6:SetOperation(c101008064.desop)
 	c:RegisterEffect(e6)
 end
-function c101008064.actcona(e,tp,eg,ep,ev,re,r,rp)
+function c101008064.actcona(e)
+	local tp=e:GetHandler():GetControler()
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
+end
+function c101008064.actconb(e)
+	local tp=e:GetHandler():GetControler()
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 end
 function c101008064.actlimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
 end
-function c101008064.actconb(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
-end
-function c101008064.actconc(e,tp,eg,ep,ev,re,r,rp)
+function c101008064.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 end
+function c101008064.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
+end
 function c101008064.desop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		Duel.Destroy(c,REASON_EFFECT)
+	end
 end
