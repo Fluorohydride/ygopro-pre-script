@@ -27,7 +27,7 @@ function c101008065.initial_effect(c)
 	--atk
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCondition(c101008065.atkcon)
@@ -55,21 +55,22 @@ function c101008065.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101008065.efilter(e,te)
-	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:GetActivateLocation()==LOCATION_MZONE and bit.band(te:GetHandler():GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL 
+	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:GetActivateLocation()==LOCATION_MZONE and te:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function c101008065.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
 	if ec~=Duel.GetAttacker() and ec~=Duel.GetAttackTarget() then return false end
 	local tc=ec:GetBattleTarget()
-	return tc and tc:IsFaceup() and bit.band(tc:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+	return tc and tc:IsFaceup() and tc:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function c101008065.atkop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local ec=e:GetHandler():GetEquipTarget()
-	local tc=e:GetHandler():GetEquipTarget():GetBattleTarget()
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	local ec=c:GetEquipTarget()
+	local tc=ec:GetBattleTarget()
 	if ec and tc and ec:IsFaceup() and tc:IsFaceup() then
 		local val=math.max(ec:GetBaseAttack(),0)
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-val)
