@@ -39,37 +39,39 @@ function c101008075.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
 end
-function c101008075.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfe) and (c:GetBaseAttack()>0 or c:GetBaseDefense()>0) and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE))
+function c101008075.cfilter(c,e)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfe) and c:GetBaseAttack()>0
+		and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE))
+		and Duel.IsExistingTarget(c101008075.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,c,e)
 end
-function c101008075.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+function c101008075.filter(c,e)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsCanBeEffectTarget(e)
 end
-function c101008075.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101008075.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(c101008075.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil)
-			and Duel.IsExistingTarget(c101008075.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		return Duel.IsExistingMatchingCard(c101008075.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil,e)
 	end
 	e:SetLabel(0)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c101008075.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_ONFIELD,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,c101008075.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_ONFIELD,0,1,1,nil,e)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	e:SetLabelObject(g:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c101008075.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,c101008075.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e)
 end
 function c101008075.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local sc=e:GetLabelObject()
-	local atk=sc:GetBaseAttack()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and sc then
-		local e1=Effect.CreateEffect(e:GetHandler())
+	if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) and sc then
+		local atk=math.max(sc:GetBaseAttack(),0)
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(-atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetValue(atk)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
