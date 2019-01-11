@@ -15,16 +15,18 @@ function c101008061.initial_effect(c)
 	c:RegisterEffect(e1) 
 end
 function c101008061.battlecheck(tp)
+	if not Duel.CheckEvent(EVENT_BATTLED) then return false end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if not d then return false end
 	if d:IsControler(tp) then a,d=d,a end
-	local res=a:IsType(TYPE_LINK) and a:IsSetCard(0x116) and d:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsPlayerCanDraw(tp,a:GetLink())
+	local res=a:IsType(TYPE_LINK) and a:IsSetCard(0x116)
+		and d:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsPlayerCanDraw(tp,a:GetLink())
 	return res,a
 end
 function c101008061.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.GetCurrentPhase()~=PHASE_DAMAGE
-	local b2=Duel.CheckEvent(EVENT_BATTLED) and c101008061.battlecheck(tp)
+	local b2,a=c101008061.battlecheck(tp)
 	if chk==0 then return b1 or b2 end
 	if b1 then 
 		e:SetLabel(1)
@@ -34,7 +36,6 @@ function c101008061.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SelectOption(tp,aux.Stringid(101008061,1))
 		e:SetCategory(CATEGORY_DRAW)
 		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_PLAYER_TARGET)
-		local _,a=c101008061.battlecheck(tp)
 		e:SetLabelObject(a)
 		Duel.SetTargetPlayer(tp)
 		Duel.SetTargetParam(a:GetLink())
