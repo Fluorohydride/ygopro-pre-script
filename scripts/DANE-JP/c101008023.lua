@@ -35,22 +35,24 @@ function c101008023.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101008023.spfilter,1,nil,tp)
 end
 function c101008023.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101008023.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c101008023.cfilter1(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsControler(tp) and c:IsCanBeEffectTarget(e)
 end
 function c101008023.matcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101008023.cfilter1,1,nil,e,tp)
+	return aux.exccon(e) and eg:IsExists(c101008023.cfilter1,1,nil,e,tp)
 end
 function c101008023.tgfilter(c,tp,eg)
-	return eg:IsContains(c)
+	return eg:IsContains(c) and c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsControler(tp)
 end
 function c101008023.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101008023.tgfilter(chkc,tp,eg) end
@@ -65,7 +67,7 @@ end
 function c101008023.matop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
 		Duel.Overlay(tc,Group.FromCards(c))
 	end
 end
