@@ -12,7 +12,7 @@ function c101008061.initial_effect(c)
 	e1:SetCountLimit(1,101008061+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c101008061.target)
 	e1:SetOperation(c101008061.activate)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 end
 function c101008061.battlecheck(tp)
 	if not Duel.CheckEvent(EVENT_BATTLED) then return false end
@@ -28,7 +28,7 @@ function c101008061.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.GetCurrentPhase()~=PHASE_DAMAGE
 	local b2,a=c101008061.battlecheck(tp)
 	if chk==0 then return b1 or b2 end
-	if b1 then 
+	if b1 then
 		e:SetLabel(1)
 		Duel.SelectOption(tp,aux.Stringid(101008061,0))
 		e:SetCategory(0)
@@ -55,7 +55,7 @@ function c101008061.activate(e,tp,eg,ep,ev,re,r,rp)
 	else
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		local a=e:GetLabelObject()
-		if a:IsRelateToBattle() then 
+		if a:IsRelateToBattle() then
 			Duel.Draw(p,a:GetLink(),REASON_EFFECT)
 		end
 	end

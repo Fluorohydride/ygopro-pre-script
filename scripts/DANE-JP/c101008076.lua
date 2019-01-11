@@ -10,7 +10,7 @@ function c101008076.initial_effect(c)
 	e1:SetCondition(c101008076.condition)
 	e1:SetTarget(c101008076.target)
 	e1:SetOperation(c101008076.activate)
-	c:RegisterEffect(e1)    
+	c:RegisterEffect(e1)
 end
 function c101008076.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

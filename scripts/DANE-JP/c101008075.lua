@@ -19,7 +19,7 @@ function c101008075.initial_effect(c)
 	e2:SetCost(c101008075.atkcost)
 	e2:SetTarget(c101008075.atktg)
 	e2:SetOperation(c101008075.atkop)
-	c:RegisterEffect(e2)    
+	c:RegisterEffect(e2)
 	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101008075,0))

@@ -1,4 +1,4 @@
---擾乱騒蛇ラウドクラウド 
+--擾乱騒蛇ラウドクラウド
 --
 --Scripted By-fwkongge
 function c101008022.initial_effect(c)
