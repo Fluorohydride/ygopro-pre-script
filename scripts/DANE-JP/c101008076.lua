@@ -14,8 +14,8 @@ function c101008076.initial_effect(c)
 end
 function c101008076.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
-	local at=Duel.GetAttackTarget()
-	return a and at and a:IsFaceup() and a:IsType(TYPE_LINK) and at:IsFaceup() and at:IsType(TYPE_LINK)
+	local d=Duel.GetAttackTarget()
+	return a and d and a:IsFaceup() and a:IsType(TYPE_LINK) and d:IsFaceup() and d:IsType(TYPE_LINK)
 end
 function c101008076.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
