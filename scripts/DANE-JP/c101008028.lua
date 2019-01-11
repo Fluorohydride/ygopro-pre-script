@@ -20,7 +20,7 @@ function c101008028.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101008028.indval(e,c)
-	return not c:IsLevelAbove(e:GetHandler():GetLevel())
+	return not c:IsLevelAbove(e:GetHandler():GetLevel()+1)
 end
 function c101008028.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
