@@ -30,7 +30,7 @@ function c101008008.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
 	local bc=tc:GetBattleTarget()
-	return bc and bc:IsAttackAbove(tc:GetAttack())
+	return bc and tc:IsSetCard(0x11a) and bc:IsAttackAbove(tc:GetAttack())
 end
 function c101008008.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
