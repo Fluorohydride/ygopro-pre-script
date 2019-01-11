@@ -31,6 +31,8 @@ function c101008061.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if b1 then 
 		e:SetLabel(1)
 		Duel.SelectOption(tp,aux.Stringid(101008061,0))
+		e:SetCategory(0)
+		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	else
 		e:SetLabel(2)
 		Duel.SelectOption(tp,aux.Stringid(101008061,1))
