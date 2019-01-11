@@ -24,6 +24,7 @@ function c101008011.initial_effect(c)
 	e2:SetOperation(c101008011.chop)
 	c:RegisterEffect(e2)
 end
+c101008011.card_code_list={80280737}
 function c101008011.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
