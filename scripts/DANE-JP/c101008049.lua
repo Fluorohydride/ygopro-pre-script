@@ -64,12 +64,12 @@ function c101008049.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=e:GetLabel()
 	local g=e:GetLabelObject()
 	local tg=g:Filter(c101008049.efilter,nil,lv)
-	g:DeleteGroup()
 	local tc=tg:GetFirst()
 	if #g>2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 		tc=tg:Select(tp,1,1,nil):GetFirst()
 	end
+	g:DeleteGroup()
 	if tc then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
