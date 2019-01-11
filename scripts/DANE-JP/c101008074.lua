@@ -1,6 +1,6 @@
 --オルフェゴール・クリマクス
 --
---Script by Djeeta
+--Scripted by Djeeta
 function c101008074.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
