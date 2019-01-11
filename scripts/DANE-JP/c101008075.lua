@@ -42,7 +42,7 @@ end
 function c101008075.cfilter(c,e)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfe) and c:GetBaseAttack()>0
 		and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE))
-		and Duel.IsExistingTarget(c101008075.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,c,e)
+		and Duel.IsExistingMatchingCard(c101008075.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,c,e)
 end
 function c101008075.filter(c,e)
 	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsCanBeEffectTarget(e)
