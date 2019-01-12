@@ -7,7 +7,7 @@ function c101008074.initial_effect(c)
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetCountLimit(1,101008074+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,101008074)
 	e1:SetCondition(c101008074.condition)
 	e1:SetTarget(c101008074.target)
 	e1:SetOperation(c101008074.activate)
@@ -46,11 +46,9 @@ function c101008074.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
 	end
-	Duel.RegisterFlagEffect(tp,101008074,RESET_PHASE+PHASE_END,0,1)
 end
 function c101008074.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(101008074,tp,ACTIVITY_SPSUMMON)==0
-		and Duel.GetFlagEffect(tp,101008074)==0
 		and aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0) end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
