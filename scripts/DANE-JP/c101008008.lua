@@ -28,6 +28,7 @@ end
 function c101008008.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
+	if not tc then return false end
 	e:SetLabelObject(tc)
 	local bc=tc:GetBattleTarget()
 	return bc and tc:IsSetCard(0x11a) and bc:IsAttackAbove(tc:GetAttack())
