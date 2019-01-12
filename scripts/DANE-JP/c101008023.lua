@@ -29,7 +29,7 @@ function c101008023.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101008023.spfilter(c,tp)
-	return c:GetSummonPlayer()==tp and c:IsType(TYPE_XYZ)
+	return c:IsControler(tp) and c:IsType(TYPE_XYZ)
 end
 function c101008023.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101008023.spfilter,1,nil,tp)

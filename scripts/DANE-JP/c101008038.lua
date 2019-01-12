@@ -2,11 +2,11 @@
 --
 --Scripted by Justfish
 function c101008038.initial_effect(c)
-	--xyz summon
 	c:SetSPSummonOnce(101008038)
+	--xyz summon
 	aux.AddXyzProcedure(c,nil,8,2,c101008038.ovfilter,aux.Stringid(101008038,0))
 	c:EnableReviveLimit()
-	--search and changelevel
+	--effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)

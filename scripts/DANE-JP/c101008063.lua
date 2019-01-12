@@ -9,7 +9,7 @@ function c101008063.initial_effect(c)
 	e1:SetTarget(c101008063.target)
 	e1:SetOperation(c101008063.activate)
 	c:RegisterEffect(e1)
-	--damage
+	--halve LP
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAINING)
@@ -23,17 +23,17 @@ function c101008063.initial_effect(c)
 	e3:SetCode(EVENT_CHAIN_SOLVED)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetLabelObject(e2)
-	e3:SetCondition(c101008063.damcon)
-	e3:SetOperation(c101008063.damop)
+	e3:SetCondition(c101008063.lpcon)
+	e3:SetOperation(c101008063.lpop)
 	c:RegisterEffect(e3)
-	--self destroy
+	--to grave
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1)
-	e4:SetCondition(c101008063.descon)
-	e4:SetOperation(c101008063.desop)
+	e4:SetCondition(c101008063.tgcon)
+	e4:SetOperation(c101008063.tgop)
 	c:RegisterEffect(e4)
 	--indes
 	local e5=Effect.CreateEffect(c)
@@ -63,21 +63,21 @@ function c101008063.regop(e,tp,eg,ep,ev,re,r,rp)
 		e:SetLabel(ep)
 	end
 end
-function c101008063.damcon(e,tp,eg,ep,ev,re,r,rp)
+function c101008063.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetFlagEffect(101008063)~=0
 end
-function c101008063.damop(e,tp,eg,ep,ev,re,r,rp)
+function c101008063.lpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local p=e:GetLabelObject():GetLabel()
 	Duel.Hint(HINT_CARD,0,101008063)
 	Duel.SetLP(p,math.ceil(Duel.GetLP(p)/2))
 	c:RegisterFlagEffect(101008063+100,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
-function c101008063.descon(e,tp,eg,ep,ev,re,r,rp)
+function c101008063.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(101008063+100)~=0
 end
-function c101008063.desop(e,tp,eg,ep,ev,re,r,rp)
+function c101008063.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 end
 function c101008063.indcon(e)

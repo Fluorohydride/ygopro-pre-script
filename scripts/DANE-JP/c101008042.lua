@@ -2,6 +2,7 @@
 --
 --Script by mercury233
 function c101008042.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x11a),2,2)
 	--to hand
@@ -37,7 +38,7 @@ function c101008042.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101008042.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsCode(90173539)
+	return rp==tp and re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsCode(90173539)
 		and e:GetHandler():GetFlagEffect(1)>0
 end
 function c101008042.thfilter(c)

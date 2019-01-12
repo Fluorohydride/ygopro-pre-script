@@ -16,6 +16,7 @@ function c101008027.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(c101008027.spcon)
+	e2:SetTarget(c101008027.sptg)
 	e2:SetOperation(c101008027.spop)
 	c:RegisterEffect(e2)
 	--activate limit
@@ -29,35 +30,27 @@ function c101008027.initial_effect(c)
 	e3:SetValue(c101008027.aclimit)
 	c:RegisterEffect(e3)
 end
-function c101008027.mzfilter(c,tp)
-	return c:IsControler(tp) and c:GetSequence()<5
+function c101008027.fselect(g,tp)
+	return Duel.GetMZoneCount(tp,g)>0
 end
 function c101008027.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetReleaseGroup(tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	return ft>-3 and rg:GetCount()>2 and (ft>0 or rg:IsExists(c101008027.mzfilter,ct,nil,tp))
+	return rg:CheckSubGroup(c101008027.fselect,3,3)
+end
+function c101008027.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local rg=Duel.GetReleaseGroup(tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local sg=rg:SelectSubGroup(tp,c101008027.fselect,true,3,3)
+	if sg then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
+	else return false end
 end
 function c101008027.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=nil
-	if ft>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:Select(tp,3,3,nil)
-	elseif ft>-2 then
-		local ct=-ft+1
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:FilterSelect(tp,c101008027.mzfilter,ct,ct,nil,tp)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local g2=rg:Select(tp,3-ct,3-ct,g)
-		g:Merge(g2)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:FilterSelect(tp,c101008027.mzfilter,3,3,nil,tp)
-	end
+	local g=e:GetLabelObject()
 	Duel.Release(g,REASON_COST)
 	local atk=0
 	local tc=g:GetFirst()
@@ -74,6 +67,7 @@ function c101008027.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetValue(atk)
 	e1:SetReset(RESET_EVENT+0xff0000)
 	c:RegisterEffect(e1)
+	g:DeleteGroup()
 end
 function c101008027.condition(e)
 	local ph=Duel.GetCurrentPhase()

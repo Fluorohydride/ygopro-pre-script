@@ -41,7 +41,7 @@ function c101008064.initial_effect(c)
 	e5:SetTargetRange(LOCATION_MZONE,0)
 	e5:SetCondition(c101008064.actconb)
 	c:RegisterEffect(e5)
-	--damage
+	--destroy
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(101008064,0))
 	e6:SetCategory(CATEGORY_DESTROY)
@@ -74,7 +74,7 @@ function c101008064.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101008064.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
+	if c:IsRelateToEffect(e) then
 		Duel.Destroy(c,REASON_EFFECT)
 	end
 end
