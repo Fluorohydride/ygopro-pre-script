@@ -10,9 +10,13 @@ function c101008025.initial_effect(c)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101008025)
+	e1:SetCondition(c101008025.condition)
 	e1:SetCost(c101008025.cost)
 	e1:SetOperation(c101008025.operation)
 	c:RegisterEffect(e1)
+end
+function c101008025.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_END
 end
 function c101008025.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
