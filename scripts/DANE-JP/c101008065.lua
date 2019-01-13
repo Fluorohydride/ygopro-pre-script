@@ -55,7 +55,8 @@ function c101008065.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101008065.efilter(e,te)
-	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:GetActivateLocation()==LOCATION_MZONE and te:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:GetActivateLocation()==LOCATION_MZONE
+		and te:IsActivated() and te:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function c101008065.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()

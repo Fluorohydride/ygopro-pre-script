@@ -77,7 +77,7 @@ function c101008040.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c101008040.spfilter(c,e,tp)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_MONSTER) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_CYBERSE) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101008040.spcheck(g)
 	return g:GetClassCount(Card.GetCode)==#g

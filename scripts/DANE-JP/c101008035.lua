@@ -56,7 +56,7 @@ function c101008035.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c101008035.spfilter(c,e,tp)
-	return c:IsSetCard(0xfd) and c:IsType(TYPE_MONSTER) and not c:IsCode(101008035) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xfd) and not c:IsCode(101008035) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101008035.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

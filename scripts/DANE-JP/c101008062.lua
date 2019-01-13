@@ -29,7 +29,7 @@ function c101008062.filter(c,e,tp)
 		and Duel.IsExistingMatchingCard(c101008062.spfilter,tp,LOCATION_DECK,0,2,nil,e,tp,c:GetCode())
 end
 function c101008062.spfilter(c,e,tp,code)
-	return c:IsType(TYPE_MONSTER) and c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101008062.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) or Duel.IsPlayerAffectedByEffect(tp,59822133) then return end

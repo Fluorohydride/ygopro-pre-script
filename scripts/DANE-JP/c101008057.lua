@@ -77,7 +77,7 @@ function c101008057.cfilter(c,e,tp)
 		and Duel.IsExistingTarget(c101008057.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp)
 end
 function c101008057.spfilter(c,e,tp)
-	return c:IsSetCard(0x121) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x121) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101008057.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()

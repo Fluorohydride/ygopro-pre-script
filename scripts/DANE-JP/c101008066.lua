@@ -50,7 +50,6 @@ function c101008066.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,1,0,0)
 end
 function c101008066.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<1 then return end
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)

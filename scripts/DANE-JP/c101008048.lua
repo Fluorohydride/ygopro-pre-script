@@ -100,7 +100,7 @@ function c101008048.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101008048.cfilter,1,nil,1-tp)
 end
 function c101008048.spfilter(c,e,tp)
-	return c:IsSetCard(0xfe) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xfe) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101008048.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -29,7 +29,7 @@ function c101008023.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101008023.spfilter(c,tp)
-	return c:IsControler(tp) and c:IsType(TYPE_XYZ)
+	return c:IsControler(tp) and c:IsType(TYPE_XYZ) and c:IsFaceup()
 end
 function c101008023.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101008023.spfilter,1,nil,tp)
@@ -67,7 +67,7 @@ end
 function c101008023.matop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		Duel.Overlay(tc,Group.FromCards(c))
 	end
 end

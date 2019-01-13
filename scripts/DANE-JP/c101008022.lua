@@ -39,7 +39,7 @@ function c101008022.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101008022.cfilter(c)
-	return c:IsAbleToRemoveAsCost() and c:IsAttribute(ATTRIBUTE_FIRE+ATTRIBUTE_WIND) and not c:IsCode(101008022)
+	return c:IsAbleToRemoveAsCost() and c:IsAttribute(ATTRIBUTE_FIRE+ATTRIBUTE_WIND)
 end
 function c101008022.cfilter1(c,g)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and g:IsExists(Card.IsAttribute,1,c,ATTRIBUTE_WIND)
@@ -90,7 +90,8 @@ function c101008022.desop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local atk=math.max(tc:GetTextAttack(),0)
 	if tc:IsRelateToEffect(e) then
-		if Duel.Destroy(tc,REASON_EFFECT)~=0 and c:IsFaceup() and atk>0 then
+		if Duel.Destroy(tc,REASON_EFFECT)~=0
+			and c:IsFaceup() and c:IsRelateToEffect(e) and atk>0 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
