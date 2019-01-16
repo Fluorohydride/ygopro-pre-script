@@ -1,4 +1,6 @@
 --無限起動リヴァーストーム
+--
+--Scripted by Justfish
 function c100412007.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,5,2)
