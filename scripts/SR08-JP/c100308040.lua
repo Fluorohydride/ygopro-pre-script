@@ -48,15 +48,12 @@ function c100308040.initial_effect(c)
 	e4:SetOperation(c100308040.desop)
 	c:RegisterEffect(e4)
 end
-function c100308040.cfilter(c,ec)
-	if c:IsLocation(LOCATION_MZONE) then
-		return ec:GetLinkedGroup():IsContains(c)
-	else
-		return bit.extract(ec:GetLinkedZone(c:GetPreviousControler()),c:GetPreviousSequence())~=0 and c:IsRace(RACE_SPELLCASTER)
-	end
+function c100308040.cfilter(c,g)
+	return c:IsFaceup() and g:IsContains(c) and c:IsRace(RACE_SPELLCASTER)
 end
 function c100308040.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100308040.cfilter,1,nil,e:GetHandler())
+	local lg=e:GetHandler():GetLinkedGroup()
+	return lg and eg:IsExists(c100308040.cfilter,1,nil,lg)
 end
 function c100308040.attackup(e,c)
 	return c:GetCounter(0x1)*300
