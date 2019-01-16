@@ -1,4 +1,4 @@
---创圣魔导王 恩底弥翁
+--創聖魔導王 エンディミオン
 --
 --Script by Djeeta
 function c100308001.initial_effect(c)
