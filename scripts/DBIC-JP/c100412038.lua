@@ -1,4 +1,6 @@
---死配之咒眼
+--死配の呪眼
+
+--Scripted by Maru
 function c100412038.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_CONTROL)

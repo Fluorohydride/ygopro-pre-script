@@ -1,4 +1,6 @@
---惨祸之咒眼
+--惨禍の呪眼
+
+--Scripted by Maru
 function c100412035.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

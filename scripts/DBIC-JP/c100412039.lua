@@ -1,4 +1,6 @@
---断罪之咒眼
+--断罪の呪眼
+
+--Scripted by Maru
 function c100412039.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

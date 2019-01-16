@@ -1,4 +1,6 @@
---唤忌之咒眼
+--喚忌の呪眼
+
+--Scripted by Maru
 function c100412034.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
