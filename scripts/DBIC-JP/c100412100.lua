@@ -1,4 +1,6 @@
 --無限起動ゴライアス
+--
+--Scripted by Justfish
 function c100412100.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,c100412100.matfilter,1,1)
