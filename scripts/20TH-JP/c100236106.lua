@@ -1,4 +1,4 @@
---罪 十字
+--Sin Cross
 --
 --Tanaka Kotoha
 function c100236106.initial_effect(c)
