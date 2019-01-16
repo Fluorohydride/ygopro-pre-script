@@ -1,0 +1,60 @@
+--静冠之咒眼
+function c100412036.initial_effect(c)
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,100412036+EFFECT_COUNT_CODE_OATH)
+	e1:SetTarget(c100412036.target)
+	e1:SetOperation(c100412036.activate)
+	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCategory(CATEGORY_REMOVE)
+	e2:SetCode(EVENT_BATTLED)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCondition(c13257312.rmcon)
+	e2:SetTarget(c13257312.rmtg)
+	e2:SetOperation(c13257312.rmop)
+	c:RegisterEffect(e2)
+	
+end
+function c100412036.costfilter(c)
+	return c:IsSetCard(0x226) and c:IsAbleToRemoveAsCost()
+end
+function c100412036.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	if Duel.IsExistingMatchingCard(c100412036.costfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(c100412036,0)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local g=Duel.SelectMatchingCard(tp,c100412036.costfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		Duel.Remove(g,POS_FACEUP,REASON_COST)
+		e:SetLabel(1)
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	else
+		e:SetLabel(0)
+	end
+end
+function c100412036.activate(e,tp,eg,ep,ev,re,r,rp,chk)
+	if e:GetHandler():IsRelateToEffect(e) and e:GetLabel()==1 then
+		Duel.Draw(tp,1,REASON_EFFECT)
+	end
+end
+function c100412036.rmcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler():GetEquipTarget()
+	return c and c:GetBattleTarget()
+end
+function c100412036.check(c,tp)
+	return c:IsControler(tp) and c:IsSetCard(0x226) and c:GetEquipGroup() and c:GetEquipGroup():IsExists(Card.IsCode,1,nil,100412032)
+end
+function c100412036.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local a=Duel.GetAttacker()
+	local d=Duel.GetAttackTarget()
+	if chk==0 then d~=nil and c100412036.check(a,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,d,1,0,0)
+end
+function c100412036.rmop(e,tp,eg,ep,ev,re,r,rp)
+	local d=Duel.GetAttackTarget()
+	if e:GetHandler():IsRelateToEffect(e) and d:IsRelateToEffect(e) then
+		Duel.Remove(d,REASON_EFFECT)
+	end
+end
