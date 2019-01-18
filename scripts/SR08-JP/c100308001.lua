@@ -3,7 +3,7 @@
 --Script by Djeeta
 function c100308001.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
-	c:EnableCounterPermit(0x1)    
+	c:EnableCounterPermit(0x1)
 	--destory
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY+CATEGORY_COUNTER)

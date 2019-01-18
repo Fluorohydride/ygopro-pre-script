@@ -35,7 +35,7 @@ function c100200158.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c100200158.negfilter(c)
-	return c:IsFaceup() and not c:IsDisabled() 
+	return c:IsFaceup() and not c:IsDisabled()
 end
 function c100200158.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
