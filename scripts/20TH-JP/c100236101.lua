@@ -3,10 +3,9 @@
 --Scripted By-FW空鸽
 function c100236101.initial_effect(c)
 	c:EnableReviveLimit()
-	--to hand
+	--act limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100236101,0))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -21,14 +20,15 @@ function c100236101.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCountLimit(1,100236101+100)
 	e2:SetCondition(aux.bdocon)
 	e2:SetTarget(c100236101.thtg)
 	e2:SetOperation(c100236101.thop)
 	c:RegisterEffect(e2)
 end
 function c100236101.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsReleasable,1,nil) end
-	local g=Duel.SelectReleaseGroup(tp,Card.IsReleasable,1,1,nil)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,nil,1,nil) end
+	local g=Duel.SelectReleaseGroup(tp,nil,1,1,nil)
 	Duel.Release(g,REASON_COST)
 end
 function c100236101.sumsuc(e,tp,eg,ep,ev,re,r,rp)

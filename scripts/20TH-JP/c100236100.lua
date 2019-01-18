@@ -8,14 +8,14 @@ function c100236100.initial_effect(c)
 	--cannot be target/effect indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_ONFIELD)
-	e1:SetValue(1)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
-	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e2:SetValue(aux.tgoval)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 	--destroy
 	local e3=Effect.CreateEffect(c)
@@ -37,21 +37,22 @@ function c100236100.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100236100.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local c=e:GetHandler()
+	if chk==0 then return c:GetAttackAnnouncedCount()==0 end
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e:GetHandler():RegisterEffect(e1)
+	c:RegisterEffect(e1)
 end
 function c100236100.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) end
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	local ct=1
-	if e:GetLabel()==1 then ct=3 end
+	if e:GetLabel()==1 and e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) then ct=3 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,ct,nil)
+	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c100236100.desop(e,tp,eg,ep,ev,re,r,rp)
