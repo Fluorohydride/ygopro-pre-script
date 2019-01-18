@@ -1,12 +1,10 @@
---方界缘起
+--方界縁起
 --
 --Script by Djeeta
 function c100236118.initial_effect(c)
 	 --Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100236118,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
@@ -82,13 +80,11 @@ function c100236118.damop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCode(EVENT_BATTLE_DESTROYING)
-		e2:SetCondition(c100236118.regcon)
-		e2:SetOperation(c100236118.regop1)
+		e2:SetOperation(c100236118.damop2)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+EVENT_PHASE+PHASE_END)
 		e2:SetLabelObject(e1)
 		tc:RegisterEffect(e2)
 		tc:RegisterFlagEffect(100236118,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100236118,2))
 	end
 end
 function c100236118.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -96,19 +92,12 @@ function c100236118.regop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=c:GetCounter(0x1038)
 	e:SetLabel(ct)
 end
-function c100236118.regcon(e,tp,eg,ep,ev,re,r,rp)
+function c100236118.damop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetAttackTarget()
-	if not tc then return end
-	if tc:IsControler(tp) then tc=Duel.GetAttacker() end
+	local tc=c:GetBattleTarget()
 	local ct=e:GetLabelObject():GetLabel()
-	return e:GetHandler():GetFlagEffect(100236118)>0 and ct>0
-end
-function c100236118.regop1(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetAttackTarget()
-	if not tc then return end
-	if tc:IsControler(tp) then tc=Duel.GetAttacker() end
-	local atk=tc:GetBaseAttack()
-	Duel.Damage(1-tp,atk,REASON_EFFECT)
+	if c:GetFlagEffect(100236118)>0 and ct>0 then
+		local atk=tc:GetBaseAttack()
+		Duel.Damage(1-tp,atk,REASON_EFFECT)
+	end
 end
