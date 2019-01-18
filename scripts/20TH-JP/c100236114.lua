@@ -75,6 +75,7 @@ function c100236114.spop(e,tp,eg,ep,ev,re,r,rp)
 	while tc and i<2 and e:GetLabel()==1 and not Duel.IsPlayerAffectedByEffect(tp,59822133) and ft>0
 		and Duel.IsExistingMatchingCard(c100236114.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(100236114,2)) do
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		g=Duel.SelectMatchingCard(tp,c100236114.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
 		tc=g:GetFirst()
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)

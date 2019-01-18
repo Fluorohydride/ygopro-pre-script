@@ -1,7 +1,8 @@
 --死配の呪眼
-
+--
 --Scripted by Maru
 function c100412038.initial_effect(c)
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -10,6 +11,7 @@ function c100412038.initial_effect(c)
 	e1:SetTarget(c100412038.target)
 	e1:SetOperation(c100412038.activate)
 	c:RegisterEffect(e1)
+	--target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -19,6 +21,7 @@ function c100412038.initial_effect(c)
 	e2:SetCondition(c100412038.tgcon)
 	e2:SetOperation(c100412038.tgop)
 	c:RegisterEffect(e2)
+	--setcode
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_ADD_SETCODE)
@@ -35,17 +38,19 @@ function c100412038.initial_effect(c)
 	e4:SetCondition(c100412038.descon)
 	e4:SetOperation(c100412038.desop)
 	c:RegisterEffect(e4)
-	
 end
 function c100412038.filter(c,atk)
 	return c:IsSetCard(0x226) and c:IsFaceup() and c:GetAttack()>atk
 end
-function c100412038.filter1(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsType(TYPE_EFFECT) and Duel.IsExistingMatchingCard(c100412038.filter,tp,LOCATION_MZONE,0,1,nil,c:GetAttack())
+function c100412038.filter1(c,tp)
+	return c:IsAttackPos() and c:IsControler(1-tp)
+		and Duel.IsExistingMatchingCard(c100412038.filter,tp,LOCATION_MZONE,0,1,nil,c:GetAttack())
 end
-function c100412038.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(c100412038.filter1,1,nil) end
-	local tc=eg:FilterSelect(tp,c100412038.filter1,1,1,nil):GetFirst()
+function c100412038.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return eg:IsContains(chkc) and c100412038.filter1(chkc,tp) end
+	if chk==0 then return eg:IsExists(c100412038.filter1,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
+	local tc=eg:FilterSelect(tp,c100412038.filter1,1,1,nil,tp):GetFirst()
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,0,0)
 end

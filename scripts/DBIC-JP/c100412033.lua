@@ -1,7 +1,8 @@
 --呪眼領閾－パレイドリア－
-
+--
 --Scripted by Maru
 function c100412033.initial_effect(c)
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -9,11 +10,11 @@ function c100412033.initial_effect(c)
 	e1:SetCountLimit(1,100412033+EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(c100412033.activate)
 	c:RegisterEffect(e1)
+	--damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e2:SetRange(LOCATION_SZONE)
+	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(c100412033.rfcon)
 	e2:SetTarget(c100412033.rftg)
@@ -33,9 +34,6 @@ end
 function c100412033.filter(c)
 	return c:IsSetCard(0x226) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
-function c100412033.filter1(c)
-	return c:IsCode(100412032) and c:IsFaceup()
-end
 function c100412033.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(c100412033.filter,tp,LOCATION_DECK,0,nil)
@@ -46,20 +44,18 @@ function c100412033.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
+function c100412033.filter1(c)
+	return c:IsCode(100412032) and c:IsFaceup()
+end
 function c100412033.rfcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100412033.filter1,tp,LOCATION_SZONE,0,1,nil)
 end
-function c100412033.check(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(0x226)
-end
 function c100412033.rftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if chk==0 then d~=nil and c100412033.check(d,tp) end
+	if chk==0 then return d~=nil and d:IsControler(tp) and d:IsSetCard(0x226) end
 end
 function c100412033.rfop(e,tp,eg,ep,ev,re,r,rp)
-	local d=Duel.GetAttackTarget()
-	if e:GetHandler():IsRelateToEffect(e) and d:IsRelateToEffect(e) then
+	if e:GetHandler():IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
