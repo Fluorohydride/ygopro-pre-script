@@ -11,7 +11,7 @@ function c100236114.initial_effect(c)
 	e1:SetCondition(c100236114.condition)
 	e1:SetTarget(c100236114.target)
 	e1:SetOperation(c100236114.activate)
-	c:RegisterEffect(e1)   
+	c:RegisterEffect(e1)
 	--Activate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100236114,1))
@@ -24,7 +24,7 @@ function c100236114.initial_effect(c)
 	e2:SetCondition(c100236114.spcon)
 	e2:SetTarget(c100236114.sptg)
 	e2:SetOperation(c100236114.spop)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 end
 function c100236114.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
@@ -55,10 +55,10 @@ end
 function c100236114.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100236114.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
-	if Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 then 
+	if Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 then
 		e:SetLabel(1)
 	else
-		e:SetLabel(0)	   
+		e:SetLabel(0)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
 end

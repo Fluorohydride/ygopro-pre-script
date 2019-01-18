@@ -54,7 +54,7 @@ function c100236103.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c100236103.indtg(c)
-	return c:IsRace(RACE_SPELLCASTER) and c:IsLevelAbove(7) 
+	return c:IsRace(RACE_SPELLCASTER) and c:IsLevelAbove(7)
 end
 function c100236103.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
