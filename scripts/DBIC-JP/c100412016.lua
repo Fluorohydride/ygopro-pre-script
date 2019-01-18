@@ -7,7 +7,7 @@ function c100412016.initial_effect(c)
 	e1:SetDescription(aux.Stringid(100412016,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,100412016)
@@ -35,8 +35,8 @@ function c100412016.costfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
 end
 function c100412016.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100412016.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler())
-	and e:GetHandler():IsReleasable() end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100412016.costfilter,tp,LOCATION_HAND,0,1,nil)
+		and e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 	Duel.DiscardHand(tp,c100412016.costfilter,1,1,REASON_COST+REASON_DISCARD)
 end

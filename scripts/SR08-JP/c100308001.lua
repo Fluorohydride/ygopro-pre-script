@@ -3,9 +3,10 @@
 --Script by Djeeta
 function c100308001.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
-	c:EnableCounterPermit(0x1)    
+	c:EnableCounterPermit(0x1)
 	--destory
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100308001,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY+CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_PZONE)
@@ -16,6 +17,7 @@ function c100308001.initial_effect(c)
 	c:RegisterEffect(e1)
 	--negate
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100308001,1))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
@@ -29,11 +31,11 @@ function c100308001.initial_effect(c)
 	--cannot target
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e3:SetValue(aux.tgoval)
 	e3:SetCondition(c100308001.ctcon)
+	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
 	--indes
 	local e4=Effect.CreateEffect(c)
@@ -41,8 +43,8 @@ function c100308001.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetValue(aux.indoval)
 	e4:SetCondition(c100308001.ctcon)
+	e4:SetValue(aux.indoval)
 	c:RegisterEffect(e4)
 	--search
 	local e5=Effect.CreateEffect(c)
@@ -62,7 +64,6 @@ function c100308001.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function c100308001.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,6,REASON_COST) end
 	Duel.RemoveCounter(tp,1,0,0x1,6,REASON_COST)
 end
@@ -70,10 +71,12 @@ function c100308001.cfilter(c)
 	return c:IsCanAddCounter(0x1,1)
 end
 function c100308001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100308001.cfilter,tp,LOCATION_ONFIELD,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+		and Duel.IsExistingMatchingCard(c100308001.cfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c100308001.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -81,7 +84,7 @@ function c100308001.desop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=Duel.GetMatchingGroupCount(c100308001.cfilter,tp,LOCATION_ONFIELD,0,nil)
 		if ct==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
+		local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
 		Duel.HintSelection(g)
 		local oc=Duel.Destroy(g,REASON_EFFECT)
 		if oc==0 then return end
@@ -89,13 +92,13 @@ function c100308001.desop(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():AddCounter(0x1,oc)
 	end
 end
-function c100308001.thfilter(c)
-	return c:GetCounter(0x1)>0
-end
 function c100308001.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
+end
+function c100308001.thfilter(c)
+	return c:GetCounter(0x1)>0
 end
 function c100308001.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100308001.thfilter,tp,LOCATION_ONFIELD,0,1,nil) end
@@ -106,15 +109,15 @@ function c100308001.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100308001.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100308001.thfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	local tc=g:GetFirst()
 	local count=tc:GetCounter(0x1)
-	if Duel.SendtoHand(tc,nil,REASON_EFFECT) and Duel.NegateActivation(ev)~=0 and re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(eg,REASON_EFFECT)
-		if Duel.SelectYesNo(tp,aux.Stringid(100308001,0)) then
-		Duel.BreakEffect()
-		c:AddCounter(0x1,count)
+	if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) and Duel.NegateActivation(ev)~=0
+		and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 then
+		if c:IsRelateToEffect(e) and Duel.SelectYesNo(tp,aux.Stringid(100308001,2)) then
+			Duel.BreakEffect()
+			c:AddCounter(0x1,count)
 		end
 	end
 end
@@ -136,12 +139,12 @@ function c100308001.thfilter1(c)
 end
 function c100308001.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(c100308001.thfilter1,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100308001.thfilter1,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100308001.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100308001.thfilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c100308001.thfilter1,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

@@ -26,9 +26,9 @@ function c100412034.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100412034.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local loc=LOCATION_GRAVE+LOCATION_HAND 
+	local loc=LOCATION_GRAVE+LOCATION_HAND
 	if Duel.IsExistingMatchingCard((c100412034.filter,tp,LOCATION_SZONE,0,1,nil) then
-		loc=loc+LOCATION_DECK 
+		loc=loc+LOCATION_DECK
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100412034.spfilter),tp,loc,0,1,1,nil,e,tp)
