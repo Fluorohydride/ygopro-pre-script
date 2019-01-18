@@ -1,4 +1,4 @@
---魔鐘洞
+--魔鍾洞
 --
 --By Tanaka Kotoha
 function c101008064.initial_effect(c)
@@ -19,9 +19,10 @@ function c101008064.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetTargetRange(0,LOCATION_MZONE)
+	e3:SetTargetRange(0,1)
 	e3:SetCondition(c101008064.actcona)
 	c:RegisterEffect(e3)
 	--activate limit
@@ -36,9 +37,10 @@ function c101008064.initial_effect(c)
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e5:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e5:SetRange(LOCATION_FZONE)
-	e5:SetTargetRange(LOCATION_MZONE,0)
+	e5:SetTargetRange(1,0)
 	e5:SetCondition(c101008064.actconb)
 	c:RegisterEffect(e5)
 	--destroy
@@ -63,7 +65,7 @@ function c101008064.actconb(e)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 end
 function c101008064.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_MONSTER)
 end
 function c101008064.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
