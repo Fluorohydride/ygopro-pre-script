@@ -34,26 +34,45 @@ end
 function c100200158.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
-function c100200158.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
-end
 function c100200158.negfilter(c)
 	return c:IsFaceup() and not c:IsDisabled() 
 end
-function c100200158.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-	local pg=Duel.GetMatchingGroup(c100200158.negfilter,tp,0,LOCATION_ONFIELD,nil)
-	local op=0
-	if pg:GetCount()>0 then
-		op=Duel.SelectOption(tp,aux.Stringid(100200158,2),aux.Stringid(100200158,3))
-	else
-		op=Duel.SelectOption(tp,aux.Stringid(100200158,2))
+function c100200158.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local b1=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+	local b2=Duel.GetMatchingGroup(c100200158.negfilter,tp,0,LOCATION_ONFIELD,nil)
+	if chk==0 then return b1 or b2 end
+	local off=1
+	local ops={}
+	local opval={}
+	if b1 then
+		ops[off]=aux.Stringid(100200158,2)
+		opval[off-1]=1
+		off=off+1
 	end
-	if op==0 then
-		Duel.Destroy(sg,REASON_EFFECT)
+	if b2 then
+		ops[off]=aux.Stringid(100200158,3)
+		opval[off-1]=2
+		off=off+1
+	end
+	local op=Duel.SelectOption(tp,table.unpack(ops))
+	local sel=opval[op]
+	e:SetLabel(sel)
+	if sel==1 then
+		e:SetCategory(CATEGORY_DESTROY)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,b1,b1:GetCount(),0,0)
 	else
-		local nc=pg:GetFirst()
+		e:SetCategory(CATEGORY_DISABLE)
+	end
+end
+function c100200158.operation(e,tp,eg,ep,ev,re,r,rp)
+	local sel=e:GetLabel()
+	local c=e:GetHandler()
+	local b1=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+	local b2=Duel.GetMatchingGroup(c100200158.negfilter,tp,0,LOCATION_ONFIELD,nil)
+	if sel==1 then
+		Duel.Destroy(b1,REASON_EFFECT)
+	else
+		local nc=b2:GetFirst()
 		while nc do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -72,7 +91,7 @@ function c100200158.operation(e,tp,eg,ep,ev,re,r,rp)
 				e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 				nc:RegisterEffect(e3)
 			end
-			nc=pg:GetNext()
+			nc=b2:GetNext()
 		end
 	end
 end
