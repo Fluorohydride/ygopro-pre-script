@@ -53,7 +53,7 @@ function c100236103.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-function c100236103.indtg(c)
+function c100236103.indtg(e,c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsLevelAbove(7)
 end
 function c100236103.spcon2(e,tp,eg,ep,ev,re,r,rp)
