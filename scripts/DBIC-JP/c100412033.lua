@@ -65,7 +65,9 @@ function c100412033.rfop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100412033.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-ep,ev,false)
+	if ep==tp then
+		Duel.ChangeBattleDamage(1-ep,ev,false)
+	end
 end
 function c100412033.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
