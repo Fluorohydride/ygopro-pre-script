@@ -81,8 +81,13 @@ function c101008025.regcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101008025.regop(e,tp,eg,ep,ev,re,r,rp)
 	local lg=eg:Filter(c101008025.cfilter,nil,1-tp)
-	lg:KeepAlive()
-	e:SetLabelObject(lg)
+	local g=e:GetLabelObject()
+	if g==nil or #g==0 then
+		lg:KeepAlive()
+		e:SetLabelObject(lg)
+	else
+		g:Merge(lg)
+	end
 	Duel.RegisterFlagEffect(tp,101008125,RESET_CHAIN,0,1)
 end
 function c101008025.lpcon2(e,tp,eg,ep,ev,re,r,rp)
@@ -92,6 +97,10 @@ function c101008025.lpop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ResetFlagEffect(tp,101008125)
 	local lg=e:GetLabelObject():GetLabelObject()
 	local rnum=lg:GetSum(Card.GetAttack)
+	local g=Group.CreateGroup()
+	g:KeepAlive()
+	e:GetLabelObject():SetLabelObject(g)
+	lg:DeleteGroup()
 	if Duel.Recover(tp,rnum,REASON_EFFECT)<1 then return end
 	Duel.RegisterFlagEffect(tp,101008025,RESET_PHASE+PHASE_END,0,1)
 end
