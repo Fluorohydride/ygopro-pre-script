@@ -25,7 +25,7 @@ function c100412037.filter1(c)
 	return c:IsFaceup() and c:IsCode(100412032)
 end
 function c100412037.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToHand() and chkc:IsControler(1-tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToHand() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	local tg=1
 	if Duel.IsExistingMatchingCard(c100412037.filter1,tp,LOCATION_SZONE,0,1,nil) then

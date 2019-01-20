@@ -83,12 +83,12 @@ function c100308001.desop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local ct=Duel.GetMatchingGroupCount(c100308001.cfilter,tp,LOCATION_ONFIELD,0,nil)
 		if ct==0 then return end
+		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
 		Duel.HintSelection(g)
 		local oc=Duel.Destroy(g,REASON_EFFECT)
 		if oc==0 then return end
-		Duel.BreakEffect()
 		e:GetHandler():AddCounter(0x1,oc)
 	end
 end
@@ -98,7 +98,7 @@ function c100308001.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
 end
 function c100308001.thfilter(c)
-	return c:GetCounter(0x1)>0
+	return c:GetCounter(0x1)>0 and c:IsAbleToHand()
 end
 function c100308001.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100308001.thfilter,tp,LOCATION_ONFIELD,0,1,nil) end
@@ -106,12 +106,14 @@ function c100308001.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_ONFIELD)
 end
 function c100308001.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100308001.thfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	local tc=g:GetFirst()
+	if not tc then return end
 	local count=tc:GetCounter(0x1)
 	if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) and Duel.NegateActivation(ev)~=0
 		and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 then

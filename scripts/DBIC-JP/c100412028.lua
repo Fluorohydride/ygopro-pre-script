@@ -22,10 +22,10 @@ function c100412028.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e2:SetCountLimit(1,100412028)
-	e2:SetCost(c100412028.rmcost)
-	e2:SetCondition(c100412028.rmcon)
-	e2:SetTarget(c100412028.rmtg)
-	e2:SetOperation(c100412028.rmop)
+	e2:SetCost(c100412028.rmcost1)
+	e2:SetCondition(c100412028.rmcon1)
+	e2:SetTarget(c100412028.rmtg1)
+	e2:SetOperation(c100412028.rmop1)
 	c:RegisterEffect(e2)
 	--banish self
 	local e3=Effect.CreateEffect(c)
@@ -35,9 +35,9 @@ function c100412028.initial_effect(c)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCondition(c100412028.rmcon1)
-	e3:SetTarget(c100412028.rmtg1)
-	e3:SetOperation(c100412028.rmop1)
+	e3:SetCondition(c100412028.rmcon2)
+	e3:SetTarget(c100412028.rmtg2)
+	e3:SetOperation(c100412028.rmop2)
 	c:RegisterEffect(e3)
 end
 function c100412028.filter(c)
@@ -56,38 +56,43 @@ function c100412028.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-function c100412028.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100412028.rmcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	e:GetHandler():RegisterFlagEffect(100412028,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,1)
+	if Duel.GetCurrentPhase()==PHASE_STANDBY then
+		e:GetHandler():RegisterFlagEffect(100412028,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,2,Duel.GetTurnCount())
+	else
+		e:GetHandler():RegisterFlagEffect(100412028,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,1,0)
+	end
+end
+function c100412028.rmcon1(e,tp,eg,ep,ev,re,r,rp)
+	local eg=e:GetHandler():GetEquipGroup()
+	return eg and eg:GetCount()>0 and eg:IsExists(Card.IsCode,1,nil,100412032)
 end
 function c100412028.rmfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
-function c100412028.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	local eg=e:GetHandler():GetEquipGroup()
-	return eg and eg:GetCount()>0 and eg:IsExists(Card.IsCode,1,nil,100412032)
-end
-function c100412028.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c100412028.rmtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetControler()~=tp and chkc:GetLocation()==LOCATION_GRAVE and c100412028.rmfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100412028.rmfilter,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,c100412028.rmfilter,tp,0,LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
-function c100412028.rmop(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100412028.rmop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
-function c100412028.rmcon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(100412028)>0
+function c100412028.rmcon2(e,tp,eg,ep,ev,re,r,rp)
+	local tid=e:GetHandler():GetFlagEffectLabel(100412028)
+	return tid and tid~=Duel.GetTurnCount()
 end
-function c100412028.rmtg1(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100412028.rmtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
 end
-function c100412028.rmop1(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100412028.rmop2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then

@@ -21,6 +21,7 @@ function c100412027.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100412027)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e2:SetCost(c100412027.descost1)
 	e2:SetCondition(c100412027.descon1)
 	e2:SetTarget(c100412027.destg1)
 	e2:SetOperation(c100412027.desop1)
@@ -53,6 +54,14 @@ function c100412027.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+function c100412027.descost1(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	if Duel.GetCurrentPhase()==PHASE_STANDBY then
+		e:GetHandler():RegisterFlagEffect(100412027,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,2,Duel.GetTurnCount())
+	else
+		e:GetHandler():RegisterFlagEffect(100412027,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,1,0)
+	end
+end
 function c100412027.descon1(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipGroup():IsExists(Card.IsCode,1,nil,100412032)
 end
@@ -62,11 +71,6 @@ function c100412027.destg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsSummonType,tp,0,LOCATION_MZONE,1,1,nil,SUMMON_TYPE_SPECIAL)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	if Duel.GetCurrentPhase()==PHASE_STANDBY then
-		e:GetHandler():RegisterFlagEffect(100412027,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,2,Duel.GetTurnCount())
-	else
-		e:GetHandler():RegisterFlagEffect(100412027,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,1,0)
-	end
 end
 function c100412027.desop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

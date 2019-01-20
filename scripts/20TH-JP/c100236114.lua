@@ -27,7 +27,8 @@ function c100236114.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100236114.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	local a=Duel.GetAttacker()
+	return a:IsControler(1-tp)
 end
 function c100236114.filter(c,e,tp)
 	return c:IsCode(15610297) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -66,14 +67,14 @@ function c100236114.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c100236114.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100236114.filter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if not tc then return end
 	Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 	ft=ft-1
 	local i=0
 	while tc and i<2 and e:GetLabel()==1 and not Duel.IsPlayerAffectedByEffect(tp,59822133) and ft>0
-		and Duel.IsExistingMatchingCard(c100236114.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100236114.filter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(100236114,2)) do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		g=Duel.SelectMatchingCard(tp,c100236114.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
