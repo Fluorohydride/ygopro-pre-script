@@ -15,19 +15,19 @@ end
 function c100236109.filter(c)
 	return c:IsCode(38033121) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
-function c100236109.filter2(c)
+function c100236109.tgfilter(c)
 	return c:IsCode(46986414) and c:IsFaceup()
 end
 function c100236109.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsCode(46986414) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
-	if chk==0 then return Duel.IsExistingTarget(c100236109.filter2,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(c100236109.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100236109.tgfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100236109.tgfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c100236109.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c100236109.filter2,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c100236109.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c100236109.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and (not tc:IsImmuneToEffect(e)) then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local g=Duel.GetMatchingGroup(c100236109.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
 		local atk=g:GetSum(Card.GetAttack)
 		local e1=Effect.CreateEffect(e:GetHandler())

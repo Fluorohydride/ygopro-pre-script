@@ -32,7 +32,7 @@ function c100236117.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetRange(LOCATION_GRAVE)
-	e4:SetCountLimit(1,101555000)
+	e4:SetCountLimit(1,100236117+100)
 	e4:SetCost(aux.bfgcost)
 	e4:SetTarget(c100236117.thtg)
 	e4:SetOperation(c100236117.thop)
@@ -41,18 +41,18 @@ end
 function c100236117.filter(e,c)
 	return c:IsSetCard(0xe3)
 end
-function c100236117.disfilter(c)
+function c100236117.cfilter(c)
 	return c:IsSetCard(0xe3)
 end
 function c100236117.drawtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingMatchingCard(c100236117.disfilter,tp,LOCATION_HAND,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c100236117.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c100236117.drawop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.DiscardHand(tp,c100236117.disfilter,1,1,REASON_EFFECT) > 0 then
+	if Duel.DiscardHand(tp,c100236117.cfilter,1,1,REASON_EFFECT)>0 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
