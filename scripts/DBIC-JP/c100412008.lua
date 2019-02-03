@@ -1,4 +1,4 @@
--- 無限起動コロッサルマウンテン
+--無限起動コロッサルマウンテン
 --
 --Script by JoyJ
 function c100412008.initial_effect(c)
@@ -14,19 +14,18 @@ function c100412008.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCost(c100412008.atkcost)
 	e1:SetOperation(c100412008.atkop)
-	c:RegisterEffect(e1,false,1)
-	--attach
+	c:RegisterEffect(e1)
+	--Attach
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100412008,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
-	e2:SetCondition(aux.bdocon)
-	e2:SetTarget(c100412008.battletg)
-	e2:SetOperation(c100412008.battleop)
+	e2:SetCondition(c100412008.xyzcon)
+	e2:SetTarget(c100412008.xyztg)
+	e2:SetOperation(c100412008.xyzop)
 	c:RegisterEffect(e2)
-	--spsummon from gy
+	--SpecialSummon
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100412008,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
@@ -36,48 +35,46 @@ function c100412008.initial_effect(c)
 	e3:SetOperation(c100412008.spop)
 	c:RegisterEffect(e3)
 end
+function c100412008.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+end
 function c100412008.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
-function c100412008.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
-function c100412008.battleop(e,tp,eg,ep,ev,re,r,rp)
+function c100412008.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local tc=c:GetBattleTarget()
+	if not c:IsRelateToBattle() or c:IsFacedown() then return false end
+	e:SetLabelObject(tc)
+	return tc and tc:IsType(TYPE_MONSTER) and tc:IsReason(REASON_BATTLE)
+end
+function c100412008.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) end
 	local tc=e:GetLabelObject()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e) then
-		local og=tc:GetOverlayGroup()
-		if og:GetCount()>0 then
-			Duel.SendtoGrave(og,REASON_RULE)
-		end
+	Duel.SetTargetCard(tc)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tc,1,0,0)
+end
+function c100412008.xyzop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.Overlay(c,tc)
 	end
 end
-function c100412008.battletg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local bc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return bc:IsCanBeXyzMaterial(e:GetHandler()) end
-	bc:CreateEffectRelation(e)
-	e:SetLabelObject(bc)
-	if bc:IsLocation(LOCATION_GRAVE) then
-		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,bc,1,0,0)
-	end
-end
 function c100412008.cfilter(c,tp)
-	return c:IsType(TYPE_LINK) and c:IsRace(RACE_MACHINE) and Duel.GetLocationCount(tp,LOCATION_MZONE) > -1
+	return c:IsType(TYPE_LINK) and c:IsRace(RACE_MACHINE) and Duel.GetMZoneCount(tp,c)>0
 end
 function c100412008.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-		and Duel.CheckReleaseGroup(tp,c100412008.cfilter,1,nil,tp) end
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c100412008.cfilter,1,nil,tp) end
 	local g=Duel.SelectReleaseGroup(tp,c100412008.cfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
