@@ -17,8 +17,8 @@ function c101007089.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYED)
-	e2:SetCountLimit(1,1101007089)
-	e2:SetCondition(c101007089.spcond)
+	e2:SetCountLimit(1,101007089+100)
+	e2:SetCondition(c101007089.spcon)
 	e2:SetTarget(c101007089.sptg)
 	e2:SetOperation(c101007089.spop)
 	c:RegisterEffect(e2)
@@ -31,59 +31,52 @@ function c101007089.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local ct=Duel.GetMatchingGroupCount(c101007089.ctfilter,tp,LOCATION_MZONE,0,e:GetHandler())
 		if ct==0 or Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return false end
 		local g=Duel.GetDecktopGroup(tp,ct)
-		return g:FilterCount(Card.IsAbleToHand,nil) > 0
+		return g:FilterCount(Card.IsAbleToHand,nil)>0
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function c101007089.thfilter(c)
 	return (c:GetType()==TYPE_SPELL or c:GetType()==TYPE_TRAP) and c:IsAbleToHand()
 end
+function c101007089.thfilter0(c)
+	return (c:GetType()==TYPE_SPELL or c:GetType()==TYPE_TRAP)
+end
 function c101007089.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(c101007089.ctfilter,tp,LOCATION_MZONE,0,e:GetHandler())
 	if ct==0 then return end
-	ct = Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
-	local t={}
-	local l=1
-	while l<=ct do
-		t[l]=l
-		l=l+1
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101007089,2))
-	ct=Duel.AnnounceNumber(tp,table.unpack(t))
 	local g=Duel.GetDecktopGroup(tp,ct)
 	Duel.ConfirmDecktop(tp,ct)
-	g = g:Filter(c101007089.thfilter,nil)
-	if g:GetCount() > 0 then
+	g=g:Filter(c101007089.thfilter0,nil)
+	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
-			if tc:IsAbleToHand() then
-					Duel.DisableShuffleCheck()
-					Duel.SendtoHand(tc,nil,REASON_EFFECT)
-				Duel.ConfirmCards(1-tp,tc)
-				Duel.ShuffleHand(tp)
-			else
-				Duel.SendtoGrave(sg,REASON_RULE)
-			end
-		g:Remove(tc)
+		if tc:IsAbleToHand() then
+			Duel.SendtoHand(tc,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,tc)
+			Duel.ShuffleHand(tp)
+		else
+			Duel.SendtoGrave(tc,REASON_RULE)
+		end
+		g:RemoveCard(tc)
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 	end
 	Duel.ShuffleDeck(tp)
 end
-function c101007089.spfilter1(c,e,tp)
+function c101007089.spfilter(c,e,tp)
 	return c:IsSetCard(0x122) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c101007089.spcond(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
+function c101007089.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsLocation(LOCATION_GRAVE)
 end
 function c101007089.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c101007089.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c101007089.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101007089.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c101007089.spfilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c101007089.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

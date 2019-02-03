@@ -5,10 +5,11 @@ function c101007081.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101007081,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
+	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(c101007081.spcon)
 	e1:SetCost(c101007081.spcost)
 	e1:SetTarget(c101007081.sptg)
@@ -47,28 +48,28 @@ function c101007081.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
-function c101007081.rmfilter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0xd3) and c:IsAbleToRemove() and c:GetOwner()~=e:GetHandler():GetControler()
+function c101007081.rmfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(0xd3) and c:IsAbleToRemove() and c:GetOwner()==1-tp
+end
+function c101007081.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101007081.rmfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_MZONE)
 end
 function c101007081.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
-function c101007081.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101007081.rmfilter,tp,LOCATION_MZONE,0,1,nil,e) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_MZONE)
-end
 function c101007081.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c101007081.rmfilter,tp,LOCATION_MZONE,0,1,1,nil,e)
-	local tc = g:GetFirst()
-	if tc and Duel.Remove(rc,POS_FACEUP,REASON_EFFECT) > 0
-		and Duel.IsExistingMatchingCard(c101007081.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c101007081.rmfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	local tc=g:GetFirst()
+	if tc and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0
+		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101007081.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.SelectYesNo(tp,aux.Stringid(101007081,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101007081.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-		if g:GetCount() > 0 then Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) end
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c101007081.indval(e,c)
