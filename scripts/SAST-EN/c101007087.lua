@@ -25,15 +25,15 @@ function c101007087.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101007087.xyzfilter(c,tp)
-	if not (c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x200)) then return false end
-	return Duel.IsExistingMatchingCard(c101007087.matfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,c)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x229)
 end
-function c101007087.matfilter(c,sc)
-	return c:IsSetCard(0x200) and c:IsCanBeXyzMaterial(sc)
+function c101007087.matfilter(c)
+	return c:IsSetCard(0x229)
 end
 function c101007087.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101007087.xyzfilter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c101007087.xyzfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101007087.xyzfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101007087.xyzfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c101007087.matfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c101007087.xyzfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 end
@@ -41,28 +41,26 @@ function c101007087.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101007087,2))
-		local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,0x200)
+		local g=Duel.SelectMatchingCard(tp,c101007087.matfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,tc)
 		if g:GetCount()>0 then
 			Duel.Overlay(tc,g)
 		end
 	end
 end
-function c101007087.xyzfilter2(c,tp)
-	if not (c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x200)) then return false end
-	return Duel.IsExistingMatchingCard(Card.IsCanBeXyzMaterial,tp,0,LOCATION_GRAVE,1,nil,c)
-end
 function c101007087.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local c = e:GetHandler()
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101007087.xyzfilter2(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c101007087.xyzfilter2,tp,LOCATION_MZONE,0,1,nil,tp) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101007087.xyzfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101007087.xyzfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c101007087.xyzfilter2,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	Duel.SelectTarget(tp,c101007087.xyzfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 end
 function c101007087.matop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101007087,2))
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToChangeControler,tp,0,LOCATION_GRAVE,1,1,nil)
-		Duel.Overlay(tc,g)
+		local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_GRAVE,1,1,nil)
+		if g:GetCount()>0 then
+			Duel.Overlay(tc,g)
+		end
 	end
 end
