@@ -1,6 +1,6 @@
 --無限起動アースシェイカー
 --
---Script by JoyJ
+--Script by JoyJ and Justfish
 function c100412009.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()

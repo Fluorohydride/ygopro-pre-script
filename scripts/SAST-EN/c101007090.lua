@@ -1,5 +1,5 @@
 --Final Light
---Script by JoyJ
+--Script by JoyJ and mercury233
 function c101007090.initial_effect(c)
 	--activate
 	local e1 = Effect.CreateEffect(c)

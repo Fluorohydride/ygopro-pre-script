@@ -1,6 +1,6 @@
 --無限起動キャンサークレーン
 --
---Script by JoyJ
+--Script by JoyJ and mercury233
 function c100412003.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

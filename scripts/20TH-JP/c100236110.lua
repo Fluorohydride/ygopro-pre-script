@@ -1,6 +1,6 @@
 --スターダスト・ミラージュ
 --
---Script by JoyJ
+--Script by JoyJ and mercury233
 function c100236110.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,6 @@
 --無限起動コロッサルマウンテン
 --
---Script by JoyJ
+--Script by JoyJ and Justfish
 function c100412008.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()

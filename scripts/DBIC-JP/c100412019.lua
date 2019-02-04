@@ -1,6 +1,6 @@
 --ウィッチクラフトマスター・ヴェール
 --
---Script by JoyJ
+--Script by JoyJ and mercury233
 function c100412019.initial_effect(c)
 	--atk & def
 	local e1=Effect.CreateEffect(c)

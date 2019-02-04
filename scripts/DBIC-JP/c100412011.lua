@@ -1,6 +1,6 @@
 --無限起動要塞メガトンゲイル
 --
---Script by JoyJ
+--Script by JoyJ and mercury233
 function c100412011.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_XYZ),3,3)

@@ -1,5 +1,5 @@
 --Time Thief Redoer
---Script by JoyJ
+--Script by JoyJ and mercury233
 function c101007085.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,nil,4,2)
