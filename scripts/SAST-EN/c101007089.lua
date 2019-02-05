@@ -46,10 +46,10 @@ function c101007089.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct==0 then return end
 	local g=Duel.GetDecktopGroup(tp,ct)
 	Duel.ConfirmDecktop(tp,ct)
-	g=g:Filter(c101007089.thfilter0,nil)
-	if g:GetCount()>0 then
+	tg=g:Filter(c101007089.thfilter0,nil)
+	if tg:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local tc=g:Select(tp,1,1,nil):GetFirst()
+		local tc=tg:Select(tp,1,1,nil):GetFirst()
 		if tc:IsAbleToHand() then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,tc)
