@@ -34,6 +34,7 @@ function c100236103.initial_effect(c)
 	e3:SetOperation(c100236103.spop2)
 	c:RegisterEffect(e3)
 end
+c100236103.card_code_list={38033121}
 function c100236103.tfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_SPELLCASTER)
 end

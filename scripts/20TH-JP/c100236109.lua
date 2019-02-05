@@ -12,6 +12,7 @@ function c100236109.initial_effect(c)
 	e1:SetOperation(c100236109.activate)
 	c:RegisterEffect(e1)
 end
+c100236109.card_code_list={46986414,38033121}
 function c100236109.filter(c)
 	return c:IsCode(38033121) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
