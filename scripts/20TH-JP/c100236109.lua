@@ -9,7 +9,7 @@ function c100236109.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100236109+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100236109.target)
-	e1:SetOperation(c100236109.activate)
+	e1:SetOperation(c100236109.operation)
 	c:RegisterEffect(e1)
 end
 c100236109.card_code_list={46986414,38033121}
