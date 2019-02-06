@@ -30,21 +30,20 @@ function c101007083.matcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
-function c101007083.matfilter(c,tp)
+function c101007083.matfilter(c)
 	return c:IsSetCard(0x229) and c:IsType(TYPE_XYZ) and c:IsFaceup()
-		and Duel.IsExistingMatchingCard(Card.IsCanBeXyzMaterial,tp,0,LOCATION_GRAVE,1,nil,c)
 end
 function c101007083.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return c101007083.matfilter(c,tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
-	if chk==0 then return Duel.IsExistingTarget(c101007083.matfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
+	if chkc then return c101007083.matfilter(c) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
+	if chk==0 then return Duel.IsExistingTarget(c101007083.matfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c101007083.matfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	Duel.SelectTarget(tp,c101007083.matfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c101007083.matop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsType(TYPE_XYZ) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local g=Duel.SelectMatchingCard(tp,Card.IsCanBeXyzMaterial,tp,0,LOCATION_GRAVE,1,1,nil,tc)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(aux.TRUE),tp,0,LOCATION_GRAVE,1,1,nil)
 		Duel.Overlay(tc,g)
 	end
 end
