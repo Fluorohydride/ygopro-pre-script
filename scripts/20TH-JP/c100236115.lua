@@ -38,7 +38,8 @@ function c100236115.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x23) and c:IsAbleToHand() and not c:IsCode(100236115)
 end
 function c100236115.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100236115.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
+		and Duel.IsExistingMatchingCard(c100236115.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end

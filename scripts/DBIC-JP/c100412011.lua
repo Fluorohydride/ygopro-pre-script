@@ -52,7 +52,7 @@ function c100412011.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100412011,1))
 	local g2=Duel.SelectMatchingCard(tp,c100412011.matfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
-	g2:AddCard(g:GetFirst())
+	g2:Merge(g)
 	Duel.SetTargetCard(g2)
 end
 function c100412011.spop(e,tp,eg,ep,ev,re,r,rp)
