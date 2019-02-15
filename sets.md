@@ -8,6 +8,7 @@
 # Announced
 
 # Archived
+## Other packs
 - Yu-Gi-Oh! The Dark Side of Dimensions promotional cards (MVPC-JP) : `100201XXX`
 - Yu-Gi-Oh! The Dark Side of Dimensions Duel Set (MVPL-JP) : `100202XXX`
 - Duelist Festival 2016 - Promotion Pack (DF16-JP) : `100203XXX`
@@ -39,6 +40,8 @@
 - Yu-Gi-Oh! Duel Monsters Anime Complete Guide: Millennium Memory promotional card (AGMM-JP) : `100299001`
 - Promotion Pack 2017 (17PR-JP) : `100230XXX`
 - Jump Victory Carnival 2017 (VF17-JP) : `100230XXX`
+- Extra Pack 2017 (EP17-JP) : `100420XXX` ~~Should have been `1002XXXXX`~~
+- Extra Pack 2018 (EP18-JP) : `100421XXX` ~~Should have been `1002XXXXX`~~
 - Promotion Pack (18PR-JP) : `100231XXX`
 - Jump Victory Carnival 2018 (VF18-JP) : `100232XXX`
 - Arc-V Volume 6 (YA06-JP) : `100233XXX`
@@ -55,7 +58,7 @@
 - 2018 Mega-Tins (CT15-EN) : `100244XXX`
 - Tournament Pack 2019 (19TP-JP) : `100245XXX`
 
-
+## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
 - Structure Deck: Seto Kaiba (SDKS-JP) : `100302XXX`
 - Structure Deck R: Revival of the Great Divine Dragon (SR02-JP) : `100302XXX`
@@ -64,38 +67,31 @@
 - Structure Deck R: Surge of Divine Light (SR05-JP) : `100305XXX`
 - Structure Deck R: Curse of the Dark (SR06-JP) : `100306XXX`
 - Structure Deck R: Undead World (SR07-JP) : `100307XXX`
-
-
+-----
 - Starter Deck 2016 (ST16-JP) : `100316XXX`
 - Starter Deck 2017 (ST17-JP) : `100317XXX`
 - Starter Deck 2018 (ST18-JP) : `100318XXX`
-
-
+-----
 - Structure Deck: Pendulum Evolution (SD31-JP) : `100331XXX`
 - Structure Deck: Cyverse Link (SD32-JP) : `100332XXX`
 - Structure Deck: Powercode Link (SD33-JP) : `100333XXX`
 - Structure Deck: Master Link (SD34-JP) : `100334XXX`
 - Structure Deck: Soulburner (SD35-JP) : `100335XXX`
 
-
+## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
 - Booster SP: Fusion Enforcers (SPFE-JP) : `100406XXX`
-- Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX`
+- Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX` ~~Should have been `100407XXX`~~
 - Deck Build Pack: Dark Savers (DBDS-JP) : `100408XXX`
 - Deck Build Pack: Hidden Summoners (DBHS-JP) : `100410XXX`
-
-
+-----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
-- Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX`
-- Duelist Pack: Legend Duelist 3 (DP20-JP) : `100409XXX`
-- Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX`
+- Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX` ~~Should have been `100419XXX`~~
+- Duelist Pack: Legend Duelist 3 (DP20-JP) : `100409XXX` ~~Should have been `100420XXX`~~
+- Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX` ~~Should have been `100421XXX`~~
 
-
-- Extra Pack 2017 (EP17-JP) : `100420XXX`
-- Extra Pack 2018 (EP18-JP) : `100421XXX`
-
-
+## Booster packs
 - THE DARK ILLUSION (TDIL-JP) : `100909XXX`
 - INVASION OF VENOM (INOV-JP) : `100910XXX`
 - RAGING TEMPEST (RATE-JP) : `100911XXX`
