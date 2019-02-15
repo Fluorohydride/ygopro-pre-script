@@ -8,95 +8,103 @@
 # Announced
 
 # Archived
-- ~~Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`~~
-- ~~Yu-Gi-Oh! The Dark Side of Dimensions Duel Set (MVPL-JP) : `100202XXX`~~
-- ~~Yu-Gi-Oh! The Dark Side of Dimensions promotional cards (MVPC-JP) : `100201XXX`~~
-- ~~Yu-Gi-Oh! The Dark Side of Dimensions Movie Pack (MVP1-JP) : `100207XXX`~~
-- ~~Duelist Festival 2016 - Promotion Pack (DF16-JP) : `100203XXX`~~
-- ~~Yu-Gi-Oh! ARC-V Volume 1 promotional card (YA01-JP) : `100205XXX`~~
-- ~~Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`~~
-- ~~Structure Deck: Seto Kaiba (SDKS-JP) : `100302XXX`~~
-- ~~Structure Deck R: Revival of the Great Divine Dragon (SR02-JP) : `100302XXX`~~
-- ~~Starter Deck 2016 (ST16-JP) : `100316XXX`~~
-- ~~Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`~~
-- ~~THE DARK ILLUSION (TDIL-JP) : `100909XXX`~~
-- ~~Yu-Gi-Oh! Duel Monsters Anime Complete Guide: Millennium Memory promotional card (AGMM-JP) : `100299001`~~
-- ~~INVASION OF VENOM (INOV-JP) : `100910XXX`~~
-- ~~20th Rival Collection (VP16-JP) : `100208XXX`~~
-- ~~Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 1 promotional card (YS01-JP) : `100210XXX`~~
-- ~~Jump Victory Carnival 2016 (VF16-JP) : `100209XXX`~~
-- ~~The Dark Illusion (TDIL-EN) : `100909XXX`~~
-- ~~Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`~~
-- ~~Structure Deck R: Machine Dragon Re-Volt (SR03-JP) : `100303XXX`~~
-- ~~Yu-Gi-Oh! ARC-V Volume 2 promotional card (YA02-JP) : `100211XXX`~~
-- ~~RAGING TEMPEST (RATE-JP) : `100911XXX`~~
-- ~~Invasion: Vengeance (INOV-EN) : `100910XXX`~~
-- ~~Booster SP: Fusion Enforcers (SPFE-JP) : `100406XXX`~~
-- ~~Dimension Box Limited Edition (DBLE-JP) : `100212XXX`~~
-- ~~20th Anniversary Pack 1st Wave (20AP-JP) : `100213XXX`~~
-- ~~Premium Pack 19 (PP19-JP) : `100214XXX`~~
-- ~~Structure Deck: Pendulum Evolution (SD31-JP) : `100331XXX`~~
-- ~~Maximum Crisis (MACR-JP) : `100912XXX`~~
-- ~~RAGING TEMPEST (RATE-EN) : `100911XXX`~~
-- ~~20th Anniversary Pack 2nd Wave (20AP-JP) : `100213XXX`~~
-- ~~The Valuable Book 19 (VB19-JP) : `100215XXX`~~
-- ~~Structure Deck R: Tyranno's Rage (SR04-JP) : `100304XXX`~~
-- ~~Perfect Rulebook 2017 (RB04-JP) : `100216XXX`~~
-- ~~Starter Deck 2017 (ST17-JP) : `100317XXX`~~
-- ~~Yu-Gi-Oh! ARC-V Volume 3 promotional card (YA03-JP) : `100218XXX`~~
-- ~~Master Guide 5 promotional cards (MG05-JP) : `100219XXX`~~
-- ~~Code of the Duelist (COTD-JP) : `101001XXX`~~
-- ~~MAXIMUM CRISIS (MACR-EN) : `100912XXX`~~
-- ~~Collectors Pack 2017 (CP17-JP) : `100217XXX`~~
-- ~~Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`~~
-- ~~Structure Deck: Cyverse Link (SD32-JP) : `100332XXX`~~
-- ~~Circuit Break (CIBR-JP) : `101002XXX`~~
-- ~~Jump Victory Carnival 2017 (VF17-JP) : `100230XXX`~~
-- ~~Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX`~~
-- ~~Code of the Duelist (COTD-EN) : `101001XXX`~~
-- ~~EXTRA PACK 2017 (EP17-JP) : `100420XXX`~~
-- ~~Link Monster GET!! Campaign (17CC-JP) : `100220XXX`~~
-- ~~Structure Deck R: Surge of Divine Light (SR05-JP) : `100305XXX`~~
-- ~~Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 2 promotional card (YS02-JP) : `100221XXX`~~
-- ~~Yu-Gi-Oh! ARC-V Volume 4 promotional card (YA04-JP) : `100222XXX`~~
-- ~~Legendary Dragon Decks (LEDD-EN) : `100240XXX`~~
-- ~~Promotion Pack 2017 (17PR-JP) : `100230XXX`~~
-- ~~Circuit Break (CIBR-EN) : `101002XXX`~~
-- ~~EXTREME FORCE (EXFO-JP) : `101003XXX`~~
-- ~~Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX`~~
-- ~~LINK VRAINS Pack (LVP1-JP) : `100223XXX`~~
-- ~~Structure Deck: Powercode Link (SD33-JP) : `100333XXX`~~
-- ~~PREMIUM PACK 20 (PP20-JP) : `100224XXX`~~
-- ~~LINK VRAINS Box (LVB1-JP) : `100225XXX`~~
-- ~~FLAMES OF DESTRUCTION (FLOD-JP) : `101004XXX`~~
-- ~~The Valuable Book 20 (VB20-JP) : `100226XXX`~~
-- ~~Deck Build Pack: Dark Savers (DBDS-JP) : `100408XXX`~~
-- ~~Legendary Collection Kaiba (LC06-EN) : `100241XXX`~~
-- ~~Structure Deck R: Curse of the Dark (SR06-JP) : `100306XXX`~~
-- ~~Starter Deck 2018 (ST18-JP) : `100318XXX`~~
-- ~~Special Pack 20th Anniversary Edition Vol.1 (18SP-JP) : `100242XXX`~~
-- ~~Cybernetic Horizon (CYHO-JP) : `101005XXX`~~
-- ~~Collectors Pack 2018 (CP18-JP) : `100227XXX`~~
-- ~~20th Anniversary Legendary Dragons (VP18-JP) : `100228XXX`~~
-- ~~Promotion Pack (18PR-JP) : `100231XXX`~~
-- ~~Duelist Pack: Legend Duelist 3 (DP20-JP) : `100409XXX`~~
-- ~~Structure Deck: Master Link (SD34-JP) : `100334XXX`~~
-- ~~Soul Fusion (SOFU-JP) : `101006XXX`~~
-- ~~Jump Victory Carnival 2018 (VF18-JP) : `100232XXX`~~
-- ~~Deck Build Pack: Hidden Summoners (DBHS-JP) : `100410XXX`~~
-- ~~Shadows in Valhalla (SHVA-EN) : `100243XXX`~~
-- ~~2018 Mega-Tins (CT15-EN) : `100244XXX`~~
-- ~~Extra Pack 2018 (EP18-JP) : `100421XXX`~~
-- ~~Structure Deck R: Undead World (SR07-JP) : `100307XXX`~~
-- ~~Arc-V Volume 6 (YA06-JP) : `100233XXX`~~
-- ~~SAVAGE STRIKE (SAST-JP) : `101007XXX`~~
-- ~~Legendary Hero Decks (LEHD-EN) : `100234XXX`~~
-- ~~Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX`~~
-- ~~Yu-Gi-Oh! Chips (YCPC-JP) : `100237XXX`~~
-- ~~LINK VRAINS PACK 2 (LVP2-JP) : `100235XXX`~~
-- ~~Structure Deck: Soulburner (SD35-JP) : `100335XXX`~~
-- ~~ANNIVERSARY DUELIST BOX (20TH-JPB) : `100236XXX`~~
-- ~~Jump Festa Limited Pack 2019 (JF19-JP) : `100239XXX`~~
-- ~~Premium Pack 2019 (19PP-JP) : `100238XXX`~~
-- ~~Tournament Pack 2019 (19TP-JP) : `100245XXX`~~
-- ~~DARK NEOSTORM (DANE-JP) : `101008XXX`~~
+- Yu-Gi-Oh! The Dark Side of Dimensions promotional cards (MVPC-JP) : `100201XXX`
+- Yu-Gi-Oh! The Dark Side of Dimensions Duel Set (MVPL-JP) : `100202XXX`
+- Duelist Festival 2016 - Promotion Pack (DF16-JP) : `100203XXX`
+- Yu-Gi-Oh! ARC-V Volume 1 promotional card (YA01-JP) : `100205XXX`
+- Collectors Pack: Duelist of Flash Version (CPF1-JP) : `100206XXX`
+- Yu-Gi-Oh! The Dark Side of Dimensions Movie Pack (MVP1-JP) : `100207XXX`
+- 20th Rival Collection (VP16-JP) : `100208XXX`
+- Jump Victory Carnival 2016 (VF16-JP) : `100209XXX`
+- Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 1 promotional card (YS01-JP) : `100210XXX`
+- Yu-Gi-Oh! ARC-V Volume 2 promotional card (YA02-JP) : `100211XXX`
+- Dimension Box Limited Edition (DBLE-JP) : `100212XXX`
+- 20th Anniversary Pack 1st Wave (20AP-JP) : `100213XXX`
+- 20th Anniversary Pack 2nd Wave (20AP-JP) : `100213XXX`
+- Premium Pack 19 (PP19-JP) : `100214XXX`
+- The Valuable Book 19 (VB19-JP) : `100215XXX`
+- Perfect Rulebook 2017 (RB04-JP) : `100216XXX`
+- Collectors Pack 2017 (CP17-JP) : `100217XXX`
+- Yu-Gi-Oh! ARC-V Volume 3 promotional card (YA03-JP) : `100218XXX`
+- Master Guide 5 promotional cards (MG05-JP) : `100219XXX`
+- Link Monster GET!! Campaign (17CC-JP) : `100220XXX`
+- Yu-Gi-Oh! ARC-V The Strongest Duelist Yuya!! Volume 2 promotional card (YS02-JP) : `100221XXX`
+- Yu-Gi-Oh! ARC-V Volume 4 promotional card (YA04-JP) : `100222XXX`
+- LINK VRAINS Pack (LVP1-JP) : `100223XXX`
+- PREMIUM PACK 20 (PP20-JP) : `100224XXX`
+- LINK VRAINS Box (LVB1-JP) : `100225XXX`
+- The Valuable Book 20 (VB20-JP) : `100226XXX`
+- Collectors Pack 2018 (CP18-JP) : `100227XXX`
+- 20th Anniversary Legendary Dragons (VP18-JP) : `100228XXX`
+- Yu-Gi-Oh! Duel Monsters Anime Complete Guide: Millennium Memory promotional card (AGMM-JP) : `100299001`
+- Promotion Pack 2017 (17PR-JP) : `100230XXX`
+- Jump Victory Carnival 2017 (VF17-JP) : `100230XXX`
+- Promotion Pack (18PR-JP) : `100231XXX`
+- Jump Victory Carnival 2018 (VF18-JP) : `100232XXX`
+- Arc-V Volume 6 (YA06-JP) : `100233XXX`
+- Legendary Hero Decks (LEHD-EN) : `100234XXX`
+- LINK VRAINS PACK 2 (LVP2-JP) : `100235XXX`
+- ANNIVERSARY DUELIST BOX (20TH-JPB) : `100236XXX`
+- Yu-Gi-Oh! Chips (YCPC-JP) : `100237XXX`
+- Premium Pack 2019 (19PP-JP) : `100238XXX`
+- Jump Festa Limited Pack 2019 (JF19-JP) : `100239XXX`
+- Legendary Dragon Decks (LEDD-EN) : `100240XXX`
+- Legendary Collection Kaiba (LC06-EN) : `100241XXX`
+- Special Pack 20th Anniversary Edition Vol.1 (18SP-JP) : `100242XXX`
+- Shadows in Valhalla (SHVA-EN) : `100243XXX`
+- 2018 Mega-Tins (CT15-EN) : `100244XXX`
+- Tournament Pack 2019 (19TP-JP) : `100245XXX`
+
+
+- Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
+- Structure Deck: Seto Kaiba (SDKS-JP) : `100302XXX`
+- Structure Deck R: Revival of the Great Divine Dragon (SR02-JP) : `100302XXX`
+- Structure Deck R: Machine Dragon Re-Volt (SR03-JP) : `100303XXX`
+- Structure Deck R: Tyranno's Rage (SR04-JP) : `100304XXX`
+- Structure Deck R: Surge of Divine Light (SR05-JP) : `100305XXX`
+- Structure Deck R: Curse of the Dark (SR06-JP) : `100306XXX`
+- Structure Deck R: Undead World (SR07-JP) : `100307XXX`
+
+
+- Starter Deck 2016 (ST16-JP) : `100316XXX`
+- Starter Deck 2017 (ST17-JP) : `100317XXX`
+- Starter Deck 2018 (ST18-JP) : `100318XXX`
+
+
+- Structure Deck: Pendulum Evolution (SD31-JP) : `100331XXX`
+- Structure Deck: Cyverse Link (SD32-JP) : `100332XXX`
+- Structure Deck: Powercode Link (SD33-JP) : `100333XXX`
+- Structure Deck: Master Link (SD34-JP) : `100334XXX`
+- Structure Deck: Soulburner (SD35-JP) : `100335XXX`
+
+
+- Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
+- Booster SP: Fusion Enforcers (SPFE-JP) : `100406XXX`
+- Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX`
+- Deck Build Pack: Dark Savers (DBDS-JP) : `100408XXX`
+- Deck Build Pack: Hidden Summoners (DBHS-JP) : `100410XXX`
+
+
+- Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
+- Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
+- Duelist Pack: Legend Duelist 2 (DP19-JP) : `100407XXX`
+- Duelist Pack: Legend Duelist 3 (DP20-JP) : `100409XXX`
+- Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX`
+
+
+- Extra Pack 2017 (EP17-JP) : `100420XXX`
+- Extra Pack 2018 (EP18-JP) : `100421XXX`
+
+
+- THE DARK ILLUSION (TDIL-JP) : `100909XXX`
+- INVASION OF VENOM (INOV-JP) : `100910XXX`
+- RAGING TEMPEST (RATE-JP) : `100911XXX`
+- MAXIMUM CRISIS (MACR-JP) : `100912XXX`
+- Code of the Duelist (COTD-JP) : `101001XXX`
+- Circuit Break (CIBR-JP) : `101002XXX`
+- EXTREME FORCE (EXFO-JP) : `101003XXX`
+- FLAMES OF DESTRUCTION (FLOD-JP) : `101004XXX`
+- Cybernetic Horizon (CYHO-JP) : `101005XXX`
+- Soul Fusion (SOFU-JP) : `101006XXX`
+- SAVAGE STRIKE (SAST-JP) : `101007XXX`
+- DARK NEOSTORM (DANE-JP) : `101008XXX`
