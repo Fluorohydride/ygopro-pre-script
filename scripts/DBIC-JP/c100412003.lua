@@ -54,7 +54,7 @@ function c100412003.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100412003.thfilter(c)
-	return c:IsAbleToHand() and c:IsCode(100412999)
+	return c:IsAbleToHand() and c:IsCode(100412012)
 end
 function c100412003.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100412003.thfilter,tp,LOCATION_DECK,0,1,nil) end
