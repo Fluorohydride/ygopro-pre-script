@@ -50,7 +50,7 @@ function c100412002.lvfilter(c)
 end
 function c100412002.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100412002.lvfilter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc~=c and chkc:IsLocation(LOCATION_MZONE) and c100412002.lvfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100412002.lvfilter,tp,LOCATION_MZONE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100412002.lvfilter,tp,LOCATION_MZONE,0,1,1,c)
