@@ -31,14 +31,23 @@ end
 function c100412016.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
-function c100412016.costfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
+function c100412016.costfilter(c,tp)
+	if c:IsLocation(LOCATION_HAND) then return c:IsType(TYPE_SPELL) and c:IsDiscardable() end
+	return c:IsFaceup() and c:IsAbleToGraveAsCost() and (c:IsHasEffect(100412024) or c:IsHasEffect(100412025))
 end
 function c100412016.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100412016.costfilter,tp,LOCATION_HAND,0,1,nil)
-		and e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-	Duel.DiscardHand(tp,c100412016.costfilter,1,1,REASON_COST+REASON_DISCARD,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100412016.costfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,1,nil,tp) end
+	local g=Duel.GetMatchingGroup(c100412016.costfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,nil,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local tc=g:Select(tp,1,1,nil):GetFirst()
+	if tc:IsLocation(LOCATION_SZONE) then
+		Duel.RegisterFlagEffect(tp,tc:GetCode(),RESET_PHASE+PHASE_END,0,1)
+		Duel.Release(e:GetHandler(),REASON_COST)
+		Duel.SendtoGrave(tc,REASON_COST)
+	else 
+		Duel.Release(e:GetHandler(),REASON_COST)
+		Duel.SendtoGrave(tc,REASON_COST+REASON_DISCARD)
+	end
 end
 function c100412016.spfilter(c,e,tp)
 	return c:IsSetCard(0x228) and not c:IsCode(100412016) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
