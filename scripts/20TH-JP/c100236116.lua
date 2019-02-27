@@ -1,5 +1,5 @@
 --Sin Territory
-
+--
 --Script by nekrozar
 function c100236116.initial_effect(c)
 	--Activate
