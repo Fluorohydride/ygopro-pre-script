@@ -85,7 +85,8 @@ function c100308003.spfilter(c,e,tp)
 end
 function c100308003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>=2 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
+	if chk==0 then return Duel.GetLocationCountFromEx(tp)>=1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=1
+		and Duel.GetUsableMZoneCount(tp)>=2 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCanAddCounter(0x1,1,false,LOCATION_MZONE)
 		and Duel.IsExistingMatchingCard(c100308003.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_EXTRA+LOCATION_PZONE)
@@ -93,12 +94,15 @@ end
 function c100308003.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
+	if Duel.GetLocationCountFromEx(tp)<1 or Duel.GetLocationCount(tp,LOCATION_MZONE)<1
+		or Duel.GetUsableMZoneCount(tp)<1 or Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100308003.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
+		Duel.SpecialSummonStep(g:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummonComplete()
 		g:AddCard(c)
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		for tc in aux.Next(g) do
 			tc:AddCounter(0x1,1)
 		end
