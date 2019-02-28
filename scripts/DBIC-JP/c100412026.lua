@@ -96,7 +96,7 @@ function c100412026.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg1=Group.CreateGroup()
 	if lv>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local rg2=cg:Select(tp,lv-1,lv-1,c)
+		local rg2=cg:Select(tp,lv,lv,c)
 		rg1:Merge(rg2)
 	end
 	rg1:AddCard(c)
