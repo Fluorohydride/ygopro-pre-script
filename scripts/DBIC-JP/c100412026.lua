@@ -44,13 +44,13 @@ function c100412026.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100412026.filter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(c100412026.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100412026,0))
-	Duel.SelectTarget(tp,c100412026.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SelectTarget(tp,c100412026.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100412026.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,c100412026.filter2,tp,LOCATION_DECK,0,1,1,nil,tc:GetOriginalCode())
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,c100412026.filter2,tp,LOCATION_DECK,0,1,1,nil,tc:GetOriginalCode())
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
