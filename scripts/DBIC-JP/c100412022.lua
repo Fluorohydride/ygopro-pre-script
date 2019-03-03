@@ -36,7 +36,7 @@ function c100412022.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(c100412022.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c100412022.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c100412022.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

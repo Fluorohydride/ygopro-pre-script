@@ -45,6 +45,9 @@ function c100412023.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end
+function c100412023.rccfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x228)
+end
 function c100412023.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 		and Duel.IsExistingMatchingCard(c100412023.rccfilter,tp,LOCATION_MZONE,0,1,nil)

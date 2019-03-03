@@ -49,6 +49,8 @@ function c100412019.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local sg=g:SelectSubGroup(tp,c100412019.check,false,1,#g)
 	if not sg then return end
+	Duel.ConfirmCards(1-tp,sg)
+	Duel.ShuffleHand(tp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
