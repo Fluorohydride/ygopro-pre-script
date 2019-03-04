@@ -112,6 +112,7 @@ function c100412026.spop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100412026.sfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,lv)
-	local tc=g:GetFirst()
-	Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	end
 end

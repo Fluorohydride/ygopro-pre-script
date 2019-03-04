@@ -51,7 +51,7 @@ function c40732515.spop(e,tp,eg,ep,ev,re,r,rp,c)
 		tc=g:GetFirst()
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(40732515,2))
-		tc=g:Select(tp,1,1,nil)
+		tc=g:Select(tp,1,1,nil):GetFirst()
 	end
 	tc:RemoveCounter(tp,0x1,6,REASON_RULE)
 end
