@@ -29,7 +29,7 @@ function c55343236.initial_effect(c)
 	c:RegisterEffect(e8)
 end
 function c55343236.uqfilter(c)
-	if Duel.IsPlayerAffectedByEffect(c:GetControler(),100236116) then
+	if Duel.IsPlayerAffectedByEffect(c:GetControler(),75223115) then
 		return c:IsCode(55343236)
 	else
 		return c:IsSetCard(0x23)
@@ -39,27 +39,27 @@ function c55343236.spfilter(c)
 	return c:IsCode(74677422) and c:IsAbleToRemoveAsCost()
 end
 function c55343236.spfilter2(c,tp)
-	return c:IsHasEffect(100236115) and c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0
+	return c:IsHasEffect(48829461) and c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function c55343236.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c55343236.spfilter,tp,LOCATION_DECK,0,1,nil)
-	local b2=Duel.GetFlagEffect(tp,100236115)==0
+	local b2=Duel.GetFlagEffect(tp,48829461)==0
 		and Duel.IsExistingMatchingCard(c55343236.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp)
 	return b1 or b2
 end
 function c55343236.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c55343236.spfilter,tp,LOCATION_DECK,0,1,nil)
-	local b2=Duel.GetFlagEffect(tp,100236115)==0
+	local b2=Duel.GetFlagEffect(tp,48829461)==0
 		and Duel.IsExistingMatchingCard(c55343236.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp)
-	if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(100236115,0))) then
+	if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(48829461,0))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local tg=Duel.SelectMatchingCard(tp,c55343236.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 		Duel.Remove(tg,POS_FACEUP,REASON_COST)
-		Duel.RegisterFlagEffect(tp,100236115,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,48829461,RESET_PHASE+PHASE_END,0,1)
 	else
 		local tc=Duel.GetFirstMatchingCard(c55343236.spfilter,tp,LOCATION_DECK,0,nil)
 		Duel.Remove(tc,POS_FACEUP,REASON_COST)

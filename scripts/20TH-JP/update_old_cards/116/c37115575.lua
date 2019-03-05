@@ -42,7 +42,7 @@ function c37115575.initial_effect(c)
 	c:RegisterEffect(e9)
 end
 function c37115575.uqfilter(c)
-	if Duel.IsPlayerAffectedByEffect(c:GetControler(),100236116) then
+	if Duel.IsPlayerAffectedByEffect(c:GetControler(),75223115) then
 		return c:IsCode(37115575)
 	else
 		return c:IsSetCard(0x23)
