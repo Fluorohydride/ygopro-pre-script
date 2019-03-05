@@ -29,7 +29,7 @@ function c35645105.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c35645105.thfilter(c)
-	return c:IsSetCard(0x127) and c:IsAbleToHand() and not c:IsCode(35645105)
+	return c:IsSetCard(0x127) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(35645105)
 end
 function c35645105.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c35645105.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -40,6 +40,7 @@ function c35645105.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c35645105.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function c35645105.lvfilter(c)
@@ -55,7 +56,7 @@ end
 function c35645105.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+	if c:IsFaceup() and c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local lv=c:GetOriginalLevel()+tc:GetOriginalLevel()
 		c35645105.setlv(c,c,lv)
 		c35645105.setlv(c,tc,lv)

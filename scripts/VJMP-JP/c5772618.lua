@@ -97,12 +97,12 @@ function c5772618.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c5772618.thfilter(c)
-	return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
-end
 function c5772618.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp==1-tp and c:GetPreviousControler()==tp
+end
+function c5772618.thfilter(c)
+	return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c5772618.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c5772618.thfilter,tp,LOCATION_DECK,0,1,nil) end

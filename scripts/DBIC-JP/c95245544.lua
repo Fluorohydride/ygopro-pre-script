@@ -18,7 +18,7 @@ function c95245544.initial_effect(c)
 	c:RegisterEffect(e1)
 	--draw
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetCategory(CATEGORY_DRAW+CATEGORY_REMOVE+CATEGORY_HANDES)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,95245545)
@@ -44,7 +44,7 @@ function c95245544.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		te:UseCountLimit(tp)
 		Duel.Release(e:GetHandler(),REASON_COST)
 		Duel.SendtoGrave(tc,REASON_COST)
-	else 
+	else
 		Duel.Release(e:GetHandler(),REASON_COST)
 		Duel.SendtoGrave(tc,REASON_COST+REASON_DISCARD)
 	end

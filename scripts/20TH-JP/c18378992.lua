@@ -24,10 +24,7 @@ function c18378992.costcheck(g,tp)
 	local code1=g:GetFirst():GetCode()
 	local code2=g:GetNext():GetCode()
 	local tg=Duel.GetMatchingGroup(c18378992.thfilter,tp,LOCATION_DECK,0,nil,code1,code2)
-	return tg:CheckSubGroup(c18378992.targetcheck,2,2)
-end
-function c18378992.targetcheck(g)
-	return g:GetClassCount(Card.GetCode)==#g
+	return tg:CheckSubGroup(aux.dncheck,2,2)
 end
 function c18378992.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -54,7 +51,7 @@ function c18378992.operation(e,tp,eg,ep,ev,re,r,rp)
 	local code2=g:GetNext():GetCode()
 	local tg=Duel.GetMatchingGroup(c18378992.thfilter,tp,LOCATION_DECK,0,nil,code1,code2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local sg=tg:SelectSubGroup(tp,c18378992.targetcheck,false,2,2)
+	local sg=tg:SelectSubGroup(tp,aux.dncheck,false,2,2)
 	if sg then
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)

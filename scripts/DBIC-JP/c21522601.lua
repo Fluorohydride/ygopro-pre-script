@@ -39,15 +39,12 @@ end
 function c21522601.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c21522601.cfilter,tp,LOCATION_HAND,0,1,nil) end
 end
-function c21522601.check(g)
-	return g:GetClassCount(Card.GetCode)==#g
-end
 function c21522601.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	local g=Duel.GetMatchingGroup(c21522601.cfilter,tp,LOCATION_HAND,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local sg=g:SelectSubGroup(tp,c21522601.check,false,1,#g)
+	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,#g)
 	if not sg then return end
 	Duel.ConfirmCards(1-tp,sg)
 	Duel.ShuffleHand(tp)
@@ -75,7 +72,7 @@ function c21522601.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 		te:UseCountLimit(tp)
 		Duel.RegisterFlagEffect(tp,tc:GetCode(),RESET_PHASE+PHASE_END,0,1)
 		Duel.SendtoGrave(tc,REASON_COST)
-	else 
+	else
 		Duel.SendtoGrave(tc,REASON_COST+REASON_DISCARD)
 	end
 end

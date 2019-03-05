@@ -7,6 +7,7 @@ function c56894757.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,56894757)
 	e1:SetTarget(c56894757.target)
 	e1:SetOperation(c56894757.activate)
@@ -58,7 +59,7 @@ function c56894757.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c56894757.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end
 end

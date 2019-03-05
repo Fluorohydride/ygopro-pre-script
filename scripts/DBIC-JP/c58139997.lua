@@ -41,13 +41,9 @@ function c58139997.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if te then
 		te:UseCountLimit(tp)
 		Duel.SendtoGrave(tc,REASON_COST)
-	else 
+	else
 		Duel.SendtoGrave(tc,REASON_COST+REASON_DISCARD)
 	end
-end
-function c58139997.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c58139997.spfilter(c,e,tp)
 	return c:IsSetCard(0x128) and not c:IsCode(58139997) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -65,11 +61,15 @@ function c58139997.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function c58139997.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsReleasable() end
+	Duel.Release(e:GetHandler(),REASON_COST)
+end
 function c58139997.filter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and not c:IsCode(58139997) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c58139997.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c58139997.filter(chkc,e,tp) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c58139997.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c58139997.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

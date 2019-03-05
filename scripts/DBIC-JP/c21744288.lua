@@ -45,7 +45,7 @@ function c21744288.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		te:UseCountLimit(tp)
 		Duel.Release(e:GetHandler(),REASON_COST)
 		Duel.SendtoGrave(tc,REASON_COST)
-	else 
+	else
 		Duel.Release(e:GetHandler(),REASON_COST)
 		Duel.SendtoGrave(tc,REASON_COST+REASON_DISCARD)
 	end

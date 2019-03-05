@@ -53,13 +53,11 @@ function c79400597.activate(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
-function c79400597.check(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(0x129) and c:GetEquipGroup() and c:GetEquipGroup():IsExists(Card.IsCode,1,nil,44133040)
-end
 function c79400597.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if chk==0 then return d~=nil and c79400597.check(a,tp) end
+	if chk==0 then return d~=nil and d:IsAbleToRemove() and a:IsControler(tp) and a:IsSetCard(0x129)
+		and a:GetEquipGroup() and a:GetEquipGroup():IsExists(Card.IsCode,1,nil,44133040) end
 	e:SetLabelObject(d)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,d,1,0,0)
 end

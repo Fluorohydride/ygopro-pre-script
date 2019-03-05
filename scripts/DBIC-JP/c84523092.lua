@@ -43,14 +43,13 @@ function c84523092.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if te then
 		te:UseCountLimit(tp)
 		Duel.SendtoGrave(tc,REASON_COST)
-	else 
+	else
 		Duel.SendtoGrave(tc,REASON_COST+REASON_DISCARD)
 	end
 end
 function c84523092.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)

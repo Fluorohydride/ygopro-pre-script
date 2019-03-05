@@ -9,19 +9,19 @@ function c55072170.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,55072170)
-	e1:SetCondition(c55072170.setcon)
+	e1:SetCondition(c55072170.condition)
 	e1:SetTarget(c55072170.target)
 	e1:SetOperation(c55072170.activate)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(55072170,0))
+	e2:SetDescription(aux.Stringid(55072170,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,55072171)
+	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCondition(aux.exccon)
 	e2:SetCost(c55072170.spcost)
 	e2:SetTarget(c55072170.sptg)
@@ -31,20 +31,20 @@ end
 function c55072170.rccfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x128)
 end
-function c55072170.setcon(e,tp,eg,ep,ev,re,r,rp)
+function c55072170.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c55072170.rccfilter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c55072170.filter(c,e,tp)
-	return c:IsType(TYPE_SPELL) and Duel.IsExistingMatchingCard(c55072170.filter2,tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
+function c55072170.filter(c,tp)
+	return c:IsType(TYPE_SPELL) and Duel.IsExistingMatchingCard(c55072170.filter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
-function c55072170.filter2(c,code,e,tp)
+function c55072170.filter2(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()
 end
 function c55072170.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c55072170.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c55072170.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c55072170.filter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c55072170.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(55072170,0))
-	Duel.SelectTarget(tp,c55072170.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
+	Duel.SelectTarget(tp,c55072170.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c55072170.activate(e,tp,eg,ep,ev,re,r,rp)

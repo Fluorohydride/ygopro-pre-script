@@ -67,6 +67,7 @@ function c69073023.spop(e,tp,eg,ep,ev,re,r,rp)
 			if og:GetCount()>0 then
 				Duel.SendtoGrave(og,REASON_RULE)
 			end
+			mat:CancelToGrave()
 			Duel.Overlay(tc,mat)
 		end
 	end

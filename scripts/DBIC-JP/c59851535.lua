@@ -21,6 +21,7 @@ function c59851535.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,59851536)
 	e2:SetCondition(c59851535.thcon)
 	e2:SetCost(aux.bfgcost)
@@ -45,7 +46,7 @@ function c59851535.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		te:UseCountLimit(tp)
 		Duel.Release(e:GetHandler(),REASON_COST)
 		Duel.SendtoGrave(tc,REASON_COST)
-	else 
+	else
 		Duel.Release(e:GetHandler(),REASON_COST)
 		Duel.SendtoGrave(tc,REASON_COST+REASON_DISCARD)
 	end
@@ -66,8 +67,8 @@ function c59851535.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c59851535.thcon(e)
-	return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),LOCATION_HAND,0)==0
+function c59851535.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
 end
 function c59851535.thfilter(c)
 	return c:IsSetCard(0x128) and c:IsAbleToHand()
