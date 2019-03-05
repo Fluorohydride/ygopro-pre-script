@@ -1,4 +1,4 @@
---ウィッチクラフト・シュミッタ
+--ウィッチクラフト・バイストリート
 --
 --Scripted By-FW空鸽
 function c100412024.initial_effect(c)
