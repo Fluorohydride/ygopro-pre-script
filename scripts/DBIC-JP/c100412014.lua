@@ -33,15 +33,16 @@ function c100412014.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100412014.costfilter(c,tp)
 	if c:IsLocation(LOCATION_HAND) then return c:IsType(TYPE_SPELL) and c:IsDiscardable() end
-	return c:IsFaceup() and c:IsAbleToGraveAsCost() and (c:IsHasEffect(100412024) or c:IsHasEffect(100412025))
+	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsHasEffect(100412024,tp)
 end
 function c100412014.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100412014.costfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,1,nil,tp) end
 	local g=Duel.GetMatchingGroup(c100412014.costfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local tc=g:Select(tp,1,1,nil):GetFirst()
-	if tc:IsLocation(LOCATION_SZONE) then
-		Duel.RegisterFlagEffect(tp,tc:GetCode(),RESET_PHASE+PHASE_END,0,1)
+	local te=tc:IsHasEffect(100412024,tp)
+	if te then
+		te:UseCountLimit(tp)
 		Duel.Release(e:GetHandler(),REASON_COST)
 		Duel.SendtoGrave(tc,REASON_COST)
 	else 
