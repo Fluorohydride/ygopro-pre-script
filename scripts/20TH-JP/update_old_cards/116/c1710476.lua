@@ -46,27 +46,26 @@ function c1710476.spfilter(c)
 	return c:IsCode(1546123) and c:IsAbleToRemoveAsCost()
 end
 function c1710476.spfilter2(c,tp)
-	return c:IsHasEffect(48829461) and c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0
+	return c:IsHasEffect(48829461,tp) and c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function c1710476.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c1710476.spfilter,tp,LOCATION_EXTRA,0,1,nil)
-	local b2=Duel.GetFlagEffect(tp,48829461)==0
-		and Duel.IsExistingMatchingCard(c1710476.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp)
+	local b2=Duel.IsExistingMatchingCard(c1710476.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp)
 	return b1 or b2
 end
 function c1710476.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c1710476.spfilter,tp,LOCATION_EXTRA,0,1,nil)
-	local b2=Duel.GetFlagEffect(tp,48829461)==0
-		and Duel.IsExistingMatchingCard(c1710476.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp)
+	local b2=Duel.IsExistingMatchingCard(c1710476.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp)
 	if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(48829461,0))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local tg=Duel.SelectMatchingCard(tp,c1710476.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+		local tg=Duel.SelectMatchingCard(tp,c1710476.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+		local te=tg:GetFirst():IsHasEffect(48829461,tp)
+		te:UseCountLimit(tp)
 		Duel.Remove(tg,POS_FACEUP,REASON_COST)
-		Duel.RegisterFlagEffect(tp,48829461,RESET_PHASE+PHASE_END,0,1)
 	else
 		local tc=Duel.GetFirstMatchingCard(c1710476.spfilter,tp,LOCATION_EXTRA,0,nil)
 		Duel.Remove(tc,POS_FACEUP,REASON_COST)

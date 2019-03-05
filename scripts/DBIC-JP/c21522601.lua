@@ -63,14 +63,16 @@ function c21522601.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c21522601.costfilter(c,tp)
 	if c:IsLocation(LOCATION_HAND) then return c:IsType(TYPE_SPELL) and c:IsDiscardable() end
-	return c:IsFaceup() and c:IsAbleToGraveAsCost() and (c:IsHasEffect(83289866) or c:IsHasEffect(19673561))
+	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsHasEffect(83289866,tp)
 end
 function c21522601.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c21522601.costfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,1,nil,tp) end
 	local g=Duel.GetMatchingGroup(c21522601.costfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local tc=g:Select(tp,1,1,nil):GetFirst()
-	if tc:IsLocation(LOCATION_SZONE) then
+	local te=tc:IsHasEffect(83289866,tp)
+	if te then
+		te:UseCountLimit(tp)
 		Duel.RegisterFlagEffect(tp,tc:GetCode(),RESET_PHASE+PHASE_END,0,1)
 		Duel.SendtoGrave(tc,REASON_COST)
 	else 
