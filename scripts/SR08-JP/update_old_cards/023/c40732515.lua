@@ -36,24 +36,29 @@ function c40732515.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c40732515.spcfilter(c,tp)
-	return c:IsCode(39910367) and c:IsCanRemoveCounter(tp,0x1,6,REASON_COST)
+	return c:IsCode(39910367) and c:IsCanRemoveCounter(tp,0x1,1,REASON_COST)
 end
 function c40732515.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.IsExistingMatchingCard(c40732515.spcfilter,tp,LOCATION_ONFIELD,0,1,nil,tp)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local g=Duel.GetMatchingGroup(c40732515.spcfilter,tp,LOCATION_ONFIELD,0,nil,tp)
+	local ct=0
+	for tc in aux.Next(g) do
+		ct=ct+tc:GetCounter(0x1)
+	end
+	return ct>=6 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function c40732515.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(c40732515.spcfilter,tp,LOCATION_ONFIELD,0,nil,tp)
-	local tc=nil
 	if #g==1 then
-		tc=g:GetFirst()
+		g:GetFirst():RemoveCounter(tp,0x1,6,REASON_RULE)
 	else
+		for i=1,6 do
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(40732515,2))
-		tc=g:Select(tp,1,1,nil):GetFirst()
+		local tg=Duel.SelectMatchingCard(tp,c40732515.spcfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
+		tg:GetFirst():RemoveCounter(tp,0x1,1,REASON_RULE)
+		end
 	end
-	tc:RemoveCounter(tp,0x1,6,REASON_RULE)
 end
 function c40732515.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
