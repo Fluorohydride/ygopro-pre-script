@@ -2,8 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **February 9, 2019** : 20th Anniversary Legendary Collection (20TH-JPC) : `1002361XX`
-- **February 23, 2019** : Deck Build Pack: Infinity Chasers (DBIC-JP) : `100412XXX`
 
 # Announced
 
@@ -48,6 +46,7 @@
 - Legendary Hero Decks (LEHD-EN) : `100234XXX`
 - LINK VRAINS PACK 2 (LVP2-JP) : `100235XXX`
 - ANNIVERSARY DUELIST BOX (20TH-JPB) : `100236XXX`
+- 20th Anniversary Legendary Collection (20TH-JPC) : `1002361XX`
 - Yu-Gi-Oh! Chips (YCPC-JP) : `100237XXX`
 - Premium Pack 2019 (19PP-JP) : `100238XXX`
 - Jump Festa Limited Pack 2019 (JF19-JP) : `100239XXX`
@@ -84,6 +83,7 @@
 - Deck Build Pack: Spirit Warriors (DBSW-JP) : `100419XXX` ~~Should have been `100407XXX`~~
 - Deck Build Pack: Dark Savers (DBDS-JP) : `100408XXX`
 - Deck Build Pack: Hidden Summoners (DBHS-JP) : `100410XXX`
+- Deck Build Pack: Infinity Chasers (DBIC-JP) : `100412XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
