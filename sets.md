@@ -70,6 +70,7 @@
 - Starter Deck 2016 (ST16-JP) : `100316XXX`
 - Starter Deck 2017 (ST17-JP) : `100317XXX`
 - Starter Deck 2018 (ST18-JP) : `100318XXX`
+- Starter Deck 2019 (ST19-JP) : `100319XXX`
 -----
 - Structure Deck: Pendulum Evolution (SD31-JP) : `100331XXX`
 - Structure Deck: Cyverse Link (SD32-JP) : `100332XXX`
@@ -104,3 +105,4 @@
 - Soul Fusion (SOFU-JP) : `101006XXX`
 - SAVAGE STRIKE (SAST-JP) : `101007XXX`
 - DARK NEOSTORM (DANE-JP) : `101008XXX`
+- RISING RAMPAGE (RIRA-JP) : `101009XXX`
