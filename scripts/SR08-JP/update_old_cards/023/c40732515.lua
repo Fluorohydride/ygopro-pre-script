@@ -51,12 +51,12 @@ end
 function c40732515.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(c40732515.spcfilter,tp,LOCATION_ONFIELD,0,nil,tp)
 	if #g==1 then
-		g:GetFirst():RemoveCounter(tp,0x1,6,REASON_RULE)
+		g:GetFirst():RemoveCounter(tp,0x1,6,REASON_COST)
 	else
 		for i=1,6 do
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(40732515,2))
 		local tg=Duel.SelectMatchingCard(tp,c40732515.spcfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
-		tg:GetFirst():RemoveCounter(tp,0x1,1,REASON_RULE)
+		tg:GetFirst():RemoveCounter(tp,0x1,1,REASON_COST)
 		end
 	end
 end
