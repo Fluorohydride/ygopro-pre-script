@@ -56,6 +56,9 @@
 - Shadows in Valhalla (SHVA-EN) : `100243XXX`
 - 2018 Mega-Tins (CT15-EN) : `100244XXX`
 - Tournament Pack 2019 (19TP-JP) : `100245XXX`
+- Yu-Gi-Oh! Duel Monsters x Monster Strike Collaboration Commemoration cards (MSC1-JP) : `100246XXX`
+- The Valuable Book 21 (VB21-JP) : `100247XXX`
+- Collectors Pack 2019 (CP19-JP) : `100248XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
