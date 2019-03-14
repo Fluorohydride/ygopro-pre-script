@@ -31,7 +31,7 @@ function c100308022.operation(e,tp,eg,ep,ev,re,r,rp)
 		if ct>0 and Duel.GetMatchingGroupCount(Card.IsCanAddCounter,tp,LOCATION_ONFIELD,0,nil,0x1,1)>0
 			and Duel.SelectYesNo(tp,aux.Stringid(100308022,0)) then
 			while ct>0 do
-				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100308022,1))
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)
 				local tc=Duel.SelectMatchingCard(tp,Card.IsCanAddCounter,tp,LOCATION_ONFIELD,0,1,1,nil,0x1,1):GetFirst()
 				if not tc then break end
 				tc:AddCounter(0x1,1)
