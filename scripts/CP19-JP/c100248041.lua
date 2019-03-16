@@ -45,7 +45,7 @@ function c100248041.initial_effect(c)
 		ge1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
 		ge1:SetOperation(c100248041.checkop)
 		Duel.RegisterEffect(ge1,0)
-	end 
+	end
 end
 function c100248041.mfilter(c)
 	return c:IsType(TYPE_SYNCHRO)
