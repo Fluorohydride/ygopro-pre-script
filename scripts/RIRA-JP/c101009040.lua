@@ -27,7 +27,7 @@ function c101009040.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101009040.mfilter(c)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x22b)
+	return c:IsLevelBelow(4) and c:IsLinkSetCard(0x22b)
 end
 function c101009040.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
@@ -68,10 +68,10 @@ function c101009040.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
-	e1:SetTarget(c101009040.splimit)
+	e1:SetTarget(c101009040.splimit2)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c101009040.splimit(e,c)
+function c101009040.splimit2(e,c)
 	return not c:IsAttribute(ATTRIBUTE_WATER)
 end

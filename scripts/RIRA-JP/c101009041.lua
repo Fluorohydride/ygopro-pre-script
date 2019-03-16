@@ -16,25 +16,25 @@ function c101009041.initial_effect(c)
 	e1:SetTarget(c101009041.sptg)
 	e1:SetOperation(c101009041.spop)
 	c:RegisterEffect(e1)
-	--draw
-	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(101009041,2))
-	e7:SetCategory(CATEGORY_TOHAND)
-	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e7:SetProperty(EFFECT_FLAG_DELAY)
-	e7:SetCode(EVENT_TO_GRAVE)
-	e7:SetCountLimit(1,101009041+100)
-	e7:SetCondition(c101009041.thcon)
-	e7:SetTarget(c101009041.thtg)
-	e7:SetOperation(c101009041.thop)
-	c:RegisterEffect(e7)
+	--to hand
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101009041,1))
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCountLimit(1,101009041+100)
+	e2:SetCondition(c101009041.thcon)
+	e2:SetTarget(c101009041.thtg)
+	e2:SetOperation(c101009041.thop)
+	c:RegisterEffect(e2)
 end
 function c101009041.spfilter(c,e,tp,zone)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsAttackBelow(1500) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c101009041.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=bit.band(e:GetHandler():GetLinkedZone(tp),0x1f)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and c101009041.spfilter(chkc,e,tp,zone) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101009041.spfilter(chkc,e,tp,zone) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c101009041.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,zone) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
