@@ -54,7 +54,7 @@ function c101009013.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101009013.descfilter,1,nil,tp)
 end
 function c101009013.tgfilter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetPreviousControler()==tp
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c101009013.descfilter(c,tp)
 		and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED)
 end
 function c101009013.destg(e,tp,eg,ep,ev,re,r,rp,chk)
