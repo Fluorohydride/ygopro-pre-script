@@ -19,7 +19,7 @@ function c101009059.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101009059.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-function c101009058.thcfilter(c)
+function c101009059.thcfilter(c)
 	return not c:IsType(TYPE_EFFECT) and c:IsFaceup()
 end
 function c101009059.thfilter(c,tc)
@@ -30,7 +30,7 @@ function c101009059.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,c101009059.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE)
-		and Duel.IsExistingMatchingCard(c101009058.thcfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c101009059.thcfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c101009059.thfilter,tp,LOCATION_DECK,0,1,nil,tc)
 		and Duel.SelectYesNo(tp,aux.Stringid(101009059,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
