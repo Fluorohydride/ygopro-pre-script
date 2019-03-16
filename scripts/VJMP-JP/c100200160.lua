@@ -19,7 +19,6 @@ function c100200160.initial_effect(c)
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100200160,1))
-	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,100200160+100)
@@ -44,7 +43,7 @@ function c100200160.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,1,REASON_COST)
 		and Duel.IsExistingMatchingCard(c100200160.costfilter,tp,LOCATION_HAND,0,1,nil) end
 	e:GetHandler():RemoveCounter(tp,0x1,1,REASON_COST)
-	Duel.DiscardHand(tp,c100200160.costfilter,1,1,REASON_DISCARD+REASON_COST)
+	Duel.DiscardHand(tp,c100200160.costfilter,1,1,REASON_DISCARD+REASON_COST,nil)
 end
 function c100200160.filter(c)
 	return c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsSSetable()

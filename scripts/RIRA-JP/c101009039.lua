@@ -34,7 +34,7 @@ function c101009039.econ(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c101009039.efilter(e,re,rp)
-	return re:GetHandler()~=e:GetHandler() and re:IsActiveType(TYPE_EFFECT)
+	return re:GetHandler()~=e:GetHandler() and re:IsActiveType(TYPE_MONSTER)
 end
 function c101009039.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

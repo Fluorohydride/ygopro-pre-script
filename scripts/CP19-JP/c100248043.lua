@@ -26,7 +26,6 @@ function c100248043.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetTargetRange(1,0)
-	e1:SetLabelObject(e)
 	e1:SetTarget(c100248043.splimit)
 	Duel.RegisterEffect(e1,tp)
 end

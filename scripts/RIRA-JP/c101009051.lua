@@ -4,6 +4,7 @@
 function c101009051.initial_effect(c)
 	--move
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DECKDES)
 	e1:SetDescription(aux.Stringid(101009051,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -14,7 +15,7 @@ function c101009051.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101009051.filter(c,tp)
-	if not (c:IsType(TYPE_LINK) and c:GetSequence()>=5) then return false end
+	if not (c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetSequence()>=5) then return false end
 	local zone=bit.band(c:GetLinkedZone(),0x1f)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,zone)>0
 end

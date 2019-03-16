@@ -44,13 +44,13 @@ function c101009028.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	return Duel.GetAttacker():IsControler(1-tp) and at:IsControler(tp) and at:IsFaceup() and at:IsRace(RACE_SPELLCASTER)
 end
-function c101009028.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER)
+function c101009028.cfilter(c,tp)
+	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function c101009028.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	if rp~=1-tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(c101009028.cfilter,1,nil)
+	return g and g:IsExists(c101009028.cfilter,1,nil,tp)
 end
 function c101009028.thfilter(c,tp)
 	return c:IsAbleToHand() and (c:IsControler(1-tp) and c:IsOnField()

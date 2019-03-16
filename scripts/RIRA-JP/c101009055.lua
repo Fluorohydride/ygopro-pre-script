@@ -42,7 +42,7 @@ function c101009055.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101009055.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
 end
 function c101009055.indcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101009055.cfilter,1,nil,tp)
@@ -63,7 +63,9 @@ function c101009055.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101009055.cfilter,1,nil,1-tp)
 end
 function c101009055.damop(e,tp,eg,ep,ev,re,r,rp)
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)

@@ -21,7 +21,7 @@ function c101009041.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101009041,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,101009041+100)
 	e2:SetCondition(c101009041.thcon)
@@ -42,9 +42,10 @@ function c101009041.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101009041.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local zone=bit.band(e:GetHandler():GetLinkedZone(tp),0x1f)
-	if tc:IsRelateToEffect(e) and zone~=0 then
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and zone~=0 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -63,7 +64,7 @@ function c101009041.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c101009041.thfilter(c)
-	return c:IsSetCard(0x22b) and c:IsType(TYPE_MONSTER) and not c:IsCode(101009041) and c:IsAbleToHand()
+	return c:IsSetCard(0x22b) and not c:IsCode(101009041) and c:IsAbleToHand()
 end
 function c101009041.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101009041.thfilter(chkc) end

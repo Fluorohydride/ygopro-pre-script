@@ -39,7 +39,6 @@ function c100319041.initial_effect(c)
 	e5:SetCode(EVENT_CUSTOM+100319041)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCountLimit(1)
 	e5:SetCondition(c100319041.atkcon)
 	e5:SetTarget(c100319041.atktg)
 	e5:SetOperation(c100319041.atkop)
@@ -70,7 +69,7 @@ function c100319041.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
 end
 function c100319041.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	return not e:GetHandler():IsHasEffect(EFFECT_EXTRA_ATTACK)
+	if chk==0 then return not e:GetHandler():IsHasEffect(EFFECT_EXTRA_ATTACK) end
 end
 function c100319041.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

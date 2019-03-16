@@ -20,7 +20,6 @@ function c101009040.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,101009040)
 	e2:SetCondition(c101009040.thcon)
 	e2:SetTarget(c101009040.thtg)
 	e2:SetOperation(c101009040.thop)
@@ -30,7 +29,7 @@ function c101009040.mfilter(c)
 	return c:IsLevelBelow(4) and c:IsLinkSetCard(0x22b)
 end
 function c101009040.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c101009040.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

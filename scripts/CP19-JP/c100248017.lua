@@ -51,7 +51,7 @@ function c100248017.spfilter2(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsLevel(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100248017.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100248017.tgfilter2(chkc,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsAbleToGrave() end
 	if chk==0 then return Duel.IsExistingTarget(c100248017.tgfilter2,tp,LOCATION_MZONE,0,1,nil,tp)
 		and Duel.IsExistingMatchingCard(c100248017.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

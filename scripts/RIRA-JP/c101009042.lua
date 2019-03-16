@@ -19,7 +19,6 @@ function c101009042.initial_effect(c)
 	--negate attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101009042,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_MZONE)
@@ -29,7 +28,7 @@ function c101009042.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101009042.thfilter(c)
-	return c:IsSetCard(0x22b) and c:IsType(TYPE_MONSTER) and not c:IsCode(101009042) and c:IsAbleToHand()
+	return c:IsSetCard(0x22b) and not c:IsCode(101009042) and c:IsAbleToHand()
 end
 function c101009042.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101009042.thfilter(chkc) end
