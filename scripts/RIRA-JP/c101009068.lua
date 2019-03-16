@@ -1,6 +1,8 @@
---海晶少女波动
+--海晶乙女波動
+--
+--Scripted By-FW空鸽
 function c101009068.initial_effect(c)
-    --Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

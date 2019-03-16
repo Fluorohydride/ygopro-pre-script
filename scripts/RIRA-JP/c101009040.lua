@@ -1,4 +1,4 @@
---海晶少女 青高海牛
+--海晶乙女ブルースラッグ
 --
 --Scripted By-FW空鸽
 function c101009040.initial_effect(c)

@@ -1,4 +1,6 @@
---海晶少女潮流
+--海晶乙女潮流
+--
+--Scripted By-FW空鸽
 function c101009069.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

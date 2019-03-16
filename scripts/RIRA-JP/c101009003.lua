@@ -1,4 +1,4 @@
---海晶少女 海马
+--海晶乙女シーホース
 --
 --Scripted By-FW空鸽
 function c101009003.initial_effect(c)

@@ -1,6 +1,8 @@
---海晶少女 石狗公
+--海晶乙女マーブルド・ロック
+--
+--Scripted By-FW空鸽
 function c101009042.initial_effect(c)
-    --link summon
+	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkAttribute,ATTRIBUTE_WATER),2)
 	c:EnableReviveLimit()
 	--special summon

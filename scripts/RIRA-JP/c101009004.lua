@@ -1,4 +1,4 @@
---海晶少女 海星
+--海晶乙女シースター
 --
 --Scripted By-FW空鸽
 function c101009004.initial_effect(c)

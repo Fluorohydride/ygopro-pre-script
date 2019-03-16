@@ -1,8 +1,8 @@
---海晶少女 奶嘴海葵
+--海晶乙女コーラルアネモネ
 --
 --Scripted By-FW空鸽
 function c101009041.initial_effect(c)
-    --link summon
+	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkAttribute,ATTRIBUTE_WATER),2,2)
 	c:EnableReviveLimit()
 	--special summon
