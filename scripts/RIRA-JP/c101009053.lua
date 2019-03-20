@@ -44,7 +44,7 @@ function c101009053.initial_effect(c)
 	e5:SetOperation(c101009053.rmop)
 	c:RegisterEffect(e5)
 end
-function c101009013.condition(e,tp,eg,ep,ev,re,r,rp)
+function c101009053.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function c101009053.spfilter(c,e,tp)
