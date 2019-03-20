@@ -59,7 +59,7 @@ function c101009013.tgfilter(c,e,tp)
 end
 function c101009013.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(c101009013.tgfilter,nil,e,tp)
-	if chk==0 then return g:GetCount()>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetCount()>0 end
 	local c=nil
 	if g:GetCount()>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -79,6 +79,7 @@ function c101009013.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
 		if g:GetCount()>0 then
+			Duel.BreakEffect()
 			Duel.HintSelection(g)
 			Duel.Destroy(g,REASON_EFFECT)
 		end

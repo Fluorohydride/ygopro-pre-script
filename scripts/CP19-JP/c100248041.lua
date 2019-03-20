@@ -6,34 +6,48 @@ function c100248041.initial_effect(c)
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
 	c:EnableReviveLimit()
 	--extra attack
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e0:SetCondition(c100248041.regcon)
+	e0:SetOperation(c100248041.regop)
+	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_EXTRA_ATTACK)
-	e1:SetCondition(c100248041.condition)
-	e1:SetValue(1)
+	e1:SetCode(EFFECT_MATERIAL_CHECK)
+	e1:SetValue(c100248041.valcheck)
+	e1:SetLabelObject(e0)
 	c:RegisterEffect(e1)
-	--atk down
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100248041,0))
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BATTLE_DAMAGE)
-	e2:SetCountLimit(1,100248041)
-	e2:SetCondition(c100248041.atkcon)
-	e2:SetTarget(c100248041.atktg)
-	e2:SetOperation(c100248041.atkop)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_EXTRA_ATTACK)
+	e2:SetCondition(c100248041.condition)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--damage
+	--atk down
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_DAMAGE)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,100248041+100)
-	e3:SetCondition(c100248041.damcon)
-	e3:SetTarget(c100248041.damtg)
-	e3:SetOperation(c100248041.damop)
+	e3:SetDescription(aux.Stringid(100248041,0))
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_BATTLE_DAMAGE)
+	e3:SetCountLimit(1,100248041)
+	e3:SetCondition(c100248041.atkcon)
+	e3:SetTarget(c100248041.atktg)
+	e3:SetOperation(c100248041.atkop)
 	c:RegisterEffect(e3)
+	--damage
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(100248041,1))
+	e4:SetCategory(CATEGORY_DAMAGE)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1,100248041+100)
+	e4:SetCondition(c100248041.damcon)
+	e4:SetTarget(c100248041.damtg)
+	e4:SetOperation(c100248041.damop)
+	c:RegisterEffect(e4)
 	--
 	if not c100248041.global_check then
 		c100248041.global_check=true
@@ -47,13 +61,22 @@ function c100248041.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
-function c100248041.mfilter(c)
-	return c:IsType(TYPE_SYNCHRO)
+function c100248041.regcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()==1
 end
-function c100248041.condition(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local mg=c:GetMaterial()
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and mg:GetCount()>0 and mg:IsExists(c100248041.mfilter,1,nil)
+function c100248041.regop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(100248041,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100248041,2))
+end
+function c100248041.valcheck(e,c)
+	local g=c:GetMaterial()
+	if g:IsExists(Card.IsSynchroType,1,nil,TYPE_SYNCHRO) then
+		e:GetLabelObject():SetLabel(1)
+	else
+		e:GetLabelObject():SetLabel(0)
+	end
+end
+function c100248041.condition(e)
+	return e:GetHandler():GetFlagEffect(100248041)>0
 end
 function c100248041.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp

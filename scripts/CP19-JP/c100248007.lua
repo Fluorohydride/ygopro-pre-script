@@ -66,7 +66,7 @@ function c100248007.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and e:GetHandler():GetType()==TYPE_TRAP+TYPE_CONTINUOUS
 end
 function c100248007.cfilter1(c,tp)
-	return c:IsSetCard(0x8) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsSetCard(0x8) and Duel.GetMZoneCount(tp,c)>0 and (c:IsFaceup() or c:IsControler(tp))
 end
 function c100248007.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100248007.cfilter1,1,nil,tp) end

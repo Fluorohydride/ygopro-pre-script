@@ -47,12 +47,12 @@ end
 function c100248033.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c100248033.spfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100248033.spfilter),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	local fid=0
 	if tc then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100248033,1))
-		local g2=Duel.SelectMatchingCard(tp,c100248033.cfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,tc)
+		local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100248033.cfilter),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,tc)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		Duel.Overlay(tc,g2)
 		fid=tc:GetFieldID()

@@ -35,6 +35,7 @@ function c101009069.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,dam*400,REASON_EFFECT)
 	if Duel.IsExistingMatchingCard(c101009069.cfilter,tp,LOCATION_MZONE,0,1,nil) and bc:IsType(TYPE_LINK) then
 		local dam1=bc:GetLink()
+		Duel.BreakEffect()
 		Duel.Damage(1-tp,dam1*500,REASON_EFFECT)
 	end
 end

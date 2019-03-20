@@ -51,12 +51,12 @@ function c101009068.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		end
-		local g1=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-		if Duel.IsExistingMatchingCard(c101009068.cfilter,tp,LOCATION_MZONE,0,1,nil) and g1:GetCount()>0 then
-			Duel.BreakEffect()
-			local nc=g1:GetFirst()
-			while nc do
+	end
+	local g1=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+	if Duel.IsExistingMatchingCard(c101009068.cfilter,tp,LOCATION_MZONE,0,1,nil) and g1:GetCount()>0 then
+		Duel.BreakEffect()
+		local nc=g1:GetFirst()
+		while nc do
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
