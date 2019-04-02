@@ -1,6 +1,6 @@
 --フォーチュンレディ・エヴァリー
 --
---Script by 夜落诗染
+--Scripted By-ღ Viola
 function c101009038.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsRace,RACE_SPELLCASTER),1)

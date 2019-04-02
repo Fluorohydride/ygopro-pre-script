@@ -1,6 +1,6 @@
 --フォーチュンレディ・パスティー
 --
---Script by 夜落诗染
+--Scripted By-ღ Viola
 function c101009008.initial_effect(c)
 	--atk,def
 	local e1=Effect.CreateEffect(c)

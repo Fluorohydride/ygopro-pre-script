@@ -1,6 +1,6 @@
 --フォーチュンレディ・リワインド
 --
---Script by 夜落诗染
+--Scripted By-ღ Viola
 function c101009070.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
