@@ -14,7 +14,7 @@ function c101009070.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101009070.filter(c,e,tp)
-	return c:IsSetCard(0x31) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x31) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0x8,tp,false,false)
 end
 function c101009070.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101009070.filter(chkc,e,tp) end
@@ -37,7 +37,7 @@ function c101009070.spop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()<=ft then
 		local tc=g:GetFirst()
 		while tc do
-			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+			Duel.SpecialSummonStep(tc,0x8,tp,tp,false,false,POS_FACEUP)
 			tc:RegisterFlagEffect(101009070,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 			tc=g:GetNext()
 		end
@@ -58,7 +58,7 @@ function c101009070.spop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,ft,ft,nil)
 		local tc=sg:GetFirst()
 		while tc do
-			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+			Duel.SpecialSummonStep(tc,0x8,tp,tp,false,false,POS_FACEUP)
 			tc:RegisterFlagEffect(101009070,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 			tc=sg:GetNext()
 		end

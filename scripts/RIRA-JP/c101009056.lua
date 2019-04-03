@@ -20,7 +20,7 @@ function c101009056.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101009056.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101009056.tfilter(c,e,tp)
-	return c:IsSetCard(0x31) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x31) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0x8,tp,false,false)
 		and not Duel.IsExistingMatchingCard(c101009056.bfilter,tp,LOCATION_ONFIELD,0,1,nil,c)
 end
 function c101009056.bfilter(c,tc)
@@ -35,7 +35,7 @@ function c101009056.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101009056.tfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(g,0x8,tp,tp,false,false,POS_FACEUP)
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
