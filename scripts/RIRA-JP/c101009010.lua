@@ -61,7 +61,7 @@ function c101009010.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xb3)
 end
 function c101009010.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101009009.cfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(c101009010.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function c101009010.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
