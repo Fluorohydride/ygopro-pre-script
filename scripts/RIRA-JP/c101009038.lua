@@ -63,6 +63,7 @@ function c101009038.lvop(e,tp,eg,ep,ev,re,r,rp)
 	if sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101009038,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local tg=sg:Select(tp,1,1,nil)
+		Duel.BreakEffect()
 		Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 	end
 end

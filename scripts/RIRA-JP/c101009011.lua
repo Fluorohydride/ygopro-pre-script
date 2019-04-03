@@ -48,7 +48,7 @@ function c101009011.initial_effect(c)
 	c:RegisterEffect(e5)
 	--attack
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(101009011,0))
+	e6:SetDescription(aux.Stringid(101009011,3))
 	e6:SetCategory(CATEGORY_ATKCHANGE)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetRange(LOCATION_MZONE)

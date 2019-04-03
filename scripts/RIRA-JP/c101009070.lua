@@ -14,7 +14,7 @@ function c101009070.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101009070.filter(c,e,tp)
-	return c:IsSetCard(0x31) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x31) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101009070.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101009070.filter(chkc,e,tp) end
