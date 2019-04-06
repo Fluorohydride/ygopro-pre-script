@@ -79,7 +79,7 @@ function c101009008.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local lv=rg:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
 		if lv>0 and tc:IsRelateToEffect(e) then
 			local op=0
-			if c:IsLevelBelow(lv) then op=Duel.SelectOption(tp,aux.Stringid(101009008,2))
+			if tc:IsLevelBelow(lv) then op=Duel.SelectOption(tp,aux.Stringid(101009008,2))
 			else op=Duel.SelectOption(tp,aux.Stringid(101009008,2),aux.Stringid(101009008,3)) end
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
