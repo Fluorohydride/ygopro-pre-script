@@ -86,7 +86,7 @@ function c101009011.scalefilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xb3) and c:GetLeftScale()~=11
 end
 function c101009011.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
+	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and c101009011.scalefilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101009011.scalefilter,tp,LOCATION_PZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c101009011.scalefilter,tp,LOCATION_PZONE,0,1,1,nil)

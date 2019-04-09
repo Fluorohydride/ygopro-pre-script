@@ -56,7 +56,7 @@ function c101009008.tgfilter(c,tp)
 		and Duel.IsExistingMatchingCard(c101009008.rmfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,c)
 end
 function c101009008.rmfilter(c)
-	return c:IsRace(RACE_SPELLCASTER) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup()) and c:IsRace(RACE_SPELLCASTER) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function c101009008.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101009008.tgfilter(chkc,tp) end
@@ -73,10 +73,10 @@ function c101009008.rmop(e,tp,eg,ep,ev,re,r,rp)
 		ec=tc
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,c101009008.rmfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,99,ec,tp)
-	if rg:GetCount()>0 then
-		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
-		local lv=rg:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
+	local rg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101009008.rmfilter),tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,99,ec,tp)
+	if rg:GetCount()>0 and Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)~=0 then
+		local og=Duel.GetOperatedGroup()
+		local lv=og:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
 		if lv>0 and tc:IsRelateToEffect(e) then
 			local op=0
 			if tc:IsLevelBelow(lv) then op=Duel.SelectOption(tp,aux.Stringid(101009008,2))

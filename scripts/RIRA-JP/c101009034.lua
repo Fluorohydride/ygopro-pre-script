@@ -14,19 +14,14 @@ function c101009034.initial_effect(c)
 	e1:SetOperation(c101009034.thop)
 	c:RegisterEffect(e1)
 end
-function c101009034.getsum(c)
-	local atk=c:GetTextAttack()
-	if atk<0 then atk=0 end
-	local def=c:GetTextDefense()
-	if def<0 then def=0 end
-	return atk+def
-end
 function c101009034.cfilter(c,tp)
-	return c:IsDefenseAbove(0)
-		and Duel.IsExistingMatchingCard(c101009034.thfilter,tp,LOCATION_DECK,0,1,nil,c101009034.getsum(c))
+	local sum=math.max(c:GetTextAttack(),0)+math.max(c:GetTextDefense(),0)
+	return c:IsAttackAbove(0) and c:IsDefenseAbove(0)
+		and Duel.IsExistingMatchingCard(c101009034.thfilter,tp,LOCATION_DECK,0,1,nil,sum)
 end
-function c101009034.thfilter(c,sum)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c101009034.getsum(c)==sum
+function c101009034.thfilter(c,csum)
+	local sum=math.max(c:GetTextAttack(),0)+math.max(c:GetTextDefense(),0)
+	return c:IsAttackAbove(0) and c:IsDefenseAbove(0) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and csum==sum
 end
 function c101009034.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c101009034.cfilter,1,nil,tp) end
