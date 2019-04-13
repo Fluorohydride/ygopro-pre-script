@@ -39,7 +39,7 @@ function c101009022.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101009022.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_WIND)
+	return c:GetSummonPlayer()==tp and c:IsSummonType(SUMMON_TYPE_ADVANCE) and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_WIND)
 end
 function c101009022.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101009022.cfilter,1,nil,tp)
