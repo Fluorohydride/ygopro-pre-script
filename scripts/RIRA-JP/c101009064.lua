@@ -37,6 +37,7 @@ function c101009064.filter(c,lp)
 	return c:IsFaceup() and c:IsAttackBelow(lp) and c:GetFlagEffect(101009064)==0
 end
 function c101009064.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local lp=Duel.GetLP(tp)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101009064.filter(chkc,lp) end
 	if chk==0 then return Duel.IsExistingTarget(c101009064.filter,tp,LOCATION_MZONE,0,1,nil,lp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
