@@ -57,7 +57,7 @@ end
 function c100200163.rmfilter2(c,e,tp)
 	local type=bit.band(c:GetType(),TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
 	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and c:IsAbleToRemove()
-		and Duel.IsExistingMatchingCard(c100200163.spfilter,tp,LOCATION_GRAVE,0,1,c,type,e,tp)
+		and Duel.IsExistingMatchingCard(c100200163.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp,type)
 end
 function c100200163.spfilter(c,e,tp,type)
 	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and not c:IsType(type) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
