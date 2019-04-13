@@ -26,7 +26,7 @@ function c101009048.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101009048.lcheck(g,lc)
-	return g:GetClassCount(Card.GetCode)==g:GetCount()
+	return g:GetClassCount(Card.GetLinkCode)==g:GetCount()
 end
 function c101009048.valop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -40,14 +40,12 @@ function c101009048.valop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101009048.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
-		and not e:GetHandler():IsStatus(STATUS_CHAINING+STATUS_BATTLE_DESTROYED)
+		and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function c101009048.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAttackAbove(800) and c:GetFlagEffect(101009048)==0 end
-	if c:IsHasEffect(EFFECT_REVERSE_UPDATE) then
-		c:RegisterFlagEffect(101009048,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-	end
+	c:RegisterFlagEffect(101009048,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function c101009048.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -63,5 +61,7 @@ function c101009048.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 	e1:SetValue(-800)
 	c:RegisterEffect(e1)
-	Duel.NegateActivation(ev)
+	if not c:IsHasEffect(EFFECT_REVERSE_UPDATE) then
+		Duel.NegateActivation(ev)
+	end
 end
