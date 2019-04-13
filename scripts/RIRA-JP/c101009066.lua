@@ -28,12 +28,12 @@ function c101009066.fselect(g,e,tp,sg)
 	local loc=0
 	if Duel.GetMZoneCount(tp,g)>0 then loc=loc+LOCATION_DECK end
 	if Duel.GetLocationCountFromEx(tp,tp,g)>0 then loc=loc+LOCATION_EXTRA end
-	return loc~=0 and g:GetClassCount(Card.GetRace)==1
+	return loc~=0 and g:GetClassCount(Card.GetOriginalRace)==1
 		and g:IsExists(c101009066.fcheck,1,nil,g,sg,TYPE_RITUAL,TYPE_FUSION,TYPE_SYNCHRO,TYPE_XYZ,TYPE_PENDULUM,TYPE_LINK)
 		and Duel.IsExistingMatchingCard(c101009066.spfilter,tp,loc,0,1,nil,e,tp,g)
 end
 function c101009066.spfilter(c,e,tp,g)
-	return g:IsExists(Card.IsRace,1,nil,c:GetRace()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return g:IsExists(aux.FilterEqualFunction(Card.GetOriginalRace,c:GetOriginalRace()),1,nil) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101009066.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Group.CreateGroup()
