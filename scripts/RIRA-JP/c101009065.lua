@@ -35,10 +35,10 @@ function c101009065.reptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c101009065.repfilter1,1,c,tp)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
-		local sg=eg
-		if eg:FilterCount(c101009065.repfilter1,1,c,tp)>1 then
+		local sg=eg:Filter(c101009065.repfilter1,c,tp)
+		if sg:GetCount()>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101009065,0))
-			sg=eg:FilterSelect(tp,c101009065.repfilter1,1,1,c,tp)
+			sg=sg:Select(tp,1,1,nil)
 		end
 		e:SetLabelObject(sg)
 		return true
@@ -59,10 +59,10 @@ function c101009065.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return eg:IsExists(c101009065.repfilter2,1,nil,tp) and c:IsAbleToRemove() end
 	if Duel.SelectEffectYesNo(tp,c,96) then
-		local sg=eg
-		if eg:FilterCount(c101009065.repfilter2,1,nil,tp)>1 then
+		local sg=eg:Filter(c101009065.repfilter2,nil,tp)
+		if sg:GetCount()>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101009065,0))
-			sg=eg:FilterSelect(tp,c101009065.repfilter2,1,1,nil,tp)
+			sg=sg:Select(tp,1,1,nil)
 		end
 		e:SetLabelObject(sg)
 		return true
