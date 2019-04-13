@@ -20,7 +20,7 @@ function c101009056.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101009056.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101009056.tfilter(c,e,tp)
-	return c:IsSetCard(0x31) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0x8,tp,false,false)
+	return c:IsSetCard(0x31) and c:IsCanBeSpecialSummoned(e,0x8,tp,false,false)
 		and not Duel.IsExistingMatchingCard(c101009056.bfilter,tp,LOCATION_ONFIELD,0,1,nil,c)
 end
 function c101009056.bfilter(c,tc)

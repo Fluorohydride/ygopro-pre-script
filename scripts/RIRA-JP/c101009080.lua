@@ -41,10 +41,10 @@ function c101009080.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ev==PLAYER_ALL
 end
 function c101009080.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) and Duel.IsPlayerCanDraw(1-tp,2) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,2)
 end
 function c101009080.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Draw(tp,1,REASON_EFFECT)
-	Duel.Draw(1-tp,1,REASON_EFFECT)
+	Duel.Draw(tp,2,REASON_EFFECT)
+	Duel.Draw(1-tp,2,REASON_EFFECT)
 end

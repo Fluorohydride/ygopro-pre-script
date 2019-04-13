@@ -55,6 +55,7 @@ function c101009066.activate(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tg=Duel.SelectMatchingCard(tp,c101009066.spfilter,tp,loc,0,1,1,nil,e,tp,rg)
 		if tg:GetCount()>0 then
+			Duel.BreakEffect()
 			Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end

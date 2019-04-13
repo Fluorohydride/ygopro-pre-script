@@ -22,7 +22,7 @@ function c101009032.initial_effect(c)
 end
 function c101009032.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_ADVANCE) and c:GetMaterial()>0
+	return c:IsSummonType(SUMMON_TYPE_ADVANCE) and c:GetMaterialCount()>0
 end
 function c101009032.desfilter(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk)

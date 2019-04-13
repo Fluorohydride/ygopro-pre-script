@@ -40,6 +40,7 @@ function c101009030.spop(e,tp,eg,ep,ev,re,r,rp)
 		and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101009030,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local sg=g:Select(tp,1,1,nil)
+		Duel.BreakEffect()
 		Duel.HintSelection(sg)
 		Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
 	end
