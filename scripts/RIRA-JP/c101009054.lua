@@ -26,7 +26,7 @@ function c101009054.resetop(e,tp,eg,ep,ev,re,r,rp)
 	c101009054[1]=1
 end
 function c101009054.filter(c,e,tp)
-	return c:IsSetCard(0x119) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x119) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101009054.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -39,11 +39,12 @@ function c101009054.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101009054.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
 	if g:GetCount()>0 and ft>0 then
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+		local ct=math.min(ft,2)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ft)
+		local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ct)
 		local tc=sg:GetFirst()
 		while tc do
-			if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_DISABLE)
