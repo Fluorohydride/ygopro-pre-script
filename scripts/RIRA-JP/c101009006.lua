@@ -36,7 +36,7 @@ end
 function c101009006.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if not a or not b then return false end
+	if not a or not d then return false end
 	if a:IsControler(1-tp) then a,d=d,a end
 	return a~=e:GetHandler() and a:IsFaceup() and a:IsSetCard(0x11a) and a:IsRelateToBattle() and d:IsFaceup() and d:IsRelateToBattle()
 end
@@ -48,7 +48,7 @@ function c101009006.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if not a or not b then return end
+	if not a or not d then return end
 	if a:IsControler(1-tp) then a,d=d,a end
 	if a:IsFaceup() and a:IsRelateToBattle() and d:IsFaceup() and d:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(c)
@@ -58,11 +58,22 @@ function c101009006.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 		a:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e2:SetValue(math.ceil(d:GetBaseAttack()/2))
+		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_DAMAGE_STEP_END)
+		e2:SetOperation(c101009006.atkop2)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 		d:RegisterEffect(e2)
+	end
+end
+function c101009006.atkop2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToBattle() then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetValue(math.ceil(c:GetBaseAttack()/2))
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		c:RegisterEffect(e1)
 	end
 end
 function c101009006.regcon(e,tp,eg,ep,ev,re,r,rp)

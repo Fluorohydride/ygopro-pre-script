@@ -72,7 +72,7 @@ function c101009021.cfilter(c,tp)
 	return c:IsRace(RACE_WINDBEAST) and c:GetPreviousControler()==tp
 end
 function c101009021.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101009021.cfilter,1,nil,tp)
+	return eg:IsExists(c101009021.cfilter,1,e:GetHandler(),tp)
 end
 function c101009021.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
