@@ -40,6 +40,7 @@ function c101009065.reptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101009065,0))
 			sg=sg:Select(tp,1,1,nil)
 		end
+		sg:KeepAlive()
 		e:SetLabelObject(sg)
 		return true
 	else return false end
@@ -50,6 +51,8 @@ function c101009065.repval(e,c)
 end
 function c101009065.repop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+	local g=e:GetLabelObject()
+	g:DeleteGroup()
 end
 function c101009065.repfilter2(c,tp)
 	return c:IsLocation(LOCATION_ONFIELD) and c:IsControler(1-tp)
@@ -64,10 +67,13 @@ function c101009065.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101009065,0))
 			sg=sg:Select(tp,1,1,nil)
 		end
+		sg:KeepAlive()
 		e:SetLabelObject(sg)
 		return true
 	else return false end
 end
 function c101009065.repop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
+	local g=e:GetLabelObject()
+	g:DeleteGroup()
 end

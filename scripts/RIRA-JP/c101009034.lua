@@ -26,7 +26,8 @@ end
 function c101009034.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c101009034.cfilter,1,nil,tp) end
 	local g=Duel.SelectReleaseGroup(tp,c101009034.cfilter,1,1,nil,tp)
-	e:SetLabel(c101009034.getsum(g:GetFirst()))
+	local sum=math.max(g:GetFirst():GetTextAttack(),0)+math.max(g:GetFirst():GetTextDefense(),0)
+	e:SetLabel(sum)
 	Duel.Release(g,REASON_COST)
 end
 function c101009034.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
