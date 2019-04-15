@@ -67,7 +67,7 @@ function c101009027.splimit(e,c,tp,sumtp,sumpos)
 	return c~=e:GetHandler()
 end
 function c101009027.tdfilter(c)
-	return (not c:IsLocation(LOCATION_REMOVED) or c:IsFaceup()) and c:IsAbleToDeck()
+	return (not c:IsLocation(LOCATION_REMOVED) or c:IsFaceup()) and c:IsAbleToDeck() and c:IsType(TYPE_MONSTER)
 end
 function c101009027.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

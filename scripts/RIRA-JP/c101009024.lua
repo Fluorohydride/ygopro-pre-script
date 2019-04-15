@@ -27,7 +27,7 @@ end
 function c101009024.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if not a or not b then return false end
+	if not a or not d then return false end
 	if a:IsControler(1-tp) then return d:IsFaceup()
 	else return a:IsFaceup() end
 end
