@@ -146,7 +146,7 @@ function c101009011.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101009011.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsLocation(LOCATION_HAND+LOCATION_DECK)
-		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==tp
+		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==tp and not c:IsReason(REASON_REDIRECT)
 end
 function c101009011.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101009011.cfilter,1,e:GetHandler(),tp)
