@@ -15,7 +15,7 @@ function c101009101.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101009101.costfilter(c)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsType(TYPE_MONSTER)
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_MONSTER)
 		and not c:IsSummonableCard() and not c:IsType(TYPE_TOKEN) and c:IsAbleToRemoveAsCost()
 end
 function c101009101.cost(e,tp,eg,ep,ev,re,r,rp,chk)
