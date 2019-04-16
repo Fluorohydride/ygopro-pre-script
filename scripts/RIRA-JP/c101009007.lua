@@ -21,7 +21,7 @@ function c101009007.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x107))
+	e2:SetTarget(c101009007.tgtg)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 end
