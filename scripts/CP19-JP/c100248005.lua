@@ -96,8 +96,9 @@ function c100248005.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100248005.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local tc=Duel.SelectMatchingCard(tp,c100248005.desfilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
-	if tc then
-		Duel.Destroy(tc,REASON_EFFECT)
+	local g=Duel.SelectMatchingCard(tp,c100248005.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	if g:GetCount()>0 then
+		Duel.HintSelection(g)
+		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

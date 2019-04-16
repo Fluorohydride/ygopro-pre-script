@@ -18,7 +18,7 @@ function c100248010.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100248010,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,100248010+100)
 	e2:SetTarget(c100248010.target)
 	e2:SetOperation(c100248010.operation)
@@ -54,7 +54,7 @@ function c100248010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100248010.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE) then
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local g=Duel.SelectMatchingCard(tp,c100248010.filter,tp,LOCATION_DECK,0,1,1,nil)
 		local tc=g:GetFirst()

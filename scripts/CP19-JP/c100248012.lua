@@ -13,7 +13,7 @@ function c100248012.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100248012.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x5008) and c:GetSequence()<5
+	return c:IsFaceup() and c:GetSequence()<5
 		and c:IsType(TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS) and c:GetOriginalType()&TYPE_MONSTER==TYPE_MONSTER
 end
 function c100248012.filter1(c,e)

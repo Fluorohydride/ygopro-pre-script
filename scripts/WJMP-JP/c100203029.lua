@@ -29,7 +29,7 @@ function c100203029.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100203029.atkfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsAttackAbove(1)
+	return c:IsType(TYPE_LINK) and c:IsAttackAbove(1)
 end
 function c100203029.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100203029.atkfilter(chkc) end

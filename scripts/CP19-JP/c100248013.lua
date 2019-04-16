@@ -5,7 +5,7 @@ function c100248013.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100248013,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CUSTOM+100248013)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
@@ -25,7 +25,7 @@ function c100248013.initial_effect(c)
 	end
 end
 function c100248013.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x8) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsType(TYPE_MONSTER) and c:IsPreviousSetCard(0x8) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c100248013.regcon(e,tp,eg,ep,ev,re,r,rp)
@@ -51,7 +51,7 @@ function c100248013.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c100248013.atkfilter(c)
-	return c:IsFaceup()
+	return aux.nzatk(c) or aux.nzdef(c)
 end
 function c100248013.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -69,12 +69,12 @@ function c100248013.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(tc:GetBaseAttack()/2)
+		e1:SetValue(math.ceil(tc:GetBaseAttack()/2))
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_BASE_DEFENSE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e2:SetValue(tc:GetBaseDefense()/2)
+		e2:SetValue(math.ceil(tc:GetBaseDefense()/2))
 		tc:RegisterEffect(e2)
 	end
 end
