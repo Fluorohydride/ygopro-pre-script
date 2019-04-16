@@ -59,6 +59,7 @@
 - Yu-Gi-Oh! Duel Monsters x Monster Strike Collaboration Commemoration cards (MSC1-JP) : `100246XXX`
 - The Valuable Book 21 (VB21-JP) : `100247XXX`
 - Collectors Pack 2019 (CP19-JP) : `100248XXX`
+- Yu-Gi-Oh! Legacy of the Duelist: Link Evolution Duelist Complete Guide promotional card (LDLE-JPB) : `100249XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
