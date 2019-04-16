@@ -1,0 +1,54 @@
+--開運ミラクルストーン
+
+--Script by nekrozar
+function c100248024.initial_effect(c)
+	c:SetUniqueOnField(1,0,100248024)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e1)
+	--atk/def
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_SPELLCASTER))
+	e1:SetValue(c100248024.atkval)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	c:RegisterEffect(e2)
+	--draw
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100248024,0))
+	e3:SetCategory(CATEGORY_DRAW)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCountLimit(1)
+	e3:SetCondition(c100248024.drcon)
+	e3:SetTarget(c100248024.drtg)
+	e3:SetOperation(c100248024.drop)
+	c:RegisterEffect(e3)
+end
+function c100248024.atkfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x22f)
+end
+function c100248024.atkval(e,c)
+	local g=Duel.GetMatchingGroup(c100248024.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
+	return g:GetClassCount(Card.GetCode)*500
+end
+function c100248024.drcon(e,tp,eg,ep,ev,re,r,rp)
+	local a=Duel.GetAttacker()
+	local d=Duel.GetAttackTarget()
+	return (a:IsControler(tp) and a:IsSetCard(0x22f)) or (d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(0x22f))
+end
+function c100248024.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+end
+function c100248024.drop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Draw(tp,1,REASON_EFFECT)
+end
