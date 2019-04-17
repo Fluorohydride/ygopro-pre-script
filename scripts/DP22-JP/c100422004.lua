@@ -40,7 +40,7 @@ function c100422004.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100422004.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100422004.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100422004.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
@@ -62,7 +62,15 @@ function c100422004.drop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:SelectSubGroup(p,aux.dncheck,false,1,Duel.GetFieldGroupCount(p,LOCATION_DECK,0))
 	if sg then
 		Duel.ConfirmCards(1-p,sg)
-		local ct=Duel.SendtoDeck(sg,nil,1,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+		local og=Duel.GetOperatedGroup()
+		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_DECK)
+		if ct==0 then return end
+		Duel.SortDecktop(p,p,ct)
+		for i=1,ct do
+			local mg=Duel.GetDecktopGroup(p,1)
+			Duel.MoveSequence(mg:GetFirst(),1)
+		end
 		Duel.BreakEffect()
 		Duel.Draw(p,ct,REASON_EFFECT)
 	end

@@ -13,7 +13,7 @@ function c100422001.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100422001,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_HAND)
@@ -77,7 +77,6 @@ function c100422001.spcon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100422001.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100422001.spop2(e,tp,eg,ep,ev,re,r,rp)
@@ -86,7 +85,7 @@ function c100422001.spop2(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_SZONE,0,nil)
 		local ct=g:GetClassCount(Card.GetCode)
 		local dg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
-		if ct>0 and #dg>0 and Duel.SelectYesNo(to,aux.Stringid(100422001,2)) then
+		if ct>0 and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(100422001,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=dg:Select(tp,1,ct,nil)
