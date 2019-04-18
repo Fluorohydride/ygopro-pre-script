@@ -59,17 +59,19 @@ end
 function c101009061.lvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,c101009061.cffilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.ConfirmCards(1-tp,g)
-	Duel.ShuffleHand(tp)
-	local sg=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,g:GetFirst():GetCode())
-	local tc=sg:GetFirst()
-	while tc do
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetValue(-1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
-		tc=sg:GetNext()
+	if #g>0 then
+		Duel.ConfirmCards(1-tp,g)
+		Duel.ShuffleHand(tp)
+		local sg=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,g:GetFirst():GetCode())
+		local tc=sg:GetFirst()
+		while tc do
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_LEVEL)
+			e1:SetValue(-1)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+			tc:RegisterEffect(e1)
+			tc=sg:GetNext()
+		end
 	end
 end

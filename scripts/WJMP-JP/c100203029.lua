@@ -54,7 +54,8 @@ function c100203029.costfilter(c,tp,g)
 		and Duel.IsExistingMatchingCard(c100203029.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c,Group.FromCards(c))
 end
 function c100203029.desfilter(c,g)
-	return not g:IsContains(c:GetEquipTarget())
+	local ec=c:GetEquipTarget()
+	return not ec or not g:IsContains(ec)
 end
 function c100203029.fselect(g,tp)
 	if Duel.IsExistingMatchingCard(c100203029.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,g:GetCount(),g,g) then
