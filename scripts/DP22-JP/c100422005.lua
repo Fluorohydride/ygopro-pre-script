@@ -60,24 +60,25 @@ function c100422005.plcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
-function c100422005.plfilter(c)
-	return c:IsCode(31893528,67287533,94772232,30170981)
+function c100422005.plfilter(c,tp,mc)
+	if not c:IsCode(31893528,67287533,94772232,30170981) then return false end
+	if Duel.IsPlayerAffectedByEffect(tp,16625614) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),0,0x11,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181) then return true end
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if mc:IsLocation(LOCATION_SZONE) then ft=ft+1 end
+	return ft>0 and not c:IsForbidden()
 end
 function c100422005.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100422005.plfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,nil)
-		and (Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-			or Duel.IsPlayerAffectedByEffect(tp,16625614) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-				and Duel.IsPlayerCanSpecialSummonMonster(tp,0,0,0x11,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181)) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100422005.plfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,nil,tp,e:GetHandler()) end
 end
 function c100422005.plop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local res=Duel.IsPlayerAffectedByEffect(tp,16625614) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,0,0,0x11,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181)
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 and not res then return end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(94212438,1))
-	local g=Duel.SelectMatchingCard(tp,c100422005.plfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100422005,2))
+	local g=Duel.SelectMatchingCard(tp,c100422005.plfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil,tp,c)
 	local tc=g:GetFirst()
-	if tc and res and Duel.SelectYesNo(tp,aux.Stringid(16625614,0)) then
+	if tc and Duel.IsPlayerAffectedByEffect(tp,16625614) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,tc:GetCode(),0,0x11,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181)
+		and Duel.SelectYesNo(tp,aux.Stringid(16625614,0)) then
 		tc:AddMonsterAttribute(TYPE_NORMAL,ATTRIBUTE_DARK,RACE_FIEND,1,0,0)
 		Duel.SpecialSummonStep(tc,181,tp,tp,true,false,POS_FACEUP)
 		--immune
