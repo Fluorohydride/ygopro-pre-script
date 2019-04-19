@@ -35,7 +35,7 @@ function c101009058.efilter(e,re)
 	return re:IsActiveType(TYPE_MONSTER)
 end
 function c101009058.drfilter1(c)
-	return not c:IsType(TYPE_EFFECT) and c:IsFaceup()
+	return (not c:IsType(TYPE_EFFECT) and c:IsFaceup()) or c:IsFacedown()
 end
 function c101009058.drfilter2(c,tp)
 	return c:IsType(TYPE_EFFECT) and c:GetSummonPlayer()==1-tp and c:IsFaceup()
