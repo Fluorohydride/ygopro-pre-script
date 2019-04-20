@@ -31,13 +31,12 @@ function c101009067.activate(e,tp,eg,ep,ev,re,r,rp)
 			local atk=0
 			local tc=sg:GetFirst()
 			while tc do
-				local tatk=tc:GetAttack()
-				if tatk<0 then tatk=0 end
-				atk=atk+tatk
+				atk=atk+math.max(tc:GetAttack(),0)
 				tc=sg:GetNext()
 			end
-			Duel.Damage(1-tp,atk,REASON_EFFECT)
-			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+			if atk>0 and Duel.Damage(1-tp,atk,REASON_EFFECT)~=0 then
+				Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+			end
 		end
 		Duel.ShuffleHand(1-tp)
 	end
