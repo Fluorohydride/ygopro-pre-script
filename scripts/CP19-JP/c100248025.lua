@@ -15,12 +15,12 @@ function c100248025.initial_effect(c)
 end
 function c100248025.filter(c,e,tp)
 	local lv=c:GetOriginalLevel()
-	return lv>0 and c:IsFaceup() and c:IsSetCard(0x22f)
+	return lv>1 and c:IsFaceup() and c:IsSetCard(0x22f)
 		and Duel.IsExistingMatchingCard(c100248025.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,lv)
 end
 function c100248025.spfilter(c,e,tp,clv)
 	local lv=c:GetOriginalLevel()
-	return lv>0 and lv<clv and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return lv>0 and lv==clv-1 and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100248025.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100248025.filter(chkc,e,tp) end
