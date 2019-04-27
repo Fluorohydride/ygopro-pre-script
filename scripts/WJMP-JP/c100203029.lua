@@ -69,7 +69,7 @@ function c100203029.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetReleaseGroup(tp):Filter(c100203029.costfilter,nil,tp,lg)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local sg=rg:SelectSubGroup(tp,c100203029.fselect,false,1,99,tp)
-	ct=Duel.Release(sg,REASON_COST)
+	local ct=Duel.Release(sg,REASON_COST)
 	e:SetLabel(ct)
 end
 function c100203029.destg(e,tp,eg,ep,ev,re,r,rp,chk)
