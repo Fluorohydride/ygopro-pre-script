@@ -1,4 +1,5 @@
 --蜂军-灵弓之梓弓蜂
+--Scripted by 龙骑
 function c100248039.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

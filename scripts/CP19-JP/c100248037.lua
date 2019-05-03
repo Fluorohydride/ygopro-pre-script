@@ -1,4 +1,5 @@
 --蜂军-连击之双弩蜂
+--Scripted by 龙骑
 function c100248037.initial_effect(c)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)

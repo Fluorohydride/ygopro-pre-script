@@ -1,4 +1,5 @@
 --No.60 刻不知之杜加雷斯
+--Scripted by 龙骑
 function c100248031.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,4,2)
