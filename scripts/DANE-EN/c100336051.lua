@@ -1,3 +1,4 @@
+--Scripted by FW空鸽
 --装弹枪管狂怒龙
 function c100336051.initial_effect(c)
 	--fusion material
