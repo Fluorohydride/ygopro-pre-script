@@ -1,4 +1,5 @@
---蜂军-毒针之针刺蜂
+--B・F－毒針のニードル
+--
 --Scripted by 龙骑
 function c100248036.initial_effect(c)
 	--serch

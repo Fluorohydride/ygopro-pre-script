@@ -1,4 +1,4 @@
---Danger! Suspense! Secrets!
+--Danger! Excitement! Mystery!
 --
 --Script by Real_Scl
 function c101008083.initial_effect(c)
