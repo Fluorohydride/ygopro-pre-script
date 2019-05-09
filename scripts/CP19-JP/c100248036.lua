@@ -2,8 +2,9 @@
 --
 --Scripted by 龙骑
 function c100248036.initial_effect(c)
-	--serch
+	--search
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100248036,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -17,6 +18,7 @@ function c100248036.initial_effect(c)
 	c:RegisterEffect(e2)	
 	--disable
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100248036,1))
 	e3:SetCategory(CATEGORY_DISABLE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetRange(LOCATION_MZONE)
@@ -29,7 +31,7 @@ function c100248036.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100248036.thfilter(c)
-	return c:IsSetCard(0x22c) and c:IsAbleToHand() and not c:IsCode(100248036)
+	return c:IsSetCard(0x22c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(100248036)
 end
 function c100248036.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100248036.thfilter,tp,LOCATION_DECK,0,1,nil) end

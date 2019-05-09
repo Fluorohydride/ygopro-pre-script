@@ -9,8 +9,8 @@ function c100248037.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,100248037)
-	e1:SetTarget(c100248037.sstg)
-	e1:SetOperation(c100248037.ssop)
+	e1:SetTarget(c100248037.sptg)
+	e1:SetOperation(c100248037.spop)
 	c:RegisterEffect(e1)
 	--Double attack
 	local e2=Effect.CreateEffect(c)
@@ -19,16 +19,17 @@ function c100248037.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-function c100248037.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100248037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function c100248037.ssop(e,tp,eg,ep,ev,re,r,rp)
+function c100248037.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-	local e1=Effect.CreateEffect(e:GetHandler())
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
