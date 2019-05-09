@@ -20,16 +20,17 @@ function c101008090.dacon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101008090.cfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsAbleToEnterBP()
 end
 function c101008090.filter(c)
-	return c:IsSetCard(0x122) and c:IsType(TYPE_MONSTER) and not c:IsHasEffect(EFFECT_DIRECT_ATTACK)
+	return c:IsSetCard(0x122) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and not c:IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
-function c101008090.datg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101008090.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101008090.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101008090.filter,tp,LOCATION_MZONE,0,1,nil) end
-	local ft=Duel.GetMatchingGroupCount(c101008090.filter,tp,LOCATION_MZONE,0,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,c101008090.filter,tp,LOCATION_MZONE,0,1,ft,nil)
+	local ct=Duel.GetMatchingGroupCount(c101008090.filter,tp,LOCATION_MZONE,0,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local g=Duel.SelectTarget(tp,c101008090.filter,tp,LOCATION_MZONE,0,1,ct,nil)
 end
 function c101008090.dafilter(c,e)
-	return c:IsSetCard(0x122) and c:IsType(TYPE_MONSTER) and not c:IsHasEffect(EFFECT_DIRECT_ATTACK) and c:IsRelateToEffect(e)
+	return not c:IsHasEffect(EFFECT_DIRECT_ATTACK) and c:IsRelateToEffect(e)
 end
 function c101008090.daop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
