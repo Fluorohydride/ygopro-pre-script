@@ -16,9 +16,6 @@ end
 function c101008085.spfilter(c,e,tp)
 	return c:IsSetCard(0x11e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c101008085.spfilter2(g)
-	return g:GetClassCount(Card.GetCode)==3
-end
 function c101008085.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local dg=Duel.GetMatchingGroup(c101008085.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
@@ -30,7 +27,7 @@ function c101008085.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101008085.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or g:GetClassCount(Card.GetCode)<3 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local sg=g:SelectSubGroup(tp,c101008085.spfilter2,false,3,3)
+	local sg=g:SelectSubGroup(tp,aux.dncheck,false,3,3)
 	if #sg>0 then
 		Duel.ConfirmCards(1-tp,sg)
 		local tc=sg:RandomSelect(1-tp,1):GetFirst()
