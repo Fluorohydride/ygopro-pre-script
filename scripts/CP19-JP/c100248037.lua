@@ -11,13 +11,13 @@ function c100248037.initial_effect(c)
 	e1:SetCountLimit(1,100248037)
 	e1:SetTarget(c100248037.sstg)
 	e1:SetOperation(c100248037.ssop)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 	--Double attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_EXTRA_ATTACK)
 	e2:SetValue(1)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
 function c100248037.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -31,7 +31,7 @@ function c100250007.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and tc:IsType(TYPE_LINK) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	elseif not tc:IsType(TYPE_LINK) then
-		Duel.SendtoGrave(e:GetHandler(),REASON_DISCARD)  
+		Duel.SendtoGrave(e:GetHandler(),REASON_DISCARD)
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

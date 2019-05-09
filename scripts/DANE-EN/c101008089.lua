@@ -63,7 +63,7 @@ function c101008089.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc==hc then tc=g:GetNext() end
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
-		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE) 
+		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
 		Duel.Remove(hc,POS_FACEUP,REASON_EFFECT)
 	end
 end

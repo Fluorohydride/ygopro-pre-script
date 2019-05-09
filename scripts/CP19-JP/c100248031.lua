@@ -4,7 +4,7 @@
 function c100248031.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,4,2)
-	c:EnableReviveLimit()  
+	c:EnableReviveLimit()
 	--draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100248031,0))
@@ -26,7 +26,7 @@ function c100248031.initial_effect(c)
 	e2:SetCost(c100248031.cost)
 	e2:SetTarget(c100248031.target2)
 	e2:SetOperation(c100248031.operation2)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 	--double attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100248031,2))
@@ -99,7 +99,7 @@ function c100248031.operation2(e,tp,eg,ep,ev,re,r,rp)
 	else
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)
 	end
-	Duel.RegisterEffect(e1,tp) 
+	Duel.RegisterEffect(e1,tp)
 end
 function c100248031.tgfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER)

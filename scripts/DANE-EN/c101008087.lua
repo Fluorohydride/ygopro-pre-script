@@ -35,7 +35,7 @@ function c101008087.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetValue(-1000)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 end
 function c101008087.rmtg(e,c)
 	return c:GetOwner()~=e:GetHandlerPlayer() and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)

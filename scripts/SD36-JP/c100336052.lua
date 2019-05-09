@@ -4,7 +4,7 @@
 function c100336052.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON),2,2,c100336052.lcheck)
-	c:EnableReviveLimit()  
+	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function c100336052.initial_effect(c)
 	e1:SetCost(c100336052.cost)
 	e1:SetTarget(c100336052.target)
 	e1:SetOperation(c100336052.operation)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 end
 function c100336052.lcheck(g,lc)
 	return g:IsExists(Card.IsSetCard,1,nil,0x102)
