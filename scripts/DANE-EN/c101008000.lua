@@ -1,4 +1,6 @@
---禁采的地精
+--Gnomaterial
+--
+--Scripted by 龙骑
 function c101008000.initial_effect(c)
 	--disable
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---蜂军-决战之巨弩炮蜂
+--B・F－決戦のビッグ・バリスタ
+--
+--Scripted by 龙骑
 function c100248042.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

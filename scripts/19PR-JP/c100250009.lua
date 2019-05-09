@@ -1,4 +1,6 @@
---虫忍 叶隐蓑
+--虫忍 ハガクレミノ
+--
+--Scripted by 龙骑
 function c100250009.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,nil,2,2,c100250009.lcheck)

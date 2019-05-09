@@ -1,4 +1,7 @@
---拓扑逻辑零衔尾蛇
+--トポロジック・ゼロヴォロス
+--
+--Scripted by 龙骑
+--not fully implemented
 function c100336041.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2)

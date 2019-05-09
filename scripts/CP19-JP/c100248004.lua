@@ -1,4 +1,6 @@
---糖果屋
+--おかしの家
+--
+--Scripted by 龙骑
 function c100248004.initial_effect(c)
 	 --Activate
 	local e1=Effect.CreateEffect(c)
