@@ -1,4 +1,6 @@
---洛戈之焰
+--Loge's Flame
+--
+--Scripted by 龙骑
 function c101008091.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

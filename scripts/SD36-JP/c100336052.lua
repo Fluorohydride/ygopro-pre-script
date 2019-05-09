@@ -1,4 +1,6 @@
---削短枪管龙
+--ソーンヴァレル・ドラゴン
+--
+--Scripted by 龙骑
 function c100336052.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON),2,2,c100336052.lcheck)

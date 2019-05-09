@@ -1,4 +1,6 @@
---泥沼的泥龙王
+--Muddy Mudragon
+--
+--Scripted by 龙骑
 function c101008081.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

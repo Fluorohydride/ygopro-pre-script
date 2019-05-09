@@ -1,4 +1,6 @@
---锁龙蛇的束缚
+--Saryuja's Shackles
+--
+--Scripted by 龙骑
 function c101008082.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

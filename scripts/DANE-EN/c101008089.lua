@@ -1,4 +1,6 @@
---女武神的拥抱
+--Valkyrie's Embrace
+--
+--Scripted by 龙骑
 function c101008089.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
