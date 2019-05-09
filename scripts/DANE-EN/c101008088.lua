@@ -45,7 +45,6 @@ function c101008088.initial_effect(c)
 	e5:SetCondition(c101008088.atkcon)
 	e5:SetOperation(c101008088.atkop)
 	c:RegisterEffect(e5)
-
 end
 function c101008088.filter(c)
 	local ct1,ct2=c:GetUnionCount()

@@ -4,7 +4,7 @@
 function c100250009.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,nil,2,2,c100250009.lcheck)
-	c:EnableReviveLimit() 
+	c:EnableReviveLimit()
 	--cannot be target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -13,7 +13,7 @@ function c100250009.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(c100250009.tgcon)
 	e1:SetValue(aux.imval1)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 	--SpecialSummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -24,7 +24,7 @@ function c100250009.initial_effect(c)
 	e2:SetCondition(c100250009.spcon)
 	e2:SetTarget(c100250009.sptg)
 	e2:SetOperation(c100250009.spop)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 end
 function c100250009.lcheck(g,lc)
 	return g:GetClassCount(Card.GetCode)==g:GetCount()

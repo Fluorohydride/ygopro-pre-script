@@ -40,7 +40,8 @@ function c101008089.cfilter2(c)
 	return c:IsFacedown() or not c:IsSetCard(0x122)
 end
 function c101008089.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101008089.cfilter,tp,LOCATION_MZONE,0,1,nil) and not  Duel.IsExistingMatchingCard(c101008089.cfilter2,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c101008089.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		and not Duel.IsExistingMatchingCard(c101008089.cfilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101008089.rmfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x122) and c:IsPosition(POS_ATTACK)

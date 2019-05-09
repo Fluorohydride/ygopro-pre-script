@@ -17,7 +17,7 @@ function c100248004.initial_effect(c)
 	e2:SetCondition(c100248004.descon)
 	e2:SetTarget(c100248004.destg)
 	e2:SetOperation(c100248004.desop)
-	c:RegisterEffect(e2)   
+	c:RegisterEffect(e2)
 end
 function c100248004.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
