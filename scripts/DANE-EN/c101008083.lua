@@ -24,7 +24,7 @@ function c101008083.thfilter(c)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x11e) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101008083.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101008084.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101008083.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101008083.activate(e,tp,eg,ep,ev,re,r,rp)
