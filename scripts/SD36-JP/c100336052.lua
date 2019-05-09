@@ -1,8 +1,10 @@
---削短枪管龙
+--ソーンヴァレル・ドラゴン
+--
+--Scripted by 龙骑
 function c100336052.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON),2,2,c100336052.lcheck)
-	c:EnableReviveLimit()  
+	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +15,7 @@ function c100336052.initial_effect(c)
 	e1:SetCost(c100336052.cost)
 	e1:SetTarget(c100336052.target)
 	e1:SetOperation(c100336052.operation)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 end
 function c100336052.lcheck(g,lc)
 	return g:IsExists(Card.IsSetCard,1,nil,0x102)
@@ -34,20 +36,16 @@ function c100336052.spfilter(c,e,tp)
 end
 function c100336052.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 and tc:IsType(TYPE_LINK) and Duel.SelectYesNo(tp,aux.Stringid(100336052,0)) then
-		local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),tc:GetLink())
-		if ft<=0 then return end
-		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 and tc:IsType(TYPE_LINK) then
+		local ct=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),tc:GetLink())
+		if ct<=0 then return end
+		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100336052.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
-		repeat
+		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(100336052,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=g:Select(tp,1,1,nil)
-			local tc=sg:GetFirst()
-			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			g:Remove(Card.IsCode,nil,tc:GetCode())
-			ft=ft-1
-		until ft<=0 or g:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(100336052,1))
-		Duel.SpecialSummonComplete()
+			local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ct)
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+		end
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)

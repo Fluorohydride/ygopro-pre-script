@@ -1,4 +1,6 @@
---天马之翼
+--Pegasus Wing
+--
+--Scripted by 龙骑
 function c101008090.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

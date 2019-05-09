@@ -1,4 +1,6 @@
---泥沼的泥龙王
+--Muddy Mudragon
+--
+--Scripted by 龙骑
 function c101008081.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
@@ -8,6 +10,7 @@ function c101008081.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1,101008081)
 	e1:SetCondition(c101008081.spcon)
 	e1:SetTarget(c101008081.sptg)
 	e1:SetOperation(c101008081.spop)

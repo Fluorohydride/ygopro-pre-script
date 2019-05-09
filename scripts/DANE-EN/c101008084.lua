@@ -17,7 +17,7 @@ function c101008084.initial_effect(c)
 	e2:SetCode(EFFECT_EQUIP_LIMIT)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetValue(c101008084.eqlimit)
-	c:RegisterEffect(e2)   
+	c:RegisterEffect(e2)
 	--atk&def up
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)

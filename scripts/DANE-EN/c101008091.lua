@@ -1,11 +1,13 @@
---洛戈之焰
+--Loge's Flame
+--
+--Scripted by 龙骑
 function c101008091.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--cannot attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -13,7 +15,7 @@ function c101008091.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetTarget(c101008091.atktarget)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -23,7 +25,7 @@ function c101008091.initial_effect(c)
 	e3:SetCondition(c101008091.spcon)
 	e3:SetTarget(c101008091.sptg)
 	e3:SetOperation(c101008091.spop)
-	c:RegisterEffect(e3) 
+	c:RegisterEffect(e3)
 end
 function c101008091.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x122)

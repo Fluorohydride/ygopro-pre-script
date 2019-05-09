@@ -1,4 +1,6 @@
---女武神的拥抱
+--Valkyrie's Embrace
+--
+--Scripted by 龙骑
 function c101008089.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -61,7 +63,7 @@ function c101008089.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc==hc then tc=g:GetNext() end
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
-		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE) 
+		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
 		Duel.Remove(hc,POS_FACEUP,REASON_EFFECT)
 	end
 end
