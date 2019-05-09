@@ -1,4 +1,5 @@
---连接苹果
+--リンクアップル
+--
 --Scripted by 龙骑
 function c100250007.initial_effect(c)
 	--special summon

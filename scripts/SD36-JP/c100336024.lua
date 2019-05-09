@@ -1,4 +1,5 @@
---速射扳机
+--ラピッド・トリガー
+--
 --Scripted by 龙骑
 function c100336024.initial_effect(c)
 	--Activate
