@@ -44,11 +44,12 @@ function c101008089.rmcon(e,tp,eg,ep,ev,re,r,rp)
 		and not Duel.IsExistingMatchingCard(c101008089.cfilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101008089.rmfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x122) and c:IsPosition(POS_ATTACK)
+	return c:IsFaceup() and c:IsSetCard(0x122) and c:IsPosition(POS_FACEUP_ATTACK)
 end
 function c101008089.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c101008089.rmfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101008089.rmfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	Duel.SelectTarget(tp,c101008089.rmfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

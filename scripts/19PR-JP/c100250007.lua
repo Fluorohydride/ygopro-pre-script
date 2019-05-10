@@ -5,7 +5,7 @@ function c100250007.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100250007,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
+	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,100250007)
@@ -38,8 +38,9 @@ function c100250007.spop(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsType(TYPE_LINK) then
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		else
-			Duel.SendtoGrave(e:GetHandler(),REASON_DISCARD)
-			Duel.Draw(tp,1,REASON_EFFECT)
+			if Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT+REASON_DISCARD)~=0 then
+				Duel.Draw(tp,1,REASON_EFFECT)
+			end
 		end
 	end
 end

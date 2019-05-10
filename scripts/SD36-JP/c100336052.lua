@@ -24,20 +24,21 @@ function c100336052.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
-function c100336052.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100336052.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c100336052.spfilter(c,e,tp)
-	return c:IsSetCard(0x102) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100336052.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 and tc:IsType(TYPE_LINK) then
-		local ct=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),tc:GetLink())
+		local ct=math.min((Duel.GetLocationCount(tp,LOCATION_MZONE)),tc:GetLink())
 		if ct<=0 then return end
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100336052.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)

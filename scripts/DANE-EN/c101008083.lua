@@ -18,7 +18,7 @@ function c101008083.cfilter(c)
 end
 function c101008083.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101008083.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c101008083.cfilter,1,1,REASON_COST)
+	Duel.DiscardHand(tp,c101008083.cfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c101008083.thfilter(c)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x11e) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
