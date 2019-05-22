@@ -15,7 +15,7 @@ function c100248036.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--disable
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100248036,1))

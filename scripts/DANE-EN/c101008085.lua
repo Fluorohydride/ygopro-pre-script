@@ -11,7 +11,7 @@ function c101008085.initial_effect(c)
 	e1:SetCountLimit(1,101008085+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c101008085.target)
 	e1:SetOperation(c101008085.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c101008085.spfilter(c,e,tp)
 	return c:IsSetCard(0x11e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -10,7 +10,7 @@ function c101008086.initial_effect(c)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x122))
 	e1:SetValue(c101008086.val)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--to grave
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101008086,0))

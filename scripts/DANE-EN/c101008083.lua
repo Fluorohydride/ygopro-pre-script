@@ -11,7 +11,7 @@ function c101008083.initial_effect(c)
 	e1:SetCost(c101008083.cost)
 	e1:SetTarget(c101008083.target)
 	e1:SetOperation(c101008083.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c101008083.cfilter(c)
 	return c:IsLevelAbove(5) and c:IsSetCard(0x11e) and c:IsDiscardable()
