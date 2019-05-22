@@ -22,12 +22,13 @@ function c100251001.winfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x40) and c:IsType(TYPE_NORMAL)
 end
 function c100251001.cfilter(c)
-	return c:IsFacedown() or not c100251001.winfilter
+	return not c100251001.winfilter(c)
 end
 function c100251001.condition(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100251001.winfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(c100251001.winfilter,tp,LOCATION_MZONE,LOCATION_MZONE,c)
 	local ct=g:GetClassCount(Card.GetCode)
-	return ct==4 and not Duel.IsExistingMatchingCard(c100251001.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return ct==4 and not Duel.IsExistingMatchingCard(c100251001.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function c100251001.operation(e,tp,eg,ep,ev,re,r,rp)
 	local WIN_REASON_EXODIA = 0x10

@@ -30,16 +30,17 @@ function c100336001.descon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100336001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,c)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,nil)
 	if chk==0 then return c:IsDestructable() and g:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,c,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c100336001.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) and Duel.Destroy(e:GetHandler(),REASON_EFFECT)>0 then
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 		Duel.ConfirmCards(tp,g)
-		local tg=g:Select(tp,1,1,nil)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local tg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil)
 		if tg:GetCount()>0 then
 			Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 		end

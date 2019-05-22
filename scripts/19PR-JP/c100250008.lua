@@ -7,6 +7,8 @@ function c100250008.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,100250008)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCost(c100250008.cost)
@@ -29,9 +31,7 @@ function c100250008.cfilter(c)
 end
 function c100250008.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100250008.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100250008.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,c100250008.cfilter,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function c100250008.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -45,15 +45,15 @@ function c100250008.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function c100250008.spfilter(c,e,tp)
-	return (c:IsRace(RACE_AQUA) or c:IsRace(RACE_FISH) or c:IsRace(RACE_SEASERPENT)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function c100250008.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
+function c100250008.spfilter(c,e,tp)
+	return c:IsRace(RACE_FISH+RACE_AQUA+RACE_SEASERPENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function c100250008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
 		and Duel.IsExistingMatchingCard(c100250008.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
 end

@@ -22,7 +22,7 @@ function c100250010.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e3:SetValue(aux.ctg)
 	c:RegisterEffect(e3)
-	--CONTROL
+	--control
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_CONTROL)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -31,6 +31,12 @@ function c100250010.initial_effect(c)
 	e4:SetCondition(c100250010.ctcon)
 	e4:SetOperation(c100250010.ctop)
 	c:RegisterEffect(e4)
+	--destroy
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e5:SetCode(EVENT_LEAVE_FIELD)
+	e5:SetOperation(c100250010.desop)
+	c:RegisterEffect(e5)
 end
 function c100250010.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -77,7 +83,8 @@ function c100250010.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetPreviousEquipTarget()
 	local rc=ec:GetReasonCard()
-	return ec and rc and c:IsReason(REASON_LOST_TARGET) and ec:IsReason(REASON_MATERIAL) and (ec:IsReason(REASON_FUSION) or ec:IsReason(REASON_SYNCHRO) or ec:IsReason(REASON_XYZ) or ec:IsReason(REASON_LINK))
+	return ec and rc and c:IsReason(REASON_LOST_TARGET) and ec:IsReason(REASON_MATERIAL)
+		and (ec:IsReason(REASON_FUSION) or ec:IsReason(REASON_SYNCHRO) or ec:IsReason(REASON_XYZ) or ec:IsReason(REASON_LINK))
 end
 function c100250010.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -85,5 +92,11 @@ function c100250010.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=ec:GetReasonCard()
 	if rc then
 		Duel.GetControl(rc,tp)
+	end
+end
+function c100250010.desop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetHandler():GetFirstCardTarget()
+	if tc and tc:IsLocation(LOCATION_MZONE) then
+		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
