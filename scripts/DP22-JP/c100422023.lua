@@ -14,7 +14,7 @@ function c100422023.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Search
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100422023+100)
@@ -36,7 +36,8 @@ function c100422023.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)
 end
 function c100422023.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100422023.cfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(c100422023.cfilter,tp,LOCATION_GRAVE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100422023.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SYNCHRO)
 end
 function c100422023.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -63,11 +64,11 @@ function c100422023.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c100422023.lpfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x21) and c:IsControler(tp)
+function c100422023.lpfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x21)
 end
 function c100422023.lpcon(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c100422023.lpfilter,1,nil,tp)
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c100422023.lpfilter,1,nil)
 end
 function c100422023.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,3000)
