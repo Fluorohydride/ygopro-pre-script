@@ -1,37 +1,37 @@
 --捕食活動
 --
 --Scripted by 龙骑
-function c100422046.initial_effect(c)
+function c100422047.initial_effect(c)
     --spsummon
     local e1=Effect.CreateEffect(c)
     e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SPECIAL_SUMMON)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetCode(EVENT_FREE_CHAIN)
-    e1:SetCountLimit(1,100422046+EFFECT_COUNT_CODE_OATH)
-    e1:SetTarget(c100422046.sptg)
-    e1:SetOperation(c100422046.spop)
+    e1:SetCountLimit(1,100422047+EFFECT_COUNT_CODE_OATH)
+    e1:SetTarget(c100422047.sptg)
+    e1:SetOperation(c100422047.spop)
     c:RegisterEffect(e1)    
 end
-function c100422046.spfilter(c,e,tp)
+function c100422047.spfilter(c,e,tp)
     return c:IsSetCard(0x10f3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100422046.filter(c)
-    return c:IsSetCard(0xf3) and not c:IsCode(100422046) and c:IsAbleToHand()
+function c100422047.filter(c)
+    return c:IsSetCard(0xf3) and not c:IsCode(100422047) and c:IsAbleToHand()
 end
-function c100422046.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100422047.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.IsExistingMatchingCard(c100422046.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(c100422046.filter,tp,LOCATION_DECK,0,1,nil) end
+        and Duel.IsExistingMatchingCard(c100422047.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(c100422047.filter,tp,LOCATION_DECK,0,1,nil) end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function c100422046.spop(e,tp,eg,ep,ev,re,r,rp)
+function c100422047.spop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    local g=Duel.SelectMatchingCard(tp,c100422046.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+    local g=Duel.SelectMatchingCard(tp,c100422047.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
     if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
         Duel.BreakEffect()
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-        local g=Duel.SelectMatchingCard(tp,c100422046.filter,tp,LOCATION_DECK,0,1,1,nil)
+        local g=Duel.SelectMatchingCard(tp,c100422047.filter,tp,LOCATION_DECK,0,1,1,nil)
         if g:GetCount()>0 then
             Duel.SendtoHand(g,nil,REASON_EFFECT)
             Duel.ConfirmCards(1-tp,g)
@@ -43,10 +43,10 @@ function c100422046.spop(e,tp,eg,ep,ev,re,r,rp)
     e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
     e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
     e2:SetTargetRange(1,0)
-    e2:SetTarget(c100422046.splimit)
+    e2:SetTarget(c100422047.splimit)
     e2:SetReset(RESET_PHASE+PHASE_END)
     Duel.RegisterEffect(e2,tp)
 end
-function c100422046.splimit(e,c)
+function c100422047.splimit(e,c)
     return not c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_EXTRA)
 end
