@@ -35,6 +35,7 @@ function c100422012.initial_effect(c)
 end
 c100422012.material_setcode=0x8
 c100422012.dark_calling=true
+c100422012.card_code_list={94820406}
 function c100422012.splimit(e,se,sp,st)
 	return st==SUMMON_TYPE_FUSION+0x10
 end
@@ -46,32 +47,32 @@ function c100422012.filter(c,atk)
 end
 function c100422012.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(c100422012.filter,tp,0,LOCATION_MZONE,1,c,c:GetAttack()) end
-	local g=Duel.GetMatchingGroup(c100422012.filter,tp,0,LOCATION_MZONE,c,c:GetAttack())
+	if chk==0 then return Duel.IsExistingMatchingCard(c100422012.filter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack()) end
+	local g=Duel.GetMatchingGroup(c100422012.filter,tp,0,LOCATION_MZONE,nil,c:GetAttack())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetCount()*500)
 end
 function c100422012.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local g=Duel.GetMatchingGroup(c100422012.filter,tp,0,LOCATION_MZONE,nil,c:GetAttack())
-	local ct=Duel.Destroy(g,REASON_EFFECT)
-	if ct>0 then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
-		e1:SetValue(ct*200)
-		c:RegisterEffect(e1)
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		local g=Duel.GetMatchingGroup(c100422012.filter,tp,0,LOCATION_MZONE,nil,c:GetAttack())
+		local ct=Duel.Destroy(g,REASON_EFFECT)
+		if ct>0 then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+			e1:SetValue(ct*200)
+			c:RegisterEffect(e1)
+		end
 	end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OATH)
-	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(c100422012.atktg)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OATH)
+	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetTarget(c100422012.atktg)
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e2,tp)
 end
 function c100422012.atktg(e,c)
 	return not c:IsSetCard(0x8)

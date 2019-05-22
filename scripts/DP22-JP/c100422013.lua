@@ -40,6 +40,9 @@ function c100422013.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+function c100422013.cfilter(c)
+	return c:IsType(TYPE_FUSION) and c:IsFaceup()
+end
 function c100422013.atkcon(e)
-	return not Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler(),TYPE_FUSION)
+	return not Duel.IsExistingMatchingCard(c100422013.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
