@@ -1,4 +1,6 @@
---蜂军-必中之大头针蜂
+--B・F－必中のピン
+--
+--Scripted by 龙骑
 function c100248034.initial_effect(c)
     --spsummon
     local e1=Effect.CreateEffect(c)

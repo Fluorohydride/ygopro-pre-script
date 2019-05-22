@@ -1,4 +1,6 @@
---蜂军巢
+--B・F・N
+--
+--Scripted by 龙骑
 function c100248045.initial_effect(c)
     c:EnableCounterPermit(0x810)
     --activate

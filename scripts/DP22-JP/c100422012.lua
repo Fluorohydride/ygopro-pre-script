@@ -1,4 +1,6 @@
---邪心英雄 恶刃死魔
+--E－HERO マリシャス・ベイン
+--
+--Scripted by 龙骑
 function c100422012.initial_effect(c)
     --fusion material
     c:EnableReviveLimit()

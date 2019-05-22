@@ -1,4 +1,6 @@
---飞鲤
+--飛鯉
+--
+--Scripted by 龙骑
 function c100250008.initial_effect(c)
     --attack up
     local e1=Effect.CreateEffect(c)

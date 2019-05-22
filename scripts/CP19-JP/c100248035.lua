@@ -1,4 +1,6 @@
---蜂军-追击之飞镖蜂
+--B・F－追撃のダート
+--
+--Scripted by 龙骑
 function c100248035.initial_effect(c)
     --damge
     local e1=Effect.CreateEffect(c)

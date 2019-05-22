@@ -1,4 +1,6 @@
---No.76 谐调光师 渐变天乐斗士
+--No.76 諧調光師グラディエール
+--
+--Scripted by 龙骑
 function c100248032.initial_effect(c)
     --xyz summon
     aux.AddXyzProcedure(c,nil,7,2)

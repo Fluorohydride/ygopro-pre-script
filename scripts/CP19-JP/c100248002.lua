@@ -1,4 +1,6 @@
---活命水
+--命の水
+--
+--Scripted by 龙骑
 function c100248002.initial_effect(c)
     --Activate
     local e1=Effect.CreateEffect(c)

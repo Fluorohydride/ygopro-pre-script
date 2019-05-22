@@ -1,4 +1,6 @@
---地缚超神官
+--地縛超神官
+--
+--Scripted by 龙骑
 function c100422023.initial_effect(c)
     --spsummon
     local e1=Effect.CreateEffect(c)

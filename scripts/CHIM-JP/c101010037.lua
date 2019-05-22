@@ -1,4 +1,6 @@
---防火龙·暗流体
+--ファイアウォール・ドラゴン・ダークフルード
+--
+--Scripted by 龙骑
 function c101010037.initial_effect(c)
     c:EnableCounterPermit(0x514) 
     --link summon

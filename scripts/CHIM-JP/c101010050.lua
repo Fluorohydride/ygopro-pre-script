@@ -1,4 +1,6 @@
---炽天蝶
+--熾天蝶
+--
+--Scripted by 龙骑
 function c101010050.initial_effect(c)
     c:EnableCounterPermit(0x475)
     --link summon

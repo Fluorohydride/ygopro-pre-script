@@ -1,4 +1,6 @@
---科技属 钻头鱼
+--TG ドリル・フィッシュ
+--
+--Scripted by 龙骑
 function c100248027.initial_effect(c)
     --direct attack
     local e1=Effect.CreateEffect(c)

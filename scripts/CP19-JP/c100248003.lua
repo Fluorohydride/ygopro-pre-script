@@ -1,4 +1,6 @@
---星星金币
+--星の金貨
+--
+--Scripted by 龙骑
 function c100248003.initial_effect(c)
     --Activate
     local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---战斗无力化音速
+--バトル・スタン・ソニック
+--
+--Scripted by 龙骑
 function c100248029.initial_effect(c)
     --Activate
     local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---苏生之蜂玉
+--蘇生の蜂玉
+--
+--Scripted by 龙骑
 function c100248044.initial_effect(c)
     --Activate
     local e1=Effect.CreateEffect(c)

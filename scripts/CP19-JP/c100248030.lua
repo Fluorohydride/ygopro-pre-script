@@ -1,4 +1,6 @@
---No.26 次元孔路 绕道章鱼
+--No.26 次元孔路オクトバイパス
+--
+--Scripted by 龙骑
 function c100248030.initial_effect(c)
     --xyz summon
     aux.AddXyzProcedure(c,nil,3,2)

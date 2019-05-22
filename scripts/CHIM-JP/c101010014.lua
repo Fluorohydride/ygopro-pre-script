@@ -1,4 +1,6 @@
---辉光龙 赛弗特龙
+--輝光竜セイファート
+--
+--Scripted by 龙骑
 function c101010014.initial_effect(c)
     --Search
     local e1=Effect.CreateEffect(c)

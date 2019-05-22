@@ -1,4 +1,6 @@
---银河卫龙
+--銀河衛竜
+--
+--Scripted by 龙骑
 function c101010047.initial_effect(c)
     --link summon
     c:EnableReviveLimit()

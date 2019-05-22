@@ -1,4 +1,6 @@
---捕食植物 穗叶藤三尖狱花神
+--捕食植物トリフィオヴェルトゥム
+--
+--Scripted by 龙骑
 function c100422045.initial_effect(c)
     --fusion material
     c:EnableReviveLimit()

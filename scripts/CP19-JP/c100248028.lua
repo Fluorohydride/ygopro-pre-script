@@ -1,4 +1,6 @@
---科技属 透明金属骨架
+--TG メタル・スケルトン
+--
+--Scripted by 龙骑
 function c100248028.initial_effect(c)
     --special summon
     local e1=Effect.CreateEffect(c)

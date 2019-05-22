@@ -1,4 +1,6 @@
---天威之龙鬼神
+--天威の龍鬼神
+--
+--Scripted by 龙骑
 function c101010035.initial_effect(c)
     --synchro summon
     aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

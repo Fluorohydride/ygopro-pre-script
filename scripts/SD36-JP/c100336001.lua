@@ -1,4 +1,6 @@
---银色弹丸龙
+--シルバーヴァレット・ドラゴン
+--
+--Scripted by 龙骑
 function c100336001.initial_effect(c)
     --destroy
     local e1=Effect.CreateEffect(c)

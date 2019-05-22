@@ -1,4 +1,6 @@
---天威龙-宽恕蟠龙
+--天威龍－アシュナ
+--
+--Scripted by 龙骑
 function c101010019.initial_effect(c)
     --special summon
     local e1=Effect.CreateEffect(c)

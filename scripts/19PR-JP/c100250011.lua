@@ -1,4 +1,6 @@
---兽血奔腾
+--獣湧き肉躍り
+--
+--Scripted by 龙骑
 function c100250011.initial_effect(c)
     --activate
     local e1=Effect.CreateEffect(c)

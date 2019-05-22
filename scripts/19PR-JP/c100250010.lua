@@ -1,4 +1,6 @@
 --一惜二跳
+--
+--Scripted by 龙骑
 function c100250010.initial_effect(c)
     --Activate
     local e1=Effect.CreateEffect(c)

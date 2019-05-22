@@ -1,4 +1,6 @@
---机关傀儡-基冈提斯人偶
+--ギミック・パペット－ギガンテス・ドール
+--
+--Scripted by 龙骑
 function c100422034.initial_effect(c)
     --xyz summon
     aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x83),4,2)

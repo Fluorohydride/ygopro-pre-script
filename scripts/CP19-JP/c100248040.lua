@@ -1,4 +1,6 @@
---蜂军-突击之钩镰枪蜂
+--B・F－突撃のヴォウジェ
+--
+--Scripted by 龙骑
 function c100248040.initial_effect(c)
     --synchro summon
     aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_INSECT),aux.NonTuner(nil),1)
