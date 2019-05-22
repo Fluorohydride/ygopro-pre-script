@@ -29,19 +29,23 @@ function c101010035.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101010035.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and re:IsActiveType(TYPE_MONSTER)
 end
 function c101010035.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+	local rc=re:GetHandler()
+	if chk==0 then return rc:IsRelateToEffect(re) and rc:IsAbleToRemove() end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,rc,1,0,0)
 end
 function c101010035.rmop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
+	local rc=re:GetHandler()
+	if rc:IsRelateToEffect(re) then
+		Duel.Remove(rc,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function c101010035.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker()==e:GetHandler() and aux.bdgcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local bc=c:GetBattleTarget()
+	return Duel.GetAttacker()==c and aux.bdgcon(e,tp,eg,ep,ev,re,r,rp) and bc:IsType(TYPE_EFFECT)
 end
 function c101010035.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToBattle() end

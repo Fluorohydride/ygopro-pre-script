@@ -7,6 +7,7 @@ function c101010047.initial_effect(c)
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_DRAGON),2,2)
 	--destroy
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101010047,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_GRAVE+LOCATION_MZONE)
@@ -20,6 +21,7 @@ function c101010047.initial_effect(c)
 	c:RegisterEffect(e1)
 	--deck top
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101010047,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
@@ -34,7 +36,9 @@ function c101010047.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function c101010047.atkfilter(c)
-	return c:IsFaceup() and c:GetOriginalAttribute()==ATTRIBUTE_LIGHT and c:IsType(TYPE_XYZ) and c:GetOriginalRace()==RACE_DRAGON and c:IsSetCard(0x48)
+	local m=_G["c"..c:GetCode()]
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and m and m.xyz_number
+		and c:GetOriginalAttribute()==ATTRIBUTE_LIGHT and c:GetOriginalRace()==RACE_DRAGON
 end
 function c101010047.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101010047.atkfilter(chkc) end
@@ -45,7 +49,7 @@ end
 function c101010047.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local m=_G["c"..tc:GetCode()]
-	if not m then return false end
+	if not m then return end
 	local no=m.xyz_number
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -54,14 +58,14 @@ function c101010047.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(no*100)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 		tc:RegisterEffect(e1)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_FIELD)
-		e3:SetCode(EFFECT_CHANGE_DAMAGE)
-		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e3:SetTargetRange(0,1)
-		e3:SetValue(c101010047.val)
-		e3:SetReset(RESET_PHASE+PHASE_BATTLE)
-		Duel.RegisterEffect(e3,tp)
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_CHANGE_DAMAGE)
+		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e2:SetTargetRange(0,1)
+		e2:SetValue(c101010047.val)
+		e2:SetReset(RESET_PHASE+PHASE_BATTLE)
+		Duel.RegisterEffect(e2,tp)
 	end
 end
 function c101010047.val(e,re,dam,r,rp,rc)
@@ -77,7 +81,7 @@ function c101010047.tptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>1 end
 end
 function c101010047.tpop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101010047,0))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101010047,2))
 	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then

@@ -2,12 +2,13 @@
 --
 --Scripted by 龙骑
 function c101010037.initial_effect(c)
-	c:EnableCounterPermit(0x514)
+	c:EnableCounterPermit(0x152)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),3)
 	c:EnableReviveLimit()
 	--search
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101010037,1))
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -32,7 +33,6 @@ function c101010037.initial_effect(c)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,101010037)
 	e3:SetCondition(c101010037.discon)
 	e3:SetCost(c101010037.discost)
 	e3:SetTarget(c101010037.distg)
@@ -58,7 +58,7 @@ function c101010037.ctop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if ct>0 then
-		c:AddCounter(0x514,ct)
+		c:AddCounter(0x152,ct)
 	end
 end
 function c101010037.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -66,19 +66,19 @@ function c101010037.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function c101010037.atkval(e,c)
-	return c:GetCounter(0x514)*2500
+	return c:GetCounter(0x152)*2500
 end
 function c101010037.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and re:IsActiveType(TYPE_MONSTER)
 end
 function c101010037.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x514,1,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x514,1,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x152,1,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,0x152,1,REASON_COST)
 end
 function c101010037.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler() then
+	if Duel.GetAttacker()==e:GetHandler() then
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)
