@@ -10,7 +10,7 @@ function c100248003.initial_effect(c)
 	e1:SetCountLimit(1,100248003+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100248003.target)
 	e1:SetOperation(c100248003.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c100248003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_HAND,0,2,e:GetHandler()) and Duel.IsPlayerCanDraw(tp,2) end

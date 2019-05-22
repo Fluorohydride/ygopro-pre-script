@@ -20,7 +20,7 @@ function c101008081.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_FUSION_SUBSTITUTE)
 	e2:SetCondition(c101008081.subcon)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function c101008081.subcon(e)
 	return e:GetHandler():IsLocation(LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)

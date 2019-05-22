@@ -14,7 +14,7 @@ function c100248042.initial_effect(c)
 	e1:SetCost(c100248042.atkcost)
 	e1:SetTarget(c100248042.atktg)
 	e1:SetOperation(c100248042.atkop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--pierce
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)

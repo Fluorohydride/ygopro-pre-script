@@ -22,7 +22,7 @@ function c100248035.initial_effect(c)
 	e2:SetCountLimit(1,100248035+100)
 	e2:SetTarget(c100248035.target)
 	e2:SetOperation(c100248035.operation)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function c100248035.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

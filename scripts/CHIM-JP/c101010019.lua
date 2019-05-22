@@ -24,7 +24,7 @@ function c101010019.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c101010019.sptg2)
 	e2:SetOperation(c101010019.spop2)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function c101010019.spcfilter(c)
 	return c:IsType(TYPE_EFFECT) and c:IsFaceup()

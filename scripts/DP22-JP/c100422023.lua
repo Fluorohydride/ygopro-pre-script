@@ -30,7 +30,7 @@ function c100422023.initial_effect(c)
 	e3:SetCountLimit(1,100422023+200)
 	e3:SetCondition(c100422023.lpcon)
 	e3:SetOperation(c100422023.lpop)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 function c100422023.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)

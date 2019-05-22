@@ -10,7 +10,7 @@ function c100248029.initial_effect(c)
 	e1:SetCondition(c100248029.condition)
 	e1:SetTarget(c100248029.target)
 	e1:SetOperation(c100248029.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c100248029.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
@@ -25,7 +25,7 @@ function c100248029.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100248029.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100248029.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)
-	if Duel.NegateAttack()~=0 and #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(100248029,0)) then	
+	if Duel.NegateAttack()~=0 and #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(100248029,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)

@@ -10,7 +10,7 @@ function c100248002.initial_effect(c)
 	e1:SetCondition(c100248002.condition)
 	e1:SetTarget(c100248002.target)
 	e1:SetOperation(c100248002.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c100248002.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0

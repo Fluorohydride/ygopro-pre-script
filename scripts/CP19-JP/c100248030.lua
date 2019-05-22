@@ -55,7 +55,7 @@ function c100248030.daop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e3:SetReset(RESET_PHASE+PHASE_BATTLE)
-	Duel.RegisterEffect(e3,tp)	
+	Duel.RegisterEffect(e3,tp)
 end
 function c100248030.atkcon(e)
 	return e:GetHandler():GetFlagEffect(100248030)~=0

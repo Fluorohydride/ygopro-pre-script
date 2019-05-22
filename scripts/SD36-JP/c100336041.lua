@@ -13,7 +13,7 @@ function c100336041.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(c100336041.value)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100336041,0))

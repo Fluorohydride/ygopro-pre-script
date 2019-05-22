@@ -10,7 +10,7 @@ function c100422047.initial_effect(c)
 	e1:SetCountLimit(1,100422047+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100422047.sptg)
 	e1:SetOperation(c100422047.spop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c100422047.spfilter(c,e,tp)
 	return c:IsSetCard(0x10f3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

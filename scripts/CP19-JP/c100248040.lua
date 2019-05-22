@@ -4,7 +4,7 @@
 function c100248040.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_INSECT),aux.NonTuner(nil),1)
-	c:EnableReviveLimit()	
+	c:EnableReviveLimit()
 	--atk change
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)

@@ -13,7 +13,7 @@ function c101008000.initial_effect(c)
 	e1:SetCost(c101008000.cost)
 	e1:SetTarget(c101008000.target)
 	e1:SetOperation(c101008000.operation)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c101008000.cfilter(c,tp)
 	return c:GetSummonPlayer()==1-tp

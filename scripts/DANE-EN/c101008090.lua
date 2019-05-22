@@ -11,7 +11,7 @@ function c101008090.initial_effect(c)
 	e1:SetCondition(c101008090.dacon)
 	e1:SetTarget(c101008090.datg)
 	e1:SetOperation(c101008090.daop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c101008090.cfilter(c)
 	return c:IsType(TYPE_UNION)

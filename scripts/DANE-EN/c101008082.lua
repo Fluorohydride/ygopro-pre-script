@@ -11,7 +11,7 @@ function c101008082.initial_effect(c)
 	e1:SetCountLimit(1,101008082,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c101008082.drtg)
 	e1:SetOperation(c101008082.drop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c101008082.filter(c,tp)
 	return c:IsType(TYPE_LINK) and Duel.IsPlayerCanDraw(tp,c:GetLink())

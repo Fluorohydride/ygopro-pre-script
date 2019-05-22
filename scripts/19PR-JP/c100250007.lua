@@ -12,7 +12,7 @@ function c100250007.initial_effect(c)
 	e1:SetCost(c100250007.spcost)
 	e1:SetTarget(c100250007.sptg)
 	e1:SetOperation(c100250007.spop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c100250007.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
