@@ -51,7 +51,7 @@ function c100248040.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function c100248040.damfilter(c)
-	return c:IsSetCard(0x22c) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x22c) and c:IsFaceup()
 end
 function c100248040.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100248040.damfilter,tp,LOCATION_MZONE,0,1,nil) end

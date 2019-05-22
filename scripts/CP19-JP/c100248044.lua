@@ -4,6 +4,7 @@
 function c100248044.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100248044,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -13,6 +14,7 @@ function c100248044.initial_effect(c)
 	c:RegisterEffect(e1)
 	--indes
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100248044,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -40,7 +42,7 @@ function c100248044.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100248044.indfilter(c)
-	return c:GetFlagEffect(100248044)==0 and c:IsRace(RACE_INSECT)
+	return c:GetFlagEffect(100248044)==0 and c:IsRace(RACE_INSECT) and c:IsFaceup()
 end
 function c100248044.indtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100248044.indfilter(chkc) end

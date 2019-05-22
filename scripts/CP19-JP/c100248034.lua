@@ -39,7 +39,7 @@ function c100248034.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c100248034.damfilter(c)
-	return c:IsCode(100248034) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsCode(100248034)
 end
 function c100248034.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100248034.damfilter,tp,LOCATION_MZONE,0,1,nil) end
