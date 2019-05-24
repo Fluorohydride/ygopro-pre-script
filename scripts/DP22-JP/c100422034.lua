@@ -33,13 +33,15 @@ function c100422034.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function c100422034.filter(c)
-	return c:IsFaceup() and c:IsControlerCanBeChanged()
+	return c:IsControlerCanBeChanged()
 end
 function c100422034.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100422034.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100422034.filter,tp,0,LOCATION_MZONE,1,nil) end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return ft>0 and Duel.IsExistingTarget(c100422034.filter,tp,0,LOCATION_MZONE,1,nil) end
+	local ct=math.min(ft,2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g=Duel.SelectTarget(tp,c100422034.filter,tp,0,LOCATION_MZONE,1,2,nil)
+	local g=Duel.SelectTarget(tp,c100422034.filter,tp,0,LOCATION_MZONE,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,#g,0,0)
 end
 function c100422034.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -77,8 +79,8 @@ end
 function c100422034.lvfilter(c)
 	return c:IsFaceup() and not c:IsLevel(8) and c:GetLevel()>0
 end
-function c100422034.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100422034.lvfilter,tp,LOCATION_MZONE,0,1,nil) end
+function c100422034.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100422034.lvfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 end
 function c100422034.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100422034.lvfilter,tp,LOCATION_MZONE,0,nil)

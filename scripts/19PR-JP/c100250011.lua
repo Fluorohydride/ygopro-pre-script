@@ -19,7 +19,7 @@ function c100250011.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil and atk>=8000
 end
 function c100250011.spfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 end
 function c100250011.spfilter1(c,e,tp,chk)
 	return c100250011.spfilter(c,e,tp)

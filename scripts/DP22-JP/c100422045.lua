@@ -41,9 +41,9 @@ end
 function c100422045.atkfilter(c)
 	return c:IsFaceup() and c:GetCounter(0x1041)>0
 end
-function c100422045.atkval(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100422045.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local atk=g:GetSum(Card.GetAttack)
+function c100422045.atkval(e,c)
+	local g=Duel.GetMatchingGroup(c100422045.atkfilter,0,LOCATION_MZONE,LOCATION_MZONE,c)
+	local atk=g:GetSum(Card.GetBaseAttack)
 	return atk
 end
 function c100422045.cfilter(c,tp)
@@ -51,7 +51,7 @@ function c100422045.cfilter(c,tp)
 end
 function c100422045.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and eg:IsExists(c100422045.cfilter,1,nil,1-tp) and Duel.GetCurrentChain()==0
-		and e:GetHandler():GetSummonType(SUMMON_TYPE_FUSION)
+		and e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c100422045.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

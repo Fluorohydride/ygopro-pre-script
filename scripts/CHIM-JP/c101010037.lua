@@ -14,6 +14,7 @@ function c101010037.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(c101010037.ctcon)
+	e1:SetTarget(c101010037.cttg)
 	e1:SetOperation(c101010037.ctop)
 	c:RegisterEffect(e1)
 	--atk up
@@ -40,10 +41,13 @@ function c101010037.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101010037.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and Duel.IsExistingMatchingCard(c101010037.cfilter,tp,LOCATION_GRAVE,0,1,nil)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c101010037.cfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
+end
+function c101010037.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.IsExistingMatchingCard(c101010037.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function c101010037.cfilter2(c,type)
 	return c:IsRace(RACE_CYBERSE) and c:IsType(type)

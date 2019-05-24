@@ -70,6 +70,11 @@ function c101010035.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 		c:RegisterEffect(e2)
-		Duel.ChainAttack()
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_EXTRA_ATTACK)
+		e3:SetValue(1)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		c:RegisterEffect(e3)
 	end
 end

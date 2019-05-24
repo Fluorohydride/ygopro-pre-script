@@ -33,10 +33,12 @@ function c100248032.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCountLimit(1,100248032)
+	e4:SetHintTiming(0,TIMING_END_PHASE)
 	e4:SetTarget(c100248032.xyztg)
 	e4:SetOperation(c100248032.xyzop)
 	c:RegisterEffect(e4)
 end
+c100248032.xyz_number=76
 function c100248032.effilter(c)
 	return c:IsType(TYPE_MONSTER)
 end
@@ -53,7 +55,7 @@ function c100248032.attval(e,c)
 	return att
 end
 function c100248032.indval1(e,c)
-	return not c:GetBattleTarget():GetAttribute()~=c:GetAttribute()
+	return c:GetBattleTarget():GetAttribute()&c:GetAttribute()~=0
 end
 function c100248032.indval2(e,te,rp)
 	return rp==1-e:GetHandlerPlayer() and te:IsActivated() and te:GetHandler():GetAttribute()&e:GetHandler():GetAttribute()~=0
@@ -62,16 +64,16 @@ function c100248032.xyzfilter(c)
 	return c:IsType(TYPE_MONSTER)
 end
 function c100248032.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(c100248032.xyzfilter,tp,0,LOCATION_GRAVE,1,nil) and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
+	if chk==0 then return Duel.IsExistingTarget(c100248032.xyzfilter,tp,0,LOCATION_GRAVE,1,nil)
+		and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local g=Duel.SelectTarget(tp,c100248032.xyzfilter,tp,0,LOCATION_GRAVE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function c100248032.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and c:IsRelateToEffect(e) then
-		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
+	if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT) and tc:IsRelateToEffect(e) then
 		Duel.Overlay(c,Group.FromCards(tc))
 	end
 end

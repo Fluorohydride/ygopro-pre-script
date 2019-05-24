@@ -11,8 +11,8 @@ function c100248040.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
 	e1:SetCondition(c100248040.atkcon)
+	e1:SetCost(c100248040.atkcost)
 	e1:SetOperation(c100248040.atkop)
 	c:RegisterEffect(e1)
 	--search
@@ -28,7 +28,7 @@ end
 function c100248040.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
-	return c==Duel.GetAttacker() and tc and tc:IsFaceup() and tc:GetAttack()>c:GetAttack()
+	return c==Duel.GetAttacker() and tc and tc:IsFaceup() and tc:IsControler(1-tp) and tc:GetAttack()>c:GetAttack()
 end
 function c100248040.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

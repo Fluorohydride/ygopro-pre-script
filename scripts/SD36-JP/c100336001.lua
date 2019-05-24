@@ -37,6 +37,7 @@ function c100336001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100336001.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) and Duel.Destroy(e:GetHandler(),REASON_EFFECT)>0 then
+		Duel.BreakEffect()
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

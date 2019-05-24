@@ -17,16 +17,15 @@ function c100248029.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100248029.filter(c,e,tp)
 	return (c:IsSetCard(0x27) or (c:IsLevelBelow(4) and c:IsType(TYPE_TUNER)))
-		and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100248029.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c100248029.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_DECK+LOCATION_HAND)
 end
 function c100248029.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100248029.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)
-	if Duel.NegateAttack()~=0 and #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if Duel.NegateAttack() and #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.SelectYesNo(tp,aux.Stringid(100248029,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

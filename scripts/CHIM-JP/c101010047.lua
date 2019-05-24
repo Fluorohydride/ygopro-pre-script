@@ -14,6 +14,7 @@ function c101010047.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101010047)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCondition(c101010047.atkcon)
 	e1:SetCost(aux.bfgcost)
 	e1:SetTarget(c101010047.atktg)
@@ -42,31 +43,31 @@ function c101010047.atkfilter(c)
 end
 function c101010047.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101010047.atkfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101010047.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101010047.atkfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c101010047.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c101010047.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local m=_G["c"..tc:GetCode()]
-	if not m then return end
-	local no=m.xyz_number
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(e:GetHandler())
+	if m and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		local no=m.xyz_number
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(no*100)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_CHANGE_DAMAGE)
-		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e2:SetTargetRange(0,1)
-		e2:SetValue(c101010047.val)
-		e2:SetReset(RESET_PHASE+PHASE_BATTLE)
-		Duel.RegisterEffect(e2,tp)
 	end
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CHANGE_DAMAGE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetTargetRange(0,1)
+	e2:SetValue(c101010047.val)
+	e2:SetReset(RESET_PHASE+PHASE_BATTLE)
+	Duel.RegisterEffect(e2,tp)
 end
 function c101010047.val(e,re,dam,r,rp,rc)
 	if bit.band(r,REASON_BATTLE)~=0 then

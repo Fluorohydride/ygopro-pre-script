@@ -26,7 +26,8 @@ function c101010014.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101010014.cfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
+	return c:IsRace(RACE_DRAGON) and c:GetOriginalLevel()>0 and c:IsAbleToGraveAsCost()
+		and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function c101010014.filter(c,e,tp)
 	local rg=Duel.GetMatchingGroup(c101010014.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
