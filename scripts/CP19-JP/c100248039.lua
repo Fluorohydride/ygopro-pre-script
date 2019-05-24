@@ -23,16 +23,12 @@ function c100248039.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100248039,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BATTLE_DESTROYING)
+	e2:SetCode(EVENT_BATTLE_DESTROYED)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(c100248039.spcon)
 	e2:SetTarget(c100248039.sptg)
 	e2:SetOperation(c100248039.spop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_BATTLE_DESTROYED)
-	e3:SetCondition(c100248039.spcon2)
-	c:RegisterEffect(e3)
 end
 function c100248039.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and bit.band(r,REASON_BATTLE)==0 and re and re:GetHandler()~=e:GetHandler() and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x22c)
@@ -49,17 +45,15 @@ function c100248039.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
-function c100248039.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local rc=eg:GetFirst()
-	return rc:IsRelateToBattle() and rc:IsStatus(STATUS_OPPO_BATTLE)
-		and rc:IsFaceup() and rc:IsSetCard(0x22c) and rc:IsControler(tp)
-end
 function c100248039.cfilter(c,tp)
-	return c:IsSetCard(0x22c) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+	if c:IsSetCard(0x22c) and c:GetPreviousControler()==tp then return true end
+	local rc=c:GetBattleTarget()
+	return rc:IsSetCard(0x22c)
+		and (not rc:IsLocation(LOCATION_MZONE) and rc:GetPreviousControler()==tp
+			or rc:IsLocation(LOCATION_MZONE) and rc:IsControler(tp))
 end
-function c100248039.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100248039.cfilter,1,nil,tp)
+function c100248039.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c100248039.cfilter,1,nil,tp)
 end
 function c100248039.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
