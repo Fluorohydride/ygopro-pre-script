@@ -53,7 +53,7 @@ function c101010037.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local ct=0
 	for i,type in ipairs({TYPE_FUSION,TYPE_RITUAL,TYPE_SYNCHRO,TYPE_XYZ}) do
-		if Duel.IsExistingMatchingCard(c101010037.cfilter2,0,LOCATION_GRAVE,0,1,nil,type) then
+		if Duel.IsExistingMatchingCard(c101010037.cfilter2,tp,LOCATION_GRAVE,0,1,nil,type) then
 			ct=ct+1
 		end
 	end
