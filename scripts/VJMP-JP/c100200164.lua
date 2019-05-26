@@ -15,7 +15,6 @@ end
 function c100200164.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_DECK,0,1,nil) end
 	local g=Duel.GetFieldGroup(tp,LOCATION_DECK,0)
-	--[[ used after Duel.AnnounceCardFilter support more than 64 opcodes
 	local ag=Group.CreateGroup()
 	local codes={}
 	for c in aux.Next(g) do
@@ -29,7 +28,7 @@ function c100200164.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	--c:IsCode(codes[1])
 	local afilter={codes[1],OPCODE_ISCODE}
 	if #codes>1 then
-		--or ... or c:IsCode(codes[n])
+		--or ... or c:IsCode(codes[i])
 		for i=2,#codes do
 			table.insert(afilter,codes[i])
 			table.insert(afilter,OPCODE_ISCODE)
@@ -38,14 +37,7 @@ function c100200164.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
 	local ac=Duel.AnnounceCardFilter(tp,table.unpack(afilter))
-	]]--
 	c100200164.announce_filter={TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK,OPCODE_ISTYPE,OPCODE_NOT}
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
-	local ac=Duel.AnnounceCardFilter(tp,table.unpack(c100200164.announce_filter))
-	while not g:IsExists(Card.IsCode,1,nil,ac) do
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100200164,0))
-		ac=Duel.AnnounceCardFilter(tp,table.unpack(c100200164.announce_filter))
-	end
 	Duel.SetTargetParam(ac)
 	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD_FILTER)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
