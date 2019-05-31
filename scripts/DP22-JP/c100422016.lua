@@ -37,6 +37,7 @@ function c100422016.initial_effect(c)
 	e3:SetOperation(c100422016.thop2)
 	c:RegisterEffect(e3)
 end
+c100422016.card_code_list={94820406}
 function c100422016.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_FIEND)
 end
