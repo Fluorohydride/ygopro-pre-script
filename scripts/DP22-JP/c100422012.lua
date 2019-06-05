@@ -38,6 +38,7 @@ c100422012.dark_calling=true
 c100422012.card_code_list={94820406}
 function c100422012.splimit(e,se,sp,st)
 	return st==SUMMON_TYPE_FUSION+0x10
+		or Duel.IsPlayerAffectedByEffect(sp,100422015) and st&SUMMON_TYPE_FUSION==SUMMON_TYPE_FUSION
 end
 function c100422012.matfilter(c)
 	return c:IsLevelAbove(5) and c:IsType(TYPE_MONSTER)
