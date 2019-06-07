@@ -7,6 +7,7 @@ function c100422049.initial_effect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetCountLimit(1,100422049)
 	e1:SetCost(c100422049.cost)
 	e1:SetTarget(c100422049.target)
@@ -27,7 +28,7 @@ function c100422049.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100422049.costfilter(c)
-	return c:IsSetCard(0x10f3) and c:IsAbleToGraveAsCost()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x10f3) and c:IsAbleToGraveAsCost()
 end
 function c100422049.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100422049.costfilter,tp,LOCATION_DECK,0,1,nil) end

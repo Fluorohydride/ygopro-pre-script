@@ -46,8 +46,9 @@ function c100336003.spfilter(c,e,tp,tc)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not c:IsOriginalCodeRule(tc:GetOriginalCodeRule())
 end
-function c100336003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100336003.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=eg:Filter(c100336003.tgfilter,nil,e,tp)
+	if chkc then return g:IsContains(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetCount()>0 end
 	local c=nil
 	if g:GetCount()>1 then

@@ -34,7 +34,7 @@ function c100422037.cfilter(c,tp)
 		and Duel.IsExistingMatchingCard(c100422037.lvfilter,tp,LOCATION_MZONE,0,1,nil,lv)
 end
 function c100422037.lvfilter(c,lv)
-	return c:IsFaceup() and not c:IsLevel(lv)
+	return c:IsFaceup() and c:IsLevelAbove(0) and not c:IsLevel(lv)
 end
 function c100422037.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100422037.cfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
@@ -47,7 +47,7 @@ function c100422037.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local lv=e:GetLabel()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(c100422037.lvfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(c100422037.lvfilter,tp,LOCATION_MZONE,0,nil,0)
 	local lc=g:GetFirst()
 	while lc do
 		local e1=Effect.CreateEffect(c)

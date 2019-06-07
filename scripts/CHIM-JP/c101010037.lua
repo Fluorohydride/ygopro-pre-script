@@ -47,7 +47,7 @@ function c101010037.cfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
 end
 function c101010037.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c101010037.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101010037.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function c101010037.cfilter2(c,type)
 	return c:IsRace(RACE_CYBERSE) and c:IsType(type)

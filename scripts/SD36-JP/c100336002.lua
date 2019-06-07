@@ -25,8 +25,7 @@ end
 function c100336002.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c100336002.tgfilter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(c100336002.tgfilter,tp,LOCATION_ONFIELD,0,1,nil,tp)
-		and Duel.IsExistingMatchingCard(c100336002.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
-	end
+		and Duel.IsExistingMatchingCard(c100336002.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,c100336002.tgfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
