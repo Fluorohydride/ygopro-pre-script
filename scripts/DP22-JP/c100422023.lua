@@ -50,7 +50,7 @@ function c100422023.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c100422023.thfilter(c)
-	return c:IsSetCard(0x21) and c:IsAbleToHand()
+	return c:IsSetCard(0x21) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100422023.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100422023.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
