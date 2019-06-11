@@ -36,9 +36,9 @@ function c100336001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c100336001.desop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) and Duel.Destroy(e:GetHandler(),REASON_EFFECT)>0 then
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
+	if e:GetHandler():IsRelateToEffect(e) and Duel.Destroy(e:GetHandler(),REASON_EFFECT)>0 and g:GetCount()>0 then
 		Duel.BreakEffect()
-		local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local tg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil)

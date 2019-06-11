@@ -41,7 +41,7 @@ function c100422012.splimit(e,se,sp,st)
 		or Duel.IsPlayerAffectedByEffect(sp,100422015) and st&SUMMON_TYPE_FUSION==SUMMON_TYPE_FUSION
 end
 function c100422012.matfilter(c)
-	return c:IsLevelAbove(5) and c:IsType(TYPE_MONSTER)
+	return c:IsLevelAbove(5) and c:IsFusionType(TYPE_MONSTER)
 end
 function c100422012.filter(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk)
@@ -69,7 +69,6 @@ function c100422012.desop(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OATH)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(c100422012.atktg)
 	e2:SetReset(RESET_PHASE+PHASE_END)

@@ -50,7 +50,6 @@ function c101010014.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if g:IsExists(c101010014.thfilter,1,nil,i) then lvt[pc]=i pc=pc+1 end
 	end
 	lvt[pc]=nil
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101010014,0))
 	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))
 	local rg=Duel.GetMatchingGroup(c101010014.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -65,10 +64,9 @@ end
 function c101010014.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101010014.thfilter,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
-	local tc=g:GetFirst()
-	if tc then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
+	if g:GetCount()>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function c101010014.thfilter2(c)

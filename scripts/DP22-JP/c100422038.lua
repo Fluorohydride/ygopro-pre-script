@@ -38,6 +38,7 @@ function c100422038.activate(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetLP(tp)<=Duel.GetLP(1-tp)-2000
 		and Duel.IsExistingMatchingCard(c100422038.setfilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(100422038,0)) then
+		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local tg=Duel.SelectMatchingCard(tp,c100422038.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 		Duel.SSet(tp,tg)

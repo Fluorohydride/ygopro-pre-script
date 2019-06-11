@@ -37,7 +37,7 @@ function c100422034.filter(c)
 end
 function c100422034.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100422034.filter(chkc) end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,1-tp,LOCATION_REASON_CONTROL)
 	if chk==0 then return ft>0 and Duel.IsExistingTarget(c100422034.filter,tp,0,LOCATION_MZONE,1,nil) end
 	local ct=math.min(ft,2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
@@ -60,7 +60,6 @@ function c100422034.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OATH)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(c100422034.atktg)
 	e2:SetReset(RESET_PHASE+PHASE_END)

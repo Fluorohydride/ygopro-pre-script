@@ -6,7 +6,7 @@ function c101010037.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),3)
 	c:EnableReviveLimit()
-	--search
+	--counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101010037,1))
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -43,21 +43,24 @@ end
 function c101010037.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
-function c101010037.cfilter(c)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
+function c101010037.cfilter(c,type)
+	return c:IsRace(RACE_CYBERSE) and c:IsType(type)
 end
 function c101010037.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101010037.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
-end
-function c101010037.cfilter2(c,type)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(type)
+	local ct=0
+	for i,type in ipairs({TYPE_FUSION,TYPE_RITUAL,TYPE_SYNCHRO,TYPE_XYZ}) do
+		if Duel.IsExistingMatchingCard(c101010037.cfilter,tp,LOCATION_GRAVE,0,1,nil,type) then
+			ct=ct+1
+		end
+	end
+	if chk==0 then return ct>0 and e:GetHandler():IsCanAddCounter(0x152,ct) end
 end
 function c101010037.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local ct=0
 	for i,type in ipairs({TYPE_FUSION,TYPE_RITUAL,TYPE_SYNCHRO,TYPE_XYZ}) do
-		if Duel.IsExistingMatchingCard(c101010037.cfilter2,tp,LOCATION_GRAVE,0,1,nil,type) then
+		if Duel.IsExistingMatchingCard(c101010037.cfilter,tp,LOCATION_GRAVE,0,1,nil,type) then
 			ct=ct+1
 		end
 	end

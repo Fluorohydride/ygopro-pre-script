@@ -68,7 +68,7 @@ function c100422023.lpfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x21)
 end
 function c100422023.lpcon(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c100422023.lpfilter,1,nil)
+	return Duel.GetLP(1-tp)~=3000 and not eg:IsContains(e:GetHandler()) and eg:IsExists(c100422023.lpfilter,1,nil)
 end
 function c100422023.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,3000)

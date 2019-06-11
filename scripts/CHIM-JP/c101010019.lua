@@ -13,7 +13,7 @@ function c101010019.initial_effect(c)
 	e1:SetTarget(c101010019.sptg)
 	e1:SetOperation(c101010019.spop)
 	c:RegisterEffect(e1)
-	--to hand
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101010019,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

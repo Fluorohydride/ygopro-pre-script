@@ -45,14 +45,13 @@ function c101010050.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101010050.lcheck(g,lc)
-	return g:GetClassCount(Card.GetCode)==g:GetCount()
+	return g:GetClassCount(Card.GetLinkCode)==g:GetCount()
 end
 function c101010050.matfilter(c)
-	return c:IsRace(RACE_INSECT)
+	return c:IsLinkRace(RACE_INSECT)
 end
 function c101010050.matcheck(e,c)
-	local g=c:GetMaterial():Filter(c101010050.matfilter,nil)
-	local ct=g:GetCount()
+	local ct=c:GetMaterial():FilterCount(c101010050.matfilter,nil)
 	e:SetLabel(ct)
 end
 function c101010050.ctcon(e,tp,eg,ep,ev,re,r,rp)
