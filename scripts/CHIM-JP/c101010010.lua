@@ -50,6 +50,7 @@ function c101010010.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c101010010.tgfilter,tp,0,LOCATION_MZONE,1,nil,tp,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c101010010.tgfilter,tp,0,LOCATION_MZONE,1,1,nil,tp,e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c101010010.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
