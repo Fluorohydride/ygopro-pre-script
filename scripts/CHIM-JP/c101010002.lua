@@ -21,16 +21,17 @@ end
 function c101010002.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101010002.cfilter,tp,LOCATION_MZONE,0,2,nil)
 end
-function c101010002.spfilter(c,e,tp)
+function c101010002.spfilter(c,e,tp,ec)
 	local zone=bit.band(c:GetLinkedZone(tp),0x1f)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsType(TYPE_LINK) and zone>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsType(TYPE_LINK) and zone>0 and ec:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c101010002.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101010002.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c101010002.spfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
+	local c=e:GetHandler()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101010002.spfilter(chkc,e,tp,c) end
+	if chk==0 then return Duel.IsExistingTarget(c101010002.spfilter,tp,LOCATION_MZONE,0,1,nil,e,tp,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c101010002.spfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	Duel.SelectTarget(tp,c101010002.spfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,c)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c101010002.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

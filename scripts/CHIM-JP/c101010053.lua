@@ -90,7 +90,7 @@ function c101010053.eqop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Equip(tp,sc,tc,false,true)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
+			e1:SetLabelObject(tc)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetValue(c101010053.eqlimit)
@@ -101,5 +101,5 @@ function c101010053.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101010053.eqlimit(e,c)
-	return e:GetOwner()==c
+	return e:GetLabelObject()==c
 end
