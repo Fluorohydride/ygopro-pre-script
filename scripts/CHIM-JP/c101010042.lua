@@ -46,7 +46,7 @@ function c101010042.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsCode(101010042) and bit.band(sumtype,SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end
 function c101010042.thfilter(c)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x12b) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
 function c101010042.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101010042.thfilter,tp,LOCATION_DECK,0,1,nil) end

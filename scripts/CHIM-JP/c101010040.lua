@@ -64,7 +64,6 @@ function c101010040.costfilter(c)
 	return c:IsSetCard(0x12b) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c101010040.indcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c101010040.costfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,c101010040.costfilter,1,1,REASON_COST)
 end
@@ -81,7 +80,7 @@ function c101010040.indop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
-		tc:RegisterEffect(e1)
+		at:RegisterEffect(e1)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
