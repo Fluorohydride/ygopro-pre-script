@@ -34,8 +34,8 @@ function c101010041.spcon1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101010041.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(101010041)==0 end
-	c:RegisterFlagEffect(101010041,RESET_CHAIN,0,1)
+	if chk==0 then return c:GetFlagEffect(101010041+100)==0 end
+	c:RegisterFlagEffect(101010041+100,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
 end
 function c101010041.spfilter1(c,e,tp,ec)
 	return c:IsSetCard(0x12b) and c:GetEquipTarget()==ec and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -71,7 +71,7 @@ function c101010041.spop1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
-		tc:RegisterEffect(e1)
+		c:RegisterEffect(e1)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
