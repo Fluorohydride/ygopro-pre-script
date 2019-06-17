@@ -84,6 +84,6 @@ function c101010003.damcon3(e,tp,eg,ep,ev,re,r,rp)
 	local ct=g:GetSum(Card.GetLink)*1000
 	return Duel.GetBattleDamage(tp)<=ct
 end
-function c101010003.damop2(e,tp,eg,ep,ev,re,r,rp)
+function c101010003.damop3(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(tp,0)
 end
