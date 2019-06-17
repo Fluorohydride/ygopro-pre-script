@@ -44,7 +44,7 @@ end
 function c101010069.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()==2 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
 function c101010069.spcon(e,tp,eg,ep,ev,re,r,rp)
