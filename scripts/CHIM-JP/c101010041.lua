@@ -119,7 +119,7 @@ function c101010041.spfilter2(c,e,tp)
 end
 function c101010041.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101010041.spfilter2),tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c101010041.spfilter2,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c101010041.spop2(e,tp,eg,ep,ev,re,r,rp)

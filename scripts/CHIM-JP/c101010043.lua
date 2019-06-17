@@ -22,7 +22,7 @@ function c101010043.initial_effect(c)
 	--tohand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101010043,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)

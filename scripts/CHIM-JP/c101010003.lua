@@ -42,7 +42,7 @@ function c101010003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,c101010003.costfilter,1,1,REASON_COST,c)
 end
 function c101010003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
