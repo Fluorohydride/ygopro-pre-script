@@ -17,13 +17,13 @@ function c100413012.spfilter1(c,e,tp)
 	return c:IsSetCard(0x231) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCanBeEffectTarget(e)
 end
 function c100413012.fselect1(g,tp)
-	return Duel.IsExistingMatchingCard(c100413012.synfilter,tp,LOCATION_EXTRA,0,1,nil,g)
+	return Duel.IsExistingMatchingCard(c100413012.synfilter,tp,LOCATION_EXTRA,0,1,nil,g) and aux.dncheck(g)
 end
 function c100413012.synfilter(c,g)
 	return c:IsSetCard(0x231) and c:IsSynchroSummonable(nil,g,g:GetCount()-1,g:GetCount()-1)
 end
 function c100413012.fselect2(g,tp)
-	return Duel.IsExistingMatchingCard(c100413012.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,g)
+	return Duel.IsExistingMatchingCard(c100413012.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,g) and aux.dncheck(g)
 end
 function c100413012.xyzfilter(c,g)
 	return c:IsSetCard(0x231) and c:IsXyzSummonable(g,g:GetCount(),g:GetCount())
@@ -34,7 +34,7 @@ function c100413012.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(c100413012.spfilter1,tp,LOCATION_GRAVE,0,nil,e,tp)
 	local b1=g:CheckSubGroup(c100413012.fselect1,1,ft,tp)
 	local b2=g:CheckSubGroup(c100413012.fselect2,1,ft,tp)
-	if chk==0 then ft>0 and Duel.IsPlayerCanSpecialSummonCount(tp,2)
+	if chk==0 then return ft>0 and Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and not Duel.IsPlayerAffectedByEffect(tp,59822133) and (b1 or b2) end
 	local op=0
 	if b1 and b2 then
@@ -45,12 +45,13 @@ function c100413012.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		op=Duel.SelectOption(tp,aux.Stringid(100413012,1))+1
 	end
 	e:SetLabel(op)
+	local sg=nil
 	if op==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:SelectSubGroup(tp,c100413012.fselect1,false,1,ft,tp)
+		sg=g:SelectSubGroup(tp,c100413012.fselect1,false,1,ft,tp)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:SelectSubGroup(tp,c100413012.fselect2,false,1,ft,tp)
+		sg=g:SelectSubGroup(tp,c100413012.fselect2,false,1,ft,tp)
 	end
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,sg:GetCount(),0,0)
@@ -86,14 +87,14 @@ function c100413012.activate(e,tp,eg,ep,ev,re,r,rp)
 	local og=Duel.GetOperatedGroup()
 	if op==0 then
 		local tg=Duel.GetMatchingGroup(c100413012.synfilter,tp,LOCATION_EXTRA,0,nil,og)
-		if og:GetCount()==sg:GetCount() and tg:GetCount()>0 then
+		if og:GetCount()==g:GetCount() and tg:GetCount()>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local rg=tg:Select(tp,1,1,nil)
 			Duel.SynchroSummon(tp,rg:GetFirst(),nil,og,og:GetCount()-1,og:GetCount()-1)
 		end
 	else
 		local tg=Duel.GetMatchingGroup(c100413012.xyzfilter,tp,LOCATION_EXTRA,0,nil,og)
-		if og:GetCount()==sg:GetCount() and tg:GetCount()>0 then
+		if og:GetCount()==g:GetCount() and tg:GetCount()>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local rg=tg:Select(tp,1,1,nil)
 			Duel.XyzSummon(tp,rg:GetFirst(),og,og:GetCount(),og:GetCount())
