@@ -106,5 +106,5 @@ function c101010068.hcfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkAbove(3)
 end
 function c101010068.handcon(e)
-	return Duel.IsExistingMatchingCard(c101010068.hcfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(c101010068.hcfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
