@@ -2,7 +2,6 @@
 
 --Scripted by nekrozar
 function c101010024.initial_effect(c)
-	c:EnableUnsummonable()
 	--cannot special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
