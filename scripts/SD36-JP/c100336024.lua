@@ -13,7 +13,7 @@ function c100336024.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100336024.filter1(c,e)
-	return c:IsOnField() and not c:IsImmuneToEffect(e)
+	return c:IsOnField() and not c:IsImmuneToEffect(e) and c:IsDestructable(e)
 end
 function c100336024.filter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c))
