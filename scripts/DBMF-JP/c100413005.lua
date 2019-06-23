@@ -2,9 +2,8 @@
 
 --Scripted by DJ
 function c100413005.initial_effect(c)
-	--Double level
+	--level
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_UPDATE_LEVEL)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -29,7 +28,7 @@ function c100413005.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100413005.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100413005.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,c100413005.filter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	Duel.SelectTarget(tp,c100413005.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c100413005.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -53,7 +52,7 @@ function c100413005.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100413005.daop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local atk=tc:GetAttack()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

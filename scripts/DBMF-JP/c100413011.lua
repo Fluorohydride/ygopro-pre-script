@@ -13,7 +13,7 @@ function c100413011.initial_effect(c)
 	c:RegisterEffect(e1)
 	--atk
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
+	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetRange(LOCATION_SZONE)
@@ -23,9 +23,9 @@ function c100413011.initial_effect(c)
 	e2:SetTarget(c100413011.atktg)
 	e2:SetOperation(c100413011.atkop)
 	c:RegisterEffect(e2)
-	--to deck
+	--to hand
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_TODECK)
+	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCountLimit(1,100413011+100)
@@ -44,8 +44,8 @@ end
 function c100413011.eqlimit(e,c)
 	return c:IsRace(RACE_CYBERSE)
 end
-function c100413011.filter(c,e,tp)
-	return c:IsRace(RACE_CYBERSE)
+function c100413011.filter(c)
+	return c:IsFaceup() and c:IsRace(RACE_CYBERSE)
 end
 function c100413011.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
@@ -70,7 +70,7 @@ function c100413011.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c100413011.atkfilter(c)
-	return c:IsSetCard(0x231) and (c:GetBaseAttack()>0 or c:GetBaseDefense()>0) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x231) and c:GetBaseAttack()>0 and c:IsAbleToGraveAsCost()
 end
 function c100413011.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -82,24 +82,23 @@ function c100413011.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100413011.atkfilter,tp,LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
-	e:SetLabelObject(g:GetFirst())
+	e:SetLabel(g:GetFirst():GetAttack())
 end
 function c100413011.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local ec=e:GetHandler():GetEquipTarget()
-	local sc=e:GetLabelObject()
-	if ec:IsFaceup() and sc then
+	local atk=e:GetLabel()
+	if ec:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(sc:GetAttack())
+		e1:SetValue(atk)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		ec:RegisterEffect(e1)
 	end
 end
 function c100413011.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_SZONE)
+	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE)
 end
 function c100413011.thfilter(c)
 	return c:IsSetCard(0x231) and not c:IsCode(100413011) and c:IsAbleToHand()

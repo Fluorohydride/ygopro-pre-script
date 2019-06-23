@@ -25,7 +25,7 @@ function c100413006.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100413006.costfilter(c,tp)
-	return c:IsRace(RACE_CYBERSE) and Duel.GetMZoneCount(tp,c,tp)>1 and c:GetSequence()>=5
+	return c:IsRace(RACE_CYBERSE) and Duel.GetMZoneCount(tp,c,tp)>0 and c:GetSequence()>=5
 end
 function c100413006.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100413006.costfilter,1,nil,tp) end
@@ -39,30 +39,29 @@ function c100413006.fselect(g)
 	return g:GetClassCount(Card.GetLocation)==g:GetCount()
 end
 function c100413006.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100413006.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(c100413006.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100413006.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK)
 end
 function c100413006.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 or Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
+	local ft=math.min((Duel.GetLocationCount(tp,LOCATION_MZONE)),2)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100413006.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
+	if ft<=0 or g:GetCount()==0 then return end
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=g:SelectSubGroup(tp,c100413006.fselect,false,1,2)
+	local sg=g:SelectSubGroup(tp,c100413006.fselect,false,1,ft)
 	if sg and sg:GetCount()>0 then
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c100413006.dafilter(c)
-	return c:IsFaceup()
-end
 function c100413006.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100413006.dafilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100413006.dafilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c100413006.dafilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function c100413006.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local atk=tc:GetAttack()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

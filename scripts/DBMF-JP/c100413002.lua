@@ -32,7 +32,7 @@ function c100413002.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c100413002.filter(c,e,tp)
-	return c:IsSetCard(0x231) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x231) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100413002.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100413002.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
@@ -47,7 +47,7 @@ function c100413002.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100413002.dafilter(c)
-	return c:IsFaceup() and not c:IsHasEffect(EFFECT_EXTRA_ATTACK) and c:GetSequence()>=5
+	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK) and c:GetSequence()>=5
 end
 function c100413002.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100413002.dafilter(chkc) end
