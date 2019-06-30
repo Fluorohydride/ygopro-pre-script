@@ -37,14 +37,15 @@ end
 function c101010058.tglimit(e,c)
 	return c:IsSetCard(0x19)
 end
-function c101010058.cfilter(c)
-	return c:IsSetCard(0x19) and c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_DECK)
+function c101010058.cfilter(c,tp)
+	return c:IsSetCard(0x19) and c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_DECK) and c:GetPreviousControler()==tp
 end
 function c101010058.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101010058.cfilter,1,nil)
+	return eg:IsExists(c101010058.cfilter,1,nil,tp)
 end
 function c101010058.filter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not Duel.IsExistingMatchingCard(c101010058.filter1,tp,LOCATION_MZONE,0,1,c,c:GetRace())
+	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+		and not Duel.IsExistingMatchingCard(c101010058.filter1,tp,LOCATION_MZONE,0,1,c,c:GetRace())
 end
 function c101010058.filter1(c,race)
 	return c:IsFaceup() and c:IsRace(race)

@@ -13,6 +13,10 @@ function c101010057.initial_effect(c)
 	e1:SetTarget(c101010057.target)
 	e1:SetOperation(c101010057.activate)
 	c:RegisterEffect(e1)
+	Duel.AddCustomActivityCounter(101010057,ACTIVITY_ATTACK,c101010057.counterfilter)
+end
+function c101010057.counterfilter(c)
+	return c:IsSetCard(0x19)
 end
 function c101010057.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(101010057,tp,ACTIVITY_ATTACK)==0 end

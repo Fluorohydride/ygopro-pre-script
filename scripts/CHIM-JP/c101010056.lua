@@ -12,7 +12,8 @@ function c101010056.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101010056.filter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not Duel.IsExistingMatchingCard(c101010056.filter1,tp,LOCATION_MZONE,0,1,c,c:GetRace())
+	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and not Duel.IsExistingMatchingCard(c101010056.filter1,tp,LOCATION_MZONE,0,1,c,c:GetRace())
 end
 function c101010056.filter1(c,race)
 	return c:IsFaceup() and c:IsRace(race)

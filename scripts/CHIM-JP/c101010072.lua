@@ -22,7 +22,6 @@ function c101010072.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetLabel(0)
 	e3:SetCountLimit(1)
 	e3:SetCost(c101010072.atkcost)
 	e3:SetTarget(c101010072.atktg)
@@ -37,8 +36,11 @@ function c101010072.initial_effect(c)
 	e4:SetOperation(c101010072.indop)
 	c:RegisterEffect(e4)
 end
+function c101010072.filter(c)
+	return c:IsFaceup() and c:IsSetCard(0x19)
+end
 function c101010072.macon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x19)
+	return Duel.IsExistingMatchingCard(c101010072.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101010072.cfilter(c)
 	return c:IsSetCard(0x19) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
@@ -49,14 +51,14 @@ function c101010072.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,c101010072.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_COST)
 end
-function c101010072.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x19)
+function c101010072.atkfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x19) and c:GetBaseDefense()>0
 end
 function c101010072.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101010072.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101010072.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101010072.atkfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101010072.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c101010072.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c101010072.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c101010072.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

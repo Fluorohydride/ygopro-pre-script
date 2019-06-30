@@ -51,10 +51,12 @@ function c101010046.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101010046.tdfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x19) and Duel.IsExistingMatchingCard(c101010046.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
+	return c:IsFaceup() and c:IsSetCard(0x19) and Duel.GetMZoneCount(tp,c)>0
+		and Duel.IsExistingMatchingCard(c101010046.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end
 function c101010046.spfilter(c,e,tp,tc)
-	return c:IsSetCard(0x19) and not c:IsOriginalCodeRule(tc:GetOriginalCodeRule()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x19) and not c:IsOriginalCodeRule(tc:GetOriginalCodeRule())
+		and c:IsCanBeSpecialSummoned(e,135,tp,false,false)
 end
 function c101010046.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101010046.tdfilter(chkc,e,tp) end
@@ -66,11 +68,12 @@ function c101010046.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101010046.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101010046.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc)
 		if g:GetCount()>0 then
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+			Duel.SpecialSummon(g,135,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 end

@@ -36,7 +36,7 @@ function c101010033.initial_effect(c)
 	c:RegisterEffect(e3)
 	--special summon
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(101010033,5))
+	e4:SetDescription(aux.Stringid(101010033,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_PHASE+PHASE_BATTLE)
@@ -64,8 +64,8 @@ function c101010033.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c101010033.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) then
-		Duel.Destroy(rc,REASON_EFFECT)
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
 function c101010033.spcon(e,tp,eg,ep,ev,re,r,rp)
