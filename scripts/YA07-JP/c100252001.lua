@@ -92,7 +92,7 @@ function c100252001.effop(e,tp,eg,ep,ev,re,r,rp)
 	local off=1
 	local ops={}
 	local opval={}
-	if not c:IsHasEffect(EFFECT_DIRECT_ATTACK) then
+	if not c:IsHasEffect(EFFECT_DIRECT_ATTACK) and Duel.IsAbleToEnterBP() then
 		ops[off]=aux.Stringid(100252001,0)
 		opval[off-1]=1
 		off=off+1

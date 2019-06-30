@@ -28,7 +28,8 @@ function c101010005.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():GetControler()~=tp and Duel.GetAttackTarget()==nil
 end
 function c101010005.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101010005.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -71,7 +72,7 @@ function c101010005.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c101010005.thfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
-function c101010005.filter(c)
+function c101010005.thfilter2(c)
 	return c:IsType(TYPE_MONSTER)
 end
 function c101010005.thop(e,tp,eg,ep,ev,re,r,rp)
