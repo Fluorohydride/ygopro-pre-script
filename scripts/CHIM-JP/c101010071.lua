@@ -1,4 +1,6 @@
---猛进的剑斗兽
+--猛進する剣闘獣
+--
+--Script by DJ
 function c101010071.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

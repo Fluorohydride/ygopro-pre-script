@@ -1,4 +1,6 @@
---剑斗海战
+--剣闘海戦
+--
+--Script by DJ
 function c101010072.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

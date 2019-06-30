@@ -1,4 +1,6 @@
---剑斗兽 维斯帕西亚努斯
+--剣闘獣ウェスパシアス
+--
+--Script by DJ
 function c101010013.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

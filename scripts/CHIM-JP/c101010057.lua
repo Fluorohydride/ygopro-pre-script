@@ -1,4 +1,6 @@
---团结的剑斗兽
+--団結する剣闘獣
+--
+--Script by DJ
 function c101010057.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

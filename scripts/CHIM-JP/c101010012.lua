@@ -1,4 +1,6 @@
---剑斗兽 女斗
+--剣闘獣アトリクス
+--
+--Script by DJ
 function c101010012.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

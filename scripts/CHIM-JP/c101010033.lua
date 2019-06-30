@@ -1,4 +1,6 @@
---剑斗兽 多米提安努斯
+--剣闘獣ドミティアノス
+--
+--Script by DJ
 function c101010033.initial_effect(c)
 	c:EnableReviveLimit()
 	--fusion

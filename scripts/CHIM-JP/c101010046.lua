@@ -1,4 +1,6 @@
---奴隶豹
+--スレイブパンサー
+--
+--Script by DJ
 function c101010046.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,nil,2,2,c101010046.lcheck)

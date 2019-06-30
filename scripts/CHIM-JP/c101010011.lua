@@ -1,4 +1,6 @@
---剑斗兽 射斗
+--剣闘獣サジタリィ
+--
+--Script by DJ
 function c101010011.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

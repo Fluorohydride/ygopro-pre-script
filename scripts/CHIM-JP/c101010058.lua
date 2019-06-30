@@ -1,4 +1,6 @@
---剑斗排斥波
+--剣闘排斥波
+--
+--Script by DJ
 function c101010058.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
