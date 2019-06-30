@@ -54,7 +54,7 @@ function c100336041.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c100336041.zonelimit(e)
-	return 0x1f001f | (0x600060 ~e:GetHandler():GetLinkedZone())
+	return 0x1f001f | (0x600060 & ~e:GetHandler():GetLinkedZone())
 end
 function c100336041.value(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_REMOVED,LOCATION_REMOVED)*200
