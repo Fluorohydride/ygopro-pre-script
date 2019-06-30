@@ -6,6 +6,15 @@ function c100336041.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2)
 	c:EnableReviveLimit()
+	--zone limit
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_MUST_USE_MZONE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetTargetRange(1,0)
+	e1:SetValue(c100336041.zonelimit)
+	c:RegisterEffect(e1)
 	--atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -43,6 +52,9 @@ function c100336041.initial_effect(c)
 	e5:SetOperation(c100336041.spop)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
+end
+function c100336041.zonelimit(e)
+	return 0x1f001f | (0x600060 & ~e:GetHandler():GetLinkedZone())
 end
 function c100336041.value(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_REMOVED,LOCATION_REMOVED)*200
