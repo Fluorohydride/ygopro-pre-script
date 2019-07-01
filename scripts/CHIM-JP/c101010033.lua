@@ -54,7 +54,7 @@ function c101010033.cfilter(c)
 	return (c:IsFusionCode(101010013) or c:IsFusionSetCard(0x19) and c:IsType(TYPE_MONSTER)) and c:IsAbleToDeckOrExtraAsCost()
 end
 function c101010033.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function c101010033.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
