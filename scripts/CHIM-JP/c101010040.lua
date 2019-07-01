@@ -49,8 +49,8 @@ end
 function c101010040.immtg2(e,c)
 	return c==e:GetHandler():GetBattleTarget()
 end
-function c101010040.efilter2(e,te)
-	return e:GetHandler()~=te:GetOwner()
+function c101010040.efilter2(e,te,c)
+	return c~=te:GetOwner()
 end
 function c101010040.indcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
