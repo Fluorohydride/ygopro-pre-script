@@ -34,9 +34,9 @@ end
 function c100413009.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local rt=3
+	if not Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_HAND,1,nil) then rt=rt-1 end
 	if not Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) then rt=rt-1 end
 	if not Duel.IsExistingMatchingCard(Card.IsType,tp,0,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) then rt=rt-1 end
-	if not Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_HAND,1,nil) then rt=rt-1 end
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	c:RemoveOverlayCard(tp,1,rt,REASON_COST)
 	local ct=Duel.GetOperatedGroup():GetCount()
@@ -44,8 +44,8 @@ function c100413009.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100413009.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_HAND,1,nil)
-	local b2=Duel.IsExistingMatchingCard(Card.IsType,tp,0,LOCATION_MZONE,1,nil,TYPE_SPELL+TYPE_TRAP)
-	local b3=Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_SZONE,1,nil)
+	local b2=Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil)
+	local b3=Duel.IsExistingMatchingCard(Card.IsType,tp,0,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP)
 	if chk==0 then return b1 or b2 or b3 end
 	local ct=e:GetLabel()
 	local sel=0
@@ -81,7 +81,7 @@ function c100413009.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 			b3=false
 		end
 		ct=ct-1
-	until ct==0 or off<3 or not Duel.SelectYesNo(tp,aux.Stringid(100413009,3))
+	until ct==0 or off<3
 	e:SetLabel(sel)
 	if bit.band(sel,1)~=0 then
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_HAND)
