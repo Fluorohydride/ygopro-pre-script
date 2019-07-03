@@ -37,7 +37,7 @@ function c100200169.descon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100200169.ctfilter(c)
 	return (c:IsLocation(LOCATION_GRAVE) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_EFFECT))
-		or (c:IsLocation(LOCATION_MZONE) and (c:IsFacedown() or (c:IsFaceup() and not c:IsType(TYPE_EFFECT))))
+		or (c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and not c:IsType(TYPE_EFFECT))
 end
 function c100200169.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100200169.ctfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
