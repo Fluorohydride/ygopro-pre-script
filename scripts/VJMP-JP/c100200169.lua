@@ -1,6 +1,6 @@
 --天威の龍拳聖
 
---Scripted by nekro
+--Scripted by nekrozar
 function c100200169.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,nil,2,99,c100200169.lcheck)

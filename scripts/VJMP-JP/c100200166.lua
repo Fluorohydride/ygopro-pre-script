@@ -47,7 +47,7 @@ function c100200166.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x99)
 end
 function c100200166.atcon(e)
-	return Duel.IsExistingMatchingCard(c100200166.cfilter,e:GetOwnerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100200166.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c100200166.indcon(e)
 	return e:GetHandler():IsDefensePos()
