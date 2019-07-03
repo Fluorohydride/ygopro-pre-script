@@ -17,7 +17,7 @@ function c101010013.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)	
+	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetCondition(aux.gbspcon)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetValue(500)
@@ -65,7 +65,7 @@ function c101010013.filter(c,e,tp)
 	return not c:IsCode(101010013) and c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,133,tp,false,false)
 end
 function c101010013.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
 		and Duel.IsExistingMatchingCard(c101010013.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end

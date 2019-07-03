@@ -75,12 +75,9 @@ end
 function c100252001.nttg(e,c)
 	return c:IsLevelAbove(5) and c:IsSetCard(0xaf)
 end
-function c100252001.cfilter(c)
-	return c:IsType(TYPE_MONSTER)
-end
 function c100252001.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c100252001.cfilter,1,e:GetHandler()) end
-	local g=Duel.SelectReleaseGroup(tp,c100252001.cfilter,1,1,e:GetHandler())
+	if chk==0 then return Duel.CheckReleaseGroup(tp,nil,1,e:GetHandler()) end
+	local g=Duel.SelectReleaseGroup(tp,nil,1,1,e:GetHandler())
 	Duel.Release(g,REASON_COST)
 end
 function c100252001.effcon(e,tp,eg,ep,ev,re,r,rp)
@@ -152,7 +149,6 @@ function c100252001.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local lp=Duel.GetLP(1-tp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
 	e1:SetValue(lp)

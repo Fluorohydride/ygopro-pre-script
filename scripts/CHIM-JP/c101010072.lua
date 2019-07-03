@@ -39,8 +39,8 @@ end
 function c101010072.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x19)
 end
-function c101010072.macon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101010072.filter,tp,LOCATION_MZONE,0,1,nil)
+function c101010072.macon(e)
+	return Duel.IsExistingMatchingCard(c101010072.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c101010072.cfilter(c)
 	return c:IsSetCard(0x19) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
@@ -49,13 +49,17 @@ function c101010072.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101010072.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101010072.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil)
+	local cf=g:Filter(Card.IsFacedown,nil)
+	if cf:GetCount()>0 then
+		Duel.ConfirmCards(1-tp,cf)
+	end
 	Duel.SendtoDeck(g,nil,2,REASON_COST)
 end
 function c101010072.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x19) and c:GetBaseDefense()>0
 end
 function c101010072.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101010072.atkfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101010072.atkfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101010072.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c101010072.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)

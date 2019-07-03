@@ -17,7 +17,7 @@ function c100200166.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(c100200166.target)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x99))
 	e2:SetCondition(c100200166.indcon)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
@@ -28,7 +28,7 @@ function c100200166.initial_effect(c)
 	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(c100200166.target)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x99))
 	e3:SetCondition(c100200166.indcon)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
@@ -47,13 +47,10 @@ function c100200166.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x99)
 end
 function c100200166.atcon(e)
-	return Duel.IsExistingMatchingCard(c100200166.cfilter,e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(c100200166.cfilter,e:GetOwnerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c100200166.indcon(e)
 	return e:GetHandler():IsDefensePos()
-end
-function c100200166.target(e,c)
-	return c~=e:GetHandler() and c:IsSetCard(0x99)
 end
 function c100200166.scfilter1(c,e,tp,mc)
 	local mg=Group.FromCards(c,mc)
@@ -63,14 +60,15 @@ end
 function c100200166.scfilter2(c,mg)
 	return c:IsSynchroSummonable(nil,mg)
 end
-function c100200166.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100200166.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100200166.scfilter1(chkc,e,tp,c) end
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c100200166.scfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp,c) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100200166.scfilter1,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c)
-	Duel.SetOperationInfo(g,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(g,CATEGORY_SPECIAL_SUMMON,g,2,tp,LOCATION_EXTRA)
 end
 function c100200166.scop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end

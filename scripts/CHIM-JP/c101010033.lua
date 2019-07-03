@@ -5,7 +5,7 @@ function c101010033.initial_effect(c)
 	c:EnableReviveLimit()
 	--fusion
 	aux.AddFusionProcCodeFun(c,101010013,aux.FilterBoolFunction(Card.IsFusionSetCard,0x19),2,true,true)
-	aux.AddContactFusionProcedure(c,c101010033.cfilter,LOCATION_ONFIELD,0,aux.tdcfop(c)):SetValue(1)
+	aux.AddContactFusionProcedure(c,c101010033.cfilter,LOCATION_ONFIELD,0,aux.tdcfop(c))
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -80,7 +80,7 @@ function c101010033.filter(c,e,tp)
 	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,134,tp,false,false)
 end
 function c101010033.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
 		and Duel.IsExistingMatchingCard(c101010033.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end

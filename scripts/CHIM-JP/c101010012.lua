@@ -25,7 +25,7 @@ function c101010012.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101010012.costfilter(c,ec)
-	return c:IsSetCard(0x19) and not c:IsCode(ec:GetCode()) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x19) and not c:IsCode(101010012) and not c:IsCode(ec:GetCode()) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c101010012.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -65,7 +65,7 @@ function c101010012.filter(c,e,tp)
 	return not c:IsCode(101010012) and c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,132,tp,false,false)
 end
 function c101010012.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
 		and Duel.IsExistingMatchingCard(c101010012.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end

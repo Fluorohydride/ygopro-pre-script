@@ -72,8 +72,10 @@ function c101010046.spop(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101010046.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc)
-		if g:GetCount()>0 then
-			Duel.SpecialSummon(g,135,tp,tp,false,false,POS_FACEUP)
+		local tc=g:GetFirst()
+		if tc then
+			Duel.SpecialSummon(tc,135,tp,tp,false,false,POS_FACEUP)
+			tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD+RESET_DISABLE,0,0)
 		end
 	end
 end

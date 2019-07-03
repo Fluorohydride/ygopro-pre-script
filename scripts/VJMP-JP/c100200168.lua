@@ -76,7 +76,7 @@ function c100200168.disfilter2(c)
 	return aux.disfilter1(c) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c100200168.distg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100200168.disfilter2(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100200168.disfilter2(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100200168.disfilter2,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c100200168.disfilter2,tp,0,LOCATION_MZONE,1,1,nil)
