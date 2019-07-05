@@ -62,7 +62,7 @@ function c100252001.damcon(e)
 end
 function c100252001.damval(e,re,val,r,rp,rc)
 	local c=e:GetHandler()
-	if bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0 and c:GetFlagEffect(100252001)==0 then
+	if bit.band(r,REASON_EFFECT)~=0 and c:GetFlagEffect(100252001)==0 then
 		Duel.RegisterFlagEffect(tp,100252001,RESET_PHASE+PHASE_END,0,1)
 		return 0
 	end
