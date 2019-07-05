@@ -104,7 +104,7 @@ function c101010015.splimit(e,c)
 	return not c:IsRace(RACE_DRAGON) or not c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
 end
 function c101010015.thfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsLevel(4) and c:IsAbleToHand()
+	return c:IsRace(RACE_DRAGON) and c:IsLevel(4) and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsAbleToHand()
 end
 function c101010015.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101010015.thfilter(chkc) end
