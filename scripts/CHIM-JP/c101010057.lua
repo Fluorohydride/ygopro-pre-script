@@ -37,7 +37,7 @@ function c101010057.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function c101010057.filter1(c,e)
-	return c:IsAbleToDeck() and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
+	return c:IsAbleToDeck() and c:IsCanBeFusionMaterial() and c:IsType(TYPE_MONSTER) and not c:IsImmuneToEffect(e)
 end
 function c101010057.filter2(c,e,tp,m,chkf)
 	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:CheckFusionMaterial(m,nil,chkf)
