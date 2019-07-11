@@ -40,7 +40,7 @@ function c101010013.hspcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if not d then return false end
 	if d:IsControler(tp) then a,d=d,a end
-	return a:IsSetCard(0x19)
+	return a:IsSetCard(0x19) and a:IsFaceup()
 end
 function c101010013.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
