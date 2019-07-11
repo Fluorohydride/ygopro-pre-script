@@ -1,7 +1,6 @@
 --I：Pマスカレーナ
 
 --Scripted by nekrozar
---need Card.IsLinkSummonable and Duel.LinkSummon update
 function c101010049.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.NOT(aux.FilterBoolFunction(Card.IsLinkType,TYPE_LINK)),2,2)
@@ -44,27 +43,18 @@ function c101010049.lkfilter(c,mc)
 	return res
 end
 function c101010049.lktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(c101010049.lkfilter,tp,LOCATION_EXTRA,0,1,nil,c) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsLinkSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c101010049.lkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsControler(1-tp) or not c:IsRelateToEffect(e) then return end
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCode(EFFECT_MUST_BE_LMATERIAL)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(1,0)
-	c:RegisterEffect(e1,true)
-	local g=Duel.GetMatchingGroup(c101010049.lkfilter,tp,LOCATION_EXTRA,0,nil,c)
+	local g=Duel.GetMatchingGroup(Card.IsLinkSummonable,tp,LOCATION_EXTRA,0,nil,nil,c)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
-		Duel.LinkSummon(tp,sg:GetFirst(),nil)
+		Duel.LinkSummon(tp,sg:GetFirst(),nil,c)
 	end
-	e1:Reset()
 end
 function c101010049.indcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_LINK

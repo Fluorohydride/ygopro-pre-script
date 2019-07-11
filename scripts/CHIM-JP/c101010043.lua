@@ -43,7 +43,7 @@ function c101010043.tgfilter(c,tp,ec)
 	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL) and Duel.IsExistingMatchingCard(c101010043.lfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
 end
 function c101010043.lfilter(c,mg)
-	return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(101010043) and c:IsLinkSummonable(mg,2,2)
+	return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(101010043) and c:IsLinkSummonable(mg,nil,2,2)
 end
 function c101010043.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -63,7 +63,7 @@ function c101010043.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,c101010043.lfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg)
 		local lc=g:GetFirst()
 		if lc then
-			Duel.LinkSummon(tp,lc,mg,2,2)
+			Duel.LinkSummon(tp,lc,mg,nil,2,2)
 		end
 	end
 end
