@@ -34,7 +34,7 @@ function c101010006.btcon(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(tc)
 	return tc:IsControler(tp) and tc:IsSetCard(0x11a) and tc~=e:GetHandler() and bc and bc:IsAttackAbove(tc)
 end
-function c59438930.btcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101010006.btcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
