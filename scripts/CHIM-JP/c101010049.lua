@@ -30,18 +30,6 @@ function c101010049.lkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end
-function c101010049.lkfilter(c,mc)
-	local e1=Effect.CreateEffect(mc)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCode(EFFECT_MUST_BE_LMATERIAL)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(1,0)
-	mc:RegisterEffect(e1,true)
-	local res=c:IsLinkSummonable(nil)
-	e1:Reset()
-	return res
-end
 function c101010049.lktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsLinkSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
