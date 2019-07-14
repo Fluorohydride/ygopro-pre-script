@@ -1,7 +1,6 @@
 --ドカンポリン
 
 --Scripted by nekrozar
---need Duel.SelectDisableField or Duel.SelectSequence update
 function c101010080.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -29,35 +28,14 @@ function c101010080.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if b1 then ft=ft+1 end
 	if b2 then ft=ft+1 end
 	if chk==0 then return ft>0 end
-	local off=1
-	local ops={}
-	local opval={}
-	if Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)>0 then
-		ops[off]=aux.Stringid(101010080,1)
-		opval[off-1]=1
-		off=off+1
+	local zone=Duel.SelectDisableField(tp,1,LOCATION_MZONE,LOCATION_MZONE,0,true)
+	if zone&0x20>0 then
+		zone=zone|0x400000
 	end
-	if b1 then
-		ops[off]=aux.Stringid(101010080,2)
-		opval[off-1]=2
-		off=off+1
+	if zone&0x40>0 then
+		zone=zone|0x200000
 	end
-	if b2 then
-		ops[off]=aux.Stringid(101010080,3)
-		opval[off-1]=3
-		off=off+1
-	end
-	if off==1 then return end
-	local op=Duel.SelectOption(tp,table.unpack(ops))
-	local seq=nil
-	if op==0 then
-		seq=Duel.SelectDisableField(tp,1,LOCATION_MZONE,LOCATION_MZONE,0)
-	elseif op==1 then
-		seq=0x400020
-	else
-		seq=0x200040
-	end
-	e:SetLabel(seq)
+	e:SetLabel(zone)
 end
 function c101010080.cfilter(c,seq,tp)
 	local nseq=c:GetSequence()
