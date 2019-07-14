@@ -35,7 +35,7 @@ function c101010010.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101010010.atkval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x230)*300
+	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x130)*300
 end
 function c101010010.tgfilter(c,tp,ec)
 	local mg=Group.FromCards(ec,c)
@@ -70,7 +70,7 @@ function c101010010.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c101010010.spfilter(c,e,tp)
-	return c:IsSetCard(0x230) and not c:IsCode(101010010) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x130) and not c:IsCode(101010010) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101010010.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101010010.spfilter(chkc,e,tp) end

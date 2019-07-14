@@ -30,7 +30,7 @@ function c101010044.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101010044.lcheck(g)
-	return g:IsExists(Card.IsLinkSetCard,1,nil,0x1230)
+	return g:IsExists(Card.IsLinkSetCard,1,nil,0x1130)
 end
 function c101010044.tgfilter(c,tp,ec)
 	local mg=Group.FromCards(ec,c)

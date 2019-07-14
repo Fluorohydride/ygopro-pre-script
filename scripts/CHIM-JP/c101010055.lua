@@ -34,7 +34,7 @@ function c101010055.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101010055.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x230) and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSummonPlayer()==tp
+	return c:IsFaceup() and c:IsSetCard(0x130) and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSummonPlayer()==tp
 end
 function c101010055.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101010055.cfilter,1,nil,tp)
@@ -58,7 +58,7 @@ function c101010055.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function c101010055.spfilter(c,e,tp)
-	return c:IsSetCard(0x230) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x130) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101010055.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

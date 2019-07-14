@@ -26,7 +26,7 @@ function c101010054.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101010054.filter(c)
-	return c:IsSetCard(0x230) and c:IsAbleToHand()
+	return c:IsSetCard(0x130) and c:IsAbleToHand()
 end
 function c101010054.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101010054.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -45,7 +45,7 @@ function c101010054.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function c101010054.spfilter(c,e,tp)
-	return c:IsSetCard(0x230) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x130) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101010054.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

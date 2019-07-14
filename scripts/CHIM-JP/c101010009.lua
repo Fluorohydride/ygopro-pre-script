@@ -56,7 +56,7 @@ function c101010009.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and not re:GetHandler():IsCode(101010009))) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c101010009.spfilter(c,e,tp)
-	return c:IsSetCard(0x230) and not c:IsCode(101010009) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x130) and not c:IsCode(101010009) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101010009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

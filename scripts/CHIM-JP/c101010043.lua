@@ -33,7 +33,7 @@ function c101010043.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101010043.lcheck(g)
-	return g:IsExists(Card.IsLinkSetCard,1,nil,0x1230)
+	return g:IsExists(Card.IsLinkSetCard,1,nil,0x1130)
 end
 function c101010043.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
