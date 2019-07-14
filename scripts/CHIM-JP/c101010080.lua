@@ -1,6 +1,6 @@
 --ドカンポリン
 
---Scripted by nekrozar
+--Scripted by nekrozar & Nanahira
 function c101010080.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
