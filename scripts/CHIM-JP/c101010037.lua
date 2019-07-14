@@ -2,7 +2,7 @@
 --
 --Scripted by 龙骑
 function c101010037.initial_effect(c)
-	c:EnableCounterPermit(0x152)
+	c:EnableCounterPermit(0x52)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),3)
 	c:EnableReviveLimit()
@@ -53,7 +53,7 @@ function c101010037.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 			ct=ct+1
 		end
 	end
-	if chk==0 then return ct>0 and e:GetHandler():IsCanAddCounter(0x152,ct) end
+	if chk==0 then return ct>0 and e:GetHandler():IsCanAddCounter(0x52,ct) end
 end
 function c101010037.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -65,7 +65,7 @@ function c101010037.ctop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if ct>0 then
-		c:AddCounter(0x152,ct)
+		c:AddCounter(0x52,ct)
 	end
 end
 function c101010037.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -73,14 +73,14 @@ function c101010037.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function c101010037.atkval(e,c)
-	return c:GetCounter(0x152)*2500
+	return c:GetCounter(0x52)*2500
 end
 function c101010037.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and re:IsActiveType(TYPE_MONSTER)
 end
 function c101010037.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x152,1,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x152,1,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x52,1,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,0x52,1,REASON_COST)
 end
 function c101010037.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

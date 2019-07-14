@@ -2,7 +2,7 @@
 
 --Scripted by nekrozar
 function c101010064.initial_effect(c)
-	c:EnableCounterPermit(0x52)
+	c:EnableCounterPermit(0x55)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -43,13 +43,13 @@ function c101010064.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101010064.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanAddCounter(tp,0x52,1,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x52)
+	if chk==0 then return Duel.IsCanAddCounter(tp,0x55,1,e:GetHandler()) end
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x55)
 end
 function c101010064.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		c:AddCounter(0x52,1)
+		c:AddCounter(0x55,1)
 	end
 end
 function c101010064.ctcon(e,tp,eg,ep,ev,re,r,rp)
@@ -57,10 +57,10 @@ function c101010064.ctcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101010064.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x52)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x55)
 end
 function c101010064.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=e:GetHandler():GetCounter(0x52)
+	local ct=e:GetHandler():GetCounter(0x55)
 	if chk==0 then return ct>0 end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetTargetPlayer(tp)
@@ -68,14 +68,14 @@ function c101010064.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101010064.recop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ct=c:GetCounter(0x52)
+	local ct=c:GetCounter(0x55)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	if c:IsRelateToEffect(e) and ct>0 then
 		Duel.Recover(p,ct*500,REASON_EFFECT)
 	end
 end
 function c101010064.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=e:GetHandler():GetCounter(0x52)
+	local ct=e:GetHandler():GetCounter(0x55)
 	if chk==0 then return ct>0 end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetTargetPlayer(1-tp)
@@ -83,7 +83,7 @@ function c101010064.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101010064.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ct=c:GetCounter(0x52)
+	local ct=c:GetCounter(0x55)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	if c:IsRelateToEffect(e) and ct>0 then
 		Duel.Damage(p,ct*300,REASON_EFFECT)

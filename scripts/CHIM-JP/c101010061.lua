@@ -3,8 +3,8 @@
 --Scripted by nekrozar
 function c101010061.initial_effect(c)
 	c:SetUniqueOnField(1,0,101010061)
-	c:EnableCounterPermit(0x53)
-	c:SetCounterLimit(0x53,7)
+	c:EnableCounterPermit(0x54)
+	c:SetCounterLimit(0x54,7)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -35,11 +35,11 @@ end
 function c101010061.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(c101010061.ctfilter,nil)
 	if ct>0 then
-		e:GetHandler():AddCounter(0x53,ct,true)
+		e:GetHandler():AddCounter(0x54,ct,true)
 	end
 end
 function c101010061.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetCounter(0x53)==7
+	return e:GetHandler():GetCounter(0x54)==7
 end
 function c101010061.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

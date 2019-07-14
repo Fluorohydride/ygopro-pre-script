@@ -2,7 +2,7 @@
 --
 --Scripted by 龙骑
 function c101010050.initial_effect(c)
-	c:EnableCounterPermit(0x153)
+	c:EnableCounterPermit(0x53)
 	--link summon
 	aux.AddLinkProcedure(c,nil,2,99,c101010050.lcheck)
 	c:EnableReviveLimit()
@@ -60,20 +60,20 @@ end
 function c101010050.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local ct=e:GetLabelObject():GetLabel()
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,ct,0,0x153)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,ct,0,0x53)
 end
 function c101010050.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabelObject():GetLabel()
 	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(0x153,ct)
+		e:GetHandler():AddCounter(0x53,ct)
 	end
 end
 function c101010050.atkval(e,c)
-	return c:GetCounter(0x153)*200
+	return c:GetCounter(0x53)*200
 end
 function c101010050.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x153,1,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x153,1,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x53,1,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,0x53,1,REASON_COST)
 end
 function c101010050.spfilter(c,e,tp)
 	return c:IsRace(RACE_INSECT) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
