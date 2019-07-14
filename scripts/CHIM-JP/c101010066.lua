@@ -27,7 +27,7 @@ function c101010066.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c101010066.filter,tp,LOCATION_HAND,0,nil,type)
 	local op=0
-	if g:GetCount()>0 and tc:IsDiscardable(REASON_EFFECT) and c:IsRelateToEffect(e) and Duel.IsPlayerCanDraw(tp,1) then
+	if g:GetCount()>0 and tc:IsDiscardable(REASON_EFFECT) and c:IsRelateToEffect(e) and c:GetLeaveFieldDest()==0 and Duel.IsPlayerCanDraw(tp,1) then
 		op=Duel.SelectOption(tp,aux.Stringid(101010066,0),aux.Stringid(101010066,1))
 	else
 		op=Duel.SelectOption(tp,aux.Stringid(101010066,1))+1
