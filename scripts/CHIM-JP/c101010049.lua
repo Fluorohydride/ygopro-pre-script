@@ -55,7 +55,11 @@ function c101010049.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e1:SetValue(1)
+	e1:SetValue(c101010049.indval)
+	e1:SetOwnerPlayer(tp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
+end
+function c101010049.indval(e,re,rp)
+	return rp==1-e:GetOwnerPlayer()
 end
