@@ -19,6 +19,7 @@ function c101010015.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCountLimit(1,101010015+100)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c101010015.thtg)
 	e2:SetOperation(c101010015.thop)
@@ -69,7 +70,8 @@ function c101010015.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not Duel.IsPlayerAffectedByEffect(tp,59822133) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+		and c:IsRelateToEffect(e) and tc:IsRelateToEffect(e)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 		Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		local e1=Effect.CreateEffect(c)
