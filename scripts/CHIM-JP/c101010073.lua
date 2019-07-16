@@ -19,7 +19,7 @@ function c101010073.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101010073.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107b) and c:IsRace(RACE_DRAGON)
+	return c:IsFaceup() and c:IsSetCard(0x7b) and c:IsRace(RACE_DRAGON)
 end
 function c101010073.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101010073.filter(chkc) end
