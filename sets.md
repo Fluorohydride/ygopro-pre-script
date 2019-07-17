@@ -2,15 +2,14 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **June 22, 2019** : Structure Deck: Revolver (SD36-JP) : `100336XXX`
 - **July 13, 2019** : CHAOS IMPACT (CHIM-JP) : `101010XXX`
 - **August 3, 2019** : Deck Build Pack: Mystic Fighters (DBMF-JP) : `100413XXX`
+- **August 31, 2019** : LINK VRAINS DUELIST SET (LVDS-JP) : `100254XXX`
 - **November 20, 2019** : 20th ANNIVERSARY MONSTER ART BOX (YMAB-JP) : `100251XXX`
 
 # Announced
-- **July 4, 2019** : Arc-V Volume 7 (YA07-JP) : `100252XXX`
 - **July 21, 2019** : Jump Victory Carnival 2019 (VF19-JP) : `100253XXX`
-- **August 31, 2019** : LINK VRAINS DUELIST SET (????-JP) : `100254XXX`
+- **August 22, 2019** : Fists of the Gadgets (????-EN) : `100255XXX`
 - **September 28, 2019** : Structure Deck R: Warrior's Strike (SR09-JP) : `100309XXX`
 - **October 12, 2019** : IGNITION ASSAULT (????-JP) : `101011XXX`
 
@@ -70,6 +69,7 @@
 - Collectors Pack 2019 (CP19-JP) : `100248XXX`
 - Yu-Gi-Oh! Legacy of the Duelist: Link Evolution Duelist Complete Guide promotional card (LDLE-JPB) : `100249XXX`
 - Promotion Pack (19PR-JP) : `100250XXX`
+- Arc-V Volume 7 (YA07-JP) : `100252XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -92,6 +92,7 @@
 - Structure Deck: Powercode Link (SD33-JP) : `100333XXX`
 - Structure Deck: Master Link (SD34-JP) : `100334XXX`
 - Structure Deck: Soulburner (SD35-JP) : `100335XXX`
+- Structure Deck: Revolver (SD36-JP) : `100336XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
