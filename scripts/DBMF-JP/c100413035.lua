@@ -29,10 +29,12 @@ function c100413035.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.SelectMatchingCard(tp,c100413035.filter1,tp,LOCATION_HAND,0,1,1,nil,tp)
 	Duel.ConfirmCards(1-tp,g1)
 	if g1:GetCount()==0 then return end
+	local g2=Duel.GetMatchingGroup(c100413035.filter2,tp,LOCATION_DECK,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g2=Duel.SelectMatchingCard(tp,c100413035.filter2,tp,LOCATION_DECK,0,1,1,nil)
-	if Duel.SendtoHand(g2,nil,REASON_EFFECT)==0 then return end
-	Duel.ConfirmCards(1-tp,g2)
-	Duel.BreakEffect()
-	Duel.SendtoDeck(g1,nil,1,REASON_EFFECT)
+	local sg=g2:SelectSubGroup(tp,aux.dncheck,false,1,2)
+	if sg and Duel.SendtoHand(sg,nil,REASON_EFFECT)~=0 then
+		Duel.ConfirmCards(1-tp,sg)
+		Duel.BreakEffect()
+		Duel.SendtoDeck(g1,nil,1,REASON_EFFECT)
+	end
 end

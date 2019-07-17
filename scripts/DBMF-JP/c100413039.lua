@@ -19,7 +19,7 @@ function c100413039.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c100413039.costfilter(c,tp)
-	return c:IsSetCard(0x232) and Duel.IsExistingTarget(c100413039.matfilter1,tp,LOCATION_MZONE,0,1,c,Group.FromCards(c))
+	return c:IsSetCard(0x232) and Duel.IsExistingTarget(c100413039.matfilter1,tp,LOCATION_MZONE,0,1,c,tp,Group.FromCards(c))
 end
 function c100413039.matfilter1(c,tp,g)
 	local sg=g:Clone()
@@ -31,7 +31,7 @@ function c100413039.matfilter2(c)
 	return c:IsSetCard(0x232) and c:IsType(TYPE_MONSTER)
 end
 function c100413039.fselect(g,tp)
-	if Duel.IsExistingTarget(c100413039.matfilter1,tp,LOCATION_MZONE,0,1,g,g) then
+	if Duel.IsExistingTarget(c100413039.matfilter1,tp,LOCATION_MZONE,0,1,g,tp,g) then
 		Duel.SetSelectedCard(g)
 		return Duel.CheckReleaseGroup(tp,nil,0,nil)
 	else return false end
@@ -49,7 +49,7 @@ function c100413039.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabelObject(sg)
 	Duel.Release(sg,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c100413039.matfilter1,tp,LOCATION_MZONE,0,1,1,nil,sg)
+	Duel.SelectTarget(tp,c100413039.matfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp,sg)
 end
 function c100413039.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rg=e:GetLabelObject()

@@ -45,7 +45,7 @@ function c100413028.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100413028.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if Duel.Destroy(sg,REASON_EFFECT)==0 then return end
+	if Duel.Destroy(tg,REASON_EFFECT)==0 then return end
 	local ct=Duel.GetOperatedGroup():FilterCount(aux.FilterEqualFunction(Card.GetPreviousControler,1-tp),nil)
 	if ct>0 and Duel.IsPlayerCanDraw(1-tp,ct) and Duel.SelectYesNo(1-tp,aux.Stringid(100413028,1)) then
 		Duel.BreakEffect()

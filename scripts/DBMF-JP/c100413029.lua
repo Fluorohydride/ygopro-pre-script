@@ -20,15 +20,15 @@ function c100413029.spfilter(c,e,tp,g)
 	return (c:IsSetCard(0x232) or c:IsRace(RACE_MACHINE)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and not g:IsExists(Card.IsCode,1,nil,c:GetCode())
 end
-function c100413029.costfilter1(c,tp)
+function c100413029.costfilter1(c,e,tp)
 	return (c:IsSetCard(0x232) or c:IsRace(RACE_MACHINE)) and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(c100413029.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,Group.FromCards(c))
 end
-function c100413029.costfilter2(c,tp)
+function c100413029.costfilter2(c,e,tp)
 	return (c:IsSetCard(0x232) or c:IsRace(RACE_MACHINE))
 		and Duel.IsExistingMatchingCard(c100413029.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,Group.FromCards(c))
 end
-function c100413029.fselect(g,tp)
+function c100413029.fselect(g,e,tp)
 	local sg=Duel.GetMatchingGroup(c100413029.spfilter,tp,LOCATION_HAND,0,nil,e,tp,g)
 	if sg:CheckSubGroup(aux.dncheck,g:GetCount(),g:GetCount()) and Duel.GetMZoneCount(tp,g)>=g:GetCount() then
 		Duel.SetSelectedCard(g)
@@ -36,10 +36,10 @@ function c100413029.fselect(g,tp)
 	else return false end
 end
 function c100413029.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c100413029.costfilter1,1,nil,tp) end
-	local rg=Duel.GetReleaseGroup(tp):Filter(c100413029.costfilter2,nil,tp)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c100413029.costfilter1,1,nil,e,tp) end
+	local rg=Duel.GetReleaseGroup(tp):Filter(c100413029.costfilter2,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local sg=rg:SelectSubGroup(tp,c100413029.fselect,false,1,99,tp)
+	local sg=rg:SelectSubGroup(tp,c100413029.fselect,false,1,99,e,tp)
 	e:SetLabelObject(sg)
 	Duel.Release(sg,REASON_COST)
 end
