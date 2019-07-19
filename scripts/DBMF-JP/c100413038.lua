@@ -7,7 +7,7 @@ function c100413038.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(c100413038.target)
-	e1:SetTarget(c100413038.activate)
+	e1:SetOperation(c100413038.activate)
 	c:RegisterEffect(e1)
 	--change effect
 	local e2=Effect.CreateEffect(c)
