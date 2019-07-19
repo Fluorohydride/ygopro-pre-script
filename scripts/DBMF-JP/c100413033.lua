@@ -54,18 +54,16 @@ function c100413033.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if g:GetCount()>0 and c:IsRelateToEffect(e) then
 		local sg=Group.CreateGroup()
-		local rg1=g:Filter(Card.IsControler,nil,tp)
-		if rg1:GetCount()>0 then
-			local sg1=Duel.GetMatchingGroup(nil,tp,LOCATION_HAND+LOCATION_ONFIELD,0,aux.ExceptThisCard(e))
+		local tg1=g:Filter(Card.IsControler,nil,tp)
+		if tg1:GetCount()>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-			local tc1=sg1:Select(tp,1,1,nil):GetFirst()
+			local tc1=tg1:Select(tp,1,1,nil):GetFirst()
 			sg:AddCard(tc1)
 		end
-		local rg2=g:Filter(Card.IsControler,nil,1-tp)
-		if rg2:GetCount()>0 then
-			local sg2=Duel.GetMatchingGroup(nil,tp,0,LOCATION_HAND+LOCATION_ONFIELD,aux.ExceptThisCard(e))
+		local tg2=g:Filter(Card.IsControler,nil,1-tp)
+		if tg2:GetCount()>0 then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_XMATERIAL)
-			local tc2=sg2:Select(1-tp,1,1,nil):GetFirst()
+			local tc2=tg2:Select(1-tp,1,1,nil):GetFirst()
 			sg:AddCard(tc2)
 		end
 		if sg:GetCount()>0 then
