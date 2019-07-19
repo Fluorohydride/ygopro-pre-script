@@ -40,6 +40,7 @@ function c100413029.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetReleaseGroup(tp):Filter(c100413029.costfilter2,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local sg=rg:SelectSubGroup(tp,c100413029.fselect,false,1,99,e,tp)
+	sg:KeepAlive()
 	e:SetLabelObject(sg)
 	Duel.Release(sg,REASON_COST)
 end
