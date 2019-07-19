@@ -21,7 +21,8 @@ function c100413033.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100413033,0))
 	e3:SetCategory(CATEGORY_DRAW)
-	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,100413033)
 	e3:SetCost(c100413033.drcost)
@@ -43,25 +44,20 @@ function c100413033.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100413033.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_HAND+LOCATION_ONFIELD,LOCATION_HAND+LOCATION_ONFIELD,aux.ExceptThisCard(e))
-	if Duel.Draw(tp,1,REASON_EFFECT)==0 then
-		local rg1=g:Filter(Card.IsControler,nil,tp)
-		g:Sub(rg1)
-	end
-	if Duel.Draw(1-tp,1,REASON_EFFECT)==0 then
-		local rg2=g:Filter(Card.IsControler,nil,1-tp)
-		g:Sub(rg2)
-	end
-	if g:GetCount()>0 and c:IsRelateToEffect(e) then
+	local td=Duel.Draw(tp,1,REASON_EFFECT)
+	local ed=Duel.Draw(1-tp,1,REASON_EFFECT)
+	if td+ed>0 and c:IsRelateToEffect(e) then
 		local sg=Group.CreateGroup()
-		local tg1=g:Filter(Card.IsControler,nil,tp)
-		if tg1:GetCount()>0 then
+		local tg1=Duel.GetMatchingGroup(nil,tp,LOCATION_HAND+LOCATION_ONFIELD,0,aux.ExceptThisCard(e))
+		if td>0 and tg1:GetCount()>0 then
+			Duel.ShuffleHand(tp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 			local tc1=tg1:Select(tp,1,1,nil):GetFirst()
 			sg:AddCard(tc1)
 		end
-		local tg2=g:Filter(Card.IsControler,nil,1-tp)
-		if tg2:GetCount()>0 then
+		local tg2=Duel.GetMatchingGroup(nil,1-tp,LOCATION_HAND+LOCATION_ONFIELD,0,aux.ExceptThisCard(e))
+		if ed>0 and tg2:GetCount()>0 then
+			Duel.ShuffleHand(1-tp)
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_XMATERIAL)
 			local tc2=tg2:Select(1-tp,1,1,nil):GetFirst()
 			sg:AddCard(tc2)
