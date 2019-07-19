@@ -16,11 +16,12 @@ function c100413037.filter(c,tp)
 	return c:IsSetCard(0x232) and c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function c100413037.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100413037.filter,tp,LOCATION_DECK,0,1,nil,tp)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100413037.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp)
 		and Duel.IsPlayerCanDraw(1-tp,1) end
 end
 function c100413037.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstMatchingCard(aux.NecroValleyFilter(c100413037.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100413037.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	if tc then
 		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 		if fc then
