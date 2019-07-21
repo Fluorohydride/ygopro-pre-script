@@ -20,8 +20,12 @@ function c101011000.initial_effect(c)
 	e2:SetOperation(c101011000.spop)
 	c:RegisterEffect(e2)
 end
+function c101011000.sumfilter(c)
+	return c:GetAttack()+c:GetDefense()
+end
 function c101011000.fselect(g,tp)
-	if Duel.GetMZoneCount(tp,g)>0 and g:GetSum(Card.GetAttack)+g:GetSum(Card.GetDefense)>=10000 then
+	Duel.SetSelectedCard(g)
+	if Duel.GetMZoneCount(tp,g)>0 and g:CheckWithSumGreater(c101011000.sumfilter,10000) then
 		Duel.SetSelectedCard(g)
 		return Duel.CheckReleaseGroup(tp,nil,0,nil)
 	else return false end

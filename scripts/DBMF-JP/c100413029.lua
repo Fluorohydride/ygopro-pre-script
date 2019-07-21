@@ -57,7 +57,7 @@ function c100413029.spop(e,tp,eg,ep,ev,re,r,rp)
 	if sg:GetCount()==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tg=sg:SelectSubGroup(tp,aux.dncheck,false,g:GetCount(),g:GetCount())
-	if tg then
-		Duel.SpecialSummonStep(tg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	if tg and tg:GetCount()>0 then
+		Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
