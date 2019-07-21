@@ -6,12 +6,15 @@
 - **July 21, 2019** : Jump Victory Carnival 2019 (VF19-JP) : `100253XXX`
 - **August 3, 2019** : Deck Build Pack: Mystic Fighters (DBMF-JP) : `100413XXX`
 - **August 31, 2019** : LINK VRAINS DUELIST SET (LVDS-JP) : `100254XXX`
+- **September 28, 2019** : Structure Deck R: Warrior's Strike (SR09-JP) : `100309XXX`
+- **October 12, 2019** : IGNITION ASSAULT (IGAS-JP) : `101011XXX`
 - **November 20, 2019** : 20th ANNIVERSARY MONSTER ART BOX (YMAB-JP) : `100251XXX`
 
 # Announced
 - **August 22, 2019** : Fists of the Gadgets (????-EN) : `100255XXX`
-- **September 28, 2019** : Structure Deck R: Warrior's Strike (SR09-JP) : `100309XXX`
-- **October 12, 2019** : IGNITION ASSAULT (????-JP) : `101011XXX`
+- **November 9, 2019** : Duelist Pack: Legend Duelist 6 (DP23-JP) : `100423XXX`
+- **November 23, 2019** : LINK VRAINS PACK 3 (LVP3-JP) : `100256XXX`
+- **December 7, 2019** : Structure Deck: (SD37-JP) : `100337XXX`
 
 # Archived
 ## Other packs
