@@ -3,12 +3,12 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **July 13, 2019** : CHAOS IMPACT (CHIM-JP) : `101010XXX`
+- **July 21, 2019** : Jump Victory Carnival 2019 (VF19-JP) : `100253XXX`
 - **August 3, 2019** : Deck Build Pack: Mystic Fighters (DBMF-JP) : `100413XXX`
 - **August 31, 2019** : LINK VRAINS DUELIST SET (LVDS-JP) : `100254XXX`
 - **November 20, 2019** : 20th ANNIVERSARY MONSTER ART BOX (YMAB-JP) : `100251XXX`
 
 # Announced
-- **July 21, 2019** : Jump Victory Carnival 2019 (VF19-JP) : `100253XXX`
 - **August 22, 2019** : Fists of the Gadgets (????-EN) : `100255XXX`
 - **September 28, 2019** : Structure Deck R: Warrior's Strike (SR09-JP) : `100309XXX`
 - **October 12, 2019** : IGNITION ASSAULT (????-JP) : `101011XXX`
