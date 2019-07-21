@@ -43,7 +43,7 @@ function c100413033.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
 end
 function c100413033.ofilter(tc,cp)
-	return not tc:IsType(TYPE_TOKEN) and (tc:IsControler(cp) or tc:IsAbleToChangeControler())
+	return not tc:IsType(TYPE_TOKEN) and (tc:IsControler(cp) or tc:IsAbleToChangeControler()) and not tc:IsStatus(STATUS_LEAVE_CONFIRMED)
 end
 function c100413033.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -57,7 +57,6 @@ function c100413033.drop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ShuffleHand(tp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 			local tc1=tg1:Select(tp,1,1,nil):GetFirst()
-			if tc1 then tc1:CancelToGrave() end
 			sg:AddCard(tc1)
 		end
 		local tg2=Duel.GetMatchingGroup(c100413033.ofilter,1-tp,LOCATION_HAND+LOCATION_ONFIELD,0,aux.ExceptThisCard(e),cp)
@@ -65,7 +64,6 @@ function c100413033.drop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ShuffleHand(1-tp)
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_XMATERIAL)
 			local tc2=tg2:Select(1-tp,1,1,nil):GetFirst()
-			if tc2 then tc2:CancelToGrave() end
 			sg:AddCard(tc2)
 		end
 		if sg:GetCount()>0 then
