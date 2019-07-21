@@ -42,8 +42,8 @@ function c100413033.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsPlayerCanDraw(1-tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
 end
-function c100413033.ofilter(tc,cp)
-	return not tc:IsType(TYPE_TOKEN) and (tc:IsControler(cp) or tc:IsAbleToChangeControler()) and not tc:IsStatus(STATUS_LEAVE_CONFIRMED)
+function c100413033.ofilter(c,tp)
+	return not c:IsType(TYPE_TOKEN) and (c:IsControler(tp) or c:IsAbleToChangeControler()) and not c:IsStatus(STATUS_LEAVE_CONFIRMED)
 end
 function c100413033.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
