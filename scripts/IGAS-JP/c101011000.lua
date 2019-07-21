@@ -51,5 +51,8 @@ function c101011000.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetValue(10000)
 	e1:SetReset(RESET_EVENT+0xff0000)
 	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_SET_DEFENSE)
+	c:RegisterEffect(e2)
 	g:DeleteGroup()
 end
