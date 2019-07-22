@@ -24,7 +24,7 @@ function c100254004.lmfilter(c)
 	return c:IsFaceup() and c:IsAttackAbove(3000)
 end
 function c100254004.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.IsExistingMatchingCard(c100254004.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
+	local g1=Duel.GetMatchingGroup(c100254004.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
 	local g2=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_EXTRA+LOCATION_GRAVE,nil)
 	if chk==0 then return (g1:IsExists(Card.IsType,1,nil,TYPE_FUSION) and g2:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE))
 		or (g1:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO) and g2:IsExists(c100254004.rmfilter1,3,nil))
