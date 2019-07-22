@@ -28,7 +28,7 @@ function c100413039.matfilter1(c,tp,g)
 		and Duel.IsExistingMatchingCard(c100413039.matfilter2,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,g:GetCount(),sg)
 end
 function c100413039.matfilter2(c)
-	return c:IsSetCard(0x232) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x232) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TOKEN) and not c:IsForbidden()
 end
 function c100413039.fselect(g,tp)
 	if Duel.IsExistingTarget(c100413039.matfilter1,tp,LOCATION_MZONE,0,1,g,tp,g) then
@@ -56,8 +56,9 @@ function c100413039.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rg=e:GetLabelObject()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
+		rg:AddCard(tc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100413039.matfilter2),tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,rg:GetCount(),rg:GetCount(),rg)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100413039.matfilter2),tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,rg:GetCount()-1,rg:GetCount()-1,rg)
 		if g:GetCount()>0 then
 			Duel.Overlay(tc,g)
 		end
