@@ -39,13 +39,13 @@ function c100309001.initial_effect(c)
 	e3:SetOperation(c100309001.negop)
 	c:RegisterEffect(e3)
 end
-function c100309001.costfilter2(c)
+function c100309001.costfilter(c)
 	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:GetType()==TYPE_EQUIP+TYPE_SPELL and c:IsAbleToRemoveAsCost()
 end
 function c100309001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100309001.costfilter2,tp,LOCATION_SZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100309001.costfilter,tp,LOCATION_SZONE+LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c100309001.costfilter2,tp,LOCATION_SZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100309001.costfilter,tp,LOCATION_SZONE+LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100309001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
