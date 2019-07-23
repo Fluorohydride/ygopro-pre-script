@@ -38,7 +38,7 @@ function c100254004.chainlm(e,rp,tp)
 	return tp==rp
 end
 function c100254004.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g1=Duel.IsExistingMatchingCard(c100254004.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
+	local g1=Duel.GetMatchingGroup(c100254004.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
 	local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToRemove),tp,0,LOCATION_ONFIELD+LOCATION_EXTRA+LOCATION_GRAVE,nil)
 	if g1:GetCount()==0 or g2:GetCount()==0 then return end
 	local res=0
