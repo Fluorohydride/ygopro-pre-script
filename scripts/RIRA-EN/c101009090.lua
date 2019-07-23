@@ -53,7 +53,7 @@ end
 function c101009090.cfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x234) and c:IsAttribute(ATTRIBUTE_DARK)
 end
-function c101009090.cfilter(c,tp)
+function c101009090.cfilter2(c,tp)
 	return c:GetSummonPlayer()==tp
 end
 function c101009090.damcon(e,tp,eg,ep,ev,re,r,rp)
