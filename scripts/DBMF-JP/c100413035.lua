@@ -17,7 +17,7 @@ function c100413035.filter1(c,tp)
 		and Duel.IsExistingMatchingCard(c100413035.filter2,tp,LOCATION_DECK,0,1,nil)
 end
 function c100413035.filter2(c)
-	return c:IsSetCard(0x232) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x232) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(100413035) and c:IsAbleToHand()
 end
 function c100413035.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100413035.filter1,tp,LOCATION_HAND,0,1,nil,tp) end
