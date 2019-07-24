@@ -63,7 +63,7 @@ function c100254004.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g1:IsExists(Card.IsType,1,nil,TYPE_LINK) and g2:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
 		if res~=0 then Duel.BreakEffect() end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local rg=g2:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_GRAVE)
+		local rg=g2:FilterSelect(tp,Card.IsLocation,1,3,nil,LOCATION_GRAVE)
 		Duel.HintSelection(rg)
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 	end
