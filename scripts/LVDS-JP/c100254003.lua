@@ -51,10 +51,11 @@ function c100254003.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100254003.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return e:GetHandler():GetOverlayCount()==0 and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function c100254003.spfilter(c,e,tp,mc)
-	return c:IsSetCard(0x119) and mc:IsCanBeXyzMaterial(c) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+	return c:IsSetCard(0x119) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function c100254003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
