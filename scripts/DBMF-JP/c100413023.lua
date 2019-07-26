@@ -19,6 +19,7 @@ function c100413023.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100413023.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_DECK)
 end
 function c100413023.tgfilter(c,mc)
 	return c:IsSetCard(0x233) and c:IsType(TYPE_MONSTER) and c:IsAttribute(mc:GetAttribute()) and not c:IsLevel(mc:GetLevel()) and c:IsAbleToGrave()
@@ -30,6 +31,7 @@ function c100413023.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
 		local tg=Duel.GetMatchingGroup(c100413023.tgfilter,tp,LOCATION_DECK,0,nil,g:GetFirst())
 		if tg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100413023,0)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local sg=tg:Select(tp,1,1,nil)
 			Duel.SendtoGrave(sg,REASON_EFFECT)

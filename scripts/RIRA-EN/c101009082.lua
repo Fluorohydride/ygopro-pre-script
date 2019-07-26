@@ -11,7 +11,7 @@ function c101009082.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(c101009082.atkcon)
-	e1:SetValue(3000)
+	e1:SetValue(2400)
 	c:RegisterEffect(e1)
 	--to deck
 	local e2=Effect.CreateEffect(c)
@@ -33,10 +33,10 @@ function c101009082.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function c101009082.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101009082.tdfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101009082.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and c101009082.tdfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101009082.tdfilter,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c101009082.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101009082.tdfilter,tp,0,LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end
 function c101009082.tdop(e,tp,eg,ep,ev,re,r,rp)

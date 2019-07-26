@@ -12,15 +12,15 @@ function c100413035.initial_effect(c)
 	e1:SetOperation(c100413035.activate)
 	c:RegisterEffect(e1)
 end
-function c100413035.filter1(c,tp)
+function c100413035.filter1(c)
 	return c:IsSetCard(0x232) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() and not c:IsPublic()
-		and Duel.IsExistingMatchingCard(c100413035.filter2,tp,LOCATION_DECK,0,1,nil)
 end
 function c100413035.filter2(c)
 	return c:IsSetCard(0x232) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(100413035) and c:IsAbleToHand()
 end
 function c100413035.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100413035.filter1,tp,LOCATION_HAND,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100413035.filter1,tp,LOCATION_HAND,0,1,nil)
+		and Duel.IsExistingMatchingCard(c100413035.filter2,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end

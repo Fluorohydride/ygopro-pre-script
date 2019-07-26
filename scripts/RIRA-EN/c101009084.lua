@@ -24,7 +24,7 @@ function c101009084.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g1=Duel.SelectTarget(tp,c101009084.desfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
 	local g2=Duel.GetMatchingGroup(c101009084.desfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,g1,g1:GetFirst())
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g2,1,0,0)
 end
 function c101009084.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

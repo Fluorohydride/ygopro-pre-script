@@ -18,6 +18,7 @@ end
 function c100413037.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100413037.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp)
 		and Duel.IsPlayerCanDraw(1-tp,1) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function c100413037.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
