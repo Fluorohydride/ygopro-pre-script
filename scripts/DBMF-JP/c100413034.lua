@@ -109,6 +109,5 @@ end
 function c100413034.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local tg=g:Filter(c100413034.desfilter,nil,e:GetLabel())
-	g:DeleteGroup()
 	Duel.Destroy(tg,REASON_EFFECT)
 end
