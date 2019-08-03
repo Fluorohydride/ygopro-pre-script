@@ -47,7 +47,7 @@ function c100413002.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100413002.dafilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK) and c:GetSequence()>=5
+	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK) and c:GetSequence()>=5 and Duel.IsAbleToEnterBP()
 end
 function c100413002.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100413002.dafilter(chkc) end
