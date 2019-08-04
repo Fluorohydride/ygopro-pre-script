@@ -24,9 +24,6 @@ function c100413002.initial_effect(c)
 	e2:SetOperation(c100413002.daop)
 	c:RegisterEffect(e2)
 end
-function c100413002.dacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP()
-end
 function c100413002.costfilter(c,tp)
 	return c:IsRace(RACE_CYBERSE) and Duel.GetMZoneCount(tp,c,tp)>0
 end
@@ -49,6 +46,9 @@ function c100413002.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
+end
+function c100413002.dacon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsAbleToEnterBP()
 end
 function c100413002.dafilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK) and c:GetSequence()>=5
