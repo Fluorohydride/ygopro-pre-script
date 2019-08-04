@@ -19,9 +19,13 @@ function c100413002.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,100413002+100)
+	e2:SetCondition(c100413002.dacon)
 	e2:SetTarget(c100413002.datg)
 	e2:SetOperation(c100413002.daop)
 	c:RegisterEffect(e2)
+end
+function c100413002.dacon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsAbleToEnterBP()
 end
 function c100413002.costfilter(c,tp)
 	return c:IsRace(RACE_CYBERSE) and Duel.GetMZoneCount(tp,c,tp)>0
