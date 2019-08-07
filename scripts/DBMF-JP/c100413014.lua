@@ -29,7 +29,7 @@ function c100413014.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100413014.spfilter1(c,e,tp)
-	return c:IsSetCard(0x233) and not c:IsCode(100413014) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x233) and c:IsLevelBelow(4) and not c:IsCode(100413014) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100413014.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100413014.spfilter1(chkc,e,tp) end
