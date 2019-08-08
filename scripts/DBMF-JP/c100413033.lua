@@ -43,7 +43,7 @@ function c100413033.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
 end
 function c100413033.ofilter(c,tp)
-	return not c:IsType(TYPE_TOKEN) and (c:IsControler(tp) or c:IsAbleToChangeControler()) and not c:IsStatus(STATUS_LEAVE_CONFIRMED)
+	return not c:IsType(TYPE_TOKEN) and (c:IsControler(tp) or c:IsAbleToChangeControler())
 end
 function c100413033.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -57,14 +57,20 @@ function c100413033.drop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ShuffleHand(tp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 			local tc1=tg1:Select(tp,1,1,nil):GetFirst()
-			sg:AddCard(tc1)
+			if tc1 and not tc1:IsImmuneToEffect(e) then
+				tc1:CancelToGrave()
+				sg:AddCard(tc1)
+			end
 		end
 		local tg2=Duel.GetMatchingGroup(c100413033.ofilter,1-tp,LOCATION_HAND+LOCATION_ONFIELD,0,aux.ExceptThisCard(e),cp)
 		if ed>0 and tg2:GetCount()>0 then
 			Duel.ShuffleHand(1-tp)
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_XMATERIAL)
 			local tc2=tg2:Select(1-tp,1,1,nil):GetFirst()
-			sg:AddCard(tc2)
+			if tc2 and not tc2:IsImmuneToEffect(e) then
+				tc2:CancelToGrave()
+				sg:AddCard(tc2)
+			end
 		end
 		if sg:GetCount()>0 then
 			Duel.BreakEffect()
