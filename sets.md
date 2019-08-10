@@ -9,8 +9,9 @@
 - **November 20, 2019** : 20th ANNIVERSARY MONSTER ART BOX (YMAB-JP) : `100251XXX`
 
 # Announced
+- **August 29, 2019** : 2019 Gold Sarcophagus Tin (TN19-JP) : `100256XXX`
 - **November 9, 2019** : Duelist Pack: Legend Duelist 6 (DP23-JP) : `100423XXX`
-- **November 23, 2019** : LINK VRAINS PACK 3 (LVP3-JP) : `100256XXX`
+- **November 23, 2019** : LINK VRAINS PACK 3 (LVP3-JP) : `100257XXX`
 - **December 7, 2019** : Structure Deck: (SD37-JP) : `100337XXX`
 
 # Archived
