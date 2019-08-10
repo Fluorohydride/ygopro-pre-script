@@ -37,7 +37,7 @@ function c100413008.imcon(e)
 	return e:GetHandler():GetSequence()>4
 end
 function c100413008.efilter(e,te)
-	return not te:GetOwner():IsSetCard(0x231)
+	return not te:GetOwner():IsSetCard(0x132)
 end
 function c100413008.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and e:GetHandler():GetBattleTarget()~=nil and e:GetHandler():GetSequence()>4
@@ -50,7 +50,7 @@ function c100413008.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp)) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100413008.thfilter(c)
-	return c:IsSetCard(0x231) and c:IsAbleToHand()
+	return c:IsSetCard(0x132) and c:IsAbleToHand()
 end
 function c100413008.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100413008.thfilter,tp,LOCATION_DECK,0,1,nil) end

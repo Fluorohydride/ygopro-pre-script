@@ -33,10 +33,10 @@ function c100413036.atkcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,TYPE_TOKEN)
 end
 function c100413036.atkval(e,c)
-	return c:IsSetCard(0x232) and c:IsType(TYPE_EFFECT)
+	return c:IsSetCard(0x134) and c:IsType(TYPE_EFFECT)
 end
 function c100413036.cfilter(c)
-	return bit.band(c:GetPreviousTypeOnField(),TYPE_EFFECT)~=0 and c:IsPreviousSetCard(0x232)
+	return bit.band(c:GetPreviousTypeOnField(),TYPE_EFFECT)~=0 and c:IsPreviousSetCard(0x134)
 end
 function c100413036.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100413036.cfilter,1,nil)

@@ -18,11 +18,11 @@ function c100413032.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100413032.costfilter(c,e,tp)
-	return (c:IsSetCard(0x232) or c:IsRace(RACE_ZOMBIE)) and Duel.GetMZoneCount(tp,c)>0
+	return (c:IsSetCard(0x134) or c:IsRace(RACE_ZOMBIE)) and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingTarget(c100413032.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetCode())
 end
 function c100413032.spfilter(c,e,tp,code)
-	return (c:IsSetCard(0x232) or c:IsRace(RACE_ZOMBIE)) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return (c:IsSetCard(0x134) or c:IsRace(RACE_ZOMBIE)) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100413032.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100413032.costfilter,1,nil,e,tp) end

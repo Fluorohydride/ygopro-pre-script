@@ -21,7 +21,7 @@ function c100413031.discon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0
 end
 function c100413031.costfilter(c)
-	return c:IsSetCard(0x232) or c:IsRace(RACE_WYRM)
+	return c:IsSetCard(0x134) or c:IsRace(RACE_WYRM)
 end
 function c100413031.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100413031.costfilter,1,nil) end

@@ -82,7 +82,7 @@ function c100413025.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100413025.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x233) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x133) and c:IsAbleToHand()
 end
 function c100413025.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100413025.thfilter(chkc) end

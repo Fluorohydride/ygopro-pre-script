@@ -41,7 +41,7 @@ function c100413034.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100413034.cfilter1,1,nil,1-tp)
 end
 function c100413034.spfilter(c,e,tp)
-	return c:IsSetCard(0x232) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(0x134) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100413034.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -57,14 +57,14 @@ function c100413034.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100413034.cfilter2(c,tp)
-	return c:GetSummonPlayer()==tp and c:IsSetCard(0x232)
+	return c:GetSummonPlayer()==tp and c:IsSetCard(0x134)
 end
 function c100413034.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and eg:IsExists(c100413034.cfilter2,1,nil,tp)
 end
 function c100413034.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,100413134,0x232,0x4011,1500,1500,4,RACE_FAIRY,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100413134,0x134,0x4011,1500,1500,4,RACE_FAIRY,ATTRIBUTE_LIGHT) end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,ft,0,0)
@@ -72,7 +72,7 @@ function c100413034.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100413034.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,100413134,0x232,0x4011,1500,1500,4,RACE_FAIRY,ATTRIBUTE_LIGHT) then return end
+	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,100413134,0x134,0x4011,1500,1500,4,RACE_FAIRY,ATTRIBUTE_LIGHT) then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	local fid=e:GetHandler():GetFieldID()
 	local g=Group.CreateGroup()

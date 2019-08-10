@@ -38,7 +38,7 @@ function c100413024.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c100413024.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x233)
+	return c:IsFaceup() and c:IsSetCard(0x133)
 end
 function c100413024.atkval(e,c)
 	return Duel.GetMatchingGroupCount(c100413024.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)*100
@@ -47,7 +47,7 @@ function c100413024.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100413024.filter,tp,LOCATION_MZONE,0,2,nil)
 end
 function c100413024.thfilter(c)
-	return c:IsSetCard(0x233) and not c:IsCode(100413024) and c:IsAbleToHand()
+	return c:IsSetCard(0x133) and not c:IsCode(100413024) and c:IsAbleToHand()
 end
 function c100413024.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100413024.thfilter(chkc) end
@@ -68,7 +68,7 @@ function c100413024.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x233))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x133))
 	e1:SetValue(aux.tgoval)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)

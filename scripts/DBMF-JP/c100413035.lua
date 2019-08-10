@@ -13,10 +13,10 @@ function c100413035.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100413035.filter1(c)
-	return c:IsSetCard(0x232) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() and not c:IsPublic()
+	return c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() and not c:IsPublic()
 end
 function c100413035.filter2(c)
-	return c:IsSetCard(0x232) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(100413035) and c:IsAbleToHand()
+	return c:IsSetCard(0x134) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(100413035) and c:IsAbleToHand()
 end
 function c100413035.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100413035.filter1,tp,LOCATION_HAND,0,1,nil)

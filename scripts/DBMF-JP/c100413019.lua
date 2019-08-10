@@ -46,7 +46,7 @@ function c100413019.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c100413019.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x233)
+	return c:IsFaceup() and c:IsSetCard(0x133)
 end
 function c100413019.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100413019.atkfilter(chkc) end
@@ -72,7 +72,7 @@ function c100413019.indcon(e)
 	return Duel.IsExistingMatchingCard(c100413019.indfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c100413019.spfilter(c,e,tp)
-	return c:IsSetCard(0x233) and c:IsLevel(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x133) and c:IsLevel(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100413019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

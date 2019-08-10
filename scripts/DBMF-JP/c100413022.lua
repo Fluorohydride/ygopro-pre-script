@@ -3,7 +3,7 @@
 --Scripted by nekrozar
 function c100413022.initial_effect(c)
 	--fusion material
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x233),aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON),true)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x133),aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON),true)
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -32,12 +32,12 @@ function c100413022.initial_effect(c)
 end
 function c100413022.spfilter1(c,e,tp)
 	local lv=c:GetLevel()
-	return lv>0 and c:IsFaceup() and c:IsSetCard(0x233)
+	return lv>0 and c:IsFaceup() and c:IsSetCard(0x133)
 		and Duel.IsExistingMatchingCard(c100413022.spfilter2,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,lv)
 end
 function c100413022.spfilter2(c,e,tp,clv)
 	local lv=c:GetLevel()
-	return lv>0 and c:IsSetCard(0x233) and math.abs(clv-lv)==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return lv>0 and c:IsSetCard(0x133) and math.abs(clv-lv)==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100413022.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

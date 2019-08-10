@@ -56,5 +56,5 @@ function c100413001.splimit(e,c)
 	return not c:IsRace(RACE_CYBERSE) and c:IsLocation(LOCATION_EXTRA)
 end
 function c100413001.tnval(e,c)
-	return e:GetHandler():IsControler(c:GetControler()) and c:IsSetCard(0x231)
+	return e:GetHandler():IsControler(c:GetControler()) and c:IsSetCard(0x132)
 end

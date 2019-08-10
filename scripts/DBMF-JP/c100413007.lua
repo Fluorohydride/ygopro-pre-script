@@ -47,7 +47,7 @@ function c100413007.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp)) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100413007.thfilter(c)
-	return c:IsSetCard(0x231) and c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0x132) and c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c100413007.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100413007.thfilter,tp,LOCATION_DECK,0,1,nil) end

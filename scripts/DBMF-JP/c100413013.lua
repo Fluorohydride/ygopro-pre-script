@@ -40,7 +40,7 @@ function c100413013.atktg(e,c)
 	return c:IsRace(RACE_CYBERSE)
 end
 function c100413013.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x231) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x132) and c:IsType(TYPE_MONSTER)
 end
 function c100413013.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100413013.cfilter,tp,LOCATION_MZONE,0,1,nil) and e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)

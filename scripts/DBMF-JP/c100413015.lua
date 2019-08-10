@@ -41,7 +41,7 @@ function c100413015.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c100413015.spfilter1(c,e,tp)
-	return c:IsSetCard(0x233) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x133) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100413015.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -63,7 +63,7 @@ function c100413015.indcon(e)
 	return Duel.IsExistingMatchingCard(c100413015.indfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c100413015.spfilter2(c,e,tp)
-	return c:IsSetCard(0x233) and c:IsLevel(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x133) and c:IsLevel(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100413015.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

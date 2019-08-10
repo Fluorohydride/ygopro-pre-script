@@ -18,7 +18,7 @@ function c100413028.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100413028.costfilter(c,tp)
-	return (c:IsSetCard(0x232) or c:IsRace(RACE_WARRIOR))
+	return (c:IsSetCard(0x134) or c:IsRace(RACE_WARRIOR))
 		and Duel.IsExistingTarget(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function c100413028.fselect(g,tp)

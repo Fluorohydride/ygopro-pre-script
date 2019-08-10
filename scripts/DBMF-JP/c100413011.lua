@@ -71,7 +71,7 @@ function c100413011.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c100413011.atkfilter(c)
-	return c:IsSetCard(0x231) and c:GetBaseAttack()>0 and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x132) and c:GetBaseAttack()>0 and c:IsAbleToGraveAsCost()
 end
 function c100413011.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -102,7 +102,7 @@ function c100413011.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE)
 end
 function c100413011.thfilter(c)
-	return c:IsSetCard(0x231) and not c:IsCode(100413011) and c:IsAbleToHand()
+	return c:IsSetCard(0x132) and not c:IsCode(100413011) and c:IsAbleToHand()
 end
 function c100413011.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100413011.thfilter(chkc) end

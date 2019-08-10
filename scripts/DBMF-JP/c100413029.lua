@@ -17,15 +17,15 @@ function c100413029.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100413029.spfilter(c,e,tp,g)
-	return (c:IsSetCard(0x232) or c:IsRace(RACE_MACHINE)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return (c:IsSetCard(0x134) or c:IsRace(RACE_MACHINE)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and not g:IsExists(Card.IsCode,1,nil,c:GetCode())
 end
 function c100413029.costfilter1(c,e,tp)
-	return (c:IsSetCard(0x232) or c:IsRace(RACE_MACHINE)) and Duel.GetMZoneCount(tp,c)>0
+	return (c:IsSetCard(0x134) or c:IsRace(RACE_MACHINE)) and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(c100413029.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,Group.FromCards(c))
 end
 function c100413029.costfilter2(c,e,tp)
-	return (c:IsSetCard(0x232) or c:IsRace(RACE_MACHINE))
+	return (c:IsSetCard(0x134) or c:IsRace(RACE_MACHINE))
 		and Duel.IsExistingMatchingCard(c100413029.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,Group.FromCards(c))
 end
 function c100413029.fselect(g,e,tp)

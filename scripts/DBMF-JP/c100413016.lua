@@ -36,7 +36,7 @@ function c100413016.ddop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,3,REASON_EFFECT)
 end
 function c100413016.spfilter(c,e,tp)
-	return c:IsSetCard(0x233) and c:IsLevel(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x133) and c:IsLevel(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100413016.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

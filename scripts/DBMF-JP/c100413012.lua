@@ -14,19 +14,19 @@ function c100413012.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100413012.spfilter1(c,e,tp)
-	return c:IsSetCard(0x231) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCanBeEffectTarget(e)
+	return c:IsSetCard(0x132) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCanBeEffectTarget(e)
 end
 function c100413012.fselect1(g,tp)
 	return Duel.IsExistingMatchingCard(c100413012.synfilter,tp,LOCATION_EXTRA,0,1,nil,g) and aux.dncheck(g)
 end
 function c100413012.synfilter(c,g)
-	return c:IsSetCard(0x231) and c:IsSynchroSummonable(nil,g,g:GetCount()-1,g:GetCount()-1)
+	return c:IsSetCard(0x132) and c:IsSynchroSummonable(nil,g,g:GetCount()-1,g:GetCount()-1)
 end
 function c100413012.fselect2(g,tp)
 	return Duel.IsExistingMatchingCard(c100413012.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,g) and aux.dncheck(g)
 end
 function c100413012.xyzfilter(c,g)
-	return c:IsSetCard(0x231) and c:IsXyzSummonable(g,g:GetCount(),g:GetCount())
+	return c:IsSetCard(0x132) and c:IsXyzSummonable(g,g:GetCount(),g:GetCount())
 end
 function c100413012.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

@@ -123,7 +123,7 @@ function c100413009.effop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100413009.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE) and c:IsSetCard(0x231)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE) and c:IsSetCard(0x132)
 end
 function c100413009.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

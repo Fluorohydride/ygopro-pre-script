@@ -29,7 +29,7 @@ function c100413020.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100413020.tgfilter(c)
-	return c:IsSetCard(0x233) and not c:IsCode(100413020) and c:IsAbleToGrave()
+	return c:IsSetCard(0x133) and not c:IsCode(100413020) and c:IsAbleToGrave()
 end
 function c100413020.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100413020.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -43,7 +43,7 @@ function c100413020.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100413020.spfilter(c,e,tp)
-	return c:IsSetCard(0x233) and c:IsLevel(8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x133) and c:IsLevel(8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100413020.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

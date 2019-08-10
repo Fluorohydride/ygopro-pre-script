@@ -33,10 +33,10 @@ function c100413026.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100413026.thfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x233) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x133) and c:IsAbleToHand()
 end
 function c100413026.thfilter2(c)
-	return c:IsSetCard(0x233) and not c:IsCode(100413026) and c:IsAbleToHand()
+	return c:IsSetCard(0x133) and not c:IsCode(100413026) and c:IsAbleToHand()
 end
 function c100413026.thtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100413026.thfilter1(chkc) end

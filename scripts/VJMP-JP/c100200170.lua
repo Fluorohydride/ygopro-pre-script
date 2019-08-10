@@ -50,7 +50,7 @@ function c100200170.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100200170.thfilter(c,ct)
 	if not c:IsAbleToHand() then return false end
-	if ct==2 then return c:IsSetCard(0x231)
+	if ct==2 then return c:IsSetCard(0x132)
 	elseif ct==3 then return c:IsType(TYPE_MONSTER) and c:IsLevel(4)
 	else return c:IsType(TYPE_SPELL+TYPE_TRAP) end
 end
@@ -75,7 +75,7 @@ function c100200170.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c100200170.spfilter(c,e,tp)
-	return c:IsSetCard(0x231) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x132) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100200170.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

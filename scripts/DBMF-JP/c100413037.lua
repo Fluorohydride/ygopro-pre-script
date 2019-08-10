@@ -13,7 +13,7 @@ function c100413037.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100413037.filter(c,tp)
-	return c:IsSetCard(0x232) and c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp,true,true)
+	return c:IsSetCard(0x134) and c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function c100413037.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100413037.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp)

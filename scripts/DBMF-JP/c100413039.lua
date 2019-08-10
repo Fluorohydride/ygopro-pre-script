@@ -19,7 +19,7 @@ function c100413039.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c100413039.costfilter(c,tp)
-	return c:IsSetCard(0x232) and Duel.IsExistingTarget(c100413039.matfilter1,tp,LOCATION_MZONE,0,1,c,tp,Group.FromCards(c))
+	return c:IsSetCard(0x134) and Duel.IsExistingTarget(c100413039.matfilter1,tp,LOCATION_MZONE,0,1,c,tp,Group.FromCards(c))
 end
 function c100413039.matfilter1(c,tp,g)
 	local sg=g:Clone()
@@ -28,7 +28,7 @@ function c100413039.matfilter1(c,tp,g)
 		and Duel.IsExistingMatchingCard(c100413039.matfilter2,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,g:GetCount(),sg)
 end
 function c100413039.matfilter2(c)
-	return c:IsSetCard(0x232) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TOKEN) and not c:IsForbidden()
+	return c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TOKEN) and not c:IsForbidden()
 end
 function c100413039.fselect(g,tp)
 	if Duel.IsExistingTarget(c100413039.matfilter1,tp,LOCATION_MZONE,0,1,g,tp,g) then

@@ -19,7 +19,7 @@ function c100413027.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100413027.thfilter(c)
-	return (c:IsSetCard(0x232) or c:IsRace(RACE_PLANT)) and not c:IsCode(100413027) and c:IsAbleToHand()
+	return (c:IsSetCard(0x134) or c:IsRace(RACE_PLANT)) and not c:IsCode(100413027) and c:IsAbleToHand()
 end
 function c100413027.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100413027.thfilter,tp,LOCATION_DECK,0,1,nil) end

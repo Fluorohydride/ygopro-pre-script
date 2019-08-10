@@ -14,11 +14,11 @@ function c101011064.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101011064.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x233) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x133) and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(c101011064.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetCode())
 end
 function c101011064.spfilter(c,e,tp,code)
-	return c:IsSetCard(0x233) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(0x133) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101011064.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101011064.filter(chkc,e,tp) end

@@ -62,7 +62,7 @@ function c100413017.indcon(e)
 	return Duel.IsExistingMatchingCard(c100413017.indfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c100413017.spfilter(c,e,tp)
-	return c:IsSetCard(0x233) and c:IsLevel(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x133) and c:IsLevel(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100413017.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
