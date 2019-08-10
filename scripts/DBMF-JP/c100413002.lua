@@ -37,7 +37,7 @@ function c100413002.filter(c,e,tp)
 end
 function c100413002.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100413002.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c100413002.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -48,7 +48,7 @@ function c100413002.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100413002.dacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP()
+	return Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function c100413002.dafilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK) and c:GetSequence()>=5

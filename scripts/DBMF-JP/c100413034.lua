@@ -57,7 +57,7 @@ function c100413034.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100413034.cfilter2(c,tp)
-	return c:GetSummonPlayer()==tp and c:IsSetCard(0x134)
+	return c:GetSummonPlayer()==tp and c:IsSetCard(0x134) and c:IsFaceup()
 end
 function c100413034.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and eg:IsExists(c100413034.cfilter2,1,nil,tp)

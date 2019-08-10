@@ -29,7 +29,7 @@ function c100413018.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100413018.thfilter(c)
-	return c:IsSetCard(0x133) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x133) and c:IsType(TYPE_MONSTER) and not c:IsCode(100413018) and c:IsAbleToHand()
 end
 function c100413018.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100413018.filter,tp,LOCATION_DECK,0,1,nil) end

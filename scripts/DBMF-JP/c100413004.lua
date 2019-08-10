@@ -13,7 +13,7 @@ function c100413004.initial_effect(c)
 	e1:SetOperation(c100413004.spop)
 	c:RegisterEffect(e1)
 end
-function c100413004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100413004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)

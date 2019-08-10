@@ -26,7 +26,7 @@ function c100413035.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100413035.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g1=Duel.SelectMatchingCard(tp,c100413035.filter1,tp,LOCATION_HAND,0,1,1,nil,tp)
+	local g1=Duel.SelectMatchingCard(tp,c100413035.filter1,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g1)
 	if g1:GetCount()==0 then return end
 	local g2=Duel.GetMatchingGroup(c100413035.filter2,tp,LOCATION_DECK,0,nil)
@@ -34,6 +34,7 @@ function c100413035.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g2:SelectSubGroup(tp,aux.dncheck,false,1,2)
 	if sg and Duel.SendtoHand(sg,nil,REASON_EFFECT)~=0 then
 		Duel.ConfirmCards(1-tp,sg)
+		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
 		Duel.SendtoDeck(g1,nil,1,REASON_EFFECT)
 	end
