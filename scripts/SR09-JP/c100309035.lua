@@ -67,13 +67,13 @@ end
 function c100309035.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local rg=Duel.SelectReleaseGroup(tp,c100309035.relfilter,1,1,nil,tp)
-	local tc=rg:GetFirst()
+	local relchk=rg:GetFirst():IsDualState()
 	if Duel.Release(rg,REASON_EFFECT)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100309035.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local dg=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
-		if dg:GetCount()>0 and tc:IsDualState() and Duel.SelectYesNo(tp,aux.Stringid(100309035,2)) then
+		if dg:GetCount()>0 and relchk and Duel.SelectYesNo(tp,aux.Stringid(100309035,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=dg:Select(tp,1,1,nil)

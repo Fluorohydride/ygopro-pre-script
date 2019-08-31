@@ -38,7 +38,6 @@ function c100254002.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsChainDisablable(0) then
 		local typ=bit.band(tc:GetOriginalType(),0x7)
 		local sel=1
-		local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_HAND,nil,TYPE_SPELL)
 		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(100254002,1))
 		if Duel.IsExistingMatchingCard(c100254002.cfilter,tp,0,LOCATION_HAND,1,nil,typ) then
 			sel=Duel.SelectOption(1-tp,1213,1214)
