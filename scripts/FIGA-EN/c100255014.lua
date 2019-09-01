@@ -54,7 +54,7 @@ end
 function c100255014.costfilter2(c)
 	return c:IsFaceup() and c:IsSetCard(0x79,0x7c) and not c:IsCode(100255014) and c:IsAbleToGraveAsCost()
 end
-function c100255014.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100255014.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100255014.costfilter2,tp,LOCATION_ONFIELD,0,1,nil)
 		or Duel.IsPlayerAffectedByEffect(tp,46241344) end
 	if Duel.IsExistingMatchingCard(c100255014.costfilter2,tp,LOCATION_ONFIELD,0,1,nil)

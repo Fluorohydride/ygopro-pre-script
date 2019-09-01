@@ -43,7 +43,6 @@ function c101011046.initial_effect(c)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,101011246)
 	e4:SetCondition(c101011046.spcon)
-	e4:SetCost(c101011046.spcost)
 	e4:SetTarget(c101011046.sptg)
 	e4:SetOperation(c101011046.spop)
 	c:RegisterEffect(e4)
@@ -51,7 +50,7 @@ end
 function c101011046.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler()
 end
-function c101011046.dmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101011046.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,e:GetHandler():GetAttack())
 end
