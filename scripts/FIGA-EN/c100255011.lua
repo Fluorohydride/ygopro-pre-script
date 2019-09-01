@@ -31,7 +31,7 @@ function c100255011.setcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100255011.setfilter1(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP)
-		and Duel.IsExistingMatchingCard(c100255011.setfilter2,tp,LOCATION_DECK,0,1,nil,tc:GetCode())
+		and Duel.IsExistingMatchingCard(c100255011.setfilter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function c100255011.setfilter2(c,code)
 	return c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(code) and c:IsSSetable()
