@@ -43,7 +43,7 @@ function c100254005.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e2,tp)
 end
 function c100254005.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return  c:IsSetCard(0xfb)
+	return not c:IsSetCard(0xfb)
 end
 function c100254005.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
