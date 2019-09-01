@@ -62,6 +62,7 @@ function c100255001.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			tc:RegisterFlagEffect(100255001,RESET_EVENT+RESETS_STANDARD,0,1)
+			tc=g:GetNext()
 		end
 		Duel.EquipComplete()
 	end
