@@ -55,7 +55,7 @@ function c100255018.ctfilter(c)
 end
 function c100255018.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c100255018.ctfilter,1,nil) then
-		e:GetHandler():AddCounter(0x56,2)
+		e:GetHandler():AddCounter(0x56,1)
 	end
 end
 function c100255018.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
