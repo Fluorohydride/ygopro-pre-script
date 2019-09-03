@@ -51,7 +51,7 @@ function c101011051.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101011051.damop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
-	local tg=Filter(Card.IsStatus,nil,STATUS_BATTLE_DESTROYED)
+	local tg=g:Filter(Card.IsStatus,nil,STATUS_BATTLE_DESTROYED)
 	local tc1=tg:Filter(Card.IsControler,nil,tp):GetFirst()
 	local tc2=tg:Filter(Card.IsControler,nil,1-tp):GetFirst()
 	if tc1 then
