@@ -29,7 +29,7 @@ function c100200171.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100200171.tgfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and Duel.GetMZoneCount(tp,c)>0 and c:IsAbleToGrave()
 end
 function c100200171.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
