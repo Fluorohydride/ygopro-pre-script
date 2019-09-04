@@ -4,6 +4,7 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **August 22, 2019** : Fists of the Gadgets (FIGA-EN) : `100255XXX`
 - **August 31, 2019** : LINK VRAINS DUELIST SET (LVDS-JP) : `100254XXX`
+- **September 14, 2019** : Extra Pack 2019 (EP19-JP) : `100258XXX`
 - **September 28, 2019** : Structure Deck R: Warrior's Strike (SR09-JP) : `100309XXX`
 - **October 12, 2019** : IGNITION ASSAULT (IGAS-JP) : `101011XXX`
 - **November 20, 2019** : 20th ANNIVERSARY MONSTER ART BOX (YMAB-JP) : `100251XXX`
