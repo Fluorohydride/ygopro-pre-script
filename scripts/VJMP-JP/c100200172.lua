@@ -22,7 +22,7 @@ function c100200172.initial_effect(c)
 	e3:SetDescription(aux.Stringid(100200172,1))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_RELEASE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCountLimit(1,100200172+100)
 	e3:SetCondition(c100200172.condition)
 	e3:SetTarget(c100200172.target)
@@ -54,7 +54,7 @@ function c100200172.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100200172.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP()
+	return Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function c100200172.filter(c)
 	return c:IsFaceup() and not c:IsHasEffect(EFFECT_EXTRA_ATTACK)
