@@ -54,7 +54,8 @@ function c100200172.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100200172.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.GetTurnPlayer()==tp and Duel.IsAbleToEnterBP() 
+	or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function c100200172.filter(c)
 	return c:IsFaceup() and not c:IsHasEffect(EFFECT_EXTRA_ATTACK)
