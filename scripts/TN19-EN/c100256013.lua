@@ -1,4 +1,4 @@
---Nibiru, the Primal Being
+--原始生命態ニビル
 
 --Scripted by nekrozar
 function c100256013.initial_effect(c)

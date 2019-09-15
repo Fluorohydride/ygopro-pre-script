@@ -1,4 +1,4 @@
---Dark Ruler No More
+--冥王結界波
 
 --Scripted by nekrozar
 function c100256014.initial_effect(c)
