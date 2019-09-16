@@ -26,12 +26,12 @@ function c101011075.target(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function c101011075.activate(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    if Duel.NegateActivation(ev) 
-        and Duel.IsExistingMatchingCard(c101011075.cfilter,tp,LOCATION_MZONE,0,1,nil) and c:IsRelateToEffect(e) then
+    local ec=re:GetHandler()
+    if Duel.NegateActivation(ev) and ec:IsRelateToEffect(re) 
+        and Duel.IsExistingMatchingCard(c101011075.cfilter,tp,LOCATION_MZONE,0,1,nil) then
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
         local tc=Duel.SelectMatchingCard(tp,c101011075.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
-        c:CancelToGrave()
-        Duel.Overlay(tc:GetFirst(),Group.FromCards(c))
+        ec:CancelToGrave()
+        Duel.Overlay(tc:GetFirst(),Group.FromCards(ec))
     end
 end
