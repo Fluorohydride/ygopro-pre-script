@@ -31,7 +31,9 @@ function c101011075.activate(e,tp,eg,ep,ev,re,r,rp)
         and Duel.IsExistingMatchingCard(c101011075.cfilter,tp,LOCATION_MZONE,0,1,nil) then
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
         local tc=Duel.SelectMatchingCard(tp,c101011075.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
-        ec:CancelToGrave()
-        Duel.Overlay(tc:GetFirst(),Group.FromCards(ec))
+        if not tc:GetFirst():IsImmuneToEffect(e) then
+            ec:CancelToGrave()
+            Duel.Overlay(tc:GetFirst(),Group.FromCards(ec))
+        end
     end
 end
