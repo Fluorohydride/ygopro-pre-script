@@ -80,7 +80,7 @@ function c100309002.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100309002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
         if chk==0 then 
-            return Duel.IsExistingMatchingCard(c100309002.spfilter2,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+            return Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100309002.spfilter2),tp,LOCATION_GRAVE,0,1,nil,e,tp)
                 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
         Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,nil,0,0)
 end
@@ -89,7 +89,7 @@ function c100309002.spop(e,tp,eg,ep,ev,re,r,rp)
         local ft=mc
         if mc<=0 then return end
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-        local g=Duel.GetMatchingGroup(c100309002.spfilter2,tp,LOCATION_GRAVE,0,nil,e,tp)
+        local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100309002.spfilter2),tp,LOCATION_GRAVE,0,nil,e,tp)
         if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
         local sg=g:Select(tp,ft,ft,nil)
         local count=0
