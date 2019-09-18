@@ -2,7 +2,7 @@
 
 --Scripted by mallu11
 function c100309002.initial_effect(c)
-        --equid
+        --equip
         local e1=Effect.CreateEffect(c)
         e1:SetCategory(CATEGORY_EQUIP)
         e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -80,7 +80,8 @@ function c100309002.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100309002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
         if chk==0 then 
-            return Duel.IsExistingMatchingCard(c100309002.spfilter2,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+            return Duel.IsExistingMatchingCard(c100309002.spfilter2,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+                and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
         Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,nil,0,0)
 end
 function c100309002.spop(e,tp,eg,ep,ev,re,r,rp)
