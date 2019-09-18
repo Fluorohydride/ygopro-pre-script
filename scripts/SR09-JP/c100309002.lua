@@ -1,6 +1,6 @@
 --昇華騎士－エクスパラディン
 
---Scriped by mallu11
+--Scripted by mallu11
 function c100309002.initial_effect(c)
         --equid
         local e1=Effect.CreateEffect(c)
