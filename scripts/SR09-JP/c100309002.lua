@@ -76,7 +76,7 @@ function c100309002.spcon(e,tp,eg,ep,ev,re,r,rp)
         local c=e:GetHandler()
         local g=c:GetEquipGroup()
         local sg=g:Filter(c100309002.spfilter1,nil,e,tp)
-        return sg:GetCount() and rp==1-tp
+        return sg:GetCount()>0 and rp==1-tp
 end
 function c100309002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
         if chk==0 then 
