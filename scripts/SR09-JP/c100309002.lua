@@ -41,7 +41,7 @@ function c100309002.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
 		return Duel.IsExistingMatchingCard(c100309002.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,tp)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c100309002.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
