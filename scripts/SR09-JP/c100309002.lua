@@ -34,22 +34,21 @@ function c100309002.initial_effect(c)
 	e3:SetLabelObject(e4)
 	c:RegisterEffect(e3)
 end
-function c100309002.eqfilter(c)
-	return c:IsType(TYPE_DUAL) or (c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE))
+function c100309002.eqfilter(c,tp)
+	return (c:IsType(TYPE_DUAL) or (c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE))) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
 function c100309002.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
-		return Duel.IsExistingMatchingCard(c100309002.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) 
+		return Duel.IsExistingMatchingCard(c100309002.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,tp)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK)
 end
 function c100309002.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-	if c:IsRelateToEffect(e) and c:IsControler(tp) and c:IsFaceup() 
-		and c:IsLocation(LOCATION_MZONE) then
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g=Duel.SelectMatchingCard(tp,c100309002.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c100309002.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,tp)
 		local tc=g:GetFirst()
 		if not Duel.Equip(tp,tc,c) then return end
 		--equip limit
@@ -83,32 +82,35 @@ function c100309002.spfilter(c,e,tp)
 	return c:IsType(TYPE_DUAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLocation(LOCATION_GRAVE)
 end
 function c100309002.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return rp==1-tp and c:GetPreviousLocation()==LOCATION_MZONE
+	return rp==1-tp and e:GetHandler():IsPreviousLocation(LOCATION_MZONE)
 end
 function c100309002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject():GetLabelObject()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and g:IsExists(c100309002.spfilter,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,nil,0,0)
+	local sg=g:Filter(c100309002.spfilter,nil,e,tp)
+	Duel.SetTargetCard(sg)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,sg:GetCount(),0,0)
+end
+function c100309002.spfilter2(c,e,tp)
+	return c:IsType(TYPE_DUAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLocation(LOCATION_GRAVE) and c:IsRelateToEffect(e)
 end
 function c100309002.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	local g=e:GetLabelObject():GetLabelObject()
-	local sg=g:Filter(aux.NecroValleyFilter(c100309002.spfilter),nil,e,tp)
+	local sg=g:Filter(aux.NecroValleyFilter(c100309002.spfilter2),nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	local spg=sg:Select(tp,ft,ft,nil)
-	local count=0
 	if spg:GetCount()>0 then
 		local tc=spg:GetFirst()
 		while tc do
-			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc:EnableDualState()
+			if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+				tc:EnableDualState()
+			end
 			tc=spg:GetNext()
-			count=count+1
 		end
 	end
-	if count>0 then Duel.SpecialSummonComplete() end
+	Duel.SpecialSummonComplete()
 end
