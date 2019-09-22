@@ -49,7 +49,7 @@ function c101011061.fselect(g)
 	return g:GetClassCount(c101011061.ccfilter)==g:GetCount()
 end
 function c101011061.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,0x126)
+	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_GRAVE,0,e:GetHandler(),0x126)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101011061.xyzfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101011061.xyzfilter,tp,LOCATION_MZONE,0,1,nil)
 		and g:CheckSubGroup(c101011061.fselect,3,3) end
