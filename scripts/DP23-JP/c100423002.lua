@@ -84,8 +84,12 @@ end
 function c100423002.drfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
 end
+function c100423002.drfilter2(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost() and c:IsFaceup()
+end
 function c100423002.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(c100423002.drfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil)
+	or Duel.IsExistingMatchingCard(c100423002.drfilter2,tp,LOCATION_ONFIELD,0,1,nil)
 	local b2=Duel.IsPlayerCanDraw(tp,1)
 	local b3=Duel.IsPlayerCanDraw(tp,2)
 	local gc=0
@@ -93,8 +97,11 @@ function c100423002.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if b2 and not b3 then gc=1 end
 	if b3 then gc=2 end
 	if chk==0 then return b1 and (b2 or b3) end
+	local g1=Duel.GetMatchingGroup(c100423002.drfilter,tp,LOCATION_HAND,0,nil)
+	local g2=Duel.GetMatchingGroup(c100423002.drfilter2,tp,LOCATION_ONFIELD,0,nil)
+	g1:Merge(g2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100423002.drfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,gc,nil)
+	local g=g1:Select(tp,1,gc,nil)
 	if g:GetCount()>0 then
 		e:SetLabel(Duel.SendtoGrave(g,REASON_COST))
 	end
