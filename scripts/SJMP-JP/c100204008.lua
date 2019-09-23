@@ -35,7 +35,7 @@ function c100204008.mfilter(c)
 	return c:IsLevelBelow(4) and c:IsLinkRace(RACE_CYBERSE)
 end
 function c100204008.discon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return ep~=tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainDisablable(ev)
 end
 function c100204008.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
@@ -58,7 +58,7 @@ function c100204008.cfilter(c,tp)
 end
 function c100204008.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100204008.cfilter,1,nil,tp) end
-	local g=Duel.SelectReleaseGroup(tp,c100204008.costfilter,1,1,nil,tp)
+	local g=Duel.SelectReleaseGroup(tp,c100204008.cfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c100204008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

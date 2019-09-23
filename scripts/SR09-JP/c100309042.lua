@@ -1,7 +1,6 @@
 --クロス・オーバー
 --
 --Script by mercury233
---Effect not fully confirmed
 function c100309042.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -40,10 +39,10 @@ function c100309042.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local hc=g:GetFirst()
 	if hc==tc then hc=g:GetNext() end
-	if hc:IsControler(tp) and tc:IsFaceup() and tc:IsRelateToEffect(e) 
-		and tc:IsControler(1-tp) and tc:IsLocation(LOCATION_MZONE) 
+	if hc:IsControler(tp) and tc:IsFaceup() and tc:IsRelateToEffect(e)
+		and tc:IsControler(1-tp) and tc:IsLocation(LOCATION_MZONE)
 		and tc:IsAbleToChangeControler() then
-		if hc:IsFaceup() and hc:IsRelateToEffect(e) 
+		if hc:IsFaceup() and hc:IsRelateToEffect(e)
 			and hc:IsLocation(LOCATION_MZONE) then
 			if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 				if Duel.Equip(tp,tc,hc,false) then
@@ -58,11 +57,11 @@ function c100309042.activate(e,tp,eg,ep,ev,re,r,rp)
 				tc:RegisterEffect(e1,true)
 				--substitute
 				local e2=Effect.CreateEffect(c)
-				e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_EQUIP)
-				e2:SetCode(EFFECT_DESTROY_REPLACE)
+				e2:SetType(EFFECT_TYPE_EQUIP)
+				e2:SetCode(EFFECT_DESTROY_SUBSTITUTE)
+				e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-				e2:SetTarget(c100309042.desreptg)
-				e2:SetOperation(c100309042.desrepop)
+				e2:SetValue(c100309042.desrepval)
 				tc:RegisterEffect(e2,true)
 				--damage 0
 				local e3=Effect.CreateEffect(c)
@@ -80,15 +79,6 @@ end
 function c100309042.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-function c100309042.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local tg=c:GetEquipTarget()
-	if chk==0 then return c:IsDestructable(e) 
-		and not c:IsStatus(STATUS_DESTROY_CONFIRMED) and tg 
-		and tg:IsReason(REASON_BATTLE+REASON_EFFECT) 
-		and not tg:IsReason(REASON_REPLACE) end
-	return Duel.SelectEffectYesNo(tp,c,aux.Stringid(100309042,0))
-end
-function c100309042.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+function c100309042.desrepval(e,re,r,rp)
+	return r&(REASON_BATTLE|REASON_EFFECT)~=0
 end
