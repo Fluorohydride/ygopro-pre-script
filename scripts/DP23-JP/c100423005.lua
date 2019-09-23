@@ -34,6 +34,7 @@ function c100423005.initial_effect(c)
 	e3:SetOperation(c100423005.desop)
 	c:RegisterEffect(e3)
 end
+c100423005.card_code_list={46986414,38033121}
 function c100423005.cfilter(c)
 	return (c:IsCode(46986414) or c:IsCode(38033121)) and c:IsReleasable()
 end
