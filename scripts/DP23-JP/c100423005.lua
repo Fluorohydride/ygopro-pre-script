@@ -4,23 +4,26 @@
 function c100423005.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100423005,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(c100423005.spcost)
-	e1:SetTarget(c100423005.target)
-	e1:SetOperation(c100423005.operation)
+	e1:SetCondition(c100423005.condition)
 	c:RegisterEffect(e1)
 	--spsummon
-	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_NEGATE)
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(100423005,1))
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_NEGATE)
+	e4:SetType(EFFECT_TYPE_ACTIVATE)
+	e4:SetCode(EVENT_CHAINING)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e4:SetCondition(c100423005.spcon)
+	e4:SetCost(c100423005.spcost)
+	e4:SetTarget(c100423005.sptg)
+	e4:SetOperation(c100423005.spop)
+	c:RegisterEffect(e4)
+	local e2=Effect.Clone(e4)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_CHAINING)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCondition(c100423005.spcon)
-	e2:SetCost(c100423005.spcost)
-	e2:SetTarget(c100423005.sptg)
-	e2:SetOperation(c100423005.spop)
 	c:RegisterEffect(e2)
 	--destroy
 	local e3=Effect.CreateEffect(c)
@@ -33,50 +36,8 @@ function c100423005.initial_effect(c)
 	e3:SetOperation(c100423005.desop)
 	c:RegisterEffect(e3)
 end
-function c100423005.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then
-		if e:GetLabel()~=100 then return false end
-		e:SetLabel(0)
-		return true
-	end
-	local ct=Duel.GetCurrentChain()
-	local te=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT)
-	local tc=te:GetHandler()
-	if ct~=1 and Duel.IsChainNegatable(ct-1) and Duel.IsExistingMatchingCard(c100423005.cfilter,tp,LOCATION_MZONE,0,1,nil)
-	and Duel.SelectYesNo(tp,aux.Stringid(100423005,0)) and c:GetFlagEffect(100423005)==0 then
-		c:RegisterFlagEffect(100423005,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local g=Duel.SelectMatchingCard(tp,c100423005.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
-		if g:GetCount()>0 then
-			Duel.Release(g,REASON_COST)
-			g:KeepAlive()
-			e:SetLabelObject(g)
-			e:SetLabel(0)
-		end
-		if (Duel.IsExistingMatchingCard(c100423005.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then return false end
-		local g=Duel.GetMatchingGroup(c100423005.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp,g:GetFirst():GetCode())
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
-		Duel.SetOperationInfo(0,CATEGORY_NEGATE,tc,1,0,0)
-	else
-		e:SetOperation(nil)
-	end
-end
-function c100423005.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if e:GetLabel()~=0 then return end
-	if not c:IsRelateToEffect(e) then return end
-	local ct=Duel.GetChainInfo(0,CHAININFO_CHAIN_COUNT)
-	local te=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT)
-	local tc=te:GetHandler()
-	local g=e:GetLabelObject()
-	local code=g:GetFirst():GetCode()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100423005.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp,code)
-	if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) then
-		Duel.NegateActivation(ct-1)
-	end
+function c100423005.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE and Duel.GetCurrentPhase()~=PHASE_DAMAGE_CAL
 end
 function c100423005.cfilter(c)
 	return (c:IsCode(46986414) or c:IsCode(38033121)) and c:IsReleasable()
@@ -107,10 +68,10 @@ function c100423005.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabelObject(g)
 		e:SetLabel(0)
 	end
-	if not (Duel.IsExistingMatchingCard(c100423005.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp)
+	if not (Duel.IsExistingMatchingCard(c100423005.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,g:GetFirst():GetCode())
 	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then return false end
-	local g=Duel.GetMatchingGroup(c100423005.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp,g:GetFirst():GetCode())
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	local sg=Duel.GetMatchingGroup(c100423005.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp,g:GetFirst():GetCode())
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg:GetFirst(),1,tp,LOCATION_HAND+LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function c100423005.spop(e,tp,eg,ep,ev,re,r,rp)
