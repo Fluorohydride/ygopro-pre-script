@@ -41,8 +41,6 @@ function c100423002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<0 then return false end
 	local b1=e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 	local b2=e:GetHandler():IsAbleToGrave()
-	local b3=Duel.IsExistingMatchingCard(c100423002.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-	b2=b2 and b3
 	if chk==0 then return b1 or b2 end
 	local s=0
 	if b1 and not b2 then
@@ -72,7 +70,9 @@ function c100423002.spop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-	if e:GetLabel()==1 and c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT) then
+	if e:GetLabel()==1 and c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)
+		and Duel.IsExistingMatchingCard(c100423002.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.SelectYesNo(tp,aux.Stringid(100423002,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100423002.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
