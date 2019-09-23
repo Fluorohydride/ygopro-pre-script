@@ -38,9 +38,8 @@ function c100309002.eqfilter(c,tp)
 	return (c:IsType(TYPE_DUAL) or (c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE))) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
 function c100309002.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
-		return Duel.IsExistingMatchingCard(c100309002.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,tp)
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingMatchingCard(c100309002.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c100309002.eqop(e,tp,eg,ep,ev,re,r,rp)

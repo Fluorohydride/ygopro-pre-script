@@ -39,10 +39,10 @@ function c100309042.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local hc=g:GetFirst()
 	if hc==tc then hc=g:GetNext() end
-	if hc:IsControler(tp) and tc:IsFaceup() and tc:IsRelateToEffect(e) 
-		and tc:IsControler(1-tp) and tc:IsLocation(LOCATION_MZONE) 
+	if hc:IsControler(tp) and tc:IsFaceup() and tc:IsRelateToEffect(e)
+		and tc:IsControler(1-tp) and tc:IsLocation(LOCATION_MZONE)
 		and tc:IsAbleToChangeControler() then
-		if hc:IsFaceup() and hc:IsRelateToEffect(e) 
+		if hc:IsFaceup() and hc:IsRelateToEffect(e)
 			and hc:IsLocation(LOCATION_MZONE) then
 			if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 				if Duel.Equip(tp,tc,hc,false) then
