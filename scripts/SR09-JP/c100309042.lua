@@ -1,7 +1,6 @@
 --クロス・オーバー
 --
 --Script by mercury233
---Effect not fully confirmed
 function c100309042.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -58,11 +57,11 @@ function c100309042.activate(e,tp,eg,ep,ev,re,r,rp)
 				tc:RegisterEffect(e1,true)
 				--substitute
 				local e2=Effect.CreateEffect(c)
-				e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_EQUIP)
-				e2:SetCode(EFFECT_DESTROY_REPLACE)
+				e2:SetType(EFFECT_TYPE_EQUIP)
+				e2:SetCode(EFFECT_DESTROY_SUBSTITUTE)
+				e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-				e2:SetTarget(c100309042.desreptg)
-				e2:SetOperation(c100309042.desrepop)
+				e2:SetValue(c100309042.desrepval)
 				tc:RegisterEffect(e2,true)
 				--damage 0
 				local e3=Effect.CreateEffect(c)
@@ -80,15 +79,6 @@ end
 function c100309042.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-function c100309042.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local tg=c:GetEquipTarget()
-	if chk==0 then return c:IsDestructable(e) 
-		and not c:IsStatus(STATUS_DESTROY_CONFIRMED) and tg 
-		and tg:IsReason(REASON_BATTLE+REASON_EFFECT) 
-		and not tg:IsReason(REASON_REPLACE) end
-	return Duel.SelectEffectYesNo(tp,c,aux.Stringid(100309042,0))
-end
-function c100309042.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+function c100309042.desrepval(e,re,r,rp)
+	return r&(REASON_BATTLE|REASON_EFFECT)~=0
 end
