@@ -9,37 +9,38 @@ function c100423005.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--spsummon
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(100423005,1))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DISABLE)
-	e4:SetType(EFFECT_TYPE_ACTIVATE)
-	e4:SetCode(EVENT_CHAINING)
-	e4:SetCondition(c100423005.spcon)
-	e4:SetCost(c100423005.spcost)
-	e4:SetTarget(c100423005.sptg)
-	e4:SetOperation(c100423005.spop)
-	c:RegisterEffect(e4)
-	local e2=Effect.Clone(e4)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetRange(LOCATION_SZONE)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100423005,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DISABLE)
+	e2:SetType(EFFECT_TYPE_ACTIVATE)
+	e2:SetCode(EVENT_CHAINING)
+	e2:SetCondition(c100423005.spcon)
+	e2:SetCost(c100423005.spcost)
+	e2:SetTarget(c100423005.sptg)
+	e2:SetOperation(c100423005.spop)
 	c:RegisterEffect(e2)
-	--destroy
-	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_DESTROY)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCondition(c100423005.descon)
-	e3:SetTarget(c100423005.destg)
-	e3:SetOperation(c100423005.desop)
+	local e3=e2:Clone()
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e3)
+	--destroy
+	local e4=Effect.CreateEffect(c)
+	e4:SetCategory(CATEGORY_DESTROY)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_TO_GRAVE)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCondition(c100423005.descon)
+	e4:SetTarget(c100423005.destg)
+	e4:SetOperation(c100423005.desop)
+	c:RegisterEffect(e4)
 end
 c100423005.card_code_list={46986414,38033121}
-function c100423005.cfilter(c)
-	return (c:IsCode(46986414) or c:IsCode(38033121)) and c:IsReleasable()
+function c100423005.cfilter(c,e,tp)
+	return c:IsCode(46986414,38033121) and c:IsReleasable() and Duel.GetMZoneCount(tp,c)>0
+		and Duel.IsExistingMatchingCard(c100423005.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,c:GetCode())
 end
 function c100423005.spfilter(c,e,tp,code)
-	return not c:IsCode(code) and (c:IsCode(46986414) or c:IsCode(38033121)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return not c:IsCode(code) and c:IsCode(46986414,38033121) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100423005.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsChainDisablable(ev)
@@ -53,21 +54,16 @@ function c100423005.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(c100423005.cfilter,tp,LOCATION_MZONE,0,1,nil) and c:GetFlagEffect(100423005)==0
+		return Duel.IsExistingMatchingCard(c100423005.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) and c:GetFlagEffect(100423005)==0
 	end
 	c:RegisterFlagEffect(100423005,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,c100423005.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.Release(g,REASON_COST)
-		g:KeepAlive()
-		e:SetLabelObject(g)
-		e:SetLabel(0)
-	end
-	if not (Duel.IsExistingMatchingCard(c100423005.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,g:GetFirst():GetCode())
-	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then return false end
-	local sg=Duel.GetMatchingGroup(c100423005.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp,g:GetFirst():GetCode())
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg:GetFirst(),1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	local g=Duel.SelectMatchingCard(tp,c100423005.cfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
+	Duel.Release(g,REASON_COST)
+	g:KeepAlive()
+	e:SetLabelObject(g)
+	e:SetLabel(0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function c100423005.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -85,12 +81,14 @@ function c100423005.descon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100423005.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c100423005.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if g:GetCount()>0 then
+		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
