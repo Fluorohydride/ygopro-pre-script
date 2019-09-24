@@ -34,8 +34,10 @@ function c101011053.fcheck(tp,sg,fc)
 	end
 	return true
 end
-function c101011053.gcheck(sg)
-	return sg:FilterCount(Card.IsControler,nil,1-tp)<=1
+function c101011053.gcheck(tp)
+	return	function(sg)
+				return sg:FilterCount(Card.IsControler,nil,1-tp)<=1
+			end
 end
 function c101011053.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -45,7 +47,7 @@ function c101011053.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		if mg1:IsExists(c101011053.chkfilter,1,nil,tp) and mg2:GetCount()>0 then
 			mg1:Merge(mg2)
 			aux.FCheckAdditional=c101011053.fcheck
-			aux.GCheckAdditional=c101011053.gcheck
+			aux.GCheckAdditional=c101011053.gcheck(tp)
 		end
 		local res=Duel.IsExistingMatchingCard(c101011053.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
 		aux.FCheckAdditional=nil
@@ -73,7 +75,7 @@ function c101011053.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if exmat then
 		aux.FCheckAdditional=c101011053.fcheck
-		aux.GCheckAdditional=c101011053.gcheck
+		aux.GCheckAdditional=c101011053.gcheck(tp)
 	end
 	local sg1=Duel.GetMatchingGroup(c101011053.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	aux.FCheckAdditional=nil
@@ -96,7 +98,7 @@ function c101011053.activate(e,tp,eg,ep,ev,re,r,rp)
 	if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
 		if exmat then
 			aux.FCheckAdditional=c101011053.fcheck
-			aux.GCheckAdditional=c101011053.gcheck
+			aux.GCheckAdditional=c101011053.gcheck(tp)
 		end
 		local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
 		aux.FCheckAdditional=nil
