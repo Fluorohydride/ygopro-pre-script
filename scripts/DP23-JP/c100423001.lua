@@ -2,8 +2,9 @@
 
 --Scripted by mallu11
 function c100423001.initial_effect(c)
+	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionCode,46986414,38033121),aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER),true)
+	aux.AddFusionProcFun2(c,{46986414,38033121},aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER),true)
 	--draw
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -42,9 +43,9 @@ function c100423001.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100423001.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.Draw(tp,1,REASON_EFFECT) then
+	if Duel.Draw(tp,1,REASON_EFFECT)~=0 then
 		local dc=Duel.GetOperatedGroup():GetFirst()
-		if dc:IsType(TYPE_SPELL+TYPE_TRAP) and dc:IsSSetable() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		if dc:IsType(TYPE_SPELL+TYPE_TRAP) and dc:IsSSetable()
 			and Duel.SelectYesNo(tp,aux.Stringid(100423001,0)) then
 			Duel.SSet(tp,dc)
 			if dc:IsType(TYPE_QUICKPLAY) then
