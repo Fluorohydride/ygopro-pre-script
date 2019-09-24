@@ -26,7 +26,7 @@ function c101011054.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local mg2=nil
 		if Duel.IsExistingMatchingCard(c101011054.cfilter,tp,LOCATION_MZONE,0,1,nil) then
 			e:SetLabel(1)
-			exg=Duel.GetMatchingGroup(aux.RitualExtraFilter,tp,LOCATION_GRAVE,0,nil,c101011054.mfilter)
+			mg2=Duel.GetMatchingGroup(aux.RitualExtraFilter,tp,LOCATION_GRAVE,0,nil,c101011054.mfilter)
 		end
 		return Duel.IsExistingMatchingCard(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,1,nil,c101011054.filter,e,tp,mg,mg2,Card.GetLevel,"Greater")
 	end
