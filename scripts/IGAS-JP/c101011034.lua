@@ -62,7 +62,7 @@ function c101011034.tetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101011034.teop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local g=Duel.GetMatchingGroup(c101011034.filter,tp,LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(c101011034.tefilter,tp,LOCATION_GRAVE,0,nil)
 	if g:GetCount()>0 and Duel.SendtoDeck(g,nil,2,REASON_EFFECT)~=0
 		and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
