@@ -43,7 +43,7 @@ function c101011006.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101011006.tefilter(c)
-	return c:IsSetCard(0x235) and c:IsType(TYPE_LINK) and c:IsAbleToExtra()
+	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK) and c:IsAbleToExtra()
 end
 function c101011006.thfilter(c)
 	return c:IsCode(101011053) and c:IsAbleToHand()
