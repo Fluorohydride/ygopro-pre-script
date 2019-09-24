@@ -49,7 +49,7 @@ function c101011004.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
-	return tc:IsFaceup() and tc:IsRace(RACE_CYBERSE)
+	return tc and tc:IsFaceup() and tc:IsRace(RACE_CYBERSE)
 end
 function c101011004.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetLabelObject()
