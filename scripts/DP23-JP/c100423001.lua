@@ -3,8 +3,15 @@
 --Scripted by mallu11
 function c100423001.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,c100423001.fufilter1,c100423001.fufilter2,true)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionCode,46986414,38033121),aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER),true)
 	--draw
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e0:SetCode(EVENT_CHAINING)
+	e0:SetRange(LOCATION_MZONE)
+	e0:SetOperation(aux.chainreg)
+	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -26,25 +33,19 @@ function c100423001.initial_effect(c)
 	e2:SetOperation(c100423001.spop)
 	c:RegisterEffect(e2)
 end
-function c100423001.fufilter1(c)
-	return c:IsCode(46986414) or c:IsCode(38033121)
-end
-function c100423001.fufilter2(c)
-	return c:IsRace(RACE_SPELLCASTER)
-end
 function c100423001.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and e:GetHandler():GetFlagEffect(1)>0
 end
 function c100423001.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c100423001.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.Draw(tp,1,REASON_EFFECT) then
 		local dc=Duel.GetOperatedGroup():GetFirst()
 		if dc:IsType(TYPE_SPELL+TYPE_TRAP) and dc:IsSSetable() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.SelectYesNo(tp,aux.Stringid(0,100423001)) then
+			and Duel.SelectYesNo(tp,aux.Stringid(100423001,0)) then
 			Duel.SSet(tp,dc)
 			if dc:IsType(TYPE_QUICKPLAY) then
 				local e1=Effect.CreateEffect(c)
@@ -66,25 +67,29 @@ function c100423001.drop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100423001.spfilter1(c,e)
+function c100423001.spfilter1(c,e,tp)
 	return c:IsCode(46986414) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.IsExistingMatchingCard(c100423001.spfilter2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,c,e,tp)
 end
-function c100423001.spfilter2(c,e)
+function c100423001.spfilter2(c,e,tp)
 	return c:IsCode(38033121) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100423001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100423001.spfilter1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e)
-	and Duel.IsExistingMatchingCard(c100423001.spfilter2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e)
-	and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,59822133) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+	local loc=LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE
+	if chk==0 then return Duel.IsExistingMatchingCard(c100423001.spfilter1,tp,loc,0,1,nil,e,tp)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,59822133) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,loc)
 end
 function c100423001.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
-	local g1=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100423001.spfilter1),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e)
-	local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100423001.spfilter2),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e)
+	local loc=LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g1=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100423001.spfilter1),tp,loc,0,1,1,nil,e,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100423001.spfilter2),tp,loc,0,1,1,g1:GetFirst(),e,tp)
 	g1:Merge(g2)
-	if g1:GetCount()>0 then
+	if g1:GetCount()==2 then
 		Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
