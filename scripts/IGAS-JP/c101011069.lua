@@ -4,6 +4,7 @@
 function c101011069.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
@@ -18,7 +19,7 @@ function c101011069.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetValue(800)
-	e2:SetTarget(c101011069.eqtg)
+	e2:SetTarget(aux.ctg)
 	c:RegisterEffect(e2)
 	--must attack
 	local e3=Effect.CreateEffect(c)
@@ -33,7 +34,7 @@ function c101011069.initial_effect(c)
 	e4:SetCode(EFFECT_ONLY_ATTACK_MONSTER)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(0,LOCATION_MZONE)
-	e4:SetValue(c101011069.eqtg)
+	e4:SetValue(aux.ctg)
 	c:RegisterEffect(e4)
 	--draw
 	local e5=Effect.CreateEffect(c)
@@ -70,9 +71,6 @@ function c101011069.activate(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
 	end
-end
-function c101011069.eqtg(e,c)
-	return c==e:GetHandler():GetCardTarget():GetFirst()
 end
 function c101011069.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
