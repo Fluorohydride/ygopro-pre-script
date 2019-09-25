@@ -26,7 +26,7 @@ function c101011069.initial_effect(c)
 	e3:SetCode(EFFECT_MUST_ATTACK)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
-	Duel.RegisterEffect(e3,tp)
+	c:RegisterEffect(e3)
 	--only attack monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -34,7 +34,7 @@ function c101011069.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(0,LOCATION_MZONE)
 	e4:SetValue(c101011069.eqtg)
-	Duel.RegisterEffect(e4,tp)
+	c:RegisterEffect(e4)
 	--draw
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_DRAW)
@@ -62,7 +62,7 @@ end
 function c101011069.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101011069.cfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101011069.cfilter,tp,LOCATION_MZONE,0,1,nil) end
-	local g=Duel.SelectTarget(tp,c101011069.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c101011069.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c101011069.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
