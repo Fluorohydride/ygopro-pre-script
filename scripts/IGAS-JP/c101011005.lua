@@ -43,8 +43,9 @@ function c101011005.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101011005.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsRace,1,nil,RACE_CYBERSE) end
-	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,nil,RACE_CYBERSE)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsRace,1,c,RACE_CYBERSE) end
+	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,c,RACE_CYBERSE)
 	e:SetLabel(g:GetFirst():GetType())
 	Duel.Release(g,REASON_COST)
 end
