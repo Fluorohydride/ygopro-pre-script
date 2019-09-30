@@ -56,14 +56,14 @@ function c101011007.damop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
+	e1:SetTargetRange(0,1)
 	e1:SetLabel(cid)
 	e1:SetValue(c101011007.damval2)
 	e1:SetReset(RESET_CHAIN)
 	Duel.RegisterEffect(e1,tp)
 end
 function c101011007.damval2(e,re,val,r,rp,rc)
-		local cc=Duel.GetCurrentChain()
+	local cc=Duel.GetCurrentChain()
 	if cc==0 or bit.band(r,REASON_EFFECT)==0 then return end
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
 	return cid==e:GetLabel() and val*2 or val
