@@ -18,7 +18,7 @@ function c101011076.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_DRAW)
 end
 function c101011076.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101011076.cfilter,1,nil,1-tp) and rp==1-tp
+	return eg:IsExists(c101011076.cfilter,1,nil,1-tp) and rp==1-tp and re and re:GetHandler():GetControler()==1-tp
 end
 function c101011076.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK,0,1,nil) end
