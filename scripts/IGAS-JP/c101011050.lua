@@ -66,10 +66,10 @@ function c101011050.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function c101011050.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-    return se and se:GetHandler():IsCode(101011050) and c:GetOriginalAttribute()==e:GetLabel()
+	return se and se:GetHandler():IsCode(101011050) and c:GetOriginalAttribute()==e:GetLabel()
 end
 function c101011050.splimit2(c)
-    return not c:IsRace(RACE_CYBERSE)
+	return not c:IsRace(RACE_CYBERSE)
 end
 function c101011050.costfilter(c)
 	return c:IsSetCard(0x235) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
