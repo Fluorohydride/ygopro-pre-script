@@ -30,15 +30,15 @@ function c101011060.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		e:SetLabel(0)
 		return res and not Duel.IsPlayerAffectedByEffect(tp,59822133)
-			and Duel.IsExistingMatchingCard(c101011060.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
+			and Duel.IsExistingMatchingCard(c101011060.spfilter,tp,LOCATION_DECK,0,2,nil,e,tp)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
 function c101011060.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerAffectedByEffect(tp,59822133) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if not Duel.IsPlayerAffectedByEffect(tp,59822133) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101011060.spfilter,tp,LOCATION_DECK,0,2,2,nil,e,tp)
-		if g:GetCount()>0 then
+		if g:GetCount()==2 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		end
 	end
