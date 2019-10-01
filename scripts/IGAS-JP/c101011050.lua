@@ -46,7 +46,7 @@ function c101011050.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101011050.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-		if g:GetCount()>0 Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
