@@ -14,8 +14,11 @@ function c101011076.initial_effect(c)
 	e1:SetOperation(c101011076.activate)
 	c:RegisterEffect(e1)
 end
+function c101011076.filter(c,tp)
+	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_DECK) and not c:IsReason(REASON_DRAW)
+end
 function c101011076.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re and re:GetHandler()==1-tp and not re:IsHasCategory(CATEGORY_DRAW) and re:IsHasCategory(CATEGORY_SEARCH)
+	return rp==1-tp and re and re:GetHandler()==1-tp and eg:IsExists(c101011076.filter,1,nil,1-tp)
 end
 function c101011076.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK,0,1,nil) end
