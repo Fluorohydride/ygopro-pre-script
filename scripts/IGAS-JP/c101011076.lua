@@ -15,7 +15,7 @@ function c101011076.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101011076.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re and not re:IsHasCategory(CATEGORY_DRAW)
+	return rp==1-tp and re and not re:IsHasCategory(CATEGORY_DRAW) and re:IsHasCategory(CATEGORY_SEARCH)
 end
 function c101011076.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK,0,1,nil) end
