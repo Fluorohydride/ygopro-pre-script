@@ -68,7 +68,7 @@ end
 function c101011050.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return se and se:GetHandler():IsCode(101011050) and c:GetOriginalAttribute()==e:GetLabel()
 end
-function c101011050.splimit2(c)
+function c101011050.splimit2(e,c)
 	return not c:IsRace(RACE_CYBERSE)
 end
 function c101011050.costfilter(c)
