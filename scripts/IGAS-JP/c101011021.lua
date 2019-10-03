@@ -57,64 +57,41 @@ function c101011021.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101011021.cpfilter(c)
 	local b=c:IsSetCard(0x128) and c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
-	local te=c:CheckActivateEffect(false,false,false)
-	if te then
+	local te=c:CheckActivateEffect(false,true,false)
+	if te~=nil then
 		local op=te:GetOperation()
-		return b and op
+		return b and op~=nil
 	end
 	return false
 end
 function c101011021.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(100)
-	return true
-end
-function c101011021.cptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		if e:GetLabel()~=100 then return false end
-		e:SetLabel(0)
 		return c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(c101011021.cpfilter,tp,LOCATION_GRAVE,0,1,nil)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c101011021.cpfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local te=g:GetFirst():CheckActivateEffect(false,true,true)
+	c101011021[Duel.GetCurrentChain()]=te
 	g:AddCard(c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	g:RemoveCard(c)
-	e:SetLabelObject(g:GetFirst())
 end
-function c101011021.cpop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if not tc then return end
-	local tpe=tc:GetType()
-	local te=tc:GetActivateEffect()
-	local tg=te:GetTarget()
-	local co=te:GetCost()
-	local op=te:GetOperation()
+function c101011021.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local te=c101011021[Duel.GetCurrentChain()]
+	if chkc then
+		local tg=te:GetTarget()
+		return tg(e,tp,eg,ep,ev,re,r,rp,0,true)
+	end
+	if chk==0 then return true end
+	if not te then return end
 	e:SetCategory(te:GetCategory())
 	e:SetProperty(te:GetProperty())
-	tc:CreateEffectRelation(te)
-	if co then co(te,tp,eg,ep,ev,re,r,rp,1) end
-	if tg then
-		tg(te,tp,eg,ep,ev,re,r,rp,1)
-	end
-	Duel.BreakEffect()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if g then
-		local etc=g:GetFirst()
-		while etc do
-			etc:CreateEffectRelation(te)
-			etc=g:GetNext()
-		end
-	end
-	if op then
-		op(te,tp,eg,ep,ev,re,r,rp)
-	end
-	tc:ReleaseEffectRelation(te)
-	if g then
-		etc=g:GetFirst()
-		while etc do
-			etc:ReleaseEffectRelation(te)
-			etc=g:GetNext()
-		end
-	end
+	local tg=te:GetTarget()
+	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
+end
+function c101011021.cpop(e,tp,eg,ep,ev,re,r,rp)
+	local te=c101011021[Duel.GetCurrentChain()]
+	if not te then return end
+	local op=te:GetOperation()
+	if op then op(e,tp,eg,ep,ev,re,r,rp) end
 end
