@@ -99,18 +99,22 @@ function c101011021.cpop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.BreakEffect()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local etc=g:GetFirst()
-	while etc do
-		etc:CreateEffectRelation(te)
-		etc=g:GetNext()
+	if g then
+		local etc=g:GetFirst()
+		while etc do
+			etc:CreateEffectRelation(te)
+			etc=g:GetNext()
+		end
 	end
 	if op then
 		op(te,tp,eg,ep,ev,re,r,rp)
 	end
 	tc:ReleaseEffectRelation(te)
-	etc=g:GetFirst()
-	while etc do
-		etc:ReleaseEffectRelation(te)
-		etc=g:GetNext()
+	if g then
+		etc=g:GetFirst()
+		while etc do
+			etc:ReleaseEffectRelation(te)
+			etc=g:GetNext()
+		end
 	end
 end
