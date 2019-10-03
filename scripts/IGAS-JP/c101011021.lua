@@ -1,0 +1,116 @@
+--ウィッチクラフト・ジェニー
+
+--Scripted by mallu11
+function c101011021.initial_effect(c)
+	--spsummon
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101011021,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1,101011021)
+	e1:SetCondition(c101011021.spcon)
+	e1:SetCost(c101011021.spcost)
+	e1:SetTarget(c101011021.sptg)
+	e1:SetOperation(c101011021.spop)
+	c:RegisterEffect(e1)
+	--copy
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101011021,1))
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCountLimit(1,101011121)
+	e2:SetCost(c101011021.cpcost)
+	e2:SetTarget(c101011021.cptg)
+	e2:SetOperation(c101011021.cpop)
+	c:RegisterEffect(e2)
+end
+function c101011021.cfilter(c)
+	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
+end
+function c101011021.spfilter(c,e,tp)
+	return c:IsSetCard(0x128) and c:IsType(TYPE_MONSTER) and not c:IsCode(101011021) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function c101011021.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+end
+function c101011021.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsReleasable() and Duel.IsExistingMatchingCard(c101011021.cfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local g=Duel.SelectMatchingCard(tp,c101011021.cfilter,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.Release(e:GetHandler(),REASON_COST)
+	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+end
+function c101011021.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101011021.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+end
+function c101011021.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,c101011021.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	if g:GetCount()>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	end
+end
+function c101011021.cpfilter(c)
+	local b=c:IsSetCard(0x128) and c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+	local te=c:CheckActivateEffect(false,false,false)
+	if te then
+		local op=te:GetOperation()
+		return b and op
+	end
+	return false
+end
+function c101011021.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(100)
+	return true
+end
+function c101011021.cptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then
+		if e:GetLabel()~=100 then return false end
+		e:SetLabel(0)
+		return c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(c101011021.cpfilter,tp,LOCATION_GRAVE,0,1,nil)
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,c101011021.cpfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	g:AddCard(c)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:RemoveCard(c)
+	e:SetLabelObject(g:GetFirst())
+end
+function c101011021.cpop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if not tc then return end
+	local tpe=tc:GetType()
+	local te=tc:GetActivateEffect()
+	local tg=te:GetTarget()
+	local co=te:GetCost()
+	local op=te:GetOperation()
+	e:SetCategory(te:GetCategory())
+	e:SetProperty(te:GetProperty())
+	tc:CreateEffectRelation(te)
+	if co then co(te,tp,eg,ep,ev,re,r,rp,1) end
+	if tg then
+		tg(te,tp,eg,ep,ev,re,r,rp,1)
+	end
+	Duel.BreakEffect()
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local etc=g:GetFirst()
+	while etc do
+		etc:CreateEffectRelation(te)
+		etc=g:GetNext()
+	end
+	if op then
+		op(te,tp,eg,ep,ev,re,r,rp)
+	end
+	tc:ReleaseEffectRelation(te)
+	etc=g:GetFirst()
+	while etc do
+		etc:ReleaseEffectRelation(te)
+		etc=g:GetNext()
+	end
+end
