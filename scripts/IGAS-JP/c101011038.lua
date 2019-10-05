@@ -24,8 +24,8 @@ function c101011038.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-function c101011038.filter(c)
-	return c:IsSetCard(0x238)
+function c101011038.filter(c,e,tp)
+	return c:IsSetCard(0x238) and c~=e:GetHandler()
 end
 function c101011038.mfilter(c,e,tp)
 	return c~=e:GetHandler()
