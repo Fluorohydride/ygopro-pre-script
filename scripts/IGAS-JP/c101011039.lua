@@ -25,8 +25,8 @@ function c101011039.initial_effect(c)
 	e2:SetOperation(c101011039.desop)
 	c:RegisterEffect(e2)
 end
-function c101011039.filter(c)
-	return c:IsSetCard(0x238)
+function c101011039.filter(c,e,tp)
+	return c:IsSetCard(0x238) and c~=e:GetHandler()
 end
 function c101011039.mfilter(c,e,tp)
 	return c~=e:GetHandler()
