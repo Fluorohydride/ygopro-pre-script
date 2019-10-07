@@ -19,8 +19,9 @@ function c101011067.condition(e,tp,eg,ep,ev,re,r,rp)
 	return sg:GetCount()<=0
 end
 function c101011067.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	local b1=Duel.GetFieldGroup(1-tp,LOCATION_MZONE,0):Filter(Card.IsPosition,nil,POS_ATTACK):GetCount()>0
-	local b2=Duel.GetFieldGroupCount(1-tp,LOCATION_SZONE,0)>0 
+	local b2=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_ONFIELD,c,TYPE_SPELL+TYPE_TRAP)>0
 	if chk==0 then return b1 or b2 end
 	local s=0
 	if b1 and not b2 then
@@ -38,7 +39,7 @@ function c101011067.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		g=Duel.GetMatchingGroup(Card.IsPosition,tp,0,LOCATION_MZONE,nil,POS_ATTACK)
 	end
 	if s==1 then
-		g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_SZONE,nil)
+		g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,c,TYPE_SPELL+TYPE_TRAP)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
@@ -48,7 +49,7 @@ function c101011067.activate(e,tp,eg,ep,ev,re,r,rp)
 		g=Duel.GetMatchingGroup(Card.IsPosition,tp,0,LOCATION_MZONE,nil,POS_ATTACK)
 	end
 	if e:GetLabel()==1 then
-		g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_SZONE,nil)
+		g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,aux.ExceptThisCard(e),TYPE_SPELL+TYPE_TRAP)
 	end
 	if g:GetCount()>0 then
 		Duel.Destroy(g,REASON_EFFECT)
