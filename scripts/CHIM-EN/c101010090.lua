@@ -35,15 +35,15 @@ function c101010090.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg2=nil
 	if b1 and not b2 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101010090,0))
-		tg1=g1:Filter(Card.CheckUniqueOnField,nil,tp):Select(tp,1,1,nil)
+		tg1=g1:Select(tp,1,1,nil)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101010090,1))
 		tg2=g3:Select(tp,1,1,nil)
 	end
 	if not b1 and b2 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101010090,0))
-		tg1=g1:Filter(Card.CheckUniqueOnField,nil,1-tp):Select(tp,1,1,nil)
+		tg1=g2:Select(tp,1,1,nil)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101010090,1))
-		tg2=g2:Select(tp,1,1,nil)
+		tg2=g1:Select(tp,1,1,nil)
 	end
 	if b1 and b2 then
 		local g=g1:Clone()
