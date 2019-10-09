@@ -12,7 +12,7 @@ function c101011020.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101011020)
 	e1:SetCondition(c101011020.spcon1)
-	e1:SetTarget(c101011020.sptg1)
+	e1:SetTarget(c101011020.sptg)
 	e1:SetOperation(c101011020.spop1)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -28,7 +28,7 @@ function c101011020.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,101011120)
 	e3:SetCondition(c101011020.spcon2)
-	e3:SetTarget(c101011020.sptg2)
+	e3:SetTarget(c101011020.sptg)
 	e3:SetOperation(c101011020.spop2)
 	c:RegisterEffect(e3)
 end
@@ -38,7 +38,7 @@ end
 function c101011020.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101011020.cfilter1,1,nil)
 end
-function c101011020.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101011020.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
@@ -59,12 +59,6 @@ function c101011020.disfilter(c)
 end
 function c101011020.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101011020.cfilter2,1,nil,tp,rp)
-end
-function c101011020.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,1-tp,LOCATION_MZONE)
 end
 function c101011020.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
