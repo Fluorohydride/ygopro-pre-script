@@ -96,6 +96,15 @@ function c101011023.setop(e,tp,eg,ep,ev,re,r,rp)
 		set=Duel.SSet(tp,tc)
 		Duel.ConfirmCards(1-tp,tc)
 	end
+	if set~=0 then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetValue(LOCATION_REMOVED)
+		tc:RegisterEffect(e1)
+	end
 	if set~=0 and Duel.IsExistingMatchingCard(Card.IsPosition,tp,LOCATION_ONFIELD,0,1,nil,POS_FACEDOWN)
 		and Duel.IsExistingMatchingCard(Card.IsPosition,tp,0,LOCATION_MZONE,1,nil,POS_FACEUP)
 		and Duel.SelectYesNo(tp,aux.Stringid(101011023,2)) then
