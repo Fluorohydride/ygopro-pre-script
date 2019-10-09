@@ -54,6 +54,9 @@ end
 function c101011023.setfilter(c,e,tp)
 	return c:IsSetCard(0x8d) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) or c:IsSSetable())
 end
+function c101011023.posfilter(c)
+	return c:IsFaceup() and c:IsCanChangePosition()
+end
 function c101011023.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
 		and (c101011023.spfilter(chkc,e,tp) or c101011023.sefilter(chkc)) end
@@ -106,12 +109,12 @@ function c101011023.setop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 	if set~=0 and Duel.IsExistingMatchingCard(Card.IsPosition,tp,LOCATION_ONFIELD,0,1,nil,POS_FACEDOWN)
-		and Duel.IsExistingMatchingCard(Card.IsPosition,tp,0,LOCATION_MZONE,1,nil,POS_FACEUP)
+		and Duel.IsExistingMatchingCard(c101011023.posfilter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(101011023,2)) then
 		Duel.BreakEffect()
 		local gc=Duel.GetMatchingGroupCount(Card.IsPosition,tp,LOCATION_ONFIELD,0,nil,POS_FACEDOWN)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsPosition,tp,0,LOCATION_MZONE,1,gc,nil,POS_FACEUP)
+		local g=Duel.SelectMatchingCard(tp,c101011023.posfilter,tp,0,LOCATION_MZONE,1,gc,nil)
 		Duel.HintSelection(g)
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 	end
