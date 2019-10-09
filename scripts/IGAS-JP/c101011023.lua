@@ -62,19 +62,20 @@ function c101011023.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and (c101011023.spfilter(chkc,e,tp) or c101011023.sefilter(chkc)) end
 	local mz=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local sz=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if chk==0 then return (mz>0 and Duel.IsExistingTarget(c101011023.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp))
-		or (sz>0 and Duel.IsExistingTarget(c101011023.sefilter,tp,LOCATION_GRAVE,0,1,nil)) end
+	local b1=mz>0 and Duel.IsExistingTarget(c101011023.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+	local b2=sz>0 and Duel.IsExistingTarget(c101011023.sefilter,tp,LOCATION_GRAVE,0,1,nil)
+	if chk==0 then return b1 or b2 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	if mz>0 and sz<=0 then
+	if b1 and not b2 then
 		local g=Duel.SelectTarget(tp,c101011023.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		local cat=e:GetCategory()
 		e:SetCategory(bit.bor(cat,CATEGORY_SPECIAL_SUMMON))
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	end
-	if mz<=0 and sz>0 then
+	if not b1 and b2 then
 		Duel.SelectTarget(tp,c101011023.sefilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	end
-	if mz>0 and sz>0 then
+	if b1 and b2 then
 		local g=Duel.SelectTarget(tp,c101011023.setfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if bit.band(g:GetFirst():GetOriginalType(),TYPE_MONSTER)~=0 then
 			local cat=e:GetCategory()
@@ -91,11 +92,11 @@ function c101011023.setop(e,tp,eg,ep,ev,re,r,rp)
 	local sz=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if (mz<=0 and bit.band(ty,TYPE_MONSTER)~=0) or (sz<=0 and bit.band(ty,TYPE_SPELL+TYPE_TRAP)~=0) then return end
 	local set=0
-	if bit.band(ty,TYPE_MONSTER)~=0 then
+	if mz>0 and bit.band(ty,TYPE_MONSTER)~=0 then
 		set=Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 		Duel.ConfirmCards(1-tp,tc)
 	end
-	if bit.band(ty,TYPE_SPELL+TYPE_TRAP)~=0 then
+	if sz>0 and bit.band(ty,TYPE_SPELL+TYPE_TRAP)~=0 then
 		set=Duel.SSet(tp,tc)
 		Duel.ConfirmCards(1-tp,tc)
 	end
