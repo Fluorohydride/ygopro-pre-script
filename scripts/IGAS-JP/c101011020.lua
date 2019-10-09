@@ -33,7 +33,7 @@ function c101011020.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101011020.cfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x1115)
+	return c:IsFaceup() and c:IsSetCard(0x1115) and not c:IsCode(101011020)
 end
 function c101011020.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101011020.cfilter1,1,nil)
