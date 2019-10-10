@@ -2,7 +2,7 @@
 
 --Scripted by mallu11
 function c101011024.initial_effect(c)
-	-spsummon1
+	--spsummon1
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101011024,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
