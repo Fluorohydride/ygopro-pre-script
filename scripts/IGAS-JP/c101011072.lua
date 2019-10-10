@@ -40,7 +40,7 @@ function c101011072.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 			e1:SetValue(LOCATION_DECKBOT)
-			tc:RegisterEffect(e1)
+			tc:RegisterEffect(e1,true)
 		end
 	end
 end
