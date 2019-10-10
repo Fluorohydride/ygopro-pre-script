@@ -107,7 +107,7 @@ function c101011023.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
-		tc:RegisterEffect(e1)
+		tc:RegisterEffect(e1,true)
 	end
 	if set~=0 and Duel.IsExistingMatchingCard(Card.IsPosition,tp,LOCATION_ONFIELD,0,1,nil,POS_FACEDOWN)
 		and Duel.IsExistingMatchingCard(c101011023.posfilter,tp,0,LOCATION_MZONE,1,nil)
