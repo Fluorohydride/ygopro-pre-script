@@ -33,7 +33,7 @@ function c101011059.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101011059.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101011059.tgfilter,tp,LOCATION_DECK,0,nil)
-	local ct=Duel.GetMatchingGroup(aux.FilterEqualFunction(Card.GetSummonLocation,LOCATION_EXTRA),tp,0,LOCATION_MZONE,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FilterEqualFunction(Card.GetSummonLocation,LOCATION_EXTRA),tp,0,LOCATION_MZONE,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ct+1)
 	if sg and sg:GetCount()>0 then

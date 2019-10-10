@@ -5,9 +5,11 @@ function c101011011.initial_effect(c)
 	--can not be attack target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
 	e1:SetCondition(c101011011.atcon)
+	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
@@ -37,7 +39,7 @@ end
 function c101011011.atfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x237)
 end
-function c101011011.atcon(e,tp,eg,ep,ev,re,r,rp)
+function c101011011.atcon(e)
 	return Duel.IsExistingMatchingCard(c101011011.atfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function c101011011.spfilter(c,e,tp)

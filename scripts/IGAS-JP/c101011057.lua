@@ -42,7 +42,7 @@ function c101011057.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x238)
 end
 function c101011057.thfilter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
+	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101011057.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101011057.cfilter,1,nil)
