@@ -36,7 +36,7 @@ function c101010081.regop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterFlagEffect(101010081,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function c101010081.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(101010081)
 end
 function c101010081.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(101010081)>0

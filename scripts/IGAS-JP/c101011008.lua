@@ -50,7 +50,7 @@ function c101011008.atcon(e)
 	return Duel.IsExistingMatchingCard(c101011008.atfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function c101011008.srfilter(c)
-	return c:IsSetCard(0x237) and c:IsAbleToHand() and not c:IsCode(101011008)
+	return c:IsSetCard(0x237) and c:IsAbleToHand() and not c:IsCode(101011008) and c:IsType(TYPE_MONSTER)
 end
 function c101011008.srcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) end

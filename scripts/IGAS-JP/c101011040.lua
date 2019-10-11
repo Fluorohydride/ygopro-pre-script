@@ -85,7 +85,7 @@ function c101011040.tfilter(c,tp)
 	return c:IsOnField() and c:IsControler(tp)
 end
 function c101011040.disfilter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsAbleToDeck()
+	return c:IsType(TYPE_RITUAL) and c:IsAbleToDeck() and c:IsType(TYPE_MONSTER)
 end
 function c101011040.discon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end

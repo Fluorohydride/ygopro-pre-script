@@ -73,8 +73,11 @@ function c101011038.rsop(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
+function c101011038.cfilter(c)
+	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER)
+end
 function c101011038.val(e,c)
 	local g=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_GRAVE,0)
-	local sg=g:Filter(Card.IsType,nil,TYPE_RITUAL)
+	local sg=g:Filter(c101011038.cfilter,nil)
 	return sg:GetCount()*300
 end
