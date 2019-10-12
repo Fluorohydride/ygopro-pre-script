@@ -34,17 +34,18 @@ function c101011010.initial_effect(c)
 	e3:SetOperation(c101011010.desop)
 	c:RegisterEffect(e3)
 end
-function c101011010.tgfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGrave() and Duel.IsExistingMatchingCard(c101011010.thfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetCode())
+function c101011010.tgfilter(c,tp)
+	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGrave()
+		and Duel.IsExistingMatchingCard(c101011010.thfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function c101011010.thfilter(c,code)
 	return c:IsSetCard(0x237) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() and not c:IsCode(code)
 end
 function c101011010.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c101011010.tgfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101011010.tgfilter,tp,LOCATION_SZONE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c101011010.tgfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c101011010.tgfilter,tp,LOCATION_SZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectTarget(tp,c101011010.tgfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101011010.tgfilter,tp,LOCATION_SZONE,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end

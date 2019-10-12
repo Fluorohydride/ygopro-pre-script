@@ -51,7 +51,7 @@ function c101011013.atkcon(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function c101011013.atkval(e,c)
-	return Duel.GetFieldGroupCount(e:GetHandler(),0,LOCATION_MZONE)*300
+	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)*300
 end
 function c101011013.xatkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<Duel.GetFieldGroupCount(1-tp,LOCATION_MZONE,0)
