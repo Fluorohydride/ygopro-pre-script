@@ -39,6 +39,8 @@ function c101011047.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if b1 then
 		local cat=e:GetCategory()
 		e:SetCategory(bit.bor(cat,CATEGORY_DRAW+CATEGORY_HANDES))
+		Duel.SetTargetPlayer(tp)
+		Duel.SetTargetParam(2)
 	end
 	if b2 then
 		local cat=e:GetCategory()
@@ -59,6 +61,13 @@ function c101011047.activate(e,tp,eg,ep,ev,re,r,rp)
 	if b1 then
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		res=Duel.Draw(p,d,REASON_EFFECT)
+		if res==2 then
+			Duel.ShuffleHand(p)
+			Duel.BreakEffect()
+			local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+			local sg=g:Select(p,2,2,nil)
+			Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
+		end
 	end
 	if b2 then
 		if res~=0 then Duel.BreakEffect() end
