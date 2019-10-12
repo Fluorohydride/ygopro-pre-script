@@ -48,10 +48,6 @@ function c101011080.negop(e,tp,eg,ep,ev,re,r,rp)
 	local coin=Duel.AnnounceCoin(p)
 	local res=Duel.TossCoin(p,1)
 	if coin==res and Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		if Duel.GetLocationCount(1-p,LOCATION_MZONE)<=0 then
-			Duel.Destroy(eg,REASON_RULE)
-		else
-			Duel.GetControl(re:GetHandler(),1-p)
-		end
+		Duel.GetControl(re:GetHandler(),1-p)
 	end
 end
