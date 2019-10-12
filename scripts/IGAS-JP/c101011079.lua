@@ -64,7 +64,7 @@ function c101011079.activate(e,tp,eg,ep,ev,re,r,rp)
 		if flag==2 then
 			local b1=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,code)
 			local b2=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,code)
-			if (b1 and mz<=0) and (b2 and ez<=0) then return end
+			if not ((b1 and mz>0) or (b2 and ez>0)) then return end
 		end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101011079.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,e,tp,code)
