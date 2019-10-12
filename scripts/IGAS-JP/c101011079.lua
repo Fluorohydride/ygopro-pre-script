@@ -58,6 +58,7 @@ function c101011079.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ez=Duel.GetLocationCountFromEx(tp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local code=tc:GetCode()
+		if tc:IsType(TYPE_PENDULUM) then flag=2 end
 		if flag==0 and mz<=0 then return end
 		if flag==1 and ez<=0 then return end
 		if flag==2 then
