@@ -49,6 +49,16 @@ function c101011079.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function c101011079.activate(e,tp,eg,ep,ev,re,r,rp)
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e2:SetTargetRange(1,0)
+		e2:SetTarget(c101011079.splimit)
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e2,tp)
+	end
 	local tc=Duel.GetFirstTarget()
 	local mz=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ez=Duel.GetLocationCountFromEx(tp)
@@ -85,16 +95,6 @@ function c101011079.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetOperation(c101011079.tdop)
 			Duel.RegisterEffect(e1,tp)
 		end
-	end
-	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e2:SetTargetRange(1,0)
-		e2:SetTarget(c101011079.splimit)
-		e2:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e2,tp)
 	end
 end
 function c101011079.tdcon(e,tp,eg,ep,ev,re,r,rp)
