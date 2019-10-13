@@ -61,12 +61,13 @@ function c101011079.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.GetMatchingGroup(c101011079.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp,code)
 			if mz<=0 then
-				g=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_EXTRA)
+				g=g:Filter(Card.IsLocation,nil,LOCATION_EXTRA)
 			end
 			if ez<=0 then
-				g=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_DECK)
+				g=g:Filter(Card.IsLocation,nil,LOCATION_DECK)
 			end
-			local sc=g:GetFirst()
+			local sg=g:Select(tp,1,1,nil)
+			local sc=sg:GetFirst()
 			if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 				sc:RegisterFlagEffect(101011079,RESET_EVENT+RESETS_STANDARD,0,1)
 				local e1=Effect.CreateEffect(e:GetHandler())
