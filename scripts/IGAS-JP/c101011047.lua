@@ -37,10 +37,6 @@ function c101011047.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b3=Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) and lg:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO)
 	local b4=Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and lg:IsExists(Card.IsType,1,nil,TYPE_XYZ)
 	if chk==0 then return b1 or b2 or b3 or b4 end
-	if b1 then
-		Duel.SetTargetPlayer(tp)
-		Duel.SetTargetParam(2)
-	end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,2)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
@@ -53,13 +49,12 @@ function c101011047.activate(e,tp,eg,ep,ev,re,r,rp)
 	local b4=Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and lg:IsExists(Card.IsType,1,nil,TYPE_XYZ)
 	local res=0
 	if b1 then
-		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-		res=Duel.Draw(p,d,REASON_EFFECT)
+		res=Duel.Draw(tp,2,REASON_EFFECT)
 		if res==2 then
-			Duel.ShuffleHand(p)
+			Duel.ShuffleHand(tp)
 			Duel.BreakEffect()
 			local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-			local sg=g:Select(p,2,2,nil)
+			local sg=g:Select(tp,2,2,nil)
 			Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
 		end
 	end
