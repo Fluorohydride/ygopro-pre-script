@@ -22,7 +22,6 @@ function c101011079.cfilter2(c,e,tp)
 end
 function c101011079.cfilter(c,e,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp,c:GetCode())
-		and bit.band(c:GetType(),TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK+TYPE_PENDULUM)==TYPE_PENDULUM
 end
 function c101011079.spfilter(c,e,tp,code)
 	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -35,39 +34,43 @@ function c101011079.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c:IsControler(1-tp) and c101011079.cfilter(chkc,e,tp) end
 	if chk==0 then return b1 or b2 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
-	local flag=0
-	if b1 and not b2 then
-		local g=Duel.SelectTarget(tp,c101011079.cfilter1,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c101011079.cfilter,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
+	local tc=g:GetFirst()
+	local d1=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,tc:GetCode())
+	local d2=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,tc:GetCode())
+	if d1 and not d2 then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	end
-	if not b1 and b2 then
-		local g=Duel.SelectTarget(tp,c101011079.cfilter2,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
+	if not d1 and d2 then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
-		flag=1
 	end
-	if b1 and b2 then
-		local g=Duel.SelectTarget(tp,c101011079.cfilter,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
+	if bit.band(tc:GetType(),TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK+TYPE_PENDULUM)==TYPE_PENDULUM then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
-		flag=2
 	end
-	e:SetLabel(flag)
 end
 function c101011079.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local flag=e:GetLabel()
 	local mz=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ez=Duel.GetLocationCountFromEx(tp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local code=tc:GetCode()
-		if flag==0 and mz<=0 then return end
-		if flag==1 and ez<=0 then return end
-		if flag==2 then
-			local b1=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,code)
-			local b2=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,code)
-			if not ((b1 and mz>0) or (b2 and ez>0)) then return end
+		local d1=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,code)
+		local d2=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,code)
+		if bit.band(tc:GetType(),TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK+TYPE_PENDULUM)==TYPE_PENDULUM then
+			if not ((d1 and mz>0) or (d2 and ez>0)) then return end
+		elseif d1 and not d2 then
+			if mz<=0 then return end
+		elseif not d1 and d2 then
+			if ez<=0 then return end
 		end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,c101011079.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,e,tp,code)
+		local g=Duel.GetMatchingGroup(c101011079.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp,code)
+		if mz<=0 then
+			g=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_EXTRA)
+		end
+		if ez<=0 then
+			g=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_DECK)
+		end
 		local sc=g:GetFirst()
 		if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 			sc:RegisterFlagEffect(101011079,RESET_EVENT+RESETS_STANDARD,0,1)
