@@ -43,7 +43,7 @@ function c100423014.activate(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetCount()>0 then
 			local tc=g:GetFirst()
 			e:SetLabelObject(tc)
-			s=Duel.SelectOption(tp,aux.Stringid(100423014,0))
+			s=Duel.SelectOption(tp,1190)
 		end
 	else
 		g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100423014.cfilter),tp,loc,0,1,1,nil,e,tp)
@@ -53,13 +53,13 @@ function c100423014.activate(e,tp,eg,ep,ev,re,r,rp)
 			local b1=tc:IsAbleToHand()
 			local b2=tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 			if b1 and not b2 then
-				s=Duel.SelectOption(tp,aux.Stringid(100423014,0))
+				s=Duel.SelectOption(tp,1190)
 			end
 			if not b1 and b2 then
-				s=Duel.SelectOption(tp,aux.Stringid(100423014,1))+1
+				s=Duel.SelectOption(tp,1152)+1
 			end
 			if b1 and b2 then
-				s=Duel.SelectOption(tp,aux.Stringid(100423014,0),aux.Stringid(100423014,1))
+				s=Duel.SelectOption(tp,1190,1152)
 			end
 		end
 	end
