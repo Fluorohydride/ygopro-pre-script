@@ -73,7 +73,7 @@ function c101011031.tnop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e3:SetTargetRange(1,0)
 	e3:SetCondition(c101011031.spcon)
-	e3:SetValue(c101011031.splimit)
+	e3:SetTarget(c101011031.splimit)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
@@ -81,7 +81,7 @@ function c101011031.cfilter(c)
 	return c:GetSummonLocation()==LOCATION_EXTRA
 end
 function c101011031.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and eg:IsExists(c101011031.cfilter,1,nil)
+	return rp==tp and eg:IsExists(c101011031.cfilter,1,nil)
 end
 function c101011031.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,101011031,RESET_PHASE+PHASE_END,0,1)
