@@ -49,6 +49,39 @@ function c101011079.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function c101011079.activate(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	local mz=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ez=Duel.GetLocationCountFromEx(tp)
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		local code=tc:GetCode()
+		local d1=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,code)
+		local d2=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,code)
+		if (bit.band(tc:GetType(),TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK+TYPE_PENDULUM)==TYPE_PENDULUM
+			and ((d1 and mz>0) or (d2 and ez>0))) or (d1 and not d2 and mz>0) or (not d1 and d2 and ez>0) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local g=Duel.GetMatchingGroup(c101011079.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp,code)
+			if mz<=0 then
+				g=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_EXTRA)
+			end
+			if ez<=0 then
+				g=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_DECK)
+			end
+			local sc=g:GetFirst()
+			if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+				sc:RegisterFlagEffect(101011079,RESET_EVENT+RESETS_STANDARD,0,1)
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+				e1:SetCode(EVENT_PHASE+PHASE_END)
+				e1:SetCountLimit(1)
+				e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+				e1:SetLabel(Duel.GetTurnCount()+1)
+				e1:SetLabelObject(sc)
+				e1:SetCondition(c101011079.tdcon)
+				e1:SetOperation(c101011079.tdop)
+				Duel.RegisterEffect(e1,tp)
+			end
+		end
+	end
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD)
@@ -58,43 +91,6 @@ function c101011079.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTarget(c101011079.splimit)
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
-	end
-	local tc=Duel.GetFirstTarget()
-	local mz=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ez=Duel.GetLocationCountFromEx(tp)
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local code=tc:GetCode()
-		local d1=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,code)
-		local d2=Duel.IsExistingMatchingCard(c101011079.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,code)
-		if bit.band(tc:GetType(),TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK+TYPE_PENDULUM)==TYPE_PENDULUM then
-			if not ((d1 and mz>0) or (d2 and ez>0)) then return end
-		elseif d1 and not d2 then
-			if mz<=0 then return end
-		elseif not d1 and d2 then
-			if ez<=0 then return end
-		end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.GetMatchingGroup(c101011079.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp,code)
-		if mz<=0 then
-			g=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_EXTRA)
-		end
-		if ez<=0 then
-			g=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_DECK)
-		end
-		local sc=g:GetFirst()
-		if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
-			sc:RegisterFlagEffect(101011079,RESET_EVENT+RESETS_STANDARD,0,1)
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e1:SetCode(EVENT_PHASE+PHASE_END)
-			e1:SetCountLimit(1)
-			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-			e1:SetLabel(Duel.GetTurnCount()+1)
-			e1:SetLabelObject(sc)
-			e1:SetCondition(c101011079.tdcon)
-			e1:SetOperation(c101011079.tdop)
-			Duel.RegisterEffect(e1,tp)
-		end
 	end
 end
 function c101011079.tdcon(e,tp,eg,ep,ev,re,r,rp)
