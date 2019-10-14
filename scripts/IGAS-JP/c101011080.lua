@@ -32,16 +32,18 @@ function c101011080.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE and Duel.GetCurrentPhase()~=PHASE_DAMAGE_CAL
 end
 function c101011080.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsOnField() and re:GetHandler():IsRelateToEffect(re) and re:IsActiveType(TYPE_MONSTER)
-		and Duel.IsChainNegatable(ev) and re:GetHandler():IsControlerCanBeChanged()
+	return Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER)
+        and Duel.IsChainNegatable(ev)
 end
 function c101011080.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
 	local p=re:GetHandlerPlayer()
+	if chk==0 then return Duel.GetLocationCount(1-p,LOCATION_MZONE) or not re:GetHandler():IsRelateToEffect(re) end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,p,1)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_CONTROL,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
+	if re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_CONTROL,eg,1,0,0)
+	end
 end
 function c101011080.negop(e,tp,eg,ep,ev,re,r,rp)
 	local p=re:GetHandlerPlayer()
