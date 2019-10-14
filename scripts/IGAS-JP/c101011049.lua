@@ -45,7 +45,7 @@ function c101011049.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
 	e:SetLabelObject(tc)
-	return tc:IsControler(1-tp) and tc:GetSequence()>4
+	return tc and tc:IsControler(1-tp) and tc:GetSequence()>4
 end
 function c101011049.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
