@@ -29,6 +29,7 @@ function c101011078.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101011078.acttg(e,re,tp)
 	local tc=re:GetHandler()
-	local g=Duel.GetMatchingGroup(Card.IsPublic,tp,LOCATION_HAND,LOCATION_HAND,nil)
-	return g:IsExists(Card.IsCode,2,nil,tc:GetCode())
+	local g1=Duel.GetMatchingGroup(Card.IsPublic,tp,LOCATION_HAND,0,nil)
+	local g2=Duel.GetMatchingGroup(Card.IsPublic,tp,0,LOCATION_HAND,nil)
+	return g1:IsExists(Card.IsCode,1,nil,tc:GetCode()) and g2:IsExists(Card.IsCode,1,nil,tc:GetCode())
 end
