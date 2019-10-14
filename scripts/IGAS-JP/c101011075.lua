@@ -16,6 +16,9 @@ end
 function c101011075.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x126) and c:IsType(TYPE_XYZ)
 end
+function c101011075.cfilter2(c)
+	return c:IsFaceup() and c:IsSetCard(0x126) and c:IsType(TYPE_XYZ) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+end
 function c101011075.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101011075.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE)
@@ -29,7 +32,7 @@ function c101011075.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,c101011075.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c101011075.cfilter2,tp,LOCATION_MZONE,0,1,1,nil)
 		if g:GetCount()>0 and not g:GetFirst():IsImmuneToEffect(e) then
 			rc:CancelToGrave()
 			Duel.Overlay(g:GetFirst(),Group.FromCards(rc))
