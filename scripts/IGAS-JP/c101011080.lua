@@ -12,7 +12,7 @@ function c101011080.initial_effect(c)
 	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101011080,1))
-	e1:SetCategory(CATEGORY_COIN+CATEGORY_NEGATE+CATEGORY_CONTROL)
+	e1:SetCategory(CATEGORY_COIN+CATEGORY_NEGATE+CATEGORY_CONTROL+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
@@ -41,13 +41,18 @@ function c101011080.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,p,1)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
 end
 function c101011080.negop(e,tp,eg,ep,ev,re,r,rp)
 	local p=re:GetHandlerPlayer()
 	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_COIN)
 	local coin=Duel.AnnounceCoin(p)
 	local res=Duel.TossCoin(p,1)
-	if coin==res and Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.GetControl(re:GetHandler(),1-p)
+	if coin==res then
+		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+			Duel.GetControl(re:GetHandler(),1-p)
+		end
+	else
+		Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 	end
 end
