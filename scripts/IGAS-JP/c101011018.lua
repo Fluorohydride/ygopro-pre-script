@@ -37,22 +37,21 @@ function c101011018.bdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101011018.bdop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetValue(c101011018.damcon)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e1:SetCondition(c101011018.damcon)
+	e1:SetOperation(c101011018.damop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c101011018.damcon(e,c)
-	local tp=e:GetHandlerPlayer()
-	if Duel.GetFlagEffect(tp,101011018)==0 and Duel.GetAttacker():IsControler(1-tp) then
-		Duel.RegisterFlagEffect(tp,101011018,RESET_PHASE+PHASE_END,0,1)
-		return true
-	else
-		return false
-	end
+function c101011018.damcon(e,tp,eg,ep,ev,re,r,rp)
+	local ac=Duel.GetAttacker()
+	return ep==tp and ac and ac:IsControler(1-tp) and Duel.GetFlagEffect(tp,101011018)==0
+end
+function c101011018.damop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.ChangeBattleDamage(ep,0,false)
+	Duel.ChangeBattleDamage(1-ep,ev,false)
+	Duel.RegisterFlagEffect(tp,101011018,RESET_PHASE+PHASE_END,0,1)
 end
 function c101011018.cfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT) and bit.band(c:GetPreviousTypeOnField(),TYPE_XYZ)~=0 and c:IsPreviousLocation(LOCATION_MZONE)
