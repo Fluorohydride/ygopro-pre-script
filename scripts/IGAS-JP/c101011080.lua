@@ -37,7 +37,7 @@ function c101011080.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101011080.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local p=re:GetHandlerPlayer()
-	if chk==0 then return Duel.GetLocationCount(1-p,LOCATION_MZONE) or not re:GetHandler():IsRelateToEffect(re) end
+	if chk==0 then return (Duel.GetLocationCount(1-p,LOCATION_MZONE)>0 and re:GetHandler():IsControler(p)) or not re:GetHandler():IsRelateToEffect(re) end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,p,1)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
