@@ -55,7 +55,7 @@ function c101011023.setfilter(c,e,tp)
 	return c:IsSetCard(0x8d) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) or c:IsSSetable())
 end
 function c101011023.posfilter(c)
-	return c:IsFaceup() and c:IsCanChangePosition()
+	return c:IsFaceup() and c:IsCanTurnSet()
 end
 function c101011023.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
