@@ -44,6 +44,7 @@ function c101011047.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c101011047.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local lg=e:GetHandler():GetLinkedGroup()
 	local b1=Duel.IsPlayerCanDraw(tp,2) and lg:IsExists(Card.IsType,1,nil,TYPE_RITUAL)
 	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101011047.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp) and lg:IsExists(Card.IsType,1,nil,TYPE_FUSION)
