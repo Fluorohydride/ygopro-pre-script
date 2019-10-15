@@ -33,7 +33,7 @@ function c101011080.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101011080.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER)
-        and Duel.IsChainNegatable(ev)
+		and Duel.IsChainNegatable(ev)
 end
 function c101011080.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local p=re:GetHandlerPlayer()
