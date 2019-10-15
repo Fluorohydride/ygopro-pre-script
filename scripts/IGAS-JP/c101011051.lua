@@ -24,7 +24,7 @@ end
 function c101011051.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return a and d and a:IsFaceup() and d:IsFaceup() and a:GetAttack()~=d:GetAttack()
+	return a and d and a:IsFaceup() and d:IsFaceup()
 end
 function c101011051.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
