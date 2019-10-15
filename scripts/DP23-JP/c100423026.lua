@@ -60,6 +60,6 @@ end
 function c100423026.ccop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimit(c100423026.chainlm)
 end
-function c100423026.chainlm(e,rp,tp)
-	return tp==rp
+function c100423026.chainlm(e,ep,tp)
+	return tp==ep
 end
