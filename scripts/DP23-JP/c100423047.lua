@@ -55,6 +55,7 @@ function c100423047.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.IsExistingMatchingCard(c100423047.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp,lsc,rsc) and Duel.SelectYesNo(tp,aux.Stringid(100423047,0)) then
 			Duel.BreakEffect()
 			local count=math.min(ct,mz)
+			if Duel.IsPlayerAffectedByEffect(tp,59822133) then count=1 end
 			local g=Duel.GetMatchingGroup(c100423047.cfilter,tp,LOCATION_HAND,0,nil,e,tp,lsc,rsc)
 			local sg=g:SelectSubGroup(tp,c100423047.fselect,false,1,count,tp)
 			flag=Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
