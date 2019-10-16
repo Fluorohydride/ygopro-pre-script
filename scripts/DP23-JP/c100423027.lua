@@ -21,7 +21,7 @@ function c100423027.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100423027.filter,tp,LOCATION_MZONE,0,1,nil) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) and rp==1-tp
 end
 function c100423027.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function c100423027.activate(e,tp,eg,ep,ev,re,r,rp)
