@@ -1,0 +1,100 @@
+--超魔導竜騎士－ドラグーン・オブ・レッドアイズ
+
+--Scripted by mallu11
+function c100259001.initial_effect(c)
+	aux.AddFusionProcCodeFun(c,46986414,c100259001.mfilter,1,true,true)
+	c:EnableReviveLimit()
+	--immune
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(1)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	c:RegisterEffect(e2)
+	--destroy
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100259001,0))
+	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(c100259001.descon)
+	e3:SetTarget(c100259001.destg)
+	e3:SetOperation(c100259001.desop)
+	c:RegisterEffect(e3)
+	--negate
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(100259001,1))
+	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_CHAINING)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1)
+	e4:SetCondition(c100259001.discon)
+	e4:SetCost(c100259001.discost)
+	e4:SetTarget(c100259001.distg)
+	e4:SetOperation(c100259001.disop)
+	c:RegisterEffect(e4)
+end
+c100259001.material_setcode=0x3b
+function c100259001.mfilter(c)
+	return c:IsFusionCode(74677422) or (c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_EFFECT))
+end
+function c100259001.descon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=c:GetMaterial()
+	local ct=g:FilterCount(Card.IsFusionType,nil,TYPE_NORMAL)
+	e:SetLabel(ct)
+	return ct>0
+end
+function c100259001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	local ct=e:GetLabel()
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) and c:GetFlagEffect(100259001)~=ct end
+	c:RegisterFlagEffect(100259001,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
+end
+function c100259001.desop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
+	if g:GetCount()>0 then
+		local atk=g:GetFirst():GetTextAttack()
+		if atk<0 then atk=0 end
+		Duel.HintSelection(g)
+		if Duel.Destroy(g,REASON_EFFECT)~=0 then
+			Duel.Damage(1-tp,atk,REASON_EFFECT)
+		end
+	end
+end
+function c100259001.discon(e,tp,eg,ep,ev,re,r,rp)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+end
+function c100259001.discost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local g=Duel.SelectMatchingCard(tp,Card.IsDiscardable,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+end
+function c100259001.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+	end
+end
+function c100259001.disop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)~=0 then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(1000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+		c:RegisterEffect(e1)
+	end
+end
