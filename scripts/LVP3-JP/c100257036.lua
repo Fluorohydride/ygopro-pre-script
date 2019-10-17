@@ -57,7 +57,7 @@ function c100257036.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local loc=LOCATION_ONFIELD+LOCATION_GRAVE
 	local g=Duel.GetMatchingGroup(c100257036.ctfilter,tp,loc,loc,nil)
-	if g:GetCount()>0 then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and g:GetCount()>0 then
 		c:AddCounter(0x1,g:GetCount())
 	end
 end
