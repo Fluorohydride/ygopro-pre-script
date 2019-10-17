@@ -41,6 +41,7 @@ function c100259017.initial_effect(c)
 	e3:SetOperation(c100259017.spop)
 	c:RegisterEffect(e3)
 end
+c100259017.synmat_syn=true
 function c100259017.tfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
