@@ -64,12 +64,14 @@ function c100423048.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local flag=false
 		local sg=g:RandomSelect(rp,1)
 		local sc=sg:GetFirst()
-		if Duel.SendtoHand(sc,nil,REASON_EFFECT)~=0 and sc:IsLocation(LOCATION_HAND) and sc:IsControler(1-rp)
-			and sc:IsDiscardable() and Duel.SelectYesNo(1-rp,aux.Stringid(100423048,2)) then
-			flag=true
-			Duel.BreakEffect()
-			Duel.SendtoGrave(sc,REASON_EFFECT+REASON_DISCARD)
-			Duel.NegateAttack()
+		if Duel.SendtoHand(sc,nil,REASON_EFFECT)~=0 and sc:IsLocation(LOCATION_HAND) and sc:IsControler(1-rp) then
+			Duel.ConfirmCards(rp,sc)
+			if sc:IsDiscardable() and Duel.SelectYesNo(1-rp,aux.Stringid(100423048,2)) then
+				flag=true
+				Duel.BreakEffect()
+				Duel.SendtoGrave(sc,REASON_EFFECT+REASON_DISCARD)
+				Duel.NegateAttack()
+			end
 		end
 		if flag==false then
 			local e1=Effect.CreateEffect(e:GetHandler())
