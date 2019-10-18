@@ -31,7 +31,7 @@ end
 function c101010081.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
-		and c:IsReason(REASON_DESTROY+REASON_EFFECT) and c:GetPreviousControler()==tp and rp==1-tp
+		and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp and rp==1-tp
 end
 function c101010081.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
