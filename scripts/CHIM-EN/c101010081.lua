@@ -12,7 +12,7 @@ function c101010081.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EVENT_DESTROYED)
+	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCondition(c101010081.regcon)
 	e2:SetOperation(c101010081.regop)
 	c:RegisterEffect(e2)
@@ -30,7 +30,8 @@ function c101010081.initial_effect(c)
 end
 function c101010081.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN) and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp and rp==1-tp
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
+		and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp and rp==1-tp
 end
 function c101010081.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

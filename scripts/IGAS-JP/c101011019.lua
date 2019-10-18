@@ -30,7 +30,8 @@ function c101011019.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetCode(EVENT_DESTROYED)
+	e3:SetCode(EVENT_TO_GRAVE)
+	e3:SetCondition(c101011019.regcon1)
 	e3:SetOperation(c101011019.regop1)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
@@ -52,6 +53,10 @@ function c101011019.initial_effect(c)
 		ge1:SetOperation(c101011019.regop)
 		Duel.RegisterEffect(ge1,0)
 	end
+end
+function c101011019.regcon1(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c101011019.regop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -104,7 +109,7 @@ function c101011019.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101011019.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(101011019)>0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+	return e:GetHandler():GetFlagEffect(101011019)>0
 end
 function c101011019.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
