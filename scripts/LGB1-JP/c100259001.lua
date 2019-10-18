@@ -2,7 +2,8 @@
 
 --Scripted by mallu11
 function c100259001.initial_effect(c)
-	aux.AddFusionProcCodeFun(c,46986414,c100259001.mfilter,1,true,true)
+	--fusion material
+	aux.AddFusionProcCodeFun(c,46986414,{74677422,c100259001.mfilter},1,true,true)
 	c:EnableReviveLimit()
 	--immune
 	local e1=Effect.CreateEffect(c)
@@ -39,22 +40,32 @@ function c100259001.initial_effect(c)
 	e4:SetTarget(c100259001.distg)
 	e4:SetOperation(c100259001.disop)
 	c:RegisterEffect(e4)
+	--material check
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e5:SetCondition(c100259001.matcon)
+	e5:SetOperation(c100259001.matop)
+	c:RegisterEffect(e5)
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(EFFECT_MATERIAL_CHECK)
+	e6:SetValue(c100259001.valcheck)
+	e6:SetLabelObject(e5)
+	c:RegisterEffect(e6)
 end
 c100259001.material_setcode=0x3b
 function c100259001.mfilter(c)
-	return c:IsFusionCode(74677422) or (c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_EFFECT))
+	return c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_EFFECT)
 end
 function c100259001.descon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local g=c:GetMaterial()
-	local ct=g:FilterCount(Card.IsFusionType,nil,TYPE_NORMAL)
-	e:SetLabel(ct)
-	return ct>0
+	return e:GetHandler():GetFlagEffectLabel(100259101)>0
 end
 function c100259001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local ct=e:GetLabel()
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) and c:GetFlagEffect(100259001)~=ct end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil)
+		and c:GetFlagEffect(100259001)<c:GetFlagEffectLabel(100259101) end
 	c:RegisterFlagEffect(100259001,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
@@ -97,4 +108,15 @@ function c100259001.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e1)
 	end
+end
+function c100259001.matcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()>0
+end
+function c100259001.matop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(100259101,RESET_EVENT+RESETS_STANDARD,0,1,e:GetLabel())
+end
+function c100259001.valcheck(e,c)
+	local g=c:GetMaterial()
+	local ct=g:FilterCount(Card.IsFusionType,nil,TYPE_NORMAL)
+	e:GetLabelObject():SetLabel(ct)
 end
