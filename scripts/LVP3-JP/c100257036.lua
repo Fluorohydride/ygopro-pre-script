@@ -57,7 +57,7 @@ function c100257036.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local loc=LOCATION_ONFIELD+LOCATION_GRAVE
 	local g=Duel.GetMatchingGroup(c100257036.ctfilter,tp,loc,loc,nil)
-	if g:GetCount()>0 then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and g:GetCount()>0 then
 		c:AddCounter(0x1,g:GetCount())
 	end
 end
@@ -68,8 +68,8 @@ function c100257036.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c100257036.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,3,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x1,3,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,LOCATION_ONFIELD,0,0x1,3,REASON_COST) end
+	Duel.RemoveCounter(tp,LOCATION_ONFIELD,0,0x1,3,REASON_COST)
 end
 function c100257036.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=bit.band(e:GetHandler():GetLinkedZone(tp),0x1f)
