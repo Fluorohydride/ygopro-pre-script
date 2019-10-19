@@ -20,6 +20,7 @@ function c100423049.initial_effect(c)
 end
 function c100423049.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_PENDULUM)
+	and (c:IsSummonType(SUMMON_TYPE_FUSION) or c:IsSummonType(SUMMON_TYPE_SYNCHRO) or c:IsSummonType(SUMMON_TYPE_XYZ) or bit.band(c:GetSummonLocation(),LOCATION_EXTRA)==LOCATION_EXTRA)
 end
 function c100423049.tgfilter1(c,e,tp,eg)
 	return eg:IsContains(c) and c:IsFaceup() and c:IsType(TYPE_FUSION) and Duel.IsExistingMatchingCard(c100423049.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalLevel())
