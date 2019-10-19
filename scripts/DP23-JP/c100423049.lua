@@ -50,7 +50,7 @@ function c100423049.spfilter5(c,e,tp,rank)
 	return c:IsType(TYPE_TUNER) and c:GetLevel()<=rank and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c100423049.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and eg:IsExists(c100423049.cfilter,1,nil)
+	return rp==tp and eg:IsExists(c100423049.cfilter,1,nil) and e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)
 end
 function c100423049.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mz=Duel.GetLocationCount(tp,LOCATION_MZONE)   
