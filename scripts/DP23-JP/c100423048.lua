@@ -55,18 +55,20 @@ function c100423048.thfilter(c,p)
 end
 function c100423048.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,1-rp,LOCATION_REMOVED)
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,1-rp,LOCATION_HAND)
+	local p=1-Duel.GetAttacker():GetControler()
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,p,LOCATION_REMOVED)
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,p,LOCATION_HAND)
 end
 function c100423048.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject():Filter(c100423048.thfilter,nil,1-rp)
-	if g:GetCount()>0 and Duel.SelectYesNo(1-rp,aux.Stringid(100423048,1)) then
+	local p=1-Duel.GetAttacker():GetControler()
+	local g=e:GetLabelObject():Filter(c100423048.thfilter,nil,p)
+	if g:GetCount()>0 and Duel.SelectYesNo(p,aux.Stringid(100423048,1)) then
 		local flag=false
-		local sg=g:RandomSelect(rp,1)
+		local sg=g:RandomSelect(1-p,1)
 		local sc=sg:GetFirst()
-		if Duel.SendtoHand(sc,nil,REASON_EFFECT)~=0 and sc:IsLocation(LOCATION_HAND) and sc:IsControler(1-rp) then
-			Duel.ConfirmCards(rp,sc)
-			if sc:IsDiscardable() and Duel.SelectYesNo(1-rp,aux.Stringid(100423048,2)) then
+		if Duel.SendtoHand(sc,nil,REASON_EFFECT)~=0 and sc:IsLocation(LOCATION_HAND) and sc:IsControler(p) then
+			Duel.ConfirmCards(1-p,sc)
+			if sc:IsDiscardable() and Duel.SelectYesNo(p,aux.Stringid(100423048,2)) then
 				flag=true
 				Duel.BreakEffect()
 				Duel.SendtoGrave(sc,REASON_EFFECT+REASON_DISCARD)
@@ -81,7 +83,7 @@ function c100423048.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetTargetRange(1,0)
 			e1:SetValue(c100423048.damval)
 			e1:SetReset(RESET_PHASE+PHASE_END)
-			Duel.RegisterEffect(e1,1-rp)
+			Duel.RegisterEffect(e1,p)
 		end
 	end
 end
