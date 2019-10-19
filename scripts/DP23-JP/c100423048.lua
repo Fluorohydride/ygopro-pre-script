@@ -55,12 +55,12 @@ function c100423048.thfilter(c,p)
 end
 function c100423048.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local p=1-Duel.GetAttacker():GetControler()
+	local p=1-ep
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,p,LOCATION_REMOVED)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,p,LOCATION_HAND)
 end
 function c100423048.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local p=1-Duel.GetAttacker():GetControler()
+	local p=1-ep
 	local g=e:GetLabelObject():Filter(c100423048.thfilter,nil,p)
 	if g:GetCount()>0 and Duel.SelectYesNo(p,aux.Stringid(100423048,1)) then
 		local flag=false
