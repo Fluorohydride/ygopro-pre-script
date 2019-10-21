@@ -31,8 +31,9 @@ end
 function c101011053.fcheck(tp,sg,fc)
 	if sg:IsExists(c101011053.chkfilter,1,nil,tp) then
 		return sg:FilterCount(Card.IsControler,nil,1-tp)<=1
+	else
+		return sg:FilterCount(Card.IsControler,nil,1-tp)<=0
 	end
-	return true
 end
 function c101011053.gcheck(tp)
 	return	function(sg)

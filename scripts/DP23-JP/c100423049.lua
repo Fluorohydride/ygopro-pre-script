@@ -53,7 +53,7 @@ function c100423049.effcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100423049.spfilter(c,e,tp,lv)
 	local lvl=c:GetOriginalLevel()
-	return lvl> and lvl==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return lvl>0 and lvl==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100423049.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -52,8 +52,8 @@ function c100423045.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100423045.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=eg:GetFirst()
-	if chk==0 then return (ec:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
-	or (ec:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp)>0) end
+	if chk==0 then return ((ec:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
+	or (ec:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp)>0)) and ec:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetTargetCard(ec)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,ec,1,0,0)
 end
