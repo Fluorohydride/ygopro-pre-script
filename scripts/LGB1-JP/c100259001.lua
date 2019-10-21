@@ -60,7 +60,7 @@ function c100259001.mfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_EFFECT)
 end
 function c100259001.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffectLabel(100259101)>0
+	return e:GetHandler():GetFlagEffectLabel(100259101) and e:GetHandler():GetFlagEffectLabel(100259101)>0
 end
 function c100259001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
