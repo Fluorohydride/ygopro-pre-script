@@ -3,7 +3,7 @@
 --Scripted by mallu11
 function c100259001.initial_effect(c)
 	--fusion material
-	aux.AddFusionProcCodeFun(c,46986414,{74677422,c100259001.mfilter},1,true,true)
+	aux.AddFusionProcCodeFun(c,46986414,c100259001.mfilter,1,true,true)
 	c:EnableReviveLimit()
 	--immune
 	local e1=Effect.CreateEffect(c)
@@ -57,7 +57,7 @@ function c100259001.initial_effect(c)
 end
 c100259001.material_setcode=0x3b
 function c100259001.mfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_EFFECT)
+	return c:IsFusionCode(74677422) or (c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_EFFECT))
 end
 function c100259001.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffectLabel(100259101) and e:GetHandler():GetFlagEffectLabel(100259101)>0
