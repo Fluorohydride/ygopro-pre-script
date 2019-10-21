@@ -11,6 +11,12 @@ function c100257001.initial_effect(c)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetValue(aux.lnklimit)
 	c:RegisterEffect(e0)
+	--mat check
+	local e9=Effect.CreateEffect(c)
+	e9:SetType(EFFECT_TYPE_SINGLE)
+	e9:SetCode(EFFECT_MATERIAL_CHECK)
+	e9:SetValue(c100257001.matcheck)
+	c:RegisterEffect(e9)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100257001,0))
@@ -18,6 +24,7 @@ function c100257001.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetLabelObject(e9)
 	e1:SetCondition(c100257001.descon)
 	e1:SetTarget(c100257001.destg)
 	e1:SetOperation(c100257001.desop)
@@ -54,23 +61,21 @@ end
 function c100257001.indes(e,c)
 	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_EARTH+ATTRIBUTE_WATER+ATTRIBUTE_FIRE+ATTRIBUTE_WIND)
 end
-function c100257001.descon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
+function c100257001.matcheck(e,c)
 	local g=c:GetMaterial()
+	local att=0
 	local tc=g:GetFirst()
-	local res=true
 	while tc do
-		for i,att in ipairs({ATTRIBUTE_DARK,ATTRIBUTE_EARTH,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_WIND}) do
-			if bit.band(tc:GetLinkAttribute(),att)==att then
-				c:RegisterFlagEffect(100256901+100*i,RESET_EVENT+RESETS_STANDARD,0,1)
-			end
-		end
+		att=att|tc:GetLinkAttribute()
 		tc=g:GetNext()
 	end
-	for i=1,5 do
-		res=res and (c:GetFlagEffect(100256901+100*i)>0)
-	end
-	return c:IsSummonType(SUMMON_TYPE_LINK) and res
+	e:SetLabel(att)
+end
+function c100257001.descon(e,tp,eg,ep,ev,re,r,rp)
+	local att=e:GetLabelObject():GetLabel()
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and att&ATTRIBUTE_DARK>0
+		and att&ATTRIBUTE_EARTH>0 and att&ATTRIBUTE_WATER>0
+		and att&ATTRIBUTE_FIRE>0 and att&ATTRIBUTE_WIND>0
 end
 function c100257001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
