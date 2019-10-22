@@ -15,7 +15,7 @@ function c100423027.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100423027.filter(c)
-	return (c.synmat_syn or c:IsCode(7841112,24696097,97489701,67030233,25165047,21123811,26268488,35952884,97836203,62242678,36857073,89907227,80896940,51447164,74892653,89474727,9753964,2743001,50954680,84305651)) and c:IsFaceup()
+	return c.synmat_syn and c:IsFaceup()
 end
 function c100423027.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100423027.filter,tp,LOCATION_MZONE,0,1,nil) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) and rp==1-tp
