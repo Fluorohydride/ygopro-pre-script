@@ -43,18 +43,17 @@ function c101011070.initial_effect(c)
 	e3:SetOperation(c101011070.spop)
 	c:RegisterEffect(e3)
 end
+function c101011070.cfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(0x237) and c:IsControler(tp)
+end
 function c101011070.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
-function c101011070.actcon(e,tp,eg,ep,ev,re,r,rp)
-	local ac=Duel.GetAttacker()
-	local tc=Duel.GetAttackTarget()
-	if not ac then return false end
-	if ac:IsControler(tp) and ac:IsSetCard(0x237) then
-		return true
-	elseif tc and tc:IsControler(tp) and tc:IsSetCard(0x237) then
-		return true
-	else return false end
+function c101011070.actcon(e)
+	local tp=e:GetHandlerPlayer()
+	local a=Duel.GetAttacker()
+	local d=Duel.GetAttackTarget()
+	return (a and c101011070.cfilter(a,tp)) or (d and c101011070.cfilter(d,tp))
 end
 function c101011070.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
