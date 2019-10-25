@@ -45,7 +45,7 @@ function c100423001.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.Draw(tp,1,REASON_EFFECT)~=0 then
 		local dc=Duel.GetOperatedGroup():GetFirst()
-		if dc:IsType(TYPE_SPELL+TYPE_TRAP) and dc:IsSSetable()
+		if dc:IsSSetable()
 			and Duel.SelectYesNo(tp,aux.Stringid(100423001,0)) then
 			Duel.SSet(tp,dc)
 			if dc:IsType(TYPE_QUICKPLAY) then
@@ -64,7 +64,6 @@ function c100423001.drop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				dc:RegisterEffect(e1)
 			end
-			Duel.ConfirmCards(1-tp,dc)
 		end
 	end
 end
