@@ -2,7 +2,7 @@
 
 --Scripted by nekrozar
 function c101011022.initial_effect(c)
-	c:SetUniqueOnField(1,0,101011022)
+	c:SetUniqueOnField(1,0,101011022,LOCATION_MZONE)
 	--remove
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101011022,0))
