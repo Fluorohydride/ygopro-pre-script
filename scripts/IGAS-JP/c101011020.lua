@@ -58,7 +58,7 @@ function c101011020.disfilter(c)
 	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_EFFECT)
 end
 function c101011020.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101011020.cfilter2,1,nil,tp,rp)
+	return eg:IsExists(c101011020.cfilter2,1,nil,tp,rp) and not eg:IsContains(e:GetHandler())
 end
 function c101011020.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
