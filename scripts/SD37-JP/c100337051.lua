@@ -82,21 +82,25 @@ function c100337051.disop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-function c100337051.thfilter(c)
+function c100337051.thfilter(c,tp)
+	local b=c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
+	return c:IsSetCard(0x9d) and c:IsAbleToHand() and (not b or (b and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0))
+end
+function c100337051.thfilter2(c)
 	return c:IsSetCard(0x9d) and c:IsAbleToHand()
 end
 function c100337051.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100337051.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100337051.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,tp,1)
 end
 function c100337051.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100337051.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100337051.thfilter2),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-		if g:GetFirst():IsLocation(LOCATION_HAND) then
+		if g:GetFirst():IsLocation(LOCATION_HAND+LOCATION_EXTRA) then
 			Duel.ShuffleHand(tp)
 			Duel.BreakEffect()
 			Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD,nil)
