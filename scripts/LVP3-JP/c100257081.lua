@@ -44,7 +44,6 @@ function c100257081.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100257081.stfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function c100257081.stop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,c100257081.stfilter,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
@@ -61,8 +60,11 @@ function c100257081.stop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
+function c100257081.actfilter(c)
+	return c:IsSetCard(0xfe) and c:IsType(TYPE_MONSTER)
+end
 function c100257081.aclimit(e,re,tp)
-	return re:GetHandler():GetFlagEffect(100257081)~=0 and not Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0xfe)
+	return re:GetHandler():GetFlagEffect(100257081)~=0 and not Duel.IsExistingMatchingCard(c100257081.actfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function c100257081.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
