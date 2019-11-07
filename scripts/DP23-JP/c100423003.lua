@@ -28,12 +28,12 @@ function c100423003.filter(c)
 		and (c:IsAbleToDeck() or c:IsLocation(LOCATION_DECK))
 end
 function c100423003.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local loc=LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE
-	if chk==0 then return Duel.IsExistingMatchingCard(c100423003.filter,tp,loc,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100423003.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c100423003.activate(e,tp,eg,ep,ev,re,r,rp)
-	local loc=LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE
-	local g=Duel.SelectMatchingCard(tp,c100423003.filter,tp,loc,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100423003,2))
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100423003.filter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then
 		if tc:IsLocation(LOCATION_DECK) then
