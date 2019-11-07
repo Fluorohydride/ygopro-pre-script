@@ -2,7 +2,8 @@
 
 --Scripted by mallu11
 function c101011031.initial_effect(c)
-	--turner
+	aux.EnableExtraDeckSummonCountLimit()
+	--tuner
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101011031,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -60,38 +61,41 @@ function c101011031.tnop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c101011031.splimit)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_SPSUMMON)
-	e2:SetCondition(c101011031.regcon)
-	e2:SetOperation(c101011031.regop)
+	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetOperation(c101011031.checkop)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e3:SetCode(92345028)
 	e3:SetTargetRange(1,0)
-	e3:SetCondition(c101011031.spcon)
-	e3:SetTarget(c101011031.splimit)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
-function c101011031.cfilter(c)
-	return c:GetSummonLocation()==LOCATION_EXTRA
+function c101011031.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+	return c:IsLocation(LOCATION_EXTRA) and aux.ExtraDeckSummonCountLimit[sump]<=0
 end
-function c101011031.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and eg:IsExists(c101011031.cfilter,1,nil)
+function c101011031.cfilter(c,tp)
+	return c:GetSummonPlayer()==tp and c:IsPreviousLocation(LOCATION_EXTRA)
 end
-function c101011031.regop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(tp,101011031,RESET_PHASE+PHASE_END,0,1)
-end
-function c101011031.spcon(e)
-	local tp=e:GetHandlerPlayer()
-	return Duel.GetFlagEffect(tp,101011031)>0
-end
-function c101011031.splimit(e,c)
-	return c:IsLocation(LOCATION_EXTRA)
+function c101011031.checkop(e,tp,eg,ep,ev,re,r,rp)
+	if eg:IsExists(c101011031.cfilter,1,nil,tp) then
+		aux.ExtraDeckSummonCountLimit[tp]=aux.ExtraDeckSummonCountLimit[tp]-1
+	end
+	if eg:IsExists(c101011031.cfilter,1,nil,1-tp) then
+		aux.ExtraDeckSummonCountLimit[1-tp]=aux.ExtraDeckSummonCountLimit[1-tp]-1
+	end
 end
 function c101011031.filter(c)
 	local ct1,ct2=c:GetUnionCount()
