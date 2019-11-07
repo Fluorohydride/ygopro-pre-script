@@ -1,4 +1,4 @@
---クロスローズ·ドラゴン
+--クロスローズ・ドラゴン
 
 --Scripted by mallu11
 function c100257041.initial_effect(c)
@@ -35,14 +35,14 @@ end
 function c100257041.lcheck(g)
 	return g:GetClassCount(Card.GetLinkRace)==g:GetCount()
 end
-function c100257041.rfilter(c,e,tp)
-	return c:IsRace(RACE_PLANT) and (Duel.GetLocationCountFromEx(tp,tp,c)>0 or Duel.GetLocationCountFromEx(tp,tp,e:GetHandler())>0)
-end
-function c100257041.spfilter1(c,e,tp)
-	return c:IsType(TYPE_SYNCHRO) and (c:IsSetCard(0x3) or c:IsRace(RACE_PLANT)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
-end
 function c100257041.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+end
+function c100257041.rfilter(c,e,tp,mc)
+	return c:IsRace(RACE_PLANT) and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,mc))>0
+end
+function c100257041.spfilter1(c,e,tp)
+	return c:IsType(TYPE_SYNCHRO) and (c:IsSetCard(0x123) or c:IsRace(RACE_PLANT)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function c100257041.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
@@ -53,13 +53,13 @@ function c100257041.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==0 then return false end
 		e:SetLabel(0)
-		return c:IsReleasable() and Duel.CheckReleaseGroup(tp,c100257041.rfilter,1,c,e,tp)
+		return c:IsReleasable() and Duel.CheckReleaseGroup(tp,c100257041.rfilter,1,c,e,tp,c)
 			and aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_SMATERIAL)
 			and Duel.IsExistingMatchingCard(c100257041.spfilter1,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 	end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,c100257041.rfilter,1,1,c,e,tp)
+	local g=Duel.SelectReleaseGroup(tp,c100257041.rfilter,1,1,c,e,tp,c)
 	g:AddCard(c)
 	Duel.Release(g,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
@@ -77,13 +77,14 @@ function c100257041.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
 end
 function c100257041.spfilter2(c,e,tp)
-	return c:IsSetCard(0x123) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x1123) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100257041.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100257041.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
 function c100257041.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c100257041.spfilter2,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c100257041.spfilter2,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c100257041.spop2(e,tp,eg,ep,ev,re,r,rp)
