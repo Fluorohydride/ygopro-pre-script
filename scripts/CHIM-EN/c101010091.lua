@@ -37,9 +37,9 @@ function c101010091.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c101010091.activate1(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-        Duel.Destroy(eg,REASON_EFFECT)
-    end
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.Destroy(eg,REASON_EFFECT)
+	end
 end
 function c101010091.cfilter2(c)
 	return c:IsFaceup() and c:IsCode(1050355)

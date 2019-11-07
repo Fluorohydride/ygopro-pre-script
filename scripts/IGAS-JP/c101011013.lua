@@ -55,6 +55,7 @@ function c101011013.atkval(e,c)
 end
 function c101011013.xatkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<Duel.GetFieldGroupCount(1-tp,LOCATION_MZONE,0)
+		and Duel.IsAbleToEnterBP()
 end
 function c101011013.xatktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
