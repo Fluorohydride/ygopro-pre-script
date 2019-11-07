@@ -62,7 +62,7 @@ function c100200173.srop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100200173.aclimit(e,re,tp)
-	return not re:GetHandler():IsAttribute(ATTRIBUTE_WIND)
+	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsAttribute(ATTRIBUTE_WIND)
 end
 function c100200173.cfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and bit.band(c:GetPreviousAttributeOnField(),ATTRIBUTE_WIND)~=0
