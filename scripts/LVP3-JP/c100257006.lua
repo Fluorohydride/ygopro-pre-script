@@ -1,4 +1,4 @@
---破壞剣士の守護絆竜
+--破壊剣士の守護絆竜
 
 --Scripted by mallu11
 function c100257006.initial_effect(c)
@@ -30,14 +30,14 @@ function c100257006.initial_effect(c)
 	e2:SetOperation(c100257006.damop)
 	c:RegisterEffect(e2)
 end
+function c100257006.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+end
 function c100257006.tgfilter(c)
 	return c:IsSetCard(0xd6) and c:IsAbleToGrave()
 end
 function c100257006.spfilter(c,e,tp)
 	return c:IsSetCard(0xd7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function c100257006.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c100257006.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100257006.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -51,6 +51,7 @@ function c100257006.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100257006.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(100257006,2)) then
+		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,c100257006.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
