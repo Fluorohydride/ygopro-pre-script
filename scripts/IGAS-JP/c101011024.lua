@@ -74,8 +74,9 @@ function c101011024.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
-			if tc:IsControler(1-tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then
-				Duel.Destroy(tc,REASON_RULE)
+			local p=c:GetControler()
+			if Duel.GetLocationCount(p,LOCATION_SZONE)<=0 then
+				Duel.SendtoGrave(tc,REASON_RULE)
 				return
 			end
 			if not Duel.Equip(tp,tc,c,false) then return end
