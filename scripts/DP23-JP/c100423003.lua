@@ -25,7 +25,7 @@ end
 c100423003.card_code_list={46986414,38033121}
 function c100423003.filter(c)
 	return (aux.IsCodeListed(c,46986414) or aux.IsCodeListed(c,38033121) or c:IsCode(46986414)) and not c:IsCode(100423003)
-		and (c:IsAbleToDeck() or c:IsLocation(LOCATION_DECK)) and not c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
+		and (c:IsAbleToDeck() or c:IsLocation(LOCATION_DECK))
 end
 function c100423003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE
