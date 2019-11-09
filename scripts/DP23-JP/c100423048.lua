@@ -18,13 +18,17 @@ function c100423048.initial_effect(c)
 	e2:SetTarget(c100423048.atktg)
 	e2:SetOperation(c100423048.atkop)
 	c:RegisterEffect(e2)
-	e1:SetLabelObject(e2)
+	local ng=Group.CreateGroup()
+	ng:KeepAlive()
+	e1:SetLabelObject(ng)
+	e2:SetLabelObject(ng)
 end
 function c100423048.rmfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
 end
 function c100423048.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	local g1=Duel.GetMatchingGroup(c100423048.rmfilter,tp,LOCATION_GRAVE,0,nil)
 	local g2=Duel.GetMatchingGroup(c100423048.rmfilter,tp,0,LOCATION_GRAVE,nil)
 	local sg=Group.CreateGroup()
@@ -40,18 +44,22 @@ function c100423048.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if sg:GetCount()>0 then
 		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
+		local g=e:GetLabelObject()
+		if c:GetFlagEffect(100423048)==0 then
+			g:Clear()
+			c:RegisterFlagEffect(100423048,RESET_EVENT+RESETS_STANDARD,0,0)
+		end
 		local rg=sg:Filter(Card.IsLocation,nil,LOCATION_REMOVED)
-		rg:KeepAlive()
-		e:GetLabelObject():SetLabelObject(rg)
 		local rc=rg:GetFirst()
 		while rc do
-			rc:RegisterFlagEffect(100423048,RESET_EVENT+RESETS_STANDARD,0,1)
+			rc:RegisterFlagEffect(100423048,RESET_EVENT+RESETS_STANDARD,0,0)
+			g:AddCard(rc)
 			rc=rg:GetNext()
 		end
 	end
 end
 function c100423048.thfilter(c,p)
-	return c:GetFlagEffect(100423048)>0 and c:IsControler(p) and c:IsAbleToHand()
+	return c:GetFlagEffect(100423048)>0 and c:IsControler(p) and c:IsAbleToHand() and c:IsLocation(LOCATION_REMOVED)
 end
 function c100423048.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -62,6 +70,7 @@ end
 function c100423048.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local p=1-ep
 	local g=e:GetLabelObject():Filter(c100423048.thfilter,nil,p)
+	if not g or g:GetCount()==0 then return end
 	if g:GetCount()>0 and Duel.SelectYesNo(p,aux.Stringid(100423048,1)) then
 		local flag=false
 		local sg=g:RandomSelect(1-p,1)
