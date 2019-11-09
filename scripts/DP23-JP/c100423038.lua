@@ -73,5 +73,8 @@ function c100423038.damop(e,tp,eg,ep,ev,re,r,rp)
 	if not bc then return end
 	local dam=bc:GetBaseAttack()
 	if dam<0 then dam=0 end
-	Duel.Damage(1-tp,dam,REASON_EFFECT)
+	if dam>0 then
+		Duel.Hint(HINT_CARD,0,100423038)
+		Duel.Damage(1-tp,dam,REASON_EFFECT)
+	end
 end
