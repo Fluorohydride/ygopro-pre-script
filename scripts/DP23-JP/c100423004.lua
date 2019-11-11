@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100423004.initial_effect(c)
+	aux.AddCodeList(c,46986414,38033121)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -12,7 +13,6 @@ function c100423004.initial_effect(c)
 	e1:SetOperation(c100423004.activate)
 	c:RegisterEffect(e1)
 end
-c100423004.card_code_list={46986414,38033121}
 function c100423004.filter1(c,e)
 	return not c:IsImmuneToEffect(e)
 end

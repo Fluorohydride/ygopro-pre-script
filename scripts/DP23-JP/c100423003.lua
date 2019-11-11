@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100423003.initial_effect(c)
+	aux.AddCodeList(c,46986414,38033121)
 	--set top
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100423003,0))
@@ -22,7 +23,6 @@ function c100423003.initial_effect(c)
 	e2:SetOperation(c100423003.drop)
 	c:RegisterEffect(e2)
 end
-c100423003.card_code_list={46986414,38033121}
 function c100423003.filter(c)
 	return (aux.IsCodeListed(c,46986414) or aux.IsCodeListed(c,38033121) or c:IsCode(46986414)) and not c:IsCode(100423003)
 		and (c:IsAbleToDeck() or c:IsLocation(LOCATION_DECK))

@@ -35,7 +35,6 @@ function c100259009.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 c100259009.material_setcode=0x8
-c100259009.card_code_list={89943723}
 c100259009.neos_fusion=true
 function c100259009.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetBattleTarget()

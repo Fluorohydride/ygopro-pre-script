@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100423005.initial_effect(c)
+	aux.AddCodeList(c,46986414,38033121)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100423005,0))
@@ -35,7 +36,6 @@ function c100423005.initial_effect(c)
 	e4:SetOperation(c100423005.desop)
 	c:RegisterEffect(e4)
 end
-c100423005.card_code_list={46986414,38033121}
 function c100423005.cfilter(c,e,tp)
 	return c:IsCode(46986414,38033121) and c:IsReleasable() and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(c100423005.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,c:GetCode())
