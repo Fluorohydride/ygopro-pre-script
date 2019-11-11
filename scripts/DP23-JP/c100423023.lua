@@ -29,7 +29,7 @@ function c100423023.initial_effect(c)
 	e2:SetOperation(c100423023.spop)
 	c:RegisterEffect(e2)
 end
-c100423023.synmat_syn=true
+c100423023.material_type=TYPE_SYNCHRO
 function c100423023.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end

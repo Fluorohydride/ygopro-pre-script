@@ -7,7 +7,6 @@ function c100423027.initial_effect(c)
 	e1:SetCategory(CATEGORY_NEGATE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCountLimit(1,100423027+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c100423027.condition)
 	e1:SetTarget(c100423027.target)
@@ -15,7 +14,7 @@ function c100423027.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100423027.filter(c)
-	return c.synmat_syn and c:IsFaceup()
+	return c:IsType(TYPE_SYNCHRO) and aux.IsMaterialListType(c,TYPE_SYNCHRO) and c:IsFaceup()
 end
 function c100423027.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100423027.filter,tp,LOCATION_MZONE,0,1,nil) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) and rp==1-tp
