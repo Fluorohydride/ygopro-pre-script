@@ -63,7 +63,7 @@ function c100257031.ffilter(c)
 		and c.material and Duel.IsExistingMatchingCard(c100257031.thfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function c100257031.thfilter(c,fc)
-	return c:IsCode(table.unpack(fc.material)) and c:IsAbleToHand()
+	return c:IsCode(table.unpack(fc.material)) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
 end
 function c100257031.fselect(g)
 	if g:GetClassCount(Card.GetCode)==g:GetCount() then
