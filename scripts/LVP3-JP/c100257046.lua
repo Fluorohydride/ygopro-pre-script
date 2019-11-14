@@ -67,16 +67,16 @@ end
 function c100257046.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(c100257046.cfilter,tp,0,LOCATION_MZONE,nil)
 	local g=Duel.GetMatchingGroup(c100257046.thfilter,tp,LOCATION_DECK,0,nil)
-	if chk==0 then return ct>0 and g:GetClassCount(Card.GetCode)>=ct end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,ct,tp,LOCATION_DECK)
+	if chk==0 then return ct>0 and and g:GetCount()>0 end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_DECK)
 end
 function c100257046.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(c100257046.cfilter,tp,0,LOCATION_MZONE,nil)
 	local g=Duel.GetMatchingGroup(c100257046.thfilter,tp,LOCATION_DECK,0,nil)
-	if ct>0 and g:GetClassCount(Card.GetCode)>=ct then
+	if ct>0 and g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=g:SelectSubGroup(tp,c100257046.fselect,false,ct,ct)
-		if sg:GetCount()==ct then
+		local sg=g:SelectSubGroup(tp,c100257046.fselect,false,1,ct)
+		if sg:GetCount()>0 then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 		end
