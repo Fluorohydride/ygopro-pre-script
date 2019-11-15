@@ -100,7 +100,8 @@ function c100337051.thop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-		if g:GetFirst():IsLocation(LOCATION_HAND+LOCATION_EXTRA) then
+		local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+		if g:GetFirst():IsLocation(LOCATION_HAND+LOCATION_EXTRA) and ct>0 then
 			Duel.ShuffleHand(tp)
 			Duel.BreakEffect()
 			Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD,nil)
