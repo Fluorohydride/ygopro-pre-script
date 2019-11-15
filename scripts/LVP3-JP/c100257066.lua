@@ -63,7 +63,7 @@ function c100257066.spfilter(c,e,tp,zone)
 	return c:IsSetCard(0x9b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
 end
 function c100257066.fselect(g)
-	if g:GetClassCount(Card.GetLevel)>=2 then
+	if g:GetClassCount(Card.GetLevel)==g:GetCount() then
 		Duel.SetSelectedCard(g)
 		return true
 	else return false end
