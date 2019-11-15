@@ -33,7 +33,7 @@ function c100257011.lmlimit(e)
 end
 function c100257011.cfilter(c,tp)
 	return c:IsFaceup()
-		and Duel.IsExistingMatchingCard(c100257011.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,c:GetAttribute(),c:GetRace(),tp)
+		and Duel.IsExistingMatchingCard(c100257011.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,c:GetOriginalAttribute(),c:GetOriginalRace(),tp)
 end
 function c100257011.eqfilter(c,att,race,tp)
 	return (c:GetOriginalAttribute()==att or c:GetOriginalRace()==race) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
@@ -52,8 +52,8 @@ function c100257011.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local flag=0
-		local att=tc:GetAttribute()
-		local race=tc:GetRace()
+		local att=tc:GetOriginalAttribute()
+		local race=tc:GetOriginalRace()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		local g=Duel.SelectMatchingCard(tp,c100257011.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,att,race,tp)
 		local gc=g:GetFirst()
