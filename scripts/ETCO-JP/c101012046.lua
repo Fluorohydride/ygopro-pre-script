@@ -61,26 +61,10 @@ function c101012046.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101012046.cfilter(c,tp)
 	local att=0
-	if Duel.GetFlagEffect(tp,101012046)==0 then
-		att=bit.bor(att,ATTRIBUTE_EARTH)
-	end
-	if Duel.GetFlagEffect(tp,101012146)==0 then
-		att=bit.bor(att,ATTRIBUTE_WATER)
-	end
-	if Duel.GetFlagEffect(tp,101012246)==0 then
-		att=bit.bor(att,ATTRIBUTE_FIRE)
-	end
-	if Duel.GetFlagEffect(tp,101012346)==0 then
-		att=bit.bor(att,ATTRIBUTE_WIND)
-	end
-	if Duel.GetFlagEffect(tp,101012446)==0 then
-		att=bit.bor(att,ATTRIBUTE_LIGHT)
-	end
-	if Duel.GetFlagEffect(tp,101012546)==0 then
-		att=bit.bor(att,ATTRIBUTE_DARK)
-	end
-	if Duel.GetFlagEffect(tp,101012646)==0 then
-		att=bit.bor(att,ATTRIBUTE_DIVINE)
+	for i,attr in ipairs({ATTRIBUTE_EARTH,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_WIND,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_DIVINE}) do
+		if Duel.GetFlagEffect(tp,101012046+(i-1)*100)==0 then
+			att=bit.bor(att,attr)
+		end
 	end
 	return c:IsType(TYPE_LINK) and c:IsAttribute(att) and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
@@ -105,25 +89,9 @@ function c101012046.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 	local att=e:GetLabel()
-	if bit.band(att,ATTRIBUTE_EARTH)~=0 then
-		Duel.RegisterFlagEffect(tp,101012046,RESET_PHASE+PHASE_END,0,1)
-	end
-	if bit.band(att,ATTRIBUTE_WATER)~=0 then
-		Duel.RegisterFlagEffect(tp,101012146,RESET_PHASE+PHASE_END,0,1)
-	end
-	if bit.band(att,ATTRIBUTE_FIRE)~=0 then
-		Duel.RegisterFlagEffect(tp,101012246,RESET_PHASE+PHASE_END,0,1)
-	end
-	if bit.band(att,ATTRIBUTE_WIND)~=0 then
-		Duel.RegisterFlagEffect(tp,101012346,RESET_PHASE+PHASE_END,0,1)
-	end
-	if bit.band(att,ATTRIBUTE_LIGHT)~=0 then
-		Duel.RegisterFlagEffect(tp,101012446,RESET_PHASE+PHASE_END,0,1)
-	end
-	if bit.band(att,ATTRIBUTE_DARK)~=0 then
-		Duel.RegisterFlagEffect(tp,101012546,RESET_PHASE+PHASE_END,0,1)
-	end
-	if bit.band(att,ATTRIBUTE_DIVINE)~=0 then
-		Duel.RegisterFlagEffect(tp,101012646,RESET_PHASE+PHASE_END,0,1)
+	for i,attr in ipairs({ATTRIBUTE_EARTH,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_WIND,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_DIVINE}) do
+		if bit.band(att,attr)~=0 then
+			Duel.RegisterFlagEffect(tp,101012046+(i-1)*100,RESET_PHASE+PHASE_END,0,1)
+		end
 	end
 end
