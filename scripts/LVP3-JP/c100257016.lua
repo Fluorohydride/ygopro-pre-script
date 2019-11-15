@@ -30,7 +30,7 @@ function c100257016.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100257016.mfilter(c)
-	return c:IsLinkAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE)
+	return c:IsLinkAttribute(ATTRIBUTE_EARTH) and c:IsLinkRace(RACE_MACHINE)
 end
 function c100257016.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
