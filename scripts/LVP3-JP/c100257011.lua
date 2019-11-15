@@ -25,7 +25,7 @@ function c100257011.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100257011.mfilter(c,fc,sub,mg,sg)
-	return not sg or sg:IsExists(Card.IsLinkAttribute,1,c,c:GetLinkAttribute()) or sg:IsExists(Card.IsRace,1,c,c:GetRace())
+	return not sg or sg:IsExists(Card.IsLinkAttribute,1,c,c:GetLinkAttribute()) or sg:IsExists(Card.IsLinkRace,1,c,c:GetLinkRace())
 end
 function c100257011.lmlimit(e)
 	local c=e:GetHandler()
