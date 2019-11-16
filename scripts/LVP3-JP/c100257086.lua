@@ -55,24 +55,34 @@ end
 function c100257086.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
-		if tc:IsControler(tp) then
-			tc:RegisterFlagEffect(100257086,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1)
-		else
-			tc:RegisterFlagEffect(100257086,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
-		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 		e1:SetLabelObject(tc)
 		e1:SetCountLimit(1)
 		e1:SetCondition(c100257086.retcon)
 		e1:SetOperation(c100257086.retop)
+		local reset=0
+		if tc:IsControler(tp) then
+			reset=RESET_OPPO_TURN
+		else
+			reset=RESET_SELF_TURN
+		end
+		if Duel.GetTurnPlayer()==1-tp then
+			e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+			e1:SetValue(Duel.GetTurnCount())
+			tc:RegisterFlagEffect(100257086,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+reset,0,2)
+		else
+			e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+			e1:SetValue(0)
+			tc:RegisterFlagEffect(100257086,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+reset,0,1)
+		end
 		Duel.RegisterEffect(e1,tp)
 	end
 end
 function c100257086.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and e:GetLabelObject():GetFlagEffect(100257086)~=0
+	if Duel.GetTurnPlayer()~=1-tp or Duel.GetTurnCount()==e:GetValue() then return false end
+	return e:GetLabelObject():GetFlagEffect(100257086)~=0
 end
 function c100257086.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())
