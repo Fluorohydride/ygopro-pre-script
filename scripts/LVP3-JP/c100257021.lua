@@ -75,7 +75,7 @@ end
 function c100257021.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100257021.thfilter,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>=2 end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_GRAVE)
 end
 function c100257021.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
