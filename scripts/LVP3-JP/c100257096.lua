@@ -64,6 +64,13 @@ function c100257096.tkop(e,tp,eg,ep,ev,re,r,rp)
 		local atk=tc:GetBaseAttack()
 		if Duel.IsPlayerCanSpecialSummonMonster(tp,100257196,0x12c,0x4011,atk,0,4,RACE_WYRM,ATTRIBUTE_LIGHT) then
 			local token=Duel.CreateToken(tp,100257196)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_SET_BASE_ATTACK)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetValue(atk)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+			token:RegisterEffect(e1)
 			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
