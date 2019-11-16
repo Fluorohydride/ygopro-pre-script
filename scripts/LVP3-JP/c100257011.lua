@@ -4,7 +4,7 @@
 function c100257011.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,c100257011.mfilter,2,2)
+	aux.AddLinkProcedure(c,nil,2,2,c100257011.lcheck)
 	--cannot link material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -24,8 +24,8 @@ function c100257011.initial_effect(c)
 	e2:SetOperation(c100257011.eqop)
 	c:RegisterEffect(e2)
 end
-function c100257011.mfilter(c,fc,sub,mg,sg)
-	return not sg or sg:IsExists(Card.IsLinkAttribute,1,c,c:GetLinkAttribute()) or sg:IsExists(Card.IsLinkRace,1,c,c:GetLinkRace())
+function c100257011.lcheck(g,lc)
+	return g:GetClassCount(Card.GetLinkAttribute)==1 or g:GetClassCount(Card.GetLinkRace)==1
 end
 function c100257011.lmlimit(e)
 	local c=e:GetHandler()
