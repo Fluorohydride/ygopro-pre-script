@@ -1,0 +1,70 @@
+--天威龍－サハスラーラ
+
+--Scripted by mallu11
+function c100257096.initial_effect(c)
+	--link summon
+	c:EnableReviveLimit()
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_WYRM),2,4)
+	--can not be attack target
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetCondition(c100257096.atcon)
+	e1:SetTarget(c100257096.attg)
+	e1:SetValue(aux.imval1)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e2:SetValue(aux.tgoval)
+	c:RegisterEffect(e2)
+	--token
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100257096,0))
+	e3:SetCategory(CATEGORY_TOKEN+CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e3:SetCountLimit(1,100257096)
+	e3:SetTarget(c100257096.tktg)
+	e3:SetOperation(c100257096.tkop)
+	c:RegisterEffect(e3)
+end
+function c100257096.atfilter(c)
+	return c:IsFaceup() and not c:IsType(TYPE_EFFECT)
+end
+function c100257096.atcon(e)
+	return Duel.IsExistingMatchingCard(c100257096.atfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+end
+function c100257096.attg(e,c)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
+end
+function c100257096.tkfilter(c,tp)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100257196,0x12c,0x4011,c:GetBaseAttack(),0,4,RACE_WYRM,ATTRIBUTE_LIGHT)
+end
+function c100257096.tktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100257096.tkfilter(chkc,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(c100257096.tkfilter,tp,0,LOCATION_MZONE,1,nil,tp) end
+	local g=Duel.SelectTarget(tp,c100257096.tkfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
+	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
+end
+function c100257096.tkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local atk=tc:GetBaseAttack()
+		if Duel.IsPlayerCanSpecialSummonMonster(tp,100257196,0x12c,0x4011,atk,0,4,RACE_WYRM,ATTRIBUTE_LIGHT) then
+			local token=Duel.CreateToken(tp,100257196)
+			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
+		end
+	end
+end
