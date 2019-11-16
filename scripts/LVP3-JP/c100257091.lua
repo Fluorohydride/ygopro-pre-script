@@ -54,7 +54,7 @@ function c100257091.spfilter(c)
 	return c:GetSummonLocation()==LOCATION_GRAVE
 end
 function c100257091.atkfilter(c)
-	return c:IsFaceup() and not (c:GetAttack()==0 and (c:IsDisabled() or c:IsType(TYPE_NORMAL)))
+	return c:IsFaceup() and not (c:GetAttack()==0 and (c:IsDisabled() or not c:IsType(TYPE_EFFECT)))
 end
 function c100257091.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
