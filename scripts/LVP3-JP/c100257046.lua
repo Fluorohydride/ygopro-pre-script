@@ -67,7 +67,7 @@ end
 function c100257046.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(c100257046.cfilter,tp,0,LOCATION_MZONE,nil)
 	local g=Duel.GetMatchingGroup(c100257046.thfilter,tp,LOCATION_DECK,0,nil)
-	if chk==0 then return ct>0 and and g:GetCount()>0 end
+	if chk==0 then return ct>0 and g:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_DECK)
 end
 function c100257046.thop(e,tp,eg,ep,ev,re,r,rp)
