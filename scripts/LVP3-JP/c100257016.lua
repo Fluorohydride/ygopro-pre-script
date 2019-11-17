@@ -51,7 +51,7 @@ function c100257016.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100257016.desfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and (c:IsAttackAbove(1) or c:IsDefenseAbove(1))
 end
 function c100257016.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
