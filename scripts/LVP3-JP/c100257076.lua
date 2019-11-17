@@ -22,10 +22,10 @@ function c100257076.mfilter(c)
 end
 function c100257076.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(c100257076.stfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetCode())
+		and Duel.IsExistingMatchingCard(c100257076.stfilter,tp,LOCATION_EXTRA+LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function c100257076.stfilter(c,code)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec) and not c:IsCode(code)
+	return (c:IsFaceup() or c:IsLocation(LOCATION_DECK)) and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec) and not c:IsCode(code)
 end
 function c100257076.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and c100257076.spfilter(chkc,e,tp) end
@@ -40,7 +40,7 @@ function c100257076.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0
 		and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) then
 		local code=tc:GetCode()
-		local g=Duel.SelectMatchingCard(tp,c100257076.stfilter,tp,LOCATION_EXTRA,0,1,1,nil,code)
+		local g=Duel.SelectMatchingCard(tp,c100257076.stfilter,tp,LOCATION_EXTRA+LOCATION_DECK,0,1,1,nil,code)
 		if g:GetCount()>0 then
 			Duel.BreakEffect()
 			Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
