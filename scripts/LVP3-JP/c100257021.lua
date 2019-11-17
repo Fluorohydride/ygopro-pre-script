@@ -82,9 +82,9 @@ function c100257021.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100257021.thfilter),tp,LOCATION_GRAVE,0,nil)
 	if g:GetClassCount(Card.GetCode)>=2 then
 		local sg=g:SelectSubGroup(tp,c100257021.fselect,false,2,2)
-		if g:GetCount()==2 then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
+		if sg:GetCount()==2 then
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
 		end
 	end
 end
