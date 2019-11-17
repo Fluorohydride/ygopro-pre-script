@@ -45,9 +45,37 @@ function c100257061.stop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,c100257061.stfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
-		Duel.SSet(tp,g)
-		Duel.ConfirmCards(1-tp,g)
+		local ct=Duel.SSet(tp,g)
+		if ct~=0 then
+			Duel.ConfirmCards(1-tp,g)
+			local tc=g:GetFirst()
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+			e1:SetCode(EVENT_PHASE+PHASE_END)
+			e1:SetCountLimit(1)
+			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+			e1:SetLabelObject(tc)
+			e1:SetCondition(c100257061.descon)
+			e1:SetOperation(c100257061.desop)
+			if Duel.GetTurnPlayer()==1-tp then
+				e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+				e1:SetValue(Duel.GetTurnCount())
+				tc:RegisterFlagEffect(100257061,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,2)
+			else
+				e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+				e1:SetValue(0)
+				tc:RegisterFlagEffect(100257061,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1)
+			end
+			Duel.RegisterEffect(e1,tp)
+		end
 	end
+end
+function c100257061.descon(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetTurnPlayer()~=1-tp or Duel.GetTurnCount()==e:GetValue() then return false end
+	return e:GetLabelObject():GetFlagEffect(100257061)~=0
+end
+function c100257061.desop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Destroy(e:GetLabelObject(),REASON_EFFECT)
 end
 function c100257061.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp and e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
