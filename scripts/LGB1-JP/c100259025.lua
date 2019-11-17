@@ -62,7 +62,7 @@ end
 function c100259025.disop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE
 		and re:GetHandler():IsRelateToEffect(re) and not re:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:GetHandler():IsAbleToChangeControler() and Duel.SelectYesNo(tp,aux.Stringid(100259025,2)) then
+		and re:GetHandler():IsAbleToChangeControler() then
 		Duel.GetControl(re:GetHandler(),tp)
 	end
 end
