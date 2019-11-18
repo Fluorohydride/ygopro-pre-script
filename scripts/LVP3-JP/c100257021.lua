@@ -76,5 +76,6 @@ function c100257021.thop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,2)
 	if sg then
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,sg)
 	end
 end
