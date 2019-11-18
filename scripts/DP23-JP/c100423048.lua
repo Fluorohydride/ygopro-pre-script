@@ -18,10 +18,25 @@ function c100423048.initial_effect(c)
 	e2:SetTarget(c100423048.atktg)
 	e2:SetOperation(c100423048.atkop)
 	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetRange(LOCATION_FZONE)
+	e3:SetCondition(c100423048.rescon)
+	e3:SetOperation(c100423048.resop)
+	c:RegisterEffect(e3)
 	local ng=Group.CreateGroup()
 	ng:KeepAlive()
 	e1:SetLabelObject(ng)
 	e2:SetLabelObject(ng)
+	e3:SetLabelObject(e1)
+end
+function c100423048.rescon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetFieldID()~=e:GetLabelObject():GetLabel()
+end
+function c100423048.resop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetLabelObject():GetLabelObject():Clear()
 end
 function c100423048.rmfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
@@ -43,6 +58,7 @@ function c100423048.activate(e,tp,eg,ep,ev,re,r,rp)
 		sg:Merge(sg2)
 	end
 	if sg:GetCount()>0 then
+		Duel.HintSelection(sg)
 		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
 		local g=e:GetLabelObject()
 		if c:GetFlagEffect(100423048)==0 then
@@ -56,6 +72,7 @@ function c100423048.activate(e,tp,eg,ep,ev,re,r,rp)
 			g:AddCard(rc)
 			rc=rg:GetNext()
 		end
+		e:SetLabel(c:GetFieldID())
 	end
 end
 function c100423048.thfilter(c,p)
