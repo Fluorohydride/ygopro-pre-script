@@ -54,7 +54,7 @@ function c100257091.spfilter(c)
 	return c:GetSummonLocation()==LOCATION_GRAVE
 end
 function c100257091.atkfilter(c)
-	return c:IsFaceup() and not (c:GetAttack()==0 and (c:IsDisabled() or (not c:IsType(TYPE_EFFECT) and c:GetOriginalType()&TYPE_EFFECT==0)))
+	return c:IsFaceup() and c:GetAttack()>0
 end
 function c100257091.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -66,7 +66,7 @@ end
 function c100257091.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:GetAttack()>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
