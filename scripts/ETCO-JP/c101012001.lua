@@ -60,9 +60,6 @@ function c101012001.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetValue(c:GetBaseDefense()/2)
 	c:RegisterEffect(e3)
 end
-function c101012001.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
-end
 function c101012001.cfilter1(c,tp)
 	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSummonPlayer()==tp
 end
@@ -70,27 +67,24 @@ function c101012001.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101012001.cfilter1,1,nil,tp)
 end
 function c101012001.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c101012001.filter,tp,LOCATION_MZONE,0,nil)
-	if g:GetCount()<=0 then return false end
+	if eg:GetCount()~=1 then return false end
+	local tc=eg:GetFirst()
 	local zone=0
-	for tc in aux.Next(g) do
-		zone=bit.bor(zone,tc:GetLinkedZone(tp))
-	end
+	zone=bit.bor(zone,tc:GetLinkedZone(tp))
 	zone=bit.band(zone,0x1f)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) end
+	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c101012001.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		local g=Duel.GetMatchingGroup(c101012001.filter,tp,LOCATION_MZONE,0,nil)
-		if g:GetCount()<=0 then return end
+		local tc=Duel.GetFirstTarget()
+		if not tc:IsRelateToEffect(e) then return end
 		local zone=0
-		for tc in aux.Next(g) do
-			zone=bit.bor(zone,tc:GetLinkedZone(tp))
-		end
+		zone=bit.bor(zone,tc:GetLinkedZone(tp))
 		zone=bit.band(zone,0x1f)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
