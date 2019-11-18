@@ -66,25 +66,16 @@ end
 function c100257021.thfilter(c)
 	return c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
 end
-function c100257021.fselect(g)
-	if g:GetClassCount(Card.GetCode)==g:GetCount() then
-		Duel.SetSelectedCard(g)
-		return true
-	else return false end
-end
 function c100257021.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100257021.thfilter,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>=2 end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function c100257021.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100257021.thfilter),tp,LOCATION_GRAVE,0,nil)
-	if g:GetClassCount(Card.GetCode)>=2 then
-		local sg=g:SelectSubGroup(tp,c100257021.fselect,false,2,2)
-		if sg:GetCount()==2 then
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sg)
-		end
+	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,2)
+	if sg then
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	end
 end
