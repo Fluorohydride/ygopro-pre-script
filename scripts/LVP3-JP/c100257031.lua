@@ -58,32 +58,26 @@ end
 function c100257031.splimit(e,c)
 	return not c:IsSetCard(0x8)
 end
-function c100257031.ffilter(c)
+function c100257031.ffilter(c,tp)
 	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x8) 
 		and c.material and Duel.IsExistingMatchingCard(c100257031.thfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function c100257031.thfilter(c,fc)
 	return c:IsCode(table.unpack(fc.material)) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
 end
-function c100257031.fselect(g)
-	if g:GetClassCount(Card.GetCode)==g:GetCount() then
-		Duel.SetSelectedCard(g)
-		return true
-	else return false end
-end
 function c100257031.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100257031.ffilter,tp,LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100257031.ffilter,tp,LOCATION_EXTRA,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_DECK)
 end
 function c100257031.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local rc=Duel.SelectMatchingCard(tp,c100257031.ffilter,tp,LOCATION_EXTRA,0,1,1,nil):GetFirst()
+	local rc=Duel.SelectMatchingCard(tp,c100257031.ffilter,tp,LOCATION_EXTRA,0,1,1,nil,tp):GetFirst()
 	if rc then
 		Duel.ConfirmCards(1-tp,rc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.GetMatchingGroup(c100257031.thfilter,tp,LOCATION_DECK,0,nil,rc)
-		local sg=g:SelectSubGroup(tp,c100257031.fselect,false,1,2)
-		if sg:GetCount()>0 then
+		local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,2)
+		if sg then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 		end
