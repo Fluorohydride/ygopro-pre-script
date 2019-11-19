@@ -36,7 +36,7 @@ end
 function c101012049.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=e:GetLabel()
-	if ft>0 and ct>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,101012149,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) then
+	if ft>0 and ct>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,48068379,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) then
 		local count=math.min(ft,ct)
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then count=1 end
 		repeat
