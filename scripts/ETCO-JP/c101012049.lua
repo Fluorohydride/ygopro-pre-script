@@ -28,7 +28,7 @@ function c101012049.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=e:GetHandler():GetMaterial()
 	if mg:GetCount()~=1 then return false end
 	if chk==0 then return mg:IsExists(Card.IsType,1,nil,TYPE_LINK) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,101012149,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,48068379,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) end
 	e:SetLabel(mg:GetFirst():GetLink())
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
@@ -36,15 +36,16 @@ end
 function c101012049.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=e:GetLabel()
-	if ft<=0 or ct<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,101012149,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) then return end
-	local count=math.min(ft,ct)
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then count=1 end
-	repeat
-		local token=Duel.CreateToken(tp,101012149)
-		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
-		count=count-1
-	until count==0 or not Duel.SelectYesNo(tp,210)
-	Duel.SpecialSummonComplete()
+	if ft>0 and ct>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,48068379,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) then
+		local count=math.min(ft,ct)
+		if Duel.IsPlayerAffectedByEffect(tp,59822133) then count=1 end
+		repeat
+			local token=Duel.CreateToken(tp,101012149)
+			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+			count=count-1
+		until count==0 or not Duel.SelectYesNo(tp,210)
+		Duel.SpecialSummonComplete()
+	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
