@@ -28,7 +28,7 @@ function c101012049.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=e:GetHandler():GetMaterial()
 	if mg:GetCount()~=1 then return false end
 	if chk==0 then return mg:IsExists(Card.IsType,1,nil,TYPE_LINK) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,101012149,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,48068379,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) end
 	e:SetLabel(mg:GetFirst():GetLink())
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
