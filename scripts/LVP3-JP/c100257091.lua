@@ -47,18 +47,18 @@ function c100257091.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER) and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_GRAVE
 		and e:GetHandler():GetFlagEffect(1)>0
 end
-function c100257091.atkcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100257091.spfilter,1,nil) and not eg:IsContains(e:GetHandler())
-end
 function c100257091.spfilter(c)
 	return c:GetSummonLocation()==LOCATION_GRAVE
 end
+function c100257091.atkcon2(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c100257091.spfilter,1,nil) and not eg:IsContains(e:GetHandler())
+end
 function c100257091.atkfilter(c)
-	return c:IsFaceup() and not (c:GetAttack()==0 and (c:IsDisabled() or (not c:IsType(TYPE_EFFECT) and c:GetOriginalType()&TYPE_EFFECT==0)))
+	return c:IsFaceup() and c:GetAttack()>0
 end
 function c100257091.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc~=c and c100257091.atkfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100257091.atkfilter(chkc) and chkc~=c end
 	if chk==0 then return Duel.IsExistingTarget(c100257091.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
 	local g=Duel.SelectTarget(tp,c100257091.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
@@ -66,25 +66,22 @@ end
 function c100257091.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:GetAttack()>0 then
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(0)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_DISABLE_EFFECT)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetValue(RESET_TURN_SET)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)

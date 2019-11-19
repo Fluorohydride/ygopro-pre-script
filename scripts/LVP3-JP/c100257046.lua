@@ -35,9 +35,9 @@ function c100257046.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c100257046.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:GetAttack()>0 end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and aux.nzatk(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(aux.nzatk,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,aux.nzatk,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function c100257046.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -53,29 +53,23 @@ function c100257046.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100257046.cfilter(c)
-	return c:IsFaceup() and c:GetAttack()==0
+	return c:IsFaceup() and c:IsAttack(0)
 end
 function c100257046.thfilter(c)
 	return c:IsRace(RACE_REPTILE) and c:IsAbleToHand()
-end
-function c100257046.fselect(g)
-	if g:GetClassCount(Card.GetCode)==g:GetCount() then
-		Duel.SetSelectedCard(g)
-		return true
-	else return false end
 end
 function c100257046.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(c100257046.cfilter,tp,0,LOCATION_MZONE,nil)
 	local g=Duel.GetMatchingGroup(c100257046.thfilter,tp,LOCATION_DECK,0,nil)
 	if chk==0 then return ct>0 and g:GetCount()>0 end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100257046.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(c100257046.cfilter,tp,0,LOCATION_MZONE,nil)
 	local g=Duel.GetMatchingGroup(c100257046.thfilter,tp,LOCATION_DECK,0,nil)
 	if ct>0 and g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=g:SelectSubGroup(tp,c100257046.fselect,false,1,ct)
+		local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ct)
 		if sg:GetCount()>0 then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)

@@ -71,19 +71,17 @@ function c100257026.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
 end
 function c100257026.spfilter(c,e,tp,lv)
-	return c:IsRace(RACE_WINDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelBelow(lv)
+	return c:IsRace(RACE_WINDBEAST) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100257026.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	ct=ct+Duel.GetLocationCount(1-tp,LOCATION_SZONE)
+	local ct=Duel.GetLocationCount(tp,LOCATION_SZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_SZONE,PLAYER_NONE,0)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100257026.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,ct) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c100257026.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local ct=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	ct=ct+Duel.GetLocationCount(1-tp,LOCATION_SZONE)
+	local ct=Duel.GetLocationCount(tp,LOCATION_SZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_SZONE,PLAYER_NONE,0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100257026.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,ct)
 	if g:GetCount()>0 then

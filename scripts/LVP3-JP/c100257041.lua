@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100257041.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,nil,2,2,c100257041.lcheck)
 	--spsummon1
@@ -45,27 +46,20 @@ function c100257041.spfilter1(c,e,tp)
 	return c:IsType(TYPE_SYNCHRO) and (c:IsSetCard(0x123) or c:IsRace(RACE_PLANT)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function c100257041.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	if chk==0 then return true end
-end
-function c100257041.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then
-		if e:GetLabel()==0 then return false end
-		e:SetLabel(0)
-		return c:IsReleasable() and Duel.CheckReleaseGroup(tp,c100257041.rfilter,1,c,e,tp,c)
-			and aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_SMATERIAL)
-			and Duel.IsExistingMatchingCard(c100257041.spfilter1,tp,LOCATION_EXTRA,0,1,nil,e,tp)
-	end
-	e:SetLabel(0)
+	if chk==0 then return c:IsReleasable() and Duel.CheckReleaseGroup(tp,c100257041.rfilter,1,c,e,tp,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectReleaseGroup(tp,c100257041.rfilter,1,1,c,e,tp,c)
 	g:AddCard(c)
 	Duel.Release(g,REASON_COST)
+end
+function c100257041.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_SMATERIAL)
+		and Duel.IsExistingMatchingCard(c100257041.spfilter1,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100257041.spop1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
+	if Duel.GetLocationCountFromEx(tp)<=0 or not aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_SMATERIAL) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100257041.spfilter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
@@ -76,11 +70,11 @@ end
 function c100257041.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
 end
-function c100257041.spfilter2(c,e,tp)
-	return c:IsSetCard(0x1123) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function c100257041.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100257041.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
+end
+function c100257041.spfilter2(c,e,tp)
+	return c:IsSetCard(0x1123) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100257041.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

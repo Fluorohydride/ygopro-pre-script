@@ -2,9 +2,10 @@
 
 --Scripted by mallu11
 function c100257036.initial_effect(c)
+	c:EnableCounterPermit(0x1)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,nil,2,3,c100257036.lcheck)
-	c:EnableCounterPermit(0x1)
 	--add counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100257036,0))
@@ -41,35 +42,34 @@ end
 function c100257036.lcheck(g,lc)
 	return g:IsExists(Card.IsLinkRace,1,nil,RACE_SPELLCASTER)
 end
-function c100257036.atfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12a)
-end
-function c100257036.atcon(e)
-	return Duel.IsExistingMatchingCard(c100257036.atfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
-end
 function c100257036.ctfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL)
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsType(TYPE_SPELL)
 end
 function c100257036.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c100257036.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local loc=LOCATION_ONFIELD+LOCATION_GRAVE
-	local g=Duel.GetMatchingGroup(c100257036.ctfilter,tp,loc,loc,nil)
-	if c:IsRelateToEffect(e) and c:IsFaceup() and g:GetCount()>0 then
+	local g=Duel.GetMatchingGroup(c100257036.ctfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+	if c:IsFaceup() and c:IsRelateToEffect(e) and g:GetCount()>0 then
 		c:AddCounter(0x1,g:GetCount())
 	end
 end
-function c100257036.spfilter(c,e,tp,zone)
-	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
+function c100257036.atfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x12a)
+end
+function c100257036.atcon(e)
+	return Duel.IsExistingMatchingCard(c100257036.atfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function c100257036.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c100257036.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,LOCATION_ONFIELD,0,0x1,3,REASON_COST) end
-	Duel.RemoveCounter(tp,LOCATION_ONFIELD,0,0x1,3,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,3,REASON_COST) end
+	Duel.RemoveCounter(tp,1,0,0x1,3,REASON_COST)
+end
+function c100257036.spfilter(c,e,tp,zone)
+	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
 end
 function c100257036.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=bit.band(e:GetHandler():GetLinkedZone(tp),0x1f)

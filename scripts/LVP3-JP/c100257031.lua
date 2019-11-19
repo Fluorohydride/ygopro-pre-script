@@ -32,12 +32,6 @@ function c100257031.initial_effect(c)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(100257031,ACTIVITY_SPSUMMON,c100257031.counterfilter)
 end
-function c100257031.atktg(e,c)
-	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsRace(RACE_FIEND)
-end
-function c100257031.atkval(e,c)
-	return c:GetLevel()*100
-end
 function c100257031.counterfilter(c)
 	return c:IsSetCard(0x8)
 end
@@ -59,11 +53,11 @@ function c100257031.splimit(e,c)
 	return not c:IsSetCard(0x8)
 end
 function c100257031.ffilter(c,tp)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x8) 
-		and c.material and Duel.IsExistingMatchingCard(c100257031.thfilter,tp,LOCATION_DECK,0,1,nil,c)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x8)
+		and Duel.IsExistingMatchingCard(c100257031.thfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function c100257031.thfilter(c,fc)
-	return c:IsCode(table.unpack(fc.material)) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
+	return aux.IsMaterialListCode(fc,c:GetCode()) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
 end
 function c100257031.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100257031.ffilter,tp,LOCATION_EXTRA,0,1,nil,tp) end
@@ -71,15 +65,21 @@ function c100257031.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100257031.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local rc=Duel.SelectMatchingCard(tp,c100257031.ffilter,tp,LOCATION_EXTRA,0,1,1,nil,tp):GetFirst()
-	if rc then
-		Duel.ConfirmCards(1-tp,rc)
+	local tc=Duel.SelectMatchingCard(tp,c100257031.ffilter,tp,LOCATION_EXTRA,0,1,1,nil,tp):GetFirst()
+	if tc then
+		Duel.ConfirmCards(1-tp,tc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.GetMatchingGroup(c100257031.thfilter,tp,LOCATION_DECK,0,nil,rc)
+		local g=Duel.GetMatchingGroup(c100257031.thfilter,tp,LOCATION_DECK,0,nil,tc)
 		local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,2)
-		if sg then
+		if sg and sg:GetCount()>0 then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 		end
 	end
+end
+function c100257031.atktg(e,c)
+	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsRace(RACE_FIEND)
+end
+function c100257031.atkval(e,c)
+	return c:GetLevel()*100
 end

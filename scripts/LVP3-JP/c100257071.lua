@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100257071.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2,2)
 	--change attribute
