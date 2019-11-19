@@ -27,7 +27,7 @@ function c100423013.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100423013.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(0x8) and not c:IsCode(100423013) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100423013.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100423013.spfilter(chkc,e,tp) end
@@ -38,7 +38,6 @@ function c100423013.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c100423013.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)

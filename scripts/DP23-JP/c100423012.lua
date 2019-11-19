@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100423012.initial_effect(c)
+	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFunRep(c,c100423012.ffilter,2,true)
 	--spsummon condition
@@ -62,10 +63,23 @@ function c100423012.srop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+function c100423012.atkfilter(c)
+	return c:IsFaceup() and c:GetAttribute()~=0
+end
 function c100423012.val(e,c)
-	local g=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0)
-	local sg=g:Filter(Card.IsFaceup,nil)
-	return sg:GetClassCount(Card.GetAttribute)*200
+	local g=Duel.GetMatchingGroup(c100423012.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
+	local att=0
+	local tc=g:GetFirst()
+	while tc do
+		att=bit.bor(att,tc:GetAttribute())
+		tc=g:GetNext()
+	end
+	local ct=0
+	while att~=0 do
+		if bit.band(att,0x1)~=0 then ct=ct+1 end
+		att=bit.rshift(att,1)
+	end
+	return ct*200
 end
 function c100423012.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

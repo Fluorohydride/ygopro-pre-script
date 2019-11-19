@@ -24,7 +24,7 @@ end
 function c100423038.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not (tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsControler(tp)) then return end
+	if tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_ATTACK_ALL)
@@ -71,8 +71,7 @@ end
 function c100423038.damop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetBattleTarget()
 	if not bc then return end
-	local dam=bc:GetBaseAttack()
-	if dam<0 then dam=0 end
+	local dam=math.max(bc:GetBaseAttack(),0)
 	if dam>0 then
 		Duel.Hint(HINT_CARD,0,100423038)
 		Duel.Damage(1-tp,dam,REASON_EFFECT)

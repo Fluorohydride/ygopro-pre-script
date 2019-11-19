@@ -49,7 +49,7 @@ function c100423049.valcheck(e,c)
 	end
 end
 function c100423049.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetCount()==1 and eg:GetFirst():IsType(e:GetLabel()) and eg:GetFirst():GetFlagEffect(100423049)~=0
+	return eg:GetCount()==1 and eg:GetFirst():IsFaceup() and eg:GetFirst():IsType(e:GetLabel()) and eg:GetFirst():GetFlagEffect(100423049)~=0
 end
 function c100423049.spfilter(c,e,tp,lv)
 	local lvl=c:GetOriginalLevel()
@@ -64,7 +64,7 @@ end
 function c100423049.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,100423049)~=0 then return end
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if eg:GetFirst():IsFaceup() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		local g=Duel.SelectMatchingCard(tp,c100423049.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,eg:GetFirst():GetOriginalLevel())
 		local tc=g:GetFirst()
 		if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
@@ -110,7 +110,7 @@ function c100423049.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetFlagEffect(tp,100423249)==0 end
 end
 function c100423049.thop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,100423249)~=0 then return end
+	if Duel.GetFlagEffect(tp,100423249)~=0 or eg:GetFirst():IsFacedown() then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100423049.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,ft,eg:GetFirst():GetRank())

@@ -19,13 +19,10 @@ function c100423016.cfilter(c,tp)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsSetCard(0x8) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function c100423016.spfilter(c,e,tp)
-	return c:IsSetCard(0x8) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(0x8) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100423016.fselect(g,e,tp)
-	if Duel.IsExistingTarget(c100423016.spfilter,tp,LOCATION_GRAVE,0,1,g,e,tp) then
-		Duel.SetSelectedCard(g)
-		return true
-	else return false end
+	return Duel.IsExistingTarget(c100423016.spfilter,tp,LOCATION_GRAVE,0,1,g,e,tp)
 end
 function c100423016.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100423016.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,tp)

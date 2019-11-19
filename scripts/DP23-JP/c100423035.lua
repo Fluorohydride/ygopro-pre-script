@@ -26,14 +26,15 @@ function c100423035.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100423035.cfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x8f) or c:IsSetCard(0x54)) and not c:IsCode(100423035)
+	return c:IsFaceup() and c:IsSetCard(0x8f,0x54) and not c:IsCode(100423035)
 end
 function c100423035.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(c100423035.cfilter,tp,LOCATION_MZONE,0,nil)>0
+	return Duel.IsExistingMatchingCard(c100423035.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100423035.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c100423035.spop1(e,tp,eg,ep,ev,re,r,rp)
@@ -43,11 +44,12 @@ function c100423035.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100423035.spfilter(c,e,tp)
-	return (c:IsSetCard(0x59) or c:IsSetCard(0x82)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x59,0x82) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100423035.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100423035.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(c100423035.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(c100423035.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100423035.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)

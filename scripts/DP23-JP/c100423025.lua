@@ -35,7 +35,8 @@ function c100423025.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100423025.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c100423025.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -45,7 +46,7 @@ function c100423025.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100423025.lvfilter(c)
-	return c:IsFaceup() and c:IsOriginalSetCard(0x66,0x1017,0xa3) and c:IsType(TYPE_SYNCHRO)
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsOriginalSetCard(0x66,0x1017,0xa3) and c:IsType(TYPE_SYNCHRO)
 end
 function c100423025.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100423025.lvfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
