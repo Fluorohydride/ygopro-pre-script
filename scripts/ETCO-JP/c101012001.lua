@@ -69,9 +69,7 @@ end
 function c101012001.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if eg:GetCount()~=1 then return false end
 	local tc=eg:GetFirst()
-	local zone=0
-	zone=bit.bor(zone,tc:GetLinkedZone(tp))
-	zone=bit.band(zone,0x1f)
+	local zone=bit.band(tc:GetLinkedZone(tp),0x1f)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) end
@@ -83,9 +81,7 @@ function c101012001.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		local tc=Duel.GetFirstTarget()
 		if not tc:IsRelateToEffect(e) then return end
-		local zone=0
-		zone=bit.bor(zone,tc:GetLinkedZone(tp))
-		zone=bit.band(zone,0x1f)
+		local zone=bit.band(tc:GetLinkedZone(tp),0x1f)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end
