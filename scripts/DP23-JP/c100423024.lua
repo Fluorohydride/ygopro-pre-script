@@ -27,10 +27,10 @@ function c100423024.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100423024.dfilter(c)
-	return c:IsType(TYPE_TUNER) and c:IsDiscardable() and c:IsAbleToGraveAsCost()
+	return c:IsType(TYPE_TUNER) and c:IsDiscardable()
 end
 function c100423024.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() and e:GetHandler():IsAbleToGraveAsCost()
+	if chk==0 then return e:GetHandler():IsDiscardable()
 		and Duel.IsExistingMatchingCard(c100423024.dfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,c100423024.dfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
@@ -38,7 +38,7 @@ function c100423024.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end
 function c100423024.thfilter(c)
-	return c:IsSetCard(0x1017) and c:IsAbleToHand()
+	return c:IsSetCard(0x1017) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100423024.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100423024.thfilter,tp,LOCATION_DECK,0,1,nil) end

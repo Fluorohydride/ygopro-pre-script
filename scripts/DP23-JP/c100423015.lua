@@ -48,6 +48,7 @@ function c100423015.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e6:SetCode(EVENT_BATTLE_DESTROYING)
 	e6:SetRange(LOCATION_SZONE)
+	e6:SetCountLimit(1,100423015)
 	e6:SetCondition(c100423015.chacon)
 	e6:SetCost(c100423015.chacost)
 	e6:SetOperation(c100423015.chaop)
@@ -113,7 +114,7 @@ function c100423015.actop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100423015.chacon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return Duel.GetAttacker()==ec and ec:IsRelateToBattle() and ec:IsStatus(STATUS_OPPO_BATTLE)
+	return Duel.GetAttacker()==ec and ec:IsRelateToBattle() and ec:IsStatus(STATUS_OPPO_BATTLE) and ec:IsChainAttackable()
 end
 function c100423015.chacost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -121,7 +122,5 @@ function c100423015.chacost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100423015.chaop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetPreviousEquipTarget()
-	if ec:IsChainAttackable() then
-		Duel.ChainAttack()
-	end
+	Duel.ChainAttack()
 end

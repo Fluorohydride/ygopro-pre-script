@@ -26,14 +26,12 @@ function c100423046.initial_effect(c)
 end
 function c100423046.cfilter(c,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK)
-	and (c:GetSequence()>4 and Duel.IsExistingMatchingCard(c100423046.filter1,tp,LOCATION_MZONE,0,1,c,tp)
-	or (Duel.GetMZoneCount(tp,c)>0 and Duel.IsExistingMatchingCard(c100423046.filter2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_MZONE,0,1,c)))
+		and Duel.IsExistingMatchingCard(c100423046.filter1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_MZONE,0,1,c,tp,c)
 end
-function c100423046.filter1(c,tp)
-	return c:IsCode(53025096) and c:IsAbleToGrave() and c:IsFaceup() and Duel.GetMZoneCount(tp,c)>0
-end
-function c100423046.filter2(c)
-	return c:IsCode(53025096) and c:IsAbleToGrave() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND+LOCATION_DECK))
+function c100423046.filter1(c,tp,mc)
+	local g=Group.FromCards(c)
+	if mc then g:AddCard(mc) end
+	return (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or c:IsFaceup()) and c:IsCode(53025096) and c:IsAbleToGrave() and Duel.GetMZoneCount(tp,g)>0
 end
 function c100423046.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100423046.cfilter,1,nil,tp) end
@@ -47,27 +45,18 @@ function c100423046.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100423046.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=nil
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then
-		g=Duel.SelectMatchingCard(tp,c100423046.filter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
-	else
-		g=Duel.SelectMatchingCard(tp,c100423046.filter2,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
-	end
-	local tc=g:GetFirst()
-	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) and c:IsRelateToEffect(e) then
+	local g=Duel.SelectMatchingCard(tp,c100423046.filter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE) and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function c100423046.spfilter(c,e,tp)
-	return c:IsSetCard(0x99) and not c:IsCode(100423046) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function c100423046.thfilter(c)
-	return c:IsCode(82768499) and c:IsAbleToHand()
 end
 function c100423046.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetPreviousControler()==tp and c:IsReason(REASON_DESTROY) and rp==1-tp
+end
+function c100423046.spfilter(c,e,tp)
+	return c:IsSetCard(0x99) and not c:IsCode(100423046) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100423046.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -75,9 +64,12 @@ function c100423046.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
+function c100423046.thfilter(c)
+	return c:IsCode(82768499) and c:IsAbleToHand()
+end
 function c100423046.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-		Duel.Hint(HINT_OPSELECTED,tp,HINTMSG_SPSUMMON)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100423046.spfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0
 			and Duel.IsExistingMatchingCard(c100423046.thfilter,tp,LOCATION_DECK,0,1,nil)

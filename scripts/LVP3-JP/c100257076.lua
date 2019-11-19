@@ -18,14 +18,14 @@ function c100257076.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100257076.mfilter(c)
-	return c:IsSetCard(0x10ec) and c:IsLinkType(TYPE_PENDULUM)
+	return c:IsLinkSetCard(0x10ec) and c:IsLinkType(TYPE_PENDULUM)
 end
 function c100257076.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(c100257076.stfilter,tp,LOCATION_EXTRA+LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function c100257076.stfilter(c,code)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_DECK)) and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec) and not c:IsCode(code)
+	return (c:IsFaceup() or c:IsLocation(LOCATION_DECK)) and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec) and not c:IsCode(code) and not c:IsForbidden()
 end
 function c100257076.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and c100257076.spfilter(chkc,e,tp) end

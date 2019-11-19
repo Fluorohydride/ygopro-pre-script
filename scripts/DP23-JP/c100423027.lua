@@ -17,7 +17,8 @@ function c100423027.filter(c)
 	return c:IsType(TYPE_SYNCHRO) and aux.IsMaterialListType(c,TYPE_SYNCHRO) and c:IsFaceup()
 end
 function c100423027.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100423027.filter,tp,LOCATION_MZONE,0,1,nil) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) and rp==1-tp
+	return Duel.IsExistingMatchingCard(c100423027.filter,tp,LOCATION_MZONE,0,1,nil)
+		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) and rp==1-tp
 end
 function c100423027.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

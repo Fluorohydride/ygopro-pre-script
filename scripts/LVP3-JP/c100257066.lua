@@ -1,4 +1,4 @@
---幻奏の華樂聖ブルーム・ハーモニスト
+--幻奏の華楽聖ブルーム・ハーモニスト
 
 --Scripted by mallu11
 function c100257066.initial_effect(c)
@@ -30,13 +30,6 @@ function c100257066.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(100257066,ACTIVITY_SPSUMMON,c100257066.counterfilter)
 end
-function c100257066.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9b)
-end
-function c100257066.actcon(e)
-	local a=Duel.GetAttacker()
-	return a and c100257066.cfilter(a) and e:GetHandler():GetLinkedGroup():IsContains(a)
-end
 function c100257066.counterfilter(c)
 	return c:IsSetCard(0x9b)
 end
@@ -62,28 +55,34 @@ end
 function c100257066.spfilter(c,e,tp,zone)
 	return c:IsSetCard(0x9b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
 end
-function c100257066.fselect(g)
-	if g:GetClassCount(Card.GetLevel)==g:GetCount() then
-		Duel.SetSelectedCard(g)
-		return true
-	else return false end
-end
 function c100257066.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=bit.band(e:GetHandler():GetLinkedZone(tp),0x1f)
-	local ct=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)
 	local g=Duel.GetMatchingGroup(c100257066.spfilter,tp,LOCATION_DECK,0,nil,e,tp,zone)
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133) and ct>1 and g:GetClassCount(Card.GetLevel)>=2 end
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
+		and ft>1 and g:GetClassCount(Card.GetLevel)>=2 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
+end
+function c100257066.fselect(g)
+	return g:GetClassCount(Card.GetLevel)==g:GetCount()
 end
 function c100257066.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=bit.band(c:GetLinkedZone(tp),0x1f)
-	local ct=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)
 	local g=Duel.GetMatchingGroup(c100257066.spfilter,tp,LOCATION_DECK,0,nil,e,tp,zone)
-	if c:IsRelateToEffect(e) and not Duel.IsPlayerAffectedByEffect(tp,59822133) and ct>1 and g:GetClassCount(Card.GetLevel)>=2 then
+	if c:IsRelateToEffect(e) and not Duel.IsPlayerAffectedByEffect(tp,59822133) and ft>1 and g:GetClassCount(Card.GetLevel)>=2 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:SelectSubGroup(tp,c100257066.fselect,false,2,2)
-		if sg:GetCount()==2 then
+		if sg and sg:GetCount()==2 then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE,zone)
 		end
 	end
+end
+function c100257066.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x9b)
+end
+function c100257066.actcon(e)
+	local a=Duel.GetAttacker()
+	return a and c100257066.cfilter(a) and e:GetHandler():GetLinkedGroup():IsContains(a)
 end

@@ -25,12 +25,11 @@ function c100423026.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(c100423026.ccon)
 	e3:SetOperation(c100423026.ccop)
 	c:RegisterEffect(e3)
 end
 function c100423026.cfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsType(TYPE_SYNCHRO) and (c:IsSetCard(0x66) or c:IsSetCard(0x1017) or c:IsSetCard(0xa3))
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsType(TYPE_SYNCHRO) and c:IsSetCard(0x66,0x1017,0xa3)
 end
 function c100423026.spfilter(c,e,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -41,7 +40,8 @@ end
 function c100423026.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local mg=eg:Filter(c100423026.cfilter,nil):GetFirst():GetMaterial()
 	if chkc then return mg:IsContains(chkc) and c100423026.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:IsExists(c100423026.spfilter,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and mg:IsExists(c100423026.spfilter,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=mg:FilterSelect(tp,c100423026.spfilter,1,1,nil,e,tp)
 	Duel.SetTargetCard(g)
@@ -53,13 +53,12 @@ function c100423026.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-function c100423026.ccon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=re:GetHandler()
-	return re:GetHandlerPlayer()==tp and tc:IsType(TYPE_SYNCHRO) and (tc:IsSetCard(0x66) or tc:IsSetCard(0x1017) or tc:IsSetCard(0xa3))
-end
 function c100423026.ccop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetChainLimit(c100423026.chainlm)
+	local tc=re:GetHandler()
+	if ep==tp and tc:IsType(TYPE_SYNCHRO) and tc:IsOriginalSetCard(0x66,0x1017,0xa3) then
+		Duel.SetChainLimit(c100423026.chainlm)
+	end
 end
-function c100423026.chainlm(e,ep,tp)
-	return tp==ep
+function c100423026.chainlm(e,rp,tp)
+	return tp==rp
 end

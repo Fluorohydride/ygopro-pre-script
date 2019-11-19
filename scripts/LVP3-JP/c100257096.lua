@@ -52,7 +52,7 @@ function c100257096.tktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100257096.tkfilter(chkc,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c100257096.tkfilter,tp,0,LOCATION_MZONE,1,nil,tp) end
-	local g=Duel.SelectTarget(tp,c100257096.tkfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
+	Duel.SelectTarget(tp,c100257096.tkfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end

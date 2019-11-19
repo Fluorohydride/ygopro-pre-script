@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100423002.initial_effect(c)
+	aux.AddCodeList(c,46986414,38033121)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -79,11 +80,10 @@ function c100423002.drfilter(c)
 end
 function c100423002.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100423002.drfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) end
-	local gc=1
-	if Duel.IsPlayerCanDraw(tp,2) then gc=2 end
-	local g1=Duel.GetMatchingGroup(c100423002.drfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
+	local ct=1
+	if Duel.IsPlayerCanDraw(tp,2) then ct=2 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=g1:Select(tp,1,gc,nil)
+	local g=Duel.SelectMatchingCard(tp,c100423002.drfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,ct,nil)
 	e:SetLabel(Duel.SendtoGrave(g,REASON_COST))
 end
 function c100423002.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

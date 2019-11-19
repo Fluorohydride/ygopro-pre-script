@@ -74,7 +74,7 @@ function c100257021.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100257021.thfilter),tp,LOCATION_GRAVE,0,nil)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,2)
-	if sg then
+	if sg and sg:GetCount()>0 then
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)
 	end

@@ -29,7 +29,7 @@ function c100257011.lcheck(g,lc)
 end
 function c100257011.lmlimit(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_LINK) and c:GetTurnID()==Duel.GetTurnCount()
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
 end
 function c100257011.cfilter(c,tp)
 	return c:IsFaceup()
@@ -51,16 +51,11 @@ function c100257011.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local flag=0
-		local att=tc:GetOriginalAttribute()
-		local race=tc:GetOriginalRace()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g=Duel.SelectMatchingCard(tp,c100257011.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,att,race,tp)
-		local gc=g:GetFirst()
-		if gc:IsLocation(LOCATION_DECK) then
-			flag=1
-		end
-		if not Duel.Equip(tp,gc,tc) then return end
+		local g=Duel.SelectMatchingCard(tp,c100257011.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,tc:GetOriginalAttribute(),tc:GetOriginalRace(),tp)
+		local sc=g:GetFirst()
+		local res=sc:IsLocation(LOCATION_DECK) and true or false
+		if not Duel.Equip(tp,sc,tc) then return end
 		--equip limit
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -69,21 +64,21 @@ function c100257011.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetLabelObject(tc)
 		e1:SetValue(c100257011.eqlimit)
-		gc:RegisterEffect(e1)
+		sc:RegisterEffect(e1)
 		--atk up
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(1000)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		gc:RegisterEffect(e2)
-		if flag==1 then
+		sc:RegisterEffect(e2)
+		if res then
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_FIELD)
 			e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 			e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 			e3:SetTargetRange(1,0)
-			e3:SetLabel(gc:GetCode())
+			e3:SetLabel(sc:GetCode())
 			e3:SetTarget(c100257011.splimit)
 			e3:SetReset(RESET_PHASE+PHASE_END)
 			Duel.RegisterEffect(e3,tp)

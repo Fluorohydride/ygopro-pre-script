@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100257001.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,nil,5,5)
 	--spsummon condition
@@ -9,7 +10,7 @@ function c100257001.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(aux.lnklimit)
+	e1:SetValue(aux.linklimit)
 	c:RegisterEffect(e1)
 	--mat check
 	local e2=Effect.CreateEffect(c)
@@ -24,10 +25,10 @@ function c100257001.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetLabelObject(e2)
 	e3:SetCondition(c100257001.descon)
 	e3:SetTarget(c100257001.destg)
 	e3:SetOperation(c100257001.desop)
+	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 	--immume
 	local e4=Effect.CreateEffect(c)
@@ -55,12 +56,6 @@ function c100257001.initial_effect(c)
 	e6:SetOperation(c100257001.rmop)
 	c:RegisterEffect(e6)
 end
-function c100257001.efilter(e,te)
-	return te:GetOwner()~=e:GetOwner()
-end
-function c100257001.indes(e,c)
-	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_EARTH+ATTRIBUTE_WATER+ATTRIBUTE_FIRE+ATTRIBUTE_WIND)
-end
 function c100257001.matcheck(e,c)
 	local g=c:GetMaterial()
 	local att=0
@@ -86,6 +81,12 @@ function c100257001.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end
+function c100257001.efilter(e,te)
+	return te:GetOwner()~=e:GetOwner()
+end
+function c100257001.indes(e,c)
+	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_EARTH+ATTRIBUTE_WATER+ATTRIBUTE_FIRE+ATTRIBUTE_WIND)
+end
 function c100257001.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
 end
@@ -96,19 +97,15 @@ function c100257001.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100257001.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local res=true
+	local res=false
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_GRAVE,0,nil)
 	if g:GetCount()>=5 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_GRAVE,0,5,5,nil)
 		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
-		local tc=sg:GetFirst()
-		while tc do
-			res=res and tc:IsLocation(LOCATION_REMOVED)
-			tc=sg:GetNext()
-		end
-	else res=false end
-	if res==false and c:IsRelateToEffect(e) then
+		if Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)==5 then res=true end
+	end
+	if not res and c:IsRelateToEffect(e) then
 		Duel.SendtoGrave(c,REASON_EFFECT)
 	end
 end

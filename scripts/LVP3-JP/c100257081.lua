@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100257081.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,nil,2,2)
 	--spsummon condition
