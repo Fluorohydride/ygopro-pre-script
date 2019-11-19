@@ -19,7 +19,7 @@ function c100423047.cfilter(c,e,tp,lsc,rsc)
 		and lv>0 and lv>lsc and lv<rsc
 end
 function c100423047.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroupCount(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,e:GetHandler())
+	local g=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,e:GetHandler())
 	if chk==0 then return g:GetCount()>0 end
 	local ct=1
 	for i=2,3 do
