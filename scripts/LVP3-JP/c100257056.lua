@@ -59,6 +59,7 @@ function c100257056.initial_effect(c)
 end
 function c100257056.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetCurrentChain()
+	local c=e:GetHandler()
 	if cid>0 then
 		c100257056[0]=Duel.GetChainInfo(cid,CHAININFO_CHAIN_ID)
 		c100257056[1]=(c:GetLinkedZone(0) & 0x7f) | ((c:GetLinkedZone(1) & 0x7f)<<0x10)
