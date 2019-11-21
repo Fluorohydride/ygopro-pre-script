@@ -2,13 +2,17 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **November 9, 2019** : Duelist Pack: Legend Duelist 6 (DP23-JP) : `100423XXX`
 - **November 20, 2019** : 20th ANNIVERSARY MONSTER ART BOX (YMAB-JP) : `100251XXX`
 - **November 23, 2019** : LINK VRAINS PACK 3 (LVP3-JP) : `100257XXX`
+- **December 7, 2019** : Structure Deck: Rebirth of Shaddoll (SD37-JP) : `100337XXX`
 - **December 21, 2019** : LEGENDARY GOLD BOX (LGB1-JP) : `100259XXX`
+- **December 21, 2019** : Premium Pack 2020 (20PP-JP) : `100260XXX`
+- **January 11, 2020** : ETERNITY CODE (ETCO-JP) : `101012XXX`
 
 # Announced
-- **December 7, 2019** : Structure Deck: (SD37-JP) : `100337XXX`
+- **December 21, 2019** : Jump Festa Limited Pack 2019 (JF20-JP) : `100261XXX`
+- **March 7, 2020** : Deck Build Pack: Secret Slayers (DB??-JP) : `100414XXX`
+- **March 20, 2020** : Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
 
 # Archived
 ## Other packs
@@ -112,6 +116,7 @@
 - Duelist Pack: Legend Duelist 3 (DP20-JP) : `100409XXX` ~~Should have been `100420XXX`~~
 - Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX` ~~Should have been `100421XXX`~~
 - Duelist Pack: Legend Duelist 5 (DP22-JP) : `100422XXX`
+- Duelist Pack: Legend Duelist 6 (DP23-JP) : `100423XXX`
 
 ## Booster packs
 - THE DARK ILLUSION (TDIL-JP) : `100909XXX`
