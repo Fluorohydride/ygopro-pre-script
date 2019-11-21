@@ -70,7 +70,7 @@ end
 function c100259033.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local mg=Group.FromCards(c)
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCountFromEx(tp)>0 then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCountFromEx(tp,tp,c)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c100259033.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,c)
 		local tc=g:GetFirst()
