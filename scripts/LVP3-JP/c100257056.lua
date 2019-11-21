@@ -48,6 +48,8 @@ function c100257056.initial_effect(c)
 	if not c100257056.global_check then
 		c100257056.global_check=true
 		c100257056[0]=nil
+		c100257056[1]=nil
+		c100257056[2]=nil
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DETACH_MATERIAL)
@@ -59,10 +61,20 @@ function c100257056.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetCurrentChain()
 	if cid>0 then
 		c100257056[0]=Duel.GetChainInfo(cid,CHAININFO_CHAIN_ID)
+		c100257056[1]=(c:GetLinkedZone(0) & 0x7f) | ((c:GetLinkedZone(1) & 0x7f)<<0x10)
+		local seq=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_SEQUENCE)
+		local te=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_EFFECT)
+		local tc=te:GetHandler()
+		if tc:IsRelateToEffect(te) then
+			if tc:IsControler(1) then seq=seq+16 end
+		else
+			if tc:GetPreviousControler()==1 then seq=seq+16 end
+		end
+		c100257056[2]=seq
 	end
 end
 function c100257056.mfilter(c)
-	return c:IsLevelAbove(0)
+	return c:IsLevelAbove(1)
 end
 function c100257056.lcheck(g,lc)
 	return g:GetClassCount(Card.GetLevel)==1
@@ -71,10 +83,10 @@ function c100257056.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c100257056.spfilter(c,e,tp)
-	return c:IsLevelAbove(0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100257056.fselect(g,tp)
-	return g:GetClassCount(Card.GetLocation)==g:GetCount()
+	return g:GetClassCount(Card.GetLocation)==g:GetCount() and g:GetClassCount(Card.GetLevel)==1
 		and Duel.IsExistingMatchingCard(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,nil,g,2,2)
 end
 function c100257056.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -90,7 +102,7 @@ function c100257056.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100257056.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 or g:GetCount()==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=g:SelectSubGroup(tp,c100257056.fselect,false,2,2)
+	local sg=g:SelectSubGroup(tp,c100257056.fselect,false,2,2,tp)
 	if sg and sg:GetCount()==2 then
 		local tc1=sg:GetFirst()
 		local tc2=sg:GetNext()
@@ -111,17 +123,20 @@ function c100257056.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e4=e3:Clone()
 		tc2:RegisterEffect(e4)
 		Duel.SpecialSummonComplete()
-		if Duel.GetLocationCountFromEx(tp,tp,g)<=0 then return end
-		local xyzg=Duel.GetMatchingGroup(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,nil,g,2,2)
+		if Duel.GetLocationCountFromEx(tp,tp,sg)<=0 then return end
+		local xyzg=Duel.GetMatchingGroup(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,nil,sg,2,2)
 		if xyzg:GetCount()>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-			Duel.XyzSummon(tp,xyz,g)
+			Duel.XyzSummon(tp,xyz,sg)
 		end
 	end
 end
 function c100257056.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)==c100257056[0] and re:IsActiveType(TYPE_XYZ) and e:GetHandler():GetFlagEffect(1)>0
+	local zone=c100257056[1]
+	local seq=c100257056[2]
+	return Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)==c100257056[0] and re:IsActiveType(TYPE_XYZ)
+		and e:GetHandler():GetFlagEffect(1)>0 and bit.extract(zone,seq)~=0
 end
 function c100257056.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsType(TYPE_SPELL+TYPE_TRAP) end
