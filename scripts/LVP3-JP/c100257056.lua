@@ -31,6 +31,7 @@ function c100257056.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(c100257056.regcon)
 	e3:SetOperation(aux.chainreg)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
@@ -59,10 +60,9 @@ function c100257056.initial_effect(c)
 end
 function c100257056.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetCurrentChain()
-	local c=e:GetHandler()
 	if cid>0 then
 		c100257056[0]=Duel.GetChainInfo(cid,CHAININFO_CHAIN_ID)
-		c100257056[1]=(c:GetLinkedZone(0) & 0x7f) | ((c:GetLinkedZone(1) & 0x7f)<<0x10)
+		c100257056[1]=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)
 		local seq=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_SEQUENCE)
 		local te=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_EFFECT)
 		local tc=te:GetHandler()
@@ -133,11 +133,15 @@ function c100257056.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function c100257056.regcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local zone=(c:GetLinkedZone(0) & 0x7f) | ((c:GetLinkedZone(1) & 0x7f)<<0x10)
+	return bit.extract(zone,c100257056[2])~=0
+end
 function c100257056.descon(e,tp,eg,ep,ev,re,r,rp)
-	local zone=c100257056[1]
-	local seq=c100257056[2]
-	return Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)==c100257056[0] and re:IsActiveType(TYPE_XYZ)
-		and e:GetHandler():GetFlagEffect(1)>0 and bit.extract(zone,seq)~=0
+	return Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)==c100257056[0]
+		and Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)==c100257056[1] and re:IsActiveType(TYPE_XYZ)
+		and e:GetHandler():GetFlagEffect(1)>0
 end
 function c100257056.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsType(TYPE_SPELL+TYPE_TRAP) end
