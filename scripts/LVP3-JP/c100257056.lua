@@ -140,7 +140,7 @@ function c100257056.regcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100257056.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)==c100257056[0]
-		and Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)==c100257056[1] and re:IsActiveType(TYPE_XYZ)
+		and c100257056[1]==LOCATION_MZONE and re:IsActiveType(TYPE_XYZ)
 		and e:GetHandler():GetFlagEffect(1)>0
 end
 function c100257056.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
