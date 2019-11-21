@@ -42,7 +42,7 @@ function c100259025.ovfilter(c)
 	return c:IsFaceup() and c:IsCode(65305468)
 end
 function c100259025.discon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsHasType(TYPE_MONSTER) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 		and Duel.IsChainNegatable(ev)
 end
 function c100259025.discost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -61,8 +61,7 @@ function c100259025.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100259025.disop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE
-		and re:GetHandler():IsRelateToEffect(re) and not re:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:GetHandler():IsAbleToChangeControler() then
+		and re:GetHandler():IsRelateToEffect(re) and not re:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then
 		Duel.GetControl(re:GetHandler(),tp)
 	end
 end
