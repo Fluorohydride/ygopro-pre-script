@@ -57,7 +57,7 @@ function c100337033.cfilter(c)
 	return c:IsSetCard(0x9d) and c:IsAbleToRemoveAsCost()
 end
 function c100337033.posfilter(c)
-	return c:IsFacedown() or (c:IsFaceup() and c:IsCanTurnSet())
+	return c:IsFaceup() and c:IsCanTurnSet()
 end
 function c100337033.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -68,12 +68,32 @@ function c100337033.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 function c100337033.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100337033.posfilter,tp,LOCATION_MZONE,0,1,nil) end
+	local b1=Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_MZONE,0,1,nil)
+	local b2=Duel.IsExistingMatchingCard(c100337033.posfilter,tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return b1 or b2 end
+	local s=0
+	if b1 and not b2 then
+		s=Duel.SelectOption(tp,aux.Stringid(100337033,2))
+	end
+	if not b1 and b2 then
+		s=Duel.SelectOption(tp,aux.Stringid(100337033,3))+1
+	end
+	if b1 and b2 then
+		s=Duel.SelectOption(tp,aux.Stringid(100337033,2),aux.Stringid(100337033,3))
+	end
+	e:SetLabel(s)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
 end
 function c100337033.posop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g=Duel.SelectMatchingCard(tp,c100337033.posfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=nil
+	if e:GetLabel()==0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+		g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_MZONE,0,1,1,nil)
+	end
+	if e:GetLabel()==1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+		g=Duel.SelectMatchingCard(tp,c100337033.posfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	end
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
 		local tc=g:GetFirst()

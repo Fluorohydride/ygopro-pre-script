@@ -38,7 +38,8 @@ function c100259041.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function c100259041.cfilter(c,e,tp)
-	return c:IsRace(RACE_CYBERSE) and c:GetLink()<=3 and not c:IsCode(100259041) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK) and c:IsLinkBelow(3) and not c:IsCode(100259041)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100259041.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
