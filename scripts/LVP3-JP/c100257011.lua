@@ -36,7 +36,8 @@ function c100257011.cfilter(c,tp)
 		and Duel.IsExistingMatchingCard(c100257011.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,c:GetOriginalAttribute(),c:GetOriginalRace(),tp)
 end
 function c100257011.eqfilter(c,att,race,tp)
-	return (c:GetOriginalAttribute()==att or c:GetOriginalRace()==race) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
+	return c:IsType(TYPE_MONSTER) and (c:GetOriginalAttribute()==att or c:GetOriginalRace()==race)
+		and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
 function c100257011.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100257011.cfilter(chkc,tp) end
