@@ -88,7 +88,7 @@ function c100337033.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=nil
 	if e:GetLabel()==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_MZONE,0,1,1,nil)
+		g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_MZONE,0,1,1,nil)
 	end
 	if e:GetLabel()==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
