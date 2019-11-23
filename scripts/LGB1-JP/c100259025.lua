@@ -51,11 +51,11 @@ function c100259025.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100259025.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
+	e:SetCategory(CATEGORY_NEGATE)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE and re:GetHandler():IsRelateToEffect(re)
 		and not re:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then
-		local cat=e:GetCategory()
-		e:SetCategory(bit.bor(cat,CATEGORY_CONTROL))
+		e:SetCategory(CATEGORY_NEGATE+CATEGORY_CONTROL)
 		Duel.SetOperationInfo(0,CATEGORY_CONTROL,eg,1,0,0)
 	end
 end

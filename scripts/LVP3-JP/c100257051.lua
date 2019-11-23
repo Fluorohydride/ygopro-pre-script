@@ -120,7 +120,7 @@ end
 function c100257051.rltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local sel=e:GetLabel()
-	local cat=e:GetCategory()
+	local cat=0
 	if sel==1 then
 		local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		e:SetCategory(bit.bor(cat,CATEGORY_DESTROY))
