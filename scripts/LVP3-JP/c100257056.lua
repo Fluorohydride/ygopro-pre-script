@@ -136,7 +136,8 @@ end
 function c100257056.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=(c:GetLinkedZone(0) & 0x7f) | ((c:GetLinkedZone(1) & 0x7f)<<0x10)
-	return bit.extract(zone,c100257056[2])~=0
+	local seq=c100257056[2]
+	return seq and bit.extract(zone,seq)~=0
 end
 function c100257056.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)==c100257056[0]
