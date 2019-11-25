@@ -15,14 +15,11 @@ function c101012056.initial_effect(c)
 	e1:SetOperation(c101012056.activate)
 	c:RegisterEffect(e1)
 end
-function c101012056.filter(c)
-	return c:IsFaceup() and c:IsCode(59054773)
-end
 function c101012056.cfilter(c)
 	return c:IsCode(59054773) and not c:IsPublic() and c:IsAbleToDeck()
 end
 function c101012056.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101012056.filter,tp,LOCATION_FZONE,0,1,nil)
+	return Duel.IsEnvironment(59054773,tp,LOCATION_FZONE)
 end
 function c101012056.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
