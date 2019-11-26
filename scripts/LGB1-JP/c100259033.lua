@@ -56,7 +56,7 @@ function c100259033.ovfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x23b)
 end
 function c100259033.spfilter(c,e,tp,mc)
-	return (c:IsSetCard(0x23b) or c:IsSetCard(0x10db)) and mc:IsCanBeXyzMaterial(c)
+	return (c:IsSetCard(0x23b) or c:IsSetCard(0x10db)) and mc:IsCanBeXyzMaterial(c) and c:IsType(TYPE_XYZ)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and not c:IsCode(100259033)
 end
 function c100259033.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
