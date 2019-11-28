@@ -63,9 +63,6 @@ function c100257066.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and ft>1 and g:GetClassCount(Card.GetLevel)>=2 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
-function c100257066.fselect(g)
-	return g:GetClassCount(Card.GetLevel)==g:GetCount()
-end
 function c100257066.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=bit.band(c:GetLinkedZone(tp),0x1f)
@@ -73,7 +70,7 @@ function c100257066.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100257066.spfilter,tp,LOCATION_DECK,0,nil,e,tp,zone)
 	if c:IsRelateToEffect(e) and not Duel.IsPlayerAffectedByEffect(tp,59822133) and ft>1 and g:GetClassCount(Card.GetLevel)>=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:SelectSubGroup(tp,c100257066.fselect,false,2,2)
+		local sg=g:SelectSubGroup(tp,aux.dlvcheck,false,2,2)
 		if sg and sg:GetCount()==2 then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE,zone)
 		end

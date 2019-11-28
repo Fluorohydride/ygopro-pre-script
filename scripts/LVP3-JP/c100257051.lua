@@ -63,11 +63,8 @@ end
 function c100257051.rselect(g,tp)
 	return Duel.GetMZoneCount(tp,g)>0
 end
-function c100257051.fselect(g,tp)
-	if Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,g) then
-		Duel.SetSelectedCard(g)
-		return Duel.CheckReleaseGroup(tp,nil,0,nil)
-	else return false end
+function c100257051.costfilter(c,tp)
+	return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function c100257051.spfilter(c,e,tp)
 	return c:IsSetCard(0x101b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -76,12 +73,11 @@ function c100257051.thfilter(c)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100257051.rlcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetReleaseGroup(tp):Filter(Card.IsType,nil,TYPE_MONSTER)
-	local ct=g:GetCount()
-	local b1=ct>0 and g:CheckSubGroup(c100257051.fselect,1,1,tp)
-	local b2=ct>1 and g:CheckSubGroup(c100257051.rselect,2,2,tp)
+	local g=Duel.GetReleaseGroup(tp)
+	local b1=Duel.CheckReleaseGroup(tp,c100257051.costfilter,1,nil,tp)
+	local b2=g:GetCount()>1 and g:CheckSubGroup(c100257051.rselect,2,2,tp)
 		and Duel.IsExistingMatchingCard(c100257051.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
-	local b3=ct>2 and Duel.IsExistingMatchingCard(c100257051.thfilter,tp,LOCATION_GRAVE,0,1,nil)
+	local b3=Duel.CheckReleaseGroup(tp,nil,3,nil) and Duel.IsExistingMatchingCard(c100257051.thfilter,tp,LOCATION_GRAVE,0,1,nil)
 	if chk==0 then return b1 or b2 or b3 end
 	local off=0
 	local ops={}
@@ -106,14 +102,12 @@ function c100257051.rlcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(opval[op])
 	local rg=nil
 	if opval[op]==1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		rg=g:SelectSubGroup(tp,c100257051.fselect,false,1,1,tp)
+		rg=Duel.SelectReleaseGroup(tp,c100257051.costfilter,1,1,nil,tp)
 	elseif opval[op]==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		rg=g:SelectSubGroup(tp,c100257051.rselect,false,2,2,tp)
 	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		rg=g:Select(tp,3,3,nil)
+		rg=Duel.SelectReleaseGroup(tp,nil,1,1,nil)
 	end
 	Duel.Release(rg,REASON_COST)
 end
