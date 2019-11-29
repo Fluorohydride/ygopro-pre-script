@@ -59,19 +59,13 @@ function c101012046.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function c101012046.cfilter(c,tp)
-	local att=0
-	for i,attr in ipairs({ATTRIBUTE_EARTH,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_WIND,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_DIVINE}) do
-		if Duel.GetFlagEffect(tp,101012046+(i-1)*100)==0 then
-			att=bit.bor(att,attr)
-		end
-	end
-	return c:IsType(TYPE_LINK) and c:IsAttribute(att) and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+function c101012046.cfilter(c)
+	return c:IsType(TYPE_LINK) and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function c101012046.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101012046.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101012046.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c101012046.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,c101012046.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	e:SetLabel(g:GetFirst():GetAttribute())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
@@ -88,10 +82,16 @@ function c101012046.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
-	local att=e:GetLabel()
-	for i,attr in ipairs({ATTRIBUTE_EARTH,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_WIND,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_DIVINE}) do
-		if bit.band(att,attr)~=0 then
-			Duel.RegisterFlagEffect(tp,101012046+(i-1)*100,RESET_PHASE+PHASE_END,0,1)
-		end
-	end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CANNOT_REMOVE)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c101012046.rmlimit)
+	e1:SetLabel(e:GetLabel())
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
+function c101012046.rmlimit(e,c,tp,r,re)
+	return c:IsAttribute(e:GetLabel()) and re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsCode(101012046) and r==REASON_COST
 end

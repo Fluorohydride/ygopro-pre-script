@@ -98,10 +98,10 @@ end
 function c100257001.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local res=false
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_GRAVE,0,nil,tp,POS_FACEDOWN)
 	if g:GetCount()>=5 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_GRAVE,0,5,5,nil)
+		local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_GRAVE,0,5,5,nil,tp,POS_FACEDOWN)
 		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
 		if Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)==5 then res=true end
 	end
