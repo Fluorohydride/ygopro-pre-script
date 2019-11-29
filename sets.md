@@ -7,10 +7,10 @@
 - **December 7, 2019** : Structure Deck: Rebirth of Shaddoll (SD37-JP) : `100337XXX`
 - **December 21, 2019** : LEGENDARY GOLD BOX (LGB1-JP) : `100259XXX`
 - **December 21, 2019** : Premium Pack 2020 (20PP-JP) : `100260XXX`
+- **December 21, 2019** : Jump Festa Limited Pack 2019 (JF20-JP) : `100261XXX`
 - **January 11, 2020** : ETERNITY CODE (ETCO-JP) : `101012XXX`
 
 # Announced
-- **December 21, 2019** : Jump Festa Limited Pack 2019 (JF20-JP) : `100261XXX`
 - **March 7, 2020** : Deck Build Pack: Secret Slayers (DB??-JP) : `100414XXX`
 - **March 20, 2020** : Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
 
