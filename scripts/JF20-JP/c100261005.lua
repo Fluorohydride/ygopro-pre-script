@@ -95,7 +95,7 @@ function c100261005.eqlimit(e,c)
 end
 function c100261005.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_LOST_TARGET)
-		and not e:GetHandler():GetPreviousEquipTarget():IsLocation(LOCATION_MZONE)
+		and not e:GetHandler():GetPreviousEquipTarget():IsLocation(LOCATION_ONFIELD+LOCATION_OVERLAY)
 end
 function c100261005.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
