@@ -50,9 +50,9 @@ function c100257036.ctcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100257036.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c100257036.ctfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
-	if c:IsFaceup() and c:IsRelateToEffect(e) and g:GetCount()>0 then
-		c:AddCounter(0x1,g:GetCount())
+	local ct=Duel.GetMatchingGroupCount(c100257036.ctfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+	if c:IsFaceup() and c:IsRelateToEffect(e) and ct>0 then
+		c:AddCounter(0x1,ct)
 	end
 end
 function c100257036.atfilter(c)
