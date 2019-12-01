@@ -68,7 +68,7 @@ function c100259033.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c100259033.matfilter(c,e)
-	return c:IsCanOverlay() and c:IsImmuneToEffect(e)
+	return c:IsCanOverlay() and not c:IsImmuneToEffect(e)
 end
 function c100259033.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
