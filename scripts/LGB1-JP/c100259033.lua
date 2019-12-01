@@ -56,7 +56,7 @@ function c100259033.ovfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x23b)
 end
 function c100259033.spfilter(c,e,tp,mc)
-	return (c:IsSetCard(0x23b) or c:IsSetCard(0x10db)) and mc:IsCanBeXyzMaterial(c) and c:IsType(TYPE_XYZ)
+	return c:IsSetCard(0x23b,0x10db) and mc:IsCanBeXyzMaterial(c) and c:IsType(TYPE_XYZ)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and not c:IsCode(100259033)
 end
 function c100259033.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -80,10 +80,11 @@ function c100259033.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Overlay(tc,mg)
 			if Duel.SpecialSummon(tc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)~=0 then
 				tc:CompleteProcedure()
-				if Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_PZONE,0,1,nil)
+				if Duel.IsExistingMatchingCard(Card.IsCanOverlay,tp,LOCATION_PZONE,0,1,nil)
 					and Duel.SelectYesNo(tp,aux.Stringid(100259033,3)) then
 					Duel.BreakEffect()
-					local sg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_PZONE,0,1,1,nil)
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+					local sg=Duel.SelectMatchingCard(tp,Card.IsCanOverlay,tp,LOCATION_PZONE,0,1,1,nil)
 					Duel.HintSelection(sg)
 					if not tc:IsImmuneToEffect(e) then
 						Duel.Overlay(tc,sg)
@@ -94,7 +95,7 @@ function c100259033.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100259033.mfilter(c)
-	return c:IsType(TYPE_XYZ) and c:GetRank()==7
+	return c:IsType(TYPE_XYZ) and c:IsRank(7)
 end
 function c100259033.valcheck(e,c)
 	local g=c:GetMaterial()
