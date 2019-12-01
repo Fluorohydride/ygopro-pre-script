@@ -67,6 +67,9 @@ function c100259033.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(c100259033.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
+function c100259033.matfilter(c,e)
+	return c:IsCanOverlay() and c:IsImmuneToEffect(e)
+end
 function c100259033.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local mg=Group.FromCards(c)
@@ -80,15 +83,13 @@ function c100259033.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Overlay(tc,mg)
 			if Duel.SpecialSummon(tc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)~=0 then
 				tc:CompleteProcedure()
-				if Duel.IsExistingMatchingCard(Card.IsCanOverlay,tp,LOCATION_PZONE,0,1,nil)
+				if Duel.IsExistingMatchingCard(c100259033.matfilter,tp,LOCATION_PZONE,0,1,nil,e)
 					and Duel.SelectYesNo(tp,aux.Stringid(100259033,3)) then
 					Duel.BreakEffect()
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-					local sg=Duel.SelectMatchingCard(tp,Card.IsCanOverlay,tp,LOCATION_PZONE,0,1,1,nil)
+					local sg=Duel.SelectMatchingCard(tp,c100259033.matfilter,tp,LOCATION_PZONE,0,1,1,nil,e)
 					Duel.HintSelection(sg)
-					if not tc:IsImmuneToEffect(e) then
-						Duel.Overlay(tc,sg)
-					end
+					Duel.Overlay(tc,sg)
 				end
 			end
 		end
