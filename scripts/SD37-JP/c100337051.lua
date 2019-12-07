@@ -4,15 +4,13 @@
 function c100337051.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	if not c:IsStatus(STATUS_COPYING_EFFECT) then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e1:SetCode(EFFECT_FUSION_MATERIAL)
-		e1:SetCondition(c100337051.FShaddollCondition())
-		e1:SetOperation(c100337051.FShaddollOperation())
-		c:RegisterEffect(e1)
-	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_FUSION_MATERIAL)
+	e1:SetCondition(c100337051.FShaddollCondition())
+	e1:SetOperation(c100337051.FShaddollOperation())
+	c:RegisterEffect(e1)
 	--cannot spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
