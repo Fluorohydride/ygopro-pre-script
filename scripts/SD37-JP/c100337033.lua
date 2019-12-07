@@ -29,8 +29,8 @@ function c100337033.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100337033.filter(c,e,tp)
-	return c:IsSetCard(0x9d) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-		or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
+	return c:IsSetCard(0x9d)
+		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
 end
 function c100337033.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100337033.filter(chkc,e,tp) end
@@ -44,8 +44,8 @@ function c100337033.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local spos=0
-	if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then spos=spos+POS_FACEUP_DEFENSE end
-	if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN) then spos=spos+POS_FACEDOWN_DEFENSE end
+	if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) then spos=spos+POS_FACEUP_DEFENSE end
+	if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then spos=spos+POS_FACEDOWN_DEFENSE end
 	if spos~=0 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,spos)
 		if tc:IsFacedown() then
@@ -56,20 +56,17 @@ end
 function c100337033.cfilter(c)
 	return c:IsSetCard(0x9d) and c:IsAbleToRemoveAsCost()
 end
-function c100337033.posfilter(c)
-	return c:IsFaceup() and c:IsCanTurnSet()
-end
 function c100337033.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c100337033.cfilter,tp,LOCATION_GRAVE,0,1,c) and c:IsAbleToRemoveAsCost() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c100337033.cfilter,tp,LOCATION_GRAVE,0,1,1,c)
-	local rg=Group.FromCards(c,g:GetFirst())
-	Duel.Remove(rg,POS_FACEUP,REASON_COST)
+	g:AddCard(c)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100337033.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_MZONE,0,1,nil)
-	local b2=Duel.IsExistingMatchingCard(c100337033.posfilter,tp,LOCATION_MZONE,0,1,nil)
+	local b2=Duel.IsExistingMatchingCard(Card.IsCanTurnSet,tp,LOCATION_MZONE,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	local s=0
 	if b1 and not b2 then
@@ -85,22 +82,19 @@ function c100337033.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
 end
 function c100337033.posop(e,tp,eg,ep,ev,re,r,rp)
-	local g=nil
 	if e:GetLabel()==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-		g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_MZONE,0,1,1,nil)
-	end
-	if e:GetLabel()==1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-		g=Duel.SelectMatchingCard(tp,c100337033.posfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	end
-	if g:GetCount()>0 then
-		Duel.HintSelection(g)
-		local tc=g:GetFirst()
-		if tc:IsFaceup() then
-			Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
-		else
+		local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_MZONE,0,1,1,nil)
+		if g:GetCount()>0 then
+			Duel.HintSelection(g)
 			Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
+		end
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+		local g=Duel.SelectMatchingCard(tp,Card.IsCanTurnSet,tp,LOCATION_MZONE,0,1,1,nil)
+		if g:GetCount()>0 then
+			Duel.HintSelection(g)
+			Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
 		end
 	end
 end

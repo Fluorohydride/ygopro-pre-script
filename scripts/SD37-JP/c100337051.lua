@@ -4,13 +4,15 @@
 function c100337051.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_FUSION_MATERIAL)
-	e1:SetCondition(c100337051.FShaddollCondition())
-	e1:SetOperation(c100337051.FShaddollOperation())
-	c:RegisterEffect(e1)
+	if not c:IsStatus(STATUS_COPYING_EFFECT) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e1:SetCode(EFFECT_FUSION_MATERIAL)
+		e1:SetCondition(c100337051.FShaddollCondition())
+		e1:SetOperation(c100337051.FShaddollOperation())
+		c:RegisterEffect(e1)
+	end
 	--cannot spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -53,14 +55,11 @@ end
 function c100337051.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
-function c100337051.disfilter(c)
-	return c:IsFaceup() and not c:IsDisabled() and ((c:IsType(TYPE_MONSTER) and c:IsType(TYPE_EFFECT)) or c:IsType(TYPE_SPELL+TYPE_TRAP))
-end
 function c100337051.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and c100337051.disfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100337051.disfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsOnField() and aux.disfilter1(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,c100337051.disfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	Duel.SelectTarget(tp,aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 end
 function c100337051.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -80,36 +79,38 @@ function c100337051.disop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
+		if tc:IsType(TYPE_TRAPMONSTER) then
+			local e3=Effect.CreateEffect(c)
+			e3:SetType(EFFECT_TYPE_SINGLE)
+			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
+			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e3)
+		end
 	end
 end
-function c100337051.thfilter(c,tp)
-	local b=c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
-	return c:IsSetCard(0x9d) and c:IsAbleToHand() and (not b or (b and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0))
-end
-function c100337051.thfilter2(c)
+function c100337051.thfilter(c)
 	return c:IsSetCard(0x9d) and c:IsAbleToHand()
 end
 function c100337051.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100337051.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100337051.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,tp,1)
 end
 function c100337051.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100337051.thfilter2),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 		Duel.ConfirmCards(1-tp,g)
-		local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-		if g:GetFirst():IsLocation(LOCATION_HAND+LOCATION_EXTRA) and ct>0 then
-			Duel.ShuffleHand(tp)
+		if g:GetFirst():IsLocation(LOCATION_HAND) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 then
 			Duel.BreakEffect()
+			Duel.ShuffleHand(tp)
 			Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD,nil)
 		end
 	end
 end
 function c100337051.FShaddollFilter(c,fc)
-	return c:IsFusionSetCard(0x9d) and c:IsCanBeFusionMaterial(fc) and not c:IsHasEffect(6205579)
+	return c:IsFusionSetCard(0x9d) and c:IsCanBeFusionMaterial(fc)
 end
 function c100337051.FShaddollExFilter(c,fc)
 	return c:IsFaceup() and c100337051.FShaddollFilter(c,fc)
@@ -137,7 +138,7 @@ function c100337051.FShaddollCondition()
 			local c=e:GetHandler()
 			local mg=g:Filter(c100337051.FShaddollFilter,nil,c)
 			local tp=e:GetHandlerPlayer()
-			local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+			local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 			local exg=nil
 			if fc and fc:IsHasEffect(81788994) and fc:IsCanRemoveCounter(tp,0x16,3,REASON_EFFECT) then
 				exg=Duel.GetMatchingGroup(c100337051.FShaddollExFilter,tp,0,LOCATION_MZONE,mg,c)
@@ -153,7 +154,7 @@ function c100337051.FShaddollOperation()
 	return  function(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
 			local c=e:GetHandler()
 			local mg=eg:Filter(c100337051.FShaddollFilter,nil,c)
-			local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+			local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 			local exg=nil
 			if fc and fc:IsHasEffect(81788994) and fc:IsCanRemoveCounter(tp,0x16,3,REASON_EFFECT) then
 				exg=Duel.GetMatchingGroup(c100337051.FShaddollExFilter,tp,0,LOCATION_MZONE,mg,c)
