@@ -87,14 +87,14 @@ function c100337033.posop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_MZONE,0,1,1,nil)
 		if g:GetCount()>0 then
 			Duel.HintSelection(g)
-			Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
+			Duel.ChangePosition(g:GetFirst(),POS_FACEUP_DEFENSE)
 		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local g=Duel.SelectMatchingCard(tp,Card.IsCanTurnSet,tp,LOCATION_MZONE,0,1,1,nil)
 		if g:GetCount()>0 then
 			Duel.HintSelection(g)
-			Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+			Duel.ChangePosition(g:GetFirst(),POS_FACEDOWN_DEFENSE)
 		end
 	end
 end
