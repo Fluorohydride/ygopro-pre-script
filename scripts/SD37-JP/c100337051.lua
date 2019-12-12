@@ -119,13 +119,15 @@ end
 function c100337051.FShaddollFilter2(c)
 	return c:IsFusionSetCard(0x9d)
 end
-function c100337051.FShaddollSpFilter1(c,tp,mg,exg,chkf)
-	return mg:IsExists(c100337051.FShaddollSpFilter2,1,c,tp,c,chkf) or (exg and exg:IsExists(c100337051.FShaddollSpFilter2,1,c,tp,c,chkf))
+function c100337051.FShaddollSpFilter1(c,fc,tp,mg,exg,chkf)
+	return mg:IsExists(c100337051.FShaddollSpFilter2,1,c,fc,tp,c,chkf)
+		or (exg and exg:IsExists(c100337051.FShaddollSpFilter2,1,c,fc,tp,c,chkf))
 end
-function c100337051.FShaddollSpFilter2(c,tp,mc,chkf)
+function c100337051.FShaddollSpFilter2(c,fc,tp,mc,chkf)
 	local sg=Group.FromCards(c,mc)
 	if sg:IsExists(aux.TuneMagicianCheckX,1,nil,sg,EFFECT_TUNE_MAGICIAN_F) then return false end
 	if not aux.MustMaterialCheck(sg,tp,EFFECT_MUST_BE_FMATERIAL) then return false end
+	if aux.FCheckAdditional and not aux.FCheckAdditional(tp,sg,fc) then return false end
 	return ((c100337051.FShaddollFilter1(c,sg) and c100337051.FShaddollFilter2(mc))
 		or (c100337051.FShaddollFilter1(mc,sg) and c100337051.FShaddollFilter2(c)))
 		and (chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(tp,tp,sg)>0)
@@ -143,9 +145,9 @@ function c100337051.FShaddollCondition()
 			end
 			if gc then
 				if not mg:IsContains(gc) then return false end
-				return c100337051.FShaddollSpFilter1(gc,tp,mg,exg,chkf)
+				return c100337051.FShaddollSpFilter1(gc,c,tp,mg,exg,chkf)
 			end
-			return mg:IsExists(c100337051.FShaddollSpFilter1,1,nil,tp,mg,exg,chkf)
+			return mg:IsExists(c100337051.FShaddollSpFilter1,1,nil,c,tp,mg,exg,chkf)
 		end
 end
 function c100337051.FShaddollOperation()
@@ -163,18 +165,18 @@ function c100337051.FShaddollOperation()
 				mg:RemoveCard(gc)
 			else
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-				g=mg:FilterSelect(tp,c100337051.FShaddollSpFilter1,1,1,nil,tp,mg,exg,chkf)
+				g=mg:FilterSelect(tp,c100337051.FShaddollSpFilter1,1,1,nil,c,tp,mg,exg,chkf)
 				mg:Sub(g)
 			end
-			if exg and exg:IsExists(c100337051.FShaddollSpFilter2,1,nil,tp,g:GetFirst(),chkf)
+			if exg and exg:IsExists(c100337051.FShaddollSpFilter2,1,nil,c,tp,g:GetFirst(),chkf)
 				and (mg:GetCount()==0 or (exg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(81788994,0)))) then
 				fc:RemoveCounter(tp,0x16,3,REASON_EFFECT)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-				local sg=exg:FilterSelect(tp,c100337051.FShaddollSpFilter2,1,1,nil,tp,g:GetFirst(),chkf)
+				local sg=exg:FilterSelect(tp,c100337051.FShaddollSpFilter2,1,1,nil,c,tp,g:GetFirst(),chkf)
 				g:Merge(sg)
 			else
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-				local sg=mg:FilterSelect(tp,c100337051.FShaddollSpFilter2,1,1,nil,tp,g:GetFirst(),chkf)
+				local sg=mg:FilterSelect(tp,c100337051.FShaddollSpFilter2,1,1,nil,c,tp,g:GetFirst(),chkf)
 				g:Merge(sg)
 			end
 			Duel.SetFusionMaterial(g)
