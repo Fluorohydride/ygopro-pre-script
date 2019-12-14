@@ -30,7 +30,7 @@ end
 function c100260018.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local g=Duel.GetMatchingGroup(c100260018.thfilter,tp,LOCATION_DECK,0,nil,c:GetOriginalCodeRule())
+		local g=Duel.GetMatchingGroup(c100260018.thfilter,tp,LOCATION_DECK,0,nil,tc:GetOriginalCodeRule())
 		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100260018,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

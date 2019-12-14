@@ -55,7 +55,7 @@ function c100259045.spfilter(c,e,tp)
 end
 function c100259045.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.GetLocation(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c100259045.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		and Duel.IsExistingTarget(c100259045.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -77,7 +77,7 @@ function c100259045.disop(e,tp,eg,ep,ev,re,r,rp)
 	if tc==hc then tc=g:GetNext() end
 	if hc:IsRelateToEffect(e) and not hc:IsImmuneToEffect(e) then
 		Duel.NegateRelatedChain(hc,RESET_TURN_SET)
-		local c=he:GetHandler()
+		local c=e:GetHandler()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
