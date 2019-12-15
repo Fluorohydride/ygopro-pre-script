@@ -14,18 +14,33 @@ function c100260016.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100260016.spfilter1(c,e,tp)
-	return c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(c100260016.spfilter2,tp,LOCATION_PZONE,0,1,c,e,tp,c)
 end
+function c100260016.xyzlv(e,c,rc)
+	return e:GetHandler():GetLevel()+e:GetLabel()*0x10000
+end
 function c100260016.spfilter2(c,e,tp,mc)
-	if not c:IsLevelAbove(1) or not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_XYZ_LEVEL)
-	e1:SetValue(mc:GetLevel())
-	c:RegisterEffect(e1,true)
+	if not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
+	local e1=nil
+	local e2=nil
+	if c:IsLevelAbove(1) and mc:IsLevelAbove(1) then
+		e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_XYZ_LEVEL)
+		e1:SetValue(c100260016.xyzlv)
+		e1:SetLabel(mc:GetLevel())
+		c:RegisterEffect(e1,true)
+		e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_XYZ_LEVEL)
+		e2:SetValue(c100260016.xyzlv)
+		e2:SetLabel(c:GetLevel())
+		mc:RegisterEffect(e2,true)
+	end
 	local res=Duel.IsExistingMatchingCard(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,nil,Group.FromCards(c,mc),2,2)
-	e1:Reset()
+	if e1 then e1:Reset() end
+	if e2 then e2:Reset() end
 	return res
 end
 function c100260016.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -65,32 +80,28 @@ function c100260016.activate(e,tp,eg,ep,ev,re,r,rp)
 	tc2:RegisterEffect(e4)
 	Duel.SpecialSummonComplete()
 	if Duel.GetLocationCountFromEx(tp,tp,g)<=0 then return end
-	local xyzchk=false
-	local e5=Effect.CreateEffect(e:GetHandler())
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_XYZ_LEVEL)
-	e5:SetValue(tc2:GetLevel())
-	tc1:RegisterEffect(e5,true)
+	local e5=nil
+	local e6=nil
+	if tc1:IsLevelAbove(1) and tc2:IsLevelAbove(1) then
+		e5=Effect.CreateEffect(e:GetHandler())
+		e5:SetType(EFFECT_TYPE_SINGLE)
+		e5:SetCode(EFFECT_XYZ_LEVEL)
+		e5:SetValue(c100260016.xyzlv)
+		e5:SetLabel(tc2:GetLevel())
+		tc1:RegisterEffect(e5,true)
+		e6=Effect.CreateEffect(e:GetHandler())
+		e6:SetType(EFFECT_TYPE_SINGLE)
+		e6:SetCode(EFFECT_XYZ_LEVEL)
+		e6:SetValue(c100260016.xyzlv)
+		e6:SetLabel(tc1:GetLevel())
+		tc2:RegisterEffect(e6,true)
+	end
 	local xyzg=Duel.GetMatchingGroup(c100260016.xyzfilter,tp,LOCATION_EXTRA,0,nil,g)
 	if xyzg:GetCount()>0 then
-		xyzchk=true
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		Duel.XyzSummon(tp,xyz,g)
 	end
-	e5:Reset()
-	if not xyzchk then
-		local e6=Effect.CreateEffect(e:GetHandler())
-		e6:SetType(EFFECT_TYPE_SINGLE)
-		e6:SetCode(EFFECT_XYZ_LEVEL)
-		e6:SetValue(tc1:GetLevel())
-		tc2:RegisterEffect(e6,true)
-		xyzg=Duel.GetMatchingGroup(c100260016.xyzfilter,tp,LOCATION_EXTRA,0,nil,g)
-		if xyzg:GetCount()>0 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-			Duel.XyzSummon(tp,xyz,g)
-		end
-		e6:Reset()
-	end
+	if e5 then e5:Reset() end
+	if e6 then e5:Reset() end
 end
