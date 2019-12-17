@@ -16,7 +16,7 @@ function c100260020.initial_effect(c)
 	--control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100260020,0))
-	e2:SetCategory(CATEGORY_CONTROL)
+	e2:SetCategory(CATEGORY_CONTROL+CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -87,9 +87,11 @@ end
 function c100260020.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp,PHASE_END,1)~=0 then
+	if tc:IsRelateToEffect(e) then
+		Duel.GetControl(tc,tp)
+		local atk=0
 		local g=Duel.GetMatchingGroup(c100260020.atkfilter,tp,LOCATION_MZONE,0,nil)
-		local atk=g:GetSum(Card.GetBaseAttack)
+		if g:GetCount()>0 then atk=g:GetSum(Card.GetBaseAttack) end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
