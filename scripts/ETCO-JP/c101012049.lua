@@ -39,11 +39,20 @@ function c101012049.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if ft>0 and ct>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,48068379,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) then
 		local count=math.min(ft,ct)
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then count=1 end
+		if count>1 then
+			local num={}
+			local i=1
+			while i<=count do
+				num[i]=i
+				i=i+1
+			end
+			count=Duel.AnnounceNumber(tp,table.unpack(num))
+		end
 		repeat
 			local token=Duel.CreateToken(tp,101012149)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 			count=count-1
-		until count==0 or not Duel.SelectYesNo(tp,210)
+		until count==0
 		Duel.SpecialSummonComplete()
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
