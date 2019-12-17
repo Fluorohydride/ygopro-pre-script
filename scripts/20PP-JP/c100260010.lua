@@ -54,7 +54,7 @@ function c100260010.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100260010.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_GRAVE)
+	return e:GetHandler():GetSummonLocation()==LOCATION_GRAVE
 end
 function c100260010.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
