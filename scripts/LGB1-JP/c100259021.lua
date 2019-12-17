@@ -86,7 +86,7 @@ end
 function c100259021.rmop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
-	if c:IsAbleToRemove() then g:AddCard(c) end
+	if c:IsAbleToRemove() and c:IsRelateToEffect(e) then g:AddCard(c) end
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
 		local op=Duel.GetOperatedGroup()
 		if op:IsContains(c) then
