@@ -96,7 +96,7 @@ function c100260016.activate(e,tp,eg,ep,ev,re,r,rp)
 		e6:SetLabel(tc1:GetLevel())
 		tc2:RegisterEffect(e6,true)
 	end
-	local xyzg=Duel.GetMatchingGroup(c100260016.xyzfilter,tp,LOCATION_EXTRA,0,nil,g)
+	local xyzg=Duel.GetMatchingGroup(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,nil,g,2,2)
 	if xyzg:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
