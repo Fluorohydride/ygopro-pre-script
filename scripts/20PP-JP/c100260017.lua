@@ -12,8 +12,8 @@ function c100260017.initial_effect(c)
 	e1:SetOperation(c100260017.activate)
 	c:RegisterEffect(e1)
 end
-function c100260017.filter1(c,e)
-	return c:IsType(TYPE_PENDULUM) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove() and (not e or not c:IsImmuneToEffect(e))
+function c100260017.filter1(c)
+	return c:IsType(TYPE_PENDULUM) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove()
 end
 function c100260017.filter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c))
@@ -43,7 +43,7 @@ function c100260017.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100260017.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp
-	local mg1=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100260017.filter1),tp,LOCATION_GRAVE,0,nil,e)
+	local mg1=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100260017.filter1),tp,LOCATION_GRAVE,0,nil)
 	local sg1=Duel.GetMatchingGroup(c100260017.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	local mg2=nil
 	local sg2=nil
