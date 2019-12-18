@@ -87,8 +87,7 @@ end
 function c100260020.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.GetControl(tc,tp)
+	if tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp)~=0 then
 		local atk=0
 		local g=Duel.GetMatchingGroup(c100260020.atkfilter,tp,LOCATION_MZONE,0,nil)
 		if g:GetCount()>0 then atk=g:GetSum(Card.GetBaseAttack) end
