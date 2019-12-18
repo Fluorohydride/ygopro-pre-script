@@ -2,9 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **November 20, 2019** : 20th ANNIVERSARY MONSTER ART BOX (YMAB-JP) : `100251XXX`
-- **November 23, 2019** : LINK VRAINS PACK 3 (LVP3-JP) : `100257XXX`
-- **December 7, 2019** : Structure Deck: Rebirth of Shaddoll (SD37-JP) : `100337XXX`
 - **December 21, 2019** : LEGENDARY GOLD BOX (LGB1-JP) : `100259XXX`
 - **December 21, 2019** : Premium Pack 2020 (20PP-JP) : `100260XXX`
 - **December 21, 2019** : Jump Festa Limited Pack 2019 (JF20-JP) : `100261XXX`
@@ -76,6 +73,8 @@
 - Fists of the Gadgets (FIGA-EN) : `100255XXX`
 - 2019 Gold Sarcophagus Tin (TN19-EN) : `100256XXX`
 - Extra Pack 2019 (EP19-JP) : `100258XXX`
+- 20th ANNIVERSARY MONSTER ART BOX (YMAB-JP) : `100251XXX`
+- LINK VRAINS PACK 3 (LVP3-JP) : `100257XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -100,6 +99,7 @@
 - Structure Deck: Master Link (SD34-JP) : `100334XXX`
 - Structure Deck: Soulburner (SD35-JP) : `100335XXX`
 - Structure Deck: Revolver (SD36-JP) : `100336XXX`
+- Structure Deck: Rebirth of Shaddoll (SD37-JP) : `100337XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
