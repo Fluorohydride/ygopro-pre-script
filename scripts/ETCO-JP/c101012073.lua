@@ -80,17 +80,14 @@ end
 function c101012073.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101012073.filter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c101012073.desfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
-end
 function c101012073.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function c101012073.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.HintSelection(Group.FromCards(c))
-	if Duel.CheckReleaseGroup(tp,c101012073.desfilter,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101012073,0)) then
-		local g=Duel.SelectReleaseGroup(tp,c101012073.desfilter,1,1,nil)
+	if Duel.CheckReleaseGroup(tp,Card.IsType,1,nil,TYPE_LINK) and Duel.SelectYesNo(tp,aux.Stringid(101012073,0)) then
+		local g=Duel.SelectReleaseGroup(tp,Card.IsType,1,1,nil,TYPE_LINK)
 		Duel.Release(g,REASON_COST)
 	else Duel.Destroy(c,REASON_COST) end
 end
