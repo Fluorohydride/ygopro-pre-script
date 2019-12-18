@@ -57,10 +57,11 @@ function c100259029.matfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 end
 function c100259029.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100259029.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100259029.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	local bpchk=0
 	if Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<PHASE_BATTLE then bpchk=1 end
 	e:SetLabel(bpchk)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c100259029.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x48) and c:IsType(TYPE_XYZ)
@@ -68,7 +69,7 @@ end
 function c100259029.spop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local c=e:GetHandler()
-	local g=Duel.SelectMatchingCard(tp,c100259029.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c100259029.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	local res=0
 	if tc then

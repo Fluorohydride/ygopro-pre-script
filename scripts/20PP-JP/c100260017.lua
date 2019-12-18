@@ -12,7 +12,7 @@ function c100260017.initial_effect(c)
 	e1:SetOperation(c100260017.activate)
 	c:RegisterEffect(e1)
 end
-function c100260017.filter1(c,e)
+function c100260017.filter1(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove()
 end
 function c100260017.filter2(c,e,tp,m,f,chkf)
@@ -25,7 +25,7 @@ end
 function c100260017.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp
-		local mg1=Duel.GetMatchingGroup(c100260017.filter1,tp,LOCATION_GRAVE,0,nil,tp)
+		local mg1=Duel.GetMatchingGroup(c100260017.filter1,tp,LOCATION_GRAVE,0,nil)
 		local res=Duel.IsExistingMatchingCard(c100260017.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)

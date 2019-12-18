@@ -111,7 +111,7 @@ function c100259037.desfilter(c,tp)
 	return Duel.IsExistingMatchingCard(c100259037.tdfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,c)
 end
 function c100259037.tdfilter(c)
-	return c:IsSetCard(0xae) and c:IsAbleToDeck()
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsSetCard(0xae) and c:IsAbleToDeck()
 end
 function c100259037.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and c100259037.desfilter(chkc,tp) end

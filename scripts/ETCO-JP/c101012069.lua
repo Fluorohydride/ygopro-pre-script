@@ -10,6 +10,7 @@ function c101012069.initial_effect(c)
 	--atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101012069,0))
+	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_SZONE)

@@ -35,11 +35,11 @@ function c100259013.initial_effect(c)
 	e3:SetOperation(c100259013.spop2)
 	c:RegisterEffect(e3)
 end
-function c100259013.cfilter(c,tp)
-	return c and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x1034)
+function c100259013.cfilter(c)
+	return c and c:IsFaceup() and c:IsSetCard(0x1034)
 end
 function c100259013.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return c100259013.cfilter(Duel.GetAttacker(),tp) or c100259013.cfilter(Duel.GetAttackTarget(),tp)
+	return c100259013.cfilter(Duel.GetAttacker()) or c100259013.cfilter(Duel.GetAttackTarget())
 end
 function c100259013.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
