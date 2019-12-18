@@ -28,7 +28,7 @@ function c100262001.initial_effect(c)
 	e3:SetOperation(c100262001.spop)
 	c:RegisterEffect(e3)
 end
-function c100262001.thfilter(c)
+function c100262001.lvfilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsLevelAbove(1) and c:IsAbleToGrave()
 end
 function c100262001.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
