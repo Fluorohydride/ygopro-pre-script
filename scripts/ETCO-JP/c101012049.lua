@@ -46,6 +46,7 @@ function c101012049.tkop(e,tp,eg,ep,ev,re,r,rp)
 				num[i]=i
 				i=i+1
 			end
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101012049,1))
 			count=Duel.AnnounceNumber(tp,table.unpack(num))
 		end
 		repeat
