@@ -67,14 +67,15 @@ function c100259029.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x48) and c:IsType(TYPE_XYZ)
 end
 function c100259029.spop2(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local c=e:GetHandler()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100259029.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	local res=0
 	if tc then
 		if Duel.IsExistingMatchingCard(c100259029.matfilter,tp,LOCATION_MZONE,0,1,nil) and tc:IsCanOverlay()
-			and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) or Duel.GetLocation(tp,LOCATION_MZONE)<=0 or Duel.SelectOption(tp,1190,aux.Stringid(100259029,2))==1) then
+			and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+				or Duel.SelectOption(tp,1152,aux.Stringid(100259029,2))==1) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local sg=Duel.SelectMatchingCard(tp,c100259029.matfilter,tp,LOCATION_MZONE,0,1,1,nil)
 			Duel.Overlay(sg:GetFirst(),Group.FromCards(tc))
