@@ -33,7 +33,7 @@ function c100262001.lvfilter(c)
 end
 function c100262001.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100262001.lvfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil)
-		and e:GetHandler():IsLevelAbove(1) end
+		and e:GetHandler():IsLevelAbove(1) and e:GetHandler():IsRelateToEffect(e) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
 end
 function c100262001.lvop(e,tp,eg,ep,ev,re,r,rp)
