@@ -79,7 +79,7 @@ function c100259005.thop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100259005.atkfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsRace(RACE_DRAGON)
+	return c:IsFaceup() and c:IsLevelAbove(8) and c:IsRace(RACE_DRAGON)
 end
 function c100259005.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100259005.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
