@@ -50,7 +50,7 @@ function c100259029.spcon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100259029.spfilter(c,e,tp)
 	return c:IsCode(93717133)
-		and (Duel.GetLocation(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		or (Duel.IsExistingMatchingCard(c100259029.matfilter,tp,LOCATION_MZONE,0,1,nil) and c:IsCanOverlay()))
 end
 function c100259029.matfilter(c)
