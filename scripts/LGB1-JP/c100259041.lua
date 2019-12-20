@@ -37,9 +37,9 @@ function c100259041.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
 end
-function c100259041.cfilter(c,e,tp)
+function c100259041.cfilter(c,e,tp,mc)
 	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK) and c:IsLinkBelow(3) and not c:IsCode(100259041)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end
 function c100259041.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -52,8 +52,7 @@ function c100259041.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 and Duel.GetLP(tp)<=2000 and c:IsRelateToEffect(e) and c:IsAbleToRemove()
-		and Duel.GetLocationCountFromEx(tp,tp,c)>0
-		and Duel.IsExistingMatchingCard(c100259041.cfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(c100259041.cfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 		and Duel.SelectYesNo(tp,aux.Stringid(100259041,1)) then
 		Duel.BreakEffect()
 		if Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_REMOVED) then

@@ -77,7 +77,8 @@ function c101012069.tfcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(att,att-1)~=0
 end
 function c101012069.tffilter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0x137) and not c:IsCode(101012069) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0x137) and not c:IsCode(101012069)
+		and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c101012069.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

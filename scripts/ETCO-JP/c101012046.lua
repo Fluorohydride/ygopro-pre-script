@@ -42,7 +42,7 @@ function c101012046.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if mg:GetCount()<1 then return false end
 	if chkc then return mg:IsContains(chkc) and c101012046.atkfilter(chkc,e) end
 	if chk==0 then return mg:IsExists(c101012046.atkfilter,1,nil,e) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=mg:FilterSelect(tp,c101012046.atkfilter,1,1,nil,e)
 	Duel.SetTargetCard(g)
 	Duel.SetChainLimit(c101012046.chainlm)

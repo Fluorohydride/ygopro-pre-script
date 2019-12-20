@@ -9,6 +9,7 @@ function c100260014.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,100260014+EFFECT_COUNT_CODE_OATH)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCost(c100260014.cost)
 	e1:SetTarget(c100260014.target)
 	e1:SetOperation(c100260014.activate)
@@ -16,6 +17,7 @@ function c100260014.initial_effect(c)
 end
 function c100260014.costfilter(c,tp)
 	return (c:IsControler(tp) or c:IsFaceup()) and c:IsAttackAbove(2000) and not c:IsCode(93717133) and Duel.GetMZoneCount(tp,c)>0
+		and Duel.IsExistingTarget(c100260014.rfilter,tp,0,LOCATION_MZONE,1,c)
 end
 function c100260014.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

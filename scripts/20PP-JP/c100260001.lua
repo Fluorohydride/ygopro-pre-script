@@ -1,4 +1,4 @@
---钢鋼鉄の魔導騎士－ギルティギア・フリード
+--鋼鉄の魔導騎士－ギルティギア・フリード
 
 --Scripted by mallu11
 function c100260001.initial_effect(c)
