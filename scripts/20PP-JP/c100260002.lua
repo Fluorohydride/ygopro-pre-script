@@ -10,6 +10,7 @@ function c100260002.initial_effect(c)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,100260002)
+	e1:SetTarget(c100260002.regtg)
 	e1:SetOperation(c100260002.regop)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -27,6 +28,15 @@ function c100260002.initial_effect(c)
 	e3:SetOperation(c100260002.spop)
 	c:RegisterEffect(e3)
 end
+function c100260002.thfilter1(c)
+	return c:IsLevelAbove(5) and c:IsAttribute(ATTRIBUTE_WATER)
+end
+function c100260002.thfilter2(c)
+	return c:IsLevelAbove(5) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToHand()
+end
+function c100260002.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100260002.thfilter1,tp,LOCATION_DECK,0,1,nil) end
+end
 function c100260002.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -37,16 +47,13 @@ function c100260002.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c100260002.thfilter(c)
-	return c:IsLevelAbove(5) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToHand()
-end
 function c100260002.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100260002.thfilter,tp,LOCATION_DECK,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100260002.thfilter2,tp,LOCATION_DECK,0,1,nil)
 end
 function c100260002.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,100260002)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100260002.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100260002.thfilter2,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
