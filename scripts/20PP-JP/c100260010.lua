@@ -68,14 +68,16 @@ function c100260010.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100260010.cfilter2(c)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsAttribute(ATTRIBUTE_WATER)
+	return not c:IsAttribute(ATTRIBUTE_WATER)
 end
 function c100260010.effcon(e,tp,eg,ep,ev,re,r,rp)
-	local mg=e:GetHandler():GetReasonCard():GetMaterial()
-	return r==REASON_XYZ and mg:IsExists(c100260010.cfilter2,mg:GetCount(),nil)
+	local c=e:GetHandler()
+	local mg=c:GetReasonCard():GetMaterial()
+	return r==REASON_XYZ and c:IsPreviousLocation(LOCATION_ONFIELD) and not mg:IsExists(c100260010.cfilter2,1,nil)
+		and mg:FilterCount(Card.IsXyzType,nil,TYPE_MONSTER)==mg:GetCount()
 end
 function c100260010.effop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,100260010)~=0 then return end
+	if Duel.GetFlagEffect(ep,100260010)~=0 then return end
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	local e1=Effect.CreateEffect(rc)
@@ -94,5 +96,5 @@ function c100260010.effop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
-	Duel.RegisterFlagEffect(tp,100260010,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(ep,100260010,RESET_PHASE+PHASE_END,0,1)
 end
