@@ -56,7 +56,7 @@ function c101012051.spop(e,tp,eg,ep,ev,re,r,rp)
 		flag[p]=(~flag_tmp)&0x7f
 	end
 	local ft1=Duel.GetLocationCount(0,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone[0])
-	local ft2=Duel.GetLocationCount(0,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone[1])
+	local ft2=Duel.GetLocationCount(1,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone[1])
 	if ft1+ft2<=0 then return end
 	local ct=math.min(ft1+ft2,2)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
