@@ -51,7 +51,7 @@ function c101012041.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101012041.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and rp==1-tp
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and ep==1-tp
 end
 function c101012041.cfilter(c,e,tp)
 	return c:IsCode(41232647) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
