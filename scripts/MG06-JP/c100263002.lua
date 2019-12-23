@@ -96,5 +96,5 @@ function c100263002.imop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100263002.efilter(e,re)
-	return e:GetOwnerPlayer()~=re:GetHandlerPlayer()
+	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
