@@ -35,6 +35,7 @@ function c100260008.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lv=e:GetHandler():GetLevel()
 	if chk==0 then return Duel.IsExistingTarget(c100260008.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler(),lv)
 		and e:GetHandler():IsLevelAbove(1) and e:GetHandler():IsRelateToEffect(e) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c100260008.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler(),lv)
 	local rec=g:GetFirst():GetLevel()*200
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
