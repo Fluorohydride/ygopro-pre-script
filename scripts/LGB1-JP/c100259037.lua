@@ -63,12 +63,13 @@ function c100259037.spop(e,tp,eg,ep,ev,re,r,rp)
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_LEVEL)
+				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 				if lv==0 then
 					e1:SetValue(ct)
 				else
 					e1:SetValue(-ct)
 				end
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				c:RegisterEffect(e1)
 			end
 		end
@@ -82,7 +83,7 @@ function c100259037.effcon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():GetReasonCard():IsSetCard(0x10af)
 end
 function c100259037.effop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,100259037)~=0 then return end
+	if Duel.GetFlagEffect(ep,100259037)~=0 then return end
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	local e1=Effect.CreateEffect(rc)
@@ -105,7 +106,7 @@ function c100259037.effop(e,tp,eg,ep,ev,re,r,rp)
 		rc:RegisterEffect(e2,true)
 	end
 	rc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100259037,5))
-	Duel.RegisterFlagEffect(tp,100259037,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(ep,100259037,RESET_PHASE+PHASE_END,0,1)
 end
 function c100259037.desfilter3(c,tp)
 	return Duel.IsExistingMatchingCard(c100259037.tdfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,c)
@@ -118,9 +119,8 @@ function c100259037.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c100259037.desfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,c100259037.desfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,tp)
-	local sg=Duel.GetMatchingGroup(c100259037.tdfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,g)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_ONFIELD+LOCATION_GRAVE)
 end
 function c100259037.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
