@@ -29,11 +29,14 @@ function c100260015.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	Duel.SelectTarget(tp,c100260015.cfilter,tp,LOCATION_MZONE,0,1,ft,nil)
 end
+function c100260015.mfilter(c,e)
+	return c:IsFaceup() and c:IsRelateToEffect(e)
+end
 function c100260015.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=0
 	if Duel.CheckLocation(tp,LOCATION_PZONE,0) then ft=ft+1 end
 	if Duel.CheckLocation(tp,LOCATION_PZONE,1) then ft=ft+1 end
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(c100260015.mfilter,nil,e)
 	if g:GetCount()>0 then
 		if g:GetCount()<=ft then
 			local tc=g:GetFirst()
