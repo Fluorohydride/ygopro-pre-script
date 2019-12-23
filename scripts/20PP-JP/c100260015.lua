@@ -19,11 +19,11 @@ function c100260015.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=0
 	if Duel.CheckLocation(tp,LOCATION_PZONE,0) then ft=ft+1 end
 	if Duel.CheckLocation(tp,LOCATION_PZONE,1) then ft=ft+1 end
-	local b=e:GetHandler():IsLocation(LOCATION_SZONE)
+	local b=e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE)
 	local st=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	local b1=b and ft>0
-	local b2=not b and ft==1 and st-ft>0
-	local b3=not b and ft==2
+	local b1=not b and ft>0
+	local b2=b and ft==1 and st-ft>0
+	local b3=b and ft==2
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100260015.cfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100260015.cfilter,tp,LOCATION_MZONE,0,1,nil) and b1 or b2 or b3 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
