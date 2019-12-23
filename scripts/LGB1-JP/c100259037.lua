@@ -54,17 +54,22 @@ function c100259037.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100259037.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if Duel.Destroy(g,REASON_EFFECT)~=0 then
+	local ct=Duel.Destroy(g,REASON_EFFECT)
+	if ct~=0 then
 		local c=e:GetHandler()
 		if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-			local ct=Duel.GetOperatedGroup():GetCount()
-			if ct>0 and Duel.SelectYesNo(tp,aux.Stringid(100259037,2)) then
-				local lv=Duel.SelectOption(tp,aux.Stringid(100259037,3),aux.Stringid(100259037,4))
+			local res=0
+			if c:GetLevel()==1 then
+				res=Duel.SelectOption(tp,aux.Stringid(100259037,2),aux.Stringid(100259037,3))
+			else
+				res=Duel.SelectOption(tp,aux.Stringid(100259037,2),aux.Stringid(100259037,3),aux.Stringid(100259037,4))
+			end
+			if res>0 then
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_LEVEL)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-				if lv==0 then
+				if res==1 then
 					e1:SetValue(ct)
 				else
 					e1:SetValue(-ct)
