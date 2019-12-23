@@ -68,7 +68,7 @@ function c100259037.spop(e,tp,eg,ep,ev,re,r,rp)
 				else
 					e1:SetValue(-ct)
 				end
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				c:RegisterEffect(e1)
 			end
 		end
