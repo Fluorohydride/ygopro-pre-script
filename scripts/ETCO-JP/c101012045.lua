@@ -71,7 +71,7 @@ function c101012045.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101012045.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and (c:IsLocation(LOCATION_GRAVE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))
-		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REDIRECT)and c:GetReasonPlayer()==tp and c:GetPreviousControler()==1-tp
+		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REDIRECT) and c:GetReasonPlayer()==tp and c:GetPreviousControler()==1-tp
 end
 function c101012045.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101012045.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
