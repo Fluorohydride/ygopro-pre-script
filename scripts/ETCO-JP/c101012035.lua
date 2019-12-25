@@ -19,6 +19,7 @@ end
 function c101012035.stcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,aux.TRUE,2,nil) end
 	local g=Duel.SelectReleaseGroup(tp,aux.TRUE,2,2,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	Duel.Release(g,REASON_COST)
 end
 function c101012035.stfilter(c)
