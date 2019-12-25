@@ -43,7 +43,8 @@ function c101012074.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	mg:Sub(tg)
 	local rg=mg:Filter(Card.IsAbleToRemove,nil)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101012074.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and rg:GetCount()>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101012074.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		and rg:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,rg,rg:GetCount(),0,0)
 end
 function c101012074.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -55,7 +56,7 @@ function c101012074.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rg=mg:Filter(Card.IsAbleToRemove,nil)
 	if rg:GetCount()>0 then
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
-		g=Duel.GetMatchingGroup(c101012074.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		local tc=g:GetFirst()
 		while tc do
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -72,7 +73,8 @@ function c101012074.efilter(e,re)
 	return e:GetHandler()~=re:GetOwner()
 end
 function c101012074.thfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO)
+		and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsControler(tp)
 end
 function c101012074.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101012074.thfilter,1,nil,tp)
