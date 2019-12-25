@@ -56,17 +56,17 @@ function c101012074.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rg=mg:Filter(Card.IsAbleToRemove,nil)
 	if rg:GetCount()>0 then
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
-		g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-		local tc=g:GetFirst()
-		while tc do
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_IMMUNE_EFFECT)
-			e1:SetValue(c101012074.efilter)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1)
-			tc=g:GetNext()
-		end
+	end
+	g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local tc=g:GetFirst()
+	while tc do
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_IMMUNE_EFFECT)
+		e1:SetValue(c101012074.efilter)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
+		tc=g:GetNext()
 	end
 end
 function c101012074.efilter(e,re)
