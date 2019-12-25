@@ -6,11 +6,29 @@ function c100260015.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_LIMIT_ZONE)
 	e1:SetCountLimit(1,100260015+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100260015.target)
 	e1:SetOperation(c100260015.activate)
+	e1:SetValue(c100260015.zones)
 	c:RegisterEffect(e1)
+end
+function c100260015.zones(e,tp,eg,ep,ev,re,r,rp)
+	local zone=0xff
+	local ft=0
+	local p0=Duel.CheckLocation(tp,LOCATION_PZONE,0)
+	local p1=Duel.CheckLocation(tp,LOCATION_PZONE,1)
+	if p0 then ft=ft+1 end
+	if p1 then ft=ft+1 end
+	local b=e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE)
+	local st=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	local b1=not b and ft>0
+	local b2=b and ft==1 and st-ft>0
+	local b3=b and ft==2
+	if b1 or b3 then return zone end
+	if b2 and p0 then zone=zone-0x1 end
+	if b2 and p1 then zone=zone-0x10 end
+	return zone
 end
 function c100260015.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
