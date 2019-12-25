@@ -56,6 +56,9 @@ function c100259001.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 c100259001.material_setcode=0x3b
+function c100259001.red_eyes_fusion_check(tp,sg,fc)
+	return sg:IsExists(Card.IsFusionCode,1,nil,74677422)
+end
 function c100259001.mfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_EFFECT)
 end
