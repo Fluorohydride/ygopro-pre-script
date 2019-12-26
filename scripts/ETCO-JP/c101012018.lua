@@ -17,12 +17,29 @@ function c101012018.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	--xyzlv
-	--local e3=Effect.CreateEffect(c)
-	--e3:SetType(EFFECT_TYPE_SINGLE)
-	--e3:SetCode(EFFECT_XYZ_LEVEL)
-	--e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	--e3:SetValue(c101012018.xyzlv)
-	--c:RegisterEffect(e3)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_XYZ_LEVEL)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetValue(c101012018.xyzlv)
+	c:RegisterEffect(e3)
+	--
+	if not c101012018.global_check then
+		c101012018.global_check=true
+		Duel.RegisterFlagEffect(0,101012018,0,0,1,5)
+		Duel.RegisterFlagEffect(1,101012018,0,0,1,5)
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_FREE_CHAIN)
+		ge1:SetCountLimit(10)
+		ge1:SetOperation(c101012018.xyzlvop)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=ge1:Clone()
+		Duel.RegisterEffect(ge2,1)
+		c101012018.xyzlvop(ge1,0)
+		c101012018.xyzlvop(ge2,1)
+	end
 end
 function c101012018.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelAbove(3) and c:IsLevelBelow(5) and not c:IsCode(101012018) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -52,5 +69,22 @@ function c101012018.splimit(e,c)
 	return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA)
 end
 function c101012018.xyzlv(e,c,rc)
-	return e:GetHandler():GetLevel()+0x10000*5+0x10000*3
+	if rc:IsAttribute(ATTRIBUTE_WATER) then
+		return c:GetLevel()+0x10000*Duel.GetFlagEffectLabel(tp,101012018)
+	else
+		return c:GetLevel()
+	end
+end
+function c101012018.xyzlvop(e,tp,eg,ep,ev,re,r,rp)
+	local lv=8-Duel.GetFlagEffectLabel(tp,101012018)
+	Duel.SetFlagEffectLabel(tp,101012018,lv)
+	local olde=e:GetLabelObject()
+	if olde then olde:Reset() end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetDescription(aux.Stringid(101012018,lv))
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(1,0)
+	Duel.RegisterEffect(e1,tp)
+	e:SetLabelObject(e1)
 end

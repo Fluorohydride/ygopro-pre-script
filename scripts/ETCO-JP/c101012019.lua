@@ -1,6 +1,6 @@
 --カッター・シャーク
 --not fully implemented
---Scripted by mallu11
+--Scripted by mallu111, xyz lv workaround by mercury233
 function c101012019.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -14,12 +14,29 @@ function c101012019.initial_effect(c)
 	e1:SetOperation(c101012019.spop)
 	c:RegisterEffect(e1)
 	--xyzlv
-	--local e2=Effect.CreateEffect(c)
-	--e2:SetType(EFFECT_TYPE_SINGLE)
-	--e2:SetCode(EFFECT_XYZ_LEVEL)
-	--e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	--e2:SetValue(c101012019.xyzlv)
-	--c:RegisterEffect(e2)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_XYZ_LEVEL)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetValue(c101012019.xyzlv)
+	c:RegisterEffect(e2)
+	--
+	if not c101012019.global_check then
+		c101012019.global_check=true
+		Duel.RegisterFlagEffect(0,101012019,0,0,1,5)
+		Duel.RegisterFlagEffect(1,101012019,0,0,1,5)
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_FREE_CHAIN)
+		ge1:SetCountLimit(10)
+		ge1:SetOperation(c101012019.xyzlvop)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=ge1:Clone()
+		Duel.RegisterEffect(ge2,1)
+		c101012019.xyzlvop(ge1,0)
+		c101012019.xyzlvop(ge2,1)
+	end
 end
 function c101012019.tgfilter(c,e,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelAbove(1) and Duel.IsExistingMatchingCard(c101012019.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel(),c:GetCode())
@@ -65,5 +82,22 @@ function c101012019.splimit(e,c)
 	return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA)
 end
 function c101012019.xyzlv(e,c,rc)
-	return e:GetHandler():GetLevel()+0x10000*5+0x10000*3
+	if rc:IsAttribute(ATTRIBUTE_WATER) then
+		return c:GetLevel()+0x10000*Duel.GetFlagEffectLabel(tp,101012019)
+	else
+		return c:GetLevel()
+	end
+end
+function c101012019.xyzlvop(e,tp,eg,ep,ev,re,r,rp)
+	local lv=8-Duel.GetFlagEffectLabel(tp,101012019)
+	Duel.SetFlagEffectLabel(tp,101012019,lv)
+	local olde=e:GetLabelObject()
+	if olde then olde:Reset() end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetDescription(aux.Stringid(101012019,lv))
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(1,0)
+	Duel.RegisterEffect(e1,tp)
+	e:SetLabelObject(e1)
 end
