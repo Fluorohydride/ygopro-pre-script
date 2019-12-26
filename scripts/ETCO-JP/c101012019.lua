@@ -26,7 +26,7 @@ function c101012019.tgfilter(c,e,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelAbove(1) and Duel.IsExistingMatchingCard(c101012019.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel(),c:GetCode())
 end
 function c101012019.spfilter(c,e,tp,lv,code)
-	return c:IsRace(RACE_FISH) and c:IsLevel(lv) and not c:IsCode(101012019) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsRace(RACE_FISH) and c:IsLevel(lv) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101012019.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101012019.tgfilter(chkc,e,tp) end
