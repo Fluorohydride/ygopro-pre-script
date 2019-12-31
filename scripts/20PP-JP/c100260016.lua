@@ -48,7 +48,6 @@ function c100260016.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.GetLocationCountFromEx(tp)>0
 		and Duel.IsExistingTarget(c100260016.spfilter1,tp,LOCATION_PZONE,0,1,nil,e,tp) end
 	local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
 	Duel.SetTargetCard(g)
@@ -79,7 +78,6 @@ function c100260016.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e4=e2:Clone()
 	tc2:RegisterEffect(e4)
 	Duel.SpecialSummonComplete()
-	if Duel.GetLocationCountFromEx(tp,tp,g)<=0 then return end
 	local e5=nil
 	local e6=nil
 	if tc1:IsLevelAbove(1) and tc2:IsLevelAbove(1) then
