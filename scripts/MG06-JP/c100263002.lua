@@ -92,6 +92,7 @@ function c100263002.imop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(c100263002.efilter)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,Duel.GetTurnPlayer()==tp and 2 or 1)
+		e1:SetOwnerPlayer(tp)
 		tc:RegisterEffect(e1)
 	end
 end
