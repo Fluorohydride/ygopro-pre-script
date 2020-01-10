@@ -14,7 +14,7 @@ function c101012078.initial_effect(c)
 end
 function c101012078.condition(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return ep==1-tp and Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_MONSTER) and bit.band(LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED,loc)~=0
+	return ep==1-tp and Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_MONSTER) and (LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED)&loc~=0
 end
 function c101012078.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
