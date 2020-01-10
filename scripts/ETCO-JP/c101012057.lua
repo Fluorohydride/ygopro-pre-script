@@ -15,7 +15,7 @@ function c101012057.initial_effect(c)
 	e1:SetOperation(c101012057.activate)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(101012057,ACTIVITY_SUMMON,c101012057.counterfilter)
-	Duel.AddCustomActivityCounter(101012157,ACTIVITY_SPSUMMON,c101012057.counterfilter)
+	Duel.AddCustomActivityCounter(101012057,ACTIVITY_SPSUMMON,c101012057.counterfilter)
 end
 function c101012057.counterfilter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE)
@@ -24,7 +24,8 @@ function c101012057.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
 end
 function c101012057.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetCustomActivityCount(101012057,tp,ACTIVITY_SUMMON)==0 and Duel.GetCustomActivityCount(101012157,tp,ACTIVITY_SPSUMMON) end
+	if chk==0 then return Duel.GetCustomActivityCount(101012057,tp,ACTIVITY_SUMMON)==0
+		and Duel.GetCustomActivityCount(101012057,tp,ACTIVITY_SPSUMMON) end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
