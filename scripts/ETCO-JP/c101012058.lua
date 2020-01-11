@@ -29,7 +29,7 @@ function c101012058.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101012058.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if tg:GetCount()>0 and Duel.Destroy(tg,REASON_EFFECT)~=0 and Duel.IsPlayerCanDraw(tp,1) then
+	if tg:GetCount()>0 and Duel.Destroy(tg,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
