@@ -37,7 +37,8 @@ function c101012080.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if res then
 		if tc1:IsCanBeSpecialSummoned(e,0,tp,false,false) then
-			if (tc1:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp)>0) or (not tc1:IsType(TYPE_LINK) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then
+			if (tc1:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_LINK)>0)
+				or (not tc1:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,nil,tc1)>0) then
 				Duel.SpecialSummon(tc1,0,tp,tp,false,false,POS_FACEUP)
 			end
 		end
@@ -49,7 +50,8 @@ function c101012080.activate(e,tp,eg,ep,ev,re,r,rp)
 	else
 		Duel.SendtoGrave(tc1,REASON_EFFECT)
 		if tc2:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEUP,1-tp) then
-			if (tc2:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(1-tp)>0) or (not tc2:IsType(TYPE_LINK) and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0) then
+			if (tc2:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(1-tp,1-tp,nil,TYPE_LINK)>0)
+				or (not tc2:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(1-tp,1-tp,nil,tc2)>0) then
 				Duel.SpecialSummon(tc2,0,1-tp,1-tp,false,false,POS_FACEUP)
 			end
 		end
