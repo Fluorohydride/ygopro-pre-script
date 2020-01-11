@@ -11,7 +11,8 @@ function c101012070.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101012070.RitualUltimateFilter(c,filter,e,tp,m1,m2,level_function,greater_or_equal,chk)
-	if bit.band(c:GetType(),0x81)~=0x81 or (filter and not filter(c,e,tp,chk)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
+	if bit.band(c:GetType(),0x81)~=0x81 or (filter and not filter(c,e,tp,chk))
+		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true,POS_FACEUP_DEFENSE) then return false end
 	local mg=m1:Filter(Card.IsCanBeRitualMaterial,c,c)
 	if m2 then
 		mg:Merge(m2)
@@ -34,7 +35,8 @@ function c101012070.atkfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_RITUAL)
 end
 function c101012070.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.IsExistingMatchingCard(c101012070.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
+	local b1=Duel.IsExistingMatchingCard(c101012070.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
 	local mg=Duel.GetRitualMaterial(tp)
 	local b2=Duel.IsExistingMatchingCard(c101012070.RitualUltimateFilter,tp,LOCATION_DECK,0,1,nil,c101012070.filter,e,tp,mg,nil,Card.GetLevel,"Equal")
 	if chk==0 then return b1 or b2 end
