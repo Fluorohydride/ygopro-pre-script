@@ -19,7 +19,7 @@ function c101012041.initial_effect(c)
 	--negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101012041,1))
-	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
@@ -53,12 +53,12 @@ end
 function c101012041.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and ep==1-tp
 end
-function c101012041.cfilter(c,e,tp)
-	return c:IsCode(41232647) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function c101012041.cfilter(c,e,tp,ec)
+	return c:IsCode(41232647) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,ec,c)>0
 end
 function c101012041.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToExtra() and Duel.GetLocationCountFromEx(tp,tp,c)>0 and Duel.IsExistingMatchingCard(c101012041.cfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return c:IsAbleToExtra() and Duel.IsExistingMatchingCard(c101012041.cfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
@@ -70,9 +70,9 @@ function c101012041.disop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
-	if c:IsAbleToExtra() and c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,2,REASON_EFFECT)~=0 and Duel.GetLocationCountFromEx(tp)>0 then
+	if c:IsAbleToExtra() and c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,2,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_EXTRA) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,c101012041.cfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(tp,c101012041.cfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,nil)
 		if g:GetCount()>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
