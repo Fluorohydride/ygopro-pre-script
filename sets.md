@@ -2,9 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **December 21, 2019** : LEGENDARY GOLD BOX (LGB1-JP) : `100259XXX`
-- **December 21, 2019** : Premium Pack 2020 (20PP-JP) : `100260XXX`
-- **December 21, 2019** : Jump Festa Limited Pack 2019 (JF20-JP) : `100261XXX`
 - **January 11, 2020** : ETERNITY CODE (ETCO-JP) : `101012XXX`
 
 # Announced
@@ -75,6 +72,9 @@
 - Extra Pack 2019 (EP19-JP) : `100258XXX`
 - 20th ANNIVERSARY MONSTER ART BOX (YMAB-JP) : `100251XXX`
 - LINK VRAINS PACK 3 (LVP3-JP) : `100257XXX`
+- LEGENDARY GOLD BOX (LGB1-JP) : `100259XXX`
+- Premium Pack 2020 (20PP-JP) : `100260XXX`
+- Jump Festa Limited Pack 2019 (JF20-JP) : `100261XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
