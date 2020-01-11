@@ -42,6 +42,13 @@ end
 function c101012032.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+		e1:SetValue(LOCATION_REMOVED)
+		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		c:RegisterEffect(e1,true)
 		local ct=e:GetLabel()
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 		if (ct>=2 and g:GetCount()>0) or ct==3 then
