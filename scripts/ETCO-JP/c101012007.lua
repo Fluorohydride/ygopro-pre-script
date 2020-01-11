@@ -36,7 +36,6 @@ function c101012007.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCondition(c101012007.discon)
 	e3:SetCost(aux.bfgcost)
-	e3:SetTarget(c101012007.distg)
 	e3:SetOperation(c101012007.disop)
 	c:RegisterEffect(e3)
 end
@@ -78,14 +77,9 @@ function c101012007.discon(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return tg and tg:IsExists(c101012007.tfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
 end
-function c101012007.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	Duel.SetTargetCard(tg)
-end
 function c101012007.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsFacedown,nil):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):Filter(Card.IsFacedown,nil):Filter(Card.IsRelateToEffect,nil,re)
 	local tc=tg:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(e:GetHandler())
