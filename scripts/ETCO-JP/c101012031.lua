@@ -85,8 +85,11 @@ function c101012031.spop2(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function c101012031.damfilter(c,tp)
+	return c:GetSummonPlayer()==1-tp
+end
 function c101012031.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp
+	return eg:IsExists(c101012031.damfilter,1,nil,tp)
 end
 function c101012031.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
