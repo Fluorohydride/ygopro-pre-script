@@ -64,7 +64,8 @@ function c101012031.cfilter(c,e,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(c101012031.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,c:GetAttribute())
 end
 function c101012031.spfilter(c,e,tp,attr)
-	return c:GetTextAttack()==c:GetTextDefense() and c:IsAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetTextAttack()>=0 and c:GetTextAttack()==c:GetTextDefense() and c:IsAttribute(attr)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101012031.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
