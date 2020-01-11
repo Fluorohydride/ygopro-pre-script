@@ -32,12 +32,6 @@ function c101012032.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	local ct=e:GetLabel()
 	local cat=CATEGORY_SPECIAL_SUMMON
-	if ct>=2 then
-		cat=cat+CATEGORY_DESTROY
-		e:SetCategory(cat)
-		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	end
 	if ct==3 then
 		cat=cat+CATEGORY_DRAW
 		e:SetCategory(cat)
