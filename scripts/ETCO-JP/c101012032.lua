@@ -50,17 +50,16 @@ function c101012032.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local ct=e:GetLabel()
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-		if (ct>=2 and g:GetCount()>0) or (ct==3 and Duel.IsPlayerCanDraw(tp,2)) then
-			Duel.BreakEffect()
-			local res=0
-			if ct>=2 and g:GetCount()>0 then
+		if (ct>=2 and g:GetCount()>0) or ct==3 then
+			if ct>=2 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101012032,1)) then
+				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 				local dg=g:Select(tp,1,1,nil)
 				Duel.HintSelection(dg)
 				res=Duel.Destroy(dg,REASON_EFFECT)
 			end
-			if ct==3 and Duel.IsPlayerCanDraw(tp,2) then
-				if res~=0 then Duel.BreakEffect() end
+			if ct==3 and Duel.IsPlayerCanDraw(tp,2) and Duel.SelectYesNo(tp,aux.Stringid(101012032,2)) then
+				Duel.BreakEffect()
 				Duel.Draw(tp,2,REASON_EFFECT)
 			end
 		end
