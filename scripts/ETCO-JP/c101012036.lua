@@ -18,7 +18,7 @@ function c101012036.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101012036.cfilter(c,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()==1-tp and aux.disfilter1(c)
+	return c:IsFaceup() and c:GetSummonPlayer()==1-tp and (aux.disfilter1(c) or c:GetAttack()>0)
 end
 function c101012036.discon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101012036.cfilter,1,nil,tp)
@@ -45,7 +45,7 @@ end
 function c101012036.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsType(TYPE_MONSTER) and not tc:IsDisabled() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
