@@ -18,17 +18,10 @@ function c101012040.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetDescription(aux.Stringid(101012040,1))
-	e2:SetCode(EVENT_CUSTOM+101012040)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(c101012040.descon)
 	c:RegisterEffect(e2)
-	--event
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(c101012040.evcon)
-	e3:SetOperation(c101012040.evop)
-	c:RegisterEffect(e3)
 	--atk
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101012040,2))
@@ -43,11 +36,8 @@ end
 function c101012040.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp)
 end
-function c101012040.evcon(e,tp,eg,ep,ev,re,r,rp)
+function c101012040.descon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c101012040.cfilter,1,nil,1-tp)
-end
-function c101012040.evop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+101012040,re,r,rp,ep,ev)
 end
 function c101012040.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
