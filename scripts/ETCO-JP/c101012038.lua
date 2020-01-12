@@ -32,7 +32,7 @@ function c101012038.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101012038.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSequence()==2
+	return e:GetHandler():GetSequence()~=2
 end
 function c101012038.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

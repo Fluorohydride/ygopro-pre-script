@@ -44,7 +44,7 @@ function c101012034.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_EQUIP_LIMIT)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e5:SetValue(c101012034.eqlimit)
+	e5:SetValue(1)
 	c:RegisterEffect(e5)
 end
 function c101012034.filter(c)
@@ -113,7 +113,4 @@ function c101012034.reop(e,tp,eg,ep,ev,re,r,rp)
 			aux.SetUnionState(ec)
 		end
 	end
-end
-function c101012034.eqlimit(e,c)
-	return e:GetHandler():GetEquipTarget()==c
 end
