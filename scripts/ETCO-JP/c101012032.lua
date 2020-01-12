@@ -17,26 +17,34 @@ function c101012032.initial_effect(c)
 	e1:SetOperation(c101012032.spop)
 	c:RegisterEffect(e1)
 end
-function c101012032.spfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsControler(tp)
-end
 function c101012032.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
+function c101012032.cfilter(c,tp)
+	return c:IsRace(RACE_FAIRY) and (c:IsControler(tp) or c:IsFaceup())
+end
+function c101012032.fgoal(sg,tp)
+	if sg:GetCount()>0 and Duel.GetMZoneCount(tp,sg)>0 then
+		Duel.SetSelectedCard(sg)
+		return Duel.CheckReleaseGroup(tp,nil,0,nil)
+	else return false end
+end
 function c101012032.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsRace,1,nil,RACE_FAIRY) end
-	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,3,nil,RACE_FAIRY)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c101012032.cfilter,nil,tp)
+	if chk==0 then return rg:CheckSubGroup(c101012032.fgoal,1,3,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g=rg:SelectSubGroup(tp,c101012032.fgoal,false,1,3,tp)
 	e:SetLabel(Duel.Release(g,REASON_COST))
 end
 function c101012032.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	local ct=e:GetLabel()
 	local cat=CATEGORY_SPECIAL_SUMMON
 	if ct==3 then
 		cat=cat+CATEGORY_DRAW
-		e:SetCategory(cat)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 	end
+	e:SetCategory(cat)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101012032.spop(e,tp,eg,ep,ev,re,r,rp)

@@ -31,11 +31,12 @@ function c101012064.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101012064.cfilter(c,tp)
-	return ((c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)) or c:IsPreviousLocation(LOCATION_GRAVE)) and c:IsLocation(LOCATION_HAND+LOCATION_DECK)
-		and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp and c:IsControler(tp) and c:IsPreviousSetCard(0x71)
+	return c:IsControler(tp) and c:GetPreviousControler()==tp
+		and (c:IsPreviousLocation(LOCATION_GRAVE) or (c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)))
+		and c:IsSetCard(0x71) and not c:IsLocation(LOCATION_EXTRA)
 end
 function c101012064.secon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101012064.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
+	return bit.band(r,REASON_EFFECT)~=0 and eg:IsExists(c101012064.cfilter,1,nil,tp)
 end
 function c101012064.sefilter(c)
 	return c:IsSetCard(0x71) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable() and not c:IsCode(101012064)
