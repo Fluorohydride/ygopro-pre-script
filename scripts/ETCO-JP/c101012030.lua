@@ -32,6 +32,9 @@ function c101012030.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
+function c101012030.rfilter(c,tp)
+	return c:IsControler(tp) or c:IsFaceup()
+end
 function c101012030.fselect(g,tp)
 	Duel.SetSelectedCard(g)
 	if Duel.GetMZoneCount(tp,g)>0 and g:CheckWithSumGreater(Card.GetLevel,8) then
@@ -40,7 +43,7 @@ function c101012030.fselect(g,tp)
 	else return false end
 end
 function c101012030.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetReleaseGroup(tp):Filter(Card.IsLevelAbove,nil,1)
+	local g=Duel.GetReleaseGroup(tp):Filter(c101012030.rfilter,nil,tp)
 	if chk==0 then return g:CheckSubGroup(c101012030.fselect,1,g:GetCount(),tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local rg=g:SelectSubGroup(tp,c101012030.fselect,false,1,g:GetCount(),tp)
