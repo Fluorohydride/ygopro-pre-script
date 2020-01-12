@@ -83,11 +83,14 @@ end
 function c101012073.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
+function c101012073.rfilter(c,tp)
+	return (c:IsControler(tp) or c:IsFaceup()) and c:IsType(TYPE_LINK)
+end
 function c101012073.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.HintSelection(Group.FromCards(c))
-	if Duel.CheckReleaseGroup(tp,Card.IsType,1,nil,TYPE_LINK) and Duel.SelectYesNo(tp,aux.Stringid(101012073,0)) then
-		local g=Duel.SelectReleaseGroup(tp,Card.IsType,1,1,nil,TYPE_LINK)
+	if Duel.CheckReleaseGroup(tp,c101012073.rfilter,1,nil,tp) and Duel.SelectYesNo(tp,aux.Stringid(101012073,0)) then
+		local g=Duel.SelectReleaseGroup(tp,c101012073.rfilter,1,1,nil,tp)
 		Duel.Release(g,REASON_COST)
 	else Duel.Destroy(c,REASON_COST) end
 end
