@@ -29,14 +29,15 @@ function c100200175.initial_effect(c)
 end
 function c100200175.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() and Duel.GetMZoneCount(tp,c)>0 end
+	if chk==0 then return c:IsReleasable() end
 	Duel.Release(c,REASON_COST)
 end
 function c100200175.spfilter(c,e,tp)
 	return c:IsRace(RACE_CYBERSE) and not c:IsCode(100200175) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100200175.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100200175.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetMZoneCount(tp,c)>0 and Duel.IsExistingMatchingCard(c100200175.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c100200175.spop(e,tp,eg,ep,ev,re,r,rp)

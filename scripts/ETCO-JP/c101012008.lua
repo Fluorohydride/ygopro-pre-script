@@ -33,7 +33,7 @@ function c101012008.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101012008.sprfilter(c)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsAbleToRemoveAsCost()
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsAbleToRemoveAsCost() and c:IsType(TYPE_MONSTER)
 end
 function c101012008.fselect(g,tp)
 	return Duel.GetMZoneCount(tp,g)>0 and g:GetClassCount(Card.GetAttribute)==#g
