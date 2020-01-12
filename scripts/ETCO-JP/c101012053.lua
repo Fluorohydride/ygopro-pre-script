@@ -48,13 +48,13 @@ end
 function c101012053.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
-function c101012053.rfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfc) and c:IsType(TYPE_LINK) and Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
+function c101012053.rfilter(c,tp)
+	return c:IsSetCard(0xfc) and c:IsType(TYPE_LINK) and Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function c101012053.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c101012053.rfilter,1,nil) end
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c101012053.rfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,c101012053.rfilter,1,1,nil)
+	local g=Duel.SelectReleaseGroup(tp,c101012053.rfilter,1,1,nil,tp)
 	e:SetLabel(g:GetFirst():GetLink())
 	Duel.Release(g,REASON_COST)
 end

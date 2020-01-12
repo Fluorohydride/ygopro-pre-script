@@ -44,18 +44,19 @@ function c101012025.chainfilter(re,tp,cid)
 	return not (re:GetHandler():IsRace(RACE_THUNDER) and re:IsActiveType(TYPE_MONSTER)
 		and Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)==LOCATION_HAND)
 end
-function c101012025.spfilter(c)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsLevelBelow(8) and c:IsRace(RACE_THUNDER) and c:IsAbleToRemoveAsCost()
+function c101012025.spfilter(c,tp)
+	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsLevelBelow(8) and c:IsRace(RACE_THUNDER)
+		and c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function c101012025.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return (Duel.GetCustomActivityCount(101012025,tp,ACTIVITY_CHAIN)~=0
 		or Duel.GetCustomActivityCount(101012025,1-tp,ACTIVITY_CHAIN)~=0)
-		and Duel.IsExistingMatchingCard(c101012025.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,c)
+		and Duel.IsExistingMatchingCard(c101012025.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,c,tp)
 end
 function c101012025.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectMatchingCard(tp,c101012025.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,c)
+	local g=Duel.SelectMatchingCard(tp,c101012025.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,c,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c101012025.etcon(e,tp,eg,ep,ev,re,r,rp)
