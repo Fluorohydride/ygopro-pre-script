@@ -37,7 +37,8 @@ function c101012080.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if res then
-		if Duel.SendtoGrave(tc2,REASON_EFFECT)~=0 and tc1:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+		if Duel.SendtoGrave(tc2,REASON_EFFECT)~=0 and tc2:IsLocation(LOCATION_GRAVE)
+			and tc1:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 			if Duel.GetLocationCountFromEx(tp,tp,nil,tc1)>0 then
 				Duel.SpecialSummon(tc1,0,tp,tp,false,false,POS_FACEUP)
 			end
@@ -48,7 +49,8 @@ function c101012080.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SetLP(1-tp,Duel.GetLP(1-tp)-atk)
 		end
 	else
-		if Duel.SendtoGrave(tc1,REASON_EFFECT)~=0 and tc2:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEUP,1-tp) then
+		if Duel.SendtoGrave(tc1,REASON_EFFECT)~=0 and tc1:IsLocation(LOCATION_GRAVE)
+			and tc2:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEUP,1-tp) then
 			if Duel.GetLocationCountFromEx(1-tp,1-tp,nil,tc2)>0 then
 				Duel.SpecialSummon(tc2,0,1-tp,1-tp,false,false,POS_FACEUP)
 			end
