@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c101012025.initial_effect(c)
+	c:EnableReviveLimit()
 	--special summon rule
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
