@@ -28,7 +28,7 @@ function c101012016.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101012016.costfilter(c,tp)
-	return c:IsRace(RACE_FIEND) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsRace(RACE_FIEND) and Duel.GetMZoneCount(tp,c)>0 and (c:IsControler(tp) or c:IsFaceup())
 end
 function c101012016.spfilter(c,e,tp)
 	return c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO)
