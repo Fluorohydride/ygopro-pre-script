@@ -53,13 +53,13 @@ end
 function c101012027.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
-function c101012027.costfilter(c)
-	return c:IsSetCard(0x134) or c:IsRace(RACE_SPELLCASTER)
+function c101012027.costfilter(c,tp)
+	return (c:IsSetCard(0x134) or c:IsRace(RACE_SPELLCASTER)) and (c:IsControler(tp) or c:IsFaceup())
 end
 function c101012027.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c101012027.costfilter,2,nil) end
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c101012027.costfilter,2,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,c101012027.costfilter,2,2,nil)
+	local g=Duel.SelectReleaseGroup(tp,c101012027.costfilter,2,2,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c101012027.distg(e,tp,eg,ep,ev,re,r,rp,chk)
