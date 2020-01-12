@@ -42,7 +42,7 @@ function c101012028.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c101012028.rfilter(c,e,tp)
-	return c:IsSetCard(0x134) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsSetCard(0x134) and Duel.GetMZoneCount(tp,c)>0 and (c:IsControler(tp) or c:IsFaceup())
 		and Duel.IsExistingMatchingCard(c101012028.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function c101012028.spfilter(c,e,tp,code)
