@@ -33,7 +33,7 @@ function c101012030.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101012030.rfilter(c,tp)
-	return c:IsControler(tp) or c:IsFaceup()
+	return c:IsLevelAbove(1) and (c:IsControler(tp) or c:IsFaceup())
 end
 function c101012030.fselect(g,tp)
 	Duel.SetSelectedCard(g)
