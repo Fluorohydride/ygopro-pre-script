@@ -17,7 +17,8 @@ function c101012072.filter(c)
 end
 function c101012072.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_GRAVE,0,nil,101012072)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,ct+3) end
+	local g=Duel.GetDecktopGroup(tp,ct+3)
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,ct+3) and g:FilterCount(Card.IsAbleToHand,nil)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101012072.activate(e,tp,eg,ep,ev,re,r,rp)
