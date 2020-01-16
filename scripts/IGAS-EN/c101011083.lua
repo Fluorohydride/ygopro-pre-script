@@ -36,7 +36,7 @@ function c101011083.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c101011083.spfilter(c,e,tp)
-	return c:IsLevel(9) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsLevel(9) or c:IsControler(1-tp)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101011083.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c101011083.spfilter(chkc,e,tp) end
