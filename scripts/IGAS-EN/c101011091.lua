@@ -67,8 +67,8 @@ function c101011091.atrop(e,tp,eg,ep,ev,re,r,rp)
 				and (not sc:IsAbleToDeck() or Duel.SelectOption(tp,aux.Stringid(101011091,3),1152)==1) then
 				Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 			else
+				Duel.HintSelection(g)
 				Duel.SendtoDeck(sc,nil,2,REASON_EFFECT)
-				Duel.ConfirmCards(1-tp,sc)
 			end
 		end
 	end
