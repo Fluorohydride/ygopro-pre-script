@@ -54,12 +54,19 @@ function c100338055.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(1)
 			e1:SetOwnerPlayer(tp)
 			tc:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_NO_BATTLE_DAMAGE)
+			e2:SetCondition(c100338055.damcon2)
+			tc:RegisterEffect(e2)
 		end
 		Duel.SpecialSummonComplete()
 	end
 end
 function c100338055.damcon(e)
 	return e:GetHandlerPlayer()==e:GetOwnerPlayer()
+end
+function c100338055.damcon2(e)
+	return 1-e:GetHandlerPlayer()==e:GetOwnerPlayer()
 end
 function c100338055.chainlm(e,ep,tp)
 	return tp==ep
