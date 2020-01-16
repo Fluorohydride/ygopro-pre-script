@@ -37,6 +37,7 @@ function c100414010.sortop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,5,nil,0x23f)
 	if g:GetCount()>0 then
 		Duel.ConfirmCards(1-tp,g)
+		Duel.ShuffleDeck(tp)
 		local tc=g:GetFirst()
 		while tc do
 			Duel.MoveSequence(tc,0)
