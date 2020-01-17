@@ -35,7 +35,8 @@ function c101011089.tgfilter(c)
 end
 function c101011089.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101011089.tgfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101011089.tgfilter,tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(c101011089.tgfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c101011089.cfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil,e,tp)
 		and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
