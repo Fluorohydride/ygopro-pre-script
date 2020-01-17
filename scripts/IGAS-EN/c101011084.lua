@@ -81,7 +81,8 @@ function c101011084.lvop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101011084.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetPreviousEquipTarget():IsReason(REASON_RELEASE) and c:IsReason(REASON_LOST_TARGET)
+	local tc=c:GetPreviousEquipTarget()
+	return tc and tc:IsReason(REASON_RELEASE) and c:IsReason(REASON_LOST_TARGET)
 end
 function c101011084.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
