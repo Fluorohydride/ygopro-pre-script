@@ -59,7 +59,7 @@ function c101011086.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.SelectMatchingCard(tp,c101011086.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,attr)
 	local sc=sg:GetFirst()
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 and sc:IsFaceup() and c:IsRelateToEffect(e) and c:IsControler(tp) then
-		if not Duel.Equip(tp,c,sc) then return end
+		if not Duel.Equip(tp,c,sc,false) then return end
 		--equip limit
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -81,13 +81,14 @@ function c101011086.eqfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x240) and not c:IsCode(101011086)
 end
 function c101011086.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101011086.eqfilter(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	if chk==0 then return c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(c101011085.eqfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c101011085.eqfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,0,0)
 end
 function c101011086.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
