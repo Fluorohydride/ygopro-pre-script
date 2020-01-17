@@ -34,10 +34,14 @@ function c101012002.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101012002.atktg(e,c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and not c:IsSetCard(0x23c) and c:GetLinkedGroup():IsContains(e:GetHandler())
+	local lg1=c:GetLinkedGroup()
+	local lg2=e:GetHandler():GetLinkedGroup()
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and not c:IsSetCard(0x23c)
+		and (lg1 and lg1:IsContains(e:GetHandler()) or lg2 and lg2:IsContains(c))
 end
 function c101012002.desfilter(c)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousTypeOnField()&TYPE_LINK~=0 and c:IsPreviousSetCard(0x23c) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousTypeOnField()&TYPE_LINK~=0 and c:IsPreviousSetCard(0x23c)
+		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c101012002.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101012002.desfilter,1,nil)
