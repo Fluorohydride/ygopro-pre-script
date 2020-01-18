@@ -19,9 +19,7 @@ function c101012062.costfilter(c)
 end
 function c101012062.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101012062.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local g=Duel.SelectMatchingCard(tp,c101012062.costfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,c101012062.costfilter,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function c101012062.filter(c)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_FIEND) and c:IsAbleToHand()

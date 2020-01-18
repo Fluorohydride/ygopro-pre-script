@@ -40,8 +40,7 @@ function c101012074.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101012074.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if g:GetCount()<=0 then return false end
 	local tg=g:GetMaxGroup(Card.GetLevel)
-	local mg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	mg:Sub(tg)
+	local mg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,tg)
 	local rg=mg:Filter(Card.IsAbleToRemove,nil)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101012074.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		and rg:GetCount()>0 end
@@ -51,8 +50,7 @@ function c101012074.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101012074.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if g:GetCount()<=0 then return end
 	local tg=g:GetMaxGroup(Card.GetLevel)
-	local mg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	mg:Sub(tg)
+	local mg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,tg)
 	local rg=mg:Filter(Card.IsAbleToRemove,nil)
 	if rg:GetCount()>0 then
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)

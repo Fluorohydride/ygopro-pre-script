@@ -12,9 +12,7 @@ function c101012072.initial_effect(c)
 	e1:SetOperation(c101012072.activate)
 	c:RegisterEffect(e1)
 end
-function c101012072.filter(c)
-	return c:IsLevelBelow(4) and c:IsRace(RACE_SEASERPENT) and c:IsAbleToHand()
-end
+
 function c101012072.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_GRAVE,0,nil,101012072)
 	local g=Duel.GetDecktopGroup(tp,ct+3)

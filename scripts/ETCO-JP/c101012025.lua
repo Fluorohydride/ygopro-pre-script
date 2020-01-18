@@ -56,6 +56,7 @@ function c101012025.spcon(e,c)
 		and Duel.IsExistingMatchingCard(c101012025.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,c,tp)
 end
 function c101012025.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c101012025.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,c,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
@@ -80,7 +81,7 @@ function c101012025.ettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c101012025.etfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
-function c101012025.etop(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101012025.etop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())

@@ -68,8 +68,7 @@ function c101012044.tpcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101012044.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
 function c101012044.tptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_DECK,0,1,nil,TYPE_SPELL)
-		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>1 end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_DECK,0,1,nil,TYPE_SPELL) end
 end
 function c101012044.tpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101012044,2))

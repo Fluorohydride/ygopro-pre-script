@@ -45,15 +45,13 @@ function c101012024.tgop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetCode(EFFECT_ADD_TYPE)
 			e1:SetValue(TYPE_TUNER)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e1)
 		end
 	end
-end
-function c101012024.tgfilter(c)
-	return c:IsSetCard(0x11b,0xfe) and c:IsAbleToGrave()
 end
 function c101012024.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_MZONE,0,e:GetHandler())==0

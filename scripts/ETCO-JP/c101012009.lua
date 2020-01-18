@@ -64,7 +64,6 @@ function c101012009.desfilter(c,race)
 end
 function c101012009.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	local race=0
@@ -72,6 +71,7 @@ function c101012009.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		race=race|tc:GetRace()
 		tc=g:GetNext()
 	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 	local rc=Duel.AnnounceRace(tp,1,race)
 	e:SetLabel(rc)
 	local dg=Duel.GetMatchingGroup(c101012009.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,rc)

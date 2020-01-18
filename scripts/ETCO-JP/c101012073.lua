@@ -30,13 +30,6 @@ function c101012073.initial_effect(c)
 	e4:SetCondition(c101012073.regcon2)
 	e4:SetOperation(c101012073.regop2)
 	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetCode(101012073)
-	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e5:SetRange(LOCATION_SZONE)
-	e5:SetTargetRange(1,1)
-	c:RegisterEffect(e5)
 end
 function c101012073.regfilter(c,tp)
 	return c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSummonPlayer()==tp

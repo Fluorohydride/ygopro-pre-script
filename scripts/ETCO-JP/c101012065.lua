@@ -68,7 +68,9 @@ function c101012065.tgop2(e,tp,eg,ep,ev,re,r,rp)
 	if ct<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.GetMatchingGroup(c101012065.filter2,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
-	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ct)
+	aux.GCheckAdditional=aux.dncheck
+	local sg=g:SelectSubGroup(tp,aux.TRUE,false,1,ct)
+	aux.GCheckAdditional=nil
 	if sg:GetCount()>0 then
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 	end
