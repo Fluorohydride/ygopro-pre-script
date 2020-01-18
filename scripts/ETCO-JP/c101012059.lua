@@ -1,5 +1,5 @@
 --メールの階段
---not fully implemented
+
 --Scripted by mallu11
 function c101012059.initial_effect(c)
 	--activate
@@ -18,7 +18,7 @@ function c101012059.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101012059.filter(c)
-	return c:IsSetCard(0x10b) and c:IsDiscardable(REASON_EFFECT)
+	return c:IsSetCard(0x10b) and c:IsDiscardable(REASON_EFFECT) and not c:IsHasEffect(101012059)
 end
 function c101012059.posfilter(c)
 	return (c:IsPosition(POS_FACEDOWN_DEFENSE) and c:IsCanChangePosition()) or (c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanTurnSet())
@@ -32,6 +32,7 @@ function c101012059.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c101012059.filter,tp,LOCATION_HAND,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT+REASON_DISCARD)~=0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local pg=Duel.SelectMatchingCard(tp,c101012059.posfilter,tp,LOCATION_MZONE,0,1,1,nil)
 		if pg:GetCount()>0 then
 			Duel.HintSelection(pg)
@@ -47,15 +48,14 @@ function c101012059.posop(e,tp,eg,ep,ev,re,r,rp)
 		local code=tc:GetCode()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_CANNOT_DISCARD_HAND)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e1:SetTargetRange(1,0)
+		e1:SetCode(101012059)
+		e1:SetTargetRange(LOCATION_HAND,0)
 		e1:SetLabel(code)
 		e1:SetTarget(c101012059.dhlimit)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
-function c101012059.dhlimit(e,c,tp,r,re)
-	return re and re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsCode(101012059) and r==REASON_EFFECT+REASON_DISCARD and c:IsCode(e:GetLabel())
+function c101012059.dhlimit(e,c)
+	return c:IsCode(e:GetLabel())
 end
