@@ -30,7 +30,8 @@ function c101012067.filter(c,e,tp)
 	return c:IsSetCard(0x128) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101012067.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc,exc)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101012067.filter,tp,LOCATION_HAND,0,1,exc,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101012067.filter,tp,LOCATION_HAND,0,1,exc,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c101012067.activate(e,tp,eg,ep,ev,re,r,rp)

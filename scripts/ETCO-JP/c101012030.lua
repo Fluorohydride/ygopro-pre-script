@@ -60,7 +60,8 @@ function c101012030.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101012030.cfilter(c)
-	return c:IsSetCard(0x23d) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x23d) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+		and c:IsAbleToRemoveAsCost()
 end
 function c101012030.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101012030.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end

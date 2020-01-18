@@ -44,7 +44,8 @@ function c101012052.spfilter(c,e,tp)
 	local ok=false
 	for p=0,1 do
 		local zone=Duel.GetLinkedZone(p)&0xff
-		ok=ok or (Duel.GetLocationCount(p,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,p,zone))
+		ok=ok or (Duel.GetLocationCount(p,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
+			and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,p,zone))
 	end
 	return ok
 end

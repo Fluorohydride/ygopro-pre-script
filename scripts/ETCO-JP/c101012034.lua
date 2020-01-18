@@ -94,7 +94,8 @@ function c101012034.recost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c101012034.refilter(c,tc,tp)
-	return aux.CheckUnionEquip(c,tc) and c:CheckEquipTarget(tc) and c:IsType(TYPE_UNION) and c:IsLevelBelow(4) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
+	return aux.CheckUnionEquip(c,tc) and c:CheckEquipTarget(tc) and c:IsType(TYPE_UNION)
+		and c:IsLevelBelow(4) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
 function c101012034.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -45,7 +45,8 @@ function c101012077.srfilter(c)
 end
 function c101012077.srtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c101012077.tdfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101012077.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) and Duel.IsExistingMatchingCard(c101012077.srfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101012077.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil)
+		and Duel.IsExistingMatchingCard(c101012077.srfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c101012077.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)

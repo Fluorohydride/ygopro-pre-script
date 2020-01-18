@@ -18,10 +18,12 @@ function c101012037.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101012037.desfilter(c,tp)
-	return c:IsRace(RACE_DINOSAUR) and not c:IsCode(101012037) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and Duel.IsExistingMatchingCard(c101012037.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetOriginalLevel())
+	return c:IsRace(RACE_DINOSAUR) and not c:IsCode(101012037) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
+		and Duel.IsExistingMatchingCard(c101012037.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetOriginalLevel())
 end
 function c101012037.thfilter(c,lv)
-	return ((c:GetOriginalLevel()==lv and c:IsRace(RACE_REPTILE+RACE_SEASERPENT+RACE_WINDBEAST)) or (c:IsSetCard(0x10e) and c:IsType(TYPE_SPELL))) and c:IsAbleToHand()
+	return ((c:GetOriginalLevel()==lv and c:IsRace(RACE_REPTILE+RACE_SEASERPENT+RACE_WINDBEAST))
+		or (c:IsSetCard(0x10e) and c:IsType(TYPE_SPELL))) and c:IsAbleToHand()
 end
 function c101012037.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101012037.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp) end

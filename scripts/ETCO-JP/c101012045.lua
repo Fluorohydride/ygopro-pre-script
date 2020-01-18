@@ -70,7 +70,8 @@ function c101012045.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101012045.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and (c:IsLocation(LOCATION_GRAVE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))
+	return c:IsPreviousLocation(LOCATION_MZONE)
+		and (c:IsLocation(LOCATION_GRAVE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))
 		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==tp and c:GetPreviousControler()==1-tp
 end
 function c101012045.spcon2(e,tp,eg,ep,ev,re,r,rp)
@@ -81,7 +82,8 @@ function c101012045.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c101012045.spfilter2(c,e,tp,g)
-	return g:IsContains(c) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return g:IsContains(c) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101012045.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c101012045.spfilter2(chkc,e,tp,eg) end

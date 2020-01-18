@@ -42,7 +42,8 @@ end
 function c101012066.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1=Duel.IsExistingTarget(c101012066.pfilter1,tp,LOCATION_MZONE,0,1,nil)
 	local b2=Duel.IsExistingTarget(c101012066.pfilter2,tp,LOCATION_MZONE,0,1,nil) and e:GetHandler():IsCanOverlay()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and (c101012066.pfilter1(chkc) or c101012066.pfilter2(chkc) and e:GetHandler():IsCanOverlay()) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp)
+		and (c101012066.pfilter1(chkc) or c101012066.pfilter2(chkc) and e:GetHandler():IsCanOverlay()) end
 	if chk==0 then return b1 or b2 end
 	local opt=0
 	local g=nil

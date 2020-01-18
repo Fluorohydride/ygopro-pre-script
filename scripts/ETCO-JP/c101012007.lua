@@ -46,7 +46,8 @@ function c101012007.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101012007.spfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
 function c101012007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101012007.spop(e,tp,eg,ep,ev,re,r,rp)

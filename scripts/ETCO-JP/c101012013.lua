@@ -46,7 +46,8 @@ function c101012013.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardDeck(tp,1,REASON_COST)
 end
 function c101012013.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsAttribute(ATTRIBUTE_WATER) and not c:IsCode(101012013) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsAttribute(ATTRIBUTE_WATER) and not c:IsCode(101012013)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101012013.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101012013.spfilter(chkc,e,tp) end

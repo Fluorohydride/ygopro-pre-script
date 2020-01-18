@@ -28,7 +28,8 @@ end
 function c101012029.setfilter(c,e,tp)
 	if not c:IsSetCard(0x130) or c:IsCode(101012029) then return false end
 	if c:IsType(TYPE_MONSTER) then
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 	else return c:IsSSetable() end
 end
 function c101012029.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -69,13 +70,15 @@ function c101012029.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101012029.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and not re:GetHandler():IsCode(101012029))) and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return c:IsPreviousLocation(LOCATION_ONFIELD)
+		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and not re:GetHandler():IsCode(101012029)))
 end
 function c101012029.spfilter(c,e,tp)
 	return c:IsSetCard(0x130) and not c:IsCode(101012029) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101012029.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101012029.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101012029.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c101012029.spop(e,tp,eg,ep,ev,re,r,rp)

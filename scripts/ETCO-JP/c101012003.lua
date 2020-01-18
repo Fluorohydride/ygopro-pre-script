@@ -46,12 +46,14 @@ function c101012003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and g:CheckSubGroup(c101012003.fselect,2,2,tp,e:GetHandler()) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and g:CheckSubGroup(c101012003.fselect,2,2,tp,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_GRAVE)
 end
 function c101012003.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101012003.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 or g:GetCount()==0 then return end
+	if g:GetCount()==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:SelectSubGroup(tp,c101012003.fselect,false,2,2,tp,e:GetHandler())
 	if sg and sg:GetCount()==2 then

@@ -36,7 +36,8 @@ function c101012004.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if not a:IsControler(tp) then a,d=d,a end
 	e:SetLabelObject(a)
-	return a and a:IsFaceup() and a:IsControler(tp) and a:IsSetCard(0xfc) and a:IsRelateToBattle() and d and d:IsControler(1-tp)
+	return a and a:IsFaceup() and a:IsControler(tp) and a:IsSetCard(0xfc) and a:IsRelateToBattle()
+		and d and d:IsControler(1-tp)
 end
 function c101012004.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

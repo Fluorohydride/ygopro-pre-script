@@ -36,7 +36,8 @@ function c101012042.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101012042.thfilter(c,e,tp,ft)
-	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelBelow(4) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelBelow(4)
+		and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function c101012042.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

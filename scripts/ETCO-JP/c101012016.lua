@@ -65,7 +65,8 @@ function c101012016.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101012016.lvfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO) and c:IsLevelAbove(1)
+	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO)
+		and c:IsLevelAbove(1)
 end
 function c101012016.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101012016.lvfilter(chkc) end

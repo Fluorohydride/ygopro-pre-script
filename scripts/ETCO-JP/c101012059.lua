@@ -21,10 +21,12 @@ function c101012059.filter(c)
 	return c:IsSetCard(0x10b) and c:IsDiscardable(REASON_EFFECT) and not c:IsHasEffect(101012059)
 end
 function c101012059.posfilter(c)
-	return (c:IsPosition(POS_FACEDOWN_DEFENSE) and c:IsCanChangePosition()) or (c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanTurnSet())
+	return (c:IsPosition(POS_FACEDOWN_DEFENSE) and c:IsCanChangePosition())
+		or (c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanTurnSet())
 end
 function c101012059.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101012059.filter,tp,LOCATION_HAND,0,1,nil) and Duel.IsExistingMatchingCard(c101012059.posfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101012059.filter,tp,LOCATION_HAND,0,1,nil)
+		and Duel.IsExistingMatchingCard(c101012059.posfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,tp,LOCATION_HAND)
 end
 function c101012059.posop(e,tp,eg,ep,ev,re,r,rp)

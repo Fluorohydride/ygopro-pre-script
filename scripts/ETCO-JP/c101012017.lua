@@ -29,7 +29,8 @@ function c101012017.initial_effect(c)
 	Duel.AddCustomActivityCounter(101012017,ACTIVITY_SPSUMMON,c101012017.counterfilter)
 end
 function c101012017.counterfilter(c)
-	return (c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO)) or c:GetSummonLocation()~=LOCATION_EXTRA
+	return c:GetSummonLocation()~=LOCATION_EXTRA
+		or (c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO))
 end
 function c101012017.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
@@ -46,7 +47,8 @@ function c101012017.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function c101012017.splimit(e,c)
-	return not (c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO)) and c:IsLocation(LOCATION_EXTRA)
+	return c:IsLocation(LOCATION_EXTRA)
+		and not (c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO))
 end
 function c101012017.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -64,7 +66,8 @@ function c101012017.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO)
 end
 function c101012017.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101012017.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) and Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_MZONE,0,e:GetHandler())==1
+	return Duel.IsExistingMatchingCard(c101012017.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+		and Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_MZONE,0,e:GetHandler())==1
 end
 function c101012017.spfilter(c,e,tp)
 	return c:IsSetCard(0x57) and not c:IsCode(101012017) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
