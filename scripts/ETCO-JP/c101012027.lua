@@ -54,7 +54,7 @@ function c101012027.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function c101012027.costfilter(c)
-	return c:IsSetCard(0x134) or c:IsRace(RACE_SPELLCASTER) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(0x134) or c:IsRace(RACE_SPELLCASTER)
 end
 function c101012027.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c101012027.costfilter,2,nil) end
