@@ -58,21 +58,27 @@ function c101012036.disop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
+		local fid=c:GetFieldID()
+		tc:RegisterFlagEffect(101012036,RESET_EVENT+RESET_TURN_SET+RESET_OVERLAY+RESET_MSCHANGE+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,fid,aux.Stringid(101012036,1))
 		local e3=Effect.CreateEffect(c)
-		e3:SetDescription(aux.Stringid(101012036,1))
-		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_LEAVE_FIELD)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e3:SetReset(RESET_EVENT+RESET_TURN_SET+RESET_OVERLAY+RESET_MSCHANGE+RESET_PHASE+PHASE_END)
+		e3:SetLabel(fid)
+		e3:SetLabelObject(tc)
+		e3:SetReset(RESET_PHASE+PHASE_END)
 		e3:SetOperation(c101012036.damop)
-		tc:RegisterEffect(e3,true)
+		Duel.RegisterEffect(e3,tp)
 	end
 end
 function c101012036.damop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if not eg:IsContains(tc) then return end
+	if tc:GetFlagEffectLabel(101012036)~=e:GetLabel() then
+		e:Reset()
+		return
+	end
 	Duel.Hint(HINT_CARD,0,101012036)
-	local c=e:GetHandler()
-	local atk=c:GetTextAttack()
-	if atk<0 then atk=0 end
-	Duel.Damage(c:GetPreviousControler(),atk,REASON_EFFECT)
+	Duel.Damage(tc:GetPreviousControler(),tc:GetBaseAttack(),REASON_EFFECT)
+	tc:ResetFlagEffect(101012036)
 	e:Reset()
 end
