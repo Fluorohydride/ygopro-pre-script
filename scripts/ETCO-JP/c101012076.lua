@@ -34,11 +34,11 @@ end
 function c101012076.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then
-		return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_ONFIELD,1,nil)
+		return Duel.IsExistingTarget(aux.disfilter2,tp,0,LOCATION_ONFIELD,1,nil)
 		and Duel.IsExistingTarget(c101012076.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g1=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g1=Duel.SelectTarget(tp,aux.disfilter2,tp,0,LOCATION_ONFIELD,1,1,nil)
 	e:SetLabelObject(g1:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g2=Duel.SelectTarget(tp,c101012076.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
