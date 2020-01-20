@@ -50,7 +50,7 @@ function c101012076.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local lc=tg:GetFirst()
 	if lc==tc then lc=tg:GetNext() end
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsControler(1-tp) and not tc:IsDisabled() then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsControler(1-tp) and (not tc:IsDisabled() or tc:IsType(TYPE_TRAPMONSTER)) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
