@@ -43,12 +43,12 @@ function c100414009.thop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,ct,nil)
 		Duel.HintSelection(sg)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		if g:GetCount()>0 then
-			Duel.SortDecktop(tp,tp,g:GetCount())
-			for i=1,g:GetCount() do
-				local mg=Duel.GetDecktopGroup(tp,1)
-				Duel.MoveSequence(mg:GetFirst(),1)
-			end
+	end
+	if g:GetCount()>0 then
+		Duel.SortDecktop(tp,tp,g:GetCount())
+		for i=1,g:GetCount() do
+			local mg=Duel.GetDecktopGroup(tp,1)
+			Duel.MoveSequence(mg:GetFirst(),1)
 		end
 	end
 end
