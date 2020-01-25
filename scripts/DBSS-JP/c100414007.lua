@@ -41,19 +41,20 @@ function c100414007.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=4 then return end
 	Duel.ConfirmDecktop(tp,5)
 	local g=Duel.GetDecktopGroup(tp,5)
-	if g:GetCount()>0 and g:FilterCount(c100414007.thfilter,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(100414007,2)) then
+	local ct=g:GetCount()
+	if ct>0 and g:FilterCount(c100414007.thfilter,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(100414007,2)) then
 		Duel.DisableShuffleCheck()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:FilterSelect(tp,c100414007.thfilter,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)
-		local ct=g:GetCount()-sg:GetCount()
-		if ct>0 then
-			Duel.SortDecktop(tp,tp,ct)
-			for i=1,ct do
-				local mg=Duel.GetDecktopGroup(tp,1)
-				Duel.MoveSequence(mg:GetFirst(),1)
-			end
+		ct=g:GetCount()-sg:GetCount()
+	end
+	if ct>0 then
+		Duel.SortDecktop(tp,tp,ct)
+		for i=1,ct do
+			local mg=Duel.GetDecktopGroup(tp,1)
+			Duel.MoveSequence(mg:GetFirst(),1)
 		end
 	end
 end
