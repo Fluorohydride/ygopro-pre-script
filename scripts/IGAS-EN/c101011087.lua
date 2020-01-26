@@ -38,7 +38,7 @@ function c101011087.atktg(e,c)
 	return c:IsFaceup() and c:IsRace(RACE_FIEND) and c~=e:GetHandler()
 end
 function c101011087.confilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x240)
+	return c:IsFaceup() and c:IsSetCard(0x23f)
 end
 function c101011087.rmcon1(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetEquipGroup()
@@ -49,7 +49,7 @@ function c101011087.rmcon2(e,tp,eg,ep,ev,re,r,rp)
 	return g and g:IsExists(c101011087.confilter,1,nil)
 end
 function c101011087.costfilter(c)
-	return c:IsSetCard(0x240) and c:IsDiscardable()
+	return c:IsSetCard(0x23f) and c:IsDiscardable()
 end
 function c101011087.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101011087.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -69,7 +69,7 @@ function c101011087.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_DECK)
 end
 function c101011087.thfilter(c)
-	return c:IsSetCard(0x240) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x23f) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101011087.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

@@ -25,7 +25,7 @@ function c100414001.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100414001.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x23f) and not c:IsCode(100414001)
+	return c:IsFaceup() and c:IsSetCard(0x23e) and not c:IsCode(100414001)
 end
 function c100414001.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100414001.cfilter,tp,LOCATION_MZONE,0,1,nil)

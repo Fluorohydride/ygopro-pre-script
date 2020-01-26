@@ -28,7 +28,7 @@ function c100414011.cfilter(c)
 end
 function c100414011.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 and tc:IsSetCard(0x23f) and Duel.IsExistingMatchingCard(c100414011.cfilter,tp,LOCATION_DECK,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(100414011,0)) then
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 and tc:IsSetCard(0x23e) and Duel.IsExistingMatchingCard(c100414011.cfilter,tp,LOCATION_DECK,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(100414011,0)) then
 		Duel.BreakEffect()
 		local dc=Duel.SelectMatchingCard(tp,c100414011.cfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 		Duel.ShuffleDeck(tp)

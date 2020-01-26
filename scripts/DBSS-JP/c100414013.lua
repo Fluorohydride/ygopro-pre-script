@@ -14,7 +14,7 @@ function c100414013.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100414013.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x23f) and c:IsType(TYPE_SYNCHRO)
+	return c:IsFaceup() and c:IsSetCard(0x23e) and c:IsType(TYPE_SYNCHRO)
 end
 function c100414013.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(c100414013.filter,tp,LOCATION_MZONE,0,1,nil) then return false end

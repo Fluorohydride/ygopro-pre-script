@@ -34,7 +34,7 @@ function c101011088.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101011088.confilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x240)
+	return c:IsFaceup() and c:IsSetCard(0x23f)
 end
 function c101011088.rmcon1(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetEquipGroup()
@@ -45,7 +45,7 @@ function c101011088.rmcon2(e,tp,eg,ep,ev,re,r,rp)
 	return g and g:IsExists(c101011088.confilter,1,nil)
 end
 function c101011088.costfilter(c)
-	return c:IsSetCard(0x240) and c:IsDiscardable()
+	return c:IsSetCard(0x23f) and c:IsDiscardable()
 end
 function c101011088.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101011088.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -65,7 +65,7 @@ function c101011088.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_DECK)
 end
 function c101011088.thfilter(c)
-	return c:IsSetCard(0x240) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x23f) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c101011088.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -78,7 +78,7 @@ function c101011088.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101011088.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsOnField() and c:IsSetCard(0x240) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsOnField() and c:IsSetCard(0x23f) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function c101011088.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c101011088.repfilter,1,nil,tp)

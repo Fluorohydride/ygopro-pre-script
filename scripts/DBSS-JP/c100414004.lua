@@ -27,10 +27,10 @@ function c100414004.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100414004.dtcon1(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0x23f)
+	return re and re:GetHandler():IsSetCard(0x23e)
 end
 function c100414004.dtfilter(c)
-	return c:IsSetCard(0x23f) and c:IsAbleToDeck()
+	return c:IsSetCard(0x23e) and c:IsAbleToDeck()
 end
 function c100414004.dttg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100414004.dtfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end

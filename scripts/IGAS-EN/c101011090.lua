@@ -13,7 +13,7 @@ function c101011090.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x240))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x23f))
 	e2:SetValue(c101011090.atkval)
 	c:RegisterEffect(e2)
 	--to hand
@@ -40,13 +40,13 @@ function c101011090.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101011090.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x240) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(0x23f) and c:GetSequence()<5
 end
 function c101011090.atkval(e,c)
 	return Duel.GetMatchingGroupCount(c101011090.atkfilter,tp,LOCATION_SZONE,0,nil)*500
 end
 function c101011090.thfilter(c)
-	return c:IsSetCard(0x240) and not c:IsCode(101011090) and c:IsAbleToHand()
+	return c:IsSetCard(0x23f) and not c:IsCode(101011090) and c:IsAbleToHand()
 end
 function c101011090.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
@@ -67,7 +67,7 @@ function c101011090.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101011090.setfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x240) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(0x23f) and c:GetSequence()<5
 end
 function c101011090.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c101011090.setfilter(chkc) end

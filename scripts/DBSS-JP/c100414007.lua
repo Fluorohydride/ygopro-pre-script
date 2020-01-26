@@ -35,7 +35,7 @@ function c100414007.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_DECK)
 end
 function c100414007.thfilter(c)
-	return c:IsSetCard(0x23f) and c:IsAbleToHand()
+	return c:IsSetCard(0x23e) and c:IsAbleToHand()
 end
 function c100414007.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=4 then return end

@@ -35,7 +35,7 @@ function c101011085.cfilter(c,e,tp)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and Duel.IsExistingMatchingCard(c101011085.spfilter1,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetAttribute())
 end
 function c101011085.spfilter1(c,e,tp,attr)
-	return c:IsSetCard(0x240) and c:IsAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsSetCard(0x23f) and c:IsAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c101011085.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -78,7 +78,7 @@ function c101011085.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_MZONE)
 end
 function c101011085.spfilter2(c,e,tp)
-	return c:IsSetCard(0x240) and not c:IsCode(101011085) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x23f) and not c:IsCode(101011085) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101011085.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101011085.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp) end
@@ -103,5 +103,5 @@ function c101011085.spop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c101011085.splimit(e,c)
-	return not c:IsSetCard(0x240)
+	return not c:IsSetCard(0x23f)
 end

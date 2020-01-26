@@ -27,7 +27,7 @@ function c100414005.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100414005.dtcon1(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0x23f)
+	return re and re:GetHandler():IsSetCard(0x23e)
 end
 function c100414005.dtfilter(c)
 	return c:IsRace(RACE_ROCK) and c:IsAbleToDeck()
