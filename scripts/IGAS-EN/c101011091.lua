@@ -45,7 +45,7 @@ function c101011091.atrtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_GRAVE)
 end
 function c101011091.thfilter(c,e,tp,ft)
-	return c:IsSetCard(0x240) and c:IsType(TYPE_MONSTER) and (c:IsAbleToDeck() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:IsSetCard(0x23f) and c:IsType(TYPE_MONSTER) and (c:IsAbleToDeck() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function c101011091.atrop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -74,7 +74,7 @@ function c101011091.atrop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101011091.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x240)
+	return c:IsFaceup() and c:IsSetCard(0x23f)
 end
 function c101011091.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(c101011091.tgfilter,tp,LOCATION_MZONE,0,1,nil)

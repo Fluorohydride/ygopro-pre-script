@@ -20,14 +20,14 @@ function c101011089.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101011089.lcheck(g)
-	return g:IsExists(Card.IsLinkSetCard,1,nil,0x240)
+	return g:IsExists(Card.IsLinkSetCard,1,nil,0x23f)
 end
 function c101011089.cfilter(c,e,tp)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 		and Duel.IsExistingMatchingCard(c101011089.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetAttribute())
 end
 function c101011089.spfilter(c,e,tp,attr)
-	return c:IsSetCard(0x240) and c:IsAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x23f) and c:IsAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c101011089.tgfilter(c)

@@ -15,7 +15,7 @@ function c100414012.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100414012.costfilter(c,tp)
-	return c:IsSetCard(0x23f) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(0x23e) and (c:IsControler(tp) or c:IsFaceup())
 end
 function c100414012.fselect(g,tp,ec)
 	local dg=g:Clone()

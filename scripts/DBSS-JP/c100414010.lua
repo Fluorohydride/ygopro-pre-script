@@ -30,11 +30,11 @@ function c100414010.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100414010.sorttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,0x23f) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,0x23e) end
 end
 function c100414010.sortop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100414010,1))
-	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,5,nil,0x23f)
+	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,5,nil,0x23e)
 	if g:GetCount()>0 then
 		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleDeck(tp)
