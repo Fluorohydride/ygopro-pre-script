@@ -50,20 +50,21 @@ end
 function c100414002.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=4 then return end
 	Duel.ConfirmDecktop(tp,5)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local g=Duel.GetDecktopGroup(tp,5)
-	if g:GetCount()>0 and g:FilterCount(c100414002.spfilter,nil,e,tp)>0 and Duel.SelectYesNo(tp,aux.Stringid(100414002,2)) then
+	local ct=g:GetCount()
+	if ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:FilterCount(c100414002.spfilter,nil,e,tp)>0
+		and Duel.SelectYesNo(tp,aux.Stringid(100414002,2)) then
 		Duel.DisableShuffleCheck()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:FilterSelect(tp,c100414002.spfilter,1,1,nil,e,tp)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-		local ct=g:GetCount()-sg:GetCount()
-		if ct>0 then
-			Duel.SortDecktop(tp,tp,ct)
-			for i=1,ct do
-				local mg=Duel.GetDecktopGroup(tp,1)
-				Duel.MoveSequence(mg:GetFirst(),1)
-			end
+		ct=g:GetCount()-sg:GetCount()
+	end
+	if ct>0 then
+		Duel.SortDecktop(tp,tp,ct)
+		for i=1,ct do
+			local mg=Duel.GetDecktopGroup(tp,1)
+			Duel.MoveSequence(mg:GetFirst(),1)
 		end
 	end
 end

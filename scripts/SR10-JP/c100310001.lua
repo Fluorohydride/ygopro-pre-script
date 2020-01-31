@@ -31,6 +31,7 @@ function c100310001.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,100310101)
+	e3:SetCondition(c100310001.spcon)
 	e3:SetTarget(c100310001.sptg)
 	e3:SetOperation(c100310001.spop)
 	c:RegisterEffect(e3)
@@ -68,7 +69,7 @@ function c100310001.sfilter(c,tp)
 	return not c:IsCode(100310001) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 		and bit.band(c:GetPreviousAttributeOnField(),ATTRIBUTE_EARTH)~=0
 		and bit.band(c:GetPreviousRaceOnField(),RACE_MACHINE)~=0
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100310001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100310001.sfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
