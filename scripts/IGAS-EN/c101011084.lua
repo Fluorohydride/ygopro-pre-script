@@ -64,6 +64,7 @@ function c101011084.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,c101011084.costfilter,tp,LOCATION_HAND,0,1,1,nil,tc:GetLevel())
 	Duel.ConfirmCards(1-tp,g)
+	Duel.ShuffleHand(tp)
 	e:SetLabel(g:GetFirst():GetLevel())
 	tc:CreateEffectRelation(e)
 end
