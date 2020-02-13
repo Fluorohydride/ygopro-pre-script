@@ -3,6 +3,7 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **January 11, 2020** : ETERNITY CODE (ETCO-JP) : `101012XXX`
+- **April 18, 2020** : RISE OF THE DUELIST (ROTD-JP) : `101101XXX`
 
 # Announced
 - **March 7, 2020** : Deck Build Pack: Secret Slayers (DB??-JP) : `100414XXX`
