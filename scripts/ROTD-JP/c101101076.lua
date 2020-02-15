@@ -56,7 +56,7 @@ function c101101076.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_ONFIELD+LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,1-tp,LOCATION_MZONE)
 end
 function c101101076.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp
@@ -99,6 +99,7 @@ function c101101076.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1,true)
 		local attr=tc:GetAttribute()
 		if tc:IsFaceup() and Duel.IsExistingMatchingCard(c101101076.tgfilter,tp,0,LOCATION_MZONE,1,nil,attr) and Duel.SelectYesNo(tp,aux.Stringid(101101076,0)) then
+			Duel.BreakEffect()
 			local g=Duel.SelectMatchingCard(tp,c101101076.tgfilter,tp,0,LOCATION_MZONE,1,1,nil,attr)
 			Duel.HintSelection(g)
 			Duel.SendtoGrave(g,REASON_EFFECT)
