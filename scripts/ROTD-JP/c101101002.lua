@@ -61,7 +61,7 @@ function c101101002.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local atk=tc:GetAttack()
-		local g=Duel.GetMatchingGroup(c101101002.disfilter,tp,0,LOCATION_MZONE,nil,c:GetAttack())
+		local g=Duel.GetMatchingGroup(c101101002.disfilter,tp,0,LOCATION_MZONE,nil,atk)
 		local tc=g:GetFirst()
 		while tc do
 			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
