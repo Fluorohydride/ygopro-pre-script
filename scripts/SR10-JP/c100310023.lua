@@ -37,8 +37,10 @@ function c100310023.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100310023.thfilter1,tp,LOCATION_DECK,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local hg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
-	Duel.SendtoHand(hg,nil,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,hg)
+	if hg:GetCount()==2 then
+		Duel.SendtoHand(hg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,hg)
+	end
 end
 function c100310023.costfilter(c)
 	return c:IsSetCard(0x36) and c:IsDiscardable()
@@ -60,6 +62,8 @@ function c100310023.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100310023.thfilter2,tp,LOCATION_DECK,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local hg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
-	Duel.SendtoHand(hg,nil,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,hg)
+	if hg:GetCount()==2 then
+		Duel.SendtoHand(hg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,hg)
+	end
 end
