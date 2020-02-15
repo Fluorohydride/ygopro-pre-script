@@ -60,7 +60,7 @@ function c100414022.rlop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100414022.atkfilter(c)
-	return c:GetPreviousTypeOnField()&TYPE_MONSTER~=0
+	return c:IsType(TYPE_MONSTER) or c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100414022.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100414022.atkfilter,1,nil) and not eg:IsContains(e:GetHandler())
