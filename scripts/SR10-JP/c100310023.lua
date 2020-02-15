@@ -37,7 +37,7 @@ function c100310023.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100310023.thfilter1,tp,LOCATION_DECK,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local hg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
-	if hg:GetCount()==2 then
+	if hg then
 		Duel.SendtoHand(hg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,hg)
 	end
@@ -62,7 +62,7 @@ function c100310023.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100310023.thfilter2,tp,LOCATION_DECK,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local hg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
-	if hg:GetCount()==2 then
+	if hg then
 		Duel.SendtoHand(hg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,hg)
 	end
