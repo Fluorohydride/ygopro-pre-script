@@ -2,12 +2,17 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **January 11, 2020** : ETERNITY CODE (ETCO-JP) : `101012XXX`
+- **February 4, 2020** : Yu-Gi-Oh! OCG Structures Volume 1 promotional card (YO01-JP) : `100262XXX`
+- **February 7, 2020** : Master Guide 6 promotional cards (MG06-JP) : `100263XXX`
+- **February 22, 2020** : Structure Deck R: Machiners Command (SR10-JP) : `100310XXX`
+- **March 7, 2020** : Deck Build Pack: Secret Slayers (DBSS-JP) : `100414XXX`
+- **March 19, 2020** : The Valuable Book 22 (VB22-JP) : `100264XXX`
+- **March 20, 2020** : Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
 - **April 18, 2020** : RISE OF THE DUELIST (ROTD-JP) : `101101XXX`
 
 # Announced
-- **March 7, 2020** : Deck Build Pack: Secret Slayers (DB??-JP) : `100414XXX`
-- **March 20, 2020** : Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
+- **May 16, 2020** :Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
+- **June 6, 2020** :Collectors Pack 2020 (CP20-JP) : `100265XXX`
 
 # Archived
 ## Other packs
@@ -135,3 +140,4 @@
 - RISING RAMPAGE (RIRA-JP) : `101009XXX`
 - CHAOS IMPACT (CHIM-JP) : `101010XXX`
 - IGNITION ASSAULT (IGAS-JP) : `101011XXX`
+- ETERNITY CODE (ETCO-JP) : `101012XXX`
