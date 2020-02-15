@@ -1,4 +1,6 @@
---黄金乡的守护者
+--黄金郷のガーディアン
+--
+--Script by JustFish
 function c100414032.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

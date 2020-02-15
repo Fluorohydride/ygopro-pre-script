@@ -1,4 +1,6 @@
---赤红血染的黄金圣药石
+--紅き血染めのエルドリクシル
+--
+--Script by JustFish
 function c100414031.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---黄金乡的盗墓者
+--黄金郷のワッケーロ
+--
+--Script by JustFish
 function c100414033.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

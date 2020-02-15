@@ -1,4 +1,6 @@
---黄金的征服王
+--黄金の征服王
+--
+--Script by JustFish
 function c100414036.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---漆黑觉醒的黄金圣药石
+--黒き覚醒のエルドリクシル
+--
+--Script by JustFish
 function c100414029.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

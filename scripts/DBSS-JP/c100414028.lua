@@ -1,4 +1,6 @@
---被诅咒的黄金国
+--呪われしエルドランド
+--
+--Script by JustFish
 function c100414028.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

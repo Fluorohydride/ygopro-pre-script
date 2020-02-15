@@ -1,4 +1,6 @@
---黄金乡的侵略者
+--黄金郷のコンキスタドール
+--
+--Script by JustFish
 function c100414034.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

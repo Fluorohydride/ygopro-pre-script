@@ -1,4 +1,6 @@
---永远辉煌的黄金乡
+--永久に輝けし黄金郷
+--
+--Script by JustFish
 function c100414035.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---洁白宿命的黄金圣药石
+--白き宿命のエルドリクシル
+--
+--Script by JustFish
 function c100414030.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
