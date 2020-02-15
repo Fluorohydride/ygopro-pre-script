@@ -23,7 +23,6 @@ end
 function c100310023.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,c) end
-	--Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST,nil)
 end
 function c100310023.thfilter1(c)
@@ -47,7 +46,6 @@ end
 function c100310023.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c100310023.costfilter,tp,LOCATION_HAND,0,1,c) end
-	--Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	Duel.DiscardHand(tp,c100310023.costfilter,1,1,REASON_COST,nil)
 end
 function c100310023.thfilter2(c)
