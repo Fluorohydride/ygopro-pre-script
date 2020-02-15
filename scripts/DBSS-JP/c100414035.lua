@@ -15,7 +15,7 @@ function c100414035.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100414035.filter(c)
-	return c:IsSetCard(0x24a) and c:IsFaceup()
+	return c:IsSetCard(0x242) and c:IsFaceup()
 end
 function c100414035.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev) and Duel.IsExistingMatchingCard(c100414035.filter,tp,LOCATION_MZONE,0,1,nil)

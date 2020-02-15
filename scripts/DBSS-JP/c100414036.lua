@@ -13,13 +13,13 @@ function c100414036.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100414036.filter(c)
-	return c:IsSetCard(0x24a) and c:IsFaceup()
+	return c:IsSetCard(0x242) and c:IsFaceup()
 end
 function c100414036.tdfilter1(c)
-	return c:IsSetCard(0x24c) and c:IsFaceup()
+	return c:IsSetCard(0x244) and c:IsFaceup()
 end
 function c100414036.tdfilter2(c)
-	return c:IsSetCard(0x24b) and c:IsFaceup()
+	return c:IsSetCard(0x243) and c:IsFaceup()
 end
 function c100414036.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100414036.filter,tp,LOCATION_MZONE,0,1,nil)

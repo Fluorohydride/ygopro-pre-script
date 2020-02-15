@@ -25,13 +25,13 @@ function c100414031.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100414031.filter(c)
-	return c:IsSetCard(0x24a) and c:IsFaceup()
+	return c:IsSetCard(0x242) and c:IsFaceup()
 end
 function c100414031.spfilter(c,e,tp)
 	return c:IsRace(RACE_ZOMBIE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100414031.spfilter1(c,e,tp)
-	return c:IsRace(RACE_ZOMBIE) and c:IsSetCard(0x24a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_ZOMBIE) and c:IsSetCard(0x242) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100414031.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
@@ -73,7 +73,7 @@ function c100414031.splimit(e,c)
 	return not c:IsRace(RACE_ZOMBIE)
 end
 function c100414031.stfilter(c)
-	return c:IsSetCard(0x24b) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x243) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function c100414031.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

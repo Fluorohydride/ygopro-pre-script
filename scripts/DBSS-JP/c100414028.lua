@@ -47,7 +47,7 @@ function c100414028.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,800)
 end
 function c100414028.filter(c)
-	return (c:IsSetCard(0x24a) and c:IsType(TYPE_MONSTER))or (c:IsSetCard(0x24b) and c:IsType(TYPE_SPELL+TYPE_TRAP)) and c:IsAbleToHand()
+	return (c:IsSetCard(0x242) and c:IsType(TYPE_MONSTER))or (c:IsSetCard(0x243) and c:IsType(TYPE_SPELL+TYPE_TRAP)) and c:IsAbleToHand()
 end
 function c100414028.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100414028.filter,tp,LOCATION_DECK,0,1,nil) end
