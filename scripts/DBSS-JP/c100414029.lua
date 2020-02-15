@@ -26,35 +26,23 @@ end
 function c100414029.filter(c)
 	return c:IsSetCard(0x242) and c:IsFaceup()
 end
-function c100414029.spfilter(c,e,tp)
+function c100414029.spfilter(c,e,tp,check)
 	return c:IsRace(RACE_ZOMBIE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-end
-function c100414029.spfilter1(c,e,tp)
-	return c:IsRace(RACE_ZOMBIE) and c:IsSetCard(0x242) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+		and (check or c:IsSetCard(0x242))
 end
 function c100414029.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
-		local chk1,chk2=Duel.IsExistingMatchingCard(c100414029.filter,tp,LOCATION_MZONE,0,1,nil),false
-		if chk1 then
-			chk2=Duel.IsExistingMatchingCard(c100414029.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp)
-		else
-			chk2=Duel.IsExistingMatchingCard(c100414029.spfilter1,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp)
-		end
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and chk2
+		local chk1=Duel.IsExistingMatchingCard(c100414029.filter,tp,LOCATION_MZONE,0,1,nil)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and Duel.IsExistingMatchingCard(c100414029.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,chk1)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c100414029.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local chk1=Duel.IsExistingMatchingCard(c100414029.filter,tp,LOCATION_MZONE,0,1,nil)
-	local g=Group.CreateGroup()
-	if chk1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		g=Duel.SelectMatchingCard(tp,c100414029.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		g=Duel.SelectMatchingCard(tp,c100414029.spfilter1,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
-	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,c100414029.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,chk1)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end

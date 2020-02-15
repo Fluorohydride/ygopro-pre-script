@@ -47,14 +47,13 @@ function c100414028.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,800)
 end
 function c100414028.filter(c)
-	return (c:IsSetCard(0x242) and c:IsType(TYPE_MONSTER))or (c:IsSetCard(0x243) and c:IsType(TYPE_SPELL+TYPE_TRAP)) and c:IsAbleToHand()
+	return (c:IsSetCard(0x242) and c:IsType(TYPE_MONSTER) or c:IsSetCard(0x243) and c:IsType(TYPE_SPELL+TYPE_TRAP)) and c:IsAbleToHand()
 end
 function c100414028.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100414028.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100414028.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100414028.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
@@ -65,12 +64,14 @@ end
 function c100414028.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE)
 end
+function c100414028.tgfilter(c)
+	return (c:IsSetCard(0x242) and c:IsType(TYPE_MONSTER) or c:IsSetCard(0x243) and c:IsType(TYPE_SPELL+TYPE_TRAP)) and c:IsAbleToGrave()
+end
 function c100414028.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100414028.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c100414028.tgop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100414028.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then

@@ -29,13 +29,19 @@ function c100414034.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.IsPlayerCanSpecialSummonMonster(tp,100414034,0,0x11,500,1800,5,RACE_ZOMBIE,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
+function c100414034.filter(c)
+	return c:IsFaceup() and c:IsCode(100414027)
+end
 function c100414034.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100414034,0,0x11,500,1800,5,RACE_ZOMBIE,ATTRIBUTE_LIGHT) then return end
 	c:AddMonsterAttribute(TYPE_NORMAL+TYPE_TRAP)
-	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_ONFIELD,0,1,nil,100414027) and  Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(100414034,2)) then
+	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0
+		and Duel.IsExistingMatchingCard(c100414034.filter,tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(100414034,2)) then
 		Duel.BreakEffect()
 		local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,1,nil)
 		Duel.HintSelection(g)

@@ -18,7 +18,8 @@ function c100414035.filter(c)
 	return c:IsSetCard(0x242) and c:IsFaceup()
 end
 function c100414035.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev) and Duel.IsExistingMatchingCard(c100414035.filter,tp,LOCATION_MZONE,0,1,nil)
+	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
+		and Duel.IsExistingMatchingCard(c100414035.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100414035.cfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and (c:IsControler(tp) or c:IsFaceup()) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
