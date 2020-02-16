@@ -40,7 +40,7 @@ function c6007213.initial_effect(c)
 end
 function c6007213.spfilter(c,check)
 	return c:IsAbleToGraveAsCost()
-		and (c:IsFaceup() and c:GetType()==TYPE_TRAP or check and c:IsFacedown() and c:IsType(TYPE_TRAP))
+		and (c:IsFaceup() and c:IsType(TYPE_TRAP) or check and c:IsFacedown() and c:IsType(TYPE_TRAP))
 end
 function c6007213.spcon(e,c)
 	if c==nil then return true end
