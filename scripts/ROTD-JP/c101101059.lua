@@ -33,9 +33,6 @@ function c101101059.initial_effect(c)
 	e3:SetOperation(c101101059.rmop)
 	c:RegisterEffect(e3)
 end
-function c101101059.tpfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfb) and c:IsAbleToHand()
-end
 function c101101059.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAttribute,tp,LOCATION_DECK,0,nil,ATTRIBUTE_WATER)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101101059,2)) then
