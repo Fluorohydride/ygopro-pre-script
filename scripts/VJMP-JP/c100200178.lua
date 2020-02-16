@@ -25,11 +25,11 @@ function c100200178.initial_effect(c)
 	e1:SetOperation(c100200178.atkop)
 	c:RegisterEffect(e1)
 end
-function c100200178.cfilter(c)
+function c100200178.filter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND)
 end
 function c100200178.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100200178.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100200178.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100200178.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -64,15 +64,12 @@ function c100200178.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	g:AddCard(c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function c100200178.atkfilter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND)
-end
 function c100200178.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100200178.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100200178.filter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function c100200178.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c100200178.atkfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(c100200178.filter,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(c)
