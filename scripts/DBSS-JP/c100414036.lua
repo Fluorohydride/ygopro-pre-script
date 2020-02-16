@@ -67,7 +67,7 @@ function c100414036.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 				local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 				if #g>0 then
-					Duel.Destroy(g)
+					Duel.Destroy(g,REASON_EFFECT)
 				end
 			end
 		end
