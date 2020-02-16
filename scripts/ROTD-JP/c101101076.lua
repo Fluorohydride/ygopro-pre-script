@@ -98,7 +98,8 @@ function c101101076.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		local attr=tc:GetAttribute()
-		if tc:IsFaceup() and Duel.IsExistingMatchingCard(c101101076.tgfilter,tp,0,LOCATION_MZONE,1,nil,attr) and Duel.SelectYesNo(tp,aux.Stringid(101101076,0)) then
+		if tc:IsFaceup() and Duel.IsExistingMatchingCard(c101101076.tgfilter,tp,0,LOCATION_MZONE,1,nil,attr)
+			and Duel.SelectYesNo(tp,aux.Stringid(101101076,0)) then
 			Duel.BreakEffect()
 			local g=Duel.SelectMatchingCard(tp,c101101076.tgfilter,tp,0,LOCATION_MZONE,1,1,nil,attr)
 			Duel.HintSelection(g)
@@ -107,5 +108,5 @@ function c101101076.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101101076.tgfilter(c,attr)
-	return c:IsFaceup() and c:IsAttribute(attr)
+	return c:IsFaceup() and c:IsAttribute(attr) and c:IsAbleToGrave()
 end
