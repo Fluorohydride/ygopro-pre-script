@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100338055.initial_effect(c)
+	aux.AddCodeList(c,6007213,32491822,69890967)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON)
