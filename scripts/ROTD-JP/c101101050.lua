@@ -80,6 +80,7 @@ function c101101050.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 			e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e2:SetRange(LOCATION_MZONE)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e2:SetValue(1)
 			tc:RegisterEffect(e2,true)
 		end
