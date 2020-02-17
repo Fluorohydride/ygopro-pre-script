@@ -25,7 +25,7 @@ function c101101036.initial_effect(c)
 	e2:SetCondition(c101101036.rscon)
 end
 function c101101036.thfilter(c,lv)
-	return c:IsType(TYPE_RITUAL) and not c:IsLevel(lv) and c:IsAbleToHand()
+	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER) and not c:IsLevel(lv) and c:IsAbleToHand()
 end
 function c101101036.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
