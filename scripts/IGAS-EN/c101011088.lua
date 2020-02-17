@@ -49,9 +49,7 @@ function c101011088.costfilter(c)
 end
 function c101011088.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101011088.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local g=Duel.SelectMatchingCard(tp,c101011088.costfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,c101011088.costfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c101011088.rmfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToRemove()
