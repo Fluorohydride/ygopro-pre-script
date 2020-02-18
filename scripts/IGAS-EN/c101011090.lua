@@ -43,7 +43,7 @@ function c101011090.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x240) and c:GetSequence()<5
 end
 function c101011090.atkval(e,c)
-	return Duel.GetMatchingGroupCount(c101011090.atkfilter,tp,LOCATION_SZONE,0,nil)*500
+	return Duel.GetMatchingGroupCount(c101011090.atkfilter,e:GetHandlerPlayer(),LOCATION_SZONE,0,nil)*500
 end
 function c101011090.thfilter(c)
 	return c:IsSetCard(0x240) and not c:IsCode(101011090) and c:IsAbleToHand()
