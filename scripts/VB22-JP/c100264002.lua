@@ -41,15 +41,15 @@ end
 function c100264002.discon(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	if g:GetCount()==0 or not re:IsActiveType(TYPE_MONSTER) then return false end
 	local tc=g:GetFirst()
 	local attr=0
 	while tc do
 		attr=attr|tc:GetAttribute()
 		tc=g:GetNext()
 	end
-	if g:GetCount()==0 or not re:IsActiveType(TYPE_MONSTER) then return false end
-	local rc=re:GetHandler()
-	return not rc:IsAttribute(attr)
+	local rattr=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_ATTRIBUTE)
+	return rattr&attr==0
 end
 function c100264002.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
