@@ -69,12 +69,12 @@ function c101011089.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetLabelObject(sc)
-		e1:SetValue(c101011085.eqlimit)
+		e1:SetValue(c101011089.eqlimit)
 		tgc:RegisterEffect(e1)
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
-function c101011085.eqlimit(e,c)
+function c101011089.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
