@@ -59,8 +59,8 @@ function c100310001.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRace(RACE_MACHINE) then
 		local g=Duel.GetMatchingGroup(c100310001.desfilter,tp,0,LOCATION_MZONE,nil,tc:GetAttack())
-		g:AddCard(tc)
 		if g:GetCount()>0 then
+			g:AddCard(tc)
 			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end
