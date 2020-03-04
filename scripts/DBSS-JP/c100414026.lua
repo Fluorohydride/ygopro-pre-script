@@ -30,7 +30,7 @@ function c100414026.initial_effect(c)
 end
 function c100414026.filter(c,check)
 	return c:IsFaceup() and (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT)
-		and (check or c:IsControlerCanBeChanged())
+		and (check or c:IsAbleToChangeControler())
 end
 function c100414026.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(c100414026.filter,1-tp,LOCATION_MZONE,0,1,nil,true) end
@@ -47,10 +47,13 @@ function c100414026.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
+function c100414026.rfilter(c,tp)
+	return Duel.GetMZoneCount(tp,c)>0 and c:IsRace(RACE_PLANT)
+end
 function c100414026.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsRace,1,nil,RACE_PLANT) end
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c100414026.rfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,nil,RACE_PLANT)
+	local g=Duel.SelectReleaseGroup(tp,c100414026.rfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c100414026.target2(e,tp,eg,ep,ev,re,r,rp,chk)
