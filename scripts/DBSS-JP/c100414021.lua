@@ -91,6 +91,6 @@ end
 function c100414021.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 	local g=Duel.SelectMatchingCard(tp,c100414021.rfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
-	Duel.Release(g,REASON_EFFECT)
+	Duel.Release(g,REASON_EFFECT+REASON_REPLACE)
 	Duel.Hint(HINT_CARD,0,100414021)
 end
