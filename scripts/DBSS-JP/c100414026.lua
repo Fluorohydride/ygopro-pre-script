@@ -70,7 +70,7 @@ function c100414026.activate2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		if e:IsHasType(EFFECT_TYPE_ACTIVATE) and tc:IsControlerCanBeChanged() then
+		if e:IsHasType(EFFECT_TYPE_ACTIVATE) and tc:IsAbleToChangeControler() then
 			Duel.BreakEffect()
 			if Duel.GetControl(tc,tp,PHASE_END,1)~=0 then
 				local e2=Effect.CreateEffect(e:GetHandler())
