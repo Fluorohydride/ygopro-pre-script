@@ -16,7 +16,8 @@ function c100414025.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100414025.spfilter(c,e,tp,check)
-	return c:IsSetCard(0x245) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and (check or Duel.IsExistingMatchingCard(c100414025.spfilter2,tp,LOCATION_GRAVE,0,1,c,e,tp))
+	return c:IsSetCard(0x245) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+		and (check or Duel.IsExistingMatchingCard(c100414025.spfilter2,tp,LOCATION_GRAVE,0,1,c,e,tp))
 end
 function c100414025.spfilter2(c,e,tp)
 	return c:IsRace(RACE_PLANT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -30,7 +31,8 @@ function c100414025.rfilter(c,tp)
 end
 function c100414025.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(c100414025.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,true) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	local b2=Duel.IsExistingMatchingCard(c100414025.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.IsPlayerCanSpecialSummonCount(tp,2) and Duel.CheckReleaseGroup(tp,c100414025.rfilter,1,nil,tp)
+	local b2=e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingMatchingCard(c100414025.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.IsPlayerCanSpecialSummonCount(tp,2) and Duel.CheckReleaseGroup(tp,c100414025.rfilter,1,nil,tp)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
@@ -49,18 +51,14 @@ function c100414025.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100414025.activate(e,tp,eg,ep,ev,re,r,rp)
 	local param=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	local check=nil
-	if param==1 then
-		check=false
-	else
-		check=true
-	end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100414025.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp,true)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
-		if not check and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100414025.spfilter2),tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		if param==1 and e:IsHasType(EFFECT_TYPE_ACTIVATE)
+			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100414025.spfilter2),tp,LOCATION_GRAVE,0,1,nil,e,tp)
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 			Duel.BreakEffect()
 			local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100414025.spfilter2),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 			Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
