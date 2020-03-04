@@ -16,7 +16,8 @@ function c100414026.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100414026.filter(c,check)
-	return c:IsFaceup() and (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT) and (check or c:IsControlerCanBeChanged())
+	return c:IsFaceup() and (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT)
+		and (check or c:IsControlerCanBeChanged())
 end
 function c100414026.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -24,7 +25,8 @@ function c100414026.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100414026.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingTarget(c100414026.filter,1-tp,LOCATION_MZONE,0,1,nil,true)
-	local b2=Duel.IsExistingTarget(c100414026.filter,1-tp,LOCATION_MZONE,0,1,nil) and Duel.CheckReleaseGroup(tp,Card.IsRace,1,nil,RACE_PLANT)
+	local b2=e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingTarget(c100414026.filter,1-tp,LOCATION_MZONE,0,1,nil)
+		and Duel.CheckReleaseGroup(tp,Card.IsRace,1,nil,RACE_PLANT)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
@@ -48,12 +50,6 @@ function c100414026.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100414026.activate(e,tp,eg,ep,ev,re,r,rp)
 	local param=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	local check=nil
-	if param==1 then
-		check=false
-	else
-		check=true
-	end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -61,7 +57,7 @@ function c100414026.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		if not check and tc:IsControlerCanBeChanged() then
+		if param==1 and e:IsHasType(EFFECT_TYPE_ACTIVATE) and tc:IsControlerCanBeChanged() then
 			Duel.BreakEffect()
 			if Duel.GetControl(tc,tp,PHASE_END,1)~=0 then
 				local e2=Effect.CreateEffect(e:GetHandler())
