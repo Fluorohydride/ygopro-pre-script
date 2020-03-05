@@ -25,7 +25,7 @@ function c100414023.initial_effect(c)
 	e2:SetOperation(c100414023.activate2)
 	c:RegisterEffect(e2)
 end
-function c100414023.thfilter(c,check)
+function c100414023.thfilter(c,tp,check)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x245) and c:IsAbleToHand()
 		and (check or Duel.IsExistingMatchingCard(c100414023.thfilter2,tp,LOCATION_DECK,0,1,c,c:GetCode(),c:GetOriginalLevel()))
 end
@@ -33,12 +33,12 @@ function c100414023.thfilter2(c,code,lv)
 	return c:IsRace(RACE_PLANT) and not c:IsCode(code) and c:GetOriginalLevel()==lv and c:IsAbleToHand()
 end
 function c100414023.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100414023.thfilter,tp,LOCATION_DECK,0,1,nil,true) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100414023.thfilter,tp,LOCATION_DECK,0,1,nil,tp,true) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100414023.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100414023.thfilter,tp,LOCATION_DECK,0,1,1,nil,true)
+	local g=Duel.SelectMatchingCard(tp,c100414023.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp,true)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
@@ -53,13 +53,13 @@ function c100414023.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100414023.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and Duel.IsExistingMatchingCard(c100414023.thfilter,tp,LOCATION_DECK,0,1,nil)
+		and Duel.IsExistingMatchingCard(c100414023.thfilter,tp,LOCATION_DECK,0,1,nil,tp)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
 end
 function c100414023.activate2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100414023.thfilter,tp,LOCATION_DECK,0,1,1,nil,true)
+	local g=Duel.SelectMatchingCard(tp,c100414023.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp,true)
 	local tc=g:GetFirst()
 	if tc and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 then
 		Duel.ConfirmCards(1-tp,tc)
