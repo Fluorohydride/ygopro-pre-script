@@ -69,17 +69,17 @@ end
 function c100414019.lvfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsLevelAbove(1)
 end
-function c100414019.lvfilter1(c)
+function c100414019.lvfilter1(c,tp)
 	return c100414019.lvfilter(c) and Duel.IsExistingMatchingCard(c100414019.lvfilter2,tp,LOCATION_MZONE,0,1,c,c:GetLevel())
 end
 function c100414019.lvfilter2(c,lv)
 	return c100414019.lvfilter(c) and not c:IsLevel(lv)
 end
 function c100414019.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100414019.lvfilter1(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100414019.lvfilter1,tp,LOCATION_MZONE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100414019.lvfilter1(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100414019.lvfilter1,tp,LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c100414019.lvfilter1,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c100414019.lvfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
 end
 function c100414019.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
