@@ -2,9 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **February 4, 2020** : Yu-Gi-Oh! OCG Structures Volume 1 promotional card (YO01-JP) : `100262XXX`
-- **February 7, 2020** : Master Guide 6 promotional cards (MG06-JP) : `100263XXX`
-- **February 22, 2020** : Structure Deck R: Machiners Command (SR10-JP) : `100310XXX`
 - **March 7, 2020** : Deck Build Pack: Secret Slayers (DBSS-JP) : `100414XXX`
 - **March 19, 2020** : The Valuable Book 22 (VB22-JP) : `100264XXX`
 - **March 20, 2020** : Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
@@ -82,6 +79,8 @@
 - LEGENDARY GOLD BOX (LGB1-JP) : `100259XXX`
 - Premium Pack 2020 (20PP-JP) : `100260XXX`
 - Jump Festa Limited Pack 2019 (JF20-JP) : `100261XXX`
+- Yu-Gi-Oh! OCG Structures Volume 1 promotional card (YO01-JP) : `100262XXX`
+- Master Guide 6 promotional cards (MG06-JP) : `100263XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -94,6 +93,7 @@
 - Structure Deck R: Undead World (SR07-JP) : `100307XXX`
 - Structure Deck R: Lord of Magician (SR08-JP) : `100308XXX`
 - Structure Deck R: Warrior's Strike (SR09-JP) : `100309XXX`
+- Structure Deck R: Machiners Command (SR10-JP) : `100310XXX`
 -----
 - Starter Deck 2016 (ST16-JP) : `100316XXX`
 - Starter Deck 2017 (ST17-JP) : `100317XXX`
