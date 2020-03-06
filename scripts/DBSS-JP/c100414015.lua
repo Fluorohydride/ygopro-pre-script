@@ -31,7 +31,7 @@ function c100414015.spfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100414015.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100414015.spfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(c100414015.spfilter,1,nil,tp)
 end
 function c100414015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
