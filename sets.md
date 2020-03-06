@@ -8,11 +8,12 @@
 - **March 7, 2020** : Deck Build Pack: Secret Slayers (DBSS-JP) : `100414XXX`
 - **March 19, 2020** : The Valuable Book 22 (VB22-JP) : `100264XXX`
 - **March 20, 2020** : Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
+- **March 20, 2020** : Duel Overload (DUOV-EN) : `100265XXX`
 - **April 18, 2020** : RISE OF THE DUELIST (ROTD-JP) : `101101XXX`
 
 # Announced
 - **May 16, 2020** :Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
-- **June 6, 2020** :Collectors Pack 2020 (CP20-JP) : `100265XXX`
+- **June 6, 2020** :Collectors Pack 2020 (CP20-JP) : `100266XXX`
 
 # Archived
 ## Other packs
