@@ -19,7 +19,7 @@ function c100265055.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_TO_GRAVE)
+	e3:SetCode(EVENT_BATTLE_DESTROYED)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(c100265055.tgcon)
 	e3:SetTarget(c100265055.tgtg)
@@ -37,9 +37,8 @@ function c100265055.distg(e,c)
 	return c:GetSummonLocation()==LOCATION_EXTRA
 end
 function c100265055.egfilter(c)
-	if not (c:IsReason(REASON_BATTLE) or c:GetSummonLocation()~=LOCATION_EXTRA) then return false end
 	local d=c:GetBattleTarget()
-	return d:GetSummonLocation()==LOCATION_EXTRA
+	return c:GetSummonLocation()==LOCATION_EXTRA and d:GetSummonLocation()==LOCATION_EXTRA
 end
 function c100265055.pcheck(c,tp)
 	return c:GetPreviousControler()==tp
