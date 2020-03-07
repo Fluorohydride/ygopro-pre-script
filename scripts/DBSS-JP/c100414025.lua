@@ -79,6 +79,7 @@ function c100414025.activate2(e,tp,eg,ep,ev,re,r,rp)
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100414025.spfilter2),tp,LOCATION_GRAVE,0,1,nil,e,tp) then
 			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100414025.spfilter2),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 			Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		end
