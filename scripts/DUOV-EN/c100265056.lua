@@ -18,8 +18,6 @@ function c100265056.initial_effect(c)
 	e2:SetOperation(c100265056.effop)
 	c:RegisterEffect(e2)
 end
---CHOOSE EFFECT
---filters
 function c100265056.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_ZOMBIE) and c:GetSummonLocation()~=LOCATION_EXTRA
 end
@@ -29,7 +27,6 @@ end
 function c100265056.tgfilter(c)
 	return c:IsFaceup() and c:IsAbleToGrave()
 end
----------
 function c100265056.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100265056.cfilter,1,nil)
 end
@@ -46,12 +43,10 @@ function c100265056.effop(e,tp,eg,ep,ev,re,r,rp)
 	local off=1
 	local ops={}
 	local opval={}
-	----
 	local b1=Duel.IsPlayerCanDraw(tp,1) and (Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x1)==0)
 	local b2=Duel.IsExistingMatchingCard(c100265056.setfilter,tp,LOCATION_DECK,0,1,nil) and (Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x2)==0)
 	local b3=Duel.IsExistingMatchingCard(c100265056.tgfilter,tp,0,LOCATION_MZONE,1,nil) and (Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x4)==0)
 	local b4=(Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x8)==0)
-	----
 	if b1 then
 		ops[off]=aux.Stringid(100265056,0)
 		opval[off-1]=1

@@ -26,22 +26,16 @@ function c100265055.initial_effect(c)
 	e3:SetOperation(c100265055.tgop)
 	c:RegisterEffect(e3)
 end
---Activate
---filters
 function c100265055.cfilter(c)
 	return c:GetSummonLocation()==LOCATION_EXTRA
 end
----------
 function c100265055.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100265055.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c100265055.cfilter,tp,0,LOCATION_MZONE,1,nil)
 end
---DISABLE
 function c100265055.distg(e,c)
 	return c:GetSummonLocation()==LOCATION_EXTRA
 end
---send to GY
---filters
 function c100265055.egfilter(c)
 	if not (c:IsReason(REASON_BATTLE) or c:GetSummonLocation()~=LOCATION_EXTRA) then return false end
 	local d=c:GetBattleTarget()
@@ -50,7 +44,6 @@ end
 function c100265055.pcheck(c,tp)
 	return c:GetPreviousControler()==tp
 end
----------
 function c100265055.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100265055.egfilter,1,nil)
 end

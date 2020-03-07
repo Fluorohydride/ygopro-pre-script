@@ -21,18 +21,14 @@ function c100265054.initial_effect(c)
 	e2:SetOperation(c100265054.setop)
 	c:RegisterEffect(e2)
 end
---IMMUNE
 function c100265054.efilter(e,te)
 	local c=te:GetHandler()
 	return c:GetType()==TYPE_TRAP and c:IsSetCard(0x4c,0x89)
 end
---SET
---filters
 function c100265054.setfilter(c,tp,code)
 	return c:IsSetCard(0x4c,0x89) and c:GetType()==TYPE_TRAP and c:IsSSetable() and (code==nil or c:GetCode()~=code)
 		and (c:IsLocation(LOCATION_GRAVE) or Duel.IsExistingMatchingCard(c100265054.setfilter,tp,LOCATION_GRAVE,0,1,c,c:GetCode()))
 end
----------
 function c100265054.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
