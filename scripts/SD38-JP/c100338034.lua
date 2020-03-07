@@ -49,9 +49,9 @@ end
 function c100338034.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if d and d:IsControler(tp) then a,d=d,a end
+	if not a:IsControler(tp) then a,d=d,a end
 	e:SetLabelObject(a)
-	return a:IsCode(6007213) and a:IsFaceup() and a:IsControler(tp)
+	return a and a:IsCode(6007213) and a:IsFaceup() and a:IsControler(tp)
 end
 function c100338034.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100338034.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
