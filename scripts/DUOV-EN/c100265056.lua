@@ -31,23 +31,32 @@ function c100265056.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100265056.cfilter,1,nil)
 end
 function c100265056.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.IsPlayerCanDraw(tp,1) and (Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x1)==0)
-	local b2=Duel.IsExistingMatchingCard(c100265056.setfilter,tp,LOCATION_DECK,0,1,nil) and (Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x2)==0)
-	local b3=Duel.IsExistingMatchingCard(c100265056.tgfilter,tp,0,LOCATION_MZONE,1,nil) and (Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x4)==0)
-	local b4=(Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x8)==0)
-	if chk==0 then return Duel.GetFlagEffect(tp,100265156)==0 and (b1 or b2 or b3 or b4) end
+	if chk==0 then
+		if Duel.GetFlagEffect(tp,100265056)==0 then
+			Duel.RegisterFlagEffect(tp,100265056,RESET_PHASE+PHASE_END,0,1)
+		end
+		local flag=Duel.GetFlagEffectLabel(tp,100265056)
+		local b1=Duel.IsPlayerCanDraw(tp,1) and bit.band(flag,0x1)==0
+		local b2=Duel.IsExistingMatchingCard(c100265056.setfilter,tp,LOCATION_DECK,0,1,nil) and bit.band(flag,0x2)==0
+		local b3=Duel.IsExistingMatchingCard(c100265056.tgfilter,tp,0,LOCATION_MZONE,1,nil) and bit.band(flag,0x4)==0
+		local b4=bit.band(flag,0x8)==0
+		return Duel.GetFlagEffect(tp,100265156)==0 and (b1 or b2 or b3 or b4)
+	end
 	Duel.RegisterFlagEffect(tp,100265156,RESET_CHAIN,0,1)
 end
 function c100265056.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
+	if Duel.GetFlagEffect(tp,100265056)==0 then
+		Duel.RegisterFlagEffect(tp,100265056,RESET_PHASE+PHASE_END,0,1)
+	end
+	local flag=Duel.GetFlagEffectLabel(tp,100265056)
 	local off=1
 	local ops={}
 	local opval={}
-	local b1=Duel.IsPlayerCanDraw(tp,1) and (Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x1)==0)
-	local b2=Duel.IsExistingMatchingCard(c100265056.setfilter,tp,LOCATION_DECK,0,1,nil) and (Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x2)==0)
-	local b3=Duel.IsExistingMatchingCard(c100265056.tgfilter,tp,0,LOCATION_MZONE,1,nil) and (Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x4)==0)
-	local b4=(Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x8)==0)
+	local b1=Duel.IsPlayerCanDraw(tp,1) and bit.band(flag,0x1)==0
+	local b2=Duel.IsExistingMatchingCard(c100265056.setfilter,tp,LOCATION_DECK,0,1,nil) and bit.band(flag,0x2)==0
+	local b3=Duel.IsExistingMatchingCard(c100265056.tgfilter,tp,0,LOCATION_MZONE,1,nil) and bit.band(flag,0x4)==0
+	local b4=bit.band(flag,0x8)==0
 	if b1 then
 		ops[off]=aux.Stringid(100265056,0)
 		opval[off-1]=1
@@ -72,20 +81,14 @@ function c100265056.effop(e,tp,eg,ep,ev,re,r,rp)
 	local sel=opval[op]
 	if sel==1 then
 		Duel.Draw(tp,1,REASON_EFFECT)
-		if Duel.GetFlagEffect(tp,100265056)<=0 then
-			Duel.RegisterFlagEffect(tp,100265056,RESET_PHASE+PHASE_END,0,1)
-		end
-		Duel.SetFlagEffectLabel(tp,100265056,Duel.GetFlagEffectLabel(tp,100265056)|0x1)
+		Duel.SetFlagEffectLabel(tp,100265056,flag|0x1)
 	elseif sel==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local g=Duel.SelectMatchingCard(tp,c100265056.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then
 			Duel.SSet(tp,g)
 		end	
-		if Duel.GetFlagEffect(tp,100265056)<=0 then
-			Duel.RegisterFlagEffect(tp,100265056,RESET_PHASE+PHASE_END,0,1)
-		end
-		Duel.SetFlagEffectLabel(tp,100265056,Duel.GetFlagEffectLabel(tp,100265056)|0x2)
+		Duel.SetFlagEffectLabel(tp,100265056,flag|0x2)
 	elseif sel==3 then
 		local g=Duel.GetMatchingGroup(c100265056.tgfilter,tp,0,LOCATION_MZONE,nil)
 		if #g>0 then
@@ -99,15 +102,9 @@ function c100265056.effop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.SendtoGrave(tg,REASON_EFFECT)
 			end
 		end
-		if Duel.GetFlagEffect(tp,100265056)<=0 then
-			Duel.RegisterFlagEffect(tp,100265056,RESET_PHASE+PHASE_END,0,1)
-		end
-		Duel.SetFlagEffectLabel(tp,100265056,Duel.GetFlagEffectLabel(tp,100265056)|0x4)
+		Duel.SetFlagEffectLabel(tp,100265056,flag|0x4)
 	else
 		Duel.Damage(1-tp,800,REASON_EFFECT)
-		if Duel.GetFlagEffect(tp,100265056)<=0 then
-			Duel.RegisterFlagEffect(tp,100265056,RESET_PHASE+PHASE_END,0,1)
-		end
-		Duel.SetFlagEffectLabel(tp,100265056,Duel.GetFlagEffectLabel(tp,100265056)|0x8)
+		Duel.SetFlagEffectLabel(tp,100265056,flag|0x8)
 	end
 end
