@@ -8,11 +8,11 @@ function c100265056.initial_effect(c)
 	c:RegisterEffect(e1)
 	--choose effect
 	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_DRAW+CATEGORY_TOGRAVE+CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCountLimit(1,100265056)
 	e2:SetCondition(c100265056.effcon)
 	e2:SetTarget(c100265056.efftg)
 	e2:SetOperation(c100265056.effop)
@@ -35,7 +35,8 @@ function c100265056.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b2=Duel.IsExistingMatchingCard(c100265056.setfilter,tp,LOCATION_DECK,0,1,nil) and (Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x2)==0)
 	local b3=Duel.IsExistingMatchingCard(c100265056.tgfilter,tp,0,LOCATION_MZONE,1,nil) and (Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x4)==0)
 	local b4=(Duel.GetFlagEffect(tp,100265056)<=0 or bit.band(Duel.GetFlagEffectLabel(tp,100265056),0x8)==0)
-	if chk==0 then return b1 or b2 or b3 or b4 end
+	if chk==0 then return Duel.GetFlagEffect(tp,100265156)==0 and (b1 or b2 or b3 or b4) end
+	Duel.RegisterFlagEffect(tp,100265156,RESET_CHAIN,0,1)
 end
 function c100265056.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -67,7 +68,8 @@ function c100265056.effop(e,tp,eg,ep,ev,re,r,rp)
 		opval[off-1]=4
 		off=off+1
 	end
-	local sel=Duel.SelectOption(tp,table.unpack(ops))+1
+	local op=Duel.SelectOption(tp,table.unpack(ops))
+	local sel=opval[op]
 	if sel==1 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 		if Duel.GetFlagEffect(tp,100265056)<=0 then
