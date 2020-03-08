@@ -21,12 +21,12 @@ function c100414035.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 		and Duel.IsExistingMatchingCard(c100414035.filter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c100414035.cfilter(c)
+function c100414035.cfilter(c,tp)
 	return c:IsRace(RACE_ZOMBIE) and (c:IsControler(tp) or c:IsFaceup()) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function c100414035.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c100414035.cfilter,1,nil) end
-	local sg=Duel.SelectReleaseGroup(tp,c100414035.cfilter,1,1,nil)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c100414035.cfilter,1,nil,tp) end
+	local sg=Duel.SelectReleaseGroup(tp,c100414035.cfilter,1,1,nil,tp)
 	Duel.Release(sg,REASON_COST)
 end
 function c100414035.target(e,tp,eg,ep,ev,re,r,rp,chk)
