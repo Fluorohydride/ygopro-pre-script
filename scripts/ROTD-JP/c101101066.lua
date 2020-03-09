@@ -48,7 +48,7 @@ function c101101066.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local l1,l2=e:GetLabel()
 		if l1~=100 then check=false end
-		e:SetLabel(0)
+		e:SetLabel(0,0)
 		return Duel.IsExistingMatchingCard(c101101066.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp,check)
 	end
 	if l2==1 then
@@ -66,7 +66,7 @@ function c101101066.activate(e,tp,eg,ep,ev,re,r,rp)
 	local l1,l2=e:GetLabel()
 	if l2==1 then check=true end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101101066,2))
 	local g=Duel.SelectMatchingCard(tp,c101101066.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,ft,check)
 	local tc=g:GetFirst()
 	if tc then
