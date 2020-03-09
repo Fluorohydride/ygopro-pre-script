@@ -110,10 +110,10 @@ function c100338035.regop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		g:Merge(lg)
 	end
-	Duel.RegisterFlagEffect(tp,100338035,RESET_CHAIN,0,1)
+	e:GetHandler():RegisterFlagEffect(100338035,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
 end
 function c100338035.lpcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,100338035)>0
+	return e:GetHandler():GetFlagEffect(100338035)>0
 end
 function c100338035.lpop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ResetFlagEffect(tp,100338035)
