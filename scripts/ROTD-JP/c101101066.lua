@@ -27,7 +27,10 @@ function c101101066.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101101066.filter(c,e,tp,check)
-	return c:IsRace(RACE_WYRM) and (Duel.IsExistingMatchingCard(c101101066.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp) or (check and not c:IsType(TYPE_EFFECT) and Duel.IsExistingMatchingCard(c101101066.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp,true) and Duel.GetMZoneCount(tp,c)>0))
+	return c:IsRace(RACE_WYRM) and (Duel.IsExistingMatchingCard(c101101066.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
+		or (check and not c:IsType(TYPE_EFFECT)
+		and Duel.IsExistingMatchingCard(c101101066.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp,true)
+		and Duel.GetMZoneCount(tp,c)>0))
 end
 function c101101066.thfilter(c,e,tp,check)
 	return c:IsRace(RACE_WYRM) and (c:IsAbleToHand() or (check and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
@@ -51,7 +54,7 @@ function c101101066.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabel(0,0)
 		return Duel.IsExistingMatchingCard(c101101066.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp,check)
 	end
-	if l2==1 then
+	if l2==1 and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		e:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
@@ -64,13 +67,14 @@ function c101101066.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local check=false
 	local l1,l2=e:GetLabel()
-	if l2==1 then check=true end
+	if l2==1 and e:IsHasType(EFFECT_TYPE_ACTIVATE) then check=true end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101101066,2))
 	local g=Duel.SelectMatchingCard(tp,c101101066.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,ft,check)
 	local tc=g:GetFirst()
 	if tc then
-		if not check or (tc:IsAbleToHand() and (ft<=0 or not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) or Duel.SelectOption(tp,1190,1152)==0)) then
+		if not check or (tc:IsAbleToHand() and (ft<=0 or not tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			or Duel.SelectOption(tp,1190,1152)==0)) then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,tc)
 		else
