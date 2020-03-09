@@ -82,10 +82,14 @@ end
 function c100338035.cfilter(c,sp)
 	return c:GetSummonPlayer()==sp and c:IsFaceup()
 end
-function c100338035.lpcon(e,tp,eg,ep,ev,re,r,rp)
+function c100338035.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100338035.filter,tp,LOCATION_ONFIELD,0,nil)
 	local ct=e:GetLabel()
-	return ct and g:GetClassCount(Card.GetCode)>=ct and eg:IsExists(c100338035.cfilter,1,nil,1-tp)
+	return ct and g:GetClassCount(Card.GetCode)>=ct
+end
+function c100338035.lpcon(e,tp,eg,ep,ev,re,r,rp)
+	return c100338035.condition(e,tp,eg,ep,ev,re,r,rp)
+		and eg:IsExists(c100338035.cfilter,1,nil,1-tp)
 end
 function c100338035.lpcon1(e,tp,eg,ep,ev,re,r,rp)
 	return c100338035.lpcon(e,tp,eg,ep,ev,re,r,rp)
@@ -97,8 +101,7 @@ function c100338035.lpop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,rnum,REASON_EFFECT)
 end
 function c100338035.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return c100338035.condition(e,tp,eg,ep,ev,re,r,rp)
-		and eg:IsExists(c100338035.cfilter,1,nil,1-tp)
+	return c100338035.lpcon(e,tp,eg,ep,ev,re,r,rp)
 		and re:IsHasType(EFFECT_TYPE_ACTIONS) and not re:IsHasType(EFFECT_TYPE_CONTINUOUS)
 end
 function c100338035.regop(e,tp,eg,ep,ev,re,r,rp)
