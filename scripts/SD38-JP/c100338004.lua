@@ -28,8 +28,9 @@ function c100338004.initial_effect(c)
 end
 function c100338004.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
-	if chk==0 then return e:GetHandler():IsReleasable() and Duel.GetMZoneCount(tp,c)>0 end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReleasable() and Duel.GetMZoneCount(tp,c)>0 end
+	Duel.Release(c,REASON_COST)
 end
 function c100338004.spfilter(c,e,tp)
 	return c:IsCode(6007213,32491822,69890967) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
