@@ -41,11 +41,14 @@ function c100338002.counttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100338002.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) and c:IsCanAddCounter(0x57,1) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
+function c100338002.fselect(g,c)
+	return aux.dncheck(g) and c:IsCanAddCounter(0x57,g:GetCount())
+end
 function c100338002.countop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c100338002.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,g:GetCount())
+	local sg=g:SelectSubGroup(tp,c100338002.fselect,false,1,g:GetCount(),c)
 	if sg:GetCount()>0 and Duel.SendtoGrave(sg,REASON_EFFECT)~=0 then
 		if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 		local og=Duel.GetOperatedGroup()
