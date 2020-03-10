@@ -119,7 +119,7 @@ function c100338035.lpcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(100338035)>0
 end
 function c100338035.lpop2(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ResetFlagEffect(tp,100338035)
+	e:GetHandler():ResetFlagEffect(100338035)
 	local lg=e:GetLabelObject():GetLabelObject()
 	local rnum=lg:GetSum(Card.GetAttack)
 	local g=Group.CreateGroup()
