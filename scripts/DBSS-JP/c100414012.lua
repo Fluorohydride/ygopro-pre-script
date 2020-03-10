@@ -19,6 +19,7 @@ function c100414012.costfilter(c,tp)
 end
 function c100414012.fselect(g,tp,ec)
 	local dg=g:Clone()
+	if ec then dg:AddCard(ec) end
 	dg:AddCard(ec)
 	if Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,g:GetCount()+1,dg) then
 		Duel.SetSelectedCard(g)
@@ -26,18 +27,25 @@ function c100414012.fselect(g,tp,ec)
 	else return false end
 end
 function c100414012.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(100,0)
+	local exc=nil
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then exc=e:GetHandler() end
 	local g=Duel.GetReleaseGroup(tp):Filter(c100414012.costfilter,nil,tp)
-	if chk==0 then return g:CheckSubGroup(c100414012.fselect,1,g:GetCount(),tp,e:GetHandler()) end
+	if chk==0 then return g:CheckSubGroup(c100414012.fselect,1,g:GetCount(),tp,exc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local rg=g:SelectSubGroup(tp,c100414012.fselect,false,1,g:GetCount(),tp,e:GetHandler())
-	e:SetLabel(Duel.Release(rg,REASON_COST))
+	local rg=g:SelectSubGroup(tp,c100414012.fselect,false,1,g:GetCount(),tp,exc)
+	e:SetLabel(100,Duel.Release(rg,REASON_COST))
 end
 function c100414012.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local exc=nil
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then exc=e:GetHandler() end
+	local check,ct=e:GetLabel()
 	if chkc then return chkc:IsOnField() end
-	if chk==0 then return true end
-	local ct=e:GetLabel()
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,exc) end
+	if check~=100 then ct=0 end
+	e:SetLabel(0,0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,ct+1,ct+1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,ct+1,ct+1,exc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c100414012.activate(e,tp,eg,ep,ev,re,r,rp)
