@@ -31,7 +31,7 @@ function c100414021.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100414021.cfilter(c)
-	return c:IsType(TYPE_MONSTER) or c:IsPreviousLocation(LOCATION_MZONE)
+	return (c:IsType(TYPE_MONSTER) and not c:IsPreviousLocation(LOCATION_SZONE)) or c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100414021.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100414021.cfilter,1,nil) and not eg:IsContains(e:GetHandler())
