@@ -48,8 +48,8 @@ function c101101066.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101101066.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local check=true
+	local l1,l2=e:GetLabel()
 	if chk==0 then
-		local l1,l2=e:GetLabel()
 		if l1~=100 then check=false end
 		e:SetLabel(0,0)
 		return Duel.IsExistingMatchingCard(c101101066.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp,check)
