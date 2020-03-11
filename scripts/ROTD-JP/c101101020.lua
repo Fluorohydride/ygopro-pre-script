@@ -5,7 +5,7 @@ function c101101020.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101101020,0))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_GRAVE_ACTION)
+	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -48,7 +48,7 @@ end
 function c101101020.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHand() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_MZONE+LOCATION_GRAVE)
 end
 function c101101020.thfilter(c)
 	return c:IsRace(RACE_BEAST) and c:IsLevelBelow(2) and not c:IsCode(101101020) and c:IsAbleToHand()
