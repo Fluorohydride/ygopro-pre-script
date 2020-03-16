@@ -72,7 +72,7 @@ function c101101060.coinop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101101060.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE)
-end 
+end
 function c101101060.effilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x137) and c:IsType(TYPE_EFFECT)
 end

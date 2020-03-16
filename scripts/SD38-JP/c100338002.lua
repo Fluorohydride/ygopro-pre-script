@@ -71,7 +71,7 @@ function c100338002.countop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100338002.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE+REASON_EFFECT)
-		and e:GetHandler():IsCanRemoveCounter(tp,0x57,1,REASON_EFFECT) 
+		and e:GetHandler():IsCanRemoveCounter(tp,0x57,1,REASON_EFFECT)
 	end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end

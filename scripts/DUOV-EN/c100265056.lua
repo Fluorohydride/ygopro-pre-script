@@ -87,7 +87,7 @@ function c100265056.effop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,c100265056.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then
 			Duel.SSet(tp,g)
-		end	
+		end
 		Duel.SetFlagEffectLabel(tp,100265056,flag|0x2)
 	elseif sel==3 then
 		local g=Duel.GetMatchingGroup(c100265056.tgfilter,tp,0,LOCATION_MZONE,nil)
