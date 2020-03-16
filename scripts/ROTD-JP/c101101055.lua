@@ -58,10 +58,10 @@ function c101101055.thfilter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
 function c101101055.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_GRAVE and c101101055.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101101055.filter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_GRAVE and c101101055.thfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101101055.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,c101101055.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101101055.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
