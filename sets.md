@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **March 7, 2020** : Deck Build Pack: Secret Slayers (DBSS-JP) : `100414XXX`
 - **March 19, 2020** : The Valuable Book 22 (VB22-JP) : `100264XXX`
 - **March 20, 2020** : Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
 - **March 20, 2020** : Duel Overload (DUOV-EN) : `100265XXX`
@@ -116,6 +115,7 @@
 - Deck Build Pack: Hidden Summoners (DBHS-JP) : `100410XXX`
 - Deck Build Pack: Infinity Chasers (DBIC-JP) : `100412XXX`
 - Deck Build Pack: Mystic Fighters (DBMF-JP) : `100413XXX`
+- Deck Build Pack: Secret Slayers (DBSS-JP) : `100414XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
