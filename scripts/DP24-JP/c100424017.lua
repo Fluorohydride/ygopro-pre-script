@@ -41,20 +41,20 @@ function c100424017.initial_effect(c)
     e4:SetOperation(c100424017.negop)
     c:RegisterEffect(e4)
 end
-function c100424017.cfilter(c)
-    return c:IsFaceup() and c:IsSetCard(0x13) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+function c100424017.cfilter(c,tp)
+    return c:IsFaceup() and c:IsSetCard(0x13) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function c100424017.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c100424017.cfilter,tp,LOCATION_MZONE,0,1,nil) end
+    if chk==0 then return Duel.IsExistingMatchingCard(c100424017.cfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-    local g=Duel.SelectMatchingCard(tp,c100424017.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c100424017.cfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
     Duel.SendtoGrave(g,REASON_COST)
 end
 function c100424017.spcon(e,tp,eg,ep,ev,re,r,rp)
     return Duel.GetTurnPlayer()~=tp
 end
 function c100424017.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) end
+    if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100424017.spop(e,tp,eg,ep,ev,re,r,rp)

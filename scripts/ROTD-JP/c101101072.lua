@@ -102,5 +102,5 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
     Duel.RegisterEffect(e3,tp)
 end
 function c101101072.splimit(e,c)
-    return not c:IsRace(RACE_CYBERSE)
+    return not c:IsRace(RACE_WARRIOR)
 end

@@ -50,11 +50,12 @@ function c101101013.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
         and Duel.IsExistingTarget(Card.IsRace,tp,LOCATION_MZONE,0,1,nil,RACE_WARRIOR) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
     Duel.SelectTarget(tp,Card.IsRace,tp,LOCATION_MZONE,0,1,1,nil,RACE_WARRIOR)
+    Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function c101101013.eqop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local tc=Duel.GetFirstTarget()
-    if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+    if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRelateToEffect(e) then
         Duel.Equip(tp,c,tc)
         --equip limit
         local e1=Effect.CreateEffect(c)

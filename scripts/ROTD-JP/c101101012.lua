@@ -23,7 +23,7 @@ function c101101012.initial_effect(c)
     c:RegisterEffect(e2)    
 end
 function c101101012.costfilter(c)
-    return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE) and c:GetLevel()>0 and c:IsAbleToRemoveAsCost()
+    return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToRemoveAsCost()
 end
 function c101101012.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(c101101012.costfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,e:GetHandler()) end
@@ -40,11 +40,14 @@ end
 function c101101012.operation(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if not c:IsRelateToEffect(e) then return end
-    if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==1 then
+    local lv=e:GetLabel()
+    if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==1
+		and lv>0 and c:GetLevel()~=lv and Duel.SelectYesNo(aux.Stringid(101101012,1)) then
+		Duel.BreakEffect()
         local e1=Effect.CreateEffect(c)
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetCode(EFFECT_CHANGE_LEVEL)
-        e1:SetValue(e:GetLabel())
+        e1:SetValue(lv)
         e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
         c:RegisterEffect(e1)
     end
@@ -77,7 +80,7 @@ function c101101012.spop2(e,tp,eg,ep,ev,re,r,rp)
     local ct=c:GetTurnCounter()
     ct=ct+1
     c:SetTurnCounter(ct)
-    if ct==2 and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) then
+    if ct==2 and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
         Duel.BreakEffect()
         if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
