@@ -41,7 +41,7 @@ end
 function c101101041.tgfilter2(c)
 	return c:IsType(TYPE_EQUIP) and c:IsType(TYPE_SPELL) and c:IsAbleToGrave()
 end
-function c101101041.thfilter1(c)
+function c101101041.thfilter2(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
 function c101101041.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
