@@ -1,4 +1,6 @@
---焰圣骑士导-罗兰
+--焔聖騎士導－ローラン
+--
+--Script by 龙骑
 function c101101041.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

@@ -1,4 +1,6 @@
---『焰圣剑-奥特克莱尔』
+--『焔聖剣－オートクレール』
+--
+--Script by 龙骑
 function c101101054.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

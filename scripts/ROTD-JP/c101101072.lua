@@ -1,4 +1,6 @@
---象牙角笛
+--オリファンの角笛
+--
+--Script by 龙骑
 function c101101072.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

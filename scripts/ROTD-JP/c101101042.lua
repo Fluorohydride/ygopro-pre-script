@@ -1,4 +1,6 @@
---焰圣骑士帝-查理
+--焔聖騎士帝－シャルル
+--
+--Script by 龙骑
 function c101101042.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

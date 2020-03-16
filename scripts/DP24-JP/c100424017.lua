@@ -1,4 +1,6 @@
---机皇帝 神智∞-同调吸收
+--機皇帝ワイゼル∞－S・アブソープション
+--
+--Script by 龙骑
 function c100424017.initial_effect(c)
 	c:EnableReviveLimit()
 	--cannot special summon

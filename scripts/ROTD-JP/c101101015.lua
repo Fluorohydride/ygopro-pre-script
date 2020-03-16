@@ -1,4 +1,6 @@
---焰圣骑士-莫吉斯
+--焔聖騎士－モージ
+--
+--Script by 龙骑
 function c101101015.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)

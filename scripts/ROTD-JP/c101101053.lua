@@ -1,4 +1,6 @@
---『焰圣剑-迪朗达尔』
+--『焔聖剣－デュランダル』
+--
+--Script by 龙骑
 function c101101053.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

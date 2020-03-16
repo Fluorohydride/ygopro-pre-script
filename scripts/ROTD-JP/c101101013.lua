@@ -1,4 +1,6 @@
---焰圣骑士-奥吉尔
+--焔聖騎士－オジエ
+--
+--Script by 龙骑
 function c101101013.initial_effect(c)
 	--tograve
 	local e1=Effect.CreateEffect(c)

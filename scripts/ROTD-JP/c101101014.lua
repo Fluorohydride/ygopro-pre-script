@@ -1,4 +1,6 @@
---焰圣骑士-奥利佛
+--焔聖騎士－オリヴィエ
+--
+--Script by 龙骑
 function c101101014.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---『焰圣剑-咎瓦尤斯』
+--『焔聖剣－ジョワユーズ』
+--
+--Script by 龙骑
 function c101101055.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

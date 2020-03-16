@@ -1,4 +1,6 @@
---焰圣骑士-阿斯托尔福
+--焔聖騎士－アストルフォ
+--
+--Script by 龙骑
 function c101101012.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
