@@ -7,6 +7,7 @@ function c101101013.initial_effect(c)
 	e1:SetDescription(aux.Stringid(101101013,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,101101013)
 	e1:SetTarget(c101101013.tgtg)
@@ -46,12 +47,15 @@ function c101101013.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
+function c101101013.eqfilter(c)
+	return c:IsFaceup() and c:IsRace(RACE_WARRIOR)
+end
 function c101101013.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101101013.eqfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(Card.IsRace,tp,LOCATION_MZONE,0,1,nil,RACE_WARRIOR) end
+		and Duel.IsExistingTarget(c101101013.eqfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,Card.IsRace,tp,LOCATION_MZONE,0,1,1,nil,RACE_WARRIOR)
+	Duel.SelectTarget(tp,c101101013.eqfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function c101101013.eqop(e,tp,eg,ep,ev,re,r,rp)

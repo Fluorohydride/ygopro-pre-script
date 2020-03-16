@@ -15,14 +15,14 @@ function c101101012.initial_effect(c)
 	c:RegisterEffect(e1)
 	--remove spsummon
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101101012,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1,101101112+EFFECT_COUNT_CODE_DUEL)
 	e2:SetCost(aux.bfgcost)
 	e2:SetOperation(c101101012.spop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function c101101012.costfilter(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToRemoveAsCost()
@@ -44,7 +44,7 @@ function c101101012.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local lv=e:GetLabel()
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==1
-		and lv>0 and c:GetLevel()~=lv and Duel.SelectYesNo(aux.Stringid(101101012,1)) then
+		and lv>0 and c:GetLevel()~=lv and Duel.SelectYesNo(aux.Stringid(101101012,2)) then
 		Duel.BreakEffect()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -82,13 +82,13 @@ function c101101012.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local ct=c:GetTurnCounter()
 	ct=ct+1
 	c:SetTurnCounter(ct)
-	if ct==2 and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if ct==2 and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101101012.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
+ 		and Duel.SelectYesNo(aux.Stringid(101101012,3)) then
 		Duel.BreakEffect()
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101101012.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
-		if g:GetCount()>0 then
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		end		
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

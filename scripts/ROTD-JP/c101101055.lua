@@ -39,7 +39,7 @@ function c101101055.initial_effect(c)
 	e4:SetCondition(c101101055.spcon)
 	e4:SetTarget(c101101055.sptg)
 	e4:SetOperation(c101101055.spop)
-	c:RegisterEffect(e4)	
+	c:RegisterEffect(e4)
 end
 function c101101055.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end

@@ -23,7 +23,7 @@ function c101101072.spfilter(c,e,tp)
 end
 function c101101072.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101101072.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	local g1=Duel.GetMatchingGroup(c101101072.desfilter,tp,LOCATION_MZONE,0,nil)	
+	local g1=Duel.GetMatchingGroup(c101101072.desfilter,tp,LOCATION_MZONE,0,nil)
 	local b1=Duel.IsExistingMatchingCard(c101101072.rmfilter,tp,LOCATION_GRAVE+LOCATION_SZONE,0,1,nil)
 	local b2=Duel.IsExistingMatchingCard(c101101072.desfilter,tp,LOCATION_MZONE,0,1,nil) and g:CheckWithSumEqual(Card.GetLevel,9,1,3)
 	if chk==0 then return b1 or b2 end
