@@ -34,9 +34,9 @@ function c101101015.cfilter(c)
 	return ((c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE)) or c:IsSetCard(0x207a)) and c:IsAbleToDeckAsCost()
 end
 function c101101015.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101101015.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,3,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101101015.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,3,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,c101101015.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,3,3,nil)
+	local g=Duel.SelectMatchingCard(tp,c101101015.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,3,3,e:GetHandler())
 	Duel.SendtoDeck(g,nil,3,REASON_COST)
 end
 function c101101015.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
