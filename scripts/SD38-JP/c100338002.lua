@@ -53,7 +53,7 @@ function c100338002.countop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100338002.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg=g:SelectSubGroup(tp,c100338002.fselect,false,1,g:GetCount(),c)
-	if sg:GetCount()>0 and Duel.SendtoGrave(sg,REASON_EFFECT)~=0 then
+	if sg and sg:GetCount()>0 and Duel.SendtoGrave(sg,REASON_EFFECT)~=0 then
 		if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 		local og=Duel.GetOperatedGroup()
 		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
