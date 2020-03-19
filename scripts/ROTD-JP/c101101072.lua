@@ -29,7 +29,7 @@ end
 function c101101072.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101101072.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	local g1=Duel.GetMatchingGroup(c101101072.desfilter,tp,LOCATION_MZONE,0,nil,tp,g)
-	local b1=Duel.IsExistingMatchingCard(c101101072.rmfilter,tp,LOCATION_GRAVE+LOCATION_SZONE,0,1,nil)
+	local b1=Duel.IsExistingMatchingCard(c101101072.rmfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil)
 	local b2=g:GetCount()>0 and Duel.IsExistingMatchingCard(c101101072.desfilter,tp,LOCATION_MZONE,0,1,nil,tp,g)
 	if chk==0 then return b1 or b2 end
 	local op=0
@@ -55,13 +55,15 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101101072.rmfilter),tp,LOCATION_SZONE+LOCATION_GRAVE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101101072.rmfilter),tp,LOCATION_SZONE+LOCATION_ONFIELD,0,1,1,nil)
+		local exc=nil
+		if e:IsHasType(EFFECT_TYPE_ACTIVATE) then exc=e:GetHandler() end
 		if g:GetCount()>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0
-			and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+			and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,exc)
 			and Duel.SelectYesNo(tp,aux.Stringid(101101072,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+			local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,exc)
 			Duel.HintSelection(g)
 			Duel.Destroy(g,REASON_EFFECT)
 		end
