@@ -29,16 +29,15 @@ function c101101014.initial_effect(c)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
 end
-function c101101014.cfilter(c,ft)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and ((c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE)) or c:GetType()==TYPE_EQUIP+TYPE_SPELL) and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
+function c101101014.cfilter(c,tp)
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
+		and ((c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE)) or c:GetType()==TYPE_EQUIP+TYPE_SPELL)
+		and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function c101101014.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local loc=LOCATION_HAND+LOCATION_ONFIELD
-	if ft==0 then loc=LOCATION_MZONE end
-	if chk==0 then return ft>-1 and Duel.IsExistingMatchingCard(c101101014.cfilter,tp,loc,0,1,e:GetHandler(),ft) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101101014.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler(),tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c101101014.cfilter,tp,loc,0,1,1,e:GetHandler(),ft)
+	local g=Duel.SelectMatchingCard(tp,c101101014.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler(),tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c101101014.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -53,7 +52,7 @@ function c101101014.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end
@@ -66,24 +65,25 @@ function c101101014.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(c101101014.eqfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,c101101014.eqfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function c101101014.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRelateToEffect(e) then
-		Duel.Equip(tp,c,tc)
+		if not Duel.Equip(tp,c,tc) then return end
 		--equip limit
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetLabelObject(tc)
 		e1:SetValue(c101101014.eqlimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
 function c101101014.eqlimit(e,c)
-	local tp=e:GetHandlerPlayer()
-	return c:IsControler(tp)
+	return c==e:GetLabelObject()
 end
