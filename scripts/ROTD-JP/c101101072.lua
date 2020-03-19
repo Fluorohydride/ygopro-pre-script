@@ -6,7 +6,7 @@ function c101101072.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCountLimit(1,101101072+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c101101072.target)
 	e1:SetOperation(c101101072.activate)
@@ -55,7 +55,7 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101101072.rmfilter),tp,LOCATION_SZONE+LOCATION_ONFIELD,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101101072.rmfilter),tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,1,nil)
 		local exc=nil
 		if e:IsHasType(EFFECT_TYPE_ACTIVATE) then exc=e:GetHandler() end
 		if g:GetCount()>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0
