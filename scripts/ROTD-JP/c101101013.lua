@@ -34,7 +34,8 @@ function c101101013.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101101013.tgfilter(c)
-	return ((c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE)) or c:IsSetCard(0x207a)) and not c:IsCode(101101013) and c:IsAbleToGrave()
+	return ((c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE)) or c:IsSetCard(0x207a)) and not c:IsCode(101101013)
+		and c:IsAbleToGrave()
 end
 function c101101013.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101101013.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -56,6 +57,7 @@ function c101101013.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(c101101013.eqfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,c101101013.eqfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function c101101013.eqop(e,tp,eg,ep,ev,re,r,rp)
@@ -68,12 +70,12 @@ function c101101013.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetLabelObject(tc)
 		e1:SetValue(c101101013.eqlimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
 function c101101013.eqlimit(e,c)
-	local tp=e:GetHandlerPlayer()
-	return c:IsControler(tp)
+	return c==e:GetLabelObject()
 end
