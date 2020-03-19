@@ -59,12 +59,11 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetCount()>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0
 			and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(101101072,2)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-			if g:GetCount()>0 then
-				Duel.HintSelection(g)
-				Duel.Destroy(g,REASON_EFFECT)
-			end
+			Duel.HintSelection(g)
+			Duel.Destroy(g,REASON_EFFECT)
 		end
 	else
 		local g=Duel.GetMatchingGroup(c101101072.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
@@ -78,22 +77,24 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
 				if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local sg=g:SelectSubGroup(tp,c101101072.spcheck,false,1,ft)
-				local tc=sg:GetFirst()
-				for tc in aux.Next(sg) do
-					if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
-						local e1=Effect.CreateEffect(c)
-						e1:SetType(EFFECT_TYPE_SINGLE)
-						e1:SetCode(EFFECT_DISABLE)
-						e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-						tc:RegisterEffect(e1)
-						local e2=Effect.CreateEffect(c)
-						e2:SetType(EFFECT_TYPE_SINGLE)
-						e2:SetCode(EFFECT_DISABLE_EFFECT)
-						e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-						tc:RegisterEffect(e2)
+				if sg then
+					local tc=sg:GetFirst()
+					for tc in aux.Next(sg) do
+						if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+							local e1=Effect.CreateEffect(c)
+							e1:SetType(EFFECT_TYPE_SINGLE)
+							e1:SetCode(EFFECT_DISABLE)
+							e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+							tc:RegisterEffect(e1)
+							local e2=Effect.CreateEffect(c)
+							e2:SetType(EFFECT_TYPE_SINGLE)
+							e2:SetCode(EFFECT_DISABLE_EFFECT)
+							e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+							tc:RegisterEffect(e2)
+						end
 					end
+					Duel.SpecialSummonComplete()
 				end
-				Duel.SpecialSummonComplete()
 			end
 		end
 	end
