@@ -70,6 +70,8 @@ function c101101050.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 		if tc:IsFaceup() and tc:IsCode(66889139) then
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(aux.Stringid(101101050,0))
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(2600)
