@@ -13,19 +13,24 @@ function c101101072.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101101072.rmfilter(c)
-	return c:GetType()==TYPE_EQUIP+TYPE_SPELL and c:IsAbleToRemove()
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup() or c:GetEquipTarget()) and c:GetType()==TYPE_EQUIP+TYPE_SPELL
+		and c:IsAbleToRemove()
 end
-function c101101072.desfilter(c)
-	return c:IsSetCard(0x247) and c:IsType(TYPE_MONSTER)
+function c101101072.desfilter(c,tp,g)
+	local ft=math.min(Duel.GetMZoneCount(tp,c),3)
+	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+	return c:IsFaceup() and c:IsSetCard(0x247) and c:IsType(TYPE_MONSTER)
+		and (not g or ft>0 and g:CheckWithSumEqual(Card.GetLevel,9,1,ft))
 end
 function c101101072.spfilter(c,e,tp)
-	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsLevelBelow(9) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsLevelBelow(9)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101101072.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101101072.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	local g1=Duel.GetMatchingGroup(c101101072.desfilter,tp,LOCATION_MZONE,0,nil)
+	local g1=Duel.GetMatchingGroup(c101101072.desfilter,tp,LOCATION_MZONE,0,nil,tp,g)
 	local b1=Duel.IsExistingMatchingCard(c101101072.rmfilter,tp,LOCATION_GRAVE+LOCATION_SZONE,0,1,nil)
-	local b2=Duel.IsExistingMatchingCard(c101101072.desfilter,tp,LOCATION_MZONE,0,1,nil) and g:CheckWithSumEqual(Card.GetLevel,9,1,3)
+	local b2=g:GetCount()>0 and Duel.IsExistingMatchingCard(c101101072.desfilter,tp,LOCATION_MZONE,0,1,nil,tp,g)
 	if chk==0 then return b1 or b2 end
 	local op=0
 	if b1 and b2 then
@@ -35,7 +40,7 @@ function c101101072.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	else op=Duel.SelectOption(tp,aux.Stringid(101101072,1))+1 end
 	e:SetLabel(op)
 	if op==0 then
-		e:SetCategory(CATEGORY_REMOVE)
+		e:SetCategory(CATEGORY_REMOVE+CATEGORY_DESTROY)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
 	else
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
@@ -51,7 +56,9 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101101072.rmfilter),tp,LOCATION_SZONE+LOCATION_GRAVE,0,1,1,nil)
-		if g:GetCount()>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT) and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101101072,2)) then
+		if g:GetCount()>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0
+			and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+			and Duel.SelectYesNo(tp,aux.Stringid(101101072,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 			if g:GetCount()>0 then
@@ -60,35 +67,35 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	else
+		local g=Duel.GetMatchingGroup(c101101072.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectMatchingCard(tp,c101101072.desfilter,tp,LOCATION_MZONE,0,1,1,nil)
-		if g:GetCount()>0 then
-			Duel.HintSelection(g)
-			Duel.Destroy(g,REASON_EFFECT)
-			Duel.BreakEffect()
+		local dg=Duel.SelectMatchingCard(tp,c101101072.desfilter,tp,LOCATION_MZONE,0,1,1,nil,tp,g)
+		if dg:GetCount()>0 then
+			Duel.HintSelection(dg)
 			local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-			if ft<=0 then return end
-			if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-			local g=Duel.GetMatchingGroup(c101101072.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=g:SelectSubGroup(tp,c101101072.spcheck,false,1,ft)
-			local tc=sg:GetFirst()
-			for tc in aux.Next(sg) do
-				if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
-					local e1=Effect.CreateEffect(c)
-					e1:SetType(EFFECT_TYPE_SINGLE)
-					e1:SetCode(EFFECT_DISABLE)
-					e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-					tc:RegisterEffect(e1)
-					local e2=Effect.CreateEffect(c)
-					e2:SetType(EFFECT_TYPE_SINGLE)
-					e2:SetCode(EFFECT_DISABLE_EFFECT)
-					e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-					tc:RegisterEffect(e2)
+			if Duel.Destroy(dg,REASON_EFFECT)~=0 and ft>0 and g:GetCount()>0 then
+				Duel.BreakEffect()
+				if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+				local sg=g:SelectSubGroup(tp,c101101072.spcheck,false,1,ft)
+				local tc=sg:GetFirst()
+				for tc in aux.Next(sg) do
+					if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+						local e1=Effect.CreateEffect(c)
+						e1:SetType(EFFECT_TYPE_SINGLE)
+						e1:SetCode(EFFECT_DISABLE)
+						e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+						tc:RegisterEffect(e1)
+						local e2=Effect.CreateEffect(c)
+						e2:SetType(EFFECT_TYPE_SINGLE)
+						e2:SetCode(EFFECT_DISABLE_EFFECT)
+						e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+						tc:RegisterEffect(e2)
+					end
 				end
+				Duel.SpecialSummonComplete()
 			end
 		end
-		Duel.SpecialSummonComplete()
 	end
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetType(EFFECT_TYPE_FIELD)
