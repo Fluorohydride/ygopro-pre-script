@@ -138,7 +138,8 @@ function c100338035.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
 function c100338035.rmtg(e,c)
-	return c:GetOwner()~=e:GetHandlerPlayer() and c:IsType(TYPE_MONSTER)
+	return c:GetOwner()~=e:GetHandlerPlayer() and not c:IsLocation(LOCATION_OVERLAY)
+		and not c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c100338035.rmcon(e)
 	local tp=e:GetHandlerPlayer()
