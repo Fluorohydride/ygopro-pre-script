@@ -73,29 +73,32 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.SelectMatchingCard(tp,c101101072.desfilter,tp,LOCATION_MZONE,0,1,1,nil,tp,g)
 		if dg:GetCount()>0 then
 			Duel.HintSelection(dg)
-			local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-			if Duel.Destroy(dg,REASON_EFFECT)~=0 and ft>0 and g:GetCount()>0 then
-				Duel.BreakEffect()
-				if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local sg=g:SelectSubGroup(tp,c101101072.spcheck,false,1,ft)
-				if sg then
-					local tc=sg:GetFirst()
-					for tc in aux.Next(sg) do
-						if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
-							local e1=Effect.CreateEffect(c)
-							e1:SetType(EFFECT_TYPE_SINGLE)
-							e1:SetCode(EFFECT_DISABLE)
-							e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-							tc:RegisterEffect(e1)
-							local e2=Effect.CreateEffect(c)
-							e2:SetType(EFFECT_TYPE_SINGLE)
-							e2:SetCode(EFFECT_DISABLE_EFFECT)
-							e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-							tc:RegisterEffect(e2)
+			if Duel.Destroy(dg,REASON_EFFECT)~=0 then
+				local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+				g=Duel.GetMatchingGroup(c101101072.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
+				if ft>0 and g:GetCount()>0 then
+					Duel.BreakEffect()
+					if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+					local sg=g:SelectSubGroup(tp,c101101072.spcheck,false,1,ft)
+					if sg then
+						local tc=sg:GetFirst()
+						for tc in aux.Next(sg) do
+							if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+								local e1=Effect.CreateEffect(c)
+								e1:SetType(EFFECT_TYPE_SINGLE)
+								e1:SetCode(EFFECT_DISABLE)
+								e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+								tc:RegisterEffect(e1)
+								local e2=Effect.CreateEffect(c)
+								e2:SetType(EFFECT_TYPE_SINGLE)
+								e2:SetCode(EFFECT_DISABLE_EFFECT)
+								e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+								tc:RegisterEffect(e2)
+							end
 						end
+						Duel.SpecialSummonComplete()
 					end
-					Duel.SpecialSummonComplete()
 				end
 			end
 		end
