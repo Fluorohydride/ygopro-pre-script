@@ -74,7 +74,7 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
 		if dg:GetCount()>0 then
 			Duel.HintSelection(dg)
 			if Duel.Destroy(dg,REASON_EFFECT)~=0 then
-				local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+				local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),3)
 				g=Duel.GetMatchingGroup(c101101072.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 				if ft>0 and g:GetCount()>0 then
 					Duel.BreakEffect()
