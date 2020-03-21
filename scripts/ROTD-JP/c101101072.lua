@@ -17,7 +17,7 @@ function c101101072.rmfilter(c)
 		and c:IsAbleToRemove()
 end
 function c101101072.desfilter(c,tp,g)
-	local ft=math.min(Duel.GetMZoneCount(tp,c),3)
+	local ft=math.min((Duel.GetMZoneCount(tp,c)),3)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	return c:IsFaceup() and c:IsSetCard(0x247) and c:IsType(TYPE_MONSTER)
 		and (not g or ft>0 and g:CheckWithSumEqual(Card.GetLevel,9,1,ft))
@@ -74,7 +74,7 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
 		if dg:GetCount()>0 then
 			Duel.HintSelection(dg)
 			if Duel.Destroy(dg,REASON_EFFECT)~=0 then
-				local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),3)
+				local ft=math.min((Duel.GetLocationCount(tp,LOCATION_MZONE)),3)
 				g=Duel.GetMatchingGroup(c101101072.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 				if ft>0 and g:GetCount()>0 then
 					Duel.BreakEffect()
