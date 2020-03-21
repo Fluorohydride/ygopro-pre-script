@@ -45,12 +45,12 @@ end
 function c6007213.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local check=Duel.IsPlayerAffectedByEffect(tp,100338034)
+	local check=Duel.IsPlayerAffectedByEffect(tp,16317140)
 	local g=Duel.GetMatchingGroup(c6007213.spfilter,tp,LOCATION_ONFIELD,0,nil,check)
 	return g:CheckSubGroup(aux.mzctcheck,3,3,tp)
 end
 function c6007213.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local check=Duel.IsPlayerAffectedByEffect(tp,100338034)
+	local check=Duel.IsPlayerAffectedByEffect(tp,16317140)
 	local g=Duel.GetMatchingGroup(c6007213.spfilter,tp,LOCATION_ONFIELD,0,nil,check)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg=g:SelectSubGroup(tp,aux.mzctcheck,true,3,3,tp)
