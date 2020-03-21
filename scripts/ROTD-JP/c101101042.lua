@@ -9,7 +9,7 @@ function c101101042.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101101042,0))
 	e1:SetCategory(CATEGORY_DESTROY)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_EQUIP)
 	e1:SetRange(LOCATION_MZONE)
@@ -20,6 +20,7 @@ function c101101042.initial_effect(c)
 	--equip
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101101042,1))
+	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetRange(LOCATION_MZONE)
@@ -42,28 +43,31 @@ function c101101042.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end
-function c101101042.eqfilter(c,ec)
-	return c:IsType(TYPE_EQUIP) and c:CheckEquipTarget(ec)
+function c101101042.eqfilter(c,ec,tp)
+	return c:IsType(TYPE_EQUIP) and c:CheckEquipTarget(ec) and c:CheckUniqueOnField(tp,LOCATION_SZONE) and not c:IsForbidden()
 end
-function c101101042.eqfilter2(c)
-	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE) and not c:IsForbidden()
+function c101101042.eqfilter2(c,tp)
+	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE) and c:CheckUniqueOnField(tp,LOCATION_SZONE) and not c:IsForbidden()
 end
 function c101101042.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingMatchingCard(c101101042.eqfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,c,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c101101042.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101101042.eqfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,c)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101101042.eqfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,c,tp)
 	local tc=g:GetFirst()
 	if tc then
-		Duel.Equip(tp,tc,c)
-		Duel.BreakEffect()
-		if Duel.IsExistingMatchingCard(c101101042.eqfilter2,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(101101042,2)) then
+		if not Duel.Equip(tp,tc,c) then return end
+		if Duel.IsExistingMatchingCard(c101101042.eqfilter2,tp,LOCATION_DECK,0,1,nil,tp)
+			and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(101101042,2)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-			local g=Duel.SelectMatchingCard(tp,c101101042.eqfilter2,tp,LOCATION_DECK,0,1,1,tp)
+			local g=Duel.SelectMatchingCard(tp,c101101042.eqfilter2,tp,LOCATION_DECK,0,1,1,nil,tp)
 			local tc=g:GetFirst()
 			if not Duel.Equip(tp,tc,c) then return end
 			--equip limit

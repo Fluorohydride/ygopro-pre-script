@@ -58,7 +58,7 @@ function c101101041.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c101101041.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101101041.tgfilter2,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(c101101041.thfilter2,tp,LOCATION_DECK,0,1,nil)
+	return Duel.IsExistingMatchingCard(c101101041.tgfilter2,tp,LOCATION_DECK,0,1,nil)
 end
 function c101101041.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,101101041)
@@ -78,23 +78,29 @@ end
 function c101101041.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
+function c101101041.eqfilter(c)
+	return c:IsFaceup() and c:IsRace(RACE_WARRIOR)
+end
 function c101101041.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101101041.eqfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(Card.IsRace,tp,LOCATION_MZONE,0,1,nil,RACE_WARRIOR) end
+		and Duel.IsExistingTarget(c101101041.eqfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,Card.IsRace,tp,LOCATION_MZONE,0,1,1,nil,RACE_WARRIOR)
+	Duel.SelectTarget(tp,c101101041.eqfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function c101101041.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		Duel.Equip(tp,c,tc)
+	if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsControler(tp) then
+		if not Duel.Equip(tp,c,tc) then return end
 		--equip limit
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetLabelObject(tc)
 		e1:SetValue(c101101041.eqlimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
@@ -107,6 +113,5 @@ function c101101041.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101101041.eqlimit(e,c)
-	local tp=e:GetHandlerPlayer()
-	return c:IsControler(tp)
+	return c==e:GetLabelObject()
 end
