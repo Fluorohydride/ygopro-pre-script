@@ -25,29 +25,32 @@ function c100265054.efilter(e,te)
 	local c=te:GetHandler()
 	return c:GetType()==TYPE_TRAP and c:IsSetCard(0x4c,0x89)
 end
-function c100265054.setfilter(c,tp,code)
-	return c:IsSetCard(0x4c,0x89) and c:GetType()==TYPE_TRAP and c:IsSSetable() and (code==nil or c:GetCode()~=code)
-		and (c:IsLocation(LOCATION_GRAVE) or Duel.IsExistingMatchingCard(c100265054.setfilter,tp,LOCATION_GRAVE,0,1,c,c:GetCode()))
+function c100265054.setfilter(c)
+	return c:IsSetCard(0x4c,0x89) and c:GetType()==TYPE_TRAP and c:IsSSetable()
+end
+function c100265054.fselect(g)
+	return g:GetClassCount(Card.GetLocation)==g:GetCount() and not g:IsExists(c100265054.fcheck,1,nil,g)
+end
+function c100265054.fcheck(c,g)
+	return g:IsExists(Card.IsCode,1,c,c:GetCode())
 end
 function c100265054.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c100265054.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>=2 and Duel.IsExistingMatchingCard(c100265054.setfilter,tp,LOCATION_DECK,0,1,nil,tp,nil) end
+	local g=Duel.GetMatchingGroup(c100265054.setfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>=2 and g:CheckSubGroup(c100265054.fselect,2,2) end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 end
 function c100265054.setop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<2 then return end
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100265054.setfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g1=Duel.SelectMatchingCard(tp,c100265054.setfilter,tp,LOCATION_DECK,0,1,1,nil,tp,nil)
-	if #g1<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100265054.setfilter),tp,LOCATION_GRAVE,0,1,1,g1:GetFirst(),tp,g1:GetFirst():GetCode())
-	g1:Merge(g2)
-	if #g1==2 then
-		if Duel.SSet(tp,g1)==0 then return end
-		local tc=g1:GetFirst()
+	local sg=g:SelectSubGroup(tp,c100265054.fselect,false,2,2)
+	if sg and #sg==2 then
+		if Duel.SSet(tp,sg)==0 then return end
+		local tc=sg:GetFirst()
 		while tc do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -56,7 +59,7 @@ function c100265054.setop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(LOCATION_REMOVED)
 			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 			tc:RegisterEffect(e1)
-			tc=g1:GetNext()
+			tc=sg:GetNext()
 		end
 	end
 end
