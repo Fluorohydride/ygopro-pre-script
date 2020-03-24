@@ -19,7 +19,7 @@ end
 function c101101072.desfilter(c,tp,g)
 	local ft=math.min((Duel.GetMZoneCount(tp,c)),3)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	return c:IsFaceup() and c:IsSetCard(0x247) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x247)
 		and (not g or ft>0 and g:CheckWithSumEqual(Card.GetLevel,9,1,ft))
 end
 function c101101072.spfilter(c,e,tp)
@@ -28,7 +28,7 @@ function c101101072.spfilter(c,e,tp)
 end
 function c101101072.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101101072.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	local g1=Duel.GetMatchingGroup(c101101072.desfilter,tp,LOCATION_MZONE,0,nil,tp,g)
+	local g1=Duel.GetMatchingGroup(c101101072.desfilter,tp,LOCATION_MZONE,0,nil,tp)
 	local b1=Duel.IsExistingMatchingCard(c101101072.rmfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil)
 	local b2=g:GetCount()>0 and Duel.IsExistingMatchingCard(c101101072.desfilter,tp,LOCATION_MZONE,0,1,nil,tp,g)
 	if chk==0 then return b1 or b2 end
@@ -75,10 +75,10 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.HintSelection(dg)
 			if Duel.Destroy(dg,REASON_EFFECT)~=0 then
 				local ft=math.min((Duel.GetLocationCount(tp,LOCATION_MZONE)),3)
+				if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 				g=Duel.GetMatchingGroup(c101101072.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-				if ft>0 and g:GetCount()>0 then
+				if ft>0 and g:CheckWithSumEqual(Card.GetLevel,9,1,ft) then
 					Duel.BreakEffect()
-					if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 					local sg=g:SelectSubGroup(tp,c101101072.spcheck,false,1,ft)
 					if sg then
