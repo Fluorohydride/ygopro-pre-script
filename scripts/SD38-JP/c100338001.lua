@@ -30,7 +30,7 @@ function c100338001.initial_effect(c)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP)
 	e3:SetCountLimit(1,100338001)
-	e3:SetCondition(c100338001.atkcon)
+	e3:SetCondition(aux.dscon)
 	e3:SetCost(c100338001.atkcost)
 	e3:SetTarget(c100338001.atktg)
 	e3:SetOperation(c100338001.atkop)
@@ -47,19 +47,16 @@ function c100338001.initial_effect(c)
 	e4:SetOperation(c100338001.thop)
 	c:RegisterEffect(e4)
 end
-function c100338001.fselect(g,tp)
-	return Duel.GetMZoneCount(tp,g)>0
-end
 function c100338001.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetReleaseGroup(tp)
-	return rg:CheckSubGroup(c100338001.fselect,3,3,tp)
+	return rg:CheckSubGroup(aux.mzctcheckrel,3,3,tp)
 end
 function c100338001.sprtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local rg=Duel.GetReleaseGroup(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local sg=rg:SelectSubGroup(tp,c100338001.fselect,true,3,3,tp)
+	local sg=rg:SelectSubGroup(tp,aux.mzctcheckrel,true,3,3,tp)
 	if sg then
 		sg:KeepAlive()
 		e:SetLabelObject(sg)
@@ -70,9 +67,6 @@ function c100338001.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
-end
-function c100338001.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function c100338001.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end

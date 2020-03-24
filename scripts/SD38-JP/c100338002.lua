@@ -57,7 +57,7 @@ function c100338002.countop(e,tp,eg,ep,ev,re,r,rp)
 		if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 		local og=Duel.GetOperatedGroup()
 		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
-		if ct>0 and c:AddCounter(0x57,ct) then
+		if ct>0 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
@@ -70,10 +70,11 @@ function c100338002.countop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100338002.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE+REASON_EFFECT)
-		and e:GetHandler():IsCanRemoveCounter(tp,0x57,1,REASON_EFFECT)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+		and c:IsCanRemoveCounter(tp,0x57,1,REASON_EFFECT)
 	end
-	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
+	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function c100338002.repop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(tp,0x57,1,REASON_EFFECT)
