@@ -29,10 +29,7 @@ function c100265054.setfilter(c)
 	return c:IsSetCard(0x4c,0x89) and c:GetType()==TYPE_TRAP and c:IsSSetable()
 end
 function c100265054.fselect(g)
-	return g:GetClassCount(Card.GetLocation)==g:GetCount() and not g:IsExists(c100265054.fcheck,1,nil,g)
-end
-function c100265054.fcheck(c,g)
-	return g:IsExists(Card.IsCode,1,c,c:GetCode())
+	return g:GetClassCount(Card.GetLocation)==g:GetCount() and aux.dncheck(g)
 end
 function c100265054.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
