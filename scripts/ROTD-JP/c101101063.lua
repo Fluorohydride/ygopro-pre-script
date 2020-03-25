@@ -21,10 +21,10 @@ function c101101063.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,c101101063.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
 end
 function c101101063.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local code=tc:GetOriginalCodeRule()
-		local c=e:GetHandler()
 		--disable
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -34,13 +34,15 @@ function c101101063.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(c101101063.disop)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
+	end
+	if tc:IsRelateToEffect(e) then
 		--redirect
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_TO_GRAVE_REDIRECT)
 		e2:SetValue(LOCATION_HAND)
-		e2:SetCondition(c101101063.rmcon)
+		e2:SetCondition(c101101063.recon)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
 	end
@@ -53,6 +55,6 @@ end
 function c101101063.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
-function c101101063.rmcon(e)
+function c101101063.recon(e)
 	return e:GetHandler():GetOwner()~=e:GetOwnerPlayer()
 end
