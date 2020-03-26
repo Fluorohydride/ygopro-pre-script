@@ -16,6 +16,7 @@ function c101101063.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL)
 end
 function c101101063.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c101101063.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101101063.filter,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c101101063.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
