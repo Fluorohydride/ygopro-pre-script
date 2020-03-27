@@ -2,14 +2,11 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **March 19, 2020** : The Valuable Book 22 (VB22-JP) : `100264XXX`
-- **March 20, 2020** : Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
-- **March 20, 2020** : Duel Overload (DUOV-EN) : `100265XXX`
 - **April 18, 2020** : RISE OF THE DUELIST (ROTD-JP) : `101101XXX`
 - **May 16, 2020** :Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
+- **June 6, 2020** :Collectors Pack 2020 (CP20-JP) : `100266XXX`
 
 # Announced
-- **June 6, 2020** :Collectors Pack 2020 (CP20-JP) : `100266XXX`
 
 # Archived
 ## Other packs
@@ -80,6 +77,8 @@
 - Jump Festa Limited Pack 2019 (JF20-JP) : `100261XXX`
 - Yu-Gi-Oh! OCG Structures Volume 1 promotional card (YO01-JP) : `100262XXX`
 - Master Guide 6 promotional cards (MG06-JP) : `100263XXX`
+- The Valuable Book 22 (VB22-JP) : `100264XXX`
+- Duel Overload (DUOV-EN) : `100265XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -106,6 +105,7 @@
 - Structure Deck: Soulburner (SD35-JP) : `100335XXX`
 - Structure Deck: Revolver (SD36-JP) : `100336XXX`
 - Structure Deck: Rebirth of Shaddoll (SD37-JP) : `100337XXX`
+- Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
