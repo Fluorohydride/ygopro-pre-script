@@ -45,7 +45,8 @@ function c101101063.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(LOCATION_HAND)
 		e2:SetCondition(c101101063.recon)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e2)
+		e2:SetOwnerPlayer(tp)
+		tc:RegisterEffect(e2,true)
 	end
 end
 function c101101063.discon(e,tp,eg,ep,ev,re,r,rp)
