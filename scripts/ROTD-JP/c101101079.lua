@@ -63,6 +63,7 @@ function c101101079.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local sg=g:SelectSubGroup(tp,c101101079.fselect,false,2,2)
+			Duel.HintSelection(sg)
 			Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 		end
 	end
