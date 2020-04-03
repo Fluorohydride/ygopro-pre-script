@@ -39,6 +39,7 @@ function c101101075.costfilter(c,e,tp)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsSetCard(0xef) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and res
 end
 function c101101075.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(100,0)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101101075.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101101075.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,e,tp)
@@ -59,6 +60,7 @@ function c101101075.target(e,tp,eg,ep,ev,re,r,rp,chk)
 				res=Duel.IsExistingMatchingCard(c101101075.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,chkf)
 			end
 		end
+		e:SetLabel(0,0)
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
