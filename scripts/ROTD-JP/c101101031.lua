@@ -18,7 +18,7 @@ function c101101031.initial_effect(c)
 end
 function c101101031.cfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
-		and (c:GetTextAttack()==1600 or c:GetTextDefense()==1600)
+		and (c:GetBaseAttack()==1600 or c:GetBaseDefense()==1600)
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()==1-tp)
 end
 function c101101031.spcon(e,tp,eg,ep,ev,re,r,rp)
