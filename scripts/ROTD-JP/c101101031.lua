@@ -17,7 +17,7 @@ function c101101031.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101101031.cfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 		and (c:GetBaseAttack()==1600 or c:GetBaseDefense()==1600)
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()==1-tp)
 end
