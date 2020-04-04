@@ -63,14 +63,16 @@ function c101101074.desop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Destroy(sc,REASON_EFFECT)
 		end
 	else
-		Duel.BreakEffect()
 		local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		local sc=g:Select(tp,1,1,nil)
-		if Duel.SelectOption(tp,aux.Stringid(101101074,3),aux.Stringid(101101074,4))==0 then
-			Duel.SendtoDeck(sc,nil,0,REASON_EFFECT)
-		else
-			Duel.SendtoDeck(sc,nil,1,REASON_EFFECT)
+		if g:GetCount()>0 then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+			local sc=g:Select(tp,1,1,nil)
+			if Duel.SelectOption(tp,aux.Stringid(101101074,3),aux.Stringid(101101074,4))==0 then
+				Duel.SendtoDeck(sc,nil,0,REASON_EFFECT)
+			else
+				Duel.SendtoDeck(sc,nil,1,REASON_EFFECT)
+			end
 		end
 	end
 end
