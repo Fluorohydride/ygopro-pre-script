@@ -47,6 +47,7 @@ function c101101075.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c101101075.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local label,rec=e:GetLabel()
 	if chk==0 then
 		local chkf=tp
 		local mg1=Duel.GetFusionMaterial(tp)
@@ -61,10 +62,9 @@ function c101101075.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			end
 		end
 		e:SetLabel(0,0)
-		return res
+		return label==100 or res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
-	local label,rec=e:GetLabel()
 	local cat=e:GetCategory()
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) and label==100 and rec>0 then
 		e:SetCategory(bit.bor(cat,CATEGORY_RECOVER))
