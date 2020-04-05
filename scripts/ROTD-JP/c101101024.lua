@@ -17,28 +17,58 @@ function c101101024.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-function c101101024.spfilter(c,e,tp)
-	return c:IsSetCard(0xef) and c:IsLevelAbove(1) and not c:IsCode(101101024) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp) and Duel.IsExistingMatchingCard(c101101024.thfilter,tp,LOCATION_DECK,0,1,c,c:GetLevel())
+function c101101024.filter(c)
+	return c:IsSetCard(0xef) and not c:IsCode(101101024) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(1)
 end
-function c101101024.thfilter(c,lv)
-	return c:IsSetCard(0xef) and c:IsLevelAbove(1) and c:IsType(TYPE_MONSTER) and not c:IsCode(101101024) and not c:IsLevel(lv) and c:IsAbleToHand()
+function c101101024.fselect(g,e,tp)
+	return aux.dlvcheck(g) and g:IsExists(c101101024.fcheck,1,nil,g,e,tp)
+end
+function c101101024.fcheck(c,g,e,tp)
+	return c:IsLocation(LOCATION_HAND+LOCATION_DECK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp)
+		and g:IsExists(c101101024.fcheck2,1,c)
+end
+function c101101024.fcheck2(c)
+	return c:IsLocation(LOCATION_DECK) and c:IsAbleToHand()
 end
 function c101101024.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 and Duel.IsExistingMatchingCard(c101101024.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
+	local g=Duel.GetMatchingGroup(c101101024.filter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
+	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 and g:CheckSubGroup(c101101024.fselect,2,2,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
+function c101101024.cfilter(c,e,tp)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp)
+		and (c:IsLocation(LOCATION_HAND) or not c:IsAbleToHand())
+end
+function c101101024.cfilter2(c,e,tp)
+	return not c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp)
+		and c:IsLocation(LOCATION_DECK) and c:IsAbleToHand()
+end
 function c101101024.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,c101101024.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
-		local tc=g:GetFirst()
-		if tc then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local g2=Duel.SelectMatchingCard(tp,c101101024.thfilter,tp,LOCATION_DECK,0,1,1,tc,tc:GetLevel())
-			if Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)~=0 then
-				Duel.SendtoHand(g2,nil,REASON_EFFECT)
-				Duel.ConfirmCards(1-tp,g2)
+		local g=Duel.GetMatchingGroup(c101101024.filter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
+		local sc=nil
+		local hc=nil
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
+		local sg=g:SelectSubGroup(tp,c101101024.fselect,false,2,2,e,tp)
+		if sg and sg:GetCount()==2 then
+			if sg:IsExists(c101101024.cfilter,1,nil,e,tp) then
+				sc=sg:Filter(c101101024.cfilter,nil,e,tp):GetFirst()
+				hc=sg:GetFirst()
+				if hc==sc then hc=sg:GetNext() end
+			elseif sg:IsExists(c101101024.cfilter2,1,nil,e,tp) then
+				hc=sg:Filter(c101101024.cfilter2,nil,e,tp):GetFirst()
+				sc=sg:GetFirst()
+				if sc==hc then sc=sg:GetNext() end
+			else
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+				sc=sg:FilterSelect(tp,c101101024.fcheck,1,1,nil,sg,e,tp):GetFirst()
+				hc=sg:GetFirst()
+				if hc==sc then hc=sg:GetNext() end
+			end
+			if sc and Duel.SpecialSummon(sc,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)~=0 and hc then
+				Duel.SendtoHand(hc,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,hc)
 			end
 		end
 	end
