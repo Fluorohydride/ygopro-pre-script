@@ -102,19 +102,19 @@ function c101101072.activate(e,tp,eg,ep,ev,re,r,rp)
 				end
 			end
 		end
+		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetType(EFFECT_TYPE_FIELD)
+		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e3:SetTargetRange(1,0)
+		e3:SetTarget(c101101072.splimit)
+		if Duel.GetTurnPlayer()==tp then
+			e3:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+		else
+			e3:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+		end
+		Duel.RegisterEffect(e3,tp)
 	end
-	local e3=Effect.CreateEffect(e:GetHandler())
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e3:SetTargetRange(1,0)
-	e3:SetTarget(c101101072.splimit)
-	if Duel.GetTurnPlayer()==tp then
-		e3:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
-	else
-		e3:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
-	end
-	Duel.RegisterEffect(e3,tp)
 end
 function c101101072.splimit(e,c)
 	return not c:IsRace(RACE_WARRIOR)
