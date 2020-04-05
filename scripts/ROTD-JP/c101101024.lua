@@ -31,7 +31,7 @@ end
 function c101101024.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,c101101024.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(tp,c101101024.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 		local tc=g:GetFirst()
 		if tc then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
