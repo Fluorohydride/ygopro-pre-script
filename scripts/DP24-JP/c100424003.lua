@@ -41,7 +41,7 @@ function c100424003.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100424003.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp
+	return ep==tp and bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0
 end
 function c100424003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
