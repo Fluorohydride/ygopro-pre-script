@@ -29,10 +29,10 @@ function c101101061.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmDecktop(tp,count)
 		local g=Duel.GetDecktopGroup(tp,count)
 		local ct=g:GetCount()
-		if ct>0 and g:FilterCount(c101101061.thfilter,nil,count)>0 and Duel.SelectYesNo(tp,aux.Stringid(101101061,0)) then
+		if ct>0 and g:FilterCount(c101101061.thfilter,nil,ct)>0 and Duel.SelectYesNo(tp,aux.Stringid(101101061,0)) then
 			Duel.DisableShuffleCheck()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg=g:FilterSelect(tp,c101101061.thfilter,1,1,nil,count)
+			local sg=g:FilterSelect(tp,c101101061.thfilter,1,1,nil,ct)
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 			Duel.ShuffleHand(tp)
