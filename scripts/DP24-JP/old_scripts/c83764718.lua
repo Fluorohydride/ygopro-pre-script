@@ -12,7 +12,7 @@ function c83764718.initial_effect(c)
 end
 function c83764718.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		or (Duel.IsPlayerAffectedByEffect(tp,100424006) and c:IsControler(tp) and c:IsCode(10000010) and c:IsCanBeSpecialSummoned(e,0,tp,true,false))
+		or (Duel.IsPlayerAffectedByEffect(tp,100424006) and c:IsControler(tp) and c:IsCode(10000010) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL+200,tp,true,false))
 end
 function c83764718.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c83764718.filter(chkc,e,tp) end
