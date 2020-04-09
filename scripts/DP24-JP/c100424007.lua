@@ -97,8 +97,8 @@ end
 function c100424007.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local label,rec=e:GetLabel()
 	if chk==0 then
-		if label~=100 then return false end
 		e:SetLabel(0,0)
+		if label~=100 then return false end
 		return Duel.GetFlagEffect(tp,100424007)==0
 	end
 	Duel.SetTargetPlayer(tp)
