@@ -84,18 +84,23 @@ function c100424007.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100424007.recfilter(c)
-	return c:IsCode(10000010) and c:IsReleasable() and c:GetAttack()>0
+	return c:IsCode(10000010) and c:GetAttack()>0
 end
 function c100424007.reccost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100424007.recfilter,tp,LOCATION_MZONE,0,1,nil) end
+	e:SetLabel(100,0)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c100424007.recfilter,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,c100424007.recfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	e:SetLabel(g:GetFirst():GetAttack())
+	local g=Duel.SelectReleaseGroup(tp,c100424007.recfilter,1,1,nil)
+	e:SetLabel(100,g:GetFirst():GetAttack())
 	Duel.Release(g,REASON_COST)
 end
 function c100424007.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,100424007)==0 end
-	local rec=e:GetLabel()
+	local label,rec=e:GetLabel()
+	if chk==0 then
+		if label~=100 then return false end
+		e:SetLabel(0,0)
+		return Duel.GetFlagEffect(tp,100424007)==0
+	end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(rec)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
