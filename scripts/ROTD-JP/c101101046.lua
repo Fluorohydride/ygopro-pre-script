@@ -64,8 +64,6 @@ function c101101046.spfilter(c,e,tp)
 	end
 end
 function c101101046.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local res=c:IsRelateToEffect(e) and not (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or (not c:IsLocation(LOCATION_GRAVE) and c:IsFacedown())) and c:IsCanOverlay()
 	if chk==0 then return Duel.IsExistingMatchingCard(c101101046.spfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA+LOCATION_GRAVE)
 end
@@ -77,7 +75,9 @@ function c101101046.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		if not c:IsRelateToEffect(e) or not c:IsCanOverlay() then return end
 		if c:IsLocation(LOCATION_HAND+LOCATION_DECK) or (not c:IsLocation(LOCATION_GRAVE) and c:IsFacedown()) then return end
-		if not (c:IsLocation(LOCATION_GRAVE) and c:IsHasEffect(EFFECT_NECRO_VALLEY) and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NECRO_VALLEY_IM)) and Duel.SelectYesNo(tp,aux.Stringid(101101046,2)) then
+		if not (c:IsLocation(LOCATION_GRAVE) and c:IsHasEffect(EFFECT_NECRO_VALLEY) and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NECRO_VALLEY_IM))
+			and Duel.SelectYesNo(tp,aux.Stringid(101101046,2)) then
+			Duel.BreakEffect()
 			Duel.Overlay(tc,Group.FromCards(c))
 		end
 	end
