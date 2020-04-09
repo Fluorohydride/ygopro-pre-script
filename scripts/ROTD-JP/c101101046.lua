@@ -78,7 +78,9 @@ function c101101046.spop(e,tp,eg,ep,ev,re,r,rp)
 		if not (c:IsLocation(LOCATION_GRAVE) and c:IsHasEffect(EFFECT_NECRO_VALLEY) and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NECRO_VALLEY_IM))
 			and Duel.SelectYesNo(tp,aux.Stringid(101101046,2)) then
 			Duel.BreakEffect()
-			Duel.Overlay(tc,Group.FromCards(c))
+			if not tc:IsImmuneToEffect(e) then
+				Duel.Overlay(tc,Group.FromCards(c))
+			end
 		end
 	end
 end
