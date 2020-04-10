@@ -75,7 +75,7 @@ function c101101046.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		if not c:IsRelateToEffect(e) or not c:IsCanOverlay() then return end
 		if c:IsLocation(LOCATION_HAND+LOCATION_DECK) or (not c:IsLocation(LOCATION_GRAVE) and c:IsFacedown()) then return end
-		if not (c:IsLocation(LOCATION_GRAVE) and c:IsHasEffect(EFFECT_NECRO_VALLEY) and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NECRO_VALLEY_IM))
+		if not (c:IsLocation(LOCATION_GRAVE) and c:IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.IsChainDisablable(0))
 			and Duel.SelectYesNo(tp,aux.Stringid(101101046,2)) then
 			Duel.BreakEffect()
 			if not tc:IsImmuneToEffect(e) then
