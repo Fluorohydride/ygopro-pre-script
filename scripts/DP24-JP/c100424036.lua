@@ -70,8 +70,8 @@ function c100424036.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGrave() and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
 	e:SetLabel(Duel.AnnounceType(tp))
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),0,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,0)
 end
 function c100424036.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not eg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then return end
