@@ -30,10 +30,7 @@ function c101101022.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and Duel.GetTurnPlayer()==1-tp
 end
 function c101101022.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return not c:IsPublic() end
-	Duel.ConfirmCards(1-tp,c)
-	Duel.ShuffleHand(tp)
+	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function c101101022.filter1(c,e)
 	return not c:IsImmuneToEffect(e)

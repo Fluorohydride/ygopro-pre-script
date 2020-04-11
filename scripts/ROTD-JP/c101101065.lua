@@ -17,7 +17,7 @@ function c101101065.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101101065.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and not c:IsDisabled()
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
 function c101101065.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
