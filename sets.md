@@ -5,6 +5,7 @@
 - **April 18, 2020** : RISE OF THE DUELIST (ROTD-JP) : `101101XXX`
 - **May 16, 2020** :Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
 - **June 6, 2020** :Collectors Pack 2020 (CP20-JP) : `100266XXX`
+- **June 20, 2020** : Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
 
 # Announced
 
