@@ -43,6 +43,7 @@ function c100424004.activate(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetFirst():IsLocation(LOCATION_HAND) then
 			if Duel.GetFlagEffect(tp,100424004)~=0 then return end
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(aux.Stringid(100424004,2))
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetTargetRange(LOCATION_HAND,0)
 			e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
