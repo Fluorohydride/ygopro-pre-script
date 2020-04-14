@@ -56,7 +56,8 @@ function c101101046.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetOverlayCount()>0
 end
 function c101101046.spfilter(c,e,tp)
-	if not (c:IsRankAbove(5) and c:IsRace(RACE_PLANT) and c:IsType(TYPE_XYZ)) then return false end
+	if not (c:IsRankAbove(5) and c:IsRace(RACE_PLANT) and c:IsType(TYPE_XYZ)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) then return false end
 	if c:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 	else
@@ -70,7 +71,7 @@ end
 function c101101046.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,aux.NecroValleyFilter(c101101046.spfilter),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101101046.spfilter),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		if not c:IsRelateToEffect(e) or not c:IsCanOverlay() then return end
