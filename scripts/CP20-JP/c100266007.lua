@@ -1,3 +1,4 @@
+--中生代化石騎士 スカルナイト
 --Fossil Warrior Skull Knight
 --Scripted by: XGlitchy30
 function c100266007.initial_effect(c)

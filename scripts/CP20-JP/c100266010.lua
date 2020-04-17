@@ -1,14 +1,7 @@
+--新生代化石竜 スカルガー
 --Fossil Dragon Skullgar
 --Scripted by: XGlitchy30
-local function getID()
-	local str=string.match(debug.getinfo(2,'S')['source'],"c%d+%.lua")
-	str=string.sub(str,1,string.len(str)-4)
-	local cod=_G[str]
-	local id=tonumber(string.sub(str,2))
-	return id,cod
-end
-local id,cid=getID()
-function cid.initial_effect(c)
+function c100266010.initial_effect(c)
 	aux.AddCodeList(c,100266011)
 	--fusion summon
 	c:EnableReviveLimit()

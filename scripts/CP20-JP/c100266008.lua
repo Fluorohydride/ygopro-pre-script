@@ -1,3 +1,4 @@
+--新生代化石騎士 スカルポーン
 --Fossil Warrior Skull Bone
 --Scripted by: XGlitchy30
 function c100266008.initial_effect(c)

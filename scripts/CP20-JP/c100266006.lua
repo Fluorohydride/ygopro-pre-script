@@ -2,6 +2,7 @@
 --
 --Script by mercury233
 function c100266006.initial_effect(c)
+	aux.AddCodeList(c,100266011)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsRace,RACE_ROCK),c100266006.matfilter,true)

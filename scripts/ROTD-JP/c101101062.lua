@@ -1,3 +1,4 @@
+--三戦の才
 --Three Tactical Talents
 --Scripted by: XGlitchy30
 function c101101062.initial_effect(c)
@@ -41,6 +42,7 @@ function c101101062.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		opval[off-1]=3
 		off=off+1
 	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
 	local op=Duel.SelectOption(tp,table.unpack(ops))
 	if opval[op]==1 then
 		e:SetCategory(CATEGORY_DRAW)
@@ -61,8 +63,6 @@ function c101101062.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetOperation(c101101062.todeck)
 		Duel.SetTargetPlayer(tp)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,1-tp,LOCATION_HAND)
-	else
-		return
 	end
 end
 function c101101062.draw(e,tp,eg,ep,ev,re,r,rp)

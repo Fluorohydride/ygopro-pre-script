@@ -1,3 +1,4 @@
+--風化戦士
 --Weathering Soldier
 --Scripted by: XGlitchy30
 function c100266005.initial_effect(c)

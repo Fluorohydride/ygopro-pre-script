@@ -1,3 +1,4 @@
+--古生代化石竜 スカルギオス
 --Fossil Dragon Skullgios
 --Scripted by: XGlitchy30
 function c100266009.initial_effect(c)
