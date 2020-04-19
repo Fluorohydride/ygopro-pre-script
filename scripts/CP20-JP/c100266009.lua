@@ -43,7 +43,7 @@ end
 function c100266009.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc and bc:IsFaceup() and bc:IsRelateToBattle() and bc:GetAttack()~=bc:GetDefense()
+	return c:IsRelateToBattle() and bc and bc:IsFaceup() and bc:IsRelateToBattle() and bc:IsDefenseAbove(0) and bc:GetAttack()~=bc:GetDefense()
 end
 function c100266009.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
