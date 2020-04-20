@@ -1,4 +1,5 @@
 --Scrypton
+--
 --Scrypted by: XGlitchy30
 function c101012082.initial_effect(c)
 	--spsummon

@@ -1,3 +1,4 @@
+--花札衛－桜－
 --Flower Cardian Cherry Blossom
 --Scripted by: XGlitchy30
 function c100266029.initial_effect(c)
@@ -22,7 +23,7 @@ function c100266029.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100266029.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsLevelBelow(2) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsLevelBelow(2)
 end
 function c100266029.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100266029.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -72,7 +73,7 @@ function c100266029.drawop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
-		Duel.ConfirmCards(1-tp,tc)
+		Duel.ConfirmCards(1-p,tc)
 		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) and Duel.IsExistingMatchingCard(c100266029.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(100266029,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)

@@ -1,4 +1,5 @@
 --Rose Girl
+--
 --Scripted by: XGlitchy30
 function c101012081.initial_effect(c)
 	--spsummon

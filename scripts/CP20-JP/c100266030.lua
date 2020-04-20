@@ -1,3 +1,4 @@
+--超勝負！
 --Super All-In!
 --Scripted by: XGlitchy30
 function c100266030.initial_effect(c)
@@ -19,8 +20,7 @@ function c100266030.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100266030.exfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsAbleToExtra()
-		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>=4 or (c:GetSequence()<5 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=3))
+	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsAbleToExtra() and Duel.GetMZoneCount(tp,c)>=4
 end
 function c100266030.spfilter(c,e,tp)
 	return c:IsSetCard(0xe6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
@@ -49,10 +49,12 @@ function c100266030.activate(e,tp,eg,ep,ev,re,r,rp)
 				local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 				if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 					local tc=Duel.GetOperatedGroup():GetFirst()
-					Duel.ConfirmCards(1-tp,tc)
-					if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) and tc:IsCanBeSpecialSummoned(e,0,tp,true,false)
-					and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(100266030,0)) then
-						Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
+					Duel.ConfirmCards(1-p,tc)
+					if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
+						if tc:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+							and Duel.SelectYesNo(tp,aux.Stringid(100266030,0)) then
+							Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
+						end
 					else
 						local rg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 						if #rg>0 and Duel.Destroy(rg,REASON_EFFECT)>0 then
