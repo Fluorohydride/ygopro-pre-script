@@ -18,6 +18,7 @@ function c101101035.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+	e2:SetCountLimit(1)
 	e2:SetCondition(c101101035.atkcon)
 	e2:SetOperation(c101101035.atkop)
 	c:RegisterEffect(e2)
@@ -40,7 +41,6 @@ function c101101035.defop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-
 function c101101035.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ac=Duel.GetAttacker()
@@ -68,7 +68,7 @@ function c101101035.atkop(e,tp,eg,ep,ev,re,r,rp)
 		ed:SetRange(LOCATION_MZONE)
 		ed:SetCode(EFFECT_SET_ATTACK_FINAL)
 		ed:SetReset(RESET_PHASE+PHASE_DAMAGE)
-		ed:SetValue(b:GetDefense())
-		a:RegisterEffect(ed,true)
+		ed:SetValue(d:GetDefense())
+		d:RegisterEffect(ed,true)
 	end
 end

@@ -23,7 +23,7 @@ function c101012088.initial_effect(c)
 end
 
 function c101012088.eqfilter(c,att,race,tp)
-	return (c:IsType(TYPE_MONSTER) or c:IsCode(101012089)) and (not c:IsForbidden())
+	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x13f)) or c:IsCode(101012089)) and (not c:IsForbidden())
 end
 function c101012088.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x13f)

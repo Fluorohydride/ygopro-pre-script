@@ -42,7 +42,7 @@ function c101012085.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101012085.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_ONFIELD) or c:IsPreviousLocation(LOCATION_HAND)
+	return c:IsPreviousLocation(LOCATION_MZONE) or c:IsPreviousLocation(LOCATION_HAND)
 end
 function c101012085.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 and Duel.IsPlayerCanDraw(tp,1) end
@@ -54,6 +54,6 @@ end
 function c101012085.drop(e,tp,eg,ep,ev,re,r,rp)
 	local _,__,p,d=Duel.GetOperationInfo(0,CATEGORY_HANDES)
 	local ___,____,p2,d2=Duel.GetOperationInfo(0,CATEGORY_DRAW)
-	Duel.DiscardHand(p,d,REASON_EFFECT+REASON_DISCARD)
+	Duel.DiscardHand(p,nil,d,d,REASON_EFFECT+REASON_DISCARD,nil)
 	Duel.Draw(p2,d2,REASON_EFFECT)
 end

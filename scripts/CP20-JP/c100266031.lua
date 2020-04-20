@@ -35,7 +35,7 @@ function c100266031.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.NegateAttack() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local c=Duel.SelectMatchingCard(c100266031.atktgfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
+		local c=Duel.SelectMatchingCard(tp,c100266031.atktgfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
 		if c then
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		end
@@ -47,14 +47,14 @@ end
 function c100266031.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return tp~=Duel.GetTurnPlayer()
-		and Duel.GetCardsInZone(tp,LOCATION_MZONE):GetCount()==0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_ATTACK)
+		and Duel.GetFieldGroup(tp,LOCATION_MZONE,0):GetCount()==0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 		and Duel.GetMZoneCount(tp)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,LOCATION_GRAVE)
 end
 function c100266031.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_ATTACK)>0 then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_ATTACK)>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)

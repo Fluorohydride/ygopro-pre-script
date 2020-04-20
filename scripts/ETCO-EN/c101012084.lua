@@ -36,7 +36,7 @@ function c101012084.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local lv=tc:GetLevel()
-	local c=Duel.SelectMatchingCard(tp,c101012084.spfilter,tp,LOCATION_HAND,0,1,1,nil,c:GetLevel())
+	local c=Duel.SelectMatchingCard(tp,c101012084.spfilter,tp,LOCATION_HAND,0,1,1,nil,lv):GetFirst()
 	if c and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		and (not tc:IsForbidden())
 		and Duel.Equip(tp,tc,c) then
@@ -44,7 +44,7 @@ function c101012084.activate(e,tp,eg,ep,ev,re,r,rp)
 		if atk>0 then
 			local e1=Effect.CreateEffect(tc)
 			e1:SetType(EFFECT_TYPE_EQUIP)
-			e1:SetCode(EFFECT_SET_ATTACK)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(atk/2)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
