@@ -62,7 +62,7 @@ function c100200181.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and aux.dscon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100200181.atkfilter(c)
-    return c:IsFaceup() and not c:IsAttack(c:GetBaseAttack())
+	return c:IsFaceup() and not c:IsAttack(c:GetBaseAttack())
 end
 function c100200181.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100200181.atkfilter(chkc) end

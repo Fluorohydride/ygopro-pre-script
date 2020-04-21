@@ -43,7 +43,7 @@ function c100266030.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<4 or Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100266030.spfilter),tp,LOCATION_GRAVE,0,4,4,nil,e,tp)
-		if #sg>0 then 
+		if #sg>0 then
 			if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 then
 				Duel.BreakEffect()
 				local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
