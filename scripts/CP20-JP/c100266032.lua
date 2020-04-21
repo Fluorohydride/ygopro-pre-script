@@ -7,7 +7,7 @@ function c100266032.initial_effect(c)
 	e1:SetDescription(aux.Stringid(100266032,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,100266032)
 	e1:SetTarget(c100266032.thtg)
@@ -21,6 +21,7 @@ function c100266032.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetCountLimit(1,100266032)
+	e2:SetCondition(c100266032.thcon2)
 	e2:SetTarget(c100266032.thtg2)
 	e2:SetOperation(c100266032.thop2)
 	c:RegisterEffect(e2)
@@ -37,6 +38,9 @@ function c100266032.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
+end
+function c100266032.thcon2(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function c100266032.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end
