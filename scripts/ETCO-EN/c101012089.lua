@@ -1,4 +1,6 @@
---巡掠海魔的纹章
+--Emblem of the Plunder Patroll
+--
+--Script by JoyJ
 function c101012089.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

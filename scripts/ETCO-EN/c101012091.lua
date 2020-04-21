@@ -1,4 +1,6 @@
---巡掠海魔大派对
+--Plunder Patroll Parrrty
+--
+--Script by JoyJ
 function c101012091.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

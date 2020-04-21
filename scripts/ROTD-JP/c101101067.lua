@@ -1,4 +1,6 @@
---从骰挑战
+--賽挑戦
+--
+--Script by JoyJ
 function c101101067.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

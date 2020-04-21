@@ -1,4 +1,6 @@
---极冰兽 极地企鹅
+--極氷獣ポーラ・ペンギン
+--
+--Script by JoyJ
 function c100266032.initial_effect(c)
 	--tohand
 	local e1=Effect.CreateEffect(c)

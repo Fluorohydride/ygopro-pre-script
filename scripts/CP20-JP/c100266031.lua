@@ -1,4 +1,6 @@
---极冰兽 雪暴狼
+--極氷獣ブリザード・ウルフ
+--
+--Script by JoyJ
 function c100266031.initial_effect(c)
 	--disable attack
 	local e1=Effect.CreateEffect(c)

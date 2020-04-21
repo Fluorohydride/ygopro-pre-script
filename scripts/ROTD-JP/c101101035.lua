@@ -1,4 +1,6 @@
---龙狸灯
+--龍狸燈
+--
+--Script by JoyJ
 function c101101035.initial_effect(c)
 	--atkup
 	local e1=Effect.CreateEffect(c)

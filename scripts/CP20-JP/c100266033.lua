@@ -1,4 +1,6 @@
---极冰兽 冰山一角鲸
+--極氷獣アイスバーグ・ナーワル
+--
+--Script by JoyJ
 function c100266033.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsAttribute,ATTRIBUTE_WATER),1)

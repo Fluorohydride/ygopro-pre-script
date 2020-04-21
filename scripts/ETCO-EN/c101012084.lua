@@ -1,4 +1,6 @@
---缚灵棱镜
+--Necroquip Prism
+--
+--Script by JoyJ
 function c101012084.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

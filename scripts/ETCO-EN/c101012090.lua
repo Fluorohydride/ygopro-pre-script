@@ -1,4 +1,6 @@
---巡掠海魔的骄傲
+--Pride of the Plunder Patroll
+--
+--Script by JoyJ
 function c101012090.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)

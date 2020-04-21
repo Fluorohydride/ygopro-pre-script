@@ -1,5 +1,7 @@
---巡掠海魔船新船舶船运
-function c101012088.initial_effect(c)
+--Plunder Patroll Shipshape Ships Shipping
+--
+--Script by JoyJ
+unction c101012088.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101012088,0))

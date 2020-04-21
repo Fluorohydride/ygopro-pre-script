@@ -1,4 +1,6 @@
---幽灵海盗 皮赖斯
+--Piwraithe the Ghost Pirate
+--
+--Script by JoyJ
 function c101012000.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

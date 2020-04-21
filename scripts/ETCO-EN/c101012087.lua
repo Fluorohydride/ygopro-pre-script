@@ -1,4 +1,6 @@
---巡掠海魔船 利斯号
+--Plunder Patrollship Lys
+--
+--Script by JoyJ
 function c101012087.initial_effect(c)
 	--fusion summon
 	c:EnableReviveLimit()

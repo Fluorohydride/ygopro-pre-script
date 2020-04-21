@@ -1,4 +1,6 @@
---饕餮龙
+--Taotie Dragon
+--
+--Script by JoyJ
 function c101012083.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()

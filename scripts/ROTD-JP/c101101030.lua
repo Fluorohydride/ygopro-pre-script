@@ -1,4 +1,6 @@
---核成供给者
+--コアキメイル・サプライヤー
+--
+--Script by JoyJ
 function c101101030.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

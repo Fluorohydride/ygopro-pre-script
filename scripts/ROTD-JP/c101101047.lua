@@ -1,4 +1,6 @@
---旋坏之贯破黄蜂巢
+--旋壊のヴェスペネイト
+--
+--Script by JoyJ
 function c101101047.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,5,2,c101101047.ovfilter,aux.Stringid(101101047,0),2,c101101047.xyzop)

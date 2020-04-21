@@ -1,4 +1,6 @@
---巡掠海魔新人 金发
+--Goldenhair, the Newest Plunder Patroll
+--
+--Script by JoyJ
 function c101012086.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

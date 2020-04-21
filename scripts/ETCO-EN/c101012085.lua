@@ -1,4 +1,6 @@
---巡掠海魔船工 蓝胡子
+--Bluebeard, the Plunder Patroll Shipwright
+--
+--Script by JoyJ
 function c101012085.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
