@@ -1,15 +1,17 @@
---机巧辰-高暗御津羽靇
+--機巧辰－高闇御津羽靇
+--
 --Scripted by: shizuru
 function c101101032.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101101032)
 	e1:SetCondition(c101101032.spcon)
-	c:RegisterEffect(e1) 
+	e1:SetTarget(c101101032.sptg)
+	e1:SetOperation(c101101032.spop)
+	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101101032,1))
@@ -34,19 +36,27 @@ function c101101032.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101101032.spfilter(c)
-	return c:GetSummonLocation()==LOCATION_EXTRA 
+	return c:GetSummonLocation()==LOCATION_EXTRA
 end
-function c101101032.spcon(e,c)
-	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c101101032.spfilter,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,2,nil)
+function c101101032.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c101101032.spfilter,tp,LOCATION_MZONE,LOCATION_MZONE,2,nil)
+end
+function c101101032.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+end
+function c101101032.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c101101032.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1500) end
 	Duel.PayLPCost(tp,1500)
 end
 function c101101032.desfilter(c)
-	return c:GetSummonLocation()==LOCATION_EXTRA 
+	return c:GetSummonLocation()==LOCATION_EXTRA
 end
 function c101101032.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101101032.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -70,16 +80,24 @@ function c101101032.desop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetReset(RESET_PHASE+PHASE_END)
-	e2:SetCondition(c101101032.ancon)
+	e2:SetCondition(c101101032.atkcon)
+	e2:SetTarget(c101101032.atktg)
+	e1:SetLabelObject(e2)
 	Duel.RegisterEffect(e2,tp)
 end
 function c101101032.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,101101032)~=0 then return end
-	Duel.RegisterFlagEffect(tp,101101032,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	local fid=eg:GetFirst():GetFieldID()
+	Duel.RegisterFlagEffect(tp,101101032,RESET_PHASE+PHASE_END,0,1)
+	e:GetLabelObject():SetLabel(fid)
 end
-function c101101032.ancon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,101101032)>0
+function c101101032.atkcon(e)
+	return Duel.GetFlagEffect(e:GetHandlerPlayer(),101101032)>0
+end
+function c101101032.atktg(e,c)
+	return c:GetFieldID()~=e:GetLabel()
 end
 function c101101032.recon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -88,18 +106,17 @@ end
 function c101101032.filter(c)
 	return c:IsAbleToRemove() and c:IsType(TYPE_MONSTER)
 end
-function c101101032.retg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetLocation()==LOCATION_GRAVE and chkc:IsAbleToRemove() and chkc:IsType(TYPE_MONSTER) and c:IsControler(1-tp) end
+function c101101032.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101101032.filter,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_GRAVE)
 end
 function c101101032.reop(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c101101032.filter,tp,0,LOCATION_GRAVE,nil)
-	if not g then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local tc=g:Select(tp,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,c101101032.filter,tp,0,LOCATION_GRAVE,1,1,nil):GetFirst()
+	if not tc then return end
 	local atk=tc:GetTextAttack()
-	if tc and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and atk>0 then
-		  Duel.Recover(tp,atk,REASON_EFFECT)
+	if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and atk>0 then
+		Duel.BreakEffect()
+		Duel.Recover(tp,atk,REASON_EFFECT)
 	end
 end
