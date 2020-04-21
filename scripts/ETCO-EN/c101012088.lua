@@ -1,7 +1,7 @@
 --Plunder Patroll Shipshape Ships Shipping
 --
 --Script by JoyJ
-unction c101012088.initial_effect(c)
+function c101012088.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101012088,0))
@@ -18,51 +18,12 @@ unction c101012088.initial_effect(c)
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCountLimit(1,101012088)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c101012088.eqtg)
 	e2:SetOperation(c101012088.eqop)
 	c:RegisterEffect(e2)
 end
-
-function c101012088.eqfilter(c,att,race,tp)
-	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x13f)) or c:IsCode(101012089)) and (not c:IsForbidden())
-end
-function c101012088.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13f)
-end
-function c101012088.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101012088.cfilter(chkc,tp)
-		and chkc:IsCanBeEffectTarget(e) end
-	if chk==0 then return Duel.IsExistingTarget(c101012088.cfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c101012088.cfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK)
-end
-function c101012088.eqop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g=Duel.SelectMatchingCard(tp,c101012088.eqfilter,tp,LOCATION_DECK,0,1,1,nil)
-		local sc=g:GetFirst()
-		if not Duel.Equip(tp,sc,tc) then return end
-		--equip limit
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetLabelObject(tc)
-		e1:SetValue(c101012088.eqlimit)
-		sc:RegisterEffect(e1)
-	end
-end
-function c101012088.eqlimit(e,c)
-	return c==e:GetLabelObject()
-end
-
 function c101012088.filter1(c,e)
 	return not c:IsImmuneToEffect(e)
 end
@@ -120,4 +81,41 @@ function c101012088.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc:CompleteProcedure()
 	end
+end
+function c101012088.eqfilter(c)
+	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x13f)) or c:IsCode(101012089)) and (not c:IsForbidden())
+end
+function c101012088.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x13f)
+end
+function c101012088.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101012088.cfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c101012088.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.SelectTarget(tp,c101012088.cfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK)
+end
+function c101012088.eqop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local g=Duel.SelectMatchingCard(tp,c101012088.eqfilter,tp,LOCATION_DECK,0,1,1,nil)
+		local sc=g:GetFirst()
+		if not Duel.Equip(tp,sc,tc) then return end
+		--equip limit
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_EQUIP_LIMIT)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetLabelObject(tc)
+		e1:SetValue(c101012088.eqlimit)
+		sc:RegisterEffect(e1)
+	end
+end
+function c101012088.eqlimit(e,c)
+	return c==e:GetLabelObject()
 end

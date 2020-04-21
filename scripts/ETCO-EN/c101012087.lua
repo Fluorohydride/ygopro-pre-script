@@ -21,7 +21,7 @@ function c101012087.initial_effect(c)
 	--negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(27346636,0))
-	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101012087+100)
@@ -33,7 +33,6 @@ function c101012087.initial_effect(c)
 	e2:SetOperation(c101012087.disop)
 	c:RegisterEffect(e2)
 end
-
 function c101012087.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
@@ -78,7 +77,8 @@ function c101012087.disop(e,tp,eg,ep,ev,re,r,rp)
 		and c:GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x13f)
 		and Duel.IsExistingMatchingCard(c101012087.thfilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(101012087,2)) then
-		local c=Duel.SelectMatchingCard(tp,c101012087.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-		Duel.SendtoHand(c,nil,REASON_EFFECT)
+		local g=Duel.SelectMatchingCard(tp,c101012087.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end

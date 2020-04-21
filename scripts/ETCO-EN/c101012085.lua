@@ -16,12 +16,13 @@ function c101012085.initial_effect(c)
 	--draw
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101012085,1))
-	e2:SetCategory(CATEGORY_HANDES+CATEGORY_DRAW)
+	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,101012085+100)
 	e2:SetCondition(c101012085.drcon)
+	e2:SetCost(c101012085.drcost)
 	e2:SetTarget(c101012085.drtg)
 	e2:SetOperation(c101012085.drop)
 	c:RegisterEffect(e2)
@@ -46,16 +47,17 @@ function c101012085.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_MZONE) or c:IsPreviousLocation(LOCATION_HAND)
 end
+function c101012085.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,nil)
+end
 function c101012085.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 and Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c101012085.drop(e,tp,eg,ep,ev,re,r,rp)
-	local _,__,p,d=Duel.GetOperationInfo(0,CATEGORY_HANDES)
-	local ___,____,p2,d2=Duel.GetOperationInfo(0,CATEGORY_DRAW)
-	Duel.DiscardHand(p,nil,d,d,REASON_EFFECT+REASON_DISCARD,nil)
-	Duel.Draw(p2,d2,REASON_EFFECT)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Draw(p,d,REASON_EFFECT)
 end

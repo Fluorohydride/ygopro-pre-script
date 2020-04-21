@@ -9,7 +9,6 @@ function c101012086.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101012086)
-	e1:SetCondition(c101012086.spcon)
 	e1:SetCost(c101012086.spcost)
 	e1:SetTarget(c101012086.sptg)
 	e1:SetOperation(c101012086.spop)
@@ -26,24 +25,17 @@ function c101012086.initial_effect(c)
 	e2:SetOperation(c101012086.operation)
 	c:RegisterEffect(e2)
 end
-function c101012086.cfilter(c)
-	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x13f)
-end
-function c101012086.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101012086.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,e:GetHandler())
+function c101012086.cfilter(c,tp)
+	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x13f) and Duel.GetMZoneCount(tp,c)>0
 end
 function c101012086.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101012086.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101012086.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,e:GetHandler(),tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c101012086.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c101012086.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,e:GetHandler(),tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function c101012086.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101012086.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,e:GetHandler())
-end
 function c101012086.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101012086.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -53,7 +45,7 @@ function c101012086.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101012086.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST,nil)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function c101012086.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

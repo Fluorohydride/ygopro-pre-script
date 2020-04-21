@@ -8,6 +8,8 @@ function c101012091.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,101012091)
+	e1:SetCondition(c101012091.condition)
 	e1:SetTarget(c101012091.target)
 	e1:SetOperation(c101012091.activate)
 	c:RegisterEffect(e1)
@@ -20,15 +22,24 @@ function c101012091.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCountLimit(1,101012091+100+EFFECT_COUNT_CODE_DUEL)
 	e2:SetCondition(c101012091.eqcon)
 	e2:SetTarget(c101012091.eqtg)
 	e2:SetOperation(c101012091.eqop)
 	c:RegisterEffect(e2)
 end
+function c101012091.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x13f)
+end
+function c101012091.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c101012091.cfilter,tp,LOCATION_MZONE,0,1,nil)
+end
+function c101012091.drfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_EQUIP)
+end
 function c101012091.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local i=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_ONFIELD,0,nil,TYPE_EQUIP)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,i+1)
-		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x13f) end
+	local i=Duel.GetMatchingGroupCount(c101012091.drfilter,tp,LOCATION_ONFIELD,0,nil)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,i+1) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(i+1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,i+1)
@@ -36,13 +47,16 @@ function c101012091.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101012091.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local i=Duel.GetMatchingGroupCount(Card.IsType,p,LOCATION_ONFIELD,0,nil,TYPE_EQUIP)
-	Duel.Draw(p,i+1,REASON_EFFECT)
-	Duel.BreakEffect()
+	local i=Duel.GetMatchingGroupCount(c101012091.drfilter,p,LOCATION_ONFIELD,0,nil)
+	if Duel.Draw(p,i+1,REASON_EFFECT)==0 then return end
+	Duel.ShuffleHand(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,i,i,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoDeck(g,nil,-1,REASON_EFFECT)
+	if i>0 then
+		Duel.BreakEffect()
+		if g:GetCount()>0 then
+			Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		end
 	end
 end
 function c101012091.cfilter(c,tp)
@@ -60,7 +74,13 @@ function c101012091.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end
 	local g=eg:Filter(c101012091.cfilter,nil,tp)
-	local tc=g:Select(tp,1,1,nil):GetFirst()
+	local tc
+	if #g==1 then
+		tc=g:GetFirst()
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		tc=g:Select(tp,1,1,nil):GetFirst()
+	end
 	if tc and Duel.Equip(tp,c,tc) then
 		--Add Equip limit
 		local e1=Effect.CreateEffect(tc)
