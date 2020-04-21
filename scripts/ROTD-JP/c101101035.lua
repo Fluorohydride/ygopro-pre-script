@@ -29,7 +29,7 @@ function c101101035.defcostfilter(c)
 	return c:IsDiscardable() and c:IsRace(RACE_WYRM)
 end
 function c101101035.defcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101101035.defcostfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,c101101035.defcostfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c101101035.defop(e,tp,eg,ep,ev,re,r,rp)
@@ -58,17 +58,25 @@ function c101101035.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if a:IsRelateToBattle() and d and d:IsRelateToBattle() then
 		local ea=Effect.CreateEffect(c)
 		ea:SetType(EFFECT_TYPE_SINGLE)
-		ea:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
-		ea:SetRange(LOCATION_MZONE)
-		ea:SetCode(EFFECT_SET_ATTACK_FINAL)
+		if EFFECT_SET_BATTLE_ATTACK then
+			ea:SetCode(EFFECT_SET_BATTLE_ATTACK)
+		else
+			ea:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
+			ea:SetCode(EFFECT_SET_ATTACK_FINAL)	
+			ea:SetRange(LOCATION_MZONE)
+		end
 		ea:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		ea:SetValue(a:GetDefense())
 		a:RegisterEffect(ea,true)
 		local ed=Effect.CreateEffect(c)
 		ed:SetType(EFFECT_TYPE_SINGLE)
-		ed:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
-		ed:SetRange(LOCATION_MZONE)
-		ed:SetCode(EFFECT_SET_ATTACK_FINAL)
+		if EFFECT_SET_BATTLE_ATTACK then
+			ed:SetCode(EFFECT_SET_BATTLE_ATTACK)
+		else
+			ed:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
+			ed:SetCode(EFFECT_SET_ATTACK_FINAL)
+			ed:SetRange(LOCATION_MZONE)
+		end
 		ed:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		ed:SetValue(d:GetDefense())
 		d:RegisterEffect(ed,true)

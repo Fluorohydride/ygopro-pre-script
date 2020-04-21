@@ -2,6 +2,7 @@
 --
 --Script by JoyJ
 function c101101030.initial_effect(c)
+	aux.AddCodeList(c,36623431)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101101030,0))
@@ -9,11 +10,13 @@ function c101101030.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_TO_GRAVE)
+	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101101030)
 	e1:SetCondition(c101101030.spcon)
 	e1:SetTarget(c101101030.sptg)
 	e1:SetOperation(c101101030.spop)
 	c:RegisterEffect(e1)
+	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101101030,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -26,9 +29,8 @@ function c101101030.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101101030.spfilter(c)
-	return c:IsPreviousLocation(LOCATION_ONFIELD)
-		and c:IsPreviousPosition(POS_FACEUP)
-		and (c:GetPreviousRaceOnField() & RACE_ROCK) > 0
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
+		and (c:GetPreviousRaceOnField()&RACE_ROCK)>0
 end
 function c101101030.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101101030.spfilter,1,nil)

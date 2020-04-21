@@ -5,6 +5,14 @@ function c101101047.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,5,2,c101101047.ovfilter,aux.Stringid(101101047,0),2,c101101047.xyzop)
 	c:EnableReviveLimit()
+	--can not be xyz material
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
+	e1:SetCondition(c101101047.xyzcon)
+	e1:SetValue(1)
+	c:RegisterEffect(e1)
 	--pierce
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -16,6 +24,7 @@ function c101101047.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_DESTROYED)
+	e3:SetCountLimit(1,101101047)
 	e3:SetCondition(c101101047.spcon)
 	e3:SetTarget(c101101047.sptg)
 	e3:SetOperation(c101101047.spop)
@@ -27,6 +36,10 @@ end
 function c101101047.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,101101047)==0 end
 	Duel.RegisterFlagEffect(tp,101101047,RESET_PHASE+PHASE_END,0,1)
+end
+function c101101047.xyzcon(e)
+	local c=e:GetHandler()
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c101101047.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
