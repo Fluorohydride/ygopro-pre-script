@@ -13,41 +13,41 @@ function c101012084.initial_effect(c)
 	e1:SetOperation(c101012084.activate)
 	c:RegisterEffect(e1)
 end
-function c101012084.spfilter(c,lv)
-	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(lv)
+function c101012084.spfilter(c,e,tp,lv)
+	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c101012084.filter(c)
+function c101012084.filter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4)
-		and Duel.IsExistingMatchingCard(c101012084.spfilter,tp,LOCATION_HAND,0,1,nil,c:GetLevel())
+		and Duel.IsExistingMatchingCard(c101012084.spfilter,tp,LOCATION_HAND,0,1,nil,c:GetLevel(),e,tp)
 		and (not c:IsForbidden())
 end
 function c101012084.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE)
-		and chkc:IsControler(tp)
-		and c101012084.filter(c)
-		and chkc:IsCanBeEffectTarget(e) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
+		and chkc:IsType(TYPE_MONSTER) and chkc:IsLevelBelow(4) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>1
-		and Duel.IsExistingTarget(c101012084.filter,tp,LOCATION_GRAVE,0,1,nil) end
+		and (Duel.GetLocationCount(tp,LOCATION_SZONE)>1
+			or e:GetHandler():IsLocation(LOCATION_SZONE) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
+		and Duel.IsExistingTarget(c101012084.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,c101012084.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101012084.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function c101012084.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local lv=tc:GetLevel()
-	local c=Duel.SelectMatchingCard(tp,c101012084.spfilter,tp,LOCATION_HAND,0,1,1,nil,lv):GetFirst()
-	if c and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	local atk=tc:GetAttack()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sc=Duel.SelectMatchingCard(tp,c101012084.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,lv):GetFirst()
+	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 		and (not tc:IsForbidden())
-		and Duel.Equip(tp,tc,c) then
-		local atk=tc:GetAttack()
+		and Duel.Equip(tp,tc,sc) then
 		if atk>0 then
 			local e1=Effect.CreateEffect(tc)
 			e1:SetType(EFFECT_TYPE_EQUIP)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(atk/2)
+			e1:SetValue(math.ceil(atk/2))
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end
@@ -66,7 +66,7 @@ function c101012084.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetCode(EFFECT_EQUIP_LIMIT)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e3:SetLabelObject(c)
+		e3:SetLabelObject(sc)
 		e3:SetValue(c101012084.eqlimit)
 		tc:RegisterEffect(e3)
 	end
