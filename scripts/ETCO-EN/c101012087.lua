@@ -56,7 +56,7 @@ function c101012087.discfilter(c)
 end
 function c101012087.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101012087.discfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,c101012087.discfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c101012087.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
