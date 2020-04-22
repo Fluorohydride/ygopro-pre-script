@@ -16,7 +16,6 @@ function c101012091.initial_effect(c)
 	--equip
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101012091,1))
-	e2:SetCountLimit(1,101012091+EFFECT_COUNT_CODE_DUEL)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCategory(CATEGORY_LEAVE_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
