@@ -48,11 +48,12 @@ function c101012090.initial_effect(c)
 end
 function c101012090.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
+	if not e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED) then return end
 	return rc:IsRelateToBattle() and rc:IsStatus(STATUS_OPPO_BATTLE)
 		and rc:IsFaceup() and rc:IsSetCard(0x13f) and rc:IsControler(tp)
 end
 function c101012090.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
@@ -108,4 +109,5 @@ function c101012090.tgop2(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
+	Duel.ShuffleExtra(1-tp)
 end
