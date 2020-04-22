@@ -59,46 +59,52 @@ function c101012091.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c101012091.cfilter(c,tp)
-	return c:GetSummonLocation()==LOCATION_EXTRA and c:GetPreviousControler()==tp
-		and c:GetControler()==tp and c:IsSetCard(0x13f) and c:IsFaceup()
+function c101012091.exfilter(c,tp)
+	return c:GetSummonLocation()==LOCATION_EXTRA and c:GetSummonPlayer()==tp and c:IsSetCard(0x13f) and c:IsFaceup()
 end
 function c101012091.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101012091.cfilter,1,nil,tp)
+	return eg:IsExists(c101012091.exfilter,1,nil,tp)
+end
+function c101012091.eqfilter(c,g)
+	return g:IsContains(c)
 end
 function c101012091.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	local c=e:GetHandler()
+	local g=eg:Filter(c101012091.exfilter,nil,tp)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and not c:IsForbidden()
+		and c:CheckUniqueOnField(tp,LOCATION_SZONE)
+		and Duel.IsExistingMatchingCard(c101012091.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g) end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function c101012091.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end
-	local g=eg:Filter(c101012091.cfilter,nil,tp)
-	local tc
-	if #g==1 then
-		tc=g:GetFirst()
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		tc=g:Select(tp,1,1,nil):GetFirst()
-	end
-	if tc and Duel.Equip(tp,c,tc) then
-		--Add Equip limit
-		local e1=Effect.CreateEffect(tc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(c101012091.eqlimit)
-		c:RegisterEffect(e1)
-		--Atk up
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_EQUIP)
-		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e2:SetValue(500)
-		c:RegisterEffect(e2)
+	if c:IsForbidden() or not c:CheckUniqueOnField(tp,LOCATION_SZONE) then return end
+	local g=eg:Filter(c101012091.exfilter,nil,tp)
+	local sg=Duel.SelectMatchingCard(tp,c101012091.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,g)
+	local tc=sg:GetFirst()
+	if tc then
+		Duel.HintSelection(sg)
+		if Duel.Equip(tp,c,tc) then
+			--Add Equip limit
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_EQUIP_LIMIT)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetLabelObject(tc)
+			e1:SetValue(c101012091.eqlimit)
+			c:RegisterEffect(e1)
+			--Atk up
+			local e2=Effect.CreateEffect(e:GetHandler())
+			e2:SetType(EFFECT_TYPE_EQUIP)
+			e2:SetCode(EFFECT_UPDATE_ATTACK)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetValue(500)
+			c:RegisterEffect(e2)
+		end
 	end
 end
 function c101012091.eqlimit(e,c)
-	return e:GetOwner()==c
+	return c==e:GetLabelObject()
 end
