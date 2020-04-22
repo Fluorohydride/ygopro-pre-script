@@ -18,15 +18,16 @@ function c101012084.spfilter(c,e,tp,lv)
 end
 function c101012084.filter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4)
-		and Duel.IsExistingMatchingCard(c101012084.spfilter,tp,LOCATION_HAND,0,1,nil,c:GetLevel(),e,tp)
+		and Duel.IsExistingMatchingCard(c101012084.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetLevel())
 		and (not c:IsForbidden())
 end
 function c101012084.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
 		and chkc:IsType(TYPE_MONSTER) and chkc:IsLevelBelow(4) end
+	local b=e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and (Duel.GetLocationCount(tp,LOCATION_SZONE)>1
-			or e:GetHandler():IsLocation(LOCATION_SZONE) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
+		and (b and Duel.GetLocationCount(tp,LOCATION_SZONE)>1
+			or not b and Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
 		and Duel.IsExistingTarget(c101012084.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,c101012084.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -40,7 +41,7 @@ function c101012084.activate(e,tp,eg,ep,ev,re,r,rp)
 	local atk=tc:GetAttack()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,c101012084.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,lv):GetFirst()
-	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
+	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0
 		and (not tc:IsForbidden())
 		and Duel.Equip(tp,tc,sc) then
 		if atk>0 then
