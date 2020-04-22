@@ -20,8 +20,8 @@ function c101101035.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e2:SetCountLimit(1)
 	e2:SetCondition(c101101035.atkcon)
+	e2:SetCost(c101101035.atkcost)
 	e2:SetOperation(c101101035.atkop)
 	c:RegisterEffect(e2)
 end
@@ -50,6 +50,11 @@ function c101101035.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc and (ac==c or bc==c)
 		and ac:IsPosition(POS_ATTACK)
 		and bc:IsPosition(POS_ATTACK)
+end
+function c101101035.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(101101035)==0 end
+	c:RegisterFlagEffect(101101035,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
 end
 function c101101035.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
