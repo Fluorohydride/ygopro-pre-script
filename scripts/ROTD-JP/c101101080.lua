@@ -31,7 +31,6 @@ function c101101080.initial_effect(c)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1,101101080+100)
-	e4:SetCondition(c101101080,chcon2)
 	e4:SetTarget(c101101080.chtg2)
 	e4:SetOperation(c101101080.chop2)
 	c:RegisterEffect(e4)
@@ -39,11 +38,8 @@ end
 function c101101080.filter(c,tp)
 	return c:GetSummonPlayer()==1-tp
 end
-function c101101080.chcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)
-end
 function c101101080.chcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101101080.filter,1,nil,tp) and c101101080.chcon2(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c101101080.filter,1,nil,tp)
 end
 function c101101080.chfilter(c)
 	return c:IsFacedown() and c:IsCanChangePosition()
