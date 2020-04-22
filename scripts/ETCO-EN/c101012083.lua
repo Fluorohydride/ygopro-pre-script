@@ -74,15 +74,16 @@ function c101012083.aclimit1(e,re,tp)
 end
 function c101012083.condition2(e)
 	local ph=Duel.GetCurrentPhase()
-	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and Duel.GetTurnPlayer()==e:GetControler()
+	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function c101012083.aclimit2(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL) or re:IsActiveType(TYPE_TRAP)
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function c101012083.condition3(e)
 	local ph=Duel.GetCurrentPhase()
-	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)) and Duel.GetTurnPlayer()==e:GetControler()
+	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE))
+		and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function c101012083.aclimit3(e,re,tp)
-	return re:GetHandler():IsLocation(LOCATION_GRAVE)
+	return re:GetActivateLocation()==LOCATION_GRAVE
 end

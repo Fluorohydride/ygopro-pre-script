@@ -70,7 +70,10 @@ function c101012089.spfilter(c,e,tp)
 	return c:IsSetCard(0x13f)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil,c:GetAttribute())
+		and Duel.IsExistingMatchingCard(c101012089.mfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil,c:GetAttribute())
+end
+function c101012089.mfilter(c,attr)
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsAttribute(attr)
 end
 function c101012089.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101012089.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
@@ -81,13 +84,13 @@ function c101012089.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c101012089.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	if not tc then return end
-	Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 	local ec=e:GetLabelObject()
 	if not ec:IsRelateToEffect(e) then return end
 	Duel.BreakEffect()
-	Duel.Equip(tp,ec,tc)
+	if not Duel.Equip(tp,ec,tc,false) then return end
 	--Atk up
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(ec)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)

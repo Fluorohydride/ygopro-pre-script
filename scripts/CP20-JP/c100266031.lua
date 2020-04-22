@@ -27,7 +27,8 @@ function c100266031.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100266031.spfilter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelBelow(4) and not c:IsCode(100266031)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100266031.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -36,6 +37,7 @@ function c100266031.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100266031.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=Duel.SelectMatchingCard(tp,c100266031.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
 		if tc then
