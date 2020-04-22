@@ -82,15 +82,16 @@ function c101012088.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-function c101012088.eqfilter(c)
-	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x13f)) or c:IsCode(101012089)) and (not c:IsForbidden())
+function c101012088.eqfilter(c,ec,tp)
+	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x13f)) or c:IsCode(101012089)) and not c:IsForbidden()
+		and c:CheckEquipTarget(ec) and c:CheckUniqueOnField(tp,LOCATION_SZONE)
 end
-function c101012088.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13f)
+function c101012088.cfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(0x13f) and Duel.IsExistingMatchingCard(c101012088.eqfilter,tp,LOCATION_DECK,0,1,nil,c,tp)
 end
 function c101012088.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101012088.cfilter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c101012088.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(c101012088.cfilter,tp,LOCATION_MZONE,0,1,nil,tp)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c101012088.cfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
@@ -102,8 +103,9 @@ function c101012088.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g=Duel.SelectMatchingCard(tp,c101012088.eqfilter,tp,LOCATION_DECK,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c101012088.eqfilter,tp,LOCATION_DECK,0,1,1,nil,tc,tp)
 		local sc=g:GetFirst()
+		if not sc then return end
 		if not Duel.Equip(tp,sc,tc) then return end
 		--equip limit
 		local e1=Effect.CreateEffect(c)
