@@ -30,9 +30,7 @@ function c101101058.filter(c)
 end
 function c101101058.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101101058.filter(chkc) end
-	if chk==0 then
-		return Duel.IsExistingTarget(c101101058.filter,tp,LOCATION_GRAVE,0,1,nil)
-	end
+	if chk==0 then return Duel.IsExistingTarget(c101101058.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c101101058.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,g,1,0,0)
@@ -54,10 +52,8 @@ function c101101058.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101101058.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsExistingMatchingCard(c101101058.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
-	end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101101058.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c101101058.spop(e,tp,eg,ep,ev,re,r,rp)

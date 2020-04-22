@@ -48,11 +48,11 @@ function c101012091.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local i=Duel.GetMatchingGroupCount(c101012091.drfilter,p,LOCATION_ONFIELD,0,nil)
 	if Duel.Draw(p,i+1,REASON_EFFECT)==0 then return end
-	Duel.ShuffleHand(tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,i,i,nil)
 	if i>0 then
+		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,i,i,nil)	
 		if g:GetCount()>0 then
 			Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 		end
