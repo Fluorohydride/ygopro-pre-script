@@ -24,7 +24,7 @@ function c101101039.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_DAMAGE_STEP+TIMING_END_PHASE)
+	e2:SetHintTiming(0,TIMING_DAMAGE_STEP+TIMING_END_PHASE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(aux.dscon)
 	e2:SetTarget(c101101039.atktg)
@@ -64,7 +64,8 @@ function c101101039.tgfilter(c)
 end
 function c101101039.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101101039.atkfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101101039.atkfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(c101101039.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101101039.atkfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c101101039.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c101101039.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)

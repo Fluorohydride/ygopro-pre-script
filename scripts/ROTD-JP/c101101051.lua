@@ -70,7 +70,8 @@ function c101101051.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101101051.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_FZONE) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_FZONE) and c:GetPreviousControler()==tp
+		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function c101101051.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_EXTRA,0,nil)

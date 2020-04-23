@@ -46,7 +46,8 @@ function c101101045.ovfilter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsRace(RACE_BEAST) and c:IsCanOverlay()
 end
 function c101101045.ovtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) and Duel.IsExistingMatchingCard(c101101045.ovfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,e:GetHandler()) end
+	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)
+		and Duel.IsExistingMatchingCard(c101101045.ovfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,e:GetHandler()) end
 end
 function c101101045.ovop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

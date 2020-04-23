@@ -59,6 +59,7 @@ function c101101049.thfilter1(c)
 end
 function c101101049.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101101049.thfilter1,tp,LOCATION_DECK,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101101049.activate1(e,tp,eg,ep,ev,re,r,rp)
@@ -84,6 +85,7 @@ function c101101049.thfilter2(c)
 end
 function c101101049.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101101049.thfilter2,tp,LOCATION_DECK,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101101049.activate2(e,tp,eg,ep,ev,re,r,rp)

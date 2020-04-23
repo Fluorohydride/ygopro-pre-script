@@ -40,7 +40,7 @@ function c101101020.cfilter(c,sp)
 	return c:GetSummonPlayer()==sp
 end
 function c101101020.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101101020.cfilter,1,nil,1-tp) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(c101101020.cfilter,1,nil,1-tp)
 end
 function c101101020.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
@@ -55,12 +55,13 @@ function c101101020.thfilter(c)
 end
 function c101101020.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_HAND) and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101101020.thfilter),tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101101020,2)) then
+	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_HAND)
+		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101101020.thfilter),tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(101101020,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101101020.thfilter),tp,LOCATION_GRAVE,0,1,1,nil)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function c101101020.spcon(e,tp,eg,ep,ev,re,r,rp)

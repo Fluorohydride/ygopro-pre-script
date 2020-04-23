@@ -69,7 +69,7 @@ function c101101066.activate(e,tp,eg,ep,ev,re,r,rp)
 	local l1,l2=e:GetLabel()
 	if l2==1 and e:IsHasType(EFFECT_TYPE_ACTIVATE) then check=true end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101101066,2))
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 	local g=Duel.SelectMatchingCard(tp,c101101066.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,ft,check)
 	local tc=g:GetFirst()
 	if tc then
@@ -104,9 +104,7 @@ function c101101066.cfilter(c)
 	return c:IsSetCard(0x12c) and c:IsAbleToHand()
 end
 function c101101066.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		return Duel.IsExistingMatchingCard(c101101066.cfilter,tp,LOCATION_DECK,0,1,nil)
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101101066.cfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101101066.thop(e,tp,eg,ep,ev,re,r,rp)

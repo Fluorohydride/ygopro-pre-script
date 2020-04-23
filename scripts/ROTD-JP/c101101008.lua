@@ -33,7 +33,8 @@ function c101101008.cfilter(c)
 end
 function c101101008.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.IsExistingMatchingCard(c101101008.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+		and Duel.IsExistingMatchingCard(c101101008.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function c101101008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -45,7 +46,10 @@ function c101101008.ofilter(c)
 end
 function c101101008.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.IsExistingMatchingCard(c101101008.ofilter,tp,LOCATION_MZONE,0,1,c) and Duel.IsExistingMatchingCard(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101101008,2)) then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
+		and Duel.IsExistingMatchingCard(c101101008.ofilter,tp,LOCATION_MZONE,0,1,c)
+		and Duel.IsExistingMatchingCard(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(101101008,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
 		local g=Duel.SelectMatchingCard(tp,aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)

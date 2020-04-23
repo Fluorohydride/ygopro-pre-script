@@ -35,7 +35,7 @@ function c101101070.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c101101070.tgfilter,tp,LOCATION_EXTRA,0,1,1,nil,atk)
 		local gc=g:GetFirst()
-		if gc and Duel.SendtoGrave(gc,REASON_EFFECT)~=0 and gc:IsLocation(LOCATION_GRAVE) and tc:IsRelateToEffect(e) then
+		if gc and Duel.SendtoGrave(gc,REASON_EFFECT)~=0 and gc:IsLocation(LOCATION_GRAVE) then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	end

@@ -17,14 +17,14 @@ end
 function c101101003.rfilter(c,tp)
 	return Duel.GetMZoneCount(tp,c)>0
 end
-function c101101003.spfilter(c,e,tp)
-	return (c:IsSetCard(0xbd) or c:IsLevel(5) and c:IsRace(RACE_DRAGON)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function c101101003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c101101003.rfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectReleaseGroup(tp,c101101003.rfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
+end
+function c101101003.spfilter(c,e,tp)
+	return (c:IsSetCard(0xbd) or c:IsLevel(5) and c:IsRace(RACE_DRAGON)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101101003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101101003.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end

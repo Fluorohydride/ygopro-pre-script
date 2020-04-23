@@ -40,7 +40,7 @@ function c101101019.cfilter(c,sp)
 	return c:GetSummonPlayer()==sp
 end
 function c101101019.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101101019.cfilter,1,nil,1-tp) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(c101101019.cfilter,1,nil,1-tp)
 end
 function c101101019.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
@@ -56,7 +56,10 @@ function c101101019.thfilter(c,e,tp)
 end
 function c101101019.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_HAND) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101101019.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(101101019,2)) then
+	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_HAND)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101101019.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
+		and Duel.SelectYesNo(tp,aux.Stringid(101101019,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101101019.thfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)

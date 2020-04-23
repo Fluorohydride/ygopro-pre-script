@@ -36,7 +36,8 @@ end
 function c101101010.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.IsExistingTarget(c101101010.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,4,nil) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false)
+		and Duel.IsExistingTarget(c101101010.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,4,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,c101101010.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,4,4,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)

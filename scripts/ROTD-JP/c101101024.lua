@@ -32,7 +32,8 @@ function c101101024.fcheck2(c)
 end
 function c101101024.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101101024.filter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
-	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 and g:CheckSubGroup(c101101024.fselect,2,2,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
+		and g:CheckSubGroup(c101101024.fselect,2,2,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
