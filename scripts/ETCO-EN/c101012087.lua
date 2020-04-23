@@ -46,6 +46,7 @@ function c101012087.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101012087.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101012087.spfilter,tp,LOCATION_SZONE+LOCATION_HAND,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
@@ -84,6 +85,8 @@ function c101012087.disop(e,tp,eg,ep,ev,re,r,rp)
 		and c:GetEquipGroup():IsExists(c101012087.eqfilter,1,nil)
 		and Duel.IsExistingMatchingCard(c101012087.thfilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(101012087,2)) then
+		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c101012087.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
