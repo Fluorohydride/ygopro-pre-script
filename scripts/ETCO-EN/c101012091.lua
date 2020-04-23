@@ -80,7 +80,7 @@ function c101012091.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end
 	if c:IsForbidden() or not c:CheckUniqueOnField(tp,LOCATION_SZONE) then return end
 	local g=eg:Filter(c101012091.exfilter,nil,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local sg=Duel.SelectMatchingCard(tp,c101012091.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,g)
 	local tc=sg:GetFirst()
 	if tc then
