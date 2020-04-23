@@ -89,10 +89,12 @@ function c101012090.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(p,LOCATION_HAND,0)
 	if g:GetCount()>0 then
 		Duel.ConfirmCards(1-p,g)
-		Duel.Hint(HINT_SELECTMSG,1-p,HINTMSG_DISCARD)
 		local sg=g:Filter(c101012090.tgfilter1,nil)
-		sg=g:Select(1-p,1,1,nil)
-		Duel.SendtoGrave(sg,REASON_EFFECT)
+		Duel.Hint(HINT_SELECTMSG,1-p,HINTMSG_TOGRAVE)
+		local tg=sg:Select(1-p,1,1,nil)
+		if tg:GetCount()>0 then
+			Duel.SendtoGrave(tg,REASON_EFFECT)
+		end
 		Duel.ShuffleHand(p)
 	end
 end
@@ -101,9 +103,10 @@ function c101012090.tgtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_EXTRA)
 end
 function c101012090.tgop2(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
-	Duel.ConfirmCards(tp,tg)
-	tg=tg:Filter(Card.IsAbleToGrave,nil)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
+	Duel.ConfirmCards(tp,g)
+	local tg=g:Filter(Card.IsAbleToGrave,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=tg:Select(tp,1,1,nil):GetFirst()
 	if tc then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
