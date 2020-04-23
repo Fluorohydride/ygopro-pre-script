@@ -28,12 +28,12 @@ function c101101030.initial_effect(c)
 	e2:SetOperation(c101101030.tgop)
 	c:RegisterEffect(e2)
 end
-function c101101030.spfilter(c)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
+function c101101030.spfilter(c,tp)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 		and (c:GetPreviousRaceOnField()&RACE_ROCK)>0
 end
 function c101101030.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101101030.spfilter,1,nil)
+	return eg:IsExists(c101101030.spfilter,1,nil,tp)
 end
 function c101101030.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
