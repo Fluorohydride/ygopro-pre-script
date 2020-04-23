@@ -48,6 +48,8 @@ function c100266033.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100266033.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local ph=Duel.GetCurrentPhase()
+	if not (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) then return false end
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainDisablable(ev) and ep==1-tp
 		and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,0,1,c)
 end

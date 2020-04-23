@@ -43,12 +43,13 @@ end
 function c100266009.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc and bc:IsFaceup() and bc:IsRelateToBattle() and bc:IsDefenseAbove(0) and bc:GetAttack()~=bc:GetDefense()
+	return c:IsRelateToBattle() and bc and bc:IsFaceup() and bc:IsRelateToBattle() and bc:IsDefenseAbove(0)
+		and bc:GetAttack()~=bc:GetDefense() and bc:IsControler(1-tp)
 end
 function c100266009.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
-	if tc:IsFaceup() and tc:IsRelateToBattle() then
+	if tc:IsFaceup() and tc:IsRelateToBattle() and tc:IsControler(1-tp) then
 		local atk=tc:GetAttack()
 		local def=tc:GetDefense()
 		if atk==def then return end
@@ -56,13 +57,13 @@ function c100266009.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(def)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		e2:SetValue(atk)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_DAMAGE)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 		tc:RegisterEffect(e2)
 	end
 end

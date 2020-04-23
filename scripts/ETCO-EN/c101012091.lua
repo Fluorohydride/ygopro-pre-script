@@ -34,7 +34,7 @@ function c101012091.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101012091.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101012091.drfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EQUIP)
+	return (c:IsFaceup() or c:GetEquipTarget()) and c:IsType(TYPE_EQUIP)
 end
 function c101012091.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local i=Duel.GetMatchingGroupCount(c101012091.drfilter,tp,LOCATION_ONFIELD,0,nil)
@@ -80,6 +80,7 @@ function c101012091.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end
 	if c:IsForbidden() or not c:CheckUniqueOnField(tp,LOCATION_SZONE) then return end
 	local g=eg:Filter(c101012091.exfilter,nil,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local sg=Duel.SelectMatchingCard(tp,c101012091.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,g)
 	local tc=sg:GetFirst()
 	if tc then
