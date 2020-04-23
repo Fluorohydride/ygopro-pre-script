@@ -34,7 +34,7 @@ function c101012091.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101012091.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101012091.drfilter(c)
-	return c:GetEquipTarget()
+	return (c:IsFaceup() or c:GetEquipTarget()) and c:IsType(TYPE_EQUIP)
 end
 function c101012091.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local i=Duel.GetMatchingGroupCount(c101012091.drfilter,tp,LOCATION_ONFIELD,0,nil)
