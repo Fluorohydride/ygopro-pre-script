@@ -83,8 +83,8 @@ function c101012088.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101012088.eqfilter(c,ec,tp)
-	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x13f)) or c:IsCode(101012089)) and not c:IsForbidden()
-		and c:CheckEquipTarget(ec) and c:CheckUniqueOnField(tp,LOCATION_SZONE)
+	return (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x13f) or c:IsCode(101012089) and c:CheckEquipTarget(ec))
+		and not c:IsForbidden() and c:CheckUniqueOnField(tp,LOCATION_SZONE)
 end
 function c101012088.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x13f) and Duel.IsExistingMatchingCard(c101012088.eqfilter,tp,LOCATION_DECK,0,1,nil,c,tp)
