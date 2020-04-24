@@ -74,17 +74,24 @@ function c100266029.drawop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-p,tc)
-		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) and Duel.IsExistingMatchingCard(c100266029.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(100266029,0)) then
-			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-			local sg=Duel.SelectMatchingCard(tp,c100266029.sfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-			if #sg>0 then
-				if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sg:GetFirst():IsCanBeSpecialSummoned(e,0,tp,false,false)
-				and (not sg:GetFirst():IsAbleToHand() or Duel.SelectOption(tp,1190,1152)==1) then
-					Duel.SpecialSummon(sg:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
+		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
+			local sel=1
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100266029,0))
+			if Duel.IsExistingMatchingCard(c100266029.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp) then
+				sel=Duel.SelectOption(tp,1213,1214)
+			else
+				sel=Duel.SelectOption(tp,1214)+1
+			end
+			if sel==0 then
+				Duel.BreakEffect()
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
+				local sc=Duel.SelectMatchingCard(tp,c100266029.sfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
+				if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+					and (not sc:IsAbleToHand() or Duel.SelectOption(tp,1190,1152)==1) then
+					Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 				else
-					Duel.SendtoHand(sg,nil,REASON_EFFECT)
-					Duel.ConfirmCards(1-tp,sg)
+					Duel.SendtoHand(sc,nil,REASON_EFFECT)
+					Duel.ConfirmCards(1-tp,sc)
 				end
 			end
 		else
