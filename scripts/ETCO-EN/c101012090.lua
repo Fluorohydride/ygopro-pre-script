@@ -66,7 +66,8 @@ function c101012090.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x13f)
 end
 function c101012090.tgcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101012090.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)
+		and Duel.IsExistingMatchingCard(c101012090.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101012090.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -74,10 +75,11 @@ function c101012090.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101012090.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,1,1-tp,1)
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,1-tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,1)
 end
 function c101012090.tgfilter1(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
@@ -100,6 +102,7 @@ function c101012090.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101012090.tgtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,1-tp,LOCATION_EXTRA,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_EXTRA)
 end
 function c101012090.tgop2(e,tp,eg,ep,ev,re,r,rp)

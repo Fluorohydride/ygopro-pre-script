@@ -81,7 +81,6 @@ function c101012087.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)
 		and Duel.Destroy(eg,REASON_EFFECT)>0 and c:IsRelateToEffect(e)
-		and c:GetEquipGroup()
 		and c:GetEquipGroup():IsExists(c101012087.eqfilter,1,nil)
 		and Duel.IsExistingMatchingCard(c101012087.thfilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(101012087,2)) then

@@ -26,13 +26,13 @@ function c101012086.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101012086.cfilter(c,tp)
-	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x13f) and c:IsType(TYPE_MONSTER)
+	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x13f) and c:GetOriginalType()&TYPE_MONSTER~=0
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and Duel.GetMZoneCount(tp,c)>0
 end
 function c101012086.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101012086.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,e:GetHandler(),tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101012086.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,e:GetHandler(),tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c101012086.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,e:GetHandler(),tp)
+	local g=Duel.SelectMatchingCard(tp,c101012086.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,e:GetHandler(),tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c101012086.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -58,7 +58,7 @@ function c101012086.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

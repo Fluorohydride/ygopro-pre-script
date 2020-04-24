@@ -36,8 +36,7 @@ function c101012081.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101012081.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-	end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101012081.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -57,7 +56,7 @@ function c101012081.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101012081.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c and c:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,c)
 	end

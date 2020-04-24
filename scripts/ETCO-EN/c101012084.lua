@@ -8,7 +8,7 @@ function c101012084.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,101012084)
+	e1:SetCountLimit(1,101012084+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c101012084.target)
 	e1:SetOperation(c101012084.activate)
 	c:RegisterEffect(e1)
@@ -24,10 +24,10 @@ end
 function c101012084.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
 		and chkc:IsType(TYPE_MONSTER) and chkc:IsLevelBelow(4) end
-	local b=e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE)
+	local ft=1
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE) then ft=2 end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and (b and Duel.GetLocationCount(tp,LOCATION_SZONE)>1
-			or not b and Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>=ft
 		and Duel.IsExistingTarget(c101012084.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,c101012084.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
