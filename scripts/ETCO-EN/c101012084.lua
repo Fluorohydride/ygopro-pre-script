@@ -43,7 +43,7 @@ function c101012084.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,c101012084.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,lv):GetFirst()
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0
-		and not tc:IsForbidden() and c:CheckUniqueOnField(tp)
+		and not tc:IsForbidden() and tc:CheckUniqueOnField(tp)
 		and Duel.Equip(tp,tc,sc) then
 		if atk>0 then
 			local e1=Effect.CreateEffect(tc)
