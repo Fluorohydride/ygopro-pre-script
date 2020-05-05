@@ -32,7 +32,7 @@ function c100424016.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100424016.spfilter(c)
-	return c:IsSetCard(0x13) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x251) and c:IsAbleToRemoveAsCost()
 end
 function c100424016.spcon(e,c)
 	if c==nil then return true end
