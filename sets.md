@@ -2,10 +2,10 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **April 18, 2020** : RISE OF THE DUELIST (ROTD-JP) : `101101XXX`
-- **May 16, 2020** :Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
-- **June 6, 2020** :Collectors Pack 2020 (CP20-JP) : `100266XXX`
-- **June 20, 2020** : Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
+- **May 21, 2020** :PRISMATIC SPECIAL PACK (VP20-JP) : `100267XXX`
+- **May 30, 2020** :Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
+- **June 20, 2020** :Collectors Pack 2020 (CP20-JP) : `100266XXX`
+- **July 4, 2020** : Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
 
 # Announced
 
@@ -143,3 +143,4 @@
 - CHAOS IMPACT (CHIM-JP) : `101010XXX`
 - IGNITION ASSAULT (IGAS-JP) : `101011XXX`
 - ETERNITY CODE (ETCO-JP) : `101012XXX`
+- RISE OF THE DUELIST (ROTD-JP) : `101101XXX`
