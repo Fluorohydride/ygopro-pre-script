@@ -30,7 +30,8 @@ function c100424022.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100424022.filter(c,e,tp)
-	return c:IsSetCard(0x13) and c:IsType(TYPE_MONSTER) and c:IsCanBeEffectTarget(e) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,true,false))
+	return c:IsSetCard(0x13) and c:IsType(TYPE_MONSTER) and c:IsCanBeEffectTarget(e)
+		and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,true,false))
 end
 function c100424022.fselect(g,e,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -72,7 +73,7 @@ function c100424022.activate(e,tp,eg,ep,ev,re,r,rp)
 			else
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local pg=sg:Select(tp,ft,ft,nil)
-				Duel.SpecialSummon(pg,0,tp,tp,false,false,POS_FACEUP)
+				Duel.SpecialSummon(pg,0,tp,tp,true,false,POS_FACEUP)
 				sg:Sub(pg)
 				Duel.SendtoGrave(sg,REASON_RULE)
 			end
