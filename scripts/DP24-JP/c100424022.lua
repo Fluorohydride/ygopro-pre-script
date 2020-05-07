@@ -37,7 +37,7 @@ function c100424022.fselect(g,e,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct1=g:FilterCount(Card.IsAbleToHand,nil)
 	local ct2=g:FilterCount(Card.IsCanBeSpecialSummoned,nil,e,0,tp,true,false)
-	return (ct1==#g or ct2==#g and ct2>=ft and not Duel.IsPlayerAffectedByEffect(tp,59822133)) and aux.dncheck(g)
+	return (ct1==#g or ct2==#g and ct2<=ft and not Duel.IsPlayerAffectedByEffect(tp,59822133)) and aux.dncheck(g)
 end
 function c100424022.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(c100424022.filter,tp,LOCATION_GRAVE,0,nil,e,tp)
