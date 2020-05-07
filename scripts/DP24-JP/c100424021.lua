@@ -67,6 +67,7 @@ function c100424021.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 		e3:SetCondition(c100424021.damcon2)
+		e3:SetValue(1)
 		tc:RegisterEffect(e3,true)
 	end
 end
