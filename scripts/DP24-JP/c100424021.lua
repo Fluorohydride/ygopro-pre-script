@@ -64,10 +64,17 @@ function c100424021.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e2:SetOwnerPlayer(tp)
 		tc:RegisterEffect(e2,true)
+		local e3=e2:Clone()
+		e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+		e3:SetCondition(c100424021.damcon2)
+		tc:RegisterEffect(e3,true)
 	end
 end
 function c100424021.damcon(e)
 	return e:GetHandlerPlayer()==e:GetOwnerPlayer()
+end
+function c100424021.damcon2(e)
+	return 1-e:GetHandlerPlayer()==e:GetOwnerPlayer()
 end
 function c100424021.repfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x13)
