@@ -74,7 +74,9 @@ function c100266021.damfilter(c)
 end
 function c100266021.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.IsEnvironment(100266026,tp,LOCATION_FZONE) and Duel.IsExistingMatchingCard(c100266021.damfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
+		and Duel.IsEnvironment(100266026,tp,LOCATION_FZONE)
+		and Duel.IsExistingMatchingCard(c100266021.damfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) then
 		Duel.BreakEffect()
 		local g=Duel.GetMatchingGroup(c100266021.damfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
 		local dam=g:GetSum(Card.GetAttack)
