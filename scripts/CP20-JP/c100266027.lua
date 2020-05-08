@@ -2,7 +2,6 @@
 
 --Scripted by mallu11
 function c100266027.initial_effect(c)
-	aux.EnableSummonOrSpecialSummonCountLimit()
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
