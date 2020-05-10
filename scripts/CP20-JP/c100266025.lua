@@ -33,7 +33,7 @@ function c100266025.atkcon(e,tp,eg,ep,ev,re,r,rp)
     return bc and bc:IsControler(1-tp)
 end
 function c100266025.atkfilter(c)
-    return c:IsFaceup() and c:IsSetCard(0x275)
+    return c:IsFaceup() and c:IsSetCard(0x246)
 end
 function c100266025.atkop(e,tp,eg,ep,ev,re,r,rp)
     local tg=Duel.GetMatchingGroup(c100266025.atkfilter,tp,LOCATION_MZONE,0,nil)
