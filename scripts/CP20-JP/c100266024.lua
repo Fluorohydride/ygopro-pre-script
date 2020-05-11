@@ -1,3 +1,4 @@
+--No.3 ゲート・オブ・ヌメロン－トゥリーニ
 --Number 3: Numeron Gate Trini
 --Scripted by TOP
 function c100266024.initial_effect(c)
@@ -33,7 +34,7 @@ function c100266024.atkcon(e,tp,eg,ep,ev,re,r,rp)
     return bc and bc:IsControler(1-tp)
 end
 function c100266024.atkfilter(c)
-    return c:IsFaceup() and c:IsSetCard(0x275)
+    return c:IsFaceup() and c:IsSetCard(0x24a)
 end
 function c100266024.atkop(e,tp,eg,ep,ev,re,r,rp)
     local tg=Duel.GetMatchingGroup(c100266024.atkfilter,tp,LOCATION_MZONE,0,nil)

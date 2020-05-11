@@ -1,3 +1,4 @@
+--No.1 ゲート・オブ・ヌメロン－エーカム
 --Number 1: Numeron Gate Ekam
 --Scripted by TOP
 function c100266022.initial_effect(c)
@@ -33,7 +34,7 @@ function c100266022.atkcon(e,tp,eg,ep,ev,re,r,rp)
     return bc and bc:IsControler(1-tp)
 end
 function c100266022.atkfilter(c)
-    return c:IsFaceup() and c:IsSetCard(0x275)
+    return c:IsFaceup() and c:IsSetCard(0x24a)
 end
 function c100266022.atkop(e,tp,eg,ep,ev,re,r,rp)
     local tg=Duel.GetMatchingGroup(c100266022.atkfilter,tp,LOCATION_MZONE,0,nil)
