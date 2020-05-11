@@ -1,3 +1,4 @@
+--機皇神龍トリスケリア
 --Meklord Astro Dragon Triskelia
 --by Sk00ps
 function c100424016.initial_effect(c)
