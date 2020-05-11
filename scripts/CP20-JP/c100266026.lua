@@ -28,7 +28,7 @@ function c100266026.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100266026.cpfilter(c)
-	return c:GetType()==TYPE_SPELL and c:IsSetCard(0x275) and c:IsAbleToGraveAsCost()
+	return c:GetType()==TYPE_SPELL and c:IsSetCard(0x24a) and c:IsAbleToGraveAsCost()
 		and c:CheckActivateEffect(false,true,false)~=nil
 end
 function c100266026.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -62,7 +62,7 @@ function c100266026.cpop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100266026.rcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,REASON_COST)~=0 and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_XYZ) and re:GetHandler():IsSetCard(0x275)
+	return bit.band(r,REASON_COST)~=0 and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_XYZ) and re:GetHandler():IsSetCard(0x24a)
 		and ep==e:GetOwnerPlayer()
 end
 function c100266026.rop(e,tp,eg,ep,ev,re,r,rp)
