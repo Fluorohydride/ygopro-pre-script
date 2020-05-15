@@ -18,7 +18,7 @@ function c100266025.initial_effect(c)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
 	e2:SetCost(c100266025.atkcost)
 	e2:SetCondition(c100266025.atkcon)
-	e2:SetTarget(c100266024.atktg)
+	e2:SetTarget(c100266025.atktg)
 	e2:SetOperation(c100266025.atkop)
 	c:RegisterEffect(e2)
 end
