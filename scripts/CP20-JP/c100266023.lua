@@ -1,3 +1,4 @@
+--No.2 ゲート・オブ・ヌメロン－ドゥヴェー
 --Number 2: Numeron Gate Dve
 --Scripted by TOP
 function c100266023.initial_effect(c)
