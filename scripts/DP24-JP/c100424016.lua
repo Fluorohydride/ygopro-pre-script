@@ -33,7 +33,7 @@ function c100424016.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100424016.spfilter(c)
-	return c:IsSetCard(0x13) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x13) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c100424016.spcon(e,c)
 	if c==nil then return true end
@@ -50,46 +50,56 @@ function c100424016.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	aux.GCheckAdditional=nil
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
-function c100424016.filter(c)
-	return c:IsType(TYPE_MONSTER) and not c:IsForbidden()
+function c100424016.eqfilter(c,tp)
+	return not c:IsForbidden() and c:CheckUniqueOnField(tp,LOCATION_SZONE)
+end
+function c100424016.filter(c,tp)
+	return c:IsFacedown() or c100424016.eqfilter(c,tp)
 end
 function c100424016.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c100424016.filter,tp,0,LOCATION_EXTRA,1,nil,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,0,LOCATION_EXTRA)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and g:GetCount()>0
+		and g:IsExists(c100424016.filter,1,nil,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,1-tp,LOCATION_EXTRA)
 end
 function c100424016.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
+	Duel.ConfirmCards(tp,g)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,c100424016.filter,tp,0,LOCATION_EXTRA,1,1,nil,c)
-	local tc=g:GetFirst()
+	local sg=g:FilterSelect(tp,c100424016.eqfilter,1,1,nil,tp)
+	local tc=sg:GetFirst()
 	if tc then
-		if not Duel.Equip(tp,tc,c) then return end
-		local atk=tc:GetTextAttack()
-		if atk<0 then atk=0 end
-		--Add Equip limit
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(c100424016.eqlimit)
-		tc:RegisterEffect(e1)
-		if atk>0 then
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_EQUIP)
-			e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
-			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e2:SetValue(atk)
-			tc:RegisterEffect(e2)
+		if Duel.Equip(tp,tc,c) then
+			local atk=tc:GetTextAttack()
+			--Add Equip limit
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_EQUIP_LIMIT)
+			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetValue(c100424016.eqlimit)
+			tc:RegisterEffect(e1)
+			if atk>0 then
+				local e2=Effect.CreateEffect(c)
+				e2:SetType(EFFECT_TYPE_EQUIP)
+				e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
+				e2:SetCode(EFFECT_UPDATE_ATTACK)
+				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e2:SetValue(atk)
+				tc:RegisterEffect(e2)
+			end
 		end
 	end
+	Duel.ShuffleExtra(1-tp)
 end
 function c100424016.eqlimit(e,c)
 	return e:GetOwner()==c
 end
+function c100424016.xatkfilter(c)
+	return c:IsFaceup() and c:GetOriginalType()&TYPE_SYNCHRO~=0
+end
 function c100424016.pcon(e)
-	return e:GetHandler():GetEquipGroup():IsExists(Card.GetOriginalType,1,nil,TYPE_SYNCHRO)
+	return e:GetHandler():GetEquipGroup():IsExists(c100424016.xatkfilter,1,nil)
 end
