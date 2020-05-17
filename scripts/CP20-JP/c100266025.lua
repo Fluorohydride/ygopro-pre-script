@@ -1,3 +1,4 @@
+--No.4 ゲート・オブ・ヌメロン－チャトゥヴァーリ
 --Number 4: Numeron Gate Catvari
 --Scripted by TOP
 function c100266025.initial_effect(c)
