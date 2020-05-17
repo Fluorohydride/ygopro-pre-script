@@ -1,3 +1,4 @@
+--No.3 ゲート・オブ・ヌメロン－トゥリーニ
 --Number 3: Numeron Gate Trini
 --Scripted by TOP
 function c100266024.initial_effect(c)
