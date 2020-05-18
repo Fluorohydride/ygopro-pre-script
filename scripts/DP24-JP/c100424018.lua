@@ -1,4 +1,6 @@
 --機皇枢インフィニティ・コア
+--
+--Script by JoyJ
 function c100424018.initial_effect(c)
 	--tohand
 	local e1=Effect.CreateEffect(c)
@@ -6,7 +8,7 @@ function c100424018.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,100424018)
 	e1:SetTarget(c100424018.thtg)
 	e1:SetOperation(c100424018.thop)
@@ -37,7 +39,7 @@ function c100424018.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100424018.thfilter(c)
-	return c:IsSetCard(0x13) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsAbleToHand()
+	return c:IsSetCard(0x13) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100424018.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100424018.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -61,8 +63,8 @@ function c100424018.filter(c,att)
 	return c:IsFaceup() and c:IsAttribute(att)
 end
 function c100424018.spfilter(c,e,tp)
-	return not Duel.IsExistingMatchingCard(c100424018.filter,tp,LOCATION_MZONE,0,1,nil,c:GetAttribute())
-		and c:IsSetCard(0x3013) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(0x3013) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+		and not Duel.IsExistingMatchingCard(c100424018.filter,tp,LOCATION_MZONE,0,1,nil,c:GetAttribute())
 end
 function c100424018.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -99,14 +101,12 @@ function c100424018.spop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 function c100424018.atkcon(e)
-	return e:GetHandler():GetFlagEffect(100424018)~=0
+	return e:GetLabel()~=0
 end
 function c100424018.atktg(e,c)
 	return c:GetFieldID()~=e:GetLabel()
 end
 function c100424018.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():GetFlagEffect(100424018)~=0 then return end
 	local fid=eg:GetFirst():GetFieldID()
-	e:GetHandler():RegisterFlagEffect(100424018,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	e:GetLabelObject():SetLabel(fid)
 end
