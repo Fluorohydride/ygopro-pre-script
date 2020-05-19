@@ -77,21 +77,13 @@ function c100266027.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
 	e2:SetTargetRange(1,0)
+	e2:SetLabel(c100266027.getsummoncount(tp))
 	e2:SetTarget(c100266027.splimit)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	Duel.RegisterEffect(e3,tp)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e4:SetCode(EVENT_SUMMON_SUCCESS)
-	e4:SetOperation(c100266027.checkop)
-	e4:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e4,tp)
-	local e5=e4:Clone()
-	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
-	Duel.RegisterEffect(e5,tp)
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD)
 	e6:SetCode(EFFECT_SPSUMMON_COUNT_LIMIT)
@@ -100,6 +92,9 @@ function c100266027.activate(e,tp,eg,ep,ev,re,r,rp)
 	e6:SetValue(1)
 	e6:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e6,tp)
+end
+function c100266027.getsummoncount(tp)
+	return Duel.GetActivityCount(tp,ACTIVITY_SUMMON)+Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)
 end
 function c100266027.rmfilter(c,fid)
 	return c:GetFlagEffectLabel(100266027)==fid
@@ -118,10 +113,5 @@ function c100266027.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 end
 function c100266027.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return Duel.GetFlagEffect(sump,100266027)>0
-end
-function c100266027.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(Card.GetSummonPlayer,1,nil,tp) then
-		Duel.RegisterFlagEffect(tp,100266027,RESET_PHASE+PHASE_END,0,1)
-	end
+	return c100266027.getsummoncount(sump)>e:GetLabel()
 end
