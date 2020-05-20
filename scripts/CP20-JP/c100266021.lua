@@ -32,6 +32,7 @@ function c100266021.initial_effect(c)
 	e3:SetCondition(c100266021.spcon)
 	e3:SetTarget(c100266021.sptg)
 	e3:SetOperation(c100266021.spop)
+	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
 c100266021.xyz_number=1
@@ -55,22 +56,27 @@ end
 function c100266021.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
+		e:SetLabel(Duel.GetTurnCount())
 		c:RegisterFlagEffect(100266021,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,2)
-		c:RegisterFlagEffect(100266021,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
 	else
+		e:SetLabel(0)
 		c:RegisterFlagEffect(100266021,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
 	end
 end
 function c100266021.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(100266021)==1 
+	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(100266021)>0
+		and e:GetLabelObject():GetLabel()~=Duel.GetTurnCount()
+end
+function c100266021.damfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetAttack()>0
 end
 function c100266021.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	local g=Duel.GetMatchingGroup(c100266021.damfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,c)
+	local dam=g:GetSum(Card.GetAttack)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
-end
-function c100266021.damfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetAttack()>0
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function c100266021.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

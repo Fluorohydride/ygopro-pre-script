@@ -63,7 +63,7 @@ function c100266026.cpop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100266026.rcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_COST)~=0 and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_XYZ) and re:GetHandler():IsSetCard(0x24a)
-		and ep==e:GetOwnerPlayer()
+		and ep==e:GetOwnerPlayer() and re:GetActivateLocation()&LOCATION_MZONE~=0
 end
 function c100266026.rop(e,tp,eg,ep,ev,re,r,rp)
 	return ev
