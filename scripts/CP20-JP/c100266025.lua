@@ -31,7 +31,7 @@ end
 function c100266025.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc and bc:IsControler(1-tp)
+	return bc and (bc:IsControler(1-tp) or bc:IsType(TYPE_TOKEN) and bc:GetPreviousControler()==1-tp)
 end
 function c100266025.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x24a)
