@@ -66,10 +66,12 @@ end
 function c100424007.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local label,atk=e:GetLabel()
 	if chk==0 then
-		e:SetLabel(0,atk)
+		e:SetLabel(0,0)
 		if label~=100 then return false end
 		return Duel.IsExistingMatchingCard(c100424007.atkfilter,tp,LOCATION_MZONE,0,1,nil)
 	end
+	e:SetLabel(0,0)
+	Duel.SetTargetParam(atk)
 end
 function c100424007.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
@@ -77,7 +79,7 @@ function c100424007.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.HintSelection(g)
-		local label,atk=e:GetLabel()
+		local atk=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE)
@@ -111,6 +113,7 @@ function c100424007.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if label~=100 then return false end
 		return true
 	end
+	e:SetLabel(0,0)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(rec)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
