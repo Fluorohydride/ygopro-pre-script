@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100266027.initial_effect(c)
+	Duel.EnableGlobalFlag(GLOBALFLAG_SPSUMMON_COUNT)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
