@@ -2,6 +2,7 @@
 --
 --Script by JoyJ
 function c100424037.initial_effect(c)
+	aux.AddCodeList(c,77585513)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100424037,0))
