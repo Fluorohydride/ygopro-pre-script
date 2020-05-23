@@ -87,10 +87,11 @@ function c100266027.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD)
-	e6:SetCode(EFFECT_SPSUMMON_COUNT_LIMIT)
+	e6:SetCode(EFFECT_LEFT_SPSUMMON_COUNT)
 	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e6:SetTargetRange(1,0)
-	e6:SetValue(1)
+	e6:SetLabel(c100266027.getsummoncount(tp))
+	e6:SetValue(c100266027.countval)
 	e6:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e6,tp)
 end
@@ -115,4 +116,7 @@ function c100266027.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100266027.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c100266027.getsummoncount(sump)>e:GetLabel()
+end
+function c100266027.countval(e,re,tp)
+	if c100266027.getsummoncount(tp)>e:GetLabel() then return 0 else return 1 end
 end
