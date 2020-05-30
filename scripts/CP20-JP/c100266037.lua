@@ -1,3 +1,4 @@
+--複写機塊コピーボックル
 --Appliancer Copybokkle
 --Scripted by TheBoos2569
 function c100266037.initial_effect(c)

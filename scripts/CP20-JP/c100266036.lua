@@ -1,3 +1,4 @@
+--遮断機塊ブレイカーバンクル
 --Appliancer Breakerbuncle
 --Scripted by TheBoos2569
 function c100266036.initial_effect(c)

@@ -1,3 +1,4 @@
+--電幻機塊コンセントロール
 --Appliancer Socketroll
 --Scripted by TheBoos2569
 function c100266035.initial_effect(c)

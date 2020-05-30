@@ -1,3 +1,4 @@
+--機塊リユース
 --Appliancer Reuse
 --Scripted by TheBoos2569
 function c100266043.initial_effect(c)
