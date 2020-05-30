@@ -16,12 +16,14 @@ function c100266044.filter(c,tp)
 	local zone=bit.band(c:GetLinkedZone(tp),0x1f)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
-function c100266044.gfilter(c)
+function c100266044.gfilter(c,e,tp)
 	return c:IsSetCard(0x24b) and c:IsType(TYPE_LINK) and c:GetLink()==1
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100266044.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100266044.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100266044.filter,tp,LOCATION_MZONE,0,1,nil,tp) and Duel.IsExistingTarget(c100266044.gfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100266044.filter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100266044.filter,tp,LOCATION_MZONE,0,1,nil,tp)
+		and Duel.IsExistingMatchingCard(c100266044.gfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100266044.filter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 end
@@ -29,10 +31,11 @@ function c100266044.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local zone=bit.band(tc:GetLinkedZone(tp),0x1f)
-	upbound=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)
+	local upbound=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)
 	if zone==0 or upbound<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then upbound=1 end
-	local g=Duel.SelectMatchingCard(tp,c100266044.gfilter,tp,LOCATION_GRAVE,0,1,upbound,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,c100266044.gfilter,tp,LOCATION_GRAVE,0,1,upbound,nil,e,tp)
 	if g:GetCount()>0 then
 		local fid=e:GetHandler():GetFieldID()
 		local tc=g:GetFirst()
