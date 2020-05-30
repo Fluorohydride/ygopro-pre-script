@@ -15,19 +15,22 @@ function c100266018.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100266018,1))
 	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetHintTiming(0,TIMING_MAIN_END)
 	e2:SetCountLimit(1,100266018)
+	e2:SetCondition(c100266018.setcon)
 	e2:SetTarget(c100266018.settg)
 	e2:SetOperation(c100266018.setop)
 	c:RegisterEffect(e2)
 end
 function c100266018.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp)
-		and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,0,2,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,0,tp,LOCATION_MZONE)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,0)
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return g:GetCount()>=2 and Duel.IsPlayerCanDraw(tp,1) end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c100266018.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -37,6 +40,10 @@ function c100266018.activate(e,tp,eg,ep,ev,re,r,rp)
 	num=math.floor(num/2)
 	if num<1 then return end
 	Duel.Draw(tp,num,REASON_EFFECT)
+end
+function c100266018.setcon(e,tp,eg,ep,ev,re,r,rp)
+    local ph=Duel.GetCurrentPhase()
+    return Duel.GetTurnPlayer()==1-tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function c100266018.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end

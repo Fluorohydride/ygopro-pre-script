@@ -45,10 +45,14 @@ function c100424037.activate1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetValue(aux.indoval)
+		e1:SetValue(c100424037.indoval)
+		e1:SetOwnerPlayer(tp)
 		tc:RegisterEffect(e1)
 		tc=g:GetNext()
 	end
+end
+function c100424037.indoval(e,re,rp)
+	return rp==1-e:GetOwnerPlayer()
 end
 function c100424037.filter2(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_MACHINE)
