@@ -31,7 +31,7 @@ function c100424004.filter(c)
 	return c:IsCode(10000010) and c:IsAbleToHand()
 end
 function c100424004.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100424004.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) and Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp) and Duel.GetFlagEffect(tp,100424004)==0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100424004.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c100424004.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -41,19 +41,20 @@ function c100424004.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 		if g:GetFirst():IsLocation(LOCATION_HAND) then
-			if Duel.GetFlagEffect(tp,100424004)~=0 then return end
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetDescription(aux.Stringid(100424004,2))
-			e1:SetType(EFFECT_TYPE_FIELD)
-			e1:SetTargetRange(LOCATION_HAND,0)
-			e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-			e1:SetValue(0x1)
-			e1:SetReset(RESET_PHASE+PHASE_END)
-			Duel.RegisterEffect(e1,tp)
-			local e2=e1:Clone()
-			e2:SetCode(EFFECT_EXTRA_SET_COUNT)
-			Duel.RegisterEffect(e2,tp)
-			Duel.RegisterFlagEffect(tp,100424004,RESET_PHASE+PHASE_END,0,1)
+			if Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp) and Duel.GetFlagEffect(tp,100424004)==0 then
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetDescription(aux.Stringid(100424004,2))
+				e1:SetType(EFFECT_TYPE_FIELD)
+				e1:SetTargetRange(LOCATION_HAND,0)
+				e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
+				e1:SetValue(0x1)
+				e1:SetReset(RESET_PHASE+PHASE_END)
+				Duel.RegisterEffect(e1,tp)
+				local e2=e1:Clone()
+				e2:SetCode(EFFECT_EXTRA_SET_COUNT)
+				Duel.RegisterEffect(e2,tp)
+				Duel.RegisterFlagEffect(tp,100424004,RESET_PHASE+PHASE_END,0,1)
+			end
 		end
 	end
 end
