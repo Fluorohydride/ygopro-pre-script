@@ -20,7 +20,7 @@ function c100266037.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1,100276037)
+	e2:SetCountLimit(1,100266037+100)
 	e2:SetCondition(aux.exccon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100266037.sptg2)
@@ -28,11 +28,11 @@ function c100266037.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100266037.filter(c)
-	return c:IsSetCard(0x24b)
+	return c:IsFaceup() and c:IsSetCard(0x24b)
 end
 function c100266037.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and c100266037.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100266037.filter(chkc) end
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c100266037.filter,tp,LOCATION_MZONE,0,1,nil) end

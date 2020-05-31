@@ -28,7 +28,7 @@ function c100266036.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return false end
 	e:SetLabelObject(tc)
 	local bc=tc:GetBattleTarget()
-	return bc and tc:IsSetCard(0x24b) and bc:IsAttackAbove(tc:GetAttack())
+	return bc and tc:IsSetCard(0x24b)
 end
 function c100266036.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
