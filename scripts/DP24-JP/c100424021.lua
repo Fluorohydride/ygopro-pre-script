@@ -42,20 +42,18 @@ end
 function c100424021.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		if tc:IsFaceup() then
-			local atk=0
-			local g=Duel.GetMatchingGroup(c100424021.atkfilter,tp,LOCATION_MZONE,0,nil)
-			if g:GetCount()>0 then atk=g:GetSum(Card.GetBaseAttack) end
-			--atk
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetValue(atk)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
-		end
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local atk=0
+		local g=Duel.GetMatchingGroup(c100424021.atkfilter,tp,LOCATION_MZONE,0,nil)
+		if g:GetCount()>0 then atk=g:GetSum(Card.GetBaseAttack) end
+		--atk
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetValue(atk)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1)
 		--damage 0
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
