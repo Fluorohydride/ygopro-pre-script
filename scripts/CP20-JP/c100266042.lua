@@ -52,7 +52,7 @@ function c100266042.atkcon(e)
 end
 function c100266042.chcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and e:GetHandler():GetLinkedGroupCount()>0 and Duel.GetTurnPlayer()==tp
+	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and e:GetHandler():GetMutualLinkedGroupCount()>0 and Duel.GetTurnPlayer()==tp
 end
 function c100266042.chfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x24b) and c:GetSequence()<5

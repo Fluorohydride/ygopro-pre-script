@@ -119,7 +119,7 @@ function c100424022.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.HintSelection(g)
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
-			local atk=tc:GetTextAttack()
+			local atk=tc:GetBaseAttack()
 			if atk>0 then
 				Duel.Damage(1-tp,atk,REASON_EFFECT)
 			end

@@ -67,7 +67,8 @@ function c100424019.damfilter(c)
 	return c:IsSetCard(0x13) and c:IsFaceup()
 end
 function c100424019.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,100424019)
 	local ct=Duel.GetMatchingGroupCount(c100424019.damfilter,tp,LOCATION_MZONE,0,nil)
+	if ct==0 then return end
+	Duel.Hint(HINT_CARD,0,100424019)
 	Duel.Damage(1-tp,ct*100,REASON_EFFECT)
 end

@@ -57,7 +57,7 @@ function c100266041.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=c:GetBattleTarget()
 	if not bc then return false end
 	e:SetLabelObject(bc)
-	return c:GetLinkedGroupCount()>0 and c:IsStatus(STATUS_OPPO_BATTLE) and bc:IsControler(1-tp) and bc:IsRelateToBattle()
+	return c:GetMutualLinkedGroupCount()>0 and c:IsStatus(STATUS_OPPO_BATTLE) and bc:IsControler(1-tp) and bc:IsRelateToBattle()
 end
 function c100266041.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetLabelObject()
@@ -77,7 +77,7 @@ function c100266041.descon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=c:GetBattleTarget()
 	if not bc then return false end
 	e:SetLabelObject(bc)
-	return c:GetLinkedGroupCount()==0 and c:IsStatus(STATUS_OPPO_BATTLE) and bc:IsControler(1-tp) and bc:IsRelateToBattle()
+	return c:GetMutualLinkedGroupCount()==0 and c:IsStatus(STATUS_OPPO_BATTLE) and bc:IsControler(1-tp) and bc:IsRelateToBattle()
 end
 function c100266041.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetLabelObject()

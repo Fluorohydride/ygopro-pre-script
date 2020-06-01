@@ -10,7 +10,6 @@ function c100424004.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100424004+EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(c100424004.condition)
 	e1:SetTarget(c100424004.target)
 	e1:SetOperation(c100424004.activate)
 	c:RegisterEffect(e1)
@@ -23,9 +22,6 @@ function c100424004.initial_effect(c)
 	e2:SetTarget(c100424004.gaintg)
 	e2:SetOperation(c100424004.gainop)
 	c:RegisterEffect(e2)
-end
-function c100424004.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
 end
 function c100424004.filter(c)
 	return c:IsCode(10000010) and c:IsAbleToHand()
