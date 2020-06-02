@@ -40,7 +40,7 @@ function c100424037.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100424037.filter1,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	while tc do
-		local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
