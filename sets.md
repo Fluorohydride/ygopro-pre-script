@@ -4,6 +4,7 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **May 21, 2020** :PRISMATIC SPECIAL PACK (VP20-JP) : `100267XXX`
 - **May 30, 2020** :Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
+- **June 18, 2020** :Toon Chaos (TOCH-EN) : `100268XXX`
 - **June 20, 2020** :Collectors Pack 2020 (CP20-JP) : `100266XXX`
 - **July 4, 2020** : Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
 
