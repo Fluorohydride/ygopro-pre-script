@@ -31,7 +31,7 @@ c:EnableReviveLimit()
 
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 
-	e2:SetCondition(c100268002.dircon)
+	e2:SetCondition(c100268001.dircon)
 
 	c:RegisterEffect(e2)
 	
@@ -99,7 +99,7 @@ function c100268001.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	
 end
 
-function c100268002.dircon(e)
+function c100268001.dircon(e)
 
 	local tp=e:GetHandlerPlayer()
 
