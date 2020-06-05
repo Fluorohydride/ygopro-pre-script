@@ -132,7 +132,7 @@ function c100268002.spop1(e,tp,eg,ep,ev,re,r,rp)
 
         and Duel.IsExistingMatchingCard(c100268002.cfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 		
-		and Duel.IsExistingMatchingCard(c100268002.cfilter2,tp,o,LOCATION_MZONE,1,e:GetHandler())
+		and Duel.IsExistingMatchingCard(c100268002.cfilter2,tp,0,LOCATION_MZONE,1,e:GetHandler())
 
         and Duel.SelectYesNo(tp,aux.Stringid(100268002,0)) then
     
