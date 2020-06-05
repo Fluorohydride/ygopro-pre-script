@@ -74,13 +74,6 @@ function c100268002.cfilter2(c)
 	return c:IsFaceup() and c:IsType(TYPE_TOON)
 
 end
-
-function c100268002.cfilter3(c)
-
-	 return c:IsType(TYPE_SPELL+TYPE_TRAP)
-
-end
-
 	
 function c100268002.atklimit(e,tp,eg,ep,ev,re,r,rp)
 
@@ -128,11 +121,11 @@ function c100268002.spop1(e,tp,eg,ep,ev,re,r,rp)
 
 	if not c:IsRelateToEffect(e) then return end
 
-	 if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
+	 if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	 
+		local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 
-        and Duel.IsExistingMatchingCard(c100268002.cfilter3,tp,0,LOCATION_ONFIELD,1,nil)
-		
-		and Duel.IsExistingMatchingCard(c100268002.cfilter2,tp,0,LOCATION_MZONE,1,e:GetHandler())
+        if Duel.IsExistingMatchingCard(c100268002.cfilter2,tp,LOCATION_ONFIELD,0,1,c)
 
         and Duel.SelectYesNo(tp,aux.Stringid(100268002,0)) then
     
@@ -140,13 +133,11 @@ function c100268002.spop1(e,tp,eg,ep,ev,re,r,rp)
 
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 
-        local g=Duel.SelectMatchingCard(tp,c100268002.cfilter3,tp,0,LOCATION_ONFIELD,1,1,nil)
+        local sg=g:Select(tp,1,1,nil)
 
-    if g:GetCount()>0 then
+        Duel.HintSelection(sg)
 
-        Duel.HintSelection(g)
-
-        Duel.Destroy(g,REASON_EFFECT)
+        Duel.Destroy(sg,REASON_EFFECT)
 
     end
 
