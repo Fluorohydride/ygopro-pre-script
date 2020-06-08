@@ -3,7 +3,6 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **May 21, 2020** :PRISMATIC SPECIAL PACK (VP20-JP) : `100267XXX`
-- **May 30, 2020** :Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
 - **June 18, 2020** :Toon Chaos (TOCH-EN) : `100268XXX`
 - **June 20, 2020** :Collectors Pack 2020 (CP20-JP) : `100266XXX`
 - **July 4, 2020** : Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
@@ -126,6 +125,7 @@
 - Duelist Pack: Legend Duelist 4 (DP21-JP) : `100411XXX` ~~Should have been `100421XXX`~~
 - Duelist Pack: Legend Duelist 5 (DP22-JP) : `100422XXX`
 - Duelist Pack: Legend Duelist 6 (DP23-JP) : `100423XXX`
+- Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
 
 ## Booster packs
 - THE DARK ILLUSION (TDIL-JP) : `100909XXX`
