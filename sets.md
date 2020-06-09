@@ -6,8 +6,10 @@
 - **June 18, 2020** :Toon Chaos (TOCH-EN) : `100268XXX`
 - **June 20, 2020** :Collectors Pack 2020 (CP20-JP) : `100266XXX`
 - **July 4, 2020** : Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
+- **August 8, 2020** : PHANTOM RAGE (PHRA-JP) : `101102XXX`
 
 # Announced
+- **October 3, 2020** :WORLD PREMIERE PACK 2020(WP20-JP) : `100269XXX`
 
 # Archived
 ## Other packs
