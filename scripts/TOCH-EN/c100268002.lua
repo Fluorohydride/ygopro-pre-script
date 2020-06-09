@@ -1,6 +1,7 @@
 --Toon Harpie Lady
 --Ejeffers1239
 function c100268002.initial_effect(c)
+	aux.AddCodeList(c,15259703)
 	--summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100268002,0))
@@ -31,26 +32,26 @@ function c100268002.initial_effect(c)
 	e5:SetCondition(c100268002.dircon)
 	c:RegisterEffect(e5)
 end
-function c100268002.cfilter(c)
+function c100268002.atklimit(e,tp,eg,ep,ev,re,r,rp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CANNOT_ATTACK)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e:GetHandler():RegisterEffect(e1)
+end
+function c100268002.cfilter1(c)
 	return c:IsFaceup() and c:IsCode(15259703)
 end
 function c100268002.cfilter2(c)
 	return c:IsFaceup() and c:IsType(TYPE_TOON)
 end
-function c100268002.atklimit(e,tp,eg,ep,ev,re,r,rp)
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_CANNOT_ATTACK)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e:GetHandler():RegisterEffect(e2)
-end
 function c100268002.dircon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(c100268002.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100268002.cfilter1,tp,LOCATION_ONFIELD,0,1,nil)
 		and not Duel.IsExistingMatchingCard(c100268002.cfilter2,tp,0,LOCATION_MZONE,1,nil)
 end
 function c100268002.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100268002.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100268002.cfilter1,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100268002.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -62,8 +63,8 @@ function c100268002.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
-		if Duel.IsExistingMatchingCard(c100268002.cfilter2,tp,LOCATION_ONFIELD,0,1,c)
-			and Duel.SelectYesNo(tp,aux.Stringid(100268002,0)) then
+		if #g>0 and Duel.IsExistingMatchingCard(c100268002.cfilter2,tp,LOCATION_ONFIELD,0,1,c)
+			and Duel.SelectYesNo(tp,aux.Stringid(100268002,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=g:Select(tp,1,1,nil)
