@@ -1,14 +1,17 @@
 --Toon Black Luster Soldier
+--Ejeffers1239
 function c100268001.initial_effect(c)
+	aux.AddCodeList(c,15259703)
 	c:EnableReviveLimit()
-	--special summon
+	--special summon rule
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(c100268001.spcon)
-	e1:SetOperation(c100268001.spop)
+	e1:SetCondition(c100268001.hspcon)
+	e1:SetTarget(c100268001.hsptg)
+	e1:SetOperation(c100268001.hspop)
 	c:RegisterEffect(e1)
 	--direct attack
 	local e2=Effect.CreateEffect(c)
@@ -16,7 +19,7 @@ function c100268001.initial_effect(c)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	e2:SetCondition(c100268001.dircon)
 	c:RegisterEffect(e2)
-	--remove
+	--banish
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100268001,0))
 	e3:SetCategory(CATEGORY_REMOVE)
@@ -30,47 +33,32 @@ function c100268001.initial_effect(c)
 	e3:SetOperation(c100268001.rmop)
 	c:RegisterEffect(e3)
 end
-function c100268001.filter(c)
-	return c:IsType(TYPE_TOON) and c:IsReleasable()
+function c100268001.rfilter(c,tp)
+	return (c:IsControler(tp) or c:IsFaceup()) and c:IsType(TYPE_TOON) and c:IsLevelAbove(1)
 end
-function c100268001.refilter(c,e,tp,m1,ft,fc)
-	local mg=m1:Filter(c100268001.filter,fc)
-	if ft>0 then
-		return mg:CheckWithSumGreater(Card.GetLevel,8,1,99,fc)
-	else
-		return ft>-1 and mg:IsExists(c100268001.mfilterf,1,nil,tp,mg,fc)
-	end
+function c100268001.fselect(g,tp)
+	Duel.SetSelectedCard(g)
+	return g:CheckWithSumGreater(Card.GetLevel,8) and aux.mzctcheckrel(g,tp)
 end
-function c100268001.mfilterf(c,tp,mg,rc)
-	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
-		Duel.SetSelectedCard(c)
-		return mg:CheckWithSumEqual(Card.GetLevel,8,0,99,rc)
-	else return false end
-end
-function c100268001.spcon(e,c)
+function c100268001.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local mg1=Duel.GetMatchingGroup(c100268001.filter,tp,LOCATION_MZONE+LOCATION_HAND,0,c)
-	return Duel.IsExistingMatchingCard(c100268001.refilter,tp,LOCATION_HAND,0,1,c,e,tp,mg1,ft,c)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c100268001.rfilter,nil,tp)
+	return rg:CheckSubGroup(c100268001.fselect,1,rg:GetCount(),tp)
 end
-function c100268001.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local mg1=Duel.GetMatchingGroup(c100268001.filter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil)
-	local mg=mg1:Filter(Card.IsReleasable,c)
-	local mat=nil
-	if ft>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		mat=mg:SelectWithSumGreater(tp,Card.GetLevel,8,1,99,c)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		mat=mg:FilterSelect(tp,c100268001.mfilterf,1,1,nil,tp,mg,c)
-		Duel.SetSelectedCard(mat)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local mat2=mg:SelectWithSumGreater(tp,Card.GetLevel,8,0,99,c)
-		mat:Merge(mat2)
-	end 
-	Duel.Release(mat,REASON_COST+REASON_RELEASE)
+function c100268001.hsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c100268001.rfilter,nil,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local sg=rg:SelectSubGroup(tp,c100268001.fselect,true,1,rg:GetCount(),tp)
+	if sg then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
+	else return false end
+end
+function c100268001.hspop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	Duel.Release(g,REASON_COST)
 end
 function c100268001.cfilter1(c)
 	return c:IsFaceup() and c:IsCode(15259703)
@@ -97,7 +85,7 @@ function c100268001.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterEffect(e1,true)
 end
 function c100268001.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsAbleToRemove() end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsAbleToRemove() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
