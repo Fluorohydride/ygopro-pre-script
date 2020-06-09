@@ -1,4 +1,5 @@
 --Toon Page-Flip
+--Script by JustFish
 function c100268004.initial_effect(c)
 	aux.AddCodeList(c,15259703)
 	--activate

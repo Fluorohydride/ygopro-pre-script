@@ -1,4 +1,5 @@
 --The Chaos Creator
+--Script by JustFish
 function c100268006.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon
@@ -40,24 +41,27 @@ function c100268006.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 end
 function c100268006.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and e:GetHandler():GetPreviousLocation(LOCATION_HAND)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and e:GetHandler():GetPreviousLocation()==LOCATION_HAND
 end
 function c100268006.tdfilter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and (c:IsAbleToDeck() or c:IsCanBeSpecialSummoned(e,0,tp,false,false)) and c:IsCanBeEffectTarget()
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsCanBeEffectTarget(e)
+		and (c:IsAbleToDeck() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+end
+function c100268006.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local dg=Duel.GetMatchingGroup(c100268006.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil,e,tp)
+	if chkc then return false end
+	if chk==0 then return dg:GetClassCount(Card.GetCode)>=3 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
+	local g=dg:SelectSubGroup(tp,aux.dncheck,false,3,3)
+	Duel.SetTargetCard(g)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c100268006.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100268006.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(c100268006.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil,e,tp)
-	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and c100268006.tdfilter(chkc) and dg:GetClassCount(Card.GetCode)>=3 end
-	if chk==0 then
-		return dg:GetClassCount(Card.GetCode)>=3 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c100268006.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,3,3,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,2,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+function c100268006.dfilter(c,tp)
+	return c:IsLocation(LOCATION_DECK) and c:IsControler(tp)
 end
 function c100268006.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
@@ -68,6 +72,18 @@ function c100268006.tdop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 			tg:Sub(sg)
 		end
-		Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+		local p=tp
+		for i=1,2 do
+			local dg=tg:Filter(c100268006.dfilter,nil,p)
+			if #dg>1 then
+				Duel.SortDecktop(tp,p,#dg)
+			end
+			for i=1,#dg do
+				local mg=Duel.GetDecktopGroup(p,1)
+				Duel.MoveSequence(mg:GetFirst(),1)
+			end
+			p=1-tp
+		end
 	end
 end
