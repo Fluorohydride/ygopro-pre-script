@@ -51,7 +51,7 @@ end
 function c100268006.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local dg=Duel.GetMatchingGroup(c100268006.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil,e,tp)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and c100268006.tdfilter(chkc) and dg:GetClassCount(Card.GetCode)>=3 end
-	if chk==0 then 
+	if chk==0 then
 		return dg:GetClassCount(Card.GetCode)>=3 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

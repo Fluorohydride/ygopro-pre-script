@@ -22,7 +22,7 @@ function c100268004.filter(c,e,tp)
 	return c:IsType(TYPE_TOON) and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP)
 end
 function c100268004.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 		local dg=Duel.GetMatchingGroup(c100268004.filter,tp,LOCATION_DECK,0,nil,e,tp)
 		return dg:GetClassCount(Card.GetCode)>=3 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	end
