@@ -1,4 +1,5 @@
 --Chaos Valkyria
+--Script by JustFish
 function c100268008.initial_effect(c)
 	--splimit
 	local e1=Effect.CreateEffect(c)
@@ -35,23 +36,15 @@ end
 function c100268008.cfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
 end
-function c100268008.cfilter1(c,g)
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and g:IsExists(Card.IsAttribute,1,c,ATTRIBUTE_DARK)
-end
-function c100268008.check(g)
-	return g:IsExists(c100268008.cfilter1,1,nil,g)
-end
 function c100268008.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c100268008.cfilter,tp,LOCATION_GRAVE,0,c)
-	if chk==0 then return g:CheckSubGroup(c100268008.check,2,2) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100268008.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local sg=g:SelectSubGroup(tp,c100268008.check,false,2,2)
+	local sg=Duel.SelectMatchingCard(tp,c100268008.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 end
 function c100268008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100268008.spop(e,tp,eg,ep,ev,re,r,rp)

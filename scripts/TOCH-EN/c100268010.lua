@@ -1,4 +1,5 @@
 --Eternal Chaos
+--Script by JustFish
 function c100268010.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -13,10 +14,11 @@ function c100268010.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100268010.tfilter(c,tp)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(c100268010.tgfilter,tp,LOCATION_DECK,0,1,nil,tp,c:GetAttack())
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(c100268010.tgfilter,tp,LOCATION_DECK,0,1,c,tp,c:GetAttack())
 end
 function c100268010.tgfilter(c,tp,atk)
-	return c:IsAttackBelow(atk) and c:IsAbleToGrave() and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and Duel.IsExistingMatchingCard(c100268010.tgfilter1,tp,LOCATION_DECK,0,1,c,atk-c:GetAttack(),c:GetAttribute())
+	return c:IsAttackBelow(atk) and c:IsAbleToGrave() and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
+		and Duel.IsExistingMatchingCard(c100268010.tgfilter1,tp,LOCATION_DECK,0,1,c,atk-c:GetAttack(),c:GetAttribute())
 end
 function c100268010.tgfilter1(c,atk,att)
 	return c:IsAttackBelow(atk) and c:IsAbleToGrave() and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and not c:IsAttribute(att)
@@ -25,7 +27,7 @@ function c100268010.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100268010.desfilter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(c100268010.tfilter,tp,0,LOCATION_MZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c100268010.tfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
+	Duel.SelectTarget(tp,c100268010.tfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,tp,LOCATION_DECK)
 end
 function c100268010.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -36,7 +38,7 @@ function c100268010.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,c100268010.tgfilter,tp,LOCATION_DECK,0,1,1,nil,tp,atk)
 		local gc=g:GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g1=Duel.SelectMatchingCard(tp,c100268010.tgfilter1,tp,LOCATION_DECK,0,1,1,nil,atk-gc:GetAttack(),gc:GetAttribute())
+		local g1=Duel.SelectMatchingCard(tp,c100268010.tgfilter1,tp,LOCATION_DECK,0,1,1,gc,atk-gc:GetAttack(),gc:GetAttribute())
 		g:Merge(g1)
 		if g:GetCount()>1 then
 			Duel.SendtoGrave(g,REASON_EFFECT)
@@ -61,7 +63,7 @@ function c100268010.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100268010.actcon(e)
-	return Duel.GetFlagEffect(e:GetHandlerPlayer(),10026801)~=0
+	return Duel.GetFlagEffect(e:GetHandlerPlayer(),100268010)~=0
 end
 function c100268010.actlimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and re:GetActivateLocation()==LOCATION_GRAVE
@@ -69,5 +71,5 @@ end
 function c100268010.aclimit1(e,tp,eg,ep,ev,re,r,rp)
 	local tp=e:GetHandlerPlayer()
 	if ep~=tp or not re:IsActiveType(TYPE_MONSTER) or not re:GetActivateLocation()==LOCATION_GRAVE then return end
-	Duel.RegisterFlagEffect(tp,10026801,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,100268010,RESET_PHASE+PHASE_END,0,1)
 end
