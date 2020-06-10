@@ -1,4 +1,6 @@
+--アフター・グロー
 --Afterglow
+--Script by JustFish
 function c100266017.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -18,6 +20,7 @@ function c100266017.tdfilter(c)
 end
 function c100266017.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100266017.rmfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_DECK,0,nil)
+	g:AddCard(e:GetHandler())
 	if chk==0 then return g:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_REMOVED)
@@ -26,6 +29,7 @@ function c100266017.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(c100266017.rmfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_DECK,0,nil)
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local tg=Duel.SelectMatchingCard(tp,c100266017.tdfilter,tp,LOCATION_REMOVED,0,1,1,nil)
 		if tg:GetCount()>0 then
 			Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
@@ -44,12 +48,12 @@ function c100266017.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==e:GetOwnerPlayer() and r==REASON_RULE
 end
 function c100266017.damop(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=e:GetOwnerPlayer() then return end
 	local hg=eg:Filter(Card.IsLocation,nil,LOCATION_HAND)
 	if hg:GetCount()==0 then return end
 	Duel.ConfirmCards(1-ep,hg)
 	local dg=hg:Filter(Card.IsCode,nil,100266017)
 	if dg:GetCount()>0 then
+		Duel.Hint(HINT_CARD,0,100266017)
 		Duel.Damage(1-ep,4000,REASON_EFFECT)
 	end
 	Duel.ShuffleHand(ep)
