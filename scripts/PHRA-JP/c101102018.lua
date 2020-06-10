@@ -1,3 +1,4 @@
+--U.A.リベロスパイカー
 --U.A. Libero Spiker
 --Scripted by Sock#3222
 function c101102018.initial_effect(c)
@@ -36,31 +37,31 @@ function c101102018.spfilter2(c,e,tp,tc)
 	return c:IsSetCard(0xb2) and not c:IsOriginalCodeRule(tc:GetOriginalCodeRule()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101102018.matchfilter(c,e,tp)
-    return Duel.IsExistingMatchingCard(c101102018.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c)
+	return Duel.IsExistingMatchingCard(c101102018.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end
 function c101102018.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
-        and Duel.GetMatchingGroup(c101102018.spfilter1,tp,LOCATION_HAND,0,nil):FilterCount(c101102018.matchfilter,nil,e,tp)>0
-    end
+		and Duel.GetMatchingGroup(c101102018.spfilter1,tp,LOCATION_HAND,0,nil):FilterCount(c101102018.matchfilter,nil,e,tp)>0
+	end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101102018.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.GetMatchingGroup(c101102018.spfilter1,tp,LOCATION_HAND,0,nil):Filter(c101102018.matchfilter,nil,e,tp)
-    if g1:GetCount()<=0 then return end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-    local tg1=g1:Select(tp,1,1,nil)
-    Duel.ConfirmCards(1-tp,tg1)
-    if Duel.SendtoDeck(tg1,nil,2,REASON_EFFECT) then
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-        local g2=Duel.SelectMatchingCard(tp,c101102018.spfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,tg1:GetFirst())
-        if Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP) and e:GetHandler():IsRelateToEffect(e) then
-            Duel.BreakEffect()
-            Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
-        end
-    end
+	if g1:GetCount()<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local tg1=g1:Select(tp,1,1,nil)
+	Duel.ConfirmCards(1-tp,tg1)
+	if Duel.SendtoDeck(tg1,nil,2,REASON_EFFECT) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g2=Duel.SelectMatchingCard(tp,c101102018.spfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,tg1:GetFirst())
+		if Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP) and e:GetHandler():IsRelateToEffect(e) then
+			Duel.BreakEffect()
+			Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+		end
+	end
 end
 
 function c101102018.spfilter(c,ft)

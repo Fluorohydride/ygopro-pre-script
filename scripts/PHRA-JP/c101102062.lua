@@ -1,3 +1,4 @@
+--U.A.ロッカールーム
 --U.A. Locker Room
 --Scripted by Sock#3222
 function c101102062.initial_effect(c)
@@ -27,23 +28,23 @@ function c101102062.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end
 function c101102062.cfilter(c)
-    return (c:IsSetCard(0xb2) or c:IsSetCard(0x107)) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
+	return (c:IsSetCard(0xb2) or c:IsSetCard(0x107)) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
 end
 function c101102062.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-    if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
-        local d=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-        if Duel.Recover(tp,d,REASON_EFFECT)<=0 then return end
-        if not Duel.SelectYesNo(tp,aux.Stringid(101102062,0)) then return end
-        local g=Duel.SelectMatchingCard(tp,c101102062.cfilter,tp,LOCATION_HAND,0,1,63,nil)
-        if g:GetCount()==0 then return end
-        Duel.ConfirmCards(1-tp,g)
-        local ct=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
-        Duel.ShuffleDeck(tp)
-        if ct>0 then
-            Duel.BreakEffect()
-            Duel.Draw(tp,ct,REASON_EFFECT)
-        end
-    end
+	if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
+		local d=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+		if Duel.Recover(tp,d,REASON_EFFECT)<=0 then return end
+		if not Duel.SelectYesNo(tp,aux.Stringid(101102062,0)) then return end
+		local g=Duel.SelectMatchingCard(tp,c101102062.cfilter,tp,LOCATION_HAND,0,1,63,nil)
+		if g:GetCount()==0 then return end
+		Duel.ConfirmCards(1-tp,g)
+		local ct=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		Duel.ShuffleDeck(tp)
+		if ct>0 then
+			Duel.BreakEffect()
+			Duel.Draw(tp,ct,REASON_EFFECT)
+		end
+	end
 end

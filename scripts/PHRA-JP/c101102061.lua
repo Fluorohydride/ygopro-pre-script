@@ -1,3 +1,4 @@
+--U.A.ハイパー・スタジアム
 --U.A. Hyper Stadium
 --Scripted by Sock#3222
 function c101102061.initial_effect(c)
@@ -23,9 +24,9 @@ function c101102061.cfilter(c)
 end
 function c101102061.excost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,101102061+100)==0
-        and Duel.IsExistingMatchingCard(c101102061.cfilter,tp,LOCATION_HAND,0,1,nil)
-        and Duel.CheckLPCost(tp,1000)
-    end
+		and Duel.IsExistingMatchingCard(c101102061.cfilter,tp,LOCATION_HAND,0,1,nil)
+		and Duel.CheckLPCost(tp,1000)
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101102061.cfilter,tp,LOCATION_HAND,0,1,1,nil)Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
@@ -58,9 +59,9 @@ end
 function c101102061.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local b1=Duel.GetMatchingGroup(c101102061.thfilter1,tp,LOCATION_DECK,0,nil)
-    local b2=Duel.GetMatchingGroup(c101102061.thfilter2,tp,LOCATION_GRAVE,0,nil)
+	local b2=Duel.GetMatchingGroup(c101102061.thfilter2,tp,LOCATION_GRAVE,0,nil)
 	if #b1<=0 and #b2<=0 then return end
-    if not Duel.SelectYesNo(tp,aux.Stringid(101102061,0)) then return end
+	if not Duel.SelectYesNo(tp,aux.Stringid(101102061,0)) then return end
 	local off=1
 	local ops={}
 	local opval={}
@@ -78,15 +79,15 @@ function c101102061.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sel=opval[op]
 	e:SetLabel(sel)
 	Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(101102061,sel+1))
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local fg=nil
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local fg=nil
 	if sel==0 then
-        e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-        fg=b1
-    else
-        fg=b2
+		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+		fg=b1
+	else
+		fg=b2
 	end
-    local sg=fg:Select(tp,1,1,nil)
-    Duel.SendtoHand(sg,nil,REASON_EFFECT)
-    Duel.ConfirmCards(1-tp,sg)
+	local sg=fg:Select(tp,1,1,nil)
+	Duel.SendtoHand(sg,nil,REASON_EFFECT)
+	Duel.ConfirmCards(1-tp,sg)
 end

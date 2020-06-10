@@ -1,3 +1,4 @@
+--U.A.プレイングマネージャー
 --U.A. Playing Manager
 --Scripted by Sock#3222
 function c101102019.initial_effect(c)
@@ -9,7 +10,7 @@ function c101102019.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetRange(LOCATION_HAND)
-    e1:SetCountLimit(1,101102019)
+	e1:SetCountLimit(1,101102019)
 	e1:SetCondition(c101102019.spcon)
 	e1:SetTarget(c101102019.sptg)
 	e1:SetOperation(c101102019.spop)
@@ -17,7 +18,7 @@ function c101102019.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-    
+	
 	--destroy/disable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -42,7 +43,7 @@ function c101102019.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-        Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c101102019.negfilter(c)
@@ -71,9 +72,9 @@ function c101102019.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(101102019,sel+1))
 	if sel==0 then
 		e:SetCategory(CATEGORY_DESTROY)
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-        local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-        Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	else
 		e:SetCategory(CATEGORY_DISABLE)
 	end
@@ -85,8 +86,8 @@ function c101102019.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	else
-        local c=e:GetHandler()
-        local b2=Duel.GetMatchingGroup(c101102019.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		local c=e:GetHandler()
+		local b2=Duel.GetMatchingGroup(c101102019.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		local nc=b2:GetFirst()
 		while nc do
 			local e1=Effect.CreateEffect(c)
