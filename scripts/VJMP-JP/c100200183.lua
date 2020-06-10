@@ -1,4 +1,6 @@
---太阳之魔术师 埃达
+--太陽の魔術師エダ
+--
+--Script by JustFish
 function c100200183.initial_effect(c)
 	--SpecialSummon
 	local e1=Effect.CreateEffect(c)
@@ -39,7 +41,7 @@ function c100200183.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100200183.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100200183.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
@@ -53,14 +55,13 @@ function c100200183.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function c100200183.filter(c)
-	return c:IsRace(RACE_SPELLCASTER) and c:IsFacedown() and c:IsDefensePos()
+	return c:IsRace(RACE_SPELLCASTER) and c:IsFacedown()
 end
 function c100200183.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100200183.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
 end
 function c100200183.posop(e,tp,eg,ep,ev,re,r,rp,chk)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectMatchingCard(tp,c100200183.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	local tc=g:GetFirst()
