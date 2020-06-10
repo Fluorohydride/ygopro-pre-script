@@ -1,4 +1,6 @@
---憑依覚醒ー大稲荷火
+--憑依覚醒－大稲荷火
+--
+--Script by JustFish
 function c100339023.initial_effect(c)
 	--spsummon proc
 	local e1=Effect.CreateEffect(c)

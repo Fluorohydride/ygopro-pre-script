@@ -1,4 +1,6 @@
 --憑依連携
+--
+--Script by JustFish
 function c100339024.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

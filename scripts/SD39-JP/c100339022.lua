@@ -1,4 +1,6 @@
---憑依覚醒ーデーモン・リーパー
+--憑依覚醒－デーモン・リーパー
+--
+--Script by JustFish
 function c100339022.initial_effect(c)
 	--spsummon proc
 	local e1=Effect.CreateEffect(c)
