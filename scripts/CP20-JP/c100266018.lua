@@ -42,8 +42,8 @@ function c100266018.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,num,REASON_EFFECT)
 end
 function c100266018.setcon(e,tp,eg,ep,ev,re,r,rp)
-    local ph=Duel.GetCurrentPhase()
-    return Duel.GetTurnPlayer()==1-tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+	local ph=Duel.GetCurrentPhase()
+	return Duel.GetTurnPlayer()==1-tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function c100266018.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end
