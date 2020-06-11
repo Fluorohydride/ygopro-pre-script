@@ -30,7 +30,7 @@ end
 function c101102001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102001.cfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101102001,2))
-	local c=Duel.SelectMatchingCard(tp,c101102069.cfilter,tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
+	local c=Duel.SelectMatchingCard(tp,c101102001.cfilter,tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
 	c:RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c101102001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
