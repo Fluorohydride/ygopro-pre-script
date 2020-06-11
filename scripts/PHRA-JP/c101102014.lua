@@ -1,4 +1,6 @@
---双天拳的熊罴
+--双天拳の熊羆
+--
+--Script by JustFish
 function c101102014.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)

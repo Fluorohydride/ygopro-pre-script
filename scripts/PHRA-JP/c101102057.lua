@@ -1,4 +1,6 @@
 --双天招来
+--
+--Script by JustFish
 function c101102057.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

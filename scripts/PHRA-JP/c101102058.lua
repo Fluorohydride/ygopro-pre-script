@@ -1,4 +1,6 @@
---阿吽之呼吸
+--阿吽の呼吸
+--
+--Script by JustFish
 function c101102058.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

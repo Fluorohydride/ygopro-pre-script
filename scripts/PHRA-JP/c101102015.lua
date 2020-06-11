@@ -1,4 +1,6 @@
---双天脚之鸿鹄
+--双天脚の鴻鵠
+--
+--Script by JustFish
 function c101102015.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

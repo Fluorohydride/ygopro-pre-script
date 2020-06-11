@@ -1,4 +1,6 @@
---双天拳 铠阿
+--双天拳 鎧阿
+--
+--Script by JustFish
 function c101102032.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

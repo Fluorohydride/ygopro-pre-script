@@ -1,4 +1,6 @@
---双天之使命
+--双天の使命
+--
+--Script by JustFish
 function c101102074.initial_effect(c)
 	--copy spell
 	local e1=Effect.CreateEffect(c)

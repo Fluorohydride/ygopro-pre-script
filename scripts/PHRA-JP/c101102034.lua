@@ -1,4 +1,6 @@
---双天将 金刚
+--双天将 金剛
+--
+--Script by JustFish
 function c101102034.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

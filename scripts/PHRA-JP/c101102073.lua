@@ -1,4 +1,6 @@
---双天之再来
+--双天の再来
+--
+--Script by JustFish
 function c101102073.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

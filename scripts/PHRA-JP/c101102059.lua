@@ -1,4 +1,6 @@
---双天之调伏
+--双天の調伏
+--
+--Script by JustFish
 function c101102059.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
