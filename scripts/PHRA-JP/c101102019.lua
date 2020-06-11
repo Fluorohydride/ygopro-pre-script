@@ -18,15 +18,14 @@ function c101102019.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	
 	--destroy/disable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e3:SetCountLimit(1,101102019+1)
-	e3:SetTarget(c101102019.thtg)
-	e3:SetOperation(c101102019.thop)
+	e3:SetCountLimit(1,101102019+100)
+	e3:SetTarget(c101102019.target)
+	e3:SetOperation(c101102019.operation)
 	c:RegisterEffect(e3)
 end
 function c101102019.cfilter(c,tp)
@@ -49,7 +48,8 @@ end
 function c101102019.negfilter(c)
 	return c:IsFaceup() and not c:IsDisabled() and not c:IsSetCard(0xb2)
 end
-function c101102019.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c101102019.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsOnField() end
 	local b1=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local b2=Duel.GetMatchingGroup(c101102019.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then return #b1>0 or #b2>0 end
@@ -69,7 +69,6 @@ function c101102019.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local op=Duel.SelectOption(tp,table.unpack(ops))+1
 	local sel=opval[op]
 	e:SetLabel(sel)
-	Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(101102019,sel+1))
 	if sel==0 then
 		e:SetCategory(CATEGORY_DESTROY)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -79,7 +78,7 @@ function c101102019.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetCategory(CATEGORY_DISABLE)
 	end
 end
-function c101102019.thop(e,tp,eg,ep,ev,re,r,rp)
+function c101102019.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) then
