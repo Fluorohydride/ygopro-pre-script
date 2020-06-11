@@ -24,7 +24,7 @@ function c101102034.initial_effect(c)
 	e2:SetCode(EVENT_BATTLED)
 	e2:SetCondition(c101102034.thcon)
 	e2:SetTarget(c101102034.thtg)
-	e2:SetOperation(c101102034.thtop)
+	e2:SetOperation(c101102034.thop)
 	c:RegisterEffect(e2)
 	--negate
 	local e3=Effect.CreateEffect(c)
