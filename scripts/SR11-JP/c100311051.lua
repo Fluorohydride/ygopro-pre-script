@@ -54,15 +54,15 @@ function c100311051.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100311051.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return aux.nbcon(tp,re) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
-	ev:GetHandler():CreateEffectRelation(e)
+	if re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+	end
 end
 function c100311051.negop(e,tp,eg,ep,ev,re,r,rp)
-	local rc=ev:GetHandler()
-	if Duel.NegateActivation(ev)~=0 and rc:IsRelateToEffect(e) then
-		Duel.Remove(rc,POS_FACEUP,REASON_EFFECT)
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function c100311051.rmcon(e,tp,eg,ep,ev,re,r,rp)
