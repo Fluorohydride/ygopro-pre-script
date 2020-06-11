@@ -80,14 +80,3 @@ end
 function c101102041.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
-
-
-
-
-
-
-
-
-
-
-

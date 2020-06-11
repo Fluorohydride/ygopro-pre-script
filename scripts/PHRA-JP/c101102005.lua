@@ -7,7 +7,6 @@ function c101102005.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,c101102005)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCondition(c101102005.spcon)
 	e1:SetTarget(c101102005.sptg)
 	e1:SetOperation(c101102005.spop)
@@ -23,6 +22,33 @@ function c101102005.initial_effect(c)
 	e2:SetTarget(c101102005.sstg)
 	e2:SetOperation(c101102005.ssop)
 	c:RegisterEffect(e2)
+end
+function c101102005.ssfilter(c)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsFaceup()
+end
+function c101102005.sscon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c101102005.ssfilter,tp,LOCATION_MZONE,0,1,nil)
+end
+function c101102005.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+end
+function c101102005.ssop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c101102005.splimit)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
+function c101102005.splimit(e,c)
+	return not c:IsAttribute(ATTRIBUTE_DARK)
 end
 function c101102005.tgfilter(c,e,tp)
 	return c:IsSetCard(0xba) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -47,7 +73,7 @@ end
 function c101102005.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -60,20 +86,4 @@ function c101102005.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 	Duel.SpecialSummonComplete()
-end
-function c101102005.ssfilter(c)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsFaceup()
-end
-function c101102005.sscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101102005.ssfilter,tp,LOCATION_MZONE,0,1,nil)
-end
-function c101102005.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-end
-function c101102005.ssop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end

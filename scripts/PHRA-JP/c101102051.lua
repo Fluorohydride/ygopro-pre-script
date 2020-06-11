@@ -41,10 +41,8 @@ function c101102051.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gfield=Duel.GetMatchingGroup(c101102051.cfilter,tp,LOCATION_MZONE,0,nil,e,tp)
 	for tc in aux.Next(gfield) do
 		local gextra=Duel.GetMatchingGroup(c101102051.cefilter,tp,LOCATION_EXTRA,0,nil,tc,ct,e,tp)
-		Debug.Message(#gextra)
 		for ex in aux.Next(gextra) do
 			local r=ex:GetRank()-tc:GetRank()
-			Debug.Message(r)
 			if not availbool[r] then
 				availbool[r]=true
 				table.insert(avail,r)
@@ -77,7 +75,6 @@ function c101102051.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101102051.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	Debug.Message(aux.GetValueType(tc))
 	if aux.MustMaterialCheck(tc,tp,EFFECT_MUST_BE_XMATERIAL) and tc:IsFaceup()
 		and tc:IsRelateToEffect(e) and tc:IsControler(tp) and not tc:IsImmuneToEffect(e) then 
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
