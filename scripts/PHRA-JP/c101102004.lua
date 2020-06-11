@@ -29,7 +29,8 @@ function c101102004.ssfilter(c)
 	return not c:IsSetCard(0xba) or c:IsFacedown()
 end
 function c101102004.sscon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c101102004.ssfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
+		and not Duel.IsExistingMatchingCard(c101102004.ssfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101102004.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
