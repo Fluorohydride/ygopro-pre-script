@@ -38,10 +38,9 @@ function c100311001.spcostfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsRace(RACE_DRAGON+RACE_WINDBEAST)
 end
 function c100311001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c100311001.spcostfilter,tp,LOCATION_GRAVE,0,nil)
-	if chk==0 then return g:CheckSubGroup(aux.gfcheck,2,2,Card.IsRace,RACE_DRAGON,RACE_WINDBEAST) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100311001.spcostfilter,tp,LOCATION_GRAVE,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local sg=g:SelectSubGroup(tp,aux.gfcheck,false,2,2,Card.IsRace,RACE_DRAGON,RACE_WINDBEAST)
+	local sg=Duel.SelectMatchingCard(tp,c100311001.spcostfilter,tp,LOCATION_GRAVE,0,2,2,nil)
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 end
 function c100311001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
