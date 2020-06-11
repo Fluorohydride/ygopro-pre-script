@@ -67,24 +67,19 @@ function c100311051.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100311051.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetAttacker()
-	if tc==c then tc=Duel.GetAttackTarget() end
-	if not tc then return false end
-	return not c:IsStatus(STATUS_BATTLE_DESTROYED) and tc:IsStatus(STATUS_BATTLE_DESTROYED)
+	local bc=c:GetBattleTarget()
+	e:SetLabelObject(bc)
+	return bc and bc:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsStatus(STATUS_OPPO_BATTLE)
 end
 function c100311051.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local tc=Duel.GetAttacker()
-	if tc==c then tc=Duel.GetAttackTarget() end
-	if chk==0 then return tc:IsAbleToRemove() end
-	tc:CreateEffectRelation(e)
-	e:SetLabelObject(tc)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,0,0)
+	local bc=e:GetLabelObject()
+	if chk==0 then return bc:IsAbleToRemove() end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,bc,1,0,0)
 end
 function c100311051.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetLabelObject()
-	if tc:IsRelateToEffect(e) then
-		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+	local bc=e:GetLabelObject()
+	if bc:IsRelateToBattle() and bc:IsAbleToRemove() then
+		Duel.Remove(bc,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function c100311051.descon(e,tp,eg,ep,ev,re,r,rp)
