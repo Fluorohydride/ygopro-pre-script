@@ -1,4 +1,6 @@
+--RUM－ファントム・フォース
 --Rank-Up-Magic Phantom Knights' Force
+--Script by JoyJ
 function c101102051.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

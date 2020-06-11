@@ -1,4 +1,6 @@
+--RR－ヒール・イーグル
 --Raidraptor - Heel Eagle
+--Script by JoyJ
 function c101102004.initial_effect(c)
 	--self ss
 	local e1=Effect.CreateEffect(c)

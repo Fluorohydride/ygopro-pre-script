@@ -1,4 +1,6 @@
+--アーク・リベリオン・エクシーズ・ドラゴン
 --Arc Rebellion Xyz Dragon
+--Script by JoyJ
 function c101102041.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,5,3)

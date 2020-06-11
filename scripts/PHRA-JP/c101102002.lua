@@ -1,4 +1,6 @@
+--幻影騎士団ステンドグリーブ
 --The Phantom Knights of Stained Greaves
+--Script by JoyJ
 function c101102002.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
+--幻影騎士団ティアースケイル
 --The Phantom Knights of Tear Scale
+--Script by JoyJ
 function c101102003.initial_effect(c)
 	--to grave
 	local e1=Effect.CreateEffect(c)

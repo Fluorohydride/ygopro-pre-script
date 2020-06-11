@@ -1,4 +1,6 @@
+--レイダーズ・ウィング
 --Raiders' Wing
+--Script by JoyJ
 function c101102001.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

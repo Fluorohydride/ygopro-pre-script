@@ -1,4 +1,6 @@
+--RR－ストラングル・レイニアス
 --Raidraptor - Strangle Lanius
+--Script by JoyJ
 function c101102005.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
+--RR－ファントム・クロー
 --Raidraptor - Phantom Knights' Claw
+--Script by JoyJ
 function c101102069.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

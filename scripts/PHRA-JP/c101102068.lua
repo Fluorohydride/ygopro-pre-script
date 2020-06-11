@@ -1,4 +1,6 @@
+--レイダーズ・アンブレイカブル・マインド
 --Raiders' Unbreakable Mind
+--Script by JoyJ
 function c101102068.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
