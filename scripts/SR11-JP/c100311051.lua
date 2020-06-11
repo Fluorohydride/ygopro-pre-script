@@ -1,4 +1,6 @@
---龙骑兵团骑士-光枪龙骑士
+--ドラグニティナイト－アラドヴァル
+--
+--Script by JoyJ
 function c100311051.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x29),aux.NonTuner(nil),1)

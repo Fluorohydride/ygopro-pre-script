@@ -1,4 +1,6 @@
+--サイキック・ウェーブ
 --Psychic Wave
+--Script by JoyJ
 function c100266015.initial_effect(c)
 	aux.AddCodeList(c,77585513)
 	--Activate

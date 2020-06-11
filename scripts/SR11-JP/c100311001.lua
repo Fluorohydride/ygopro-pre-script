@@ -1,4 +1,6 @@
+--ドラグニティアームズ－グラム
 --Dragunity Arma Gram
+--Script by JoyJ
 function c100311001.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -140,4 +142,4 @@ function c100311001.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100311001.eqlimit(e,c)
 	return e:GetOwner()==c
-	end
+end

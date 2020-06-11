@@ -1,4 +1,6 @@
+--ドラグニティ・グロー
 --Dragunity Glow
+--Script by JoyJ
 function c100311026.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
