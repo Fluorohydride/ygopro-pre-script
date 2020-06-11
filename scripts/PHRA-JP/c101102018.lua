@@ -55,7 +55,7 @@ function c101102018.spfilter2(c,e,tp,tc)
 end
 function c101102018.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsAbleToHand()
-		and Duel.IsExistingMatchingCard(c101102018.spfilter1,tp,LOCATION_HAND,0,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c101102018.spfilter1,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
