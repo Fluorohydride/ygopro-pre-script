@@ -84,7 +84,7 @@ end
 function c100311051.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetLabelObject()
 	if tc:IsRelateToEffect(e) then
-		Duel.Remove(rc,POS_FACEUP,REASON_EFFECT)
+		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function c100311051.descon(e,tp,eg,ep,ev,re,r,rp)
