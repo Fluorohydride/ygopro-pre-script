@@ -43,11 +43,9 @@ function c101102018.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectMatchingCard(tp,c101102018.spfilter,tp,LOCATION_MZONE,0,1,1,nil,ft)
 	Duel.SendtoHand(g,nil,REASON_COST)
 end
-
 function c101102018.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end
-
 function c101102018.spfilter1(c,e,tp)
 	return c:IsSetCard(0xb2) and c:IsLevelAbove(5) and c:IsAbleToDeck()
 		and Duel.IsExistingMatchingCard(c101102018.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c)
@@ -59,7 +57,7 @@ function c101102018.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsAbleToHand()
 		and Duel.IsExistingMatchingCard(c101102018.spfilter1,tp,LOCATION_HAND,0,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function c101102018.spop2(e,tp,eg,ep,ev,re,r,rp)

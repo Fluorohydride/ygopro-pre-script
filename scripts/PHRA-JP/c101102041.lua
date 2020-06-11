@@ -78,7 +78,6 @@ function c101102041.operation(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e0,tp)
 end
-
 function c101102041.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end

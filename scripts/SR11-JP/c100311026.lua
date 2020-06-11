@@ -8,7 +8,6 @@ function c100311026.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100311026)
-	e1:SetCost(c100311026.cost)
 	e1:SetTarget(c100311026.target)
 	e1:SetOperation(c100311026.activate)
 	c:RegisterEffect(e1)
@@ -25,7 +24,6 @@ function c100311026.initial_effect(c)
 	e2:SetOperation(c100311026.spop)
 	c:RegisterEffect(e2)
 end
-
 function c100311026.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsLevelAbove(5) and c:IsSetCard(0x29) and c:IsAbleToHand()
 end

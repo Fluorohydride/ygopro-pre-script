@@ -34,7 +34,6 @@ function c100311001.initial_effect(c)
 	e3:SetOperation(c100311001.eqop)
 	c:RegisterEffect(e3)
 end
-
 function c100311001.spcostfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsRace(RACE_DRAGON+RACE_WINDBEAST)
 end
@@ -99,7 +98,7 @@ end
 function c100311001.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE) and c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()~=tp
 end
-function c100311001.condition(e,tp,eg,ep,ev,re,r,rp)
+function c100311001.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100311001.cfilter,1,nil,tp)
 end
 function c100311001.filter(c,e,tp)
