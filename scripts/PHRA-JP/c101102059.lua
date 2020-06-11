@@ -43,14 +43,14 @@ function c101102059.activate(e,tp,eg,ep,ev,re,r,rp)
 			local b2=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil)
 			local sel=0
 			if b1 and b2 then
-				Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_OPTION)
-				sel=Duel.SelectOption(1-tp,aux.Stringid(101102059,0),aux.Stringid(101102059,1))+1
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPTION)
+				sel=Duel.SelectOption(tp,aux.Stringid(101102059,0),aux.Stringid(101102059,1))+1
 			elseif b1 then
-				Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_OPTION)
-				sel=Duel.SelectOption(1-tp,aux.Stringid(101102059,0))+1
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPTION)
+				sel=Duel.SelectOption(tp,aux.Stringid(101102059,0))+1
 			elseif b2 then
-				Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_OPTION)
-				sel=Duel.SelectOption(1-tp,aux.Stringid(101102059,1))+2
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPTION)
+				sel=Duel.SelectOption(tp,aux.Stringid(101102059,1))+2
 			end
 			if sel==1 then
 				Duel.BreakEffect()
