@@ -24,14 +24,14 @@ function c101102073.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c101102073.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	local tc=g:GetFirst()
-	if tc:GetOriginalLevel()==4 then
+	if tc:GetOriginalLevel()<=4 then
 		Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	end
 end
 function c101102073.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 and tc:GetOriginalLevel()==4 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 and tc:GetOriginalLevel()<=4 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,101102173,0x24d,0x4011,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) and Duel.SelectYesNo(tp,aux.Stringid(101102073,0)) then
 			Duel.BreakEffect()
 			local token=Duel.CreateToken(tp,101102173)
