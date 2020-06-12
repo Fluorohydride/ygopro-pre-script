@@ -38,7 +38,7 @@ end
 function c100266015.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c100266015.costfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
-	local g=Duel.SelectMatchingCard(tp,c100266015.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100266015.costfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100266015.target(e,tp,eg,ep,ev,re,r,rp,chk)
