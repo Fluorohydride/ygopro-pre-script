@@ -20,7 +20,7 @@ function c100311001.initial_effect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,100311001+100)
+	e2:SetCountLimit(1,100311001+100)
 	e2:SetTarget(c100311001.distg)
 	e2:SetOperation(c100311001.disop)
 	c:RegisterEffect(e2)
@@ -28,7 +28,8 @@ function c100311001.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_DESTROYED)
-	e1:SetCountLimit(1,100311001+200)
+	e3:SetCountLimit(1,100311001+200)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(c100311001.eqcon)
 	e3:SetTarget(c100311001.eqtg)
 	e3:SetOperation(c100311001.eqop)
@@ -69,17 +70,20 @@ function c100311001.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		if tc:IsType(TYPE_TRAPMONSTER) then
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
+			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e3)
 		end
@@ -88,6 +92,7 @@ function c100311001.disop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetValue(-ct*1000)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
@@ -95,7 +100,7 @@ function c100311001.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100311001.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE) and c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()~=tp
+	return c:IsReason(REASON_BATTLE) and c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()==1-tp and c:IsType(TYPE_MONSTER)
 end
 function c100311001.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100311001.cfilter,1,nil,tp)
@@ -105,37 +110,32 @@ function c100311001.filter(c,e,tp)
 		and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and not c:IsForbidden()
 end
 function c100311001.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if chk==0 then return ct>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and eg:IsExists(c100311001.filter,1,nil,e,tp) end
 	local g=eg:Filter(c100311001.filter,nil,e,tp)
-	local tc=nil
+	local tg=nil
 	if g:GetCount()>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		tc=g:Select(tp,1,ct,nil)
+		tg=g:Select(tp,1,1,nil)
 	else
-		tc=g
+		tg=g
 	end
-	e:SetLabelObject(tc)
-	tc:ForEach(Card.CreateEffectRelation,e)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tc,#tc,0,0)
+	Duel.SetTargetCard(tg)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tg,1,0,0)
 end
 function c100311001.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=e:GetLabelObject()
-	g=g:Filter(Card.IsRelateToEffect,nil,e)
-	if c:IsFaceup() then
-		for tc in aux.Next(g) do
-			if Duel.Equip(tp,tc,c,true,true) then
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_EQUIP_LIMIT)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-				e1:SetValue(c100311001.eqlimit)
-				tc:RegisterEffect(e1)
-			end
-			Duel.EquipComplete()
+	local tc=Duel.GetFirstTarget()
+	if c:IsFaceup() and tc:IsRelateToEffect(e) then
+		if Duel.Equip(tp,tc,c,true,true) then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_EQUIP_LIMIT)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetValue(c100311001.eqlimit)
+			tc:RegisterEffect(e1)
 		end
+		Duel.EquipComplete()
 	end
 end
 function c100311001.eqlimit(e,c)
