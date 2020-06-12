@@ -22,7 +22,7 @@ function c101102019.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCountLimit(1,101102019+100)
 	e3:SetTarget(c101102019.target)
 	e3:SetOperation(c101102019.operation)
@@ -71,11 +71,13 @@ function c101102019.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabel(sel)
 	if sel==0 then
 		e:SetCategory(CATEGORY_DESTROY)
+		e:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	else
 		e:SetCategory(CATEGORY_DISABLE)
+		e:SetProperty(EFFECT_FLAG_DELAY)
 	end
 end
 function c101102019.operation(e,tp,eg,ep,ev,re,r,rp)
