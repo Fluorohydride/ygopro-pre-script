@@ -30,7 +30,7 @@ function c101102033.initial_effect(c)
 end
 function c101102033.repfilter(c,tp)
 	return c:IsSetCard(0x24d) and c:IsType(TYPE_FUSION) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function c101102033.desfilter(c,e,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x24d)
