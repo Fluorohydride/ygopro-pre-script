@@ -23,21 +23,15 @@ function c101102069.cfilter(c,tp)
 end
 function c101102069.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102069.cfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101102069,0))
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DEATTACHFROM)
 	local c=Duel.SelectMatchingCard(tp,c101102069.cfilter,tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
-	local g2=c:GetOverlayGroup()
 	c:RemoveOverlayCard(tp,1,1,REASON_COST)
-	local g3=c:GetOverlayGroup()
-	g2:Sub(g3)
-	local tc=g2:GetFirst()
+	local tc=Duel.GetOperatedGroup():GetFirst()
 	if tc:IsSetCard(0xba) or tc:IsSetCard(0x10db) or tc:IsSetCard(0x2073) then
-		e:SetLabel(tc:GetBaseAttack())
+		e:SetLabel(1)
 	else
 		e:SetLabel(0)
 	end
-end
-function c101102069.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsType(TYPE_XYZ)
 end
 function c101102069.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -46,19 +40,21 @@ function c101102069.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
+function c101102069.tgfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsType(TYPE_XYZ)
+end
 function c101102069.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 and e:GetLabel()>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 		local g=Duel.SelectMatchingCard(tp,c101102069.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
-		if g then
-			local tc=g:GetFirst()
+		local tc=g:GetFirst()
+		if tc then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e1:SetValue(e:GetLabel())
-			c:RegisterEffect(e1)
+			e1:SetValue(eg:GetFirst():GetBaseAttack())
+			tc:RegisterEffect(e1)
 		end
 	end
 end
