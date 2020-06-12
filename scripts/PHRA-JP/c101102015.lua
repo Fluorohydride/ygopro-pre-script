@@ -8,7 +8,7 @@ function c101102015.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e1:SetCode(EVENT_TO_GRAVE)
+	e1:SetCode(EVENT_DESTROYED)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101102015)
 	e1:SetCondition(c101102015.spcon)
@@ -31,15 +31,8 @@ function c101102015.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101102015.spfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x24d) and not c:IsCode(101102015) and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT))
-end
-function c101102015.sffilter(c,e,tp,tc)
-	return c:IsSetCard(0x24d) and c:IsType(TYPE_FUSION)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
-end
-function c101102015.desfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x24d)
-		and Duel.IsExistingMatchingCard(c101102015.sffilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousSetCard(0x24d) and c:GetPreviousCodeOnField()~=101102015
+		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c101102015.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -51,10 +44,20 @@ function c101102015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
+function c101102015.desfilter(c,e,tp)
+	return c:IsFaceup() and c:IsSetCard(0x24d)
+		and Duel.IsExistingMatchingCard(c101102015.sffilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
+end
+function c101102015.sffilter(c,e,tp,tc)
+	return c:IsSetCard(0x24d) and c:IsType(TYPE_FUSION)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
+end
 function c101102015.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.IsExistingMatchingCard(c101102015.desfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(101102015,2)) then
+	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
+		and Duel.IsExistingMatchingCard(c101102015.desfilter,tp,LOCATION_MZONE,0,1,nil,e,tp)
+		and Duel.SelectYesNo(tp,aux.Stringid(101102015,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,c101102015.desfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
