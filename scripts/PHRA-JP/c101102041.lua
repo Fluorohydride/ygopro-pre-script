@@ -34,7 +34,7 @@ function c101102041.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c101102041.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE):GetSum(Card.GetBaseAttack)>0 end
+	if chk==0 then return Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler()):GetSum(Card.GetBaseAttack)>0 end
 end
 function c101102041.mgfilter(c)
 	return c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK)
@@ -44,30 +44,30 @@ function c101102041.tgfilter(c)
 end
 function c101102041.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local atk=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE):GetSum(Card.GetBaseAttack)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e1:SetValue(atk)
-	c:RegisterEffect(e1)
-	local mg=c:GetOverlayGroup()
-	if mg:IsExists(c101102041.mgfilter,1,nil) then
-		local exc=aux.ExceptThisCard(e)
-		local g=Duel.GetMatchingGroup(c101102041.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,exc)
-		for tc in aux.Next(g) do
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e2)
-		end	
+	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		local atk=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,c):GetSum(Card.GetBaseAttack)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+		e1:SetValue(atk)
+		c:RegisterEffect(e1)
+		local mg=c:GetOverlayGroup()
+		if mg:IsExists(c101102041.mgfilter,1,nil) then
+			local g=Duel.GetMatchingGroup(c101102041.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,c)
+			for tc in aux.Next(g) do
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_DISABLE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				tc:RegisterEffect(e1)
+				local e2=Effect.CreateEffect(c)
+				e2:SetType(EFFECT_TYPE_SINGLE)
+				e2:SetCode(EFFECT_DISABLE_EFFECT)
+				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+				tc:RegisterEffect(e2)
+			end	
+		end
 	end
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)
