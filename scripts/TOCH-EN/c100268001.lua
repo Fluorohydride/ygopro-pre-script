@@ -38,16 +38,17 @@ function c100268001.rfilter(c,tp)
 end
 function c100268001.fselect(g,tp)
 	Duel.SetSelectedCard(g)
-	return g:CheckWithSumGreater(Card.GetLevel,8) and aux.mzctcheckrel(g,tp)
+	return g:CheckWithSumGreater(Card.GetLevel,8)
+		and Duel.GetMZoneCount(tp,g)>0 and Duel.CheckReleaseGroupEx(tp,Auxiliary.IsInGroup,#g,nil,g)
 end
 function c100268001.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp,true):Filter(c100268001.rfilter,nil,tp)
+	local rg=Duel.GetReleaseGroup(tp,true):Filter(c100268001.rfilter,c,tp)
 	return rg:CheckSubGroup(c100268001.fselect,1,rg:GetCount(),tp)
 end
 function c100268001.hsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local rg=Duel.GetReleaseGroup(tp,true):Filter(c100268001.rfilter,nil,tp)
+	local rg=Duel.GetReleaseGroup(tp,true):Filter(c100268001.rfilter,c,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local sg=rg:SelectSubGroup(tp,c100268001.fselect,true,1,rg:GetCount(),tp)
 	if sg then
