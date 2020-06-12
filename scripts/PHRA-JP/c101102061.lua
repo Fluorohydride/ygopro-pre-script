@@ -8,6 +8,7 @@ function c101102061.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCountLimit(1,101102061+EFFECT_COUNT_CODE_OATH)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(c101102061.target)
 	e1:SetOperation(c101102061.activate)
 	c:RegisterEffect(e1)
 	--extra summon
@@ -19,6 +20,10 @@ function c101102061.initial_effect(c)
 	e2:SetTarget(c101102061.extg)
 	e2:SetOperation(c101102061.exop)
 	c:RegisterEffect(e2)
+end
+function c101102061.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c101102061.thfilter(c)
 	if not c:IsAbleToHand() then return false end
