@@ -21,6 +21,7 @@ function c101102002.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101102002,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCountLimit(1,101102102)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c101102002.sptarget)
 	e2:SetOperation(c101102002.spoperation)
@@ -43,15 +44,14 @@ function c101102002.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		e1:SetValue(1)
 		c:RegisterEffect(e1)
 	end
 end
 function c101102002.filter(c,e,tp)
-	return c:IsSetCard(0x10db) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x10db) and not c:IsCode(101102002) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101102002.sptarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -62,7 +62,7 @@ function c101102002.spoperation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101102002.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) and Duel.SelectYesNo(tp,aux.Stringid(101102002,2)) then
+	if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.SelectYesNo(tp,aux.Stringid(101102002,2)) then
 		Duel.BreakEffect()
 		local tc=g:GetFirst()
 		local e1=Effect.CreateEffect(e:GetHandler())
