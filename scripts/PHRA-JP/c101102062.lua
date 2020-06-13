@@ -27,16 +27,18 @@ function c101102062.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,500)
 end
 function c101102062.cfilter(c)
-	return (c:IsSetCard(0xb2) or c:IsSetCard(0x107)) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
+	return (c:IsSetCard(0xb2) or c:IsSetCard(0x107)) and c:IsType(TYPE_MONSTER) and not c:IsPublic() and c:IsAbleToDeck()
 end
 function c101102062.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
+	if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) then
 		local d=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 		if Duel.Recover(tp,d,REASON_EFFECT)<=0 then return end
-		if not Duel.SelectYesNo(tp,aux.Stringid(101102062,0)) then return end
+		local tg=Duel.GetMatchingGroup(c101102062.cfilter,tp,LOCATION_HAND,0,nil)
+		if #tg<=0 or not Duel.SelectYesNo(tp,aux.Stringid(101102062,0)) then return end
 		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,c101102062.cfilter,tp,LOCATION_HAND,0,1,63,nil)
 		if g:GetCount()==0 then return end
 		Duel.ConfirmCards(1-tp,g)
