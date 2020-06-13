@@ -13,7 +13,7 @@ function c100266044.initial_effect(c)
 	e1:SetOperation(c100266044.activate)
 	c:RegisterEffect(e1)
 end
-function c100266044.filter(c,tp)
+function c100266044.filter(c,e,tp)
 	if not (c:IsType(TYPE_LINK) and c:IsSetCard(0x24b)) then return false end
 	local zone=c:GetLinkedZone(tp)
 	return Duel.IsExistingMatchingCard(c100266044.gfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,zone)
@@ -23,10 +23,10 @@ function c100266044.gfilter(c,e,tp,zone)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c100266044.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100266044.filter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c100266044.filter,tp,LOCATION_MZONE,0,1,nil,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100266044.filter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100266044.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c100266044.filter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	local g=Duel.SelectTarget(tp,c100266044.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c100266044.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -37,7 +37,7 @@ function c100266044.activate(e,tp,eg,ep,ev,re,r,rp)
 	if upbound<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then upbound=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100266044.gfilter),tp,LOCATION_GRAVE,0,1,upbound,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100266044.gfilter),tp,LOCATION_GRAVE,0,1,upbound,nil,e,tp,zone)
 	if g:GetCount()>0 then
 		local fid=e:GetHandler():GetFieldID()
 		local tc=g:GetFirst()
