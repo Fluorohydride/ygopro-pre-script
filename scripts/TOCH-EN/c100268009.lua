@@ -59,7 +59,7 @@ function c100268009.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100268009.tdfilter(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and not c:IsSummonableCard() and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and not c:IsSummonableCard() and c:IsAbleToDeck()
 end
 function c100268009.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c100268009.tdfilter(chkc) end
