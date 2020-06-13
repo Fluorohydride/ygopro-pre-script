@@ -21,12 +21,12 @@ function c100311051.initial_effect(c)
 	c:RegisterEffect(e1)
 	--remove
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(33823832,1))
+	e2:SetDescription(aux.Stringid(100311051,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetCode(EVENT_BATTLED)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
+	e2:SetCountLimit(1,100311051+100)
 	e2:SetCondition(c100311051.rmcon)
 	e2:SetTarget(c100311051.rmtg)
 	e2:SetOperation(c100311051.rmop)
@@ -37,6 +37,7 @@ function c100311051.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_DESTROYED)
+	e3:SetCountLimit(1,100311051+200)
 	e3:SetCondition(c100311051.descon)
 	e3:SetTarget(c100311051.destg)
 	e3:SetOperation(c100311051.desop)
@@ -50,6 +51,7 @@ function c100311051.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100311051.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100311051.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c100311051.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
@@ -69,7 +71,7 @@ function c100311051.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	e:SetLabelObject(bc)
-	return bc and bc:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsStatus(STATUS_OPPO_BATTLE)
+	return bc and bc:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsStatus(STATUS_OPPO_BATTLE) and bc:IsControler(1-tp)
 end
 function c100311051.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetLabelObject()
@@ -78,7 +80,7 @@ function c100311051.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100311051.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetLabelObject()
-	if bc:IsRelateToBattle() and bc:IsAbleToRemove() then
+	if bc:IsRelateToBattle() and bc:IsControler(1-tp) then
 		Duel.Remove(bc,POS_FACEUP,REASON_EFFECT)
 	end
 end
