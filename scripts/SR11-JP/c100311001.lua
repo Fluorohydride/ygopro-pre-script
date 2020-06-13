@@ -108,11 +108,10 @@ function c100311001.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(c100311001.filter,nil,tp)
 	if chk==0 then return #g>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>=#g end
 	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,#g,0,0)
 end
 function c100311001.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e):Filter(c100311001.chkfilter,nil,tp)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e):Filter(aux.NecroValleyFilter(c100311001.chkfilter),nil,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if c:IsFaceup() and c:IsRelateToEffect(e) and #g>0 and ft>0 then
 		local sg=nil
