@@ -16,8 +16,8 @@ end
 function c100268004.ffilter(c)
 	return c:IsFaceup() and c:IsCode(15259703)
 end
-function c100268004.con(e)
-	return Duel.IsExistingMatchingCard(c100268004.ffilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+function c100268004.con(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c100268004.ffilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100268004.filter(c,e,tp)
 	return c:IsType(TYPE_TOON) and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP)
@@ -37,8 +37,6 @@ function c100268004.op(e,tp,eg,ep,ev,re,r,rp)
 	if #sg>0 then
 		Duel.ConfirmCards(1-tp,sg)
 		local tc=sg:RandomSelect(1-tp,1):GetFirst()
-		Duel.ConfirmCards(tp,tc)
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
-		Duel.ShuffleDeck(tp)
 	end
 end
