@@ -26,7 +26,6 @@ function c100266038.initial_effect(c)
 	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(c100266038.atkcon)
-	e3:SetTarget(c100266038.atktg)
 	e3:SetOperation(c100266038.atkop)
 	c:RegisterEffect(e3)
 	--draw
@@ -80,15 +79,8 @@ function c100266038.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ac:IsControler(tp) and ac:IsFaceup() and ac:IsType(TYPE_LINK) and ac:IsSetCard(0x24b) and g:IsContains(ac)
 		and ac:IsRelateToBattle() and bc:IsControler(1-tp)
 end
-function c100266038.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ac=e:GetLabelObject()
-	if not ac then return false end
-	local g=e:GetHandler():GetMutualLinkedGroup()
-	if chk==0 then return g:GetCount()>0 end
-end
 function c100266038.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local ac=e:GetLabelObject()
-	if not ac then return end
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=e:GetHandler():GetMutualLinkedGroup()
 	if ac:IsRelateToBattle() and ac:IsFaceup() and ac:IsControler(tp) then
