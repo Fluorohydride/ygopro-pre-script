@@ -30,18 +30,20 @@ function c101102057.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101102057.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD,nil,REASON_EFFECT)==0 then return end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,101102157,0x24d,0x4011,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) then return end
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	local count=0
-	for i=1,ft do
-		local token=Duel.CreateToken(tp,101102157)
-		if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)~=0 and count==0 then
-			count=2
+	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD,nil,REASON_EFFECT)~=0 then
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		if ft>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,101102157,0x24d,0x4011,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) then
+			if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+			local count=0
+			for i=1,ft do
+				local token=Duel.CreateToken(tp,101102157)
+				if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)~=0 and count==0 then
+					count=2
+				end
+			end
+			Duel.SpecialSummonComplete()
 		end
 	end
-	Duel.SpecialSummonComplete()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
