@@ -44,7 +44,7 @@ function c101102069.tgfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsType(TYPE_XYZ)
 end
 function c101102069.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 and e:GetLabel()==0 then
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 and e:GetLabel()==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 		local g=Duel.SelectMatchingCard(tp,c101102069.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
 		local tc=g:GetFirst()
