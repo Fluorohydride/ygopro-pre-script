@@ -47,12 +47,15 @@ function c100268006.tdfilter(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsCanBeEffectTarget(e)
 		and (c:IsAbleToDeck() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
+function c100268006.fselect(g,e,tp)
+	return aux.dncheck(g) and g:IsExists(Card.IsAbleToDeck,2,nil) and g:IsExists(Card.IsCanBeSpecialSummoned,1,nil,e,0,tp,false,false)
+end
 function c100268006.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local dg=Duel.GetMatchingGroup(c100268006.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil,e,tp)
 	if chkc then return false end
-	if chk==0 then return dg:GetClassCount(Card.GetCode)>=3 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return dg:CheckSubGroup(c100268006.fselect,3,3,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local g=dg:SelectSubGroup(tp,aux.dncheck,false,3,3)
+	local g=dg:SelectSubGroup(tp,c100268006.fselect,false,3,3,e,tp)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)

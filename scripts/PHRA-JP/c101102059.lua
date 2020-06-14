@@ -19,6 +19,7 @@ function c101102059.cfilter(c)
 end
 function c101102059.ffilter(c,tp)
 	return c:IsPreviousSetCard(0x24d) and c:GetPreviousControler()==tp and c:GetPreviousTypeOnField()&TYPE_FUSION~=0
+		and c:IsPreviousPosition(POS_FACEUP)
 end
 function c101102059.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

@@ -39,9 +39,9 @@ function c100311001.spcostfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsRace(RACE_DRAGON+RACE_WINDBEAST)
 end
 function c100311001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100311001.spcostfilter,tp,LOCATION_GRAVE,0,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100311001.spcostfilter,tp,LOCATION_GRAVE,0,2,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local sg=Duel.SelectMatchingCard(tp,c100311001.spcostfilter,tp,LOCATION_GRAVE,0,2,2,nil)
+	local sg=Duel.SelectMatchingCard(tp,c100311001.spcostfilter,tp,LOCATION_GRAVE,0,2,2,e:GetHandler())
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 end
 function c100311001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -55,13 +55,13 @@ function c100311001.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c100311001.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsType(TYPE_MONSTER) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and aux.disfilter1(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function c100311001.eqfilter(c)
-	return c:IsType(TYPE_EQUIP) and c:IsFaceup()
+	return (c:IsFaceup() or c:GetEquipTarget()) and c:IsType(TYPE_EQUIP)
 end
 function c100311001.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -79,23 +79,15 @@ function c100311001.disop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
-		if tc:IsType(TYPE_TRAPMONSTER) then
+		local ct=Duel.GetMatchingGroupCount(c100311001.eqfilter,tp,LOCATION_ONFIELD,0,nil)
+		if ct>0 then
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
+			e3:SetCode(EFFECT_UPDATE_ATTACK)
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e3:SetValue(-ct*1000)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e3)
-		end
-		local ct=Duel.GetMatchingGroupCount(c100311001.eqfilter,tp,LOCATION_ONFIELD,0,nil)
-		if ct>0 and tc:IsType(TYPE_MONSTER) then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetValue(-ct*1000)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
 		end
 	end
 end
@@ -105,35 +97,41 @@ end
 function c100311001.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100311001.cfilter,1,nil,tp)
 end
-function c100311001.filter(c,e,tp)
+function c100311001.chkfilter(c,tp)
+	return not c:IsForbidden() and c:CheckUniqueOnField(tp,LOCATION_SZONE)
+end
+function c100311001.filter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==1-tp
-		and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and not c:IsForbidden()
+		and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c100311001.chkfilter(c,tp)
 end
 function c100311001.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and eg:IsExists(c100311001.filter,1,nil,e,tp) end
-	local g=eg:Filter(c100311001.filter,nil,e,tp)
-	local tg=nil
-	if g:GetCount()>1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		tg=g:Select(tp,1,1,nil)
-	else
-		tg=g
-	end
-	Duel.SetTargetCard(tg)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tg,1,0,0)
+	local g=eg:Filter(c100311001.filter,nil,tp)
+	if chk==0 then return #g>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>=#g end
+	Duel.SetTargetCard(g)
 end
 function c100311001.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if c:IsFaceup() and tc:IsRelateToEffect(e) then
-		if Duel.Equip(tp,tc,c,true,true) then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_EQUIP_LIMIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e1:SetValue(c100311001.eqlimit)
-			tc:RegisterEffect(e1)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e):Filter(aux.NecroValleyFilter(c100311001.chkfilter),nil,tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if c:IsFaceup() and c:IsRelateToEffect(e) and #g>0 and ft>0 then
+		local sg=nil
+		if #g>ft then
+			sg=g:Select(tp,ft,ft,nil)
+		else
+			sg=g
+		end
+		local tc=sg:GetFirst()
+		while tc do
+			if Duel.Equip(tp,tc,c,true,true) then
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_EQUIP_LIMIT)
+				e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetValue(c100311001.eqlimit)
+				tc:RegisterEffect(e1)
+			end
+			tc=sg:GetNext()
 		end
 		Duel.EquipComplete()
 	end

@@ -72,7 +72,8 @@ function c100339006.dmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
 	local g=Duel.SelectMatchingCard(tp,c100339006.dmfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	local tc=g:GetFirst()
-	if tc and tc:IsFaceup() and tc:GetBaseAttack()>0 then
+	if tc then
+		Duel.HintSelection(g)
 		Duel.Damage(1-tp,tc:GetBaseAttack(),REASON_EFFECT)
 	end
 end
