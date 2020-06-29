@@ -1,4 +1,6 @@
+--No.3 地獄蝉王ローカスト・キング
 --Number 3: Cicada King
+--Script by JoyJ
 function c100266028.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -38,7 +40,6 @@ function c100266028.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not g then return end
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
-
 function c100266028.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -52,7 +53,6 @@ function c100266028.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and not tc:IsDisabled() and tc:IsControler(1-tp) and tc:IsOnField() and tc:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(tc)
 end
-
 function c100266028.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then

@@ -1,4 +1,6 @@
---暗黑之魔再生
+--暗黒の魔再生
+--
+--Script by JoyJ
 function c100266001.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
