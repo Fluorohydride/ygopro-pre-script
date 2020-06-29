@@ -1,4 +1,6 @@
---敌袭警报
+--敵襲警報－イエローアラート－
+--
+--Script by JustFish
 function c100266003.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

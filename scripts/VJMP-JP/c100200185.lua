@@ -1,4 +1,6 @@
---暗黑短吻鳄
+--ダーク・アリゲーター
+--
+--Script by JustFish
 function c100200185.initial_effect(c)
 	--normal summon with 1 tribute
 	local e1=Effect.CreateEffect(c)

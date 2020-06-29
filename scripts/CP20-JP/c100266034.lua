@@ -1,4 +1,6 @@
---切火女郎
+--キリビ・レディ
+--
+--Script by JustFish
 function c100266034.initial_effect(c)
 	--spsummon from hand
 	local e1=Effect.CreateEffect(c)

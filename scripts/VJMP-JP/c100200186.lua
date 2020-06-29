@@ -1,4 +1,6 @@
---轮回龙
+--輪廻竜サンサーラ
+--
+--Script by JustFish
 function c100200186.initial_effect(c)
 	--double tribute
 	local e1=Effect.CreateEffect(c)

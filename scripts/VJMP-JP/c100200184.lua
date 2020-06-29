@@ -1,4 +1,6 @@
---爬虫蛋
+--レプティア・エッグ
+--
+--Script by JustFish
 function c100200184.initial_effect(c)
 	--indes
 	local e1=Effect.CreateEffect(c)

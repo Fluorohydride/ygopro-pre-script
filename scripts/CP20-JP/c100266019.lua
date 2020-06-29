@@ -1,4 +1,6 @@
---罪 范式龙
+--Sin パラダイム・ドラゴン
+--
+--Script by JustFish
 function c100266019.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon

@@ -1,4 +1,6 @@
---强化履带车
+--パワードクロウラー
+--
+--Script by JustFish
 function c100266002.initial_effect(c)
 	--tohand
 	local e1=Effect.CreateEffect(c)

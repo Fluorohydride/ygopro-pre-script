@@ -1,4 +1,6 @@
---铠装白熊
+--アーマード・ホワイトベア
+--
+--Script by JustFish
 function c100266016.initial_effect(c)
 	--tohand
 	local e1=Effect.CreateEffect(c)
