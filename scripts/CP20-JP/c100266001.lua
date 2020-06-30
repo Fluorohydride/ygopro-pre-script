@@ -2,8 +2,10 @@
 --
 --Script by JoyJ
 function c100266001.initial_effect(c)
+	aux.AddCodeList(c,10000010)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100266001,0))
 	e1:SetCategory(CATEGORY_LEAVE_GRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -16,8 +18,9 @@ function c100266001.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100266001,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCost(c100266001.spcost)
 	e2:SetTarget(c100266001.sptg)
 	e2:SetOperation(c100266001.spop)
@@ -31,7 +34,7 @@ function c100266001.filter(c,tp)
 end
 function c100266001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and c100266001.filter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingMatchingCard(c100266001.filter,tp,0,LOCATION_GRAVE,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100266001.filter,tp,0,LOCATION_GRAVE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectTarget(tp,c100266001.filter,tp,0,LOCATION_GRAVE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,#g,0,0)
@@ -47,7 +50,9 @@ function c100266001.spcfilter(c)
 		and (c:IsFacedown() or c:IsLocation(LOCATION_HAND))
 end
 function c100266001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100266001.spcfilter,tp,LOCATION_SZONE+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
+		and Duel.IsExistingMatchingCard(c100266001.spcfilter,tp,LOCATION_SZONE+LOCATION_HAND,0,1,nil) end
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100266001.spcfilter,tp,LOCATION_SZONE+LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
@@ -60,15 +65,14 @@ function c100266001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetMZoneCount(tp)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
-function c100266001.tgfilter(c,e,tp)
+function c100266001.tgfilter(c)
 	return c:IsAbleToGrave()
 end
 function c100266001.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,c100266001.sptgfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	if Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)>0
-		and Duel.IsExistingMatchingCard(c100266001.tgfilter,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(100266001,0)) then
+	local tc=Duel.SelectMatchingCard(tp,c100266001.sptgfilter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
+	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)>0 then
 		local fid=e:GetHandler():GetFieldID()
 		tc:RegisterFlagEffect(100266001,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -81,10 +85,14 @@ function c100266001.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(c100266001.tgcon)
 		e1:SetOperation(c100266001.tgop)
 		Duel.RegisterEffect(e1,tp)
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,c100266001.tgfilter,tp,0,LOCATION_MZONE,1,1,nil)
-		Duel.SendtoGrave(g,REASON_EFFECT)
+		if Duel.IsExistingMatchingCard(c100266001.tgfilter,tp,0,LOCATION_MZONE,1,nil)
+			and Duel.SelectYesNo(tp,aux.Stringid(100266001,2)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+			local g=Duel.SelectMatchingCard(tp,c100266001.tgfilter,tp,0,LOCATION_MZONE,1,1,nil)
+			Duel.HintSelection(g)
+			Duel.SendtoGrave(g,REASON_EFFECT)
+		end
 	end
 end
 function c100266001.tgcon(e,tp,eg,ep,ev,re,r,rp)

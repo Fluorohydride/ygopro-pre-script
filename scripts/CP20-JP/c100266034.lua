@@ -20,7 +20,7 @@ function c100266034.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100266034+100)
-	e2:SetCost(c100266034.spcost)
+	e2:SetCost(c100266034.spcost2)
 	e2:SetTarget(c100266034.sptg2)
 	e2:SetOperation(c100266034.spop2)
 	c:RegisterEffect(e2)
@@ -41,7 +41,7 @@ function c100266034.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-function c100266034.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100266034.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end

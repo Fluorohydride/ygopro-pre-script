@@ -52,20 +52,19 @@ function c100200184.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(c100200184.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
 end
+function c100200184.spcheck(g)
+	return g:GetClassCount(Card.GetCode)==1
+end
 function c100200184.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft<=0 then return end
 	if ft>3 then ft=3 end
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.GetMatchingGroup(c100200184.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)
 	if g:GetCount()>0 then
-		local hg=g:Select(tp,1,1,nil)
-		g:RemoveCard(hg:GetFirst())
-		g=g:Filter(Card.IsCode,nil,hg:GetFirst():GetCode())
-		if not Duel.IsPlayerAffectedByEffect(tp,59822133) and g:GetCount()>0 and ft>1 and Duel.SelectYesNo(tp,aux.Stringid(100200184,1)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local tg=g:Select(tp,1,ft-1,nil)
-			hg:Merge(tg)
-		end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local hg=g:SelectSubGroup(tp,c100200184.spcheck,false,1,ft)
 		Duel.SpecialSummon(hg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

@@ -39,6 +39,7 @@ function c100266002.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,c100266002.desfilter,tp,0,LOCATION_MZONE,1,1,nil,atk)
 		if g:GetCount()>0 then
+			Duel.HintSelection(g)
 			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end
