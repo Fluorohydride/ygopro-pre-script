@@ -36,7 +36,7 @@ function c100266008.matfilter(c)
 	return c:GetLevel()>0 and c:IsLevelBelow(4)
 end
 function c100266008.splimit(e,se,sp,st)
-	return st==SUMMON_TYPE_FUSION+0x20 or not e:GetHandler():IsLocation(LOCATION_EXTRA)
+	return se:GetHandler():IsCode(100266011) or not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 function c100266008.thfilter(c)
 	return c:IsCode(100266012) and c:IsAbleToHand()

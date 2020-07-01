@@ -38,7 +38,7 @@ function c100266009.matfilter(c,fc)
 	return c:IsFusionType(TYPE_MONSTER) and c:IsLevelAbove(7) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(1-fc:GetControler())
 end
 function c100266009.splimit(e,se,sp,st)
-	return st==SUMMON_TYPE_FUSION+0x20 or not e:GetHandler():IsLocation(LOCATION_EXTRA)
+	return se:GetHandler():IsCode(100266011) or not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 function c100266009.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

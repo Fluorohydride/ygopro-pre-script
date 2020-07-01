@@ -43,7 +43,7 @@ function c100266006.matfilter(c)
 	return c:IsLevelAbove(7) and c:IsFusionType(TYPE_MONSTER)
 end
 function c100266006.splimit(e,se,sp,st)
-	return st==SUMMON_TYPE_FUSION+0x20 or not e:GetHandler():IsLocation(LOCATION_EXTRA)
+	return se:GetHandler():IsCode(100266011) or not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 function c100266006.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp

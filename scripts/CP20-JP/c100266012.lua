@@ -32,7 +32,7 @@ function c100266012.filter(c,e,tp)
 end
 function c100266012.ffilter(c,lv,e,tp,tc)
 	return c:IsSetCard(0x248) and c:IsType(TYPE_FUSION) and c:GetOriginalLevel()==lv+2
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION+0x20,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
 end
 function c100266012.chkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x248) and c:IsType(TYPE_FUSION)
@@ -55,7 +55,7 @@ function c100266012.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.SelectMatchingCard(tp,c100266012.ffilter,tp,LOCATION_EXTRA,0,1,1,nil,lv,e,tp,nil)
 	if sg:GetCount()>0 then
 		Duel.BreakEffect()
-		Duel.SpecialSummon(sg,SUMMON_TYPE_FUSION+0x20,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(sg,SUMMON_TYPE_FUSION,tp,tp,true,false,POS_FACEUP)
 		sg:GetFirst():CompleteProcedure()
 	end
 end

@@ -42,7 +42,7 @@ function c100266007.matfilter(c)
 	return c:IsLevel(5,6)
 end
 function c100266007.splimit(e,se,sp,st)
-	return st==SUMMON_TYPE_FUSION+0x20 or not e:GetHandler():IsLocation(LOCATION_EXTRA)
+	return se:GetHandler():IsCode(100266011) or not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 function c100266007.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
