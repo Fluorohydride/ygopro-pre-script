@@ -34,7 +34,7 @@ function c100266023.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc and (bc:IsControler(1-tp) or bc:IsType(TYPE_TOKEN) and bc:GetPreviousControler()==1-tp)
 end
 function c100266023.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x24a)
+	return c:IsFaceup() and c:IsSetCard(0x14a)
 end
 function c100266023.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100266023.atkfilter,tp,LOCATION_MZONE,0,1,nil) end

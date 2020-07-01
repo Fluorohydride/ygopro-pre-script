@@ -28,7 +28,7 @@ function c100266036.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return false end
 	e:SetLabelObject(tc)
 	local bc=tc:GetBattleTarget()
-	return bc and tc:IsSetCard(0x24b)
+	return bc and tc:IsSetCard(0x14b)
 end
 function c100266036.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -55,7 +55,7 @@ function c100266036.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100266036.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x24b)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x14b)
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function c100266036.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

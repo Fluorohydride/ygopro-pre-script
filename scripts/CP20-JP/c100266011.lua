@@ -35,7 +35,7 @@ function c100266011.initial_effect(c)
 	end
 end
 function c100266011.cfilter(c,tp)
-	return c:IsPreviousSetCard(0x248) and c:GetPreviousTypeOnField()&TYPE_FUSION~=0
+	return c:IsPreviousSetCard(0x149) and c:GetPreviousTypeOnField()&TYPE_FUSION~=0
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100266011.regcon(e,tp,eg,ep,ev,re,r,rp)
@@ -53,7 +53,7 @@ function c100266011.filter1(c)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove()
 end
 function c100266011.filter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x248) and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x149) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c100266011.target(e,tp,eg,ep,ev,re,r,rp,chk)

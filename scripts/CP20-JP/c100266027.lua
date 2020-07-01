@@ -17,7 +17,7 @@ function c100266027.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(100266026,tp,LOCATION_FZONE) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function c100266027.spfilter(c,e,tp)
-	return c:IsSetCard(0x124a) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsSetCard(0x114a) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c100266027.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100266027.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end

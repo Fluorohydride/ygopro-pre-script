@@ -28,7 +28,7 @@ function c100266037.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100266037.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x24b)
+	return c:IsFaceup() and c:IsSetCard(0x14b)
 end
 function c100266037.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -57,7 +57,7 @@ function c100266037.spop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function c100266037.spfilter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x24b)
+	return c:IsFaceup() and c:IsSetCard(0x14b)
 		and Duel.IsExistingMatchingCard(c100266037.spfilter2,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,e:GetHandler(),e,tp,c:GetCode())
 end
 function c100266037.spfilter2(c,e,tp,code)

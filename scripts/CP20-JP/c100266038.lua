@@ -4,7 +4,7 @@
 function c100266038.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x24b),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x14b),2,2)
 	--cannot be target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -51,7 +51,7 @@ function c100266038.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c100266038.chkfilter(c,tp,g)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0x24b) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0x14b) and c:IsType(TYPE_LINK)
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not g:IsContains(c)
 end
 function c100266038.chk(e,tp,eg,ep,ev,re,r,rp)
@@ -76,7 +76,7 @@ function c100266038.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if not bc then return false end
 	if not ac:IsControler(tp) then ac,bc=bc,ac end
 	e:SetLabelObject(ac)
-	return ac:IsControler(tp) and ac:IsFaceup() and ac:IsType(TYPE_LINK) and ac:IsSetCard(0x24b) and g:IsContains(ac)
+	return ac:IsControler(tp) and ac:IsFaceup() and ac:IsType(TYPE_LINK) and ac:IsSetCard(0x14b) and g:IsContains(ac)
 		and ac:IsRelateToBattle() and bc:IsControler(1-tp)
 end
 function c100266038.atkop(e,tp,eg,ep,ev,re,r,rp)

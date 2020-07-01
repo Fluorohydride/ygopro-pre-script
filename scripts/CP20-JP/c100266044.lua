@@ -14,12 +14,12 @@ function c100266044.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100266044.filter(c,e,tp)
-	if not (c:IsType(TYPE_LINK) and c:IsSetCard(0x24b)) then return false end
+	if not (c:IsType(TYPE_LINK) and c:IsSetCard(0x14b)) then return false end
 	local zone=c:GetLinkedZone(tp)
 	return Duel.IsExistingMatchingCard(c100266044.gfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,zone)
 end
 function c100266044.gfilter(c,e,tp,zone)
-	return c:IsSetCard(0x24b) and c:IsType(TYPE_LINK) and c:IsLink(1)
+	return c:IsSetCard(0x14b) and c:IsType(TYPE_LINK) and c:IsLink(1)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c100266044.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

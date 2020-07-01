@@ -4,7 +4,7 @@
 function c100266042.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x24b),1,1)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x14b),1,1)
 	--cannot link material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -55,7 +55,7 @@ function c100266042.chcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and e:GetHandler():GetMutualLinkedGroupCount()>0 and Duel.GetTurnPlayer()==tp
 end
 function c100266042.chfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x24b) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(0x14b) and c:GetSequence()<5
 end
 function c100266042.fselect(g,c)
 	return g:IsContains(c)

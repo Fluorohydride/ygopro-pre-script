@@ -35,7 +35,7 @@ function c100266045.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100266045.thfilter1(c)
-	return not c:IsType(TYPE_FIELD) and c:IsSetCard(0x24b) and c:IsAbleToHand()
+	return not c:IsType(TYPE_FIELD) and c:IsSetCard(0x14b) and c:IsAbleToHand()
 end
 function c100266045.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -48,13 +48,13 @@ function c100266045.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100266045.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x24b) and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSummonPlayer()==tp
+	return c:IsFaceup() and c:IsSetCard(0x14b) and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSummonPlayer()==tp
 end
 function c100266045.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100266045.cfilter,1,nil,tp)
 end
 function c100266045.thfilter2(c)
-	return c:IsSetCard(0x24b) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x14b) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100266045.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100266045.thfilter2,tp,LOCATION_GRAVE,0,1,nil) end
@@ -68,7 +68,7 @@ function c100266045.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100266045.mvfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x24b)
+	return c:IsFaceup() and c:IsSetCard(0x14b)
 end
 function c100266045.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100266045.mvfilter,tp,LOCATION_MZONE,0,1,nil)
