@@ -65,6 +65,40 @@ function c100200184.spop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local hg=g:SelectSubGroup(tp,c100200184.spcheck,false,1,ft)
-		Duel.SpecialSummon(hg,0,tp,tp,false,false,POS_FACEUP)
+		local fid=e:GetHandler():GetFieldID()
+		local tc=hg:GetFirst()
+		while tc do
+			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+			tc:RegisterFlagEffect(100200184,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			tc=hg:GetNext()
+		end
+		Duel.SpecialSummonComplete()
+		hg:KeepAlive()
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetCountLimit(1)
+		e1:SetLabel(fid)
+		e1:SetLabelObject(hg)
+		e1:SetCondition(c100200184.rmcon)
+		e1:SetOperation(c100200184.rmop)
+		Duel.RegisterEffect(e1,tp)
 	end
+end
+function c100200184.rmfilter(c,fid)
+	return c:GetFlagEffectLabel(100200184)==fid
+end
+function c100200184.rmcon(e,tp,eg,ep,ev,re,r,rp)
+	local g=e:GetLabelObject()
+	if not g:IsExists(c100200184.rmfilter,1,nil,e:GetLabel()) then
+		g:DeleteGroup()
+		e:Reset()
+		return false
+	else return true end
+end
+function c100200184.rmop(e,tp,eg,ep,ev,re,r,rp)
+	local g=e:GetLabelObject()
+	local tg=g:Filter(c100200184.rmfilter,nil,e:GetLabel())
+	Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 end
