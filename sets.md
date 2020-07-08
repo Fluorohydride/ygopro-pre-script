@@ -3,7 +3,6 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **May 21, 2020** :PRISMATIC SPECIAL PACK (VP20-JP) : `100267XXX`
-- **July 4, 2020** : Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
 - **August 8, 2020** : PHANTOM RAGE (PHRA-JP) : `101102XXX`
 - **August 29, 2020** : Structure Deck: Dragunity Drive (SR11-JP) : `100311XXX`
 
@@ -110,6 +109,7 @@
 - Structure Deck: Revolver (SD36-JP) : `100336XXX`
 - Structure Deck: Rebirth of Shaddoll (SD37-JP) : `100337XXX`
 - Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
+- Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
