@@ -90,6 +90,5 @@ function c101102030.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101102030.desfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local sg=g:SelectSubGroup(tp,c101102030.fselect,false,1,3)
-	Duel.HintSelection(sg)
 	Duel.Destroy(sg,REASON_EFFECT)
 end
