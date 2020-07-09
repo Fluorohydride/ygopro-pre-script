@@ -24,7 +24,6 @@ function c101102030.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,101102130)
 	e2:SetCondition(c101102030.descon)
-	e2:SetTarget(c101102030.destg)
 	e2:SetOperation(c101102030.desop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -54,12 +53,6 @@ end
 function c101102030.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT) and re:GetHandler():IsSetCard(0x11f)
 end
-function c101102030.desfilter(c)
-	return not (c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER)) and c:IsSetCard(0x11f) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND+LOCATION_DECK))
-end
-function c101102030.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101102030.desfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,1,nil) end
-end
 function c101102030.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
@@ -80,6 +73,9 @@ function c101102030.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101102030.descon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()~=e:GetLabel()
+end
+function c101102030.desfilter(c)
+	return not (c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER)) and c:IsSetCard(0x11f) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND+LOCATION_DECK))
 end
 function c101102030.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102030.desfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,1,nil) end
