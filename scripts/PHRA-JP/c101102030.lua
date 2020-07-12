@@ -47,11 +47,9 @@ function c101102030.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c101102030.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc then
-		local mg=Group.CreateGroup()
-		tc:SetMaterial(mg)
-		if Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)~=0 then
-			tc:CompleteProcedure()
-		end
+		tc:SetMaterial(nil)
+		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
+		tc:CompleteProcedure()
 	end
 end
 function c101102030.descon(e,tp,eg,ep,ev,re,r,rp)
