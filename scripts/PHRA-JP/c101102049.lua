@@ -23,6 +23,13 @@ function c101102049.initial_effect(c)
 	e2:SetValue(c101102049.repval)
 	e2:SetOperation(c101102049.repop)
 	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetCode(101102049)
+	e3:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e3:SetCountLimit(1,101102049)
+	c:RegisterEffect(e3)
 end
 function c101102049.mfilter(c)
 	return c:IsLevelBelow(4) and c:IsLinkSetCard(0x120)
@@ -49,9 +56,10 @@ function c101102049.repfilter(c,tp,re)
 		and c==re:GetHandler() and not c:IsReason(REASON_REPLACE)
 end
 function c101102049.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetTurnPlayer()==1-tp and eg:IsExists(c101102049.repfilter,1,nil,tp,re)
-		and e:GetHandler():IsAbleToRemoveAsCost() end
-	return Duel.SelectYesNo(tp,aux.Stringid(101102049,0))
+	local c=e:GetHandler()
+	if chk==0 then return re:GetLabel()~=101102049 and Duel.GetTurnPlayer()==1-tp
+		and c:IsAbleToRemoveAsCost() and eg:IsExists(c101102049.repfilter,1,nil,tp,re) end
+	return Duel.SelectEffectYesNo(tp,c,aux.Stringid(101102049,0))
 end
 function c101102049.repval(e,c)
 	return c101102049.repfilter(c,e:GetHandlerPlayer(),c:GetReasonEffect())
