@@ -56,11 +56,15 @@ function c100415031.effectfilter(e,ct)
 	local etype=Duel.GetChainInfo(ct,CHAININFO_EXTTYPE)
 	return etype&(TYPE_RITUAL+TYPE_SPELL)==TYPE_RITUAL+TYPE_SPELL
 end
+function c100415031.confilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x250)
+end
 function c100415031.lvfilter(c,e)
 	return c:IsFaceup() and c:IsLevelAbove(2) and c:IsAttackAbove(1000) and (not e or c:IsRelateToEffect(e))
 end
 function c100415031.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100415031.lvfilter,1,nil,nil)
+	local g=Duel.GetMatchingGroup(c100415031.confilter,tp,LOCATION_MZONE,0,nil)
+	return eg:IsExists(c100415031.lvfilter,1,nil,nil) and #g-eg:Filter(c100415031.confilter,nil):FilterCount(Card.IsControler,nil,tp)>0
 end
 function c100415031.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
