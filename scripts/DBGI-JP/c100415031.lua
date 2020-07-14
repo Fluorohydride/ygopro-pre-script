@@ -53,7 +53,7 @@ function c100415031.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100415031.effectfilter(e,ct)
-	local etype=Duel.GetChainInfo(ct,CHAININFO_TYPE)
+	local etype=Duel.GetChainInfo(ct,CHAININFO_EXTTYPE)
 	return etype&(TYPE_RITUAL+TYPE_SPELL)==TYPE_RITUAL+TYPE_SPELL
 end
 function c100415031.lvfilter(c,e)
