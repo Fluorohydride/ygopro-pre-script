@@ -49,22 +49,15 @@ function c100415032.thop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100415032.exmfilter(c,e)
-	return c:IsCanBeRitualMaterial(nil) and c:IsReleasableByEffect(e)
-end
 function c100415032.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsRace,nil,RACE_MACHINE)
-		local mg2=Duel.GetMatchingGroup(c100415032.exmfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,e):Filter(Card.IsRace,nil,RACE_MACHINE)
-		if mg2 then mg:Merge(mg2) end
 		return Duel.IsExistingMatchingCard(c100415032.RitualUltimateFilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,nil,e,tp,mg,nil,Card.GetAttack,"Greater")
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c100415032.operation(e,tp,eg,ep,ev,re,r,rp)
 	local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsRace,nil,RACE_MACHINE)
-	local mg2=Duel.GetMatchingGroup(c100415032.exmfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,e):Filter(Card.IsRace,nil,RACE_MACHINE)
-	if mg2 then mg:Merge(mg2) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100415032.RitualUltimateFilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,nil,e,tp,mg,nil,Card.GetAttack,"Greater")
 	local tc=tg:GetFirst()
