@@ -53,10 +53,10 @@ function c101102048.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c101102048.cfilter,1,nil,tp)
 end
 function c101102048.rfilter(c)
-	return c:IsSetCard(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and c:IsFaceup()
+	return c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and c:IsFaceup()
 end
 function c101102048.thfilter(c,lv)
-	return c:IsSetCard(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and c:IsAbleToHand() and c:IsLevelBelow(lv)
+	return c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and c:IsAbleToHand() and c:IsLevelBelow(lv)
 end
 function c101102048.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
