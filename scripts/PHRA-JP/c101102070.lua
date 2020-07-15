@@ -26,8 +26,7 @@ function c101102070.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101102070.spfilter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp,ft)
 	if chk==0 then return ft>0 and Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and not Duel.IsPlayerAffectedByEffect(tp,59822133) and g:CheckSubGroup(c101102070.fselect1,1,ft,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA)
 end
 
 function c101102070.activate(e,tp,eg,ep,ev,re,r,rp)
