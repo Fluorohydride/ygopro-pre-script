@@ -90,6 +90,6 @@ function c101102072.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_UPDATE_RANK)
 		e2:SetValue(lvl)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e2)
+		tc:RegisterEffect(e2)
 	end
 end
