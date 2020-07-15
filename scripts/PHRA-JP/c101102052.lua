@@ -41,10 +41,11 @@ function c101102052.splimit(e,c)
 	return not c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST)
 end
 function c101102052.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(c101102052.srfilter,tp,LOCATION_DECK,0,1,nil,c:GetRace())
+	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+		and Duel.IsExistingMatchingCard(c101102052.srfilter,tp,LOCATION_DECK,0,1,nil,c:GetOriginalRace())
 end
 function c101102052.srfilter(c,race)
-	return c:IsSetCard(0x24f) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsRace(race)
+	return c:IsSetCard(0x24f) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:GetOriginalRace()-race>0
 end
 function c101102052.srcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -54,11 +55,11 @@ function c101102052.srtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(c101102052.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp)
+		return Duel.IsExistingMatchingCard(c101102052.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp)
 	end
-	local g=Duel.SelectMatchingCard(tp,c101102052.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101102052.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,tp)
+	e:SetLabel(g:GetFirst():GetOriginalRace())
 	Duel.SendtoGrave(g,REASON_COST)
-	e:SetLabel(g:GetFirst():GetRace())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101102052.srop(e,tp,eg,ep,ev,re,r,rp)
