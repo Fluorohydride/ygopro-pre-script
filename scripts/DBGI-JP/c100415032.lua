@@ -25,7 +25,7 @@ function c100415032.initial_effect(c)
 	if Duel.GetRitualMaterialEx==nil then
 		function Duel.GetRitualMaterialEx(tp,e)
 			local g=Duel.GetRitualMaterial(tp)
-			local g2=Duel.GetMatchingGroup(function (c,e) return c:IsCanBeRitualMaterial(nil) and c:IsReleasableByEffect(e) end,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,e)
+			local g2=Duel.GetMatchingGroup(function (c,e) return c:IsCanBeRitualMaterial(nil) and c:IsReleasableByEffect(e) and not c:IsImmuneToEffect(e) end,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,e)
 			g:Merge(g2)
 			return g
 		end
