@@ -1,4 +1,6 @@
---铁兽的战线
+--鉄獣の戦線
+--
+--Script by JustFish
 function c101102052.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -52,7 +54,7 @@ function c101102052.srtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(c101102052.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp) 
+		return Duel.IsExistingMatchingCard(c101102052.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp)
 	end
 	local g=Duel.SelectMatchingCard(tp,c101102052.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)

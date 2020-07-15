@@ -1,4 +1,6 @@
---铁兽的凶袭
+--鉄獣の凶襲
+--
+--Script by JustFish
 function c101102053.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---铁兽战线 银弹之卢加鲁
+--鉄獣戦線 銀弾のルガル
+--
+--Script by JustFish
 function c101102047.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST),2,3)

@@ -1,4 +1,6 @@
---铁兽战线 纳贝尔
+--鉄獣戦線 ナーベル
+--
+--Script by JustFish
 function c101102006.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

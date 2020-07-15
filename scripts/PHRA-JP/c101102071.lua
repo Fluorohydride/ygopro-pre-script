@@ -1,4 +1,6 @@
---铁兽的血盟
+--鉄獣の血盟
+--
+--Script by JustFish
 function c101102071.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

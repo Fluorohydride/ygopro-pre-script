@@ -1,4 +1,6 @@
---铁兽战线 克拉斯
+--鉄獣戦線 ケラス
+--
+--Script by JustFish
 function c101102007.initial_effect(c)
 	--special summon from hand
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---铁兽战线 徒花之费丽姬
+--鉄獣戦線 徒花のフェリジット
+--
+--Script by JustFish
 function c101102046.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST),2,2)

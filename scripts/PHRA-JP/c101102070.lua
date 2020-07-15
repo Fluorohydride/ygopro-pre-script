@@ -1,4 +1,6 @@
---铁兽的抗战
+--鉄獣の抗戦
+--
+--Script by JustFish
 function c101102070.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

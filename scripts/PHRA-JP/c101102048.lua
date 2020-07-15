@@ -1,4 +1,6 @@
---铁兽战线 凶鸟之施莱格
+--鉄獣戦線 凶鳥のシュライグ
+--
+--Script by JustFish
 function c101102048.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST),2,4)
@@ -57,9 +59,9 @@ function c101102048.thfilter(c,lv)
 	return c:IsSetCard(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and c:IsAbleToHand() and c:IsLevelBelow(lv)
 end
 function c101102048.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 		local ct=Duel.GetMatchingGroupCount(c101102048.rfilter,tp,LOCATION_REMOVED,0,nil)
-		return Duel.IsExistingMatchingCard(c101102048.thfilter,tp,LOCATION_DECK,0,1,nil,ct) 
+		return Duel.IsExistingMatchingCard(c101102048.thfilter,tp,LOCATION_DECK,0,1,nil,ct)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end

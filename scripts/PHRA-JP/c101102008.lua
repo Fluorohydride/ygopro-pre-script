@@ -1,4 +1,6 @@
---铁兽战线 弗拉克杜尔
+--鉄獣戦線 フラクトール
+--
+--Script by JustFish
 function c101102008.initial_effect(c)
 	--to gy
 	local e1=Effect.CreateEffect(c)
