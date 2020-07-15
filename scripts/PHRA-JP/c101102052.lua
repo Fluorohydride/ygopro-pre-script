@@ -41,7 +41,7 @@ function c101102052.splimit(e,c)
 	return not c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST)
 end
 function c101102052.cfilter(c,tp)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(c101102052.srfilter,tp,LOCATION_DECK,0,1,nil,c:GetOriginalRace())
 end
 function c101102052.srfilter(c,race)
