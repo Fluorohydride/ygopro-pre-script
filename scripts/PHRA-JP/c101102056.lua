@@ -1,4 +1,6 @@
---电脑堺门-青龙
+--電脳堺門－青龍
+--
+--Script by JustFish
 function c101102056.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

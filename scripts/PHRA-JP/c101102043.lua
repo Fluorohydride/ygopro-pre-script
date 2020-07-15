@@ -1,4 +1,6 @@
---电脑堺凰-凰凰
+--電脳堺凰－凰々
+--
+--Script by JustFish
 function c101102043.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()

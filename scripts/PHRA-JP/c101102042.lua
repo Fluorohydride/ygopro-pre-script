@@ -1,4 +1,6 @@
---电脑堺甲-甲甲
+--電脳堺甲－甲々
+--
+--Script by JustFish
 function c101102042.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()

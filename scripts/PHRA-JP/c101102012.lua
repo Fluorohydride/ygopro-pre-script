@@ -1,4 +1,6 @@
---电脑堺豸-豸 豸
+--電脳堺豸－豸々
+--
+--Script by JustFish
 function c101102012.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

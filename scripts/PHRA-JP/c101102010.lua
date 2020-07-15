@@ -1,4 +1,6 @@
---电脑堺媛-瑞瑞
+--電脳堺媛－瑞々
+--
+--Script by JustFish
 function c101102010.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

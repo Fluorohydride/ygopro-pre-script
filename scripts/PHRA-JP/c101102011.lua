@@ -1,4 +1,6 @@
---电脑堺悟-老老
+--電脳堺悟－老々
+--
+--Script by JustFish
 function c101102011.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

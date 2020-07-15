@@ -1,4 +1,6 @@
---电脑堺狐-仙仙
+--電脳堺狐－仙々
+--
+--Script by JustFish
 function c101102036.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

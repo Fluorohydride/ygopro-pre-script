@@ -1,4 +1,6 @@
---电脑堺麟-麟麟
+--電脳堺麟－麟々
+--
+--Script by JustFish
 function c101102013.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

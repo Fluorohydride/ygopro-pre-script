@@ -1,4 +1,6 @@
---电脑堺都-九龙
+--電脳堺都－九竜
+--
+--Script by JustFish
 function c101102055.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -32,7 +34,7 @@ function c101102055.fselect(g,ft1,ft2,ect,ft)
 		and g:FilterCount(c101102055.exfilter2,nil)<=ft2
 end
 function c101102055.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 		local ft=1
 		if e:GetHandler():IsLocation(LOCATION_SZONE) then ft=0 end
 		return Duel.GetLocationCount(tp,LOCATION_SZONE)>ft
