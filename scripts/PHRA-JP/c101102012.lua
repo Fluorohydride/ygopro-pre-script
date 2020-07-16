@@ -68,7 +68,7 @@ function c101102012.splimit(e,c)
 	return not (c:IsLevelAbove(3) or c:IsRankAbove(3))
 end
 function c101102012.thfilter(c)
-	return c:IsSetCard(0x24e) and not c:IsCode(101102012) and c:IsAbleToHand()
+	return c:IsSetCard(0x24e) and c:IsType(TYPE_MONSTER) and not c:IsCode(101102012) and c:IsAbleToHand()
 end
 function c101102012.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101102012.thfilter),tp,LOCATION_GRAVE,0,1,nil)
