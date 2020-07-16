@@ -38,7 +38,7 @@ function c101102052.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101102052.splimit(e,c)
-	return not c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST)
 end
 function c101102052.cfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
