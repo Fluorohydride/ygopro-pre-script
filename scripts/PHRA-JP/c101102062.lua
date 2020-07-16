@@ -36,7 +36,7 @@ function c101102062.activate(e,tp,eg,ep,ev,re,r,rp)
 		local d=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 		if Duel.Recover(tp,d,REASON_EFFECT)<=0 then return end
 		local tg=Duel.GetMatchingGroup(c101102062.cfilter,tp,LOCATION_HAND,0,nil)
-		if #tg<=0 or not Duel.SelectYesNo(tp,aux.Stringid(101102062,0)) then return end
+		if #tg<=0 or not Duel.IsPlayerCanDraw(tp) or not Duel.SelectYesNo(tp,aux.Stringid(101102062,0)) then return end
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,c101102062.cfilter,tp,LOCATION_HAND,0,1,63,nil)
