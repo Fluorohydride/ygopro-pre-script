@@ -84,20 +84,38 @@ end
 function c100415029.tgfilter(c)
 	return c:IsFaceup() and c:IsAbleToGrave()
 end
-function c100415029.fselect(g,tp)
-	if Duel.IsExistingTarget(c100415029.tgfilter,tp,0,LOCATION_ONFIELD,2,nil) then
-		return g:CheckWithSumEqual(Card.GetAttack,2000,#g,#g) or g:CheckWithSumEqual(Card.GetAttack,4000,#g,#g)
-	elseif Duel.IsExistingTarget(c100415029.tgfilter,tp,0,LOCATION_ONFIELD,1,nil) then
-		return g:CheckWithSumEqual(Card.GetAttack,2000,#g,#g)
+function c100415029.fselect(g,chk1,chk2)
+	local sum=g:GetSum(Card.GetAttack)
+	if chk2 then
+		return sum==2000 or sum==4000
+	elseif chk1 then
+		return sum==2000
 	end
 	return false
 end
+function c100415029.gcheck(maxatk)
+	return	function(g)
+				return g:GetSum(Card.GetAttack)<=maxatk
+			end
+end
 function c100415029.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100,0)
+	local chk1=Duel.IsExistingTarget(c100415029.tgfilter,tp,0,LOCATION_ONFIELD,1,nil)
+	local chk2=Duel.IsExistingTarget(c100415029.tgfilter,tp,0,LOCATION_ONFIELD,2,nil)
+	local maxatk=2000
+	if chk2 then maxatk=4000 end
 	local g=Duel.GetMatchingGroup(c100415029.costfilter,tp,LOCATION_GRAVE,0,nil)
-	if chk==0 then return g:CheckSubGroup(c100415029.fselect,1,#g,tp) end
+	if chk==0 then
+		if not chk1 then return false end
+		aux.GCheckAdditional=c100415029.gcheck(maxatk)
+		local res=g:CheckSubGroup(c100415029.fselect,1,#g,chk1,chk2)
+		aux.GCheckAdditional=nil
+		return res
+	end
+	aux.GCheckAdditional=c100415029.gcheck(maxatk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local sg=g:SelectSubGroup(tp,c100415029.fselect,false,1,#g,tp)
+	local sg=g:SelectSubGroup(tp,c100415029.fselect,false,1,#g,chk1,chk2)
+	aux.GCheckAdditional=nil
 	if sg:GetSum(Card.GetAttack)==4000 then
 		e:SetLabel(100,2)
 	else
