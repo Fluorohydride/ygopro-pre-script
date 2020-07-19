@@ -26,22 +26,24 @@ function c101102079.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g1>0 and #g2>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg1=g1:Select(tp,1,#g2,nil)
-		if Duel.Remove(sg1,POS_FACEDOWN,REASON_EFFECT)~=0 then
-			local sg2=g2:RandomSelect(tp,#sg1)
-			if Duel.Remove(sg2,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+		if Duel.Remove(sg1,POS_FACEDOWN,REASON_EFFECT)~=0 and sg1:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then
+			local og1=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_REMOVED)
+			local sg2=g2:RandomSelect(tp,#og1)
+			if Duel.Remove(sg2,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0 and sg2:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then
 				local c=e:GetHandler()
 				local fid=c:GetFieldID()
-				local tc=sg2:GetFirst()
+				local og2=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_REMOVED)
+				local tc=og2:GetFirst()
 				while tc do
 					tc:RegisterFlagEffect(101102079,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-					tc=sg2:GetNext()
+					tc=og2:GetNext()
 				end
-				sg2:KeepAlive()
+				og2:KeepAlive()
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 				e1:SetCode(EVENT_PHASE+PHASE_END)
 				e1:SetLabel(fid)
-				e1:SetLabelObject(sg2)
+				e1:SetLabelObject(og2)
 				e1:SetCountLimit(1)
 				e1:SetCondition(c101102079.retcon)
 				e1:SetOperation(c101102079.retop)
