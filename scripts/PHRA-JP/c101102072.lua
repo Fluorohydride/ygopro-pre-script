@@ -40,21 +40,23 @@ function c101102072.tdfilter(c)
 	return c:IsSetCard(0x24e) and c:IsAbleToDeck() and c:IsFaceup()
 end
 function c101102072.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local g=Duel.GetMatchingGroup(c101102072.tdfilter,tp,LOCATION_REMOVED,0,nil)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and Duel.IsExistingMatchingCard(c101102072.tdfilter,tp,LOCATION_REMOVED,0,2,nil) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and g:CheckSubGroup(aux.dncheck,2,2) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	local tg=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,2,tp,LOCATION_REMOVED)
 end
 function c101102072.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
+	local g=Duel.GetMatchingGroup(c101102072.tdfilter,tp,LOCATION_REMOVED,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,c101102072.tdfilter,tp,LOCATION_REMOVED,0,2,2,nil)
-	if #g>0 then
-		Duel.HintSelection(g)
-		if Duel.SendtoDeck(g,nil,2,REASON_EFFECT)~=0 and g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK+LOCATION_EXTRA) and tc:IsRelateToEffect(e) then
+	local sg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
+	if sg then
+		Duel.HintSelection(sg)
+		if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=0 and sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK+LOCATION_EXTRA) and tc:IsRelateToEffect(e) then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	end

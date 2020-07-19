@@ -30,7 +30,7 @@ function c100311002.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x29)
 end
 function c100311002.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsEnvironment(62265044) or Duel.IsExistingMatchingCard(c100311002.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsEnvironment(62265044,tp) or Duel.IsExistingMatchingCard(c100311002.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100311002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

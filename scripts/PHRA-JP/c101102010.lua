@@ -5,7 +5,7 @@ function c101102010.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101102010,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE+CATEGORY_DECKDES+CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -32,7 +32,7 @@ function c101102010.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,c101102010.tfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101102010.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -42,21 +42,17 @@ function c101102010.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c101102010.tgfilter,tp,LOCATION_DECK,0,1,1,nil,type1)
 		local tgc=g:GetFirst()
-		local type1=type1+tgc:GetType()&0x7|type1
-		if tgc then
-			Duel.SendtoGrave(tgc,REASON_EFFECT)
-		end
-		if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-			if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-				local sg=Duel.GetMatchingGroup(c101102010.thfilter,tp,LOCATION_DECK,0,nil,type1)
-				if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(101102010,1)) then
-					Duel.BreakEffect()
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-					local g=sg:Select(tp,1,1,nil)
-					if #g>0 then
-						Duel.SendtoHand(g,nil,REASON_EFFECT)
-						Duel.ConfirmCards(1-tp,g)
-					end
+		if tgc and Duel.SendtoGrave(tgc,REASON_EFFECT)~=0 and tgc:IsLocation(LOCATION_GRAVE) and c:IsRelateToEffect(e)
+			and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+			local type1=tgc:GetType()&0x7|type1
+			local sg=Duel.GetMatchingGroup(c101102010.thfilter,tp,LOCATION_DECK,0,nil,type1)
+			if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(101102010,1)) then
+				Duel.BreakEffect()
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+				local hg=sg:Select(tp,1,1,nil)
+				if #hg>0 then
+					Duel.SendtoHand(hg,nil,REASON_EFFECT)
+					Duel.ConfirmCards(1-tp,hg)
 				end
 			end
 		end
