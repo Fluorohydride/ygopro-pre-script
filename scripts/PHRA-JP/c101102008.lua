@@ -51,27 +51,32 @@ end
 function c101102008.cfilter(c)
 	return c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and c:IsAbleToRemoveAsCost()
 end
-function c101102008.fselect(g,e,tp)
-	return Duel.IsExistingMatchingCard(c101102008.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g:GetCount())
+function c101102008.fselect(g,tg)
+	return tg:IsExists(Card.IsLink,1,nil,#g)
 end
-function c101102008.spfilter(c,e,tp,lk)
-	return c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and c:IsLink(lk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+function c101102008.spfilter(c,e,tp)
+	return c:IsType(TYPE_LINK) and c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c101102008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
+	local cg=Duel.GetMatchingGroup(c101102008.cfilter,tp,LOCATION_GRAVE,0,nil)
+	local tg=Duel.GetMatchingGroup(c101102008.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
+	local _,maxlink=tg:GetMaxGroup(Card.GetLink)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		local cg=Duel.GetMatchingGroup(c101102008.cfilter,tp,LOCATION_GRAVE,0,nil)
-		local ct=cg:GetCount()
-		return cg:CheckSubGroup(c101102008.fselect,1,ct,e,tp)
+		if #tg==0 then return false end
+		return cg:CheckSubGroup(c101102008.fselect,1,maxlink,tg)
 	end
-	local cg=Duel.GetMatchingGroup(c101102008.cfilter,tp,LOCATION_GRAVE,0,nil)
-	local ct=cg:GetCount()
-	local rg=cg:SelectSubGroup(tp,c101102008.fselect,false,1,ct,e,tp,ct)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local rg=cg:SelectSubGroup(tp,c101102008.fselect,false,1,maxlink,tg)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	e:SetLabel(rg:GetCount())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+end
+function c101102008.spfilter1(c,e,tp,lk)
+	return c101102008.spfilter(c,e,tp) and c:IsLink(lk)
 end
 function c101102008.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(e:GetHandler())
@@ -86,7 +91,7 @@ function c101102008.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local lk=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c101102008.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,lk)
+	local g=Duel.SelectMatchingCard(tp,c101102008.spfilter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,lk)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
