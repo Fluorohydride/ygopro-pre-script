@@ -86,7 +86,6 @@ function c101102007.spop1(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(c101102007.sumlimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local lk=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101102007.spfilter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,lk)
