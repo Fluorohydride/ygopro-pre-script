@@ -26,14 +26,11 @@ function c100311002.initial_effect(c)
 	e2:SetOperation(c100311002.desop)
 	c:RegisterEffect(e2)
 end
-function c100311002.filter(c)
-	return c:IsFaceup() and c:IsCode(62265044)
-end
 function c100311002.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x29)
 end
 function c100311002.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100311002.filter,tp,LOCATION_ONFIELD,0,1,nil) or Duel.IsExistingMatchingCard(c100311002.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsEnvironment(62265044,tp) or Duel.IsExistingMatchingCard(c100311002.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100311002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
