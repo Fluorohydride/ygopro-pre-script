@@ -4,7 +4,7 @@
 function c101102042.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()
-	aux.AddXyzProcedure(c,nil,3,2,nil,nil,7)
+	aux.AddXyzProcedure(c,nil,3,2,nil,nil,99)
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101102042,0))
