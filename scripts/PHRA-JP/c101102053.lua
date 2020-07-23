@@ -8,20 +8,24 @@ function c101102053.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCountLimit(1,101102053+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c101102053.sptg)
 	e1:SetOperation(c101102053.spop)
 	c:RegisterEffect(e1)
 end
 function c101102053.spfilter1(c,e,tp)
-	return c:IsFaceup() and c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and Duel.IsExistingMatchingCard(c101102053.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetAttack(),c:GetRace())
+	return c:IsFaceup() and c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST)
+		and Duel.IsExistingMatchingCard(c101102053.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetAttack(),c:GetRace())
 end
 function c101102053.spfilter2(c,e,tp,atk,race)
-	return c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and c:IsAttackBelow(atk) and not c:IsRace(race) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and c:IsAttackBelow(atk) and not c:IsRace(race)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101102053.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101102053.spfilter1(chkc,e,tp) end
-	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Duel.IsExistingTarget(c101102053.spfilter1,tp,LOCATION_MZONE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
+		and Duel.IsExistingTarget(c101102053.spfilter1,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c101102053.spfilter1,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)

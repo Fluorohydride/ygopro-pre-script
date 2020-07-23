@@ -6,7 +6,6 @@ function c101102072.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_END_PHASE+TIMING_MSET)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -16,7 +15,7 @@ function c101102072.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMING_END_PHASE+TIMING_EQUIP)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e2:SetCountLimit(1,101102072)
 	e2:SetTarget(c101102072.target)
 	e2:SetOperation(c101102072.operation)
@@ -55,8 +54,8 @@ function c101102072.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
 	if sg then
-		Duel.HintSelection(sg)
-		if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=0 and sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK+LOCATION_EXTRA) and tc:IsRelateToEffect(e) then
+		if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=0 and sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK+LOCATION_EXTRA)
+			and tc:IsRelateToEffect(e) then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	end

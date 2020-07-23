@@ -8,13 +8,13 @@ function c101102055.initial_effect(c)
 	e1:SetCategory(CATEGORY_DECKDES+CATEGORY_TOGRAVE+CATEGORY_ATKCHANGE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,10110205596540+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,101102055+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c101102055.target)
 	e1:SetOperation(c101102055.activate)
 	c:RegisterEffect(e1)
 end
 function c101102055.tffilter(c,tp)
-	return c:IsSetCard(0x124e) and not c:IsType(TYPE_FIELD+TYPE_MONSTER) and not c:IsForbidden()
+	return c:IsSetCard(0x124e) and not c:IsType(TYPE_FIELD+TYPE_MONSTER) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c101102055.gtfilter(c)
 	return c:IsSetCard(0x124e) and c:IsFaceup()
@@ -46,14 +46,13 @@ function c101102055.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,c101102055.tffilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	if tc then
-		if Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)~=0 then
+		if Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
 			local gc=Duel.GetMatchingGroupCount(c101102055.gtfilter,tp,LOCATION_ONFIELD,0,nil)
 			if gc>=2 and Duel.SelectYesNo(tp,aux.Stringid(101102055,1)) then
 				Duel.BreakEffect()
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_FIELD)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
-				e1:SetRange(LOCATION_MZONE)
 				e1:SetTargetRange(LOCATION_MZONE,0)
 				e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x24e))
 				e1:SetValue(200)
