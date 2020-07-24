@@ -7,8 +7,8 @@ function c101102045.initial_effect(c)
 	c:EnableReviveLimit()
 	--to grave
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetDescription(aux.Stringid(101102045,1))
+	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
@@ -51,6 +51,7 @@ end
 function c101102045.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if c101102045.check(Duel.GetAttacker()) or c101102045.check(Duel.GetAttackTarget()) then
 		Duel.RegisterFlagEffect(tp,101102045,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(1-tp,101102045,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function c101102045.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
