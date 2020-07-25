@@ -6,7 +6,7 @@ function c101102064.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101102064,0))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_COIN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101102064)
@@ -35,6 +35,7 @@ end
 function c101102064.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102064.thfilter1,tp,LOCATION_DECK,0,1,nil)
 		or Duel.IsExistingMatchingCard(c101102064.thfilter2,tp,0,LOCATION_DECK,1,nil,1-tp) end
+	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,PLAYER_ALL,LOCATION_DECK)
 end
 function c101102064.activate(e,tp,eg,ep,ev,re,r,rp)
