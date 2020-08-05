@@ -71,7 +71,10 @@ function c101102044.teop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		local ct=tc:GetOverlayCount()
-		if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) and ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101102044.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(101102044,2)) then
+		if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA)
+			and ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101102044.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)
+			and Duel.SelectYesNo(tp,aux.Stringid(101102044,2)) then
 			Duel.BreakEffect()
 			local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 			ct=math.min(ct,ft)

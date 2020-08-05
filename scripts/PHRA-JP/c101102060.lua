@@ -31,7 +31,8 @@ function c101102060.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c101102060.costfilter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelAbove(1) and Duel.GetMZoneCount(tp,c)>0 and (c:IsFaceup() or c:IsControler(tp)) and Duel.IsExistingMatchingCard(c101102060.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,c:GetCode(),c:GetLevel())
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelAbove(1) and Duel.GetMZoneCount(tp,c)>0 and (c:IsFaceup() or c:IsControler(tp))
+		and Duel.IsExistingMatchingCard(c101102060.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,c:GetCode(),c:GetLevel())
 end
 function c101102060.spfilter(c,e,tp,code,lv)
 	return c:IsSetCard(0xb) and not c:IsCode(code) and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -43,7 +44,6 @@ function c101102060.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabel(0,0,0)
 		return Duel.CheckReleaseGroup(tp,c101102060.costfilter,1,nil,e,tp)
 	end
-	e:SetLabel(0,0,0)
 	local tc=Duel.SelectReleaseGroup(tp,c101102060.costfilter,1,1,nil,e,tp):GetFirst()
 	e:SetLabel(0,tc:GetCode(),tc:GetLevel())
 	Duel.Release(tc,REASON_COST)

@@ -76,13 +76,9 @@ function c101102055.activate(e,tp,eg,ep,ev,re,r,rp)
 				if ect>0 and (ft1>0 or ft2>0) and Duel.SelectYesNo(tp,aux.Stringid(101102055,3)) then
 					Duel.BreakEffect()
 					local sg=Duel.GetMatchingGroup(c101102055.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
-					if sg:GetCount()>0 then
-						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-						local rg=sg:SelectSubGroup(tp,c101102055.fselect,false,1,4,ft1,ft2,ect,ft)
-						if rg:GetCount()>0 then
-							Duel.SpecialSummon(rg,0,tp,tp,false,false,POS_FACEUP)
-						end
-					end
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+					local rg=sg:SelectSubGroup(tp,c101102055.fselect,false,1,4,ft1,ft2,ect,ft)
+					Duel.SpecialSummon(rg,0,tp,tp,false,false,POS_FACEUP)
 				end
 			end
 		end

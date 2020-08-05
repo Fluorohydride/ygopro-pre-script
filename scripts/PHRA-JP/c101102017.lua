@@ -35,7 +35,7 @@ function c101102017.spcon(e,c)
 	return Duel.IsExistingMatchingCard(c101102017.spfilter,tp,LOCATION_HAND,0,1,c)
 end
 function c101102017.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101102017.spfilter,tp,LOCATION_HAND,0,1,1,c)
 	Duel.SendtoGrave(g,REASON_COST)
 end
