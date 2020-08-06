@@ -28,8 +28,7 @@ function c101102023.sprcon(e,c)
 	local tp=c:GetControler()
 	local g1=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local g2=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and g1:GetSum(Card.GetAttack)<g2:GetSum(Card.GetAttack)
+	return g1:GetSum(Card.GetAttack)<g2:GetSum(Card.GetAttack)
 end
 function c101102023.thfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and c:IsAbleToHand()
