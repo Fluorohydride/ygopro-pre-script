@@ -51,7 +51,7 @@ function c101102022.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,c101102022.costfilter,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function c101102022.thfilter(c)
-	return c:GetAttack()>=0 and c:GetAttack()==c:GetDefense() and not c:IsCode(101102022) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:GetTextAttack()>=0 and c:GetAttack()==c:GetDefense() and not c:IsCode(101102022) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101102022.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102022.thfilter,tp,LOCATION_DECK,0,1,nil) end
