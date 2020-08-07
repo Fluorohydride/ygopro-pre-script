@@ -26,9 +26,11 @@ function c101102067.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,3,3)
 	if sg and #sg==3 then
 		Duel.ConfirmCards(1-tp,sg)
+		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_ATOHAND)
 		local oc=sg:Select(1-tp,1,1,nil):GetFirst()
 		if Duel.SendtoHand(oc,1-tp,REASON_EFFECT)~=0 and oc:IsLocation(LOCATION_HAND) then
 			sg:RemoveCard(oc)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sc=sg:Select(tp,1,1,nil):GetFirst()
 			Duel.SendtoHand(sc,tp,REASON_EFFECT)
 		end
