@@ -34,8 +34,11 @@ function c101102080.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if not tc:IsAbleToHand() and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) or ft<=0) then return end
 		if tc:IsAbleToHand() and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) or ft<=0 or Duel.SelectOption(tp,1190,1152)==0) then
+			Duel.DisableShuffleCheck()
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
+			Duel.ShuffleHand(tp)
 		else
+			Duel.DisableShuffleCheck()
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
 	else
