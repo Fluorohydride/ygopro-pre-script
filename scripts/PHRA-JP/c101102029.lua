@@ -40,6 +40,7 @@ function c101102029.initial_effect(c)
 	e7:SetCode(EVENT_PHASE+PHASE_END)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCountLimit(1)
+	e7:SetCondition(c101102029.ctrcon)
 	e7:SetTarget(c101102029.ctrtg)
 	e7:SetOperation(c101102029.ctrop)
 	c:RegisterEffect(e7)
@@ -63,6 +64,9 @@ function c101102029.countop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		c:AddCounter(0x58,6)
 	end
+end
+function c101102029.ctrcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
 end
 function c101102029.ctrtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
