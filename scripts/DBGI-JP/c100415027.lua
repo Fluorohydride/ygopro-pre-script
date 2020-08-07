@@ -30,10 +30,12 @@ function c100415027.counterfilter(c)
 end
 function c100415027.costfilter(c,tp)
 	return (c:IsSetCard(0x250) or c:IsType(TYPE_RITUAL)) and c:IsType(TYPE_MONSTER) and Duel.GetMZoneCount(tp,c)>0
+		and (c:IsControler(tp) or c:IsFaceup())
 end
 function c100415027.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
-	if chk==0 then return Duel.GetCustomActivityCount(100415027,tp,ACTIVITY_SPSUMMON)==0 and Duel.CheckReleaseGroupEx(tp,c100415027.costfilter,1,e:GetHandler(),tp) end
+	if chk==0 then return Duel.GetCustomActivityCount(100415027,tp,ACTIVITY_SPSUMMON)==0
+		and Duel.CheckReleaseGroupEx(tp,c100415027.costfilter,1,e:GetHandler(),tp) end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -63,7 +65,9 @@ function c100415027.drfilter(c)
 end
 function c100415027.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 and Duel.IsExistingMatchingCard(c100415027.drfilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(100415027,1)) then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0
+		and Duel.IsExistingMatchingCard(c100415027.drfilter,tp,LOCATION_HAND,0,1,nil)
+		and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(100415027,1)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 		local g=Duel.SelectMatchingCard(tp,c100415027.drfilter,tp,LOCATION_HAND,0,1,1,nil)

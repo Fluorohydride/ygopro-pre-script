@@ -23,11 +23,11 @@ function c101102061.initial_effect(c)
 end
 function c101102061.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c101102061.thfilter(c)
 	if not c:IsAbleToHand() then return false end
-	return c:IsLocation(LOCATION_DECK) and (c:IsSetCard(0xb2) or c:IsSetCard(0x107)) and c:IsType(TYPE_MONSTER)
+	return c:IsLocation(LOCATION_DECK) and c:IsSetCard(0xb2,0x107) and c:IsType(TYPE_MONSTER)
 		or c:IsLocation(LOCATION_GRAVE) and c:IsCode(19814508)
 end
 function c101102061.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -76,5 +76,5 @@ function c101102061.exop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,101102061,RESET_PHASE+PHASE_END,0,1)
 end
 function c101102061.estg(e,c)
-	return c:IsSetCard(0xb2) or c:IsSetCard(0x107)
+	return c:IsSetCard(0xb2,0x107)
 end

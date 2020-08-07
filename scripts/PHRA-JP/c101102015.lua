@@ -35,14 +35,12 @@ function c101102015.spfilter(c,tp)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c101102015.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	return eg:IsExists(c101102015.spfilter,1,nil,tp) and Duel.GetTurnPlayer()~=tp
 end
 function c101102015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c101102015.desfilter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x24d)
@@ -61,13 +59,12 @@ function c101102015.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,c101102015.desfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
-		if g:GetCount()>0 then
-			if Duel.Destroy(g,REASON_EFFECT)~=0 then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local sg=Duel.SelectMatchingCard(tp,c101102015.sffilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,nil)
-				if sg:GetCount()>0 then
-					Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-				end
+		Duel.HintSelection(g)
+		if Duel.Destroy(g,REASON_EFFECT)~=0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sg=Duel.SelectMatchingCard(tp,c101102015.sffilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,nil)
+			if sg:GetCount()>0 then
+				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 			end
 		end
 	end

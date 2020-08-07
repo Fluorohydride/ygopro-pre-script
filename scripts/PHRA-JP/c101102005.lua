@@ -2,28 +2,28 @@
 --Raidraptor - Strangle Lanius
 --Script by JoyJ
 function c101102005.initial_effect(c)
-	--spsummon
+	--self ss
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(101102005,0))
+	e1:SetDescription(aux.Stringid(101102005,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101102005)
-	e1:SetCondition(c101102005.spcon)
-	e1:SetTarget(c101102005.sptg)
-	e1:SetOperation(c101102005.spop)
+	e1:SetCondition(c101102005.sscon)
+	e1:SetTarget(c101102005.sstg)
+	e1:SetOperation(c101102005.ssop)
 	c:RegisterEffect(e1)
-	--self ss
+	--spsummon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101102005,1))
+	e2:SetDescription(aux.Stringid(101102005,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_HAND)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101102005+100)
-	e2:SetCondition(c101102005.sscon)
-	e2:SetTarget(c101102005.sstg)
-	e2:SetOperation(c101102005.ssop)
+	e2:SetCondition(c101102005.spcon)
+	e2:SetTarget(c101102005.sptg)
+	e2:SetOperation(c101102005.spop)
 	c:RegisterEffect(e2)
 end
 function c101102005.ssfilter(c)

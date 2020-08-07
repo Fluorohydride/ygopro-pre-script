@@ -9,6 +9,7 @@ function c101102051.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101102051)
+	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(c101102051.condition)
 	e1:SetCost(c101102051.cost)
 	e1:SetTarget(c101102051.target)
@@ -24,7 +25,7 @@ end
 function c101102051.cefilter(c,tc,ct,e,tp)
 	if not c:IsType(TYPE_XYZ) then return false end
 	local r=c:GetRank()-tc:GetRank()
-	return (c:IsSetCard(0xba) or c:IsSetCard(0x10db) or c:IsSetCard(0x2073))
+	return c:IsSetCard(0xba,0x10db,0x2073)
 		and tc:IsCanBeXyzMaterial(c) and r>0 and ct>=r
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
@@ -59,7 +60,7 @@ end
 function c101102051.tgefilter(c,tc,e,tp,rank)
 	if not c:IsType(TYPE_XYZ) then return false end
 	local r=c:GetRank()-tc:GetRank()
-	return (c:IsSetCard(0xba) or c:IsSetCard(0x10db) or c:IsSetCard(0x2073))
+	return c:IsSetCard(0xba,0x10db,0x2073)
 		and tc:IsCanBeXyzMaterial(c) and r==rank
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0

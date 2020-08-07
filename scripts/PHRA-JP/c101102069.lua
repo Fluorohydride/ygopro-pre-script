@@ -27,7 +27,7 @@ function c101102069.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=Duel.SelectMatchingCard(tp,c101102069.cfilter,tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
 	c:RemoveOverlayCard(tp,1,1,REASON_COST)
 	local tc=Duel.GetOperatedGroup():GetFirst()
-	if tc:IsSetCard(0xba) or tc:IsSetCard(0x10db) or tc:IsSetCard(0x2073) then
+	if tc:IsSetCard(0xba,0x10db,0x2073) then
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)

@@ -35,7 +35,8 @@ function c101102014.thfilter(c)
 end
 function c101102014.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101102014.desfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101102014.desfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101102014.desfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c101102014.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,c101102014.desfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
@@ -54,7 +55,9 @@ function c101102014.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101102014.thfilter1(c,tp)
 	local mg=c:GetMaterial()
-	return mg and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:GetPreviousTypeOnField()&TYPE_FUSION~=0 and mg:IsExists(Card.IsType,1,nil,TYPE_EFFECT) and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)
+	return mg and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
+		and c:GetPreviousTypeOnField()&TYPE_FUSION~=0 and mg:IsExists(Card.IsType,1,nil,TYPE_EFFECT)
+		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)
 end
 function c101102014.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101102014.thfilter1,1,nil,tp)

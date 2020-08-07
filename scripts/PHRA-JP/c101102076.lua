@@ -20,7 +20,7 @@ function c101102076.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101102076.filter(c)
-	return (c:IsSetCard(0xb2) or c:IsSetCard(0x107)) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xb2,0x107) and c:IsType(TYPE_MONSTER)
 end
 function c101102076.spfilter(c,e,tp)
 	return c101102076.filter(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

@@ -51,7 +51,7 @@ function c101102018.spfilter1(c,e,tp)
 		and Duel.IsExistingMatchingCard(c101102018.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end
 function c101102018.spfilter2(c,e,tp,tc)
-	return c:IsSetCard(0xb2) and not c:IsOriginalCodeRule(tc:GetOriginalCodeRule()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xb2) and not c:IsCode(tc:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101102018.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsAbleToHand()

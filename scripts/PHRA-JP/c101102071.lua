@@ -52,12 +52,14 @@ function c101102071.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101102071.cfilter(c,tp)
-	return c:IsRace(RACE_BEAST) and c:IsFaceup() and Duel.IsExistingMatchingCard(c101102071.cfilter1,tp,LOCATION_MZONE,0,1,c,tp)
+	return c:IsRace(RACE_BEAST) and c:IsFaceup()
+		and Duel.IsExistingMatchingCard(c101102071.cfilter1,tp,LOCATION_MZONE,0,1,c,c,tp)
 end
-function c101102071.cfilter1(c,tp)
-	return c:IsRace(RACE_BEASTWARRIOR) and c:IsFaceup() and Duel.IsExistingMatchingCard(c101102071.cfilter2,tp,LOCATION_MZONE,0,1,c,tp)
+function c101102071.cfilter1(c,c1,tp)
+	return c:IsRace(RACE_BEASTWARRIOR) and c:IsFaceup()
+		and Duel.IsExistingMatchingCard(c101102071.cfilter2,tp,LOCATION_MZONE,0,1,Group.FromCards(c,c1))
 end
-function c101102071.cfilter2(c,tp)
+function c101102071.cfilter2(c)
 	return c:IsRace(RACE_WINDBEAST) and c:IsFaceup()
 end
 function c101102071.negcon(e,tp,eg,ep,ev,re,r,rp)
@@ -69,7 +71,7 @@ end
 function c101102071.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c101102071.negfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101102071.negfilter,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
 	Duel.SelectTarget(tp,c101102071.negfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 end
 function c101102071.negop(e,tp,eg,ep,ev,re,r,rp)

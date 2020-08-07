@@ -8,7 +8,7 @@ function c101102043.initial_effect(c)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101102043,0))
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
@@ -61,20 +61,24 @@ function c101102043.spfilter(c,e,tp)
 	return c:IsSetCard(0x24e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101102043.fselect(g)
-	return g:GetClassCount(Card.GetOriginalRace)==1
-		and g:GetClassCount(Card.GetOriginalAttribute)==1
+	return g:GetClassCount(Card.GetRace)==1
+		and g:GetClassCount(Card.GetAttribute)==1
 end
 function c101102043.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c101102043.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and g:CheckSubGroup(c101102043.fselect,2,2) end
+	if chk==0 then
+		local g=Duel.GetMatchingGroup(c101102043.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>=2
+		and not Duel.IsPlayerAffectedByEffect(tp,59822133)
+		and g:CheckSubGroup(c101102043.fselect,2,2) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
 function c101102043.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2
+		or Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 	local g=Duel.GetMatchingGroup(c101102043.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:SelectSubGroup(tp,c101102043.fselect,false,2,2)
-	if #sg>0 then
+	if sg then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

@@ -30,6 +30,7 @@ function c100415025.counterfilter(c)
 end
 function c100415025.costfilter(c,tp)
 	return (c:IsSetCard(0x250) or c:IsType(TYPE_RITUAL)) and c:IsType(TYPE_MONSTER) and Duel.GetMZoneCount(tp,c)>0
+		and (c:IsControler(tp) or c:IsFaceup())
 end
 function c100415025.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -64,7 +65,9 @@ function c100415025.tgfilter(c)
 end
 function c100415025.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 and Duel.IsExistingMatchingCard(c100415025.tgfilter,tp,LOCATION_REMOVED,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(100415025,1)) then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0
+		and Duel.IsExistingMatchingCard(c100415025.tgfilter,tp,LOCATION_REMOVED,0,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(100415025,1)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c100415025.tgfilter,tp,LOCATION_REMOVED,0,1,1,nil)

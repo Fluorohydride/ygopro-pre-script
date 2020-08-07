@@ -23,7 +23,8 @@ function c100415036.cfilter(c,tp)
 	return c:GetSummonPlayer()==1-tp and c:IsAbleToDeck()
 end
 function c100415036.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100415036.filter,tp,LOCATION_MZONE,0,1,nil) and Duel.GetCurrentChain()==0 and eg:IsExists(c100415036.cfilter,1,nil,tp)
+	return Duel.IsExistingMatchingCard(c100415036.filter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.GetCurrentChain()==0 and eg:IsExists(c100415036.cfilter,1,nil,tp)
 end
 function c100415036.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

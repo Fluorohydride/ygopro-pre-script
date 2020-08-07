@@ -63,7 +63,7 @@ function c101102039.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and re:IsActiveType(TYPE_MONSTER)
 end
 function c101102039.posfilter(c)
-	return c:IsPosition(POS_FACEDOWN_DEFENSE) and c:IsCanChangePosition()
+	return c:IsPosition(POS_FACEDOWN_DEFENSE) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsCanChangePosition()
 end
 function c101102039.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102039.posfilter,tp,LOCATION_MZONE,0,1,nil) end
