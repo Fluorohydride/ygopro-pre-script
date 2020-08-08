@@ -75,20 +75,19 @@ end
 function c101102045.ovcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101102045.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
+function c101102045.ofilter(c,e)
+	return c:IsCanOverlay() and (not e or not c:IsImmuneToEffect(e))
+end
 function c101102045.ovtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) and Duel.IsExistingMatchingCard(Card.IsCanOverlay,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) and Duel.IsExistingMatchingCard(c101102045.ofilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
 end
 function c101102045.ovop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local g=Duel.SelectMatchingCard(tp,Card.IsCanOverlay,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c101102045.ofilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,e)
 		local tc=g:GetFirst()
-		if tc and not c:IsImmuneToEffect(e) then
-			local og=tc:GetOverlayGroup()
-			if og:GetCount()>0 then
-				Duel.SendtoGrave(og,REASON_RULE)
-			end
+		if tc then
 			Duel.Overlay(c,tc)
 		end
 	end
