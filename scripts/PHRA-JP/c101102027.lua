@@ -34,15 +34,16 @@ function c101102027.initial_effect(c)
 	c:RegisterEffect(e2)
 	e0:SetLabelObject(e2)
 end
-function c101102027.spfilter(c,e,tp)
-	local lv=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
+function c101102027.spfilter(c,e,tp,lv)
 	return c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_AQUA) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101102027.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101102027.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(c101102027.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	local lv=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101102027.spfilter(chkc,e,tp,lv) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(c101102027.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,lv) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c101102027.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c101102027.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,lv)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101102027.spop(e,tp,eg,ep,ev,re,r,rp)

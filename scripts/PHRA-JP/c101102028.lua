@@ -36,7 +36,8 @@ function c101102028.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ct>0 and ct==Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 end
 function c101102028.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101102028.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -50,7 +51,8 @@ function c101102028.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function c101102028.lvfilter(c,tp)
-	return c:IsFaceup() and c:IsLevelAbove(1) and c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT) and Duel.IsExistingTarget(c101102028.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetLevel())
+	return c:IsFaceup() and c:IsLevelAbove(1) and c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT)
+		and Duel.IsExistingTarget(c101102028.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetLevel())
 end
 function c101102028.cfilter(c,lv)
 	return c:IsFaceup() and c:IsLevelAbove(1) and not c:IsLevel(lv)

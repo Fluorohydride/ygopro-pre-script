@@ -14,7 +14,8 @@ function c101102066.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101102066.xyzfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and Duel.IsExistingTarget(c101102066.matfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
+	return c:IsFaceup() and c:IsType(TYPE_XYZ)
+		and Duel.IsExistingTarget(c101102066.matfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function c101102066.matfilter(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk) and c:IsCanOverlay()

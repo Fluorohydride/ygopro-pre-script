@@ -29,18 +29,18 @@ function c101102026.initial_effect(c)
 	e3:SetOperation(c101102026.drop)
 	c:RegisterEffect(e3)
 end
-function c101102026.indfilter(c)
+function c101102026.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS)
 end
 function c101102026.indcon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(c101102026.indfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(c101102026.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c101102026.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
 end
 function c101102026.drfilter(c)
-	return c101102026.indfilter(c) and c:IsAbleToGraveAsCost()
+	return c101102026.cfilter(c) and c:IsAbleToGraveAsCost()
 end
 function c101102026.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102026.drfilter,tp,LOCATION_ONFIELD,0,1,nil) end

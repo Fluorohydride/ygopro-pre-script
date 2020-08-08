@@ -51,6 +51,7 @@ function c101102029.initial_effect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e8:SetCode(EVENT_CONTROL_CHANGED)
 	e8:SetCountLimit(1)
+	e8:SetCondition(c101102029.dicecon)
 	e8:SetTarget(c101102029.dicetg)
 	e8:SetOperation(c101102029.diceop)
 	c:RegisterEffect(e8)
@@ -77,6 +78,9 @@ function c101102029.ctrop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.GetControl(c,1-tp)
 	end
+end
+function c101102029.dicecon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetCounter(0x58)>0
 end
 function c101102029.dicetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
