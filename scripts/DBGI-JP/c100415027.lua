@@ -47,7 +47,7 @@ function c100415027.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectReleaseGroupEx(tp,c100415027.costfilter,1,1,e:GetHandler(),tp)
 	Duel.Release(g,REASON_COST)
-end 
+end
 function c100415027.splimit2(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsSummonableCard()
 end

@@ -27,7 +27,7 @@ function c100415033.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTarget(c100415033.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-end 
+end
 function c100415033.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsSummonableCard()
 end

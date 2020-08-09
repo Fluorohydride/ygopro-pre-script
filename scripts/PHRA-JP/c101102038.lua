@@ -46,7 +46,7 @@ function c101102038.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101102038.eqfilter(c)
-    return c:IsFaceup() and c:IsRace(RACE_WARRIOR)
+	return c:IsFaceup() and c:IsRace(RACE_WARRIOR)
 end
 function c101102038.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

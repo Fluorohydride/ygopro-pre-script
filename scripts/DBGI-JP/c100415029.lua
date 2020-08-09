@@ -121,7 +121,7 @@ function c100415029.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabel(100,1)
 	end
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
-end 
+end
 function c100415029.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c100415029.tgfilter(chkc) end
 	local check,ct=e:GetLabel()
