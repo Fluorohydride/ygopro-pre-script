@@ -46,7 +46,9 @@ function c101102080.activate(e,tp,eg,ep,ev,re,r,rp)
 		if not c:IsRelateToEffect(e) then return end
 		local p=c:GetControler()
 		local b1=Duel.GetLP(p)~=1000
-		local b2=Duel.GetLP(1-p)<8000
+		local ea=Duel.IsPlayerAffectedByEffect(1-p,EFFECT_REVERSE_DAMAGE)
+		local eb=Duel.IsPlayerAffectedByEffect(1-p,EFFECT_REVERSE_RECOVER)
+		local b2=Duel.GetLP(1-p)<8000 and (ea or not eb)
 		local b3=true
 		local off=0
 		local ops={}
