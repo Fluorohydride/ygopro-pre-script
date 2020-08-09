@@ -36,10 +36,11 @@ end
 function c101102050.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetLinkedGroup()
 	if chk==0 then return #g==2 and g:IsExists(c101102050.ctfilter,1,nil,tp) and g:IsExists(c101102050.ctfilter,1,nil,1-tp) end
+	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,2,0,0)
 end
 function c101102050.ctop(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetHandler():GetLinkedGroup()
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	local a=g:GetFirst()
 	local b=g:GetNext()
 	if a and b then
