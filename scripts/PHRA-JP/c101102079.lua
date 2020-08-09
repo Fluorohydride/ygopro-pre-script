@@ -31,18 +31,17 @@ function c101102079.activate(e,tp,eg,ep,ev,re,r,rp)
 			local sg2=g2:RandomSelect(tp,#og1)
 			if Duel.Remove(sg2,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0 and sg2:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then
 				local c=e:GetHandler()
-				local fid=c:GetFieldID()
 				local og2=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_REMOVED)
 				local tc=og2:GetFirst()
 				while tc do
-					tc:RegisterFlagEffect(101102079,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+					tc:RegisterFlagEffect(101102079,RESET_EVENT+RESETS_STANDARD,0,1)
 					tc=og2:GetNext()
 				end
 				og2:KeepAlive()
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 				e1:SetCode(EVENT_PHASE+PHASE_END)
-				e1:SetLabel(fid)
+				e1:SetReset(RESET_PHASE+PHASE_END)
 				e1:SetLabelObject(og2)
 				e1:SetCountLimit(1)
 				e1:SetCondition(c101102079.retcon)
@@ -52,19 +51,15 @@ function c101102079.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c101102079.retfilter(c,fid)
-	return c:GetFlagEffectLabel(101102079)==fid
+function c101102079.retfilter(c)
+	return c:GetFlagEffect(101102079)~=0
 end
 function c101102079.retcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject()
-	if not g:IsExists(c101102079.retfilter,1,nil,e:GetLabel()) then
-		g:DeleteGroup()
-		e:Reset()
-		return false
-	else return true end
+	return e:GetLabelObject():IsExists(c101102079.retfilter,1,nil)
 end
 function c101102079.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local tg=g:Filter(c101102079.retfilter,nil,e:GetLabel())
 	Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
+	g:DeleteGroup()
 end
