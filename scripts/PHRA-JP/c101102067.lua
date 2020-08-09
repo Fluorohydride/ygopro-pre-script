@@ -1,5 +1,5 @@
 --ジャック・イン・ザ・ハンド
-
+--not fully implemented
 --Scripted by mallu11
 function c101102067.initial_effect(c)
 	--Activate
@@ -12,16 +12,16 @@ function c101102067.initial_effect(c)
 	e1:SetOperation(c101102067.activate)
 	c:RegisterEffect(e1)
 end
-function c101102067.thfilter(c)
-	return c:IsLevel(1) and c:IsAbleToHand()
+function c101102067.thfilter(c,tp)
+	return c:IsLevel(1) and c:IsAbleToHand() and c:IsAbleToHand(1-tp)
 end
 function c101102067.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c101102067.thfilter,tp,LOCATION_DECK,0,nil)
+	local g=Duel.GetMatchingGroup(c101102067.thfilter,tp,LOCATION_DECK,0,nil,tp)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>=3 end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,PLAYER_ALL,LOCATION_DECK)
 end
 function c101102067.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c101102067.thfilter,tp,LOCATION_DECK,0,nil)
+	local g=Duel.GetMatchingGroup(c101102067.thfilter,tp,LOCATION_DECK,0,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,3,3)
 	if sg then
