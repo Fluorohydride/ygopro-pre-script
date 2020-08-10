@@ -36,7 +36,7 @@ function c81997228.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c81997228.excostfilter(c,tp)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsAbleToRemoveAsCost() and c:IsHasEffect(101102049,tp)
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsAbleToRemoveAsCost() and c:IsHasEffect(25725326,tp)
 end
 function c81997228.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c81997228.excostfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,tp)
@@ -49,7 +49,7 @@ function c81997228.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		tc=g:GetFirst()
 	end
-	local te=tc:IsHasEffect(101102049,tp)
+	local te=tc:IsHasEffect(25725326,tp)
 	if te then
 		te:UseCountLimit(tp)
 		Duel.Remove(tc,POS_FACEUP,REASON_COST+REASON_REPLACE)

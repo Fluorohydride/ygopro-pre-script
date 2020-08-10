@@ -49,7 +49,7 @@ function c18514525.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c18514525.excostfilter(c,tp)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsAbleToRemoveAsCost() and c:IsHasEffect(101102049,tp)
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsAbleToRemoveAsCost() and c:IsHasEffect(25725326,tp)
 end
 function c18514525.costfilter(c,tp,g)
 	local tg=g:Clone()
@@ -73,7 +73,7 @@ function c18514525.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		tc=cg:GetFirst()
 	end
-	local te=tc:IsHasEffect(101102049,tp)
+	local te=tc:IsHasEffect(25725326,tp)
 	if te then
 		te:UseCountLimit(tp)
 		Duel.Remove(tc,POS_FACEUP,REASON_COST+REASON_REPLACE)
