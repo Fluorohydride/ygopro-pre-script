@@ -35,18 +35,17 @@ function c100415001.initial_effect(c)
 	e3:SetOperation(c100415001.eqop)
 	c:RegisterEffect(e3)
 end
-function c100415001.costfilter(c)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToGraveAsCost()
+function c100415001.costfilter(c,tp)
+	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function c100415001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100415001.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100415001.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,e:GetHandler(),tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100415001.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c100415001.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,e:GetHandler(),tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100415001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100415001.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -71,18 +70,19 @@ function c100415001.attop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function c100415001.tgfilter(c,tp,mc)
-	return c:IsFaceup() and c:IsSetCard(0x251) and Duel.IsExistingMatchingCard(c100415001.eqfilter,tp,LOCATION_GRAVE,0,1,mc)
+function c100415001.tgfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x251)
 end
 function c100415001.eqfilter(c)
 	return c:IsSetCard(0x251) and c:IsType(TYPE_MONSTER) and not c:IsLevel(4)
 end
 function c100415001.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100415001.tgfilter(chkc,tp,e:GetHandler()) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100415001.tgfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(c100415001.tgfilter,tp,LOCATION_MZONE,0,1,nil,tp,e:GetHandler()) end
+		and Duel.IsExistingTarget(c100415001.tgfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c100415001.eqfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,c100415001.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,tp,e:GetHandler())
+	Duel.SelectTarget(tp,c100415001.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_GRAVE)
 end
 function c100415001.eqop(e,tp,eg,ep,ev,re,r,rp)
