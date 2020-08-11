@@ -78,18 +78,19 @@ function c100415003.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100415003.tgfilter(c,tp,mc)
-	return c:IsFaceup() and c:IsSetCard(0x251) and Duel.IsExistingMatchingCard(c100415003.eqfilter,tp,LOCATION_GRAVE,0,1,mc)
+function c100415003.tgfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x251)
 end
 function c100415003.eqfilter(c)
 	return c:IsSetCard(0x251) and c:IsType(TYPE_MONSTER) and not c:IsLevel(4)
 end
 function c100415003.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100415003.tgfilter(chkc,tp,e:GetHandler()) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100415003.tgfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(c100415003.tgfilter,tp,LOCATION_MZONE,0,1,nil,tp,e:GetHandler()) end
+		and Duel.IsExistingTarget(c100415003.tgfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c100415003.eqfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,c100415003.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,tp,e:GetHandler())
+	Duel.SelectTarget(tp,c100415003.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_GRAVE)
 end
 function c100415003.eqop(e,tp,eg,ep,ev,re,r,rp)
