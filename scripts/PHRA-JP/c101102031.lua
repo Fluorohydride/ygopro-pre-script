@@ -70,7 +70,7 @@ function c101102031.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(101102031)>0
 end
 function c101102031.thfilter(c,e,tp)
-	if not (c:IsSetCard(0x24f) and c:IsType(TYPE_MONSTER) or c:IsCode(68468459)) then return false end
+	if not (c:IsSetCard(0x14d) and c:IsType(TYPE_MONSTER) or c:IsCode(68468459)) then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	return c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end

@@ -15,10 +15,10 @@ function c101102059.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101102059.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x24d)
+	return c:IsFaceup() and c:IsSetCard(0x14f)
 end
 function c101102059.ffilter(c,tp)
-	return c:IsPreviousSetCard(0x24d) and c:GetPreviousControler()==tp and c:GetPreviousTypeOnField()&TYPE_FUSION~=0
+	return c:IsPreviousSetCard(0x14f) and c:GetPreviousControler()==tp and c:GetPreviousTypeOnField()&TYPE_FUSION~=0
 		and c:IsPreviousPosition(POS_FACEUP)
 end
 function c101102059.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

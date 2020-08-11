@@ -28,10 +28,10 @@ function c101102014.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101102014.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x24d)
+	return c:IsFaceup() and c:IsSetCard(0x14f)
 end
 function c101102014.thfilter(c)
-	return c:IsSetCard(0x24d) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x14f) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
 function c101102014.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101102014.desfilter(chkc) end

@@ -45,7 +45,7 @@ function c101102052.cfilter(c,tp)
 		and Duel.IsExistingMatchingCard(c101102052.srfilter,tp,LOCATION_DECK,0,1,nil,c:GetOriginalRace())
 end
 function c101102052.srfilter(c,race)
-	return c:IsSetCard(0x24f) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:GetOriginalRace()~=race
+	return c:IsSetCard(0x14d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:GetOriginalRace()~=race
 end
 function c101102052.srcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)

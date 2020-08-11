@@ -16,10 +16,10 @@ function c101102012.initial_effect(c)
 end
 function c101102012.tfilter(c,tp)
 	local type1=c:GetType()&0x7
-	return c:IsSetCard(0x24e) and c:IsFaceup() and Duel.IsExistingMatchingCard(c101102012.tgfilter,tp,LOCATION_DECK,0,1,nil,type1)
+	return c:IsSetCard(0x14e) and c:IsFaceup() and Duel.IsExistingMatchingCard(c101102012.tgfilter,tp,LOCATION_DECK,0,1,nil,type1)
 end
 function c101102012.tgfilter(c,type1)
-	return not c:IsType(type1) and c:IsSetCard(0x24e) and c:IsAbleToGrave()
+	return not c:IsType(type1) and c:IsSetCard(0x14e) and c:IsAbleToGrave()
 end
 function c101102012.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c101102012.tfilter(chkc,tp) end
@@ -64,7 +64,7 @@ function c101102012.splimit(e,c)
 	return not (c:IsLevelAbove(3) or c:IsRankAbove(3))
 end
 function c101102012.thfilter(c)
-	return c:IsSetCard(0x24e) and c:IsType(TYPE_MONSTER) and not c:IsCode(101102012) and c:IsAbleToHand()
+	return c:IsSetCard(0x14e) and c:IsType(TYPE_MONSTER) and not c:IsCode(101102012) and c:IsAbleToHand()
 end
 function c101102012.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101102012.thfilter),tp,LOCATION_GRAVE,0,1,nil)

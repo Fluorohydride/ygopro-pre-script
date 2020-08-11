@@ -32,7 +32,7 @@ function c101102056.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101102056.cfilter(c)
-	return c:IsSetCard(0x24e) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x14e) and c:IsAbleToRemoveAsCost()
 end
 function c101102056.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102056.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -65,7 +65,7 @@ function c101102056.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101102056.thfilter(c)
-	return c:IsSetCard(0x24e) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x14e) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101102056.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102056.thfilter,tp,LOCATION_DECK,0,1,nil) end

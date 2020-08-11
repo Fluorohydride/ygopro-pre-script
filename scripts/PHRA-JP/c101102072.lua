@@ -36,7 +36,7 @@ function c101102072.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101102072.tdfilter(c)
-	return c:IsSetCard(0x24e) and c:IsAbleToDeck() and c:IsFaceup()
+	return c:IsSetCard(0x14e) and c:IsAbleToDeck() and c:IsFaceup()
 end
 function c101102072.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(c101102072.tdfilter,tp,LOCATION_REMOVED,0,nil)
@@ -64,7 +64,7 @@ function c101102072.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end
 function c101102072.lvfilter(c)
-	return c:IsSetCard(0x24e) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and (c:GetLevel()>0 or c:GetRank()>0)
+	return c:IsSetCard(0x14e) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and (c:GetLevel()>0 or c:GetRank()>0)
 end
 function c101102072.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101102072.lvfilter(chkc) end

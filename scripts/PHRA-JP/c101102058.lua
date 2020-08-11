@@ -24,7 +24,7 @@ function c101102058.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101102058.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x24d) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x14f) and c:IsAbleToHand()
 end
 function c101102058.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -37,7 +37,7 @@ function c101102058.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101102058.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x24d)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x14f)
 end
 function c101102058.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101102058.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -45,13 +45,13 @@ end
 function c101102058.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101102058.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,101102157,0x24d,0x4011,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,101102157,0x14f,0x4011,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 end
 function c101102058.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,101102157,0x24d,0x4011,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,101102157,0x14f,0x4011,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) then
 		local token=Duel.CreateToken(tp,101102158)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end

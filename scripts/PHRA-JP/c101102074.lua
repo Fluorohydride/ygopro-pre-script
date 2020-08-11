@@ -22,7 +22,7 @@ function c101102074.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c101102074.filter(c)
-	return c:IsSetCard(0x24d) and not c:IsCode(101102074) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsSetCard(0x14f) and not c:IsCode(101102074) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:CheckActivateEffect(false,true,false)~=nil
 end
 function c101102074.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then

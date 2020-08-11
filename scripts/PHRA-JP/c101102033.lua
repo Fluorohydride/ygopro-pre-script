@@ -4,7 +4,7 @@
 function c101102033.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x24d),2,true)
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x14f),2,true)
 	--destroy replace
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -30,11 +30,11 @@ function c101102033.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101102033.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x24d) and c:IsType(TYPE_FUSION) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsSetCard(0x14f) and c:IsType(TYPE_FUSION) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function c101102033.desfilter(c,e,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x24d)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x14f)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function c101102033.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -60,7 +60,7 @@ function c101102033.repop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101102033.fmfilter(c)
 	local mg=c:GetMaterial()
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x24d) and c:IsFaceup() and mg and mg:IsExists(Card.IsType,1,nil,TYPE_EFFECT)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x14f) and c:IsFaceup() and mg and mg:IsExists(Card.IsType,1,nil,TYPE_EFFECT)
 end
 function c101102033.discon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)

@@ -58,7 +58,7 @@ function c101102043.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and (c:IsReason(REASON_EFFECT) and rp==1-tp or c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp))
 end
 function c101102043.spfilter(c,e,tp)
-	return c:IsSetCard(0x24e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x14e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101102043.fselect(g)
 	return g:GetClassCount(Card.GetRace)==1

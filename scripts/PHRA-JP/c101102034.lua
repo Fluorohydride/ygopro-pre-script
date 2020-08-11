@@ -4,7 +4,7 @@
 function c101102034.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,101102014,aux.FilterBoolFunction(Card.IsFusionSetCard,0x24d),2,true,false)
+	aux.AddFusionProcCodeFun(c,101102014,aux.FilterBoolFunction(Card.IsFusionSetCard,0x14f),2,true,false)
 	--actlimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

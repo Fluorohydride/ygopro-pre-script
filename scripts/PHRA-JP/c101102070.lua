@@ -20,10 +20,10 @@ function c101102070.fselect(g,tp)
 	return Duel.IsExistingMatchingCard(c101102070.lkfilter,tp,LOCATION_EXTRA,0,1,nil,g)
 end
 function c101102070.lkfilter(c,g)
-	return c:IsSetCard(0x24f) and c:IsLinkSummonable(g,nil,g:GetCount(),g:GetCount())
+	return c:IsSetCard(0x14d) and c:IsLinkSummonable(g,nil,g:GetCount(),g:GetCount())
 end
 function c101102070.chkfilter(c,tp)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x24f) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsType(TYPE_LINK) and c:IsSetCard(0x14d) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c101102070.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

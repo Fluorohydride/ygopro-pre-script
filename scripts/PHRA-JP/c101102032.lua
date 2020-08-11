@@ -4,7 +4,7 @@
 function c101102032.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x24d),2,true)
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x14f),2,true)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101102032,0))
@@ -50,11 +50,11 @@ function c101102032.operation(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function c101102032.ffilter(e,c)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x24d)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x14f)
 end
 function c101102032.fmfilter(c)
 	local mg=c:GetMaterial()
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x24d) and c:IsFaceup() and mg and mg:IsExists(Card.IsType,1,nil,TYPE_EFFECT)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x14f) and c:IsFaceup() and mg and mg:IsExists(Card.IsType,1,nil,TYPE_EFFECT)
 end
 function c101102032.adcon(e)
 	local tp=e:GetHandlerPlayer()
