@@ -25,7 +25,7 @@ function c100415004.initial_effect(c)
 	e2:SetOperation(c100415004.drop)
 	c:RegisterEffect(e2)
 end
-function c100415004.tgfilter(c,tp)
+function c100415004.tgfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x251)
 end
 function c100415004.eqfilter(c)
