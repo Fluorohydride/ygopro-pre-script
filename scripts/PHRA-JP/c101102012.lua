@@ -16,7 +16,7 @@ function c101102012.initial_effect(c)
 end
 function c101102012.tfilter(c,tp)
 	local type1=c:GetType()&0x7
-	return c:IsSetCard(0x24e) and c:IsFaceup() and Duel.IsExistingMatchingCard(c101102012.tgfilter,tp,LOCATION_DECK,0,1,nil,tp,type1)
+	return c:IsSetCard(0x24e) and c:IsFaceup() and Duel.IsExistingMatchingCard(c101102012.tgfilter,tp,LOCATION_DECK,0,1,nil,type1)
 end
 function c101102012.tgfilter(c,type1)
 	return not c:IsType(type1) and c:IsSetCard(0x24e) and c:IsAbleToGrave()
