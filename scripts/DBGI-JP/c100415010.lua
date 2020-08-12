@@ -29,7 +29,10 @@ end
 function c100415010.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local check=c100415010.chkfilter(tp,TYPE_FUSION) and c100415010.chkfilter(tp,TYPE_SYNCHRO) and c100415010.chkfilter(tp,TYPE_XYZ) and c100415010.chkfilter(tp,TYPE_LINK)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100415010.filter(chkc,tp,check) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	local b=e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE)
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if b then ft=ft-1 end
+	if chk==0 then return ft>0
 		and Duel.IsExistingTarget(c100415010.filter,tp,LOCATION_MZONE,0,1,nil,tp,check) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,c100415010.filter,tp,LOCATION_MZONE,0,1,1,nil,tp,check)
