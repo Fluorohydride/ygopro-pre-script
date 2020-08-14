@@ -4,6 +4,7 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **May 21, 2020** :PRISMATIC SPECIAL PACK (VP20-JP) : `100267XXX`
 - **August 8, 2020** : PHANTOM RAGE (PHRA-JP) : `101102XXX`
+- **August 28, 2020** : 2020 Tin of Lost Memories (MP20-EN) : `100271XXX`
 - **August 29, 2020** : Structure Deck R: Dragunity Drive (SR11-JP) : `100311XXX`
 - **September 4, 2020**: Yu-Gi-Oh! OCG Structures Volume 2 promotional card (YO02-JP): `100269XXX`
 - **September 12, 2020**: Deck Build Pack: Genesis Impactors (DBGI-JP): `100415XXX`
