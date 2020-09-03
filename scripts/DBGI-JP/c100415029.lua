@@ -1,4 +1,4 @@
---竜儀巧-メテオニス＝DRA
+--竜儀巧－メテオニス＝DRA
 
 --Scripted by mallu11
 function c100415029.initial_effect(c)
