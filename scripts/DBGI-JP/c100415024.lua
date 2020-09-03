@@ -1,4 +1,4 @@
---竜輝巧ーバンα
+--竜輝巧－バンα
 
 --Scripted by mallu11
 function c100415024.initial_effect(c)
