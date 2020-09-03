@@ -1,4 +1,4 @@
---竜輝巧-ファフニール
+--竜輝巧－ファフニール
 
 --Scripted by mallu11
 function c100415031.initial_effect(c)
