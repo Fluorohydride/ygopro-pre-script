@@ -68,7 +68,7 @@ end
 function c100415029.valcheck(e,c)
 	local mg=c:GetMaterial()
 	local fg=mg:Filter(c100415029.lvfilter,nil,c)
-	if fg and fg:GetSum(Card.GetRitualLevel,c)<=2 then
+	if #fg>0 and fg:GetSum(Card.GetRitualLevel,c)<=2 then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
