@@ -1,4 +1,4 @@
---竜輝巧-エルδ
+--竜輝巧－ルタδ
 
 --Scripted by mallu11
 function c100415027.initial_effect(c)
