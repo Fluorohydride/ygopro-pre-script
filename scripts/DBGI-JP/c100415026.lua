@@ -1,4 +1,4 @@
---竜輝巧-エルγ
+--竜輝巧－エルγ
 
 --Scripted by mallu11
 function c100415026.initial_effect(c)
