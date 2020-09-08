@@ -20,21 +20,32 @@ function c100200189.initial_effect(c)
 	e2:SetOperation(c100200189.sgop)
 	c:RegisterEffect(e2)
 end
-function c100200189.costfilter(c)
+function c100200189.tgfilter2(c,attr)
+	return c:IsAbleToGrave() and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT)
+		and not c:IsAttribute(attr)
+end
+function c100200189.tgfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsDiscardable()
+		and Duel.IsExistingMatchingCard(c100200189.tgfilter2,tp,LOCATION_DECK,0,1,nil,c:GetAttribute())
 end
 function c100200189.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100200189.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	local tc=Duel.SelectMatchingCard(tp, c100200189.costfilter, tp, LOCATION_HAND, 0, 1, 1)
-	Duel.SendtoGrave(tc,REASON_DISCARD+REASON_COST)
-	e:SetLabel(tc:GetAttribute())
+	e:SetLabel(100)
+	return true
 end
 function c100200189.filter(c,attr)
 	return not c:IsAttribute(attr) and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsAbleToGrave()
 end
 function c100200189.sgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(c100200189.filter,tp,LOCATION_DECK,0,1,nil,e:GetLabel()) end
+	if chk==0 then
+		if e:GetLabel()~=100 then return false end
+		e:SetLabel(0)
+		return Duel.IsExistingMatchingCard(c100200189.tgfilter,tp,LOCATION_HAND,0,1,nil)
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local tc=Duel.SelectMatchingCard(tp,c100200189.tgfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
+	e:SetLabel(tc:GetAttribute())
+	Duel.SendtoGrave(tc,REASON_DISCARD+REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c100200189.sgop(e,tp,eg,ep,ev,re,r,rp)

@@ -31,11 +31,11 @@ function c100311025.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and not Duel.IsPlayerAffectedByEffect(tp,59822133) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
-function c100311025.gcheck(g)
+function c100311025.gcheck(g,e,tp)
 	if #g~=2 then return false end
 	local ca=g:GetFirst()
 	local cb=g:GetNext()
-	return c100311025.filter1(ca) and c100311025.filter2(cb) or c100311025.filter1(cb) and c100311025.filter2(ca)
+	return c100311025.filter1(ca,e,tp) and c100311025.filter2(cb,e,tp) or c100311025.filter1(cb,e,tp) and c100311025.filter2(ca,e,tp)
 end
 function c100311025.scfilter(c,mg)
 	return c:IsRace(RACE_DRAGON) and c:IsSynchroSummonable(nil,mg)
@@ -43,23 +43,26 @@ end
 function c100311025.cfilter(c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsPreviousLocation(LOCATION_EXTRA)
 end
+function c100311025.matfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x29)
+end
 function c100311025.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c100311025.filter3,tp,LOCATION_DECK,0,nil,e,tp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 or g:CheckSubGroup(c100311025.gcheck,2,2) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 or not g:CheckSubGroup(c100311025.gcheck,2,2,e,tp) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=g:SelectSubGroup(tp,c100311025.gcheck,false,2,2)
+	local sg=g:SelectSubGroup(tp,c100311025.gcheck,false,2,2,e,tp)
 	local ca=g:GetFirst()
 	local cb=g:GetNext()
 	local success=false
 	if Duel.SpecialSummonStep(ca,0,tp,tp,false,false,POS_FACEUP) and Duel.SpecialSummonStep(cb,0,tp,tp,false,false,POS_FACEUP) then
 		success=true
-		local e1=Effect.CreateEffect(ca)
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		ca:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(ca)
+		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
@@ -70,12 +73,12 @@ function c100311025.activate(e,tp,eg,ep,ev,re,r,rp)
 		cb:RegisterEffect(e4)
 	end
 	Duel.SpecialSummonComplete()
-	local mg=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_MZONE,0,nil,0x29)
+	local mg=Duel.GetMatchingGroup(c100311025.matfilter,tp,LOCATION_MZONE,0,nil)
 	if success and Duel.IsExistingMatchingCard(c100311025.cfilter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.IsExistingMatchingCard(c100311025.scfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
-		and Duel.SelectYesNo(tp,aux.Stringid(100311025,0)) then
+		and Duel.SelectYesNo(tp,aux.Stringid(100311025,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc=Duel.SelectMatchingCard(tp,c100311025.scfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg)
+		local tc=Duel.SelectMatchingCard(tp,c100311025.scfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg):GetFirst()
 		Duel.SynchroSummon(tp,tc,nil,mg)
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
