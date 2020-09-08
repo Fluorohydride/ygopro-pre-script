@@ -1,4 +1,6 @@
---绝火之大贤者 琐罗亚
+--絶火の大賢者ゾロア
+--
+--Script by JoyJ
 function c100415002.initial_effect(c)
 	--equip
 	local e1=Effect.CreateEffect(c)
@@ -26,15 +28,16 @@ end
 function c100415002.eqfilter(c,tp)
 	return c:IsSetCard(0x251) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
-function c100415002.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x251) and Duel.IsExistingMatchingCard(c100415002.eqfilter,tp,LOCATION_EXTRA,0,1,nil,tp)
+function c100415002.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x251)
 end
 function c100415002.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100415002.cfilter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c100415002.cfilter,tp,LOCATION_MZONE,0,1,nil,tp)
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100415002.cfilter(chkc) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(c100415002.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c100415002.eqfilter,tp,LOCATION_EXTRA,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c100415002.cfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	Duel.SelectTarget(tp,c100415002.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_EXTRA)
 end
 function c100415002.eqop(e,tp,eg,ep,ev,re,r,rp)
@@ -75,7 +78,7 @@ function c100415002.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,c100415002.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100415002.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if #g<1 then return end
 		local tc=g:GetFirst()
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
@@ -90,5 +93,6 @@ function c100415002.spop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
 		end
+		Duel.SpecialSummonComplete()
 	end
 end

@@ -1,4 +1,6 @@
---疾风之龙骑兵团
+--疾風のドラグニティ
+--
+--Script by JoyJ
 function c100311025.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -15,30 +17,16 @@ function c100311025.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
-function c100311025.filter1(c,e,tp)
-	return c:IsSetCard(0x29) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function c100311025.filter2(c,e,tp)
-	return c:IsSetCard(0x29) and c:IsRace(RACE_WINDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function c100311025.filter3(c,e,tp)
-	return c:IsSetCard(0x29) and (c:IsRace(RACE_WINDBEAST) or c:IsType(TYPE_TUNER)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function c100311025.filter(c,e,tp)
+	return c:IsSetCard(0x29) and (c:IsType(TYPE_TUNER) or c:IsRace(RACE_WINDBEAST)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100311025.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsExistingMatchingCard(c100311025.filter1,tp,LOCATION_DECK,0,1,nil,e,tp)
-		and Duel.IsExistingMatchingCard(c100311025.filter2,tp,LOCATION_DECK,0,1,nil,e,tp)
-		and not Duel.IsPlayerAffectedByEffect(tp,59822133) end
+	if chk==0 then
+		local g=Duel.GetMatchingGroup(c100311025.filter,tp,LOCATION_DECK,0,nil,e,tp)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
+			and g:CheckSubGroup(aux.gffcheck,2,2,Card.IsType,TYPE_TUNER,Card.IsRace,RACE_WINDBEAST)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
-end
-function c100311025.gcheck(g,e,tp)
-	if #g~=2 then return false end
-	local ca=g:GetFirst()
-	local cb=g:GetNext()
-	return c100311025.filter1(ca,e,tp) and c100311025.filter2(cb,e,tp) or c100311025.filter1(cb,e,tp) and c100311025.filter2(ca,e,tp)
-end
-function c100311025.scfilter(c,mg)
-	return c:IsRace(RACE_DRAGON) and c:IsSynchroSummonable(nil,mg)
 end
 function c100311025.cfilter(c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsPreviousLocation(LOCATION_EXTRA)
@@ -46,14 +34,28 @@ end
 function c100311025.matfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x29)
 end
+function c100311025.scfilter(c,mg)
+	return c:IsRace(RACE_DRAGON) and c:IsSynchroSummonable(nil,mg)
+end
 function c100311025.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c100311025.filter3,tp,LOCATION_DECK,0,nil,e,tp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 or not g:CheckSubGroup(c100311025.gcheck,2,2,e,tp) then return end
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_FIELD)
+		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e3:SetTargetRange(1,0)
+		e3:SetTarget(c100311025.splimit)
+		e3:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e3,tp)
+	end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 or Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
+	local g=Duel.GetMatchingGroup(c100311025.filter,tp,LOCATION_DECK,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=g:SelectSubGroup(tp,c100311025.gcheck,false,2,2,e,tp)
-	local ca=g:GetFirst()
-	local cb=g:GetNext()
+	local sg=g:SelectSubGroup(tp,aux.gffcheck,false,2,2,Card.IsType,TYPE_TUNER,Card.IsRace,RACE_WINDBEAST)
+	if not sg then return end
+	local ca=sg:GetFirst()
+	local cb=sg:GetNext()
 	local success=false
 	if Duel.SpecialSummonStep(ca,0,tp,tp,false,false,POS_FACEUP) and Duel.SpecialSummonStep(cb,0,tp,tp,false,false,POS_FACEUP) then
 		success=true
@@ -81,15 +83,6 @@ function c100311025.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.SelectMatchingCard(tp,c100311025.scfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg):GetFirst()
 		Duel.SynchroSummon(tp,tc,nil,mg)
 	end
-	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	local e3=Effect.CreateEffect(e:GetHandler())
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e3:SetTargetRange(1,0)
-	e3:SetTarget(c100311025.splimit)
-	e3:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e3,tp)
 end
 function c100311025.splimit(e,c)
 	return not c:IsRace(RACE_DRAGON) and c:IsLocation(LOCATION_EXTRA)
