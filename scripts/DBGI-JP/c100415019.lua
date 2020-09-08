@@ -4,14 +4,13 @@
 function c100415019.initial_effect(c)
 	--Activate(no effect)
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100415019,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--negate attack
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100415019,1))
-	e2:SetCountLimit(100415019,1)
+	e2:SetDescription(aux.Stringid(100415019,0))
+	e2:SetCountLimit(1,100415019)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_FZONE)
@@ -20,8 +19,8 @@ function c100415019.initial_effect(c)
 	c:RegisterEffect(e2)
 	--to deck
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100415019,2))
-	e3:SetCountLimit(100415019+100,1)
+	e3:SetDescription(aux.Stringid(100415019,1))
+	e3:SetCountLimit(1,100415019+100)
 	e3:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_FZONE)
@@ -38,7 +37,7 @@ function c100415019.cfilter1(c,tp)
 end
 function c100415019.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100415019.cfilter1,tp,LOCATION_MZONE,0,1,nil,tp) end
-	local sg=Duel.SelectReleaseGroup(tp,c100415019.cfilter,1,1,nil,tp)
+	local sg=Duel.SelectReleaseGroup(tp,c100415019.cfilter1,1,1,nil,tp)
 	Duel.Release(sg,REASON_COST)
 end
 function c100415019.operation1(e,tp,eg,ep,ev,re,r,rp)
@@ -53,8 +52,7 @@ function c100415019.tgfilter2(c)
 		and (c:IsAbleToDeck() or (Duel.GetMatchingGroupCount(nil,tp,LOCATION_MZONE,0,nil)==0 and c:IsAbleToHand()))
 end
 function c100415019.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
-		and c100415019.tgfilter2(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100415019.tgfilter2(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100415019.tgfilter2,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c100415019.tgfilter2,tp,LOCATION_GRAVE,0,1,1,nil)

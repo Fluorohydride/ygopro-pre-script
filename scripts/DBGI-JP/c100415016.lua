@@ -1,6 +1,6 @@
 --Evil★Twin リィラ
 --
---Script by 0x254ish
+--Script by JustFish
 function c100415016.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,nil,2,2,c100415016.lcheck)

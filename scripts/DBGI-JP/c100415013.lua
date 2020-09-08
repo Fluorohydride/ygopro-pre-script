@@ -1,6 +1,6 @@
 --Live☆Twin キスキル
 --
---Script by 0x254ish
+--Script by JustFish
 function c100415013.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

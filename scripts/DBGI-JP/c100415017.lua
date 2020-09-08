@@ -1,6 +1,6 @@
 --Evil★Twins キスキル・リィラ
 --
---Script by 0x254ish
+--Script by JustFish
 function c100415017.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon condition

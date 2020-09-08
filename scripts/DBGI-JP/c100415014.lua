@@ -1,6 +1,6 @@
 --Live☆Twin リィラ
 --
---Script by 0x254ish
+--Script by JustFish
 function c100415014.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
