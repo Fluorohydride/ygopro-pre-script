@@ -62,9 +62,8 @@ function c100415019.operation2(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc = Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	if Duel.GetMatchingGroupCount(nil,tp,LOCATION_MZONE,0,nil)==0
-		and tc:IsAbleToHand()
-		and (not tc:IsAbleToDeck() or Duel.SelectYesNo(tp,aux.Stringid(100415019,3))) then
+	if Duel.GetMatchingGroupCount(nil,tp,LOCATION_MZONE,0,nil)==0 and tc:IsAbleToHand()
+		and (not tc:IsAbleToDeck() or Duel.SelectOption(tp,1190,aux.Stringid(100415019,2))==0) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	else
 		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
