@@ -1,4 +1,4 @@
---竜輝巧ーラスβ
+--竜輝巧－ラスβ
 
 --Scripted by mallu11
 function c100415025.initial_effect(c)

@@ -1,4 +1,4 @@
---竜儀巧-メテオニス＝DRA
+--竜儀巧－メテオニス＝DRA
 
 --Scripted by mallu11
 function c100415029.initial_effect(c)
@@ -60,7 +60,7 @@ function c100415029.matcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) and e:GetLabel()==1
 end
 function c100415029.matop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(100415029,RESET_EVENT+RESETS_STANDARD,0,1)
+	e:GetHandler():RegisterFlagEffect(100415029,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100415029,1))
 end
 function c100415029.lvfilter(c,rc)
 	return c:GetRitualLevel(rc)>0
@@ -68,7 +68,7 @@ end
 function c100415029.valcheck(e,c)
 	local mg=c:GetMaterial()
 	local fg=mg:Filter(c100415029.lvfilter,nil,c)
-	if fg:GetSum(Card.GetRitualLevel,c)<=2 then
+	if #fg>0 and fg:GetSum(Card.GetRitualLevel,c)<=2 then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
