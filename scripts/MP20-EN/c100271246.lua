@@ -45,9 +45,8 @@ function c100271246.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	--cannot attack
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e1:SetProperty(EFFECT_FLAG_OATH)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetCondition(c100271246.atkcon)
 	e1:SetTarget(c100271246.atktg)
@@ -67,7 +66,7 @@ function c100271246.spfilter(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and c:IsLevelAbove(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100271246.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100271246.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100271246.filter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.IsExistingMatchingCard(c100271246.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
