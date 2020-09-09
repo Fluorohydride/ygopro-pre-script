@@ -8,6 +8,7 @@
 - **August 29, 2020** : Structure Deck R: Dragunity Drive (SR11-JP) : `100311XXX`
 - **September 4, 2020**: Yu-Gi-Oh! OCG Structures Volume 2 promotional card (YO02-JP): `100269XXX`
 - **September 12, 2020**: Deck Build Pack: Genesis Impactors (DBGI-JP): `100415XXX`
+- **October 31, 2020**: Blazing Vortex (BLVO-JP): `101103XXX`
 
 # Announced
 - **October 3, 2020** :WORLD PREMIERE PACK 2020(WP20-JP) : `100270XXX`
