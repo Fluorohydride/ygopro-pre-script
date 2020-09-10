@@ -2,11 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **May 21, 2020** :PRISMATIC SPECIAL PACK (VP20-JP) : `100267XXX`
-- **August 8, 2020** : PHANTOM RAGE (PHRA-JP) : `101102XXX`
-- **August 28, 2020** : 2020 Tin of Lost Memories (MP20-EN) : `100271XXX`
-- **August 29, 2020** : Structure Deck R: Dragunity Drive (SR11-JP) : `100311XXX`
-- **September 4, 2020**: Yu-Gi-Oh! OCG Structures Volume 2 promotional card (YO02-JP): `100269XXX`
 - **September 12, 2020**: Deck Build Pack: Genesis Impactors (DBGI-JP): `100415XXX`
 - **October 31, 2020**: Blazing Vortex (BLVO-JP): `101103XXX`
 
@@ -86,6 +81,9 @@
 - Duel Overload (DUOV-EN) : `100265XXX`
 - Toon Chaos (TOCH-EN) : `100268XXX`
 - Collectors Pack 2020 (CP20-JP) : `100266XXX`
+- PRISMATIC SPECIAL PACK (VP20-JP) : `100267XXX`
+- 2020 Tin of Lost Memories (MP20-EN) : `100271XXX`
+- Yu-Gi-Oh! OCG Structures Volume 2 promotional card (YO02-JP): `100269XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -99,6 +97,7 @@
 - Structure Deck R: Lord of Magician (SR08-JP) : `100308XXX`
 - Structure Deck R: Warrior's Strike (SR09-JP) : `100309XXX`
 - Structure Deck R: Machiners Command (SR10-JP) : `100310XXX`
+- Structure Deck R: Dragunity Drive (SR11-JP) : `100311XXX`
 -----
 - Starter Deck 2016 (ST16-JP) : `100316XXX`
 - Starter Deck 2017 (ST17-JP) : `100317XXX`
@@ -152,3 +151,4 @@
 - IGNITION ASSAULT (IGAS-JP) : `101011XXX`
 - ETERNITY CODE (ETCO-JP) : `101012XXX`
 - RISE OF THE DUELIST (ROTD-JP) : `101101XXX`
+- PHANTOM RAGE (PHRA-JP) : `101102XXX`
