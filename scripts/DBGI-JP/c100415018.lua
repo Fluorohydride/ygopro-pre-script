@@ -45,5 +45,5 @@ function c100415018.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100415018.splimit(e,c)
-	return not c:IsSetCard(0x254) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsSetCard(0x2254) and c:IsLocation(LOCATION_EXTRA)
 end

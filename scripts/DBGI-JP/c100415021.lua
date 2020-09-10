@@ -25,7 +25,7 @@ function c100415021.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c100415021.linkfilter(c)
-	return c:IsLinkSummonable(nil) and c:IsSetCard(0x254)
+	return c:IsLinkSummonable(nil) and c:IsSetCard(0x2254)
 end
 function c100415021.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
