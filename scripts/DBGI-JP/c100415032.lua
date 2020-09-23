@@ -84,12 +84,12 @@ function c100415032.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100415032.RitualCheckGreater(g,c,atk)
-	if atk==0 then return #g==1 end
+	if atk==0 then return false end
 	Duel.SetSelectedCard(g)
 	return g:CheckWithSumGreater(Card.GetAttack,atk)
 end
 function c100415032.RitualCheckEqual(g,c,atk)
-	if atk==0 then return #g==1 and g:GetFirst():GetAttack()==0 end
+	if atk==0 then return false end
 	return g:CheckWithSumEqual(Card.GetAttack,atk,#g,#g)
 end
 function c100415032.RitualCheck(g,tp,c,atk,greater_or_equal)
