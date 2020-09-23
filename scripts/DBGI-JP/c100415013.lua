@@ -26,8 +26,8 @@ function c100415013.initial_effect(c)
 	e3:SetOperation(c100415013.recop)
 	c:RegisterEffect(e3)
 end
-function c100415013.spcon(e)
-	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)==1
+function c100415013.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function c100415013.spfilter(c,e,tp)
 	return c:IsSetCard(0x253) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

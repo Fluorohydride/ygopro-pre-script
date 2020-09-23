@@ -67,8 +67,7 @@ end
 function c100415017.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	local ct=g:GetCount()-2
-	if ct<1 then return end
-	if chk==0 then return Duel.IsPlayerCanSendtoGrave(1-tp) and g:IsExists(Card.IsAbleToGrave,1,nil,1-tp,nil) end
+	if chk==0 then return Duel.IsPlayerCanSendtoGrave(1-tp) and ct>0 and g:IsExists(Card.IsAbleToGrave,1,nil,1-tp,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,ct,0,0)
 end
 function c100415017.tgop(e,tp,eg,ep,ev,re,r,rp)
@@ -85,7 +84,7 @@ function c100415017.cfilter(c,setcode)
 	return c:IsFaceup() and c:IsSetCard(setcode)
 end
 function c100415017.con(e)
-	local tp=e:GetHandler():GetControler()
-	return Duel.IsExistingMatchingCard(c100415017.cfilter,tp,LOCATION_MZONE,0,1,nil,0x252)
-		and Duel.IsExistingMatchingCard(c100415017.cfilter,tp,LOCATION_MZONE,0,1,nil,0x253)
+	local tp=e:GetHandlerPlayer()
+	return Duel.IsExistingMatchingCard(c100415017.cfilter,tp,LOCATION_GRAVE,0,1,nil,0x252)
+		and Duel.IsExistingMatchingCard(c100415017.cfilter,tp,LOCATION_GRAVE,0,1,nil,0x253)
 end

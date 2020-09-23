@@ -27,9 +27,17 @@ function c100415014.initial_effect(c)
 	e3:SetCost(c100415014.atcost)
 	e3:SetOperation(c100415014.atop)
 	c:RegisterEffect(e3)
+	--accumulate
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(0x10000000+100415014)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetTargetRange(0,1)
+	c:RegisterEffect(e4)
 end
-function c100415014.spcon(e)
-	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)==1
+function c100415014.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function c100415014.spfilter(c,e,tp)
 	return c:IsSetCard(0x252) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -47,12 +55,11 @@ function c100415014.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c100415014.atcost(e,c)
-	local tp=e:GetHandlerPlayer()
-	return Duel.CheckLPCost(1-tp,500)
+function c100415014.atcost(e,c,tp)
+	local ct=Duel.GetFlagEffect(tp,100415014)
+	return Duel.CheckLPCost(tp,ct*500)
 end
 function c100415014.atop(e,tp,eg,ep,ev,re,r,rp)
-	local tp=e:GetHandlerPlayer()
 	Duel.Hint(HINT_CARD,0,100415014)
-	Duel.PayLPCost(1-tp,500)
+	Duel.PayLPCost(tp,500)
 end

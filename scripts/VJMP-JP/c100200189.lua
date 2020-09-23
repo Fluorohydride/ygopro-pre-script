@@ -26,7 +26,7 @@ function c100200189.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	return true
 end
-function c100200189.tgfilter(c)
+function c100200189.tgfilter(c,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsDiscardable()
 		and Duel.IsExistingMatchingCard(c100200189.tgfilter2,tp,LOCATION_DECK,0,1,nil,c:GetAttribute())
 end
@@ -39,10 +39,10 @@ function c100200189.sgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(c100200189.tgfilter,tp,LOCATION_HAND,0,1,nil)
+		return Duel.IsExistingMatchingCard(c100200189.tgfilter,tp,LOCATION_HAND,0,1,nil,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local tc=Duel.SelectMatchingCard(tp,c100200189.tgfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,c100200189.tgfilter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
 	e:SetLabel(tc:GetAttribute())
 	Duel.SendtoGrave(tc,REASON_DISCARD+REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
@@ -51,7 +51,7 @@ function c100200189.sgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100200189.tgfilter2,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
 	local tc=g:GetFirst()
-	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) then
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

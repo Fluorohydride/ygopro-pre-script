@@ -1,6 +1,6 @@
 --Evil★Twin イージーゲーム
 --
---Script by JoyJ
+--Script by JoyJ & mercury233
 function c100415022.initial_effect(c)
 	--activate
 	local e0=Effect.CreateEffect(c)
@@ -48,7 +48,7 @@ function c100415022.tgfilter1(c)
 	return c:IsSetCard(0x252,0x253)	and c:IsFaceup()
 end
 function c100415022.cfilter1(c,tp)
-	return c:IsSetCard(0x252,0x253)
+	return c:IsSetCard(0x252,0x253) and c:GetBaseAttack()>0
 		and (c:IsControler(tp) or c:IsFaceup()) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 		and Duel.IsExistingTarget(c100415022.tgfilter1,tp,LOCATION_MZONE,0,1,c)
 end
@@ -78,6 +78,8 @@ function c100415022.activate1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100415022.condition2(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainDisablable(ev) then return false end
+	if re:IsHasCategory(CATEGORY_NEGATE)
+		and Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT):IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-tg:GetCount()>0
 end

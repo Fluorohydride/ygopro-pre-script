@@ -18,6 +18,7 @@ function c100415002.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100415002,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_EQUIP)
 	e2:SetCountLimit(1,100415002+100)
 	e2:SetCondition(c100415002.spcon)
@@ -36,7 +37,7 @@ function c100415002.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(c100415002.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c100415002.eqfilter,tp,LOCATION_EXTRA,0,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,c100415002.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_EXTRA)
 end
@@ -63,8 +64,11 @@ end
 function c100415002.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
+function c100415002.cfilter2(c)
+	return c:GetOriginalType()&TYPE_MONSTER==TYPE_MONSTER and c:IsSetCard(0x251)
+end
 function c100415002.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSetCard,1,nil,0x251)
+	return eg:IsExists(c100415002.cfilter2,1,nil)
 end
 function c100415002.spfilter(c,e,tp)
 	return c:IsLevel(4) and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(100415002)
