@@ -24,7 +24,7 @@ function c101103004.initial_effect(c)
 	--draw
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101103004,1))
-	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
+	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetProperty(EFFECT_FLAG_DELAY)

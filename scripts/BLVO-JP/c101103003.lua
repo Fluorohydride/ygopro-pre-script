@@ -56,7 +56,7 @@ function c101103003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		else
 			e:SetLabel(0)
 		end
-		return c:IsAbleToGrave() and Duel.GetMZoneCount(tp,c)>0 and Duel.IsExistingMatchingCard(c101103003.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,label)
+		return c:IsAbleToGrave() and Duel.GetMZoneCount(tp,c)>0 and Duel.IsExistingMatchingCard(c101103003.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,e:GetLabel())
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
