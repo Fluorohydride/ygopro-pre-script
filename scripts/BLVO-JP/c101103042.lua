@@ -1,4 +1,6 @@
---梦魔镜的魇魔-涅伊洛斯
+--夢魔鏡の魘魔－ネイロス
+--
+--Script by JustFish
 function c101103042.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
@@ -41,7 +43,8 @@ function c101103042.ffilter(c,fc,sub,mg,sg)
 	return c:IsFusionSetCard(0x131) and (not sg or not sg:IsExists(Card.IsFusionAttribute,1,c,c:GetFusionAttribute()))
 end
 function c101103042.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev) and Duel.IsEnvironment(1050355,PLAYER_ALL,LOCATION_FZONE)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER)
+		and Duel.IsChainDisablable(ev) and Duel.IsEnvironment(1050355,PLAYER_ALL,LOCATION_FZONE)
 end
 function c101103042.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

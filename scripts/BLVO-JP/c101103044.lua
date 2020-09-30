@@ -1,4 +1,6 @@
---魔轰神 安德剌斯
+--魔轟神アンドレイス
+--
+--Script by JustFish
 function c101103044.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x35),aux.NonTuner(nil),1)

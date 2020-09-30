@@ -1,4 +1,6 @@
---梦魔镜的使徒-涅洛伊
+--夢魔鏡の使徒－ネイロイ
+--
+--Script by JustFish
 function c101103026.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -37,7 +39,8 @@ end
 function c101103026.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and not c:IsAttribute(ATTRIBUTE_DARK) and Duel.SelectYesNo(tp,aux.Stringid(101103026,1)) then
+		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and not c:IsAttribute(ATTRIBUTE_DARK)
+			and Duel.SelectYesNo(tp,aux.Stringid(101103026,1)) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
@@ -60,7 +63,9 @@ function c101103026.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end
 function c101103026.thop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsEnvironment(74665651,PLAYER_ALL,LOCATION_FZONE) and Duel.IsExistingMatchingCard(c101103026.thfilter,tp,0,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101103026,2)) then
+	if Duel.IsEnvironment(74665651,PLAYER_ALL,LOCATION_FZONE)
+		and Duel.IsExistingMatchingCard(c101103026.thfilter,tp,0,LOCATION_ONFIELD,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(101103026,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local g=Duel.SelectMatchingCard(tp,c101103026.thfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 		if #g>0 then

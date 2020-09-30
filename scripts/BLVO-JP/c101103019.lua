@@ -1,4 +1,6 @@
---魔轰神兽 阿凡克
+--魔轟神獣アバンク
+--
+--Script by JustFish
 function c101103019.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

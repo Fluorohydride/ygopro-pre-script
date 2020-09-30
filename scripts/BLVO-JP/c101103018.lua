@@ -1,4 +1,6 @@
---魔轰神 马可西亚
+--魔轟神マルコシア
+--
+--Script by JustFish
 function c101103018.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -32,8 +34,8 @@ function c101103018.gselect(g)
 	return g:IsExists(c101103018.dhfilter,1,nil)
 end
 function c101103018.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101103018.dhfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101103018.dhfilter,tp,LOCATION_HAND,0,1,e:GetHandler())
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
