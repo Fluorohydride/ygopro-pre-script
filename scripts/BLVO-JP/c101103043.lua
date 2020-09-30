@@ -54,12 +54,12 @@ function c101103043.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c101103043.damfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c101103043.damfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetFirst():GetAttack()/2)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,math.floor(g:GetFirst():GetAttack()/2))
 end
 function c101103043.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.Damage(1-tp,tc:GetAttack()/2,REASON_EFFECT)
+		Duel.Damage(1-tp,math.floor(tc:GetAttack()/2),REASON_EFFECT)
 	end
 end
 function c101103043.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -75,7 +75,7 @@ function c101103043.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		else
 			b=c:GetFlagEffect(101103143)<1
 		end
-		return b and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+		return b and Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	end
 	c:RegisterFlagEffect(101103143,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
