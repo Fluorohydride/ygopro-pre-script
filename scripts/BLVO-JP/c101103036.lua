@@ -13,8 +13,6 @@ local e1=Effect.CreateEffect(c)
 	e1:SetOperation(c101103036.activate)
 	c:RegisterEffect(e1)
 end
-function c101103036.ojamafilter
-	return c:IsSetCard(0xf)
 function c101103036.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_ONFIELD)
 end
