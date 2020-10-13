@@ -22,14 +22,6 @@ function c100415032.initial_effect(c)
 	e2:SetTarget(c100415032.thtg)
 	e2:SetOperation(c100415032.thop)
 	c:RegisterEffect(e2)
-	if Duel.GetRitualMaterialEx==nil then
-		function Duel.GetRitualMaterialEx(tp,e)
-			local g=Duel.GetRitualMaterial(tp)
-			local g2=Duel.GetMatchingGroup(function (c,e) return c:IsCanBeRitualMaterial(nil) and c:IsReleasableByEffect(e) and not c:IsImmuneToEffect(e) end,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,e)
-			g:Merge(g2)
-			return g
-		end
-	end
 end
 function c100415032.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x250) and c:IsAttackAbove(1000)
@@ -59,13 +51,13 @@ function c100415032.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100415032.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local mg=Duel.GetRitualMaterialEx(tp,e):Filter(Card.IsRace,nil,RACE_MACHINE)
+		local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsRace,nil,RACE_MACHINE)
 		return Duel.IsExistingMatchingCard(c100415032.RitualUltimateFilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,nil,e,tp,mg,nil,Card.GetAttack,"Greater")
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c100415032.operation(e,tp,eg,ep,ev,re,r,rp)
-	local mg=Duel.GetRitualMaterialEx(tp,e):Filter(Card.IsRace,nil,RACE_MACHINE)
+	local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsRace,nil,RACE_MACHINE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100415032.RitualUltimateFilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,nil,e,tp,mg,nil,Card.GetAttack,"Greater")
 	local tc=tg:GetFirst()
@@ -92,12 +84,12 @@ function c100415032.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100415032.RitualCheckGreater(g,c,atk)
-	if atk==0 then return #g==1 end
+	if atk==0 then return false end
 	Duel.SetSelectedCard(g)
 	return g:CheckWithSumGreater(Card.GetAttack,atk)
 end
 function c100415032.RitualCheckEqual(g,c,atk)
-	if atk==0 then return #g==1 and g:GetFirst():GetAttack()==0 end
+	if atk==0 then return false end
 	return g:CheckWithSumEqual(Card.GetAttack,atk,#g,#g)
 end
 function c100415032.RitualCheck(g,tp,c,atk,greater_or_equal)

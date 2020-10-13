@@ -1,4 +1,4 @@
---竜輝巧-ファフニール
+--竜輝巧－ファフニール
 
 --Scripted by mallu11
 function c100415031.initial_effect(c)
@@ -71,8 +71,8 @@ function c100415031.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(eg)
 end
 function c100415031.lvop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(c100415031.lvfilter,nil,e)
 	local c=e:GetHandler()
+	local g=eg:Filter(c100415031.lvfilter,nil,e)
 	local tc=g:GetFirst()
 	while tc do
 		local atk=tc:GetAttack()
@@ -80,7 +80,6 @@ function c100415031.lvop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(-lv)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)

@@ -32,21 +32,20 @@ function c100200186.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c100200186.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SUMMON,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SUMMON,g,0,0,0)
 end
 function c100200186.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		if Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND)
-			and (tc:IsSummonable(true,nil,1) or tc:IsMSetable(true,nil,1))
-			and Duel.SelectYesNo(tp,aux.Stringid(100200186,0)) then
-			local s1=tc:IsSummonable(true,nil,1)
-			local s2=tc:IsMSetable(true,nil,1)
-			if (s1 and s2 and Duel.SelectPosition(tp,tc,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)==POS_FACEUP_ATTACK) or not s2 then
-				Duel.Summon(tp,tc,true,nil,1)
-			else
-				Duel.MSet(tp,tc,true,nil,1)
-			end
+	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND)
+		and (tc:IsSummonable(true,nil,1) or tc:IsMSetable(true,nil,1))
+		and Duel.SelectYesNo(tp,aux.Stringid(100200186,0)) then
+		Duel.BreakEffect()
+		local s1=tc:IsSummonable(true,nil,1)
+		local s2=tc:IsMSetable(true,nil,1)
+		if (s1 and s2 and Duel.SelectPosition(tp,tc,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)==POS_FACEUP_ATTACK) or not s2 then
+			Duel.Summon(tp,tc,true,nil,1)
+		else
+			Duel.MSet(tp,tc,true,nil,1)
 		end
 	end
 end

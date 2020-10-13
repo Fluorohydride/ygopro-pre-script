@@ -1,8 +1,14 @@
---竜儀巧-メテオニス＝DRA
+--竜儀巧－メテオニス＝DRA
 
 --Scripted by mallu11
 function c100415029.initial_effect(c)
 	c:EnableReviveLimit()
+	--
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_MATERIAL_CHECK)
+	e0:SetValue(c100415029.valcheck)
+	c:RegisterEffect(e0)
 	--cannot be effect target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -18,19 +24,14 @@ function c100415029.initial_effect(c)
 	e2:SetCondition(c100415029.atkcon)
 	e2:SetValue(c100415029.atkfilter)
 	c:RegisterEffect(e2)
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e0:SetCondition(c100415029.matcon)
-	e0:SetOperation(c100415029.matop)
-	c:RegisterEffect(e0)
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_MATERIAL_CHECK)
-	e3:SetValue(c100415029.valcheck)
-	e3:SetLabelObject(e0)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetCondition(c100415029.matcon)
+	e3:SetOperation(c100415029.matop)
 	c:RegisterEffect(e3)
+	e0:SetLabelObject(e3)
 	--to grave
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100415029,0))
@@ -60,7 +61,7 @@ function c100415029.matcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) and e:GetLabel()==1
 end
 function c100415029.matop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(100415029,RESET_EVENT+RESETS_STANDARD,0,1)
+	e:GetHandler():RegisterFlagEffect(100415029,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100415029,1))
 end
 function c100415029.lvfilter(c,rc)
 	return c:GetRitualLevel(rc)>0
@@ -68,7 +69,7 @@ end
 function c100415029.valcheck(e,c)
 	local mg=c:GetMaterial()
 	local fg=mg:Filter(c100415029.lvfilter,nil,c)
-	if fg:GetSum(Card.GetRitualLevel,c)<=2 then
+	if #fg>0 and fg:GetSum(Card.GetRitualLevel,c)<=2 then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)

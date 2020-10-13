@@ -1,4 +1,4 @@
---竜輝巧ーバンα
+--竜輝巧－バンα
 
 --Scripted by mallu11
 function c100415024.initial_effect(c)
@@ -34,7 +34,8 @@ function c100415024.costfilter(c,tp)
 end
 function c100415024.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
-	if chk==0 then return Duel.GetCustomActivityCount(100415024,tp,ACTIVITY_SPSUMMON)==0 and Duel.CheckReleaseGroupEx(tp,c100415024.costfilter,1,e:GetHandler(),tp) end
+	if chk==0 then return Duel.GetCustomActivityCount(100415024,tp,ACTIVITY_SPSUMMON)==0
+		and Duel.CheckReleaseGroupEx(tp,c100415024.costfilter,1,e:GetHandler(),tp) end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)

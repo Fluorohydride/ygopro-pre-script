@@ -1,4 +1,4 @@
---竜輝巧-アルζ
+--竜輝巧－アルζ
 
 --Scripted by mallu11
 function c100415028.initial_effect(c)
