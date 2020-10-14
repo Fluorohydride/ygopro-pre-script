@@ -70,7 +70,8 @@ function c100270791.dcost(e,tp,eg,ep,ev,re,r,rp,chk)
 
    if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
 
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)end
+	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
+end
 
 function c100270791.dop(e,tp,eg,ep,ev,re,r,rp)
 
