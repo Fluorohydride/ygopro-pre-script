@@ -5,9 +5,9 @@
 - **September 12, 2020**: Deck Build Pack: Genesis Impactors (DBGI-JP): `100415XXX`
 - **October 31, 2020**: Blazing Vortex (BLVO-JP): `101103XXX`
 - **November 21, 2020**: Structure Deck: Ice Barrier of the Frozen Prison (SD40-JP) : `100340XXX`
+- **December 5, 2020**: SELECTION 10 (????-JP) : `100270XXX`
 
 # Announced
-- **October 3, 2020** :WORLD PREMIERE PACK 2020(WP20-JP) : `100270XXX`
 
 # Archived
 ## Other packs
