@@ -29,8 +29,10 @@ function c101103069.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101103069.disfilter,tp,0,LOCATION_MZONE,1,nil) or Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)>0 end
 	local ct=1
 	if Duel.IsExistingMatchingCard(c101103069.cfilter,tp,LOCATION_MZONE,0,1,nil) then ct=2 end
+	local min=0
+	if Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)<=0 then min=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectMatchingCard(tp,c101103069.disfilter,tp,0,LOCATION_MZONE,0,ct,nil)
+	local g=Duel.SelectMatchingCard(tp,c101103069.disfilter,tp,0,LOCATION_MZONE,min,ct,nil)
 	ct=ct-#g
 	local dis=0
 	if ct>0 then
