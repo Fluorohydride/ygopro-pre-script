@@ -75,7 +75,7 @@ function c101103055.catkfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousTypeOnField()&TYPE_XYZ~=0 and c:IsReason(REASON_EFFECT)
 end
 function c101103055.catkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101103055.catkfilter,1,nil,tp) and Duel.GetTurnPlayer()==1-tp
+	return eg:IsExists(c101103055.catkfilter,1,nil,tp)
 end
 function c101103055.catktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
