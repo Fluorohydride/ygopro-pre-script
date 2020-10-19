@@ -38,12 +38,12 @@ function c101103046.desfilter(c)
 end
 --str2 to str6 is Spell&Trap Zone(from right to left)
 --str7 to str13 is Monster Zone(from right to left)
-function c101103046.seqfilter(c,i)
+function c101103046.seqfilter(c,i,chk)
 	local seq=c:GetSequence()
 	if i==11 then
-		return (seq==1 or seq==5) and c:IsLocation(LOCATION_MZONE)
+		return (seq==5 or (chk and seq==1)) and c:IsLocation(LOCATION_MZONE)
 	elseif i==12 then
-		return (seq==3 or seq==6) and c:IsLocation(LOCATION_MZONE)
+		return (seq==6 or (chk and seq==3)) and c:IsLocation(LOCATION_MZONE)
 	else
 		local loc
 		local j
@@ -89,18 +89,18 @@ function c101103046.seqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=Duel.SelectOption(tp,table.unpack(ops))
 	e:SetLabel(opval[op])
 	Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(101103046,opval[op]+1))
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
+	local g=Duel.GetMatchingGroup(c101103046.seqfilter,tp,0,LOCATION_ONFIELD,nil,opval[op],true)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c101103046.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local i=e:GetLabel()
-	local ct=Duel.GetMatchingGroupCount(c101103046.seqfilter,tp,0,LOCATION_ONFIELD,nil,i)
+	local ct=Duel.GetMatchingGroupCount(c101103046.seqfilter,tp,0,LOCATION_ONFIELD,nil,i,true)
 	if ct<=0 or not c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) then return end
 	local count=c:RemoveOverlayCard(tp,1,ct,REASON_EFFECT)
 	if count<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,c101103046.seqfilter,tp,0,LOCATION_ONFIELD,count,count,nil,i)
+	local g=Duel.SelectMatchingCard(tp,c101103046.seqfilter,tp,0,LOCATION_ONFIELD,count,count,nil,i,true)
 	Duel.HintSelection(g)
 	Duel.Destroy(g,REASON_EFFECT)
 end
