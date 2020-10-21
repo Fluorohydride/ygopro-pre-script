@@ -23,7 +23,7 @@ function c101103069.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,68468459)
 end
 function c101103069.disfilter(c)
-	return aux.disfilter1 and c:GetSequence()<5
+	return c:IsFaceup() and c:GetSequence()<5
 end
 function c101103069.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101103069.disfilter,tp,0,LOCATION_MZONE,1,nil) or Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)>0 end
@@ -66,6 +66,11 @@ function c101103069.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101103069.disfilter2,tp,0,LOCATION_MZONE,nil,dis)
 	local tc=g:GetFirst()
 	while tc do
+		local e0=Effect.CreateEffect(c)
+		e0:SetType(EFFECT_TYPE_SINGLE)
+		e0:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+		e0:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e0)
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
