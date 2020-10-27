@@ -24,6 +24,7 @@ function c101103045.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101103046)
+	e2:SetCost(c101103045.rmcost)
 	e2:SetTarget(c101103045.rmtg)
 	e2:SetOperation(c101103045.rmop)
 	c:RegisterEffect(e2)
@@ -36,7 +37,7 @@ function c101103045.eqfilter(c)
 end
 function c101103045.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101103045.eqfilter(chkc) end
-	if chk==0 then return Duel.GetLocationCount(LOCATION_SZONE)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(c101103045.eqfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,c101103045.eqfilter,tp,LOCATION_GRAVE,0,1,1,nil)
@@ -51,13 +52,19 @@ function c101103045.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESET_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(c101103045.eqlimit)
 		tc:RegisterEffect(e1)
 	end
 end
 function c101103045.eqlimit(e,c)
 	return e:GetOwner()==c
+end
+function c101103045.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(Card.IsAbleToGraveAsCost,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=e:GetHandler():GetEquipGroup():FilterSelect(tp,Card.IsAbleToGraveAsCost,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function c101103045.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and chk:IsAbleToRemove() end
