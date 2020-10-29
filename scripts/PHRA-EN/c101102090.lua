@@ -25,17 +25,17 @@ function c101102090.initial_effect(c)
 	e2:SetCondition(c101102090.immcon)
 	e2:SetOperation(c101102090.immop)
 	c:RegisterEffect(e2)
-	--special summon
+	--tohand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101102090,2))
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_DESTROYED)
-	e2:SetCountLimit(1,101102090+200)
-	e3:SetCondition(c101102090.spcon)
-	e3:SetTarget(c101102090.sptg)
-	e3:SetOperation(c101102090.spop)
+	e3:SetCountLimit(1,101102090+200)
+	e3:SetCondition(c101102090.thcon)
+	e3:SetTarget(c101102090.thtg)
+	e3:SetOperation(c101102090.thop)
 	c:RegisterEffect(e3)
 end
 function c101102090.ffilter(c,fc,sub,mg,sg)
@@ -76,24 +76,23 @@ end
 function c101102090.efilter(e,te)
 	return te:IsActiveType(e:GetLabel()) and te:GetHandlerPlayer()~=e:GetHandlerPlayer()
 end
-
-function c101102090.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c101102090.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp==1-tp and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
-function c101102090.spfilter(c)
+function c101102090.thfilter(c)
 	return c:IsAbleToHand() and c:IsSetCard(0x258)
 end
-function c101102090.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101102090.spfilter,tp,LOCATION_REMOVED,0,1,nil) end
+function c101102090.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101102090.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_REMOVED)
 end
-function c101102090.spop(e,tp,eg,ep,ev,re,r,rp)
+function c101102090.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c101102090.spfilter,tp,LOCATION_REMOVED,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101102090.thfilter,tp,LOCATION_REMOVED,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
