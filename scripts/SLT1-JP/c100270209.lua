@@ -30,7 +30,7 @@ function c100270209.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x256)
 end
 function c100270209.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100270209.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(c100270209.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100270209.filter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_PLANT) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
