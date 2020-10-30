@@ -1,3 +1,4 @@
+--迅雷の暴君 グローザー
 --Grozer the Thunderclap Tyrant
 --Script by: XGlitchy30
 
@@ -83,7 +84,6 @@ function c100200190.negop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function c100200190.cfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FIEND) and c:IsPreviousLocation(LOCATION_HAND) and c:IsControler(tp)
 end

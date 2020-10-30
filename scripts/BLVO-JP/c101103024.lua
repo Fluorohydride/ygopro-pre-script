@@ -1,3 +1,4 @@
+--光天のマハー・ヴァイロ
 --Lightsky Maha Vailo
 --Script by: XGlitchy30
 function c101103024.initial_effect(c)
@@ -73,11 +74,9 @@ end
 function c101103024.atkval(e,c)
 	return c:GetEquipCount()*1000
 end
-
 function c101103024.actlimit(e,re,rp)
 	return re:IsActiveType(TYPE_MONSTER)
 end
-
 function c101103024.negfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsAbleToGraveAsCost()
 end

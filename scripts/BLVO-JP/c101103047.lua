@@ -1,6 +1,6 @@
+--神樹獣ハイペリュトン
 --Divine Treebeast High Peryton
 --Script by: XGlitchy30
-
 function c101103047.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,9,2)
@@ -54,7 +54,6 @@ function c101103047.ovop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(c,Group.FromCards(tc))
 	end
 end
-
 function c101103047.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.IsChainNegatable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP)
 end

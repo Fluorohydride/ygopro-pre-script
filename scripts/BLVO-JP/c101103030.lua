@@ -1,3 +1,4 @@
+--妖精弓士イングナル
 --Fairy Archer Ingunar
 --Script by: XGlitchy30
 
