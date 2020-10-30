@@ -58,7 +58,7 @@ function c101103047.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.IsChainNegatable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP)
 end
 function c101103047.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 		local typ=bit.band(re:GetActiveType(),TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP)
 		return e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,typ)
 	end

@@ -72,7 +72,7 @@ function c101103020.thfilter2(c)
 	return c101103020.thfilter(c) and c:IsAbleToHand()
 end
 function c101103020.thop(e,tp,eg,ep,ev,re,r,rp)
- Duel.Hint(HINT_CARD,0,101103020)
+	Duel.Hint(HINT_CARD,0,101103020)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101103020.thfilter2,tp,LOCATION_EXTRA,0,1,1,nil)
 	if g:GetCount()>0 then
