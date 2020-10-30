@@ -73,5 +73,5 @@ function c100340001.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100340001.rmtarget(e,c)
-	return not c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_ONFIELD)
+	return not c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_ONFIELD) and c:GetControler()~=e:GetOwnerPlayer()
 end
