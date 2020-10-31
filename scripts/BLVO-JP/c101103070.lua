@@ -1,4 +1,5 @@
---教导的创成
+--ドラグマ・ジェネシス
+--
 --"Lua By REIKAI 2404873791"
 function c101103070.initial_effect(c)
    --Activate

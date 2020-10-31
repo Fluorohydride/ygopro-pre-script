@@ -1,4 +1,5 @@
---熔岩谷火精龙
+--ラヴァルバル・サラマンダー
+--
 --"Lua By REIKAI 2404873791"
 function c100270205.initial_effect(c)
    --synchro summon

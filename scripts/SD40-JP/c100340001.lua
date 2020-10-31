@@ -1,4 +1,5 @@
---冰结界的虎将 韦恩
+--氷結界の虎将 ウェイン
+--
 --"Lua By REIKAI 2404873791"
 function c100340001.initial_effect(c)
 	--spsummon
