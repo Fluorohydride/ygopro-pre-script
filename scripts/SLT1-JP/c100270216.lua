@@ -1,4 +1,6 @@
---圣蔓之剑士
+--聖蔓の剣士
+--
+--Script by JustFish
 function c100270216.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,c100270216.mfilter,1,1)

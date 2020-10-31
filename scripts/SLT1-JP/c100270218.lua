@@ -1,4 +1,6 @@
+--聖天樹の開花
 --Sunavalon Bloom
+--Script by JustFish
 function c100270218.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

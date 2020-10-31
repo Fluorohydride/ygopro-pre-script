@@ -1,12 +1,6 @@
---圣天树之大母神
-function c100270208.initial_effect(c)
-	--link summon
-	aux.AddLinkProcedure(c,c100270208.mfilter,2,99)
-	c:EnableReviveLimit()
-	--search
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100270208,0))
-	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAN--圣种之影芽
+--聖種の影芽
+--
+--Script by JustFish
 function c100270208.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

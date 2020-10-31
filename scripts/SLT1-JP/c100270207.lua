@@ -1,4 +1,6 @@
---圣蔓之少女
+--聖蔓の乙女
+--
+--Script by JustFish
 function c100270207.initial_effect(c)
 	--negate
 	local e1=Effect.CreateEffect(c)

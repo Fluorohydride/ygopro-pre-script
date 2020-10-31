@@ -1,4 +1,6 @@
---圣天树之大母神
+--聖天樹の大母神
+--
+--Script by JustFish
 function c100270213.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,c100270213.mfilter,2,99)

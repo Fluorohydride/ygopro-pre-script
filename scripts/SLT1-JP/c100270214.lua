@@ -1,4 +1,6 @@
---圣蔓之守护者
+--聖蔓の守護者
+--
+--Script by JustFish
 function c100270214.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,c100270214.mfilter,1,1)

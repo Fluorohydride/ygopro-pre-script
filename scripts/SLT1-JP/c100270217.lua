@@ -1,4 +1,6 @@
---圣蔓之社
+--聖蔓の社
+--
+--Script by JustFish
 function c100270217.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

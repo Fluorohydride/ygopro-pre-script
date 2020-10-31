@@ -1,4 +1,6 @@
---圣天树之精灵
+--聖天樹の精霊
+--
+--Script by JustFish
 function c100270211.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,c100270211.mfilter,2,2,c100270211.lcheck)

@@ -1,4 +1,6 @@
---圣蔓之治愈者
+--聖蔓の癒し手
+--
+--Script by JustFish
 function c100270215.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,c100270215.mfilter,1,1)

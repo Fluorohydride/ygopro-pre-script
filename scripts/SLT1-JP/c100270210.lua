@@ -1,4 +1,6 @@
---圣天树之幼精
+--聖天樹の幼精
+--
+--Script by JustFish
 function c100270210.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,c100270210.mfilter,1,1)

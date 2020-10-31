@@ -1,4 +1,6 @@
---圣种之天双芽
+--聖種の天双芽
+--
+--Script by JustFish
 function c100270209.initial_effect(c)
 	--SpecialSummon
 	local e1=Effect.CreateEffect(c)
