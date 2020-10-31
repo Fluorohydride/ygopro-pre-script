@@ -8,7 +8,6 @@ function c101103047.initial_effect(c)
 	--attach overlay
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101103047,0))
-	e1:SetCategory(CATEGORY_LEAVE_GRAVE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_CHAINING)
@@ -33,7 +32,7 @@ function c101103047.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101103047.ovcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and rp==tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP)
+	return Duel.GetTurnPlayer()==tp and rp==tp
 end
 function c101103047.ovfilter(c,typ)
 	return c:IsType(typ) and c:IsCanOverlay()
@@ -43,7 +42,7 @@ function c101103047.ovtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101103047.ovfilter(chkc,typ) end
 	if chk==0 then return Duel.IsExistingTarget(c101103047.ovfilter,tp,LOCATION_GRAVE,0,1,nil,typ) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,aux.NecroValleyFilter(c101103047.ovfilter),tp,LOCATION_GRAVE,0,1,1,nil,typ)
+	local g=Duel.SelectTarget(tp,c101103047.ovfilter,tp,LOCATION_GRAVE,0,1,1,nil,typ)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function c101103047.ovop(e,tp,eg,ep,ev,re,r,rp)
@@ -55,12 +54,13 @@ function c101103047.ovop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101103047.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.IsChainNegatable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP)
+	return Duel.GetTurnPlayer()==1-tp and Duel.IsChainNegatable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function c101103047.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
+		local c=e:GetHandler()
 		local typ=bit.band(re:GetActiveType(),TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP)
-		return e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,typ)
+		return c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) and c:GetOverlayGroup():IsExists(Card.IsType,1,nil,typ)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
@@ -68,12 +68,15 @@ function c101103047.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c101103047.negop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) or not c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) then return end
 	local typ=bit.band(re:GetActiveType(),TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP)
 	local og=e:GetHandler():GetOverlayGroup():Filter(Card.IsType,nil,typ)
 	if og:GetCount()<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
 	local g=og:Select(tp,1,1,nil)
 	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 then
+		Duel.RaiseSingleEvent(c,EVENT_DETACH_MATERIAL,e,0,0,0,0)
 		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 			Duel.Destroy(eg,REASON_EFFECT)
 		end
