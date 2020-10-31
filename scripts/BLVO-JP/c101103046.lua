@@ -95,6 +95,7 @@ end
 function c101103046.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local i=e:GetLabel()
+	if not c:IsRelateToEffect(e) then return end
 	local ct=Duel.GetMatchingGroupCount(c101103046.seqfilter,tp,0,LOCATION_ONFIELD,nil,i,true)
 	if ct<=0 or not c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) then return end
 	local count=c:RemoveOverlayCard(tp,1,ct,REASON_EFFECT)
