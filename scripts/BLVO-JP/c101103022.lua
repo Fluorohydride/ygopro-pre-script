@@ -19,7 +19,7 @@ function c101103022.initial_effect(c)
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,101103022+1)
+	e2:SetCountLimit(1,101103022+100)
 	e2:SetTarget(c101103022.srtg)
 	e2:SetOperation(c101103022.srop)
 	c:RegisterEffect(e2)
@@ -34,7 +34,6 @@ function c101103022.initial_effect(c)
 	e3:SetOperation(c101103022.mop)
 	c:RegisterEffect(e3)
 end
-c101103022.listed_series={0x53}
 --Modified from Bluebeard, the Plunder Patroll Shipwright
 function c101103022.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x53) and not c:IsCode(101103022)
@@ -75,17 +74,14 @@ function c101103022.mcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSetCard(0x53) and c:IsType(TYPE_XYZ) and c:IsRelateToBattle() and bc and bc:IsFaceup()
 		and bc:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and bc:IsRelateToBattle()
 end
-function c101103022.mtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return true end
+function c101103022.mtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetHandler():GetBattleTarget()
-	Duel.SetTargetPlayer(1-tp)
+	if chk==0 then return bc and bc:IsRelateToBattle() and bc:IsAbleToRemove() end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,bc,1,0,0)
 end
 function c101103022.mop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	if c:IsFaceup() and c:IsRelateToBattle() and bc:IsFaceup() and bc:IsRelateToBattle() then
+	local bc=e:GetHandler():GetBattleTarget()
+	if bc and bc:IsRelateToBattle() then
 		Duel.Remove(bc,POS_FACEUP,REASON_EFFECT)
 	end
 end
