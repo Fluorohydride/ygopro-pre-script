@@ -1,4 +1,6 @@
---黄金乡的七摩天
+--黄金郷の七摩天
+--
+--Script by JustFish
 function c101103062.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---黄金狂 黄金国巫妖
+--黄金狂エルドリッチ
+--
+--Script by JustFish
 function c101103040.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

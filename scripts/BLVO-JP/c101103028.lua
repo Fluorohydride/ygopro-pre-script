@@ -1,4 +1,6 @@
---直播☆双子 璃拉·糖果
+--Live☆Twin リィラ・トリート
+--
+--Script by JustFish
 function c101103028.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

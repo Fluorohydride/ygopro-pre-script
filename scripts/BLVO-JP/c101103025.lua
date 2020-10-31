@@ -1,4 +1,6 @@
---战华之叛-吕奉
+--戦華の叛－呂奉
+--
+--Script by JustFish
 function c101103025.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon condition
