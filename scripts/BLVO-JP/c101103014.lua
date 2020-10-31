@@ -19,7 +19,7 @@ function c101103014.initial_effect(c)
 	--redirect
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
