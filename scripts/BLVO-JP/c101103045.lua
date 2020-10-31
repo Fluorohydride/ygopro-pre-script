@@ -11,7 +11,7 @@ function c101103045.initial_effect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,101103045)
 	e1:SetCondition(c101103045.eqcon)
 	e1:SetTarget(c101103045.eqtg)
@@ -23,7 +23,7 @@ function c101103045.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,101103046)
+	e2:SetCountLimit(1,101103145)
 	e2:SetCost(c101103045.rmcost)
 	e2:SetTarget(c101103045.rmtg)
 	e2:SetOperation(c101103045.rmop)
@@ -60,10 +60,13 @@ end
 function c101103045.eqlimit(e,c)
 	return e:GetOwner()==c
 end
+function c101103045.costfilter(c,tp)
+	return c:IsControler(tp) and c:IsAbleToGraveAsCost()
+end
 function c101103045.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(Card.IsAbleToGraveAsCost,1,nil) end
+	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(c101103045.costfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=e:GetHandler():GetEquipGroup():FilterSelect(tp,Card.IsAbleToGraveAsCost,1,1,nil)
+	local g=e:GetHandler():GetEquipGroup():FilterSelect(tp,c101103045.costfilter,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c101103045.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -71,7 +74,7 @@ function c101103045.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,2,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,1-tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function c101103045.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
