@@ -47,7 +47,7 @@ function c101103025.initial_effect(c)
 end
 function c101103025.chainfilter(re,tp,cid)
 	local rc=re:GetHandler()
-	return rc:IsSetCard(0x137) and re:IsActiveType(TYPE_MONSTER)
+	return rc:IsSetCard(0x137) or not re:IsActiveType(TYPE_MONSTER)
 end
 function c101103025.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x137)
@@ -103,7 +103,7 @@ function c101103025.ctlcon(e,tp,eg,ep,ev,re,r,rp)
 	return tg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function c101103025.ctltg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsControlerCanBeChanged() end
+	if chk==0 then true end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,e:GetHandler(),1,0,0)
 end
 function c101103025.ctlop(e,tp,eg,ep,ev,re,r,rp)
