@@ -18,9 +18,9 @@ function c101103010.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetCountLimit(1,101103011)
-	e2:SetTarget(c101103010.thtg)
-	e2:SetOperation(c101103010.thop)
+	e2:SetCountLimit(1,101103110)
+	e2:SetTarget(c101103010.tgtg)
+	e2:SetOperation(c101103010.tgop)
 	c:RegisterEffect(e2)
 end
 function c101103010.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -78,18 +78,17 @@ function c101103010.sumlimit(e,c)
 	if not c then return false end
 	return c:IsControler(e:GetHandlerPlayer())
 end
-function c101103010.thfilter(c)
-	return c:IsSetCard(0x14d) and c:IsType(TYPE_MONSTER) and not c:IsCode(101103010) and c:IsAbleToGrave()
+function c101103010.tgfilter(c)
+	return c:IsSetCard(0x14d) and not c:IsCode(101103010) and c:IsAbleToGrave()
 end
-function c101103010.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101103010.thfilter,tp,LOCATION_DECK,0,1,nil) end
+function c101103010.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101103010.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-function c101103010.thop(e,tp,eg,ep,ev,re,r,rp)
+function c101103010.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c101103010.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101103010.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
-		Duel.SendtoGrave(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
