@@ -27,8 +27,9 @@ function c101103080.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	for i=1,6 do t[i]=i end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NUMBER)
 	e:SetLabel(Duel.AnnounceNumber(tp,table.unpack(t)))
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,0)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,0,0,0)
 end
 function c101103080.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Set up the equation
