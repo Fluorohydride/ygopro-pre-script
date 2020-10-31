@@ -1,4 +1,6 @@
---熔岩弓手
+--ラヴァル・アーチャー
+--
+--Script by 尺
 function c100270204.initial_effect(c)
 	--extra summon
 	local e1=Effect.CreateEffect(c)
