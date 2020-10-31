@@ -69,8 +69,11 @@ end
 function c101102091.gcheck(g)
 	return g:GetClassCount(Card.GetType)==#g
 end
+function c101102091.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101102091.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,3,tp,LOCATION_REMOVED)
+end
 function c101102091.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.GetMatchingGroup(c101102091.thfilter,tp,LOCATION_REMOVED,0,nil)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

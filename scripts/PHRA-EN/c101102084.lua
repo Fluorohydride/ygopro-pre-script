@@ -8,7 +8,6 @@ function c101102084.initial_effect(c)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,101102084)
-	e1:SetCost(c101102084.thcost)
 	e1:SetTarget(c101102084.thtg)
 	e1:SetOperation(c101102084.thop)
 	c:RegisterEffect(e1)
@@ -47,18 +46,18 @@ end
 function c101102084.spcostexcheck(c,e,tp)
 	local result=false
 	if c:IsType(TYPE_MONSTER) then
-		result=result or Duel.IsExistingMatchingCard(c101102084.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,e,tp,101102087)
+		result=result or Duel.IsExistingMatchingCard(c101102084.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,101102087)
 	end
 	if c:IsType(TYPE_SPELL) then
-		result=result or Duel.IsExistingMatchingCard(c101102084.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,e,tp,101102088)
+		result=result or Duel.IsExistingMatchingCard(c101102084.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,101102088)
 	end
 	if c:IsType(TYPE_TRAP) then
-		result=result or Duel.IsExistingMatchingCard(c101102084.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,e,tp,101102089)
+		result=result or Duel.IsExistingMatchingCard(c101102084.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,101102089)
 	end
 	return result
 end
-function c101102084.spcostfilter(c,e,tp,tg)
-	tg:AddCard(c)
+function c101102084.spcostfilter(c,e,tp,tc)
+	local tg=Group.FromCards(c,tc)
 	return c:IsAbleToRemoveAsCost() and c101102084.spcostexcheck(c,e,tp)
 		and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 		and Duel.GetMZoneCount(tp,tg)>0
@@ -66,12 +65,12 @@ end
 function c101102084.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		e:SetLabel(1)
-		return Duel.IsExistingMatchingCard(c101102084.spcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler(),e,tp,Group.FromCards(e:GetHandler()))
+		return Duel.IsExistingMatchingCard(c101102084.spcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler(),e,tp,e:GetHandler())
 			and e:GetHandler():IsReleasable()
 	end
 	Duel.Release(e:GetHandler(),REASON_COST+REASON_RELEASE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local cost=Duel.SelectMatchingCard(tp,c101102084.spcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,e,tp)
+	local cost=Duel.SelectMatchingCard(tp,c101102084.spcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler(),e,tp,e:GetHandler())
 	e:SetLabel(cost:GetType())
 	Duel.Remove(cost,POS_FACEUP,REASON_COST)
 end

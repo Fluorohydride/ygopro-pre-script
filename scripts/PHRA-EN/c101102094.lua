@@ -26,7 +26,7 @@ function c101102094.initial_effect(c)
 	e3:SetCondition(c101102094.rmcon)
 	e3:SetTarget(c101102094.rmtg)
 	e3:SetOperation(c101102094.rmop)
-	c:RegisterEffect(e4)
+	c:RegisterEffect(e3)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101102094,1))

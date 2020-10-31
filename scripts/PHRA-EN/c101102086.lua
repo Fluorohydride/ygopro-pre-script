@@ -2,7 +2,7 @@
 function c101102086.initial_effect(c)
 	--self spsummon
 	local e1=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101102086,0))
+	e1:SetDescription(aux.Stringid(101102086,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -32,7 +32,7 @@ end
 function c101102086.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.GetMZoneCount(tp)>0
+		and Duel.GetMZoneCount(tp)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c101102086.spop(e,tp,eg,ep,ev,re,r,rp)
