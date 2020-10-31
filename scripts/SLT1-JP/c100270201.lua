@@ -1,4 +1,6 @@
---神星之影 路径灵
+--星なる影 ゲニウス
+--
+--Script by 龙骑
 function c100270201.initial_effect(c)
 	--immune
 	local e1=Effect.CreateEffect(c)

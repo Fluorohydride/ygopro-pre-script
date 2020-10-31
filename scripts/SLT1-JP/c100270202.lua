@@ -1,4 +1,6 @@
---影依的炎核 虚梦狱
+--影依の炎核 ヴォイド
+--
+--Script by 龙骑
 function c100270202.initial_effect(c)
 	--remove
 	local e1=Effect.CreateEffect(c)

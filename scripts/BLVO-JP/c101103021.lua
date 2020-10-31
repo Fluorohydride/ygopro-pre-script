@@ -1,4 +1,6 @@
---炼装勇士·消灭
+--メタルフォーゼ・バニッシャー
+--
+--Script by 龙骑
 function c101103021.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)

@@ -1,4 +1,6 @@
---碑像天使-亚兹卢恩死月弓碑
+--碑像の天使－アズルーン
+--
+--Script by 龙骑
 function c101103079.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

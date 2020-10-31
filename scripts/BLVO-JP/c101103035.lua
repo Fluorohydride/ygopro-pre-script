@@ -1,4 +1,6 @@
---白骨烤王
+--ワイトベイキング
+--
+--Script by 龙骑
 function c101103035.initial_effect(c)
 	aux.AddCodeList(c,32274490)
 	--change code
