@@ -35,7 +35,7 @@ function c101103056.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsController(tp) and c101103056.atkfilter(chkc) end
 	local g=Duel.GetMatchingGroup(c101103056.atkfilter2,tp,LOCATION_MZONE,0,nil,e)
 	if chk==0 then return #g>0 end
-	local ag=Duel.SelectTarget(tp,c101103056.atkfilter,tp,LOCATION_MZONE,0,1,#g,nil)
+	Duel.SelectTarget(tp,c101103056.atkfilter,tp,LOCATION_MZONE,0,1,#g,nil)
 end
 function c101103056.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e):Filter(Card.IsFaceup,nil)
