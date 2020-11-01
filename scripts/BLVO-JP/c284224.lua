@@ -46,7 +46,7 @@ function c284224.indct(e,re,r,rp)
 end
 --すべてを拭く
 function c284224.thfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c284224.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c284224.thfilter,tp,0,LOCATION_SZONE,1,nil) end
