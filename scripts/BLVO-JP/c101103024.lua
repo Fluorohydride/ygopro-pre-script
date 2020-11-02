@@ -78,15 +78,13 @@ function c101103024.actlimit(e,re,rp)
 	return re:IsActiveType(TYPE_MONSTER)
 end
 function c101103024.negfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsAbleToGraveAsCost()
+	return (c:IsFaceup() or c:GetEquipTarget()) and c:IsType(TYPE_EQUIP) and c:IsAbleToGraveAsCost()
 end
 function c101103024.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101103024.negfilter,tp,LOCATION_SZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101103024.negfilter,tp,LOCATION_SZONE,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoGrave(g,REASON_COST)
-	end
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function c101103024.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

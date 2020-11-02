@@ -12,7 +12,7 @@ function c101103049.initial_effect(c)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,101103049)
-	e1:SetCondition(c101103049.eqcon)
+	e1:SetCondition(c101103049.condition)
 	e1:SetTarget(c101103049.eqtg)
 	e1:SetOperation(c101103049.eqop)
 	c:RegisterEffect(e1)
@@ -21,17 +21,17 @@ function c101103049.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101103049,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetCountLimit(1,101103049)
-	e2:SetCondition(c101103049.spcon)
+	e2:SetCondition(c101103049.condition)
 	e2:SetTarget(c101103049.sptg)
 	e2:SetOperation(c101103049.spop)
 	c:RegisterEffect(e2)
 end
-function c101103049.eqcon(e,tp,eg,ep,ev,re,r,rp)
+function c101103049.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
 function c101103049.eqfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe1)
@@ -42,16 +42,15 @@ function c101103049.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(c101103049.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,c101103049.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function c101103049.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
+	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:GetControler()~=tp or tc:IsFacedown() or not tc:IsRelateToEffect(e) or not c:CheckUniqueOnField(tp) then
-		Duel.SendtoGrave(c,REASON_EFFECT)
-		return
-	end
-	Duel.Equip(tp,c,tc)
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or not tc:IsControler(tp) or tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
+	if not c:CheckUniqueOnField(tp) or c:IsForbidden() then return end
+	if not Duel.Equip(tp,c,tc) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
@@ -70,20 +69,16 @@ end
 function c101103049.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-function c101103049.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()
-end
-function c101103049.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe1) and c:IsType(TYPE_MONSTER)
+function c101103049.desfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(0xe1) and Duel.GetMZoneCount(tp,c)>0
 end
 function c101103049.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc:IsFaceup() and chkc~=c end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_ONFIELD,0,1,c)
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c101103049.desfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c101103049.desfilter,tp,LOCATION_ONFIELD,0,1,nil,tp)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,0,1,1,c)
+	local g=Duel.SelectTarget(tp,c101103049.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end

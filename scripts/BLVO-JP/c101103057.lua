@@ -44,7 +44,7 @@ function c101103057.indcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101103057.indtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetLabelObject()
-	if chk==0 then return bc end
+	if chk==0 then return bc and bc:IsRelateToBattle() end
 end
 function c101103057.indop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetLabelObject()

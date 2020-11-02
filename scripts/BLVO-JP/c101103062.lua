@@ -21,7 +21,7 @@ function c101103062.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101103062,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,101103062+100)
@@ -94,11 +94,11 @@ function c101103062.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-function c101103062.alfilter(c,re)
-	return c:IsRace(RACE_ZOMBIE) and re:IsHasType(EFFECT_TYPE_ACTIONS)
+function c101103062.alfilter(c)
+	return c:IsRace(RACE_ZOMBIE) and c:IsFaceup()
 end
 function c101103062.alcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101103062.alfilter,1,nil,re)
+	return eg:IsExists(c101103062.alfilter,1,nil) and re:IsHasType(EFFECT_TYPE_ACTIONS)
 end
 function c101103062.cfilter(c)
 	return c:IsFacedown() and c:GetSequence()<5
@@ -107,7 +107,7 @@ function c101103062.altg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and c101103062.cfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101103062.cfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101103062,2))
-	local g=Duel.SelectTarget(tp,c101103062.cfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,c101103062.cfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil)
 end
 function c101103062.alop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

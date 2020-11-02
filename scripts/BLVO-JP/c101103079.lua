@@ -29,7 +29,6 @@ function c101103079.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_DESTROYED)
-	e3:SetRange(LOCATION_MZONE)
 	e3:SetTarget(c101103079.destg)
 	e3:SetOperation(c101103079.desop)
 	c:RegisterEffect(e3)
@@ -51,7 +50,7 @@ function c101103079.discon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0
 end
 function c101103079.discfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and c:GetSummonLocation()==LOCATION_SZONE and c:GetOriginalType()==TYPE_TRAP+TYPE_CONTINUOUS 
+	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:GetSummonLocation()==LOCATION_SZONE and (c:GetType()&(TYPE_TRAP+TYPE_CONTINUOUS))==TYPE_TRAP+TYPE_CONTINUOUS
 end
 function c101103079.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101103079.discfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -69,8 +68,9 @@ function c101103079.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(eg,REASON_EFFECT)
 end
 function c101103079.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetLabelObject(),1,0,0)
+	local tc=e:GetHandler():GetBattleTarget()
+	if chk==0 then return tc and tc:IsRelateToBattle() end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
 function c101103079.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
