@@ -2,12 +2,11 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **September 12, 2020**: Deck Build Pack: Genesis Impactors (DBGI-JP): `100415XXX`
 - **October 31, 2020**: Blazing Vortex (BLVO-JP): `101103XXX`
 - **November 21, 2020**: Structure Deck: Ice Barrier of the Frozen Prison (SD40-JP) : `100340XXX`
+- **December 5, 2020**: SELECTION 10 (SLT1-JP) : `100270XXX`
 
 # Announced
-- **October 3, 2020** :WORLD PREMIERE PACK 2020(WP20-JP) : `100270XXX`
 
 # Archived
 ## Other packs
@@ -124,6 +123,7 @@
 - Deck Build Pack: Infinity Chasers (DBIC-JP) : `100412XXX`
 - Deck Build Pack: Mystic Fighters (DBMF-JP) : `100413XXX`
 - Deck Build Pack: Secret Slayers (DBSS-JP) : `100414XXX`
+- Deck Build Pack: Genesis Impactors (DBGI-JP): `100415XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
