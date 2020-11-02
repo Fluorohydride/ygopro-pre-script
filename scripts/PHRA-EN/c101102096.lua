@@ -28,6 +28,7 @@ end
 function c101102096.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101102096.filter,tp,LOCATION_DECK+LOCATION_REMOVED,0,nil,Duel.GetMZoneCount(tp)>0)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101102096,0)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 		local tc=g:Select(tp,1,1,nil)
 		local opt=0
 		if not tc:IsAbleToHand() then
@@ -35,7 +36,7 @@ function c101102096.activate(e,tp,eg,ep,ev,re,r,rp)
 		elseif not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 			opt=1
 		else
-			opt=Duel.SelectOption(tp,aux.Stringid(101102096,1),aux.Stringid(101102096,2))
+			opt=Duel.SelectOption(tp,1190,1152)
 		end
 		if opt==0 then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
