@@ -1,4 +1,4 @@
---梦魔镜的说梦
+--夢魔鏡の夢語らい
 --
 --Script by Real_Scl
 function c101103077.initial_effect(c)

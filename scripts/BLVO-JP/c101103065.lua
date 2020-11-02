@@ -1,4 +1,4 @@
---金满而谦虚之壶
+--金満で謙虚な壺
 --
 --Script by Real_Scl
 function c101103065.initial_effect(c)
