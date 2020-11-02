@@ -1,4 +1,6 @@
 --Myutant Evolution Lab
+--
+--Script by JoyJ
 function c101102092.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

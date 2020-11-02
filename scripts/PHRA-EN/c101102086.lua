@@ -1,4 +1,6 @@
 --Myutant GB-88
+--
+--Script by JoyJ
 function c101102086.initial_effect(c)
 	--self spsummon
 	local e1=Effect.CreateEffect(c)

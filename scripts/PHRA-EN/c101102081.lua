@@ -1,4 +1,6 @@
 --Mahaama the Fairy Dragon
+--
+--Script by JoyJ
 function c101102081.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

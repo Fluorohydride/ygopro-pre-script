@@ -1,4 +1,6 @@
 --Myutant Arsenal
+--
+--Script by JoyJ
 function c101102089.initial_effect(c)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)

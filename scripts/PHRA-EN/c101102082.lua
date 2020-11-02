@@ -1,4 +1,6 @@
 --Jabbing Panda
+--
+--Script by JoyJ
 function c101102082.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

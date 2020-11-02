@@ -1,4 +1,6 @@
 --Myutant Expansion
+--
+--Script by JoyJ
 function c101102096.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

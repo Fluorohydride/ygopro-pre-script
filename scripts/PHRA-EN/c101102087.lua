@@ -1,4 +1,6 @@
 --Myutant Beast
+--
+--Script by JoyJ
 function c101102087.initial_effect(c)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)

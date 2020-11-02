@@ -1,4 +1,6 @@
 --Myutant Synthesis
+--
+--Script by JoyJ
 function c101102090.initial_effect(c)
 	--fusion summon
 	c:EnableReviveLimit()

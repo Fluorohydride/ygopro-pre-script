@@ -1,4 +1,6 @@
 --Myutant Ultimus
+--
+--Script by JoyJ
 function c101102091.initial_effect(c)
 	--fusion summon
 	c:EnableReviveLimit()

@@ -1,4 +1,6 @@
 --Periallis, Empress of Blossoms
+--
+--Script by JoyJ
 function c101102083.initial_effect(c)
 	--link summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

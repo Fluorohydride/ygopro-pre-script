@@ -1,4 +1,6 @@
 --Myutant M-05
+--
+--Script by JoyJ
 function c101102084.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)

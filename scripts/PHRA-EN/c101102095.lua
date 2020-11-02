@@ -1,4 +1,6 @@
 --Myutant Clash
+--
+--Script by JoyJ
 function c101102095.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
 --Myutant Mist
+--
+--Script by JoyJ
 function c101102088.initial_effect(c)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
