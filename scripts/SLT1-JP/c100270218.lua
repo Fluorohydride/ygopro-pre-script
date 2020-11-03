@@ -18,7 +18,7 @@ function c100270218.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,100270218)
+	e2:SetCountLimit(1,100270218+100)
 	e2:SetCondition(c100270218.atkcon)
 	e2:SetTarget(c100270218.atktg)
 	e2:SetOperation(c100270218.atkop)
@@ -57,18 +57,18 @@ function c100270218.actop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100270218.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local a,d=Duel.GetAttacker(),Duel.GetAttackTarget()
-	return (a:IsControler(tp) and a:IsRace(RACE_PLANT) and a:IsType(TYPE_LINK))
-		or (not d or (d:IsControler(tp) and d:IsRace(RACE_PLANT) and d:IsType(TYPE_LINK)))
+	local tc=Duel.GetBattleMonster(tp)
+	return tc:IsRace(RACE_PLANT) and tc:IsType(TYPE_LINK)
 end
 function c100270218.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local lg=e:GetHandler():GetLinkedGroup()
+	local tc=Duel.GetBattleMonster(tp)
+	local lg=tc:GetLinkedGroup():Filter(Card.IsFaceup,nil)
 	if chk==0 then return #lg>0 and lg:GetSum(Card.GetAttack)>0 end
 end
 function c100270218.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttacker()
-	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-	local lg=tc:GetLinkedGroup()
+	local tc=Duel.GetBattleMonster(tp)
+	if not tc:IsRelateToBattle() then return end
+	local lg=tc:GetLinkedGroup():Filter(Card.IsFaceup,nil)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
