@@ -58,7 +58,7 @@ function c100270218.actop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100270218.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetBattleMonster(tp)
-	return tc:IsRace(RACE_PLANT) and tc:IsType(TYPE_LINK)
+	return tc and tc:IsRace(RACE_PLANT) and tc:IsType(TYPE_LINK)
 end
 function c100270218.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetBattleMonster(tp)
