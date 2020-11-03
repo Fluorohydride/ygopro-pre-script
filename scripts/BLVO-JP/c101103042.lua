@@ -2,6 +2,7 @@
 --
 --Script by JustFish
 function c101103042.initial_effect(c)
+	aux.AddCodeList(c,74665651,1050355)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFunRep(c,c101103042.ffilter,2,true)

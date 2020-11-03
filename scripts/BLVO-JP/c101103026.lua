@@ -2,6 +2,7 @@
 --
 --Script by JustFish
 function c101103026.initial_effect(c)
+	aux.AddCodeList(c,74665651,1050355)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101103026,0))
