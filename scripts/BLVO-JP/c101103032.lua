@@ -1,4 +1,6 @@
---大雷陀螺仪独眼巨人
+--ダイカミナリ・ジャイクロプス
+--
+--Script by 署名傻逼龙骑吧
 function c101103032.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--Banish
