@@ -48,7 +48,7 @@ function c100270210.mfilter(c)
 end
 function c100270210.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsLinkCode,1,nil,100270201) then
+	if g:IsExists(Card.IsLinkCode,1,nil,100270206) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
@@ -80,7 +80,7 @@ function c100270210.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0
 end
 function c100270210.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c100270210.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100270210.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100270210.spop(e,tp,eg,ep,ev,re,r,rp)
