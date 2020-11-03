@@ -7,6 +7,7 @@ function c101103069.initial_effect(c)
 	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e1:SetCountLimit(1,101103069+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c101103069.condition)
 	e1:SetTarget(c101103069.target)
@@ -38,27 +39,30 @@ function c101103069.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if ct>0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)>0 then
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101103069,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLEZONE)
-			dis=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0xe000e0)|dis
+			dis=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0)|dis
 		elseif #g==0 then
 			if ct==2 and Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)>1 and Duel.SelectYesNo(tp,aux.Stringid(101103069,1)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLEZONE)
-				dis=Duel.SelectDisableField(tp,2,0,LOCATION_MZONE,0xe000e0)|dis
+				dis=Duel.SelectDisableField(tp,2,0,LOCATION_MZONE,0)|dis
 			else
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLEZONE)
-				dis=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0xe000e0)|dis
+				dis=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0)|dis
 			end
 		end
 	end
 	local tc=g:GetFirst()
 	while tc do
-		dis=(2^tc:GetSequence())|dis
+		dis=(2^tc:GetSequence())*0x10000|dis
 		tc=g:GetNext()
 	end
 	e:SetLabel(dis)
 	Duel.Hint(HINT_ZONE,tp,dis)
 end
 function c101103069.disfilter2(c,dis)
-	return c:IsFaceup() and (2^c:GetSequence())&dis~=0
+	return c:IsFaceup() and (2^c:GetSequence())*0x10000&dis~=0
+end
+function c101103069.disfilter3(c,dis)
+	return c:IsFacedown() and (2^c:GetSequence())*0x10000&dis~=0
 end
 function c101103069.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -85,13 +89,18 @@ function c101103069.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		dis=dis-(2^tc:GetSequence())
+		dis=dis-(2^tc:GetSequence())*0x10000
 		tc=g:GetNext()
+	end
+	local sg=Duel.GetMatchingGroup(c101103069.disfilter3,tp,0,LOCATION_MZONE,nil,dis)
+	local sc=sg:GetFirst()
+	while sc do
+		dis=dis-(2^sc:GetSequence())*0x10000
+		sc=sg:GetNext()
 	end
 	if dis~=0 then
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD)
-		e3:SetRange(LOCATION_MZONE)
 		e3:SetCode(EFFECT_DISABLE_FIELD)
 		e3:SetOperation(c101103069.disop)
 		e3:SetReset(RESET_PHASE+PHASE_END)
