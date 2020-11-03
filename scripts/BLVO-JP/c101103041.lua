@@ -63,9 +63,9 @@ function c101103041.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION)
 end
 --破壊された
-function c101103041.descon(e)
+function c101103041.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep==1-tp and re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER)
+	return ep==1-tp and re:GetHandler():IsOnField() and re:GetHandler():IsRelateToEffect(re) and re:IsActiveType(TYPE_MONSTER)
 		and Duel.IsExistingMatchingCard(c101103041.cfilter,tp,LOCATION_MZONE,0,2,nil)
 end
 function c101103041.destg(e,tp,eg,ep,ev,re,r,rp,chk)
