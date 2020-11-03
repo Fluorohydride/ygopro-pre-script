@@ -12,7 +12,7 @@ function c100340001.initial_effect(c)
 	e1:SetCondition(c100340001.spcon)
 	e1:SetTarget(c100340001.sptg)
 	e1:SetOperation(c100340001.spop)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100340001,1))
@@ -56,7 +56,7 @@ function c100340001.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c100340001.thfilter(c,e)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() 
+	return c:IsSetCard(0x2f) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100340001.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100340001.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -10,7 +10,7 @@ function c101103033.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(1,1)
 	e1:SetValue(c101103033.actlimit)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 	--control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101103033,1))
@@ -22,7 +22,7 @@ function c101103033.initial_effect(c)
 	e2:SetCondition(c101103033.ctcon)
 	e2:SetTarget(c101103033.cttg)
 	e2:SetOperation(c101103033.ctop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
 function c101103033.actlimit(e,re,tp)
 	local rc=re:GetHandler()
@@ -39,7 +39,7 @@ function c101103033.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101103033.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.GetControl(c,1-tp) and Duel.SelectYesNo(tp,aux.Stringid(101103033,0)) then		
+	if c:IsRelateToEffect(e) and Duel.GetControl(c,1-tp) and Duel.SelectYesNo(tp,aux.Stringid(101103033,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 		local aat=Duel.AnnounceAttribute(tp,1,0xff-e:GetHandler():GetAttribute())

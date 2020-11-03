@@ -66,7 +66,7 @@ function c101103041.desfilter(c)
 end
 function c101103041.descon(e)
 	return Duel.IsExistingMatchingCard(c101103041.desfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)
-		and ep==1-tp and re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER) 
+		and ep==1-tp and re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER)
 end
 function c101103041.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsDestructable() end

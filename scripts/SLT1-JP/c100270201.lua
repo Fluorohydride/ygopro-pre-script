@@ -11,7 +11,7 @@ function c100270201.initial_effect(c)
 	e1:SetCost(c100270201.cost)
 	e1:SetTarget(c100270201.target)
 	e1:SetOperation(c100270201.operation)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--actlimit
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100270201,1))
@@ -23,7 +23,7 @@ function c100270201.initial_effect(c)
 	e2:SetCondition(c100270201.actcon)
 	e2:SetTarget(c100270201.acttg)
 	e2:SetOperation(c100270201.actop)
-	c:RegisterEffect(e2)   
+	c:RegisterEffect(e2)
 end
 function c100270201.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

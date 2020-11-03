@@ -10,7 +10,7 @@ function c101103028.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101103028+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c101103028.spcon)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101103028,0))

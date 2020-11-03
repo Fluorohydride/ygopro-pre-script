@@ -54,7 +54,7 @@ end
 function c65749035.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local rg=tg:Filter(Card.IsRelateToEffect,nil,e)
-	if rg:GetCount()>0 then 
+	if rg:GetCount()>0 then
 		Duel.Destroy(rg,REASON_EFFECT)
 	end
 end

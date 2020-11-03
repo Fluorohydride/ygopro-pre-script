@@ -2,7 +2,7 @@
 --
 --"LUA BY REIKAI"
 function c101103064.initial_effect(c)
-	aux.AddRitualProcGreaterCode(c,101103037,nil,c101103064.mfilter) 
+	aux.AddRitualProcGreaterCode(c,101103037,nil,c101103064.mfilter)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -47,7 +47,7 @@ function c101103064.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	if not (c:IsRelateToEffect(e) and c:IsAbleToRemove() and c:IsLocation(LOCATION_GRAVE)) then return false end
-	if Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 then 
+	if Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101103064.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if g:GetCount()>0 then

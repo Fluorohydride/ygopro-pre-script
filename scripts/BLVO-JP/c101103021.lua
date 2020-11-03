@@ -16,7 +16,7 @@ function c101103021.initial_effect(c)
 	e1:SetCondition(c101103021.condition)
 	e1:SetTarget(c101103021.target)
 	e1:SetOperation(c101103021.operation)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101103021,1))
@@ -27,7 +27,7 @@ function c101103021.initial_effect(c)
 	e2:SetCountLimit(1,101103121)
 	e2:SetTarget(c101103021.sptg)
 	e2:SetOperation(c101103021.spop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 	--remove
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_REMOVE)
@@ -38,7 +38,7 @@ function c101103021.initial_effect(c)
 	e3:SetCondition(c101103021.rmcon)
 	e3:SetTarget(c101103021.rmtg)
 	e3:SetOperation(c101103021.rmop)
-	c:RegisterEffect(e3) 
+	c:RegisterEffect(e3)
 end
 function c101103021.desfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
@@ -54,8 +54,8 @@ function c101103021.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function c101103021.operation(e,tp,eg,ep,ev,re,r,rp)
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-        local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101103021.thfilter),tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101103021.thfilter),tp,LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
@@ -65,7 +65,7 @@ function c101103021.filter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
 end
 function c101103021.fselect(g,tp)
-    return g:IsExists(Card.IsSetCard,1,nil,0xe1) and Duel.GetMZoneCount(tp,g)>0
+	return g:IsExists(Card.IsSetCard,1,nil,0xe1) and Duel.GetMZoneCount(tp,g)>0
 end
 function c101103021.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

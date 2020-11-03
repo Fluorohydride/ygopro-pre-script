@@ -23,7 +23,7 @@ function c101103034.initial_effect(c)
 	e2:SetTarget(c101103034.lvtg)
 	e2:SetOperation(c101103034.lvop)
 	c:RegisterEffect(e2)
-	--atk 
+	--atk
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101103034,2))
 	e3:SetCategory(CATEGORY_ATKCHANGE)

@@ -63,7 +63,7 @@ function c101103077.tfop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(fc,REASON_RULE)
 		Duel.BreakEffect()
 	end
-	Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true) 
+	Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 	local g=Duel.GetMatchingGroup(c101103077.spfilter,tp,LOCATION_HAND,0,nil,e,tp,tc:GetCode())
 	if #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(101103077,1)) then
 		Duel.BreakEffect()

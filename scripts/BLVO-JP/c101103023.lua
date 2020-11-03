@@ -60,7 +60,7 @@ function c101103023.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 and Duel.SelectYesNo(tp,aux.Stringid(101103023,2)) then
 		local g=Group.FromCards(c,tc):Filter(Card.IsFaceup,nil,nil)
 		local lv=Duel.AnnounceLevel(tp,5,7,6)
-		for oc in  aux.Next(g) do
+		for oc in aux.Next(g) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
@@ -101,7 +101,7 @@ function c101103023.efop(e,tp,eg,ep,ev,re,r,rp)
 	rc:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
-	rc:RegisterEffect(e2) 
+	rc:RegisterEffect(e2)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)

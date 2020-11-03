@@ -33,11 +33,11 @@ function c101103066.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101103066.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and r==REASON_RULE 
+	return ep==tp and r==REASON_RULE
 end
 function c101103066.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
-	return true 
+	return true
 end
 function c101103066.tdfilter(c)
 	return not c:IsPublic() and c:IsAbleToDeck()
@@ -65,7 +65,7 @@ function c101103066.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101103066.drcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and r==REASON_EFFECT 
+	return ep==tp and r==REASON_EFFECT
 end
 function c101103066.drtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

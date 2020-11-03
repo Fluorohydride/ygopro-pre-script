@@ -12,7 +12,7 @@ function c101103031.initial_effect(c)
 	e1:SetCost(c101103031.tgcost)
 	e1:SetTarget(c101103031.tgtg)
 	e1:SetOperation(c101103031.tgop)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 	--att dark
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101103031,1))
@@ -21,7 +21,7 @@ function c101103031.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetTarget(c101103031.atttg)
 	e2:SetOperation(c101103031.attop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
 function c101103031.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<=1 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0

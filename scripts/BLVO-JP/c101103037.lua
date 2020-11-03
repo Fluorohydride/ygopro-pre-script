@@ -13,7 +13,7 @@ function c101103037.initial_effect(c)
 	e1:SetCondition(c101103037.tdcon)
 	e1:SetTarget(c101103037.tdtg)
 	e1:SetOperation(c101103037.tdop)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101103037,1))
@@ -24,12 +24,12 @@ function c101103037.initial_effect(c)
 	e2:SetCountLimit(1,101103037)
 	e2:SetTarget(c101103037.target)
 	e2:SetOperation(c101103037.activate)
-	c:RegisterEffect(e2)	 
+	c:RegisterEffect(e2)
 end
 function c101103037.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL) and bc:GetSummonLocation()==LOCATION_EXTRA 
+	return bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL) and bc:GetSummonLocation()==LOCATION_EXTRA
 end
 function c101103037.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -38,7 +38,7 @@ function c101103037.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,bc,1,0,0)
 end
 function c101103037.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()	
+	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	if not bc:IsRelateToBattle() then return false end
 	Duel.SendtoDeck(bc,nil,2,REASON_EFFECT)

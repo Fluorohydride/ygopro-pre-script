@@ -11,7 +11,7 @@ function c100340026.initial_effect(c)
 	e1:SetCost(c100340026.cost)
 	e1:SetTarget(c100340026.target)
 	e1:SetOperation(c100340026.activate)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 	--tohand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100340026,2))
@@ -24,7 +24,7 @@ function c100340026.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100340026.thtg)
 	e2:SetOperation(c100340026.thop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
 function c100340026.rfilter(c,ft,tp)
 	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
@@ -39,7 +39,7 @@ function c100340026.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c100340026.filter(c,e,tp)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100340026.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

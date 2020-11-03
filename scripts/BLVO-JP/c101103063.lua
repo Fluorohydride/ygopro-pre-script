@@ -2,7 +2,7 @@
 --
 --"LUA BY REIKAI"
 function c101103063.initial_effect(c)
-   --Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -56,7 +56,6 @@ function c101103063.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101103063.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>0 end
-	
 end
 function c101103063.cfop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

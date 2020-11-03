@@ -11,7 +11,7 @@ function c101103065.initial_effect(c)
 	e1:SetCost(c101103065.cost)
 	e1:SetTarget(c101103065.target)
 	e1:SetOperation(c101103065.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	if not c101103065.gf then
 		c101103065.gf=true
 		local ge1=Effect.CreateEffect(c)

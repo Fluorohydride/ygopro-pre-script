@@ -11,7 +11,7 @@ function c101103078.initial_effect(c)
 	e1:SetCost(c101103078.cost)
 	e1:SetTarget(c101103078.target)
 	e1:SetOperation(c101103078.operation)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c101103078.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

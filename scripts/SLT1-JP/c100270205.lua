@@ -2,9 +2,9 @@
 --
 --"Lua By REIKAI 2404873791"
 function c100270205.initial_effect(c)
-   --synchro summon
+	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsAttribute,ATTRIBUTE_FIRE),1)
-	c:EnableReviveLimit() 
+	c:EnableReviveLimit()
 	--Draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100270205,0))
@@ -76,12 +76,11 @@ function c100270205.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x39) and Duel.IsExistingMatchingCard(c100270205.posfilter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function c100270205.setop(e,tp,eg,ep,ev,re,r,rp)
-   local ct=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_MZONE,0,nil,0x39)
-   if Duel.IsExistingMatchingCard(c100270205.posfilter,tp,0,LOCATION_MZONE,1,nil)
-	   then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-			local g=Duel.SelectMatchingCard(tp,c100270205.posfilter,tp,0,LOCATION_MZONE,1,ct,nil)
-			Duel.HintSelection(g)
-			Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
+	local ct=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_MZONE,0,nil,0x39)
+	if Duel.IsExistingMatchingCard(c100270205.posfilter,tp,0,LOCATION_MZONE,1,nil) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+		local g=Duel.SelectMatchingCard(tp,c100270205.posfilter,tp,0,LOCATION_MZONE,1,ct,nil)
+		Duel.HintSelection(g)
+		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 	end
 end

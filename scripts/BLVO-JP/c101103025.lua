@@ -17,7 +17,7 @@ function c101103025.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,101103025+EFFECT_COUNT_CODE_OATH)
 	e2:SetCondition(c101103025.spcon)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--Destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101103025,0))

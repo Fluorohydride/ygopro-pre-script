@@ -14,7 +14,7 @@ function c101103029.initial_effect(c)
 	e1:SetCondition(c101103029.spcon)
 	e1:SetTarget(c101103029.sptg)
 	e1:SetOperation(c101103029.spop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--actlimit
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101103029,1))
@@ -47,7 +47,7 @@ function c101103029.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function c101103029.filter(c)
-	return c:IsFaceup() and c:GetSummonLocation()==LOCATION_EXTRA 
+	return c:IsFaceup() and c:GetSummonLocation()==LOCATION_EXTRA
 end
 function c101103029.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c101103029.filter(chkc) end

@@ -2,7 +2,7 @@
 --
 --"Lua By REIKAI 2404873791"
 function c101103070.initial_effect(c)
-   --Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOEXTRA+CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +12,7 @@ function c101103070.initial_effect(c)
 	e1:SetCountLimit(1,101103070+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c101103070.target)
 	e1:SetOperation(c101103070.activate)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 end
 function c101103070.filter(c,tp)
 	local ctype=bit.band(c:GetType(),TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
