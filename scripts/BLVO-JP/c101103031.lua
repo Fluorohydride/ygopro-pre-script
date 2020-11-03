@@ -1,4 +1,6 @@
---契珖之荧光亚龙
+--契珖のヴルーレセンス
+--
+--Script by 龙骑
 function c101103031.initial_effect(c)
 	--to grave
 	local e1=Effect.CreateEffect(c)

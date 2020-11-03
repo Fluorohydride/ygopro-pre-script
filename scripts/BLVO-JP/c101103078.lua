@@ -1,4 +1,6 @@
---电磁轨道炮
+--E.M.R.
+--
+--Script by 龙骑
 function c101103078.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

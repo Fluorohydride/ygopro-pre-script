@@ -1,4 +1,6 @@
---战华史略-大丈夫之义
+--戦華史略－大丈夫之義
+--
+--Script by 龙骑
 function c101103074.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

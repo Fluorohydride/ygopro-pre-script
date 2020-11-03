@@ -1,4 +1,6 @@
---抵达冰结界的晴岚
+--氷結界に至る晴嵐
+--
+--Script by 龙骑
 function c100340026.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

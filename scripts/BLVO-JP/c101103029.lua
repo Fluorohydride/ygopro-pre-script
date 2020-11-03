@@ -1,4 +1,6 @@
---风之天翼 米拉多羽蛇
+--風の天翼ミラドーラ
+--
+--Script by 龙骑
 function c101103029.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

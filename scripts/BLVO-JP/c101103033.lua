@@ -1,4 +1,6 @@
 --天孔邪鬼
+--
+--Script by 龙骑
 function c101103033.initial_effect(c)
 	--actlimit
 	local e1=Effect.CreateEffect(c)
