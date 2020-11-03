@@ -84,11 +84,12 @@ function c101102094.sptgfilter(c,e,tp,attr)
 	return c:GetOriginalAttribute()~=attr and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101102094.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=e:GetHandler():GetEquipTarget()
 	if chk==0 then
+		local tc=e:GetHandler():GetEquipTarget()
 		e:SetLabelObject(tc)
 		return tc and tc:IsAbleToGrave() and Duel.IsExistingMatchingCard(c101102094.sptgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,tc:GetOriginalAttribute())
 	end
+	local tc=e:GetLabelObject()
 	tc:CreateEffectRelation(e)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,0,0)
 end
