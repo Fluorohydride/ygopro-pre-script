@@ -1,6 +1,7 @@
 --金満で謙虚な壺
 --
 --Script by Real_Scl
+--Banish cost corrected by Gecko-chan (line 35 "POS_FACEUP+POS_FACEDOWN")
 function c101103065.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -31,7 +32,7 @@ function c101103065.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c101103065.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_EXTRA,0,nil,POS_FACEDOWN)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_EXTRA,0,nil,POS_FACEUP+POS_FACEDOWN)
 	local b1=#g>=3 and Duel.GetDecktopGroup(tp,3):IsExists(Card.IsAbleToHand,1,nil)
 	local b2=#g>=6 and Duel.GetDecktopGroup(tp,6):IsExists(Card.IsAbleToHand,1,nil)
 	if chk==0 then
