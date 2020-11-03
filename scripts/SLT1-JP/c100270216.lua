@@ -88,6 +88,7 @@ function c100270216.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,bc,1,0,0)
 end
 function c100270216.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local zone=Duel.GetLinkedZone(tp)&0x1f
 	if zone~=0 and tc:IsRelateToEffect(e) then
