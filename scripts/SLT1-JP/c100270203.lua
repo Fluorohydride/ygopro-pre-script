@@ -43,7 +43,7 @@ function c100270203.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100270203.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(cm.filter1,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(c100270203.filter1,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	while tc do
 		local e3=Effect.CreateEffect(c)
