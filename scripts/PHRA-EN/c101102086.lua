@@ -67,6 +67,6 @@ function c101102086.sp2op(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,c101102086.sp2costfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
+	local tc=Duel.SelectMatchingCard(tp,c101102086.sp2tgfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
 	if tc then Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end
 end
