@@ -43,7 +43,7 @@ function c101102092.thfilter(c,e,tp)
 end
 function c101102092.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if not Duel.GetMZoneCount(tp)>0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local g=Duel.SelectMatchingCard(tp,c101102092.thfilter,tp,LOCATION_HAND+LOCATION_REMOVED,1,1,nil,e,tp)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101102092,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
