@@ -72,7 +72,7 @@ function c101102084.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.Release(e:GetHandler(),REASON_COST+REASON_RELEASE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local cost=Duel.SelectMatchingCard(tp,c101102084.spcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler(),e,tp,e:GetHandler())
+	local cost=Duel.SelectMatchingCard(tp,c101102084.spcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler(),e,tp,e:GetHandler()):GetFirst()
 	e:SetLabel(cost:GetType())
 	Duel.Remove(cost,POS_FACEUP,REASON_COST)
 end
