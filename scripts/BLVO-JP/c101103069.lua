@@ -35,12 +35,12 @@ function c101103069.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,c101103069.disfilter,tp,0,LOCATION_MZONE,min,ct,nil)
 	ct=ct-#g
 	local dis=0
-	if ct>0 then
+	if ct>0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)>0 then
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101103069,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLEZONE)
 			dis=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0xe000e0)|dis
 		elseif #g==0 then
-			if Duel.SelectYesNo(tp,aux.Stringid(101103069,1)) then
+			if ct==2 and Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)>1 and Duel.SelectYesNo(tp,aux.Stringid(101103069,1)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLEZONE)
 				dis=Duel.SelectDisableField(tp,2,0,LOCATION_MZONE,0xe000e0)|dis
 			else
