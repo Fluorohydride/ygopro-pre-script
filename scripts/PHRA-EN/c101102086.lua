@@ -58,7 +58,8 @@ function c101102086.sp2tgfilter(c,e,tp)
 		and c:IsSetCard(0x258) and c:IsLevel(8)
 end
 function c101102086.sp2tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101102086.sp2tgfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
+		and Duel.IsExistingMatchingCard(c101102086.sp2tgfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
 end
 function c101102086.sp2op(e,tp,eg,ep,ev,re,r,rp)
