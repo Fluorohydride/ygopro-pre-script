@@ -1,8 +1,9 @@
---铠龙之圣骑士
+--鎧竜の聖騎士
+--
 --"LUA BY REIKAI"
 function c101103037.initial_effect(c)
 	c:EnableReviveLimit()
---todeck
+	--todeck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101103037,1))
 	e1:SetCategory(CATEGORY_TODECK)

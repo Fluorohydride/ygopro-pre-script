@@ -1,4 +1,5 @@
---铠龙降临
+--鎧竜降臨
+--
 --"LUA BY REIKAI"
 function c101103064.initial_effect(c)
 	aux.AddRitualProcGreaterCode(c,101103037,nil,c101103064.mfilter) 

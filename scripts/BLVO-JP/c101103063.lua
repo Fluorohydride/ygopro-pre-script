@@ -1,4 +1,5 @@
---恶魔之杖
+--デーモンの杖
+--
 --"LUA BY REIKAI"
 function c101103063.initial_effect(c)
    --Activate
