@@ -1,12 +1,13 @@
---银河眼极光波龙
+--銀河眼の極光波竜
+--
 --"Lua By REIKAI 2404873791"
 function c100270203.initial_effect(c)
-   --xyz summon
-	aux.AddXyzProcedure(c,nil,10,2,c100270203.ovfilter,aux.Stringid(100270203,1),2,c100270203.xyzop)
-	c:EnableReviveLimit() 
+	--xyz summon
+	aux.AddXyzProcedure(c,nil,10,2,c100270203.ovfilter,aux.Stringid(100270203,0),2,c100270203.xyzop)
+	c:EnableReviveLimit()
 	--CANNOT be tg
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100270203,2))
+	e1:SetDescription(aux.Stringid(100270203,1))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
@@ -15,7 +16,7 @@ function c100270203.initial_effect(c)
 	c:RegisterEffect(e1)
 	--
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100270203,3))
+	e2:SetDescription(aux.Stringid(100270203,2))
 	e2:SetCategory(CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_MZONE)
@@ -27,7 +28,7 @@ function c100270203.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100270203.ovfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe5)
+	return c:IsFaceup() and c:IsSetCard(0x10e5)
 end
 function c100270203.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,100270203)==0 end
