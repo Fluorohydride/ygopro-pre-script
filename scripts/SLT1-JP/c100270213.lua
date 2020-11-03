@@ -44,7 +44,7 @@ function c100270213.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_LINK)
 end
 function c100270213.thfilter(c)
-	return c:IsSetCard(0x255) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x256) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100270213.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100270213.thfilter,tp,LOCATION_DECK,0,1,nil) end
