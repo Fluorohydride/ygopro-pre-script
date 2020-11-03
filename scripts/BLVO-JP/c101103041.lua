@@ -59,13 +59,14 @@ function c101103041.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end
---破壊された
-function c101103041.desfilter(c)
+function c101103041.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION)
 end
+--破壊された
 function c101103041.descon(e)
-	return Duel.IsExistingMatchingCard(c101103041.desfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)
-		and ep==1-tp and re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER)
+	local c=e:GetHandler()
+	return ep==1-tp and re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER)
+		and Duel.IsExistingMatchingCard(c101103041.cfilter,tp,LOCATION_MZONE,0,2,nil)
 end
 function c101103041.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsDestructable() end
