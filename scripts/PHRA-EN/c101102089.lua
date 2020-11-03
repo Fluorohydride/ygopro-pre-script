@@ -62,8 +62,9 @@ function c101102089.rmcostfilter(c,e)
 end
 function c101102089.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102089.rmcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,e) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c101102089.rmcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,e)
-	Duel.Remove(g,REASON_COST)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c101102089.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

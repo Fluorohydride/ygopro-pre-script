@@ -17,17 +17,18 @@ function c101102087.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(c101102087.ctval)
 	c:RegisterEffect(e2)
-	--draw card
+	--negate
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_DRAW)
+	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetCountLimit(1,101102087)
-	e3:SetCondition(c101102087.drcon)
-	e3:SetCost(c101102087.drcost)
-	e3:SetTarget(c101102087.drtg)
-	e3:SetOperation(c101102087.drop)
+	e3:SetCondition(c101102087.negcon)
+	e3:SetCost(c101102087.negcost)
+	e3:SetTarget(c101102087.negtg)
+	e3:SetOperation(c101102087.negop)
 	c:RegisterEffect(e3)
 	--special summon
 	local e4=Effect.CreateEffect(c)
@@ -47,27 +48,27 @@ end
 function c101102087.ctval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer() and (re:GetActiveType() & TYPE_MONSTER)>0
 end
-function c101102087.drcon(e,tp,eg,ep,ev,re,r,rp)
+function c101102087.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:GetHandler()~=e:GetHandler()
 		and re:IsActiveType(TYPE_SPELL) and Duel.IsChainNegatable(ev)
 end
-function c101102087.cfilter(c)
-	return not c:IsStatus(STATUS_BATTLE_DESTROYED)
-end
-function c101102087.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101102087.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function c101102087.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(2)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+function c101102087.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return aux.nbcon(tp,re) end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	if re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+	end
 end
-function c101102087.drop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
+function c101102087.negop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
+	end
 end
 function c101102087.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
