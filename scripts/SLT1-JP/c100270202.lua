@@ -31,10 +31,10 @@ function c100270202.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function c100270202.cfilter(c,tp)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(c100270202.tgfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetOriginalAttribute())
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(c100270202.tgfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetAttribute())
 end
 function c100270202.tgfilter(c,att)
-	return c:IsAbleToGrave() and c:GetOriginalAttribute()==att and c:IsSetCard(0x9d)
+	return c:IsAbleToGrave() and c:GetAttribute()==att and c:IsSetCard(0x9d)
 end
 function c100270202.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100270202.cfilter(chkc,tp) end
