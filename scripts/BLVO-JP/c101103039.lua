@@ -60,7 +60,7 @@ function c101103039.despop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function c90050480.desmcon(e,tp,eg,ep,ev,re,r,rp)
+function c101103039.desmcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonLocation()==LOCATION_EXTRA
 end
 function c101103039.desmfilter(c)

@@ -20,7 +20,6 @@ function c101103041.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
-	e2:SetCondition(c101103041.thcon)
 	e2:SetTarget(c101103041.thtg)
 	e2:SetOperation(c101103041.thop)
 	c:RegisterEffect(e2)
@@ -62,17 +61,17 @@ function c101103041.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 --破壊された
 function c101103041.desfilter(c)
-	return c:IsFaceup and c:IsType(TYPE_FUSION)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION)
 end
 function c101103041.descon(e)
 	return Duel.IsExistingMatchingCard(c101103041.desfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)
 		and ep==1-tp and re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER)
 end
-function c101103041.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101103041.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsDestructable() end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 end
-function c101103041.operation(e,tp,eg,ep,ev,re,r,rp)
+function c101103041.desop(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end

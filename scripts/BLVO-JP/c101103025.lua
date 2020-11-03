@@ -103,7 +103,7 @@ function c101103025.ctlcon(e,tp,eg,ep,ev,re,r,rp)
 	return tg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function c101103025.ctltg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then true end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,e:GetHandler(),1,0,0)
 end
 function c101103025.ctlop(e,tp,eg,ep,ev,re,r,rp)
