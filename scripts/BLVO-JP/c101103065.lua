@@ -53,47 +53,47 @@ function c101103065.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetParam(ct)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_DRAW)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CHANGE_DAMAGE)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetTargetRange(0,1)
-	e2:SetValue(c101103065.damval)
-	e2:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e2,tp)
-end
-function c101103065.damval(e,re,val,r,rp,rc)
-	return math.floor(val/2)
 end
 function c101103065.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.ConfirmDecktop(p,d)
 	local g=Duel.GetDecktopGroup(p,d)
-	if #g==0 then return end
-	Duel.DisableShuffleCheck()
-	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
-	local sc=g:Select(p,1,1,nil):GetFirst()
-	if sc:IsAbleToHand() then
-		Duel.SendtoHand(sc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-p,sc)
-		Duel.ShuffleHand(p)
-		g:RemoveCard(sc)
-	else
-		Duel.SendtoGrave(sc,REASON_RULE)
-	end
 	if #g>0 then
-		Duel.SortDecktop(tp,tp,#g)
-		for i=1,#g do
+		Duel.DisableShuffleCheck()
+		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
+		local sc=g:Select(p,1,1,nil):GetFirst()
+		if sc:IsAbleToHand() then
+			Duel.SendtoHand(sc,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-p,sc)
+			Duel.ShuffleHand(p)
+		else
+			Duel.SendtoGrave(sc,REASON_RULE)
+		end
+	end
+	if #g>1 then
+		Duel.SortDecktop(tp,tp,#g-1)
+		for i=1,#g-1 do
 			local dg=Duel.GetDecktopGroup(tp,1)
 			Duel.MoveSequence(dg:GetFirst(),1)
 		end
 	end
+	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(0,1)
+	e1:SetValue(c101103065.damval)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
+function c101103065.damval(e,re,val,r,rp,rc)
+	return math.floor(val/2)
 end
