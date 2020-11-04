@@ -29,10 +29,10 @@ function c101103008.ovfilter(c)
 end
 function c101103008.ovtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101103008.ovfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101103008.ovfilter,tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(c101103008.ovfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 		and e:GetHandler():IsCanOverlay() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c101103008.ovfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c101103008.ovfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
 	if e:GetHandler():IsLocation(LOCATION_GRAVE) then
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 	end
