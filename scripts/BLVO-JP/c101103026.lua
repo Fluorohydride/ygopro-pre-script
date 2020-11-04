@@ -57,7 +57,7 @@ function c101103026.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetHandler():IsSetCard(0x131) and re:IsActiveType(TYPE_MONSTER)
 end
 function c101103026.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() and c:IsFaceup()
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c101103026.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
