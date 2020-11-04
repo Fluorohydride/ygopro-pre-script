@@ -49,7 +49,7 @@ function c101103066.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=tg:GetFirst()
 	if #tg>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		tc=tg:Select(tp,1,1,nil)
+		tc=tg:Select(tp,1,1,nil):GetFirst()
 	end
 	Duel.ConfirmCards(1-tp,tc)
 	Duel.SetTargetCard(tc)
@@ -57,10 +57,8 @@ function c101103066.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c101103066.drop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK) then
+	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK) then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
@@ -75,7 +73,7 @@ function c101103066.drtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=tg:GetFirst()
 	if #tg>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		tc=tg:Select(tp,1,1,nil)
+		tc=tg:Select(tp,1,1,nil):GetFirst()
 	end
 	Duel.ConfirmCards(1-tp,tc)
 	Duel.SetTargetCard(tc)
@@ -87,7 +85,7 @@ function c101103066.drop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or Duel.SendtoGrave(c,REASON_EFFECT)<=0 or not c:IsLocation(LOCATION_GRAVE) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK) then
+	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK) then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
