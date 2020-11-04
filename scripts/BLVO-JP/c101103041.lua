@@ -20,6 +20,7 @@ function c101103041.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(c101103041.thtg)
 	e2:SetOperation(c101103041.thop)
 	c:RegisterEffect(e2)
@@ -40,7 +41,7 @@ function c101103041.indtg(e,c)
 	return c:IsFaceup() and c:IsType(0x14f) and c:IsType(TYPE_FUSION)
 end
 function c101103041.indct(e,re,r,rp)
-	if bit.band(r,REASON_EFFECT)~=0 then
+	if bit.band(r,REASON_BATTLE)~=0 then
 		return 1
 	else return 0 end
 end
