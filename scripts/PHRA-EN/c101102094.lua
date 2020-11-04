@@ -63,11 +63,13 @@ function c101102094.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101102094.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
+	if not ec then return false end
 	local tc=ec:GetBattleTarget()
-	return ec and tc and Duel.GetAttacker()==ec and tc:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return tc and Duel.GetAttacker()==ec and tc:IsSummonType(SUMMON_TYPE_SPECIAL)
 		and tc:IsControler(1-tp)
 end
 function c101102094.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local ec=e:GetHandler():GetEquipTarget()
 	local tc=ec:GetBattleTarget()
 	if chk==0 then return tc and tc:IsAbleToRemove() end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,0,0)
