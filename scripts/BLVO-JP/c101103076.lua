@@ -33,7 +33,12 @@ function c101103076.desfilter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x14f) and lv>0 and Duel.IsExistingMatchingCard(c101103076.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp,lv,c)
 end
 function c101103076.spfilter(c,e,tp,lv,rc)
-	return c:IsSetCard(0x14f) and c:IsLevel(lv-1,lv+1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsLocation(LOCATION_DECK) and Duel.GetMZoneCount(tp,rc,tp)>0 or Duel.GetLocationCountFromEx(tp,tp,rc)>0)
+	if not (c:IsSetCard(0x14f) and c:IsLevel(lv-1,lv+1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) then return false end
+	if c:IsLocation(LOCATION_DECK) then
+		return Duel.GetMZoneCount(tp,rc)>0
+	else
+		return Duel.GetLocationCountFromEx(tp,tp,rc,c)>0
+	end
 end
 function c101103076.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101103076.desfilter(chkc,e,tp) end
