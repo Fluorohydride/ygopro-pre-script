@@ -41,7 +41,7 @@ function c101102091.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101102091.cfilter(c,re)
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsAbleToRemoveAsCost()
-		and c:IsType(re:GetActiveType())
+		and c:IsType(re:GetActiveType()) and c:IsSetCard(0x258)
 end
 function c101102091.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102091.cfilter,tp,LOCATION_GRAVE+LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,re) end
