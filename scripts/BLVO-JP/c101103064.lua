@@ -14,12 +14,6 @@ function c101103064.initial_effect(c)
 	e1:SetOperation(c101103064.spop)
 	c:RegisterEffect(e1)
 end
-function c101103064.mfilter(c)
-	return c:IsCode(101103037)
-end
-function c101103064.ritual_filter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsSetCard(0x10cf)
-end
 function c101103064.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and c:IsLevelAbove(1) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
