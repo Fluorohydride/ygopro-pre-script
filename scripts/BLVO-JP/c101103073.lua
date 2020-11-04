@@ -38,7 +38,7 @@ function c101103073.activate(e,tp,eg,ep,ev,re,r,rp)
 	local lc=tg:GetFirst()
 	if lc==tc then lc=tg:GetNext() end
 	if Duel.DiscardHand(tp,nil,1,1,REASON_DISCARD+REASON_EFFECT,nil)>0 and tc:IsRelateToEffect(e) then
-		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 and lc:IsFaceup() and lc:IsRelateToEffect(e) then
+		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 and lc:IsRelateToEffect(e) then
 			Duel.Destroy(lc,REASON_EFFECT)
 		end
 	end
