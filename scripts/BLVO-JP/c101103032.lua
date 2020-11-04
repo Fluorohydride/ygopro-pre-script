@@ -11,7 +11,7 @@ function c101103032.initial_effect(c)
 	e1:SetValue(LOCATION_REMOVED)
 	e1:SetCondition(c101103032.rmcon)
 	c:RegisterEffect(e1)
-	--Destroy
+	--position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101103032,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -28,16 +28,16 @@ function c101103032.initial_effect(c)
 	e3:SetCategory(CATEGORY_POSITION)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetOperation(c101103032.posop)
+	e3:SetTarget(c101103032.postg2)
+	e3:SetOperation(c101103032.posop2)
 	c:RegisterEffect(e3)
-	--spsummon
+	--destroy
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101103032,2))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetCategory(CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_CHANGE_POS)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,101103032)
@@ -46,9 +46,10 @@ function c101103032.initial_effect(c)
 	c:RegisterEffect(e4)
 	--tohand
 	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(101103032,3))
 	e5:SetCategory(CATEGORY_TOHAND)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetCode(EVENT_DESTROYED)
 	e5:SetCountLimit(1,101103032+100)
 	e5:SetCondition(c101103032.thcon)
@@ -77,15 +78,19 @@ function c101103032.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101103032.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tg=g:Filter(Card.IsCanChangePosition,nil,e)
+	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if tg:GetCount()>0 then
 		Duel.ChangePosition(tg,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 	end
 end
-function c101103032.posop(e,tp,eg,ep,ev,re,r,rp)
+function c101103032.postg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsCanChangePosition() end
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
+end
+function c101103032.posop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		Duel.ChangePosition(c,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
+	if c:IsRelateToEffect(e) then
+		Duel.ChangePosition(c,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 	end
 end
 function c101103032.desfilter(c)
@@ -116,6 +121,7 @@ function c101103032.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_PZONE,0,1,1,nil)
 	if g:GetCount()>0 then
+		Duel.HintSelection(g)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end
