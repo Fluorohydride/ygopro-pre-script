@@ -48,7 +48,7 @@ function c101102088.ctval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer() and (re:GetActiveType() & TYPE_SPELL)>0
 end
 function c101102088.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:GetHandler()~=e:GetHandler()
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
 		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainNegatable(ev)
 end
 function c101102088.drcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -48,8 +48,8 @@ function c101102089.ctval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer() and (re:GetActiveType() & TYPE_MONSTER)>0
 end
 function c101102089.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:GetHandler()~=e:GetHandler()
-		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainNegatable(ev)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
+		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function c101102089.cfilter(c)
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED)
