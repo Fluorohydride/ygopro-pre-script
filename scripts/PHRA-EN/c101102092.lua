@@ -15,17 +15,17 @@ function c101102092.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x19))
+	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x258))
 	e2:SetValue(c101102092.atkval)
 	c:RegisterEffect(e2)
 	--draw
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(101102092,0))
+	e3:SetDescription(aux.Stringid(101102092,1))
 	e3:SetCategory(CATEGORY_DRAW+CATEGORY_TODECK)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetRange(LOCATION_MZONE)
+	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1)
 	e3:SetTarget(c101102092.drtg)
 	e3:SetOperation(c101102092.drop)
@@ -38,13 +38,13 @@ function c101102092.atkval(e,c)
 	local tp=e:GetHandler():GetControler()
 	return Duel.GetMatchingGroupCount(c101102092.atkvalfilter,tp,LOCATION_REMOVED,0,nil)*100
 end
-function c101102092.thfilter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelBelow(4)
+function c101102092.spfilter(c,e,tp)
+	return c:IsSetCard(0x258) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelBelow(4)
 end
 function c101102092.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetMZoneCount(tp)<=0 then return end
-	local g=Duel.SelectMatchingCard(tp,c101102092.thfilter,tp,LOCATION_HAND+LOCATION_REMOVED,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c101102092.spfilter,tp,LOCATION_HAND+LOCATION_REMOVED,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101102092,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
