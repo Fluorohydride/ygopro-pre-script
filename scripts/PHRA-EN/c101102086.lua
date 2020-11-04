@@ -28,7 +28,7 @@ function c101102086.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101102086.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsEnvironment(101102092,tp,LOCATION_FZONE) and Duel.GetTurnPlayer()~=tp
 		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end
 function c101102086.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
