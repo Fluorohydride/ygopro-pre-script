@@ -43,7 +43,7 @@ function c101103077.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function c101103077.tffilter(c)
-	return c:IsFaceup() and c:IsCode(74665651,1050355)
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsCode(74665651,1050355)
 end
 function c101103077.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101103077.tffilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
@@ -63,12 +63,13 @@ function c101103077.tfop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(fc,REASON_RULE)
 		Duel.BreakEffect()
 	end
-	Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
-	local g=Duel.GetMatchingGroup(c101103077.spfilter,tp,LOCATION_HAND,0,nil,e,tp,tc:GetCode())
-	if #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(101103077,1)) then
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:Select(tp,1,1,nil)
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+	if Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true) then
+		local g=Duel.GetMatchingGroup(c101103077.spfilter,tp,LOCATION_HAND,0,nil,e,tp,tc:GetCode())
+		if #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(101103077,1)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sg=g:Select(tp,1,1,nil)
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+		end
 	end
 end
