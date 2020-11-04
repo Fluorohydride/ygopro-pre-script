@@ -27,14 +27,14 @@ end
 function c101103033.actlimit(e,re,tp)
 	local rc=re:GetHandler()
 	local c=e:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc:IsAttribute(c:GetAttribute()) and rc~=c and rc:GetControler()==c:GetControler()
+	return re:IsActiveType(TYPE_MONSTER) and rc:IsAttribute(c:GetAttribute()) and rc~=c and tp==c:GetControler()
 end
 function c101103033.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local p=e:GetHandler():GetOwner()
 	return p==Duel.GetTurnPlayer() and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end
 function c101103033.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return true end
+	if chk==0 then return e:GetHandler():IsControlerCanBeChanged() end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,e:GetHandler(),1,0,0)
 end
 function c101103033.ctop(e,tp,eg,ep,ev,re,r,rp)
