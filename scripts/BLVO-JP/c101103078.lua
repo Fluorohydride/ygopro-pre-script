@@ -5,7 +5,7 @@ function c101103078.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(c101103078.cost)
@@ -19,18 +19,19 @@ function c101103078.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		return true
 	end
 end
-function c101103078.costfilter(c)
-	return c:IsRace(RACE_MACHINE)
+function c101103078.costfilter(c,tp)
+	return c:IsRace(RACE_MACHINE) and (c:IsControler(tp) or c:IsFaceup()) and c:GetTextAttack()>=1000
+		and Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function c101103078.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dc=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
+	if chkc then return chkc:IsOnField() end
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.CheckReleaseGroup(tp,c101103078.costfilter,1,nil)
+		return Duel.CheckReleaseGroup(tp,c101103078.costfilter,1,nil,tp)
 	end
-	local g=Duel.SelectReleaseGroup(tp,c101103078.costfilter,1,1,nil)
-	local atk=g:GetFirst():GetAttack()
+	local g=Duel.SelectReleaseGroup(tp,c101103078.costfilter,1,1,nil,tp)
+	local atk=g:GetFirst():GetTextAttack()
 	Duel.Release(g,REASON_COST)
 	local ct=math.floor(atk/1000)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
