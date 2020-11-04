@@ -55,7 +55,7 @@ end
 function c101102090.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.Destroy(g,REASON_EFFECT)
+		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
 function c101102090.immcon(e,tp,eg,ep,ev,re,r,rp)
