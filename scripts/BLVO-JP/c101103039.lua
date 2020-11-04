@@ -42,7 +42,7 @@ function c101103039.initial_effect(c)
 end
 function c101103039.filter(c,tp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousSetCard(0xe1)
-		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
+		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c101103039.despcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101103039.filter,1,nil,tp)
