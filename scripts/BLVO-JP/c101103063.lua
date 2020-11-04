@@ -16,30 +16,34 @@ function c101103063.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_EQUIP_LIMIT)
-	e2:SetValue(1)
+	e2:SetValue(c101103063.eqlimit)
 	c:RegisterEffect(e2)
 	--confirm
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101103063,0))
+	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1,100270206)
+	e3:SetCountLimit(1,101103063)
 	e3:SetTarget(c101103063.cftg)
 	e3:SetOperation(c101103063.cfop)
 	c:RegisterEffect(e3)
 	--tograve
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101103063,1))
-	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e4:SetCategory(CATEGORY_TOHAND)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_TO_GRAVE)
-	e4:SetCountLimit(1,101103063)
+	e4:SetCountLimit(1,101103163)
 	e4:SetCondition(c101103063.thcon)
 	e4:SetCost(c101103063.thcost)
 	e4:SetTarget(c101103063.thtg)
 	e4:SetOperation(c101103063.thop)
 	c:RegisterEffect(e4)
+end
+function c101103063.eqlimit(e,c)
+	return c:IsControler(e:GetHandlerPlayer())
 end
 function c101103063.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
@@ -55,7 +59,8 @@ function c101103063.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101103063.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>0 end
+	local ec=e:GetHandler():GetEquipTarget()
+	if chk==0 then return ec and ec::IsAttackAbove(1) and Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>0 end
 end
 function c101103063.cfop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -88,10 +93,9 @@ function c101103063.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101103063.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function c101103063.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) or not e:GetHandler():IsAbleToHand() then return end
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,e:GetHandler())
 end
