@@ -11,15 +11,10 @@ function c101102093.initial_effect(c)
 	e1:SetTarget(c101102093.target)
 	e1:SetOperation(c101102093.activate)
 	c:RegisterEffect(e1)
-	--damage
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_CHAINING)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetOperation(c101102093.regop)
-	e2:SetLabelObject(e1)
-	c:RegisterEffect(e2)
+	Duel.AddCustomActivityCounter(101102093,ACTIVITY_CHAIN,c101102093.chainfilter)
+end
+function c101102093.chainfilter(re,tp,cid)
+	return false
 end
 function c101102093.filter0(c)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove()
@@ -31,11 +26,9 @@ function c101102093.filter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x258) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
-function c101102093.cfilter(c)
-	return c:GetSummonLocation()==LOCATION_EXTRA
-end
+
 function c101102093.fcheck(tp,sg,fc)
-	return (sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1 and fc:IsLocation(LOCATION_DECK)) and (sg:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)<=1 and fc:IsLocation(LOCATION_GRAVE))
+	return sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1 and sg:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)<=1
 end
 function c101102093.gcheck(sg)
 	return sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1 and sg:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)<=1
@@ -44,12 +37,12 @@ function c101102093.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp
 		local mg1=Duel.GetFusionMaterial(tp)
-		if e:GetLabel()==Duel.GetTurnCount() then
+		if Duel.GetCustomActivityCount(101102093,1-tp,ACTIVITY_CHAIN)~=0 then
 			local mg2=Duel.GetMatchingGroup(c101102093.filter0,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
 			if mg2:GetCount()>0 then
 				mg1:Merge(mg2)
-				Auxiliary.FCheckAdditional=c87931906.fcheck
-				Auxiliary.GCheckAdditional=c87931906.gcheck
+				Auxiliary.FCheckAdditional=c101102093.fcheck
+				Auxiliary.GCheckAdditional=c101102093.gcheck
 			end
 		end
 		local res=Duel.IsExistingMatchingCard(c101102093.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
@@ -72,7 +65,7 @@ function c101102093.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c101102093.filter1,nil,e)
 	local exmat=false
-	if Duel.IsExistingMatchingCard(c101102093.cfilter,tp,0,LOCATION_MZONE,1,nil) then
+	if Duel.GetCustomActivityCount(101102093,1-tp,ACTIVITY_CHAIN)~=0 then
 		local mg2=Duel.GetMatchingGroup(c101102093.filter0,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
 		if mg2:GetCount()>0 then
 			mg1:Merge(mg2)
@@ -121,8 +114,4 @@ function c101102093.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc:CompleteProcedure()
 	end
-end
-function c101102093.regop(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp then return end
-	e:GetLabelObject():SetLabel(Duel.GetTurnCount())
 end
