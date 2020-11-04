@@ -28,7 +28,7 @@ function c101103008.ovfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x257) and c:IsType(TYPE_XYZ)
 end
 function c101103008.ovtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101103008.ovfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101103008.ovfilter(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.IsExistingTarget(c101103008.ovfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 		and e:GetHandler():IsCanOverlay() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
