@@ -41,6 +41,7 @@ function c101103071.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	for lc in aux.Next(lg) do
 		zone=bit.bor(zone,lc:GetColumnZone(LOCATION_MZONE,tp))
 	end
+	zone=zone&0x1f
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c101103071.spfilter(chkc,e,tp,zone) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c101103071.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp,zone) end
@@ -56,6 +57,7 @@ function c101103071.spop(e,tp,eg,ep,ev,re,r,rp)
 	for lc in aux.Next(lg) do
 		zone=bit.bor(zone,lc:GetColumnZone(LOCATION_MZONE,tp))
 	end
+	zone=zone&0x1f
 	if zone~=0 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
