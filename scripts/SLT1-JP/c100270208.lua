@@ -58,17 +58,30 @@ function c100270208.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100270208.spop1(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		local code=tc:GetCode()
 		local g=Duel.GetMatchingGroup(c100270208.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,code)
 		if #g>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=g:Select(tp,1,1,nil)
-			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+			local sc=g:Select(tp,1,1,nil):GetFirst()
+			if Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_DISABLE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				sc:RegisterEffect(e1)
+				local e2=Effect.CreateEffect(c)
+				e2:SetType(EFFECT_TYPE_SINGLE)
+				e2:SetCode(EFFECT_DISABLE_EFFECT)
+				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+				sc:RegisterEffect(e2)
+			end
+			Duel.SpecialSummonComplete()
 		end
 	end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
