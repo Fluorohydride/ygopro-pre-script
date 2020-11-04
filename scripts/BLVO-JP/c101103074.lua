@@ -45,7 +45,7 @@ function c101103074.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101103074.cfilter(c,tp)
-	return c:GetSummonPlayer()~=tp
+	return c:GetSummonPlayer()==1-tp
 end
 function c101103074.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101103074.cfilter,1,nil,tp)
@@ -63,13 +63,13 @@ function c101103074.tkop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c101103074.repfilter(c,tp)
+function c101103074.repfilter(c)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsReason(REASON_BATTLE)
 		and c:IsSetCard(0x137) and not c:IsReason(REASON_REPLACE)
 end
 function c101103074.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsStatus(STATUS_DESTROY_CONFIRMED)
-		and eg:IsExists(c101103074.repfilter,1,nil,tp) end
+		and eg:IsExists(c101103074.repfilter,1,nil) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function c101103074.repval(e,c)
@@ -78,18 +78,18 @@ end
 function c101103074.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 end
-function c101103074.tfilter(c,tp)
+function c101103074.tfilter(c)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x137)
 end
 function c101103074.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(c101103074.tfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
+	return g and g:IsExists(c101103074.tfilter,1,nil) and Duel.IsChainNegatable(ev)
 end
 function c101103074.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function c101103074.negop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateEffect(ev)
+	Duel.NegateActivation(ev)
 end
