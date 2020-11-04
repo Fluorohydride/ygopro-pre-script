@@ -34,7 +34,7 @@ function c101103065.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_EXTRA,0,nil,POS_FACEDOWN)
 	local count=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	local b1=#g>=3 and count>=3 and Duel.GetDecktopGroup(tp,3):IsExists(Card.IsAbleToHand,1,nil)
-	local b2=#g>=6 and count>=6 Duel.GetDecktopGroup(tp,6):IsExists(Card.IsAbleToHand,1,nil)
+	local b2=#g>=6 and count>=6 and Duel.GetDecktopGroup(tp,6):IsExists(Card.IsAbleToHand,1,nil)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
