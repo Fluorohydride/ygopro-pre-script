@@ -46,11 +46,12 @@ function c101102086.sp2costfilter(c)
 	return c:IsAbleToRemoveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function c101102086.sp2cost(e,tp,eg,ep,ev,re,r,rp)
-	if chk==0 then return e:GetHandler():IsReleasable()
-		and Duel.IsExistingMatchingCard(c101102086.sp2costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,e,tp) end
-	Duel.Release(e:GetHandler(),REASON_COST+REASON_RELEASE)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReleasable()
+		and Duel.IsExistingMatchingCard(c101102086.sp2costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,c) end
+	Duel.Release(c,REASON_COST+REASON_RELEASE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local cost=Duel.SelectMatchingCard(tp,c101102086.sp2costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,e,tp)
+	local cost=Duel.SelectMatchingCard(tp,c101102086.sp2costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,c)
 	Duel.Remove(cost,POS_FACEUP,REASON_COST)
 end
 function c101102086.sp2tgfilter(c,e,tp)
