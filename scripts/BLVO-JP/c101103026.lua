@@ -16,6 +16,7 @@ function c101103026.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101103026,2))
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_TOHAND+CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -42,6 +43,7 @@ function c101103026.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and not c:IsAttribute(ATTRIBUTE_DARK)
 			and Duel.SelectYesNo(tp,aux.Stringid(101103026,1)) then
+			Duel.BreakEffect()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
@@ -52,10 +54,10 @@ function c101103026.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101103026.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsSetCard(0x131) and re:GetHandler():IsType(TYPE_MONSTER)
+	return re:GetHandler():IsSetCard(0x131) and re:IsActiveType(TYPE_MONSTER)
 end
 function c101103026.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() and c:IsFaceup()
 end
 function c101103026.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -70,6 +72,7 @@ function c101103026.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local g=Duel.SelectMatchingCard(tp,c101103026.thfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 		if #g>0 then
+			Duel.HintSelection(g)
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end
 	end
@@ -79,7 +82,7 @@ function c101103026.thop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 		if #g>0 then
 			Duel.BreakEffect()
-			Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 		end
 	end
 end
