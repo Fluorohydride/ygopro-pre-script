@@ -64,7 +64,7 @@ function c101103074.tkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101103074.repfilter(c,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsReason(REASON_BATTLE)
 		and c:IsSetCard(0x137) and not c:IsReason(REASON_REPLACE)
 end
 function c101103074.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
