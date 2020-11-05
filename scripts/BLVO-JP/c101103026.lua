@@ -16,7 +16,7 @@ function c101103026.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101103026,2))
+	e2:SetDescription(aux.Stringid(101103026,3))
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_TOHAND+CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
