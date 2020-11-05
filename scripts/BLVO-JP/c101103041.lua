@@ -5,6 +5,12 @@ function c101103041.initial_effect(c)
 	--フュージョン召喚
 	c:EnableReviveLimit()
 	aux.AddFusionProcCodeFun(c,11759079,aux.FilterBoolFunction(Card.IsFusionSetCard,0x14f),2,true,true)
+	--effect monster material check
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_MATERIAL_CHECK)
+	e0:SetValue(c101103041.matcheck)
+	c:RegisterEffect(e0)
 	--最初に破壊されない
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -35,6 +41,12 @@ function c101103041.initial_effect(c)
 	e3:SetTarget(c101103041.destg)
 	e3:SetOperation(c101103041.desop)
 	c:RegisterEffect(e3)
+end
+function c101103041.matcheck(e,c)
+	local g=c:GetMaterial()
+	if g:IsExists(Card.IsType,1,nil,TYPE_EFFECT) then
+		c:RegisterFlagEffect(85360035,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
+	end
 end
 --初回は破壊されない
 function c101103041.indtg(e,c)
