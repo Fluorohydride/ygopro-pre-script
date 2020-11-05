@@ -60,7 +60,7 @@ function c101103063.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101103063.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=e:GetHandler():GetEquipTarget()
-	if chk==0 then return ec and ec::IsAttackAbove(1) and Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>0 end
+	if chk==0 then return ec and ec:IsAttackAbove(1) and Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>0 end
 end
 function c101103063.cfop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
