@@ -46,7 +46,7 @@ function c101102096.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101102096.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x258) and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsSetCard(0x258) and c:IsLocation(LOCATION_MZONE) and c:IsLevelAbove(8)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function c101102096.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
