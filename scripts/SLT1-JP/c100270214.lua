@@ -60,7 +60,7 @@ end
 function c100270214.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	local a,d,c=Duel.GetAttacker(),Duel.GetAttackTarget(),e:GetHandler()
 	local g=Duel.GetMatchingGroup(c100270214.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
-	return d and (a==c or b==c) and a:GetControler()~=d:GetControler() and #g>0
+	return d and (a==c or d==c) and a:GetControler()~=d:GetControler() and #g>0
 end
 function c100270214.dmop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
