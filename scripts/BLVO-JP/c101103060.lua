@@ -50,7 +50,7 @@ end
 function c101103060.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101103060.thfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101103060.thfilter,tp,LOCATION_GRAVE,0,1,nil)
-		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,nil) end
+		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_HAND,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g1=Duel.SelectTarget(tp,c101103060.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
@@ -69,9 +69,6 @@ function c101103060.atkcon(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()~=nil
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-end
-function c101103060.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xa9,0xad)
 end
 function c101103060.atkval(e,c)
 	local ct=Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_HAND)-Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)

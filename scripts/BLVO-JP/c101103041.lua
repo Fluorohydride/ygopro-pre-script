@@ -4,7 +4,7 @@
 function c101103041.initial_effect(c)
 	--フュージョン召喚
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,11759079,aux.FilterBoolFunction(Card.IsFusionSetCard,0x14f),2,true,false)
+	aux.AddFusionProcCodeFun(c,11759079,aux.FilterBoolFunction(Card.IsFusionSetCard,0x14f),2,true,true)
 	--最初に破壊されない
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -38,7 +38,7 @@ function c101103041.initial_effect(c)
 end
 --初回は破壊されない
 function c101103041.indtg(e,c)
-	return c:IsFaceup() and c:IsType(0x14f) and c:IsType(TYPE_FUSION)
+	return c:IsType(0x14f) and c:IsType(TYPE_FUSION)
 end
 function c101103041.indct(e,re,r,rp)
 	if bit.band(r,REASON_BATTLE)~=0 then
@@ -50,12 +50,12 @@ function c101103041.thfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c101103041.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101103041.thfilter,tp,0,LOCATION_SZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(c101103041.thfilter,tp,0,LOCATION_SZONE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101103041.thfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(c101103041.thfilter,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),0,0)
 end
 function c101103041.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c101103041.thfilter,tp,0,LOCATION_SZONE,nil)
+	local g=Duel.GetMatchingGroup(c101103041.thfilter,tp,0,LOCATION_ONFIELD,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end

@@ -4,7 +4,6 @@
 function c101103075.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101103075+EFFECT_COUNT_CODE_OATH)
@@ -17,7 +16,7 @@ function c101103075.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,101103075)
+	e2:SetCountLimit(1,101103175)
 	e2:SetCondition(c101103075.cpcon)
 	e2:SetTarget(c101103075.cptg)
 	e2:SetOperation(c101103075.cpop)
@@ -30,7 +29,7 @@ function c101103075.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetCountLimit(1,101103175)
+	e3:SetCountLimit(1,101103275)
 	e3:SetCondition(c101103075.spcon)
 	e3:SetCost(aux.bfgcost)
 	e3:SetTarget(c101103075.sptg)
@@ -65,11 +64,12 @@ function c101103075.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function c101103075.spfilter(c,e,tp)
-	return c:IsSetCard(0x14e) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return c:IsSetCard(0x14e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101103075.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101103075.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c101103075.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(c101103075.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c101103075.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)

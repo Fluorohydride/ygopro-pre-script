@@ -38,6 +38,7 @@ function c101103080.activate(e,tp,eg,ep,ev,re,r,rp)
 	local gnum=Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local dg=Duel.SelectMatchingCard(tp,c101103080.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	if #dg==0 then return end
 	local mon=dg:GetFirst()
 	local lnum=mon:GetLevel()
 	--The equation
