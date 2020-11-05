@@ -49,17 +49,46 @@ function c101103050.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 --temp update
-function Auxiliary.LCheckOtherMaterial(c,mg,lc,tp)
+function Auxiliary.LExtraFilter(c,f,lc,tp)
+	if c:IsLocation(LOCATION_ONFIELD) and not c:IsFaceup() then return false end
+	if not c:IsCanBeLinkMaterial(lc) or f and not f(c) then return false end
 	local le={c:IsHasEffect(EFFECT_EXTRA_LINK_MATERIAL,tp)}
 	for _,te in pairs(le) do
-		local f=te:GetValue()
-		if f and not f(te,lc,mg,c,tp) then return false end
+		local tf=te:GetValue()
+		local related,valid=tf(te,lc,nil,c,tp)
+		if related then return true end
 	end
-	return true
+	return false
 end
+function Auxiliary.LCheckOtherMaterial(c,mg,lc,tp)
+	local le={c:IsHasEffect(EFFECT_EXTRA_LINK_MATERIAL,tp)}
+	local res1=false
+	local res2=true
+	for _,te in pairs(le) do
+		local f=te:GetValue()
+		local related,valid=f(te,lc,mg,c,tp)
+		if related then res2=false end
+		if related and valid then res1=true end
+	end
+	return res1 or res2
+end
+function Auxiliary.LExtraMaterialCount(mg,lc,tp)
+	for tc in aux.Next(mg) do
+		local le={tc:IsHasEffect(EFFECT_EXTRA_LINK_MATERIAL,tp)}
+		for _,te in pairs(le) do
+			local sg=mg:Filter(aux.TRUE,tc)
+			local f=te:GetValue()
+			local related,valid=f(te,lc,sg,tc,tp)
+			if related and valid then
+				te:UseCountLimit(tp)
+			end
+		end
+	end
+end
+--/temp update
 function c101103050.matval(e,lc,mg,c,tp)
-	if e:GetHandlerPlayer()~=tp then return true end
-	return lc:IsCode(101103050) and not mg:IsExists(Card.IsControler,1,nil,1-tp)
+	if e:GetHandler()~=lc then return false,nil end
+	return true,not mg or not mg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function c101103050.discon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
