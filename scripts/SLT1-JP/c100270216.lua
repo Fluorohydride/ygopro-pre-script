@@ -82,7 +82,7 @@ end
 function c100270216.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetHandler():GetBattleTarget()
 	local zone=Duel.GetLinkedZone(tp)&0x1f
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,LOCATION_REASON_TOFIELD,zone)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 		and bc:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetTargetCard(bc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,bc,1,0,0)
