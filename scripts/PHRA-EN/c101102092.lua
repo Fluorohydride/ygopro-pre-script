@@ -38,7 +38,7 @@ function c101102092.atkval(e,c)
 	return Duel.GetMatchingGroupCount(c101102092.atkvalfilter,tp,LOCATION_REMOVED,0,nil)*100
 end
 function c101102092.spfilter(c,e,tp)
-	return c:IsSetCard(0x258) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelBelow(4)
+	return c:IsSetCard(0x258) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelBelow(4) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function c101102092.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

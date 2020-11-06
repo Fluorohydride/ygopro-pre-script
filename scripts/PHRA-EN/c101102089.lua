@@ -83,7 +83,7 @@ function c101102089.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:GetPreviousControler()==tp
 end
 function c101102089.thtgfilter(c)
-	return c:IsSetCard(0x258) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x258) and c:IsType(TYPE_TRAP) and c:IsAbleToHand() and c:IsFaceup()
 end
 function c101102089.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101102089.thtgfilter(chkc) end

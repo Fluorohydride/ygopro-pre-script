@@ -84,7 +84,7 @@ function c101102090.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c101102090.thfilter(c)
-	return c:IsAbleToHand() and c:IsSetCard(0x258)
+	return c:IsAbleToHand() and c:IsSetCard(0x258) and c:IsFaceup()
 end
 function c101102090.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102090.thfilter,tp,LOCATION_REMOVED,0,1,nil) end

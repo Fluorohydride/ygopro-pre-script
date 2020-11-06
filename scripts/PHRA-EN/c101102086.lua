@@ -61,7 +61,7 @@ function c101102086.sp2cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101102086.sp2tgfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and c:IsSetCard(0x258) and c:IsLevel(8)
+		and c:IsSetCard(0x258) and c:IsLevel(8) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function c101102086.sp2tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp)>0

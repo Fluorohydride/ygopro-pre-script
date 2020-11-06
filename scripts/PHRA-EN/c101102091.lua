@@ -66,7 +66,7 @@ function c101102091.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c101102091.thfilter(c,typ)
-	return c:IsAbleToHand() and c:IsSetCard(0x258)
+	return c:IsAbleToHand() and c:IsSetCard(0x258) and c:IsFaceup()
 end
 function c101102091.gcheck(g)
 	return g:GetClassCount(Card.GetType)==#g
