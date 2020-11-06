@@ -23,10 +23,9 @@ end
 function c101102096.filter(c,e,tp,zone)
 	return c:IsSetCard(0x258) and c:IsLevelBelow(4)
 		and ((zone and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) or c:IsAbleToHand())
-		and (c:IsFaceup() or c:IsLocation(LOCATION_DECK))
 end
 function c101102096.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c101102096.filter,tp,LOCATION_DECK+LOCATION_REMOVED,0,nil,Duel.GetMZoneCount(tp)>0)
+	local g=Duel.GetMatchingGroup(c101102096.filter,tp,LOCATION_DECK,0,nil,Duel.GetMZoneCount(tp)>0)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101102096,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
