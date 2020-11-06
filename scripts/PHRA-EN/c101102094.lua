@@ -83,7 +83,7 @@ function c101102094.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101102094.sptgfilter(c,e,tp,attr)
-	return c:GetOriginalAttribute()~=attr and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetOriginalAttribute()~=attr and c:IsSetCard(0x258) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101102094.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
