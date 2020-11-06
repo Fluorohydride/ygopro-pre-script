@@ -43,7 +43,7 @@ end
 function c101102092.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetMZoneCount(tp)<=0 then return end
-	local g=Duel.SelectMatchingCard(tp,c101102092.spfilter,tp,LOCATION_HAND+LOCATION_REMOVED,0,1,1,nil,e,tp)
+	local g=Duel.GetMatchingGroup(c101102092.spfilter,tp,LOCATION_HAND+LOCATION_REMOVED,0,nil,e,tp)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101102092,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
