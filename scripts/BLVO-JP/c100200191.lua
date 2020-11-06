@@ -30,7 +30,7 @@ function c100200191.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c100200191.spspfilter1(c,e,tp)
-	return c:IsSetCard(0x2f) and c:IsLevelAbove(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100200191.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
@@ -46,7 +46,7 @@ function c100200191.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100200191.spfilter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x2f) and c:IsLevelAbove(3) and c:IsAttribute(ATTRIBUTE_WATER)
+	return c:IsFaceup() and c:IsLevelAbove(3) and c:IsAttribute(ATTRIBUTE_WATER)
 end
 function c100200191.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100200191.spfilter2(chkc) end
