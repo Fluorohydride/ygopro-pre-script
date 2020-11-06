@@ -29,7 +29,7 @@ function c100200191.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
-function c100200191.spspfilter1(c,e,tp)
+function c100200191.spfilter1(c,e,tp)
 	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100200191.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -67,16 +67,14 @@ function c100200191.spop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetValue(-2)
 	tc:RegisterEffect(e1)
-	if not tc:IsImmuneToEffect(e1) and c:IsRelateToEffect(e)~=0
-		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) then
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
-			e2:SetValue(LOCATION_REMOVED)
-			c:RegisterEffect(e2,true)
-		end
+	if not tc:IsImmuneToEffect(e1) and c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e2:SetValue(LOCATION_REMOVED)
+		c:RegisterEffect(e2,true)
 	end
 end
 		
