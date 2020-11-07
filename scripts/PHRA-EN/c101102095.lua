@@ -39,7 +39,7 @@ function c101102095.tgfilter(c)
 	return c:IsType(TYPE_EFFECT) and c:IsFaceup() and not c:IsDisabled()
 end
 function c101102095.tgfilter2(c)
-	return c:IsSetCard(0x258) and c:IsAbleToRemove()
+	return c:IsSetCard(0x258) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function c101102095.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c101102095.tgfilter(chkc) and chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) end
@@ -73,7 +73,6 @@ function c101102095.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function c101102095.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=Duel.GetAttacker()
 	local bc=ec:GetBattleTarget()
