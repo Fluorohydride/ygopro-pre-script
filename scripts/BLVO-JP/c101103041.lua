@@ -45,7 +45,7 @@ end
 function c101103041.matcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsType,1,nil,TYPE_EFFECT) then
-		c:RegisterFlagEffect(85360035,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
+		c:RegisterFlagEffect(11759079,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 	end
 end
 --初回は破壊されない
