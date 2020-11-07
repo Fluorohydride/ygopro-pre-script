@@ -53,6 +53,7 @@ end
 function c101103023.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101103023.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -60,6 +61,7 @@ function c101103023.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.SelectYesNo(tp,aux.Stringid(101103023,2)) then
+		Duel.BreakEffect()
 		local g=Group.FromCards(c)
 		if tc:IsRelateToEffect(e) then g:AddCard(tc) end
 		g=g:Filter(Card.IsFaceup,nil)
