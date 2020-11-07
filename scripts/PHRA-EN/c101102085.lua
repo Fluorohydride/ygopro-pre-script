@@ -28,7 +28,7 @@ function c101102085.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101102085.thfilter(c)
-	return c:IsSetCard(0x258) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() and c:GetCode()~=101102085
+	return c:IsSetCard(0x258) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c101102085.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102085.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -48,13 +48,13 @@ end
 function c101102085.spcostexcheck(c,e,tp)
 	local result=false
 	if c:IsType(TYPE_MONSTER) then
-		result=result or Duel.IsExistingMatchingCard(c101102085.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,101102087)
+		result=result or Duel.IsExistingMatchingCard(c101102085.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,c,e,tp,101102087)
 	end
 	if c:IsType(TYPE_SPELL) then
-		result=result or Duel.IsExistingMatchingCard(c101102085.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,101102088)
+		result=result or Duel.IsExistingMatchingCard(c101102085.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,c,e,tp,101102088)
 	end
 	if c:IsType(TYPE_TRAP) then
-		result=result or Duel.IsExistingMatchingCard(c101102085.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,101102089)
+		result=result or Duel.IsExistingMatchingCard(c101102085.spcostexcheckfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,c,e,tp,101102089)
 	end
 	return result
 end
@@ -66,11 +66,11 @@ function c101102085.spcostfilter(c,e,tp,tc)
 end
 function c101102085.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		e:SetLabel(1)
+		e:SetLabel(100)
 		return Duel.IsExistingMatchingCard(c101102085.spcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler(),e,tp,e:GetHandler())
 			and e:GetHandler():IsReleasable()
 	end
-	Duel.Release(e:GetHandler(),REASON_COST+REASON_RELEASE)
+	Duel.Release(e:GetHandler(),REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local cost=Duel.SelectMatchingCard(tp,c101102085.spcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler(),e,tp,e:GetHandler()):GetFirst()
 	e:SetLabel(cost:GetType())
@@ -78,12 +78,9 @@ function c101102085.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101102085.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local label=e:GetLabel()
-		if label>0 then
-			e:SetLabel(0)
-			return true
-		end
-		return false
+		if e:GetLabel()~=100 then return false end
+        e:SetLabel(0)
+		return true
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
@@ -93,8 +90,8 @@ function c101102085.spopfilter(c,e,tp,typ)
 		or ((typ & TYPE_TRAP)>0 and c:IsCode(101102089)))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c101102085.spop(e,tp,eg,ep,ev,re,r,rp,chk)
-	local typ = e:GetLabel()
+function c101102085.spop(e,tp,eg,ep,ev,re,r,rp)
+	local typ=e:GetLabel()
 	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c101102085.spopfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp,typ)

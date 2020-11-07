@@ -47,16 +47,18 @@ end
 function c101102086.sp2con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
-function c101102086.sp2costfilter(c)
+function c101102086.sp2costfilter(c,tp,tc)
+	local tg=Group.FromCards(c,tc)
 	return c:IsAbleToRemoveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
+		and Duel.GetMZoneCount(tp,tg)>0
 end
 function c101102086.sp2cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReleasable()
-		and Duel.IsExistingMatchingCard(c101102086.sp2costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,c) end
-	Duel.Release(c,REASON_COST+REASON_RELEASE)
+		and Duel.IsExistingMatchingCard(c101102086.sp2costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,c,tp,c) end
+	Duel.Release(c,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local cost=Duel.SelectMatchingCard(tp,c101102086.sp2costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,c)
+	local cost=Duel.SelectMatchingCard(tp,c101102086.sp2costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,c,tp,c)
 	Duel.Remove(cost,POS_FACEUP,REASON_COST)
 end
 function c101102086.sp2tgfilter(c,e,tp)
@@ -64,12 +66,12 @@ function c101102086.sp2tgfilter(c,e,tp)
 		and c:IsSetCard(0x258) and c:IsLevel(8) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function c101102086.sp2tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
-		and Duel.IsExistingMatchingCard(c101102086.sp2tgfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101102086.sp2tgfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
 end
 function c101102086.sp2op(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,c101102086.sp2tgfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101102086.sp2tgfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
 	if tc then Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end
 end

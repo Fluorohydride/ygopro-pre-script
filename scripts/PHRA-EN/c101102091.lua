@@ -39,13 +39,15 @@ function c101102091.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 		and Duel.IsChainNegatable(ev)
 end
-function c101102091.cfilter(c,re)
+function c101102091.cfilter(c,rtype)
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsAbleToRemoveAsCost()
-		and c:IsType(re:GetActiveType()) and c:IsSetCard(0x258)
+		and (not c:IsOnField() or c:IsFaceup())
+		and c:IsType(rtype) and c:IsSetCard(0x258)
 end
 function c101102091.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101102091.cfilter,tp,LOCATION_GRAVE+LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,re) end
-	local g=Duel.SelectMatchingCard(tp,c101102091.cfilter,tp,LOCATION_GRAVE+LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,re)
+	local rtype=re:GetActiveType()&0x7
+	if chk==0 then return Duel.IsExistingMatchingCard(c101102091.cfilter,tp,LOCATION_GRAVE+LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,rtype) end
+	local g=Duel.SelectMatchingCard(tp,c101102091.cfilter,tp,LOCATION_GRAVE+LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,rtype)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c101102091.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -69,11 +71,13 @@ function c101102091.thfilter(c,typ)
 	return c:IsAbleToHand() and c:IsSetCard(0x258) and c:IsFaceup()
 end
 function c101102091.gcheck(g)
-	return g:GetClassCount(Card.GetType)==#g
+	return g:FilterCount(Card.IsType,nil,TYPE_MONSTER)<=1
+		and g:FilterCount(Card.IsType,nil,TYPE_SPELL)<=1
+		and g:FilterCount(Card.IsType,nil,TYPE_TRAP)<=1
 end
 function c101102091.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101102091.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,3,tp,LOCATION_REMOVED)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_REMOVED)
 end
 function c101102091.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101102091.thfilter,tp,LOCATION_REMOVED,0,nil)
@@ -82,7 +86,6 @@ function c101102091.thop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:SelectSubGroup(tp,c101102091.gcheck,false,1,3)
 		if sg then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sg)
 		end
 	end
 end

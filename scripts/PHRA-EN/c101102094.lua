@@ -32,7 +32,7 @@ function c101102094.initial_effect(c)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101102094,1))
-	e4:SetCategory(CATEGORY_ATKCHANGE)
+	e4:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -89,16 +89,19 @@ function c101102094.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local tc=e:GetHandler():GetEquipTarget()
 		e:SetLabelObject(tc)
-		return tc and tc:IsAbleToGrave() and Duel.IsExistingMatchingCard(c101102094.sptgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,tc:GetOriginalAttribute())
+		return tc and tc:IsAbleToGrave() and Duel.GetMZoneCount(tp,tc)>0
+			and Duel.IsExistingMatchingCard(c101102094.sptgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,tc:GetOriginalAttribute())
 	end
 	local tc=e:GetLabelObject()
 	tc:CreateEffectRelation(e)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,tc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c101102094.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if not tc:IsRelateToEffect(e) then return end
-	if Duel.SendtoGrave(tc,REASON_EFFECT)>0 then
+	if Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101102094.sptgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,tc:GetOriginalAttribute())
 		if #g>0 then

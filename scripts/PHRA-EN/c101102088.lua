@@ -22,6 +22,7 @@ function c101102088.initial_effect(c)
 	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,101102088)
 	e3:SetCondition(c101102088.drcon)
@@ -45,11 +46,11 @@ function c101102088.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(0x258)
 end
 function c101102088.ctval(e,re,rp)
-	return rp==1-e:GetHandlerPlayer() and (re:GetActiveType() & TYPE_SPELL)>0
+	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_SPELL)
 end
 function c101102088.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
-		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainNegatable(ev)
+		and re:IsActiveType(TYPE_TRAP)
 end
 function c101102088.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) end
@@ -72,19 +73,18 @@ function c101102088.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:GetPreviousControler()==tp
 end
 function c101102088.thtgfilter(c)
-	return c:IsSetCard(0x258) and c:IsType(TYPE_TRAP) and c:IsAbleToHand() and c:IsFaceup()
+	return c:IsSetCard(0x258) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsFaceup()
 end
 function c101102088.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101102088.thtgfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101102088.thtgfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c101102088.thtgfilter,tp,LOCATION_REMOVED,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c101102088.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
 	end
 end

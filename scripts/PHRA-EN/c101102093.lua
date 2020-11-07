@@ -11,10 +11,7 @@ function c101102093.initial_effect(c)
 	e1:SetTarget(c101102093.target)
 	e1:SetOperation(c101102093.activate)
 	c:RegisterEffect(e1)
-	Duel.AddCustomActivityCounter(101102093,ACTIVITY_CHAIN,c101102093.chainfilter)
-end
-function c101102093.chainfilter(re,tp,cid)
-	return false
+	Duel.AddCustomActivityCounter(101102093,ACTIVITY_CHAIN,aux.FALSE)
 end
 function c101102093.filter0(c)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove()
@@ -26,7 +23,6 @@ function c101102093.filter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x258) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
-
 function c101102093.fcheck(tp,sg,fc)
 	return sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1 and sg:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)<=1
 end

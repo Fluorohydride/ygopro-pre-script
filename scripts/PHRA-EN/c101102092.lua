@@ -30,13 +30,6 @@ function c101102092.initial_effect(c)
 	e3:SetOperation(c101102092.drop)
 	c:RegisterEffect(e3)
 end
-function c101102092.atkvalfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x258)
-end
-function c101102092.atkval(e,c)
-	local tp=e:GetHandler():GetControler()
-	return Duel.GetMatchingGroupCount(c101102092.atkvalfilter,tp,LOCATION_REMOVED,0,nil)*100
-end
 function c101102092.spfilter(c,e,tp)
 	return c:IsSetCard(0x258) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelBelow(4) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
@@ -50,12 +43,20 @@ function c101102092.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function c101102092.atkvalfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x258)
+end
+function c101102092.atkval(e,c)
+	local tp=e:GetHandler():GetControler()
+	local g=Duel.GetMatchingGroup(c101102092.atkvalfilter,tp,LOCATION_REMOVED,0,nil)
+	return g:GetClassCount(Card.GetCode)*100
+end
 function c101102092.drtgfilter(c)
 	return c:IsAbleToDeck() and c:IsSetCard(0x258) and c:IsType(TYPE_MONSTER)
 end
 function c101102092.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingMatchingCard(c101102092.drtgfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c101102092.drop(e,tp,eg,ep,ev,re,r,rp)
