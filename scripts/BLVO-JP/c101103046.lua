@@ -1,6 +1,6 @@
 --スプリガンズ・シップ エクスブロウラー
 
---Scripted by mallu11
+--Scripted by mallu11 & mercury233
 function c101103046.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,8,2,nil,nil,99)
@@ -28,80 +28,81 @@ function c101103046.initial_effect(c)
 	e2:SetTarget(c101103046.rmtg)
 	e2:SetOperation(c101103046.rmop)
 	c:RegisterEffect(e2)
-end
-function c101103046.desfilter(c)
-	if c:IsLocation(LOCATION_SZONE) then
-		return c:GetSequence()<5
-	else
-		return true
-	end
-end
---str2 to str6 is Spell&Trap Zone(from right to left)
---str7 to str13 is Monster Zone(from right to left)
-function c101103046.seqfilter(c,i,chk)
-	local seq=c:GetSequence()
-	if i==11 then
-		return (seq==5 or (chk and seq==1)) and c:IsLocation(LOCATION_MZONE)
-	elseif i==12 then
-		return (seq==6 or (chk and seq==3)) and c:IsLocation(LOCATION_MZONE)
-	else
-		local loc
-		local j
-		if i<6 then
-			loc=LOCATION_MZONE
-			j=0
-		else
-			loc=LOCATION_SZONE
-			j=5
-		end
-		if c:IsLocation(loc) then
-			return seq==i-j-1
-		else
-			if i==7 then
-				return seq==i-j or seq==i-j-1 or seq==i-j-2 or seq==5
-			elseif i==9 then
-				return seq==i-j or seq==i-j-1 or seq==i-j-2 or seq==6
-			else
-				return (seq==i-j or seq==i-j-1 or seq==i-j-2) and seq<5
+	if Duel.SelectField==nil then
+function Duel.SelectField(tp,count,s,o,filter)
+	--temp lua ver
+	--assume count is always 1, s is always 0
+	local off=1
+	local ops={}
+	local opval={}
+	if o&LOCATION_MZONE>0 then
+		for i=0,4 do
+			if 1<<(i+16)&filter==0 then
+				ops[off]=aux.Stringid(101103046,i+2)
+				opval[off-1]=i
+				off=off+1
 			end
 		end
 	end
+	if o&LOCATION_SZONE>0 then
+		for i=5,9 do
+			if 1<<(i+4+16)&filter==0 then
+				ops[off]=aux.Stringid(101103046,i+2)
+				opval[off-1]=i+4
+				off=off+1
+			end
+		end
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local sel=Duel.SelectOption(tp,table.unpack(ops))
+	return 1<<(opval[sel]+16)
+end
+	end
+end
+function c101103046.desfilter(c)
+	return not c:IsLocation(LOCATION_SZONE) or c:GetSequence()<5
+end
+function c101103046.seqfilter(c,seq)
+	local loc=LOCATION_MZONE
+	if seq>8 then
+		loc=LOCATION_SZONE
+		seq=seq-8
+	end
+	if seq>=5 and seq<=7 then return false end
+	local cseq=c:GetSequence()
+	local cloc=c:GetLocation()
+	if cloc==LOCATION_SZONE and cseq>=5 then return false end
+	if cloc==LOCATION_MZONE and cseq>=5 and loc==LOCATION_MZONE
+		and (seq==1 and cseq==5 or seq==3 and cseq==6) then return true end
+	return cseq==seq or cloc==loc and math.abs(cseq-seq)==1
 end
 function c101103046.seqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) and Duel.IsExistingMatchingCard(c101103046.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
-	local b={}
-	for i=1,12 do
-		b[i]=Duel.IsExistingMatchingCard(c101103046.seqfilter,tp,0,LOCATION_ONFIELD,1,nil,i)
-	end
-	local off=0
-	local ops={}
-	local opval={}
-	off=1
-	for i=1,12 do
-		if b[i] then
-			ops[off]=aux.Stringid(101103046,i+1)
-			opval[off-1]=i
-			off=off+1
+	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT)
+		and Duel.IsExistingMatchingCard(c101103046.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+	local filter=0
+	for i=0,16 do
+		if not Duel.IsExistingMatchingCard(c101103046.seqfilter,tp,0,LOCATION_ONFIELD,1,nil,i) then
+			filter=filter|1<<(i+16)
 		end
 	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	local op=Duel.SelectOption(tp,table.unpack(ops))
-	e:SetLabel(opval[op])
-	Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(101103046,opval[op]+1))
-	local g=Duel.GetMatchingGroup(c101103046.seqfilter,tp,0,LOCATION_ONFIELD,nil,opval[op],true)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local flag=Duel.SelectField(tp,1,0,LOCATION_ONFIELD,filter)
+	local seq=math.log(flag>>16,2)
+	e:SetLabel(seq)
+	local g=Duel.GetMatchingGroup(c101103046.seqfilter,tp,0,LOCATION_ONFIELD,nil,seq)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c101103046.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local i=e:GetLabel()
 	if not c:IsRelateToEffect(e) then return end
-	local ct=Duel.GetMatchingGroupCount(c101103046.seqfilter,tp,0,LOCATION_ONFIELD,nil,i,true)
+	local seq=e:GetLabel()
+	local ct=Duel.GetMatchingGroupCount(c101103046.seqfilter,tp,0,LOCATION_ONFIELD,nil,seq)
 	if ct<=0 or not c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) then return end
 	local count=c:RemoveOverlayCard(tp,1,ct,REASON_EFFECT)
 	if count<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,c101103046.seqfilter,tp,0,LOCATION_ONFIELD,count,count,nil,i,true)
+	local g=Duel.SelectMatchingCard(tp,c101103046.seqfilter,tp,0,LOCATION_ONFIELD,count,count,nil,seq)
 	Duel.HintSelection(g)
 	Duel.Destroy(g,REASON_EFFECT)
 end
