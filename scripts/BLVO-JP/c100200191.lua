@@ -1,4 +1,5 @@
---アイスバリアのアテンダント
+--氷結界の随身
+--
 --LUA by Kohana Sonogami
 function c100200191.initial_effect(c)
 	--Special Summon 1
@@ -14,13 +15,13 @@ function c100200191.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Special Summon 2
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100200191,0))
+	e2:SetDescription(aux.Stringid(100200191,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(aux.exccon)
-	e2:SetCountLimit(1,100200192)
+	e2:SetCountLimit(1,100200191+100)
 	e2:SetTarget(c100200191.sptg2)
 	e2:SetOperation(c100200191.spop2)
 	c:RegisterEffect(e2)
@@ -76,5 +77,4 @@ function c100200191.spop2(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e2,true)
 	end
-end
-		
+end		
