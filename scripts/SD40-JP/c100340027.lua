@@ -32,7 +32,7 @@ function c100340027.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetOperation(c100340027.activate)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectTarget(tp,c100340027.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	else
 		e:SetCategory(0)
 		e:SetProperty(0)
