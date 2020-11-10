@@ -51,7 +51,7 @@ function c1002702024.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) then
 		tg:Merge(g:Filter(Card.IsType,nil,TYPE_MONSTER))
 	end
-	if Duel.IsPlayerCanDraw(tp,1) then
+	if Duel.IsExistingMatchingCard(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) then
 		tg:Merge(g:Filter(Card.IsType,nil,TYPE_SPELL))
 	end
 	if Duel.IsExistingMatchingCard(c1002702024.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) then
@@ -74,7 +74,7 @@ function c1002702024.operation(e,tp,eg,ep,ev,re,r,rp)
 	if sg:IsExists(Card.IsType,1,nil,TYPE_SPELL) then
 		Duel.BreakEffect()
 		local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
-		aDuel.HintSelection(g)
+		Duel.HintSelection(g)
 		Duel.GetControl(g:GetFirst(),tp,PHASE_END,1)
 	end
 	if sg:IsExists(Card.IsType,1,nil,TYPE_TRAP) then
