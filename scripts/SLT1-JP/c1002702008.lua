@@ -20,7 +20,7 @@ function c55285840.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c1002702008.tfilter(c,tp)
-	return (c:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) or c:IsFaceup()) and c:IsControler(tp)
+	return c:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED) and c:IsControler(tp)
 end
 function c1002702008.discon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
