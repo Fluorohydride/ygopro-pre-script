@@ -60,22 +60,22 @@ function c100272001.desop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetMatchingGroup(c100272001.desfilter,tp,0,LOCATION_MZONE,nil)
     if Duel.Destroy(g,REASON_EFFECT)~=0 then
     local dc=Duel.GetOperatedGroup():FilterCount(c100272001.sgfilter,nil,1-tp)
-    if dc~=0 and Duel.GetFlagEffect(tp,69145170)==0 and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and Duel.SelectYesNo(tp,aux.Stringid(100272001,0)) then
-    Duel.BreakEffect()
-    Duel.Draw(tp,dc,REASON_EFFECT)
-    --cannot attack
-    local e1=Effect.CreateEffect(e:GetHandler())
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OATH)
-    e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-    e1:SetTargetRange(LOCATION_MZONE,0)
-    e1:SetCondition(c100272001.atkcon)
-    e1:SetTarget(c100272001.atktg)
-    e1:SetReset(RESET_PHASE+PHASE_END)
-    Duel.RegisterEffect(e1,tp)
+        if dc~=0 and Duel.GetFlagEffect(tp,69145170)==0 and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and Duel.SelectYesNo(tp,aux.Stringid(100272001,0)) then
+         Duel.BreakEffect()
+            Duel.Draw(tp,dc,REASON_EFFECT)
+         --cannot attack
+            local e1=Effect.CreateEffect(e:GetHandler())
+            e1:SetType(EFFECT_TYPE_FIELD)
+            e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OATH)
+            e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+            e1:SetTargetRange(LOCATION_MZONE,0)
+            e1:SetCondition(c100272001.atkcon)
+            e1:SetTarget(c100272001.atktg)
+            e1:SetReset(RESET_PHASE+PHASE_END)
+            Duel.RegisterEffect(e1,tp)
+        end
     end
 end
-
 function c100272001.atkcon(e)
     return Duel.GetFlagEffect(e:GetHandlerPlayer(),69145169)~=0
 end
