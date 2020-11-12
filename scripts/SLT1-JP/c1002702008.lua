@@ -1,7 +1,7 @@
---ヒエラティックヘブンリードラゴンヘリオポリスの領主
+--ヘリオポリスのヒエラティックヘブンリードラゴンオーバーロード
 --LUA by Kohana Sonogami
 --
-function c55285840.initial_effect(c)
+function c1002702008.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,nil,8,2)
 	--negate
