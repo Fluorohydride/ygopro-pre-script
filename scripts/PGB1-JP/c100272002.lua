@@ -55,15 +55,15 @@ function c48152161.activate(e,tp,eg,ep,ev,re,r,rp)
         e3:SetType(EFFECT_TYPE_FIELD)
         e3:SetCode(EFFECT_DISABLE)
         e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-        e3:SetTarget(c24224830.distg)
+        e3:SetTarget(c100272002.distg)
         e3:SetLabelObject(tc)
         e3:SetReset(RESET_PHASE+PHASE_END)
         Duel.RegisterEffect(e3,tp)
         local e4=Effect.CreateEffect(e:GetHandler())
         e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
         e4:SetCode(EVENT_CHAIN_SOLVING)
-        e4:SetCondition(c24224830.discon)
-        e4:SetOperation(c24224830.disop)
+        e4:SetCondition(c100272002.discon)
+        e4:SetOperation(c100272002.disop)
         e4:SetLabelObject(tc)
         e4:SetReset(RESET_PHASE+PHASE_END)
         Duel.RegisterEffect(e4,tp)
@@ -74,3 +74,14 @@ function c48152161.activate(e,tp,eg,ep,ev,re,r,rp)
 		   end
     end
 end
+function c100272002.distg(e,c)
+    local tc=e:GetLabelObject()
+    return c:IsOriginalCodeRule(tc:GetOriginalCodeRule())
+end
+function c100272002.discon(e,tp,eg,ep,ev,re,r,rp)
+    local tc=e:GetLabelObject()
+    return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsOriginalCodeRule(tc:GetOriginalCodeRule())
+end
+function c100272002.disop(e,tp,eg,ep,ev,re,r,rp)
+    Duel.NegateEffect(ev)
+end		
