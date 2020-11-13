@@ -5,6 +5,8 @@
 - **October 31, 2020**: Blazing Vortex (BLVO-JP): `101103XXX`
 - **November 21, 2020**: Structure Deck: Ice Barrier of the Frozen Prison (SD40-JP) : `100340XXX`
 - **December 5, 2020**: SELECTION 10 (SLT1-JP) : `100270XXX`
+- **December 19, 2020**: PRISMATIC GOD BOX (PGB1-JP) : `100272XXX`
+- **January 16, 2021**: LIGHTNING OVERDRIVE (LIOV?-JP): `101104XXX`
 
 # Announced
 
