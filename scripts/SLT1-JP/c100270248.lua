@@ -17,7 +17,7 @@ function c100270248.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100270248.thfilter(c)
-	return c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()
+	return c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsAbleToHand()
 end
 function c100270248.spfilter(c,e,tp)
 	return c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
