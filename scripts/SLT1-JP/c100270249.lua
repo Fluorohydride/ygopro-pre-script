@@ -21,7 +21,7 @@ function c100270249.cfilter(c)
 		and c:IsAbleToHandAsCost()
 end
 function c100270249.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainDisablable(ev)
+	return ep==1-tp and Duel.IsChainDisablable(ev)
 end
 function c100270249.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
