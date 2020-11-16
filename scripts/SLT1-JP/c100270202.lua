@@ -9,7 +9,6 @@ function c100270202.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,100270202)
-	e1:SetCost(c100270202.cost)
 	e1:SetTarget(c100270202.target)
 	e1:SetOperation(c100270202.operation)
 	c:RegisterEffect(e1)
@@ -21,20 +20,16 @@ function c100270202.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,100270202)
-	e2:SetCost(c100270202.cost)
+	e2:SetCondition(c100270202.tgcon)
 	e2:SetTarget(c100270202.tgtg)
 	e2:SetOperation(c100270202.tgop)
 	c:RegisterEffect(e2)
-end
-function c100270202.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function c100270202.cfilter(c,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(c100270202.tgfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetAttribute())
 end
 function c100270202.tgfilter(c,att)
-	return c:IsAbleToGrave() and c:GetAttribute()==att and c:IsSetCard(0x9d)
+	return c:IsAbleToGrave() and c:IsAttribute(att) and c:IsSetCard(0x9d)
 end
 function c100270202.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100270202.cfilter(chkc,tp) end
@@ -47,24 +42,26 @@ end
 function c100270202.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local att=tc:GetOriginalAttribute()
+		local att=tc:GetAttribute()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c100270202.tgfilter,tp,LOCATION_EXTRA,0,1,1,nil,att)
-		if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
+		if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		end
 	end
+end
+function c100270202.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function c100270202.ctfilter(c)
 	return c:IsFaceup()
 end
 function c100270202.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroup(c100270202.ctfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetClassCount(Card.GetAttribute)
+	local ct=Duel.GetMatchingGroup(c100270202.ctfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetClassCount(Card.GetOriginalAttribute)
 	if chk==0 then return ct>0 and Duel.IsPlayerCanDiscardDeck(tp,ct) end
-	e:SetLabel(ct)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,ct)
 end
 function c100270202.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	Duel.DiscardDeck(tp,e:GetLabel(),REASON_EFFECT)
+	local ct=Duel.GetMatchingGroup(c100270202.ctfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetClassCount(Card.GetOriginalAttribute)
+	Duel.DiscardDeck(tp,ct,REASON_EFFECT)
 end
