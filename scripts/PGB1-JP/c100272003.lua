@@ -1,5 +1,6 @@
+--交差する魂
 --Exchanging Souls
---scripted by TOP & Lyris
+--scripted by TOP & Lyris & mercury233
 function c100272003.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -29,7 +30,7 @@ function c100272003.sumfilter(c,ec)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetValue(POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	:RegisterEffect(e1)
+	c:RegisterEffect(e1)
 	local res=c:IsSummonable(true,nil,1)
 	e1:Reset()
 	return res
@@ -53,6 +54,23 @@ function c100272003.sumop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		Duel.Summon(tp,tc,true,nil,1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_CHAIN_END)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e2:SetOperation(c100272003.limitop)
+		e2:SetLabelObject(tc)
+		Duel.RegisterEffect(e2,tp)
+	end
+end
+function c100272003.cfilter(c,tp)
+	return c:GetPreviousControler()==1-tp
+end
+function c100272003.limitop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=e:GetLabelObject()
+	local g=tc:GetMaterial()
+	if g and g:IsExists(c100272003.cfilter,1,nil,tp) then
 		--can't activate effects
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -71,6 +89,7 @@ function c100272003.sumop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_PHASE+PHASE_END,2)
 		Duel.RegisterEffect(e3,tp)
 	end
+	e:Reset()
 end
 function c100272003.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and not re:GetHandler():IsRace(RACE_DIVINE)
