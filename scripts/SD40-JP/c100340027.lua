@@ -1,4 +1,4 @@
---氷の壁のクリア・ウォール・ドラゴン
+--氷結界の晶壁
 --LUA by Kohana♡
 function c100340027.initial_effect(c)
 	--Activate
@@ -15,7 +15,7 @@ function c100340027.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xf))
-	e2:SetCondition(c100340027.IceBarrierCondition)
+	e2:SetCondition(c100340027.condition)
 	e2:SetValue(c100340027.efilter)
 	c:RegisterEffect(e2)
 end
@@ -43,15 +43,16 @@ function c100340027.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c100340027.imfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2f)
 end
-function c100340027.IceBarrierCondition(e)
+function c100340027.condition(e)
 	return Duel.IsExistingMatchingCard(c100340027.imfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,3,nil)
 end
 function c100340027.efilter(e,te)
-	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActiveType(TYPE_MONSTER) and c:GetSummonLocation()==LOCATION_EXTRA
+	return te:IsActiveType(TYPE_MONSTER) and te:IsActivated()
+		and te:GetOwnerPlayer()==1-e:GetHandlerPlayer() and te:GetHandler():GetSummonLocation()==LOCATION_EXTRA
 end
