@@ -1,49 +1,48 @@
 --クロノダイバー・ダブルバレル
 --Time Thief Doublebarrel
 --LUA by Kohana Sonogami
---
-function c100270224.initial_effect(c)
+function c100270024.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,nil,4,2)
 	--Apply
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100270224,1))
+	e1:SetDescription(aux.Stringid(100270024,1))
 	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_CHANGE_ATK+CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,100270224)
-	e1:SetCondition(c100270224.condition)
-	e1:SetTarget(c100270224.target)
-	e1:SetOperation(c100270224.operation)
+	e1:SetCountLimit(1,100270024)
+	e1:SetCondition(c100270024.condition)
+	e1:SetTarget(c100270024.target)
+	e1:SetOperation(c100270024.operation)
 	c:RegisterEffect(e1)
 end
-function c100270224.condition(e,tp,eg,ep,ev,re,r,rp)
+function c100270024.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp
 end
-function c100270224.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100270024.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local c=e:GetHandler()
 		if not c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) then return false end
 		local g=c:GetOverlayGroup()
 		if g:IsExists(Card.IsType,1,nil,TYPE_MONSTER)
-			and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) then return true end
+			then return true end
 		if g:IsExists(Card.IsType,1,nil,TYPE_SPELL)
 			and Duel.IsExistingMatchingCard(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) then return true end
 		if g:IsExists(Card.IsType,1,nil,TYPE_TRAP)
-			and Duel.IsExistingMatchingCard(c100270224.dfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) then return true end
+			and Duel.IsExistingMatchingCard(c100270024.dfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) then return true end
 		return false
 	end
 end
-function c100270224.check(g)
+function c100270024.check(g)
 	return g:FilterCount(Card.IsType,nil,TYPE_MONSTER)<=1
 		and g:FilterCount(Card.IsType,nil,TYPE_SPELL)<=1
 		and g:FilterCount(Card.IsType,nil,TYPE_TRAP)<=1
 end
-function c100270224.dfilter(c)
+function c100270024.dfilter(c)
 	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_EFFECT)
 end
-function c100270224.operation(e,tp,eg,ep,ev,re,r,rp)
+function c100270024.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or not c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) then return end
 	local g=c:GetOverlayGroup()
@@ -54,11 +53,11 @@ function c100270224.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) then
 		tg:Merge(g:Filter(Card.IsType,nil,TYPE_SPELL))
 	end
-	if Duel.IsExistingMatchingCard(c100270224.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) then
+	if Duel.IsExistingMatchingCard(c100270024.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) then
 		tg:Merge(g:Filter(Card.IsType,nil,TYPE_TRAP))
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
-	local sg=tg:SelectSubGroup(tp,c100270224.check,false,1,3)
+	local sg=tg:SelectSubGroup(tp,c100270024.check,false,1,3)
 	if not sg then return end
 	Duel.SendtoGrave(sg,REASON_EFFECT)
 	Duel.RaiseSingleEvent(c,EVENT_DETACH_MATERIAL,e,0,0,0,0)
@@ -73,13 +72,15 @@ function c100270224.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if sg:IsExists(Card.IsType,1,nil,TYPE_SPELL) then
 		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 		local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.HintSelection(g)
 		Duel.GetControl(g:GetFirst(),tp,PHASE_END,1)
 	end
 	if sg:IsExists(Card.IsType,1,nil,TYPE_TRAP) then
 		Duel.BreakEffect()
-		local g=Duel.SelectMatchingCard(tp,c100270224.dfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,exc)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
+		local g=Duel.SelectMatchingCard(tp,c100270024.dfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 		if g:GetCount()>0 then
 			local tc=g:GetFirst()
 			local e1=Effect.CreateEffect(e:GetHandler())
