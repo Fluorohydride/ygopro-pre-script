@@ -2,7 +2,7 @@
 --ZS Ascend Sage
 --LUA by Kohana Sonogami
 --
-function c56410040.initial_effect(c)
+function c101103203.initial_effect(c)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(56410040,0))
