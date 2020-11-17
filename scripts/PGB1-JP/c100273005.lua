@@ -55,7 +55,7 @@ function c100273005.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToChangeControler()
 end
 function c100273005.eqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x110) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x110) and c:IsType(TYPE_MONSTER) and not c:IsSummonableCard()
 end
 function c100273005.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100273005.filter(chkc) end
