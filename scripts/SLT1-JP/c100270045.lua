@@ -1,4 +1,6 @@
---神圣篝火
+--聖なる篝火
+--
+--Script by 龙骑
 function c100270045.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

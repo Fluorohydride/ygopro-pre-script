@@ -1,4 +1,6 @@
---圣夜骑士团·弗拉梅尔
+--ホーリーナイツ・フラムエル
+--
+--Script by 龙骑
 function c100270044.initial_effect(c)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)

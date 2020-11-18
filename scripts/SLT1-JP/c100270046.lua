@@ -1,4 +1,6 @@
---辉煌的圣夜
+--煌めく聖夜
+--
+--Script by 龙骑
 function c100270046.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

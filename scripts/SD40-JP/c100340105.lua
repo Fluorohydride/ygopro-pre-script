@@ -1,4 +1,6 @@
---三叉龙的鼓动
+--トリシューラの鼓動
+--
+--Script by 龙骑
 function c100340105.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
