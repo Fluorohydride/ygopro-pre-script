@@ -1,4 +1,5 @@
 # Upcoming
+- **November 18,2020** Premium Pack (21PP): `1002740XX`
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
