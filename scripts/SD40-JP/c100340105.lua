@@ -27,9 +27,22 @@ function c100340105.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2f) and c:IsType(TYPE_SYNCHRO)
 end
 function c100340105.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.GetMatchingGroup(c100340105.cfilter,tp,LOCATION_MZONE,0,1,nil)
-	local g2=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,nil)
-	if chk==0 then return g1:GetClassCount(Card.GetCode)>=1 and g2:GetCount()>0 end
+	local g=Duel.GetMatchingGroup(c100340105.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	local ct=g:GetClassCount(Card.GetCode)
+	if chk==0 then return ct>=1 and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil)
+		and (ct<2 or Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil))
+		and (ct<3 or Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil)) end
+	local rct=1
+	local loc=LOCATION_ONFIELD
+	if ct>=2 then
+		rct=rct+1
+		loc=loc+LOCATION_GRAVE
+	end
+	if ct>=3 then
+		rct=rct+1
+		loc=loc+LOCATION_HAND
+	end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,rct,0,loc)
 end
 function c100340105.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
