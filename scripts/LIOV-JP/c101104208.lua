@@ -1,4 +1,6 @@
---异热同心信托
+--ゼアル・エントラスト
+--
+--Script by 龙骑
 function c101104208.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -24,7 +26,8 @@ function c101104208.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101104208.spfilter(c,e,tp)
-	return (c:IsSetCard(0x107f) or c:IsSetCard(0x107e) or c:IsSetCard(0x207e)) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:IsSetCard(0x107f,0x107e,0x207e) and c:IsType(TYPE_MONSTER)
+		and (c:IsAbleToHand() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function c101104208.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101104208.spfilter(chkc,e,tp) end

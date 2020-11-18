@@ -1,4 +1,6 @@
---异热同心构筑
+--ゼアル・コンストラクション
+--
+--Script by 龙骑
 function c101104207.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
@@ -12,7 +14,9 @@ function c101104207.initial_effect(c)
 	c:RegisterEffect(e1)	 
 end
 function c101104207.filter(c)
-	return (((c:IsSetCard(0x107e) or c:IsSetCard(0x207e)) and c:IsType(TYPE_MONSTER)) or (c:IsSetCard(0x7e) and c:IsType(TYPE_SPELL+TYPE_TRAP)) or ((c:IsSetCard(0x95) or c:IsSetCard(0x25b)) and c:IsType(TYPE_SPELL))) and c:IsAbleToHand()
+	return ((c:IsSetCard(0x107e,0x207e) and c:IsType(TYPE_MONSTER))
+		or (c:IsSetCard(0x7e) and c:IsType(TYPE_SPELL+TYPE_TRAP))
+		or (c:IsSetCard(0x95,0x25b) and c:IsType(TYPE_SPELL))) and c:IsAbleToHand()
 end
 function c101104207.tdfilter(c)
 	return not c:IsPublic() and c:IsAbleToDeck()

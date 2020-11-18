@@ -1,4 +1,6 @@
---升阶魔法-异热同心之力
+--RUM－ゼアル・フォース
+--
+--Script by 龙骑
 function c101104206.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -16,6 +18,7 @@ function c101104206.initial_effect(c)
 	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCountLimit(1,101104206)
 	e2:SetCost(aux.bfgcost)
 	e2:SetCondition(c101104206.drcon)

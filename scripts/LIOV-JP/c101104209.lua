@@ -1,4 +1,6 @@
---异热同心联盟
+--ゼアル・アライアンス
+--
+--Script by 龙骑
 function c101104209.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -7,7 +9,6 @@ function c101104209.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_DESTROYED)
-	e1:SetCountLimit(1,101104209)
 	e1:SetCondition(c101104209.spcon)
 	e1:SetCost(c101104209.spcost)
 	e1:SetTarget(c101104209.sptg)
