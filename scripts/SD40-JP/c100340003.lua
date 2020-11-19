@@ -32,6 +32,7 @@ function c100340003.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,100340003)
 	e3:SetCost(aux.bfgcost)
+	e3:SetCondition(c100340003.tkcon)
 	e3:SetTarget(c100340003.tktg)
 	e3:SetOperation(c100340003.tkop)
 	c:RegisterEffect(e3)
@@ -48,6 +49,9 @@ end
 function c100340003.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER)
 end
+function c100340003.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c100340003.cfilter,tp,LOCATION_MZONE,0,1,nil)
+end
 function c100340003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
@@ -57,6 +61,12 @@ function c100340003.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+end
+function c100340003.tkfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER)
+end
+function c100340003.tkcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c100340003.tkfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100340003.tktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
