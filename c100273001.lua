@@ -1,7 +1,6 @@
---エンジェル01
---Angel01
+--エンジェルO1
+--Angel O1
 --LUA by Kohana Sonogami
---
 function c100273001.initial_effect(c)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
@@ -10,7 +9,7 @@ function c100273001.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,100273001)
+	e1:SetCountLimit(1,100273001+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c100273001.spcon)
 	e1:SetOperation(c100273001.spop)
 	c:RegisterEffect(e1)
@@ -42,6 +41,5 @@ function c100273001.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.ShuffleHand(tp)
 end
 function c100273001.trcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
-		and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and e:GetHandler():GetSequence()<5
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end
