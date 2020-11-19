@@ -7,6 +7,7 @@
 - **December 5, 2020**: SELECTION 10 (SLT1-JP) : `100270XXX`
 - **December 19, 2020**: PRISMATIC GOD BOX (PGB1-JP) : `100272XXX`
 - **January 16, 2021**: LIGHTNING OVERDRIVE (LIOV?-JP): `101104XXX`
+- **???? ??, 2021** Premium Pack 2021 (21PP): `100273XXX`
 
 # Announced
 
