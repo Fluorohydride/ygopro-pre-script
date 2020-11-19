@@ -54,17 +54,21 @@ function c101104204.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,c101104204.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,tp)
 		local tc=g:GetFirst()
 		if not tc then return end
-		if not Duel.Equip(tp,tc,c) then return end
-		--equip limit
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetLabelObject(c)
-		e1:SetValue(c101104204.eqlimit)
-		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(101104204,RESET_EVENT+RESETS_STANDARD,0,0)
+		local mt=_G["c"..tc:GetCode()]
+		if mt.equip_monster then
+			mt.equip_monster(tc,tp,c)
+		else
+			if not Duel.Equip(tp,tc,c) then return end
+			--equip limit
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetCode(EFFECT_EQUIP_LIMIT)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetLabelObject(c)
+			e1:SetValue(c101104204.eqlimit)
+			tc:RegisterEffect(e1)
+		end
 	end
 end
 function c101104204.eqlimit(e,c)
