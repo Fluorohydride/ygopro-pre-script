@@ -42,5 +42,6 @@ function c100273001.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.ShuffleHand(tp)
 end
 function c100273001.trcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and e:GetHandler():GetSequence()<5
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+		and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and e:GetHandler():GetSequence()<5
 end
