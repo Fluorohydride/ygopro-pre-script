@@ -41,7 +41,7 @@ function c100273001.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
 end
-function c100273001.trcon(e)
+function c100273001.trcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 		and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and e:GetHandler():GetSequence()<5
 end
