@@ -1,7 +1,6 @@
---氷の壁のミコ船
+--氷結界の依巫
 --Vessel Miko of the Ice Barrier
 --LUA by Kohana Sonogami
---
 function c100340003.initial_effect(c)
 	--Cannot Change a Battle Position
 	local e1=Effect.CreateEffect(c)
@@ -30,7 +29,7 @@ function c100340003.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCountLimit(1,100340003)
+	e3:SetCountLimit(1,100340003+100)
 	e3:SetCost(aux.bfgcost)
 	e3:SetCondition(c100340003.tkcon)
 	e3:SetTarget(c100340003.tktg)
@@ -44,10 +43,10 @@ function c100340003.poscon(e)
 	return Duel.IsExistingMatchingCard(c100340003.posfilter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function c100340003.postg(e,c)
-	return c:IsPosition(POS_FACEUP_DEFENSE)
+	return c:IsDefensePos()
 end
 function c100340003.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x2f)
 end
 function c100340003.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100340003.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -63,21 +62,21 @@ function c100340003.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c100340003.tkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x2f)
 end
 function c100340003.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100340003.tkfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100340003.tktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	and Duel.IsPlayerCanSpecialSummonMonster(tp,100340004,0,0x4011,0,0,1,RACE_AQUA,ATTRIBUTE_WATER) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100340103,0,0x4011,0,0,1,RACE_AQUA,ATTRIBUTE_WATER) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c100340003.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if Duel.IsPlayerCanSpecialSummonMonster(tp,100340004,0,0x4011,0,0,1,RACE_AQUA,ATTRIBUTE_WATER) then
-		local token=Duel.CreateToken(tp,89907228)
-		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	if Duel.IsPlayerCanSpecialSummonMonster(tp,100340103,0,0x4011,0,0,1,RACE_AQUA,ATTRIBUTE_WATER) then
+		local token=Duel.CreateToken(tp,100340103)
+		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
