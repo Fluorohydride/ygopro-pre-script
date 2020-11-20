@@ -59,7 +59,7 @@ function c100270014.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(c100270014.tgfilter,tp,LOCATION_DECK,0,nil)
 	if ct==0 then ct=1 end
 	if ct>2 then ct=2 end
-	local g=Duel.SelectReleaseGroupEx(tp,c25857246.filter,1,ct,nil)
+	local g=Duel.SelectReleaseGroupEx(tp,c100270014.filter,1,ct,nil)
 	if g:GetCount()>0 then
 		local rct=Duel.Release(g,REASON_EFFECT)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
