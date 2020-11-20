@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **October 31, 2020**: Blazing Vortex (BLVO-JP): `101103XXX`
 - **November 21, 2020**: Structure Deck: Ice Barrier of the Frozen Prison (SD40-JP) : `100340XXX`
 - **December 5, 2020**: SELECTION 10 (SLT1-JP) : `100270XXX`
 - **December 19, 2020**: PRISMATIC GOD BOX (PGB1-JP) : `100272XXX`
@@ -156,3 +155,4 @@
 - ETERNITY CODE (ETCO-JP) : `101012XXX`
 - RISE OF THE DUELIST (ROTD-JP) : `101101XXX`
 - PHANTOM RAGE (PHRA-JP) : `101102XXX`
+- Blazing Vortex (BLVO-JP): `101103XXX`
