@@ -10,12 +10,12 @@ function c100273011.initial_effect(c)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCode(EVENT_PREDRAW)
 	e1:SetCost(aux.bfgcost)
-	e1:SetCondition(c100273011.descon)
-	e1:SetTarget(c100273011.destg)
-	e1:SetOperation(c100273011.desop)
+	e1:SetCondition(c100273011.opcon)
+	e1:SetTarget(c100273011.optg)
+	e1:SetOperation(c100273011.opop)
 	c:RegisterEffect(e1)
 end
-function c100273011.descon(e,tp,eg,ep,ev,re,r,rp)
+function c100273011.opcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
 		and Duel.GetDrawCount(tp)>0
 end
@@ -25,7 +25,7 @@ end
 function c100273011.ssetfilter(c)
 	return c:IsSetCard(0xc5) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
-function c100273011.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100273011.optg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(c100273011.ttopfilter,tp,LOCATION_DECK,0,1,nil) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>1
 	local b2=Duel.IsExistingMatchingCard(c100273011.ssetfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return b1 or b2 end
@@ -61,7 +61,7 @@ function c100273011.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(0)
 	end
 end
-function c100273011.desop(e,tp,eg,ep,ev,re,r,rp)
+function c100273011.opop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sel=e:GetLabel()
 	if sel==0 then
