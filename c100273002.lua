@@ -69,6 +69,7 @@ function c100273002.tktg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function c100273002.tkop2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,100273002,0x4011,0,0,1,RACE_FAIRY,ATTRIBUTE_LIGHT) then
@@ -77,4 +78,15 @@ function c100273002.tkop2(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c100273002.splimit)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
+function c100273002.splimit(e,c)
+	return not c:IsLocation(LOCATION_HAND)
 end
