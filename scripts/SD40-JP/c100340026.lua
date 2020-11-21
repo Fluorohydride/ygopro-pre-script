@@ -26,36 +26,41 @@ function c100340026.initial_effect(c)
 	e2:SetOperation(c100340026.thop)
 	c:RegisterEffect(e2)
 end
-function c100340026.rfilter(c,ft,tp)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
+function c100340026.rfilter(c,tp)
+	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and (c:IsControler(tp) or c:IsFaceup())
+end
+function c100340026.spfilter(c,e,tp)
+	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function c100340026.fselect(g,tp)
+	return Duel.GetMZoneCount(tp,g)>=g:GetCount() and Duel.CheckReleaseGroup(tp,aux.IsInGroup,#g,nil,g)
 end
 function c100340026.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroup(tp,c100340026.rfilter,1,nil,ft,tp) end
-	local maxc=10
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then maxc=1 end
-	local g=Duel.SelectReleaseGroup(tp,c100340026.rfilter,1,maxc,nil,ft,tp)
+	e:SetLabel(100)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c100340026.rfilter,nil,tp)
+	local sg=Duel.GetMatchingGroup(c100340026.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
+	local ft=Duel.IsPlayerAffectedByEffect(tp,59822133) and 1 or 5
+	local maxc=math.min(ft,rg:GetCount(),(Duel.GetMZoneCount(tp,rg)),sg:GetClassCount(Card.GetCode))
+	if chk==0 then return maxc>0 and rg:CheckSubGroup(c100340026.fselect,1,maxc,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g=rg:SelectSubGroup(tp,c100340026.fselect,false,1,maxc,tp)
 	e:SetLabel(g:GetCount())
 	Duel.Release(g,REASON_COST)
 end
-function c100340026.filter(c,e,tp)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function c100340026.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c100340026.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return e:GetLabel()==100 end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,e:GetLabel(),tp,LOCATION_DECK)
 end
 function c100340026.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.GetMatchingGroup(c100340026.filter,tp,LOCATION_DECK,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(c100340026.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	local ct=e:GetLabel()
 	if ft<ct or ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ct)
-	if sg and #sg>0 then
+	if sg then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
