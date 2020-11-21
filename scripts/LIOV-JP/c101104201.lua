@@ -27,7 +27,6 @@ function c101104201.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_CHAIN_SOLVING)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1)
 	e3:SetCondition(c101104201.negcon)
 	e3:SetOperation(c101104201.negop)
 	c:RegisterEffect(e3)
@@ -86,10 +85,12 @@ end
 function c101104201.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE
 		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+		and e:GetHandler():GetFlagEffect(101104201)==0
 end
 function c101104201.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectYesNo(tp,aux.Stringid(101104201,1)) then
 		Duel.Hint(HINT_CARD,0,101104201)
 		Duel.NegateEffect(ev)
+		e:GetHandler():RegisterFlagEffect(101104201,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end
