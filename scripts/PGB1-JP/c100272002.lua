@@ -17,7 +17,7 @@ function c100272002.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100272002.actfilter(c)
-	return c:IsFaceup() and c:IsOriginalCodeRule(10000030)
+	return c:IsFaceup() and c:IsOriginalCodeRule(10000000)
 end
 function c100272002.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100272002.actfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
