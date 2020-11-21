@@ -16,7 +16,8 @@ function c100273011.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100273011.descon(e,tp,eg,ep,ev,re,r,rp)
-	return tp==Duel.GetTurnPlayer() and Duel.GetDrawCount(tp)>0
+	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
+		and Duel.GetDrawCount(tp)>0
 end
 function c100273011.ttopfilter(c)
 	return c:IsSetCard(0xb)
