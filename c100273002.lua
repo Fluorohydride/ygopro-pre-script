@@ -75,7 +75,7 @@ function c100273002.tkop2(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,100273002,0x4011,0,0,1,RACE_FAIRY,ATTRIBUTE_LIGHT) then
 		for i=1,2 do
 			local token=Duel.CreateToken(tp,100273002)
-			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 	local e1=Effect.CreateEffect(c)
