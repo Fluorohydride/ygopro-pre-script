@@ -1,15 +1,15 @@
 --トリシューラの鼓動
 --
 --Script by 龙骑
-function c100340105.initial_effect(c)
+function c100340055.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,100340105)
-	e1:SetTarget(c100340105.target)
-	e1:SetOperation(c100340105.activate)
+	e1:SetCountLimit(1,100340055)
+	e1:SetTarget(c100340055.target)
+	e1:SetOperation(c100340055.activate)
 	c:RegisterEffect(e1) 
 	--disable
 	local e2=Effect.CreateEffect(c)
@@ -18,16 +18,16 @@ function c100340105.initial_effect(c)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,100340205)
-	e2:SetCondition(c100340105.discon)
+	e2:SetCondition(c100340055.discon)
 	e2:SetCost(aux.bfgcost)
-	e2:SetOperation(c100340105.disop)
+	e2:SetOperation(c100340055.disop)
 	c:RegisterEffect(e2)
 end
-function c100340105.cfilter(c)
+function c100340055.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2f) and c:IsType(TYPE_SYNCHRO)
 end
-function c100340105.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c100340105.cfilter,tp,LOCATION_MZONE,0,1,nil)
+function c100340055.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=Duel.GetMatchingGroup(c100340055.cfilter,tp,LOCATION_MZONE,0,1,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	if chk==0 then return ct>=1 and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil)
 		and (ct<2 or Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil))
@@ -44,9 +44,9 @@ function c100340105.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,rct,0,loc)
 end
-function c100340105.activate(e,tp,eg,ep,ev,re,r,rp)
+function c100340055.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c100340105.cfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(c100340055.cfilter,tp,LOCATION_MZONE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	if ct>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -71,15 +71,15 @@ function c100340105.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100340105.tfilter(c,tp)
+function c100340055.tfilter(c,tp)
 	return c:IsOnField() and c:IsControler(tp) and c:IsSetCard(0x2f) and c:IsType(TYPE_SYNCHRO)
 end
-function c100340105.discon(e,tp,eg,ep,ev,re,r,rp)
+function c100340055.discon(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return tg and tg:IsExists(c100340105.tfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
+	return tg and tg:IsExists(c100340055.tfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
 end
-function c100340105.disop(e,tp,eg,ep,ev,re,r,rp)
+function c100340055.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
