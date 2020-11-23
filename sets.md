@@ -7,6 +7,7 @@
 - **December 19, 2020**: PRISMATIC GOD BOX (PGB1-JP) : `100272XXX`
 - **January 16, 2021**: LIGHTNING OVERDRIVE (LIOV?-JP): `101104XXX`
 - **???? ??, 2021** Premium Pack 2021 (21PP): `100273XXX`
+- **April ??, 2021**: Number Complete File -Piece of Memories- (????-JP): `100274XXX`
 
 # Announced
 
