@@ -27,7 +27,7 @@ function c100274202.initial_effect(c)
 end
 c100274202.xyz_number=1000
 function c100274202.NumeroniusCondition(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsCode(100274201)
+	return re and re:GetHandler():IsCode(100274201)
 end
 function c100274202.NumeroniusOperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
