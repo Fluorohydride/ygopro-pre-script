@@ -36,7 +36,7 @@ function c100274203.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,100274203)>0
 end
 function c100274203.xyzfilter1(c)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x114a) and c:IsCanOverlay()
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and c:IsCanOverlay()
 end
 function c100274203.xyzfilter2(c)
 	return c:IsCode(41418852) and c:IsType(TYPE_SPELL) and c:IsCanOverlay()
