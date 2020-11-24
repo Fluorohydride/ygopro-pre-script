@@ -24,7 +24,7 @@ function c100274203.initial_effect(c)
 end
 function c100274203.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==79747096
-		and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():IsActiveType(TYPE_MONSTER)
+		and c:IsReason(REASON_EFFECT)
 end
 function c100274203.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(c100274203.cfilter,nil)
@@ -36,10 +36,10 @@ function c100274203.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,100274203)>0
 end
 function c100274203.xyzfilter1(c)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and c:IsCanOverlay()
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x114a) and c:IsCanOverlay()
 end
 function c100274203.xyzfilter2(c)
-	return c:IsCode(41418852) and c:IsType(TYPE_SPELL) and c:IsCanOverlay()
+	return c:IsCode(41418852) and c:IsCanOverlay()
 end
 function c100274203.xyzfilter3(c,e,tp)
 	return c:IsCode(100274201) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
