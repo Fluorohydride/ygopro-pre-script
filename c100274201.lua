@@ -62,18 +62,19 @@ function c100274201.spfilter1(c,e,tp)
 end
 function c100274201.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	local sg=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,sg:GetCount(),0,0)
 end
 function c100274201.desop2(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,aux.ExceptThisCard(e))
-	if g:GetCount()>0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
+	local dg=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,aux.ExceptThisCard(e))
+	Duel.Destroy(dg,REASON_EFFECT)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	local g=Duel.GetMatchingGroup(c100274201.spfilter1,tp,0,LOCATION_GRAVE,nil,e,tp)
+	if g:GetFirst() and Duel.SelectYesNo(tp,aux.Stringid(100274201,3)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100274201.spfilter1),tp,0,LOCATION_GRAVE,1,1,nil,e,tp)
-		if sg:GetCount()>0 then
-			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-		end
+		local sg=g:Select(tp,1,1,nil)
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
 function c100274201.spcon(e,tp,eg,ep,ev,re,r,rp)
