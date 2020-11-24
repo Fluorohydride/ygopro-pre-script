@@ -45,7 +45,7 @@ function c100273010.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(c100273010.tgfilter,tp,LOCATION_DECK,0,1,nil) end
     Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-function c100273010.tgop(e,tp,eg,ep,ev,re,r,rp
+function c100273010.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c100273010.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
