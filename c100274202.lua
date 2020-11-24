@@ -25,6 +25,7 @@ function c100274202.initial_effect(c)
 	e2:SetOperation(c100274202.naop)
 	c:RegisterEffect(e2)
 end
+c100274202.xyz_number=1000
 function c100274202.NumeroniusCondition(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsCode(100274201)
 end
@@ -67,7 +68,6 @@ function c100274202.NumeroniusOperation(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetOperation(c100274202.winop)
 	c:RegisterEffect(e4)
 end
-c100274202.xyz_number=1000
 function c100274202.atkcon(e)
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
 end
