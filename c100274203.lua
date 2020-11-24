@@ -24,7 +24,7 @@ function c100274203.initial_effect(c)
 end
 function c100274203.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==79747096
-		and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():IsActiveType(TYPE_MONSTER)
+		and c:IsReason(REASON_EFFECT)
 end
 function c100274203.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(c100274203.cfilter,nil)
@@ -81,6 +81,7 @@ function c100274203.xyzop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 			sc:RegisterEffect(e1)
 			local e2=e1:Clone()
+			e2:SetValue(1000)
 			e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
 			sc:RegisterEffect(e2)
 			Duel.SpecialSummonComplete()
