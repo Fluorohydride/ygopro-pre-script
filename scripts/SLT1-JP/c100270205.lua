@@ -47,7 +47,7 @@ function c100270205.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	tg=g:SelectSubGroup(tp,c100270205.tgfilter,false,2,2,tp)
 	if tg then
 		if Duel.SendtoGrave(tg,REASON_EFFECT)==0 then
