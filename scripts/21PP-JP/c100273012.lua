@@ -28,7 +28,7 @@ function c100273012.spfilter(c,e,tp)
 end
 function c100273012.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)~=0 
+	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)~=0
 		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100273012.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(100273012,0)) then
 		Duel.BreakEffect()

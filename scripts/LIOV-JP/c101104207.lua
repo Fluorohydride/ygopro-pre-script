@@ -11,7 +11,7 @@ function c101104207.initial_effect(c)
 	e1:SetCountLimit(1,101104207+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c101104207.target)
 	e1:SetOperation(c101104207.activate)
-	c:RegisterEffect(e1)	 
+	c:RegisterEffect(e1)
 end
 function c101104207.filter(c)
 	return ((c:IsSetCard(0x107e,0x207e) and c:IsType(TYPE_MONSTER))

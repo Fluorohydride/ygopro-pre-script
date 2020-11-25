@@ -13,7 +13,7 @@ function c100270044.initial_effect(c)
 	e1:SetCost(c100270044.spcost)
 	e1:SetTarget(c100270044.sptg)
 	e1:SetOperation(c100270044.spop)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 	--To hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -25,7 +25,7 @@ function c100270044.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100270044.thtg)
 	e2:SetOperation(c100270044.thop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
 function c100270044.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp

@@ -9,7 +9,7 @@ function c100273004.initial_effect(c)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,100273004+EFFECT_COUNT_CODE_OATH)
-	e1:SetTarget(c100273004.target) 
+	e1:SetTarget(c100273004.target)
 	e1:SetOperation(c100273004.activate)
 	c:RegisterEffect(e1)
 end

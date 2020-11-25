@@ -15,7 +15,7 @@ function c100270046.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 	e2:SetTarget(c100270046.extg)
-	c:RegisterEffect(e2)	 
+	c:RegisterEffect(e2)
 	--draw
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DRAW)
@@ -27,7 +27,7 @@ function c100270046.initial_effect(c)
 	e3:SetCondition(c100270046.drcon)
 	e3:SetTarget(c100270046.drtg)
 	e3:SetOperation(c100270046.drop)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 function c100270046.extg(e,c)
 	return c:IsSetCard(0x25c) or (c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsLevel(7))
@@ -36,7 +36,7 @@ function c100270046.cfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(7) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c100270046.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100270046.cfilter,1,nil,tp) and Duel.GetTurnPlayer()==tp 
+	return eg:IsExists(c100270046.cfilter,1,nil,tp) and Duel.GetTurnPlayer()==tp
 end
 function c100270046.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

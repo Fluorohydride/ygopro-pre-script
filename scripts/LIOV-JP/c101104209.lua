@@ -13,7 +13,7 @@ function c101104209.initial_effect(c)
 	e1:SetCost(c101104209.spcost)
 	e1:SetTarget(c101104209.sptg)
 	e1:SetOperation(c101104209.spop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c101104209.cfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsType(TYPE_XYZ)
@@ -70,7 +70,7 @@ function c101104209.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleDeck(tp)
 		Duel.MoveSequence(tc,0)
 		Duel.ConfirmDecktop(tp,1)
-	end  
+	end
 end
 function c101104209.indval(e,c)
 	return not c:IsSetCard(0x48)

@@ -24,7 +24,7 @@ function c100270043.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100270043.atktg)
 	e2:SetOperation(c100270043.atkop)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 end
 function c100270043.releasefilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsReleasableByEffect()

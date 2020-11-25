@@ -77,4 +77,4 @@ function c100200191.spop2(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e2,true)
 	end
-end		
+end

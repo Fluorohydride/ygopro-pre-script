@@ -19,7 +19,7 @@ function c100270049.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and Duel.IsChainDisablable(ev)
 end
 function c100270049.cfilter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(7) and c:IsRace(RACE_DRAGON) 
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(7) and c:IsRace(RACE_DRAGON)
 		and c:IsAbleToHandAsCost()
 end
 function c100270049.cost(e,tp,eg,ep,ev,re,r,rp,chk)

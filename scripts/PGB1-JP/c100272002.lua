@@ -48,7 +48,7 @@ function c100272002.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-	  	if Duel.Destroy(tc,REASON_EFFECT)~=0 then
+		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
 			local e3=Effect.CreateEffect(e:GetHandler())
 			e3:SetType(EFFECT_TYPE_FIELD)
 			e3:SetCode(EFFECT_DISABLE)
@@ -86,4 +86,4 @@ function c100272002.discon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100272002.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
-end		
+end

@@ -10,7 +10,7 @@ function c100270045.initial_effect(c)
 	e1:SetCountLimit(1,100270045+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100270045.target)
 	e1:SetOperation(c100270045.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function c100270045.filter(c)
 	return c:IsAbleToHand()

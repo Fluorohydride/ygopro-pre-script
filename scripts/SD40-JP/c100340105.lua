@@ -10,7 +10,7 @@ function c100340105.initial_effect(c)
 	e1:SetCountLimit(1,100340105)
 	e1:SetTarget(c100340105.target)
 	e1:SetOperation(c100340105.activate)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--disable
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DISABLE)

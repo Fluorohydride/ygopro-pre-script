@@ -82,7 +82,7 @@ function c101104204.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107e) and c:GetOriginalType()&TYPE_MONSTER~=0
 end
 function c101104204.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp)  and aux.disfilter1(chkc) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and aux.disfilter1(chkc) end
 	local ct=e:GetHandler():GetEquipGroup():FilterCount(c101104204.cfilter,nil)
 	if chk==0 then return ct>0 and Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
