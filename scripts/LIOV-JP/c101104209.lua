@@ -41,7 +41,7 @@ function c101104209.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101104209.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)
@@ -60,17 +60,17 @@ function c101104209.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetValue(c101104209.indval)
 		tc:RegisterEffect(e3)
 		tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101104209,1))
+		--to deck top
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101104209,2))
+		local g2=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_DECK,0,1,1,nil)
+		local tc2=g2:GetFirst()
+		if tc2 then
+			Duel.ShuffleDeck(tp)
+			Duel.MoveSequence(tc2,0)
+			Duel.ConfirmDecktop(tp,1)
+		end
 	end
 	Duel.SpecialSummonComplete()
-	--to deck top
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101104209,2))
-	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_DECK,0,1,1,nil)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.ShuffleDeck(tp)
-		Duel.MoveSequence(tc,0)
-		Duel.ConfirmDecktop(tp,1)
-	end
 end
 function c101104209.indval(e,c)
 	return not c:IsSetCard(0x48)
