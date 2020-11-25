@@ -27,7 +27,7 @@ function c100273008.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetCode(EVENT_BATTLE_DESTROYING)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCondition(c100273008.damcon)
+	e3:SetCondition(aux.bdocon)
 	e3:SetTarget(c100273008.damtg)
 	e3:SetOperation(c100273008.damop)
 	c:RegisterEffect(e3)
@@ -45,19 +45,13 @@ function c100273008.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100273008.matfilter1(c,fc)
-	return c:IsLevel(5,6)
+	return c:IsRace(RACE_ROCK) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(fc:GetControler())
 end
 function c100273008.matfilter2(c,fc)
-	return c:IsFusionType(TYPE_MONSTER) and c:IsRace(RACE_ROCK) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(fc:GetControler())
+	return c:IsLevel(5,6)
 end
 function c100273008.splimit(e,se,sp,st)
 	return se:GetHandler():IsCode(59419719) or not e:GetHandler():IsLocation(LOCATION_EXTRA)
-end
-function c100273008.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local d=Duel.GetAttacker()
-	if d==c then d=Duel.GetAttackTarget() end
-	return c:IsRelateToBattle() and d:IsLocation(LOCATION_GRAVE) and d:IsReason(REASON_BATTLE) and d:IsType(TYPE_MONSTER)
 end
 function c100273008.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

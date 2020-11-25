@@ -4,7 +4,7 @@
 function c100273009.initial_effect(c)
 	--fusion summon
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,c100273009.matfilter1,c100273009.matfilter2,true)
+	aux.AddFusionProcFun2(c,c100273009.matfilter,aux.FilterBoolFunction(Card.IsLevelBelow,4),true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -19,7 +19,7 @@ function c100273009.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCondition(c100273009.damcon)
+	e2:SetCondition(aux.bdocon)
 	e2:SetTarget(c100273009.damtg)
 	e2:SetOperation(c100273009.damop)
 	c:RegisterEffect(e2)
@@ -35,20 +35,11 @@ function c100273009.initial_effect(c)
 	e3:SetOperation(c100273009.thop)
 	c:RegisterEffect(e3)
 end
-function c100273009.matfilter1(c,fc)
-	return c:GetLevel()>0 and c:IsLevelBelow(4)
-end
-function c100273009.matfilter2(c,fc)
-	return c:IsFusionType(TYPE_MONSTER) and c:IsRace(RACE_ROCK) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(fc:GetControler())
+function c100273009.matfilter(c,fc)
+	return c:IsRace(RACE_ROCK) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(fc:GetControler())
 end
 function c100273009.splimit(e,se,sp,st)
 	return se:GetHandler():IsCode(59419719) or not e:GetHandler():IsLocation(LOCATION_EXTRA)
-end
-function c100273009.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local d=Duel.GetAttacker()
-	if d==c then d=Duel.GetAttackTarget() end
-	return c:IsRelateToBattle() and d:IsLocation(LOCATION_GRAVE) and d:IsReason(REASON_BATTLE) and d:IsType(TYPE_MONSTER)
 end
 function c100273009.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
