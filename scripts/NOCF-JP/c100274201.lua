@@ -71,7 +71,7 @@ function c100274201.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,aux.ExceptThisCard(e))
 	if Duel.Destroy(dg,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		local g=Duel.GetMatchingGroup(c100274201.spfilter2,tp,0,LOCATION_GRAVE,nil,e,tp)
-		if g:GetCount()0 and Duel.SelectYesNo(tp,aux.Stringid(100274201,3)) then
+		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100274201,3)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)
