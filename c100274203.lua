@@ -47,13 +47,13 @@ end
 function c100274203.xyztg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c100274203.xyzfilter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,4,nil)
-		and Duel.IsExistingTarget(c100274203.xyzfilter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil)
+		and Duel.IsExistingTarget(c100274203.xyzfilter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil)
+		and Duel.IsExistingTarget(c100274203.xyzfilter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,4,nil)
 		and Duel.IsExistingMatchingCard(c100274203.xyzfilter3,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local sg1=Duel.SelectTarget(tp,c100274203.xyzfilter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,4,nil)
+	local sg1=Duel.SelectTarget(tp,c100274203.xyzfilter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local sg2=Duel.SelectTarget(tp,c100274203.xyzfilter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+	local sg2=Duel.SelectTarget(tp,c100274203.xyzfilter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,4,nil)
 	sg1:Merge(sg2)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
