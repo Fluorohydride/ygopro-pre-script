@@ -1,7 +1,6 @@
---インファニティポーン
+--インフェルニティ・ポーン
 --Infernity Pawn
 --LUA by Kohana Sonogami
---
 function c100273011.initial_effect(c)
 	--Optional
 	local e1=Effect.CreateEffect(c)
@@ -17,7 +16,7 @@ function c100273011.initial_effect(c)
 end
 function c100273011.opcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
-		and Duel.GetDrawCount(tp)>0
+		and Duel.GetDrawCount(tp)>0 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 end
 function c100273011.ttopfilter(c)
 	return c:IsSetCard(0xb)
@@ -30,16 +29,18 @@ function c100273011.optg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b2=Duel.IsExistingMatchingCard(c100273011.ssetfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	local dt=Duel.GetDrawCount(tp)
-	aux.DrawReplaceCount=0
-	aux.DrawReplaceMax=dt
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCode(EFFECT_DRAW_COUNT)
-	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_DRAW)
-	e1:SetValue(0)
-	Duel.RegisterEffect(e1,tp)
+	if dt~=0 then
+		aux.DrawReplaceCount=0
+		aux.DrawReplaceMax=dt
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetCode(EFFECT_DRAW_COUNT)
+		e1:SetTargetRange(1,0)
+		e1:SetReset(RESET_PHASE+PHASE_DRAW)
+		e1:SetValue(0)
+		Duel.RegisterEffect(e1,tp)
+	end
 	local off=1
 	local ops,opval={},{}
 	if b1 then
@@ -55,16 +56,14 @@ function c100273011.optg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=Duel.SelectOption(tp,table.unpack(ops))+1
 	local sel=opval[op]
 	e:SetLabel(sel)
-	if sel==0 then
-		e:SetCategory(0)
-	else
-		e:SetCategory(0)
-	end
 end
 function c100273011.opop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	aux.DrawReplaceCount=aux.DrawReplaceCount+1
+	if aux.DrawReplaceCount>aux.DrawReplaceMax then return end
 	local sel=e:GetLabel()
 	if sel==0 then
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100273011,3))
 		local g=Duel.SelectMatchingCard(tp,c100273011.ttopfilter,tp,LOCATION_DECK,0,1,1,nil)
 		local tc=g:GetFirst()
 		if tc then
