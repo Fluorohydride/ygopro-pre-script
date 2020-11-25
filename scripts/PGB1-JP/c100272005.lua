@@ -18,7 +18,7 @@ function c100272005.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100272005,1))
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetCountLimit(1,100272005)
 	e2:SetTarget(c100272005.eqtg)
@@ -55,7 +55,7 @@ function c100272005.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToChangeControler()
 end
 function c100272005.eqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x110) and c:IsType(TYPE_MONSTER) and not c:IsSummonableCard()
+	return c:IsFaceup() and c:IsSetCard(0x110) and not c:IsSummonableCard()
 end
 function c100272005.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100272005.filter(chkc) end
