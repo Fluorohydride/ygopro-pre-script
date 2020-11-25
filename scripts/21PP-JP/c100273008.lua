@@ -1,23 +1,25 @@
+--中生代化石マシン スカルワゴン
 --Fossil Machine Skull Wagon
+--Script by TheOnePharaoh
 function c100273008.initial_effect(c)
-    --fusion summon
-    c:EnableReviveLimit()
-    aux.AddFusionProcFun2(c,c100273008.matfilter1,c100273008.matfilter2,true)
-    --spsummon condition
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-    e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-    e1:SetValue(c100273008.splimit)
-    c:RegisterEffect(e1)
-    --extra attack
-    local e2=Effect.CreateEffect(c)
-    e2:SetType(EFFECT_TYPE_SINGLE)
-    e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-    e2:SetRange(LOCATION_MZONE)
-    e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
-    e2:SetValue(1)
-    c:RegisterEffect(e2)
+	--fusion summon
+	c:EnableReviveLimit()
+	aux.AddFusionProcFun2(c,c100273008.matfilter1,c100273008.matfilter2,true)
+	--spsummon condition
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetValue(c100273008.splimit)
+	c:RegisterEffect(e1)
+	--extra attack
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
+	e2:SetValue(1)
+	c:RegisterEffect(e2)
 	--damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100273008,0))
@@ -29,27 +31,27 @@ function c100273008.initial_effect(c)
 	e3:SetTarget(c100273008.damtg)
 	e3:SetOperation(c100273008.damop)
 	c:RegisterEffect(e3)
-    --destroy
-    local e4=Effect.CreateEffect(c)
-    e4:SetDescription(aux.Stringid(100273008,1))
-    e4:SetCategory(CATEGORY_DESTROY)
-    e4:SetType(EFFECT_TYPE_IGNITION)
-    e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-    e4:SetRange(LOCATION_GRAVE)
-    e4:SetCountLimit(1,100273008)
-    e4:SetCost(aux.bfgcost)
-    e4:SetTarget(c100273008.destg)
-    e4:SetOperation(c100273008.desop)
-    c:RegisterEffect(e4)
+	--destroy
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(100273008,1))
+	e4:SetCategory(CATEGORY_DESTROY)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetRange(LOCATION_GRAVE)
+	e4:SetCountLimit(1,100273008)
+	e4:SetCost(aux.bfgcost)
+	e4:SetTarget(c100273008.destg)
+	e4:SetOperation(c100273008.desop)
+	c:RegisterEffect(e4)
 end
 function c100273008.matfilter1(c,fc)
-    return c:IsLevel(5,6)
+	return c:IsLevel(5,6)
 end
 function c100273008.matfilter2(c,fc)
-    return c:IsFusionType(TYPE_MONSTER) and c:IsRace(RACE_ROCK) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(fc:GetControler())
+	return c:IsFusionType(TYPE_MONSTER) and c:IsRace(RACE_ROCK) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(fc:GetControler())
 end
 function c100273008.splimit(e,se,sp,st)
-    return se:GetHandler():IsCode(59419719) or not e:GetHandler():IsLocation(LOCATION_EXTRA)
+	return se:GetHandler():IsCode(59419719) or not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 function c100273008.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -68,18 +70,18 @@ function c100273008.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function c100273008.filter(c)
-    return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c100273008.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chkc then return chkc:IsOnField() and c100273008.filter(chkc) end
-    if chk==0 then return Duel.IsExistingTarget(c100273008.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-    local g=Duel.SelectTarget(tp,c100273008.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-    Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	if chkc then return chkc:IsOnField() and c100273008.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100273008.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,c100273008.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c100273008.desop(e,tp,eg,ep,ev,re,r,rp)
-    local tc=Duel.GetFirstTarget()
-    if tc and tc:IsRelateToEffect(e) then
-        Duel.Destroy(tc,REASON_EFFECT)
-    end
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) then
+		Duel.Destroy(tc,REASON_EFFECT)
+	end
 end
