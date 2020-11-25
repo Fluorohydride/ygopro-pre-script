@@ -24,7 +24,7 @@ end
 function c101104203.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0
+		and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0)==0
 end
 function c101104203.efcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
