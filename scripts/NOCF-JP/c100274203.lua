@@ -1,7 +1,6 @@
---数冠カオスの儀式
+--ヌメロン・カオス・リチューアル
 --Numeron Chaos Ritual
 --Anime Retrain Version by Kohana
---
 function c100274203.initial_effect(c)
 	--Activate/Special Summon
 	local e1=Effect.CreateEffect(c)
@@ -23,7 +22,7 @@ function c100274203.initial_effect(c)
 	end
 end
 function c100274203.cfilter(c)
-	return c:GetPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==79747096
+	return c:GetPreviousLocation()&LOCATION_ONFIELD>0 and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==79747096
 		and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():IsActiveType(TYPE_MONSTER)
 end
 function c100274203.checkop(e,tp,eg,ep,ev,re,r,rp)
@@ -46,15 +45,13 @@ function c100274203.xyzfilter3(c,e,tp)
 end
 function c100274203.xyztg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c100274203.xyzfilter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(c100274203.xyzfilter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil)
 		and Duel.IsExistingTarget(c100274203.xyzfilter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,4,nil)
 		and Duel.IsExistingMatchingCard(c100274203.xyzfilter3,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local sg1=Duel.SelectTarget(tp,c100274203.xyzfilter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local sg2=Duel.SelectTarget(tp,c100274203.xyzfilter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,4,nil)
-	sg1:Merge(sg2)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100274203.mtfilter(c,e)
@@ -65,53 +62,47 @@ function c100274203.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,c100274203.xyzfilter3,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	local sc=sg:GetFirst()
-	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetValue(10000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+		sc:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetValue(1000)
+		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
+		sc:RegisterEffect(e2)
 		local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 		local g=tg:Filter(c100274203.mtfilter,nil,e)
 		local tc=g:GetFirst()
 		while tc do
-			local mg=tc:GetOverlayGroup()
-			if mg:GetCount()~=0 then
-				Duel.Overlay(sc,mg)
-			end
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetValue(10000)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
-			sc:RegisterEffect(e1)
-			local e2=e1:Clone()
-			e2:SetValue(1000)
-			e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
-			sc:RegisterEffect(e2)
-			Duel.SpecialSummonComplete()
-			if sc then
-				Duel.Overlay(sc,Group.FromCards(tc))
-				tc=g:GetNext()
-			end
+			Duel.Overlay(sc,Group.FromCards(tc))
+			tc=g:GetNext()
 		end
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e1:SetCode(EFFECT_CANNOT_SUMMON)
-		e1:SetTargetRange(1,0)
-		e1:SetLabel(c100274203.getsummoncount(tp))
-		e1:SetTarget(c100274203.splimit)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-		Duel.RegisterEffect(e2,tp)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD)
-		e3:SetCode(EFFECT_LEFT_SPSUMMON_COUNT)
-		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e3:SetTargetRange(1,0)
-		e3:SetLabel(c100274203.getsummoncount(tp))
-		e3:SetValue(c100274203.countval)
-		e3:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e3,tp)
 	end
+	Duel.SpecialSummonComplete()
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CANNOT_SUMMON)
+	e1:SetTargetRange(1,0)
+	e1:SetLabel(c100274203.getsummoncount(tp))
+	e1:SetTarget(c100274203.splimit)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	Duel.RegisterEffect(e2,tp)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_LEFT_SPSUMMON_COUNT)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetTargetRange(1,0)
+	e3:SetLabel(c100274203.getsummoncount(tp))
+	e3:SetValue(c100274203.countval)
+	e3:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e3,tp)
 end
 function c100274203.getsummoncount(tp)
 	return Duel.GetActivityCount(tp,ACTIVITY_SUMMON)+Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)
