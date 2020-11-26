@@ -45,7 +45,6 @@ function c100340105.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,rct,0,loc)
 end
 function c100340105.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c100340105.cfilter,tp,LOCATION_MZONE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	if ct>0 then
@@ -72,7 +71,7 @@ function c100340105.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100340105.tfilter(c,tp)
-	return c:IsOnField() and c:IsControler(tp) and c:IsSetCard(0x2f) and c:IsType(TYPE_SYNCHRO)
+	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0x2f) and c:IsType(TYPE_SYNCHRO)
 end
 function c100340105.discon(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then return false end

@@ -7,14 +7,14 @@ function c100340026.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,100340026+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,100340026)
 	e1:SetCost(c100340026.cost)
 	e1:SetTarget(c100340026.target)
 	e1:SetOperation(c100340026.activate)
 	c:RegisterEffect(e1)
 	--tohand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100340026,2))
+	e2:SetDescription(aux.Stringid(100340026,0))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -30,7 +30,7 @@ function c100340026.rfilter(c,tp)
 	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and (c:IsControler(tp) or c:IsFaceup())
 end
 function c100340026.spfilter(c,e,tp)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x2f) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100340026.fselect(g,tp)
 	return Duel.GetMZoneCount(tp,g)>=g:GetCount() and Duel.CheckReleaseGroup(tp,aux.IsInGroup,#g,nil,g)
@@ -52,20 +52,19 @@ function c100340026.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,e:GetLabel(),tp,LOCATION_DECK)
 end
 function c100340026.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.GetMatchingGroup(c100340026.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
+	if ft>0 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	local ct=e:GetLabel()
 	if ft<ct or ft<=0 then return end
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
+	local g=Duel.GetMatchingGroup(c100340026.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ct)
+	local sg=g:SelectSubGroup(tp,aux.dncheck,false,ct,ct)
 	if sg then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c100340026.thfilter(c)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsAbleToHand()
 end
 function c100340026.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c100340026.thfilter(chkc) end

@@ -55,7 +55,7 @@ function c100340001.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-function c100340001.thfilter(c,e)
+function c100340001.thfilter(c)
 	return c:IsSetCard(0x2f) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100340001.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
