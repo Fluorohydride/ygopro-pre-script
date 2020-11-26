@@ -20,7 +20,6 @@ function c100273010.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,100273110)
-	e2:SetCondition(c100273010.tgcon)
 	e2:SetTarget(c100273010.tgtg)
 	e2:SetOperation(c100273010.tgop)
 	c:RegisterEffect(e2)
@@ -35,14 +34,12 @@ function c100273010.hdop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()==0 then return end
 	Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
 end
-function c100273010.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
-end
 function c100273010.tgfilter(c)
 	return c:IsSetCard(0xb) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function c100273010.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100273010.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
+		and Duel.IsExistingMatchingCard(c100273010.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c100273010.tgop(e,tp,eg,ep,ev,re,r,rp)
