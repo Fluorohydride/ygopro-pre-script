@@ -1,7 +1,6 @@
 --氷結界の浄玻璃
 --Mirror Judge of the Ice Barrier
 --LUA by Kohana Sonogami
---
 function c101104020.initial_effect(c)
 	--It Loses 500 LP for each time they pay/activate a card effect
 	local e1=Effect.CreateEffect(c)
@@ -36,39 +35,36 @@ function c101104020.initial_effect(c)
 	e3:SetOperation(c101104020.posop)
 	c:RegisterEffect(e3)
 end
-function c101104020.filter(c)
+function c101104020.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2f)
 end
 function c101104020.llpcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return Duel.IsExistingMatchingCard(c101104020.filter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
-		and ep~=tp
+	return Duel.IsExistingMatchingCard(c101104020.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+		and ep==1-tp and re:IsActivated()
 end
 function c101104020.llpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,101104020)
-	Duel.SetLP(1-tp,Duel.GetLP(1-tp)-1000)
+	Duel.SetLP(1-tp,Duel.GetLP(1-tp)-500)
 end
 function c101104020.tdfilter(c) 
 	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() 
 end
 function c101104020.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c101104020.tdfilter,tp,LOCATION_GRAVE,0,2,nil)
-		and Duel.IsExistingTarget(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,2,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101104020.tdfilter,tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingTarget(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g1=Duel.SelectTarget(tp,c101104020.tdfilter,tp,LOCATION_GRAVE,0,2,2,nil)
+	local g1=Duel.SelectTarget(tp,c101104020.tdfilter,tp,LOCATION_GRAVE,0,1,2,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g2=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,2,2,nil)
-	g1:Merge(g2) 
+	local g2=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,2,nil)
+	g1:Merge(g2)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,g1:GetCount(),0,0)
 end
 function c101104020.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if #g>0 then
 		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 	end
-end
-function c101104020.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2f)
 end
 function c101104020.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101104020.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -81,10 +77,9 @@ function c101104020.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c101104020.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectTarget(tp,c101104020.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
 function c101104020.posop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsAttackPos() and tc:IsRelateToEffect(e) then
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
