@@ -44,9 +44,8 @@ function c100270023.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100270023.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 then
-		c:CompleteProcedure()
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
 	end
 end
 function c100270023.tgfilter(c)
