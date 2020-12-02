@@ -2,12 +2,11 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **November 21, 2020**: Structure Deck: Ice Barrier of the Frozen Prison (SD40-JP) : `100340XXX`
 - **December 5, 2020**: SELECTION 10 (SLT1-JP) : `100270XXX`
 - **December 19, 2020**: PRISMATIC GOD BOX (PGB1-JP) : `100272XXX`
-- **January 16, 2021**: LIGHTNING OVERDRIVE (LIOV?-JP): `101104XXX`
-- **???? ??, 2021** Premium Pack 2021 (21PP): `100273XXX`
-- **April ??, 2021**: Number Complete File -Piece of Memories- (????-JP): `100274XXX`
+- **January 16, 2021**: LIGHTNING OVERDRIVE (LIOV-JP): `101104XXX`
+- **???? ??, 2021** Premium Pack 2021 (21PP-JP): `100273XXX`
+- **April ??, 2021**: Number Complete File -Piece of Memories- (NOCF?-JP): `100274XXX`
 
 # Announced
 
@@ -116,6 +115,7 @@
 - Structure Deck: Rebirth of Shaddoll (SD37-JP) : `100337XXX`
 - Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
 - Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
+- Structure Deck: Ice Barrier of the Frozen Prison (SD40-JP) : `100340XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
