@@ -81,7 +81,7 @@ function c100274201.desop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100274201.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetOverlayGroup() and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:GetOverlayCount()>0 and c:IsPreviousLocation(LOCATION_MZONE)
 		and rp==1-tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
 end
 function c100274201.spfilter(c,e,tp)
