@@ -24,7 +24,7 @@ function c100270001.initial_effect(c)
 	e2:SetCountLimit(1,100270101)
 	e2:SetCondition(c100270001.negcon)
 	e2:SetTarget(c100270001.negtg)
-	e2:SetOperation(c100270001.negop)
+	e2:SetOperation(function(_,_,_,_,ev)Duel.NegateActivation(ev)end)
 	c:RegisterEffect(e2)
 	--Special Summon this card from your GY
 	local e3=Effect.CreateEffect(c)
@@ -87,9 +87,6 @@ end
 function c100270001.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-end
-function c100270001.negop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateActivation(ev)
 end
 function c100270001.cfilter(c,tp)
 	return c:GetSummonLocation()==LOCATION_GRAVE and c:GetPreviousControler()==1-tp
