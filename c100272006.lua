@@ -19,7 +19,7 @@ function c100272006.initial_effect(c)
 	--Choose 1 monster in their Deck/Special Summon that target
 	local e2=Effect.CreateEffect(c) 
 	e2:SetDescription(aux.Stringid(100272006,1))
-	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION) 
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100272006+100)
