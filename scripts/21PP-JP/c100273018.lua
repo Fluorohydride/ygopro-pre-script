@@ -2,7 +2,7 @@
 --Sunavalon Daphne
 --LUA by Kohana Sonogami
 --
-function c53413628.initial_effect(c)
+function c100273018.initial_effect(c)
 	--Link Summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_PLANT),2,2)
 	c:EnableReviveLimit()
@@ -16,32 +16,32 @@ function c53413628.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Shuffle 2 Plant Link Monsters into the Extra Deck
 	local e2=Effect.CreateEffect(c) 
-	e2:SetDescription(aux.Stringid(100273019,0)) 
+	e2:SetDescription(aux.Stringid(100273018,0)) 
 	e2:SetCategory(CATEGORY_TOEXTRA)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,100273019)
-	e2:SetCost(c100273019.tdcost)
-	e2:SetTarget(c100273019.tdtg)
-	e2:SetOperation(c100273019.tdop)
+	e2:SetCountLimit(1,100273018)
+	e2:SetCost(c100273018.tdcost)
+	e2:SetTarget(c100273018.tdtg)
+	e2:SetOperation(c100273018.tdop)
 	c:RegisterEffect(e2)
 end
-function c100273019.tdfilter(c)
+function c100273018.tdfilter(c)
 	return c:IsType(TYPE_LINK) and c:IsRace(RACE_PLANT) and c:IsAbleToExtraDeck()
 end
-function c100273019.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100273018.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,nil,1,nil) end
 	local g=Duel.SelectReleaseGroup(tp,nil,1,1,nil)
 	Duel.Release(g,REASON_COST)
 end
-function c100273019.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100273019.tdfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100273019.tdfilter,tp,LOCATION_GRAVE,0,2,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100273019,0))
-	local g=Duel.SelectTarget(tp,c100273019.tdfilter,tp,LOCATION_GRAVE,0,2,2,nil)
+function c100273018.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100273018.tdfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100273018.tdfilter,tp,LOCATION_GRAVE,0,2,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100273018,0))
+	local g=Duel.SelectTarget(tp,c100273018.tdfilter,tp,LOCATION_GRAVE,0,2,2,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,g,g:GetCount(),0,0)
 end
-function c100273019.tdop(e,tp,eg,ep,ev,re,r,rp)
+function c100273018.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
 	if sg:GetCount()>0 then
