@@ -1,0 +1,50 @@
+--サンアバロン・ダフネ
+--Sunavalon Daphne
+--LUA by Kohana Sonogami
+--
+function c53413628.initial_effect(c)
+	--Link Summon
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_PLANT),2,2)
+	c:EnableReviveLimit()
+	--Cannot be targeted for attacks
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(aux.imval1)
+	c:RegisterEffect(e1)
+	--Shuffle 2 Plant Link Monsters into the Extra Deck
+	local e2=Effect.CreateEffect(c) 
+	e2:SetDescription(aux.Stringid(100273019,0)) 
+	e2:SetCategory(CATEGORY_TOEXTRA)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,100273019)
+	e2:SetCost(c100273019.tdcost)
+	e2:SetTarget(c100273019.tdtg)
+	e2:SetOperation(c100273019.tdop)
+	c:RegisterEffect(e2)
+end
+function c100273019.tdfilter(c)
+	return c:IsType(TYPE_LINK) and c:IsRace(RACE_PLANT) and c:IsAbleToExtraDeck()
+end
+function c100273019.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,nil,1,nil) end
+	local g=Duel.SelectReleaseGroup(tp,nil,1,1,nil)
+	Duel.Release(g,REASON_COST)
+end
+function c100273019.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100273019.tdfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100273019.tdfilter,tp,LOCATION_GRAVE,0,2,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100273019,0))
+	local g=Duel.SelectTarget(tp,c100273019.tdfilter,tp,LOCATION_GRAVE,0,2,2,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,g,g:GetCount(),0,0)
+end
+function c100273019.tdop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
+	if sg:GetCount()>0 then
+		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+	end
+end
