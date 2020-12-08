@@ -67,7 +67,7 @@ function c100273018.mttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,c100273018.cfilter,tp,LOCATION_MZONE,0,1,1,nil,lg)
 end
 function c100273018.cfilter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x256)
+	return c:IsFaceup() and c:IsSetCard(0x256) and c:IsType(TYPE_LINK)
 end
 function c100273018.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -79,7 +79,7 @@ function c100273018.mtop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(ct)
+		e1:SetValue(ct-1)
 		tc:RegisterEffect(e1)
 	end
 end
