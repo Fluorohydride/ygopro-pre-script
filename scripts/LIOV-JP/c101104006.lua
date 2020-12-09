@@ -79,7 +79,7 @@ function c101104006.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101104006.eqfilter),tp,LOCATION_DECK,0,1,1,nil)
 		local ec=g:GetFirst() 
 		if ec then
-			if not Duel.Equip(1-tp,ec,tc) then return end
+			if not Duel.Equip(tp,ec,tc) then return end
 			--Equip Limit
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
