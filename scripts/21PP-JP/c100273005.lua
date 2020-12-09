@@ -64,7 +64,7 @@ function c100273005.damop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Damage(p,d,REASON_EFFECT)~=0
 		and Duel.IsExistingMatchingCard(c100273005.cfilter,tp,LOCATION_GRAVE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c100273005.tdfilter,tp,LOCATION_REMOVED,0,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(100273005,2))~=0 then
+		and Duel.SelectYesNo(tp,aux.Stringid(100273005,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,c100273005.tdfilter,tp,LOCATION_REMOVED,0,1,1,nil)
