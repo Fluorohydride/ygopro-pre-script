@@ -14,7 +14,7 @@ function c100273005.initial_effect(c)
 	e1:SetTarget(c100273005.tgtg)
 	e1:SetOperation(c100273005.tgop)
 	c:RegisterEffect(e1)
-	--Inflict 500 then return 1 "Fossil" into the Extra Deck
+	--Inflict 500 then return 1 "Fossil" into the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100273005,1))
 	e2:SetCategory(CATEGORY_TODECK)
@@ -53,7 +53,7 @@ function c100273005.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetParam(500)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 end
-function c100273005.tdfilter(c)
+function c100273005.tgfilter1(c)
 	return (aux.IsCodeListed(c,59419719) or c:IsCode(59419719)) and c:IsAbleToDeck()
 end
 function c100273005.cfilter(c)
@@ -61,15 +61,14 @@ function c100273005.cfilter(c)
 end
 function c100273005.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Damage(p,d,REASON_EFFECT)~=0
-		and Duel.IsExistingMatchingCard(c100273005.cfilter,tp,LOCATION_GRAVE,0,1,nil)
-		and Duel.IsExistingMatchingCard(c100273005.tdfilter,tp,LOCATION_REMOVED,0,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(100273005,2)) then
-		Duel.BreakEffect()
+	if Duel.Damage(p,d,REASON_EFFECT) and Duel.IsExistingMatchingCard(c100273005.cfilter,tp,LOCATION_GRAVE,0,1,nil)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		local g=Duel.SelectMatchingCard(tp,c100273005.tdfilter,tp,LOCATION_REMOVED,0,1,1,nil)
-		if g:GetCount()>0 then
-			Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		local g=Duel.GetMatchingGroup(c100273005.tgfilter1,tp,LOCATION_REMOVED,0,nil)
+		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100273005,2)) then
+			Duel.BreakEffect()
+			local sg=g:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
+			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_RETURN)
 		end
 	end
 end
