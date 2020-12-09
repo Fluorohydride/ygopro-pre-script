@@ -95,7 +95,7 @@ function c101104006.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function c101104006.rfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSetCard(0x25d) and c:IsAbleToRemoveAsCost()
+	return c:IsType(TYPE_TRAP) and c:IsSetCard(0x25a) and c:IsAbleToRemoveAsCost()
 end
 function c101104006.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
