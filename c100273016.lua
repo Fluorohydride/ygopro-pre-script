@@ -119,6 +119,7 @@ function c100273016.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ex,g=Duel.GetOperationInfo(0,CATEGORY_DESTROY)
 	if g:GetFirst():IsRelateToEffect(e) then
 		if Duel.Destroy(g,REASON_EFFECT)~=0 then
+			local tc=g:GetFirst()
 			local dam=tc:GetRank()*300
 			Duel.Damage(1-tp,dam,REASON_EFFECT)
 		end
