@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100273021.initial_effect(c)
+	Duel.EnableGlobalFlag(GLOBALFLAG_SELF_TOGRAVE)
 	--activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
@@ -17,10 +18,11 @@ function c100273021.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to grave
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_ADJUST)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_SELF_TOGRAVE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetOperation(c100273021.adjustop)
+	e2:SetCondition(c100273021.sdcon)
 	c:RegisterEffect(e2)
 end
 function c100273021.repfilter(c,tp)
@@ -45,8 +47,6 @@ end
 function c100273021.desrepval(e,c)
 	return c100273021.repfilter(c,e:GetHandlerPlayer())
 end
-function c100273021.adjustop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 then return end
-	Duel.HintSelection(Group.FromCards(e:GetHandler()))
-	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
+function c100273021.sdcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)~=0
 end
