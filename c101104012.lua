@@ -44,7 +44,7 @@ function c101104012.costfilter1(c)
 end
 function c101104012.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101104012.costfilter1,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	local g=Duel.SelectMatchingCard(tp,c101104012.cosfilter1,tp,LOCATION_HAND,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c101104012.costfilter1,tp,LOCATION_HAND,0,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c101104012.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -71,7 +71,7 @@ function c101104012.thfilter(c,code)
 end
 function c101104012.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101104012.costfilter2,tp,LOCATION_HAND,0,1,nil) end
-	local g=Duel.SelectMatchingCard(tp,c101104012.cosfilter2,tp,LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101104012.costfilter2,tp,LOCATION_HAND,0,1,1,nil)
 	e:SetLabel(g:GetFirst():GetCode())
 	Duel.SendtoGrave(g,REASON_COST)
 end
