@@ -43,7 +43,8 @@ function c101104046.efilter(e,te)
 end
 function c101104046.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) and rc:GetType()==TYPE_TRAP and rc:IsSetCard(0x4c,0x89) and rc:IsRelateToEffect(re) and rc:IsCanTurnSet() and rc:IsStatus(STATUS_LEAVE_CONFIRMED)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) and rc:GetType()==TYPE_TRAP and rc:IsSetCard(0x4c,0x89)
+		and rc:IsRelateToEffect(re) and rc:IsCanTurnSet() and rc:IsStatus(STATUS_LEAVE_CONFIRMED) and rp==tp
 end
 function c101104046.setop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,101104046)==0 and Duel.SelectYesNo(tp,aux.Stringid(101104046,1)) then
