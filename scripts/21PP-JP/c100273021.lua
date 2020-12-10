@@ -47,6 +47,6 @@ end
 function c100273021.desrepval(e,c)
 	return c100273021.repfilter(c,e:GetHandlerPlayer())
 end
-function c100273021.sdcon(e,tp,eg,ep,ev,re,r,rp)
+function c100273021.sdcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)~=0
 end
