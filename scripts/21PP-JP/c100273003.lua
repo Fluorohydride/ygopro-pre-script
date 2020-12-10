@@ -106,7 +106,7 @@ function c100273003.chk(e,tp,eg,ep,ev,re,r,rp)
 	local e3=e:GetLabelObject()
 	local e4=e3:GetLabelObject()
 	local te=c:GetReasonEffect()
-	if c:GetFlagEffect(100273003)==0 or not te or not te:IsActivated() then
+	if c:GetFlagEffect(100273003)==0 or not te or not te:IsActivated() or te:GetHandler()~=c then
 		e3:Reset()
 		e4:Reset()
 	else
