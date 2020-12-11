@@ -59,17 +59,17 @@ function c101104006.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101104006.eqfilter1(c,e,tp)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e) and c:GetSummonPlayer()~=tp
+		and Duel.IsExistingMatchingCard(c101104006.eqfilter2,tp,LOCATION_DECK,0,1,nil,c)
+end
+function c101104006.eqfilter2(c)
+	return c:IsType(TYPE_TRAP) and not c:IsForbidden()
 end
 function c101104006.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and c101104006.eqfilter1(chkc,e,tp) end
-	if chk==0 then return eg:IsExists(c101104006.eqfilter1,1,nil,e,tp)
-		and Duel.IsExistingMatchingCard(c101104006.eqfilter2,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return eg:IsExists(c101104006.eqfilter1,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=eg:FilterSelect(tp,c101104006.eqfilter1,1,1,nil,e,tp)
 	Duel.SetTargetCard(g)
-end
-function c101104006.eqfilter2(c)
-	return c:IsSetCard(0x25a) and c:IsType(TYPE_TRAP) and not c:IsForbidden()
 end
 function c101104006.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
