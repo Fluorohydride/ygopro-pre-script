@@ -1,9 +1,9 @@
 --フリント・クラッガー
 --Flint Cragger
---LUA by Kohana Sonogami
+--Scripted by Kohana Sonogami
 --
 function c100273005.initial_effect(c)
-	--Send 1 "Fossil" from your Extra Deck to the GY
+	--tograve
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100273005,0))
 	e1:SetCategory(CATEGORY_GRAVE)
@@ -14,7 +14,7 @@ function c100273005.initial_effect(c)
 	e1:SetTarget(c100273005.tgtg)
 	e1:SetOperation(c100273005.tgop)
 	c:RegisterEffect(e1)
-	--Inflict 500 then return 1 "Fossil" into the GY
+	--return to gy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100273005,1))
 	e2:SetCategory(CATEGORY_TODECK)
