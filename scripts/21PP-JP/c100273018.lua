@@ -27,7 +27,7 @@ function c100273018.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100273018.tdfilter(c)
-	return c:IsType(TYPE_LINK) and c:IsRace(RACE_PLANT) and c:IsAbleToExtraDeck()
+	return c:IsType(TYPE_LINK) and c:IsRace(RACE_PLANT) and c:IsAbleToExtra()
 end
 function c100273018.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,nil,1,nil) end
