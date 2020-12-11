@@ -62,7 +62,7 @@ function c101104006.eqfilter1(c,e,tp)
 		and Duel.IsExistingMatchingCard(c101104006.eqfilter2,tp,LOCATION_DECK,0,1,nil,c)
 end
 function c101104006.eqfilter2(c)
-	return c:IsType(TYPE_TRAP) and not c:IsForbidden()
+	return c:IsSetCard(0x25a) and c:IsType(TYPE_TRAP) and not c:IsForbidden()
 end
 function c101104006.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and c101104006.eqfilter1(chkc,e,tp) end
