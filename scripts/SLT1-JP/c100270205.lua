@@ -22,7 +22,6 @@ function c100270205.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100270205,1))
 	e2:SetCategory(CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCost(c100270205.cost)
@@ -34,24 +33,23 @@ function c100270205.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c100270205.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=2
-	if chk==0 then return ct>0 and Duel.IsPlayerCanDraw(tp,ct) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(ct)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
+	Duel.SetTargetParam(2)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
-function c100270205.tgfilter(g,tp)
+function c100270205.tgcheck(g)
 	return g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_FIRE)
 end
 function c100270205.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
+	Duel.BreakEffect()
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	tg=g:SelectSubGroup(tp,c100270205.tgfilter,false,2,2,tp)
+	tg=g:SelectSubGroup(tp,c100270205.tgcheck,false,2,2)
 	if tg then
 		if Duel.SendtoGrave(tg,REASON_EFFECT)==0 then
-			Duel.ConfirmCards(1-p,tg)
 			Duel.ShuffleHand(p)
 		end
 	else
@@ -69,17 +67,21 @@ function c100270205.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,c100270205.refilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
+function c100270205.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x39)
+end
 function c100270205.posfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
 end
 function c100270205.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x39) and Duel.IsExistingMatchingCard(c100270205.posfilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100270205.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c100270205.posfilter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function c100270205.setop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_MZONE,0,nil,0x39)
-	if Duel.IsExistingMatchingCard(c100270205.posfilter,tp,0,LOCATION_MZONE,1,nil) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-		local g=Duel.SelectMatchingCard(tp,c100270205.posfilter,tp,0,LOCATION_MZONE,1,ct,nil)
+	local ct=Duel.GetMatchingGroupCount(c100270205.cfilter,tp,LOCATION_MZONE,0,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+	local g=Duel.SelectMatchingCard(tp,c100270205.posfilter,tp,0,LOCATION_MZONE,1,ct,nil)
+	if #g>0 then
 		Duel.HintSelection(g)
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 	end

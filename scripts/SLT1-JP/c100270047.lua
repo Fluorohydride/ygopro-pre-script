@@ -31,25 +31,25 @@ function c100270047.initial_effect(c)
 	e3:SetOperation(c100270047.spop)
 	c:RegisterEffect(e3)
 end
-function c100270047.filter1(c)
+function c100270047.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_FAIRY) and c:IsAbleToDeck() and not c:IsPublic()
 end
-function c100270047.filter2(c)
+function c100270047.thfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(7) and c:IsRace(RACE_DRAGON) and c:IsAbleToHand()
 end
 function c100270047.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100270047.filter1,tp,LOCATION_HAND,0,1,nil)
-		and Duel.IsExistingMatchingCard(c100270047.filter2,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100270047.cfilter,tp,LOCATION_HAND,0,1,nil)
+		and Duel.IsExistingMatchingCard(c100270047.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100270047.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g1=Duel.SelectMatchingCard(tp,c100270047.filter1,tp,LOCATION_HAND,0,1,1,nil)
+	local g1=Duel.SelectMatchingCard(tp,c100270047.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if g1:GetCount()==0 then return end
 	Duel.ConfirmCards(1-tp,g1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g2=Duel.SelectMatchingCard(tp,c100270047.filter2,tp,LOCATION_DECK,0,1,1,nil)
+	local g2=Duel.SelectMatchingCard(tp,c100270047.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g2:GetCount()>0 and Duel.SendtoHand(g2,nil,REASON_EFFECT)~=0 then
 		Duel.ConfirmCards(1-tp,g2)
 		Duel.ShuffleDeck(tp)
