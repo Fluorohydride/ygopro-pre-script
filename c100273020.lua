@@ -1,9 +1,9 @@
 --サンヴァイン・クロスブリード
 --Sunvine Cross Breed
---LUA by Kohana Sonogami
+--Scripted by Kohana Sonogami
 --
 function c100273020.initial_effect(c)
-	--Special Summon 1 Plant Monster from your GY
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100273020,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
