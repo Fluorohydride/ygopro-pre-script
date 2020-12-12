@@ -1,12 +1,12 @@
 --サンアバロン・メリアス
 --Sunavalon Melias
---LUA by Kohana Sonogami
+--Scripted by Kohana Sonogami
 --
 function c100273019.initial_effect(c)
-	--Link Summon
+	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_PLANT),2,99,c100273019.lcheck)
 	c:EnableReviveLimit()
-	--Special Summon "Sunseed Genius Loci" from your GY
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100273019,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function c100273019.initial_effect(c)
 	e1:SetTarget(c100273019.sptg)
 	e1:SetOperation(c100273019.spop)
 	c:RegisterEffect(e1)
-	--Cannot be targeted for attacks
+	--untargetable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -24,12 +24,13 @@ function c100273019.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(aux.imval1)
 	c:RegisterEffect(e2)
-	--It can attack of many times up to "Sunvine" you control
+	--multi attack
 	local e3=Effect.CreateEffect(c) 
 	e3:SetDescription(aux.Stringid(100273019,1))
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
+	e3:SetCondition(c100273019.mtcon)
 	e3:SetTarget(c100273019.mttg)
 	e3:SetOperation(c100273019.mtop)
 	c:RegisterEffect(e3)
@@ -56,6 +57,9 @@ function c100273019.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function c100273019.mtcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
+end
 function c100273019.cfilter(c,g)
 	return c:IsSetCard(0x255) and g:IsContains(c)
 end
@@ -66,20 +70,21 @@ function c100273019.mttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c100273019.cfilter,tp,LOCATION_MZONE,0,1,1,nil,lg)
 end
-function c100273019.cfilter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x256) and c:IsType(TYPE_LINK)
-end
 function c100273019.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
-	local ct=Duel.GetMatchingGroupCount(c100273019.cfilter2,tp,LOCATION_MZONE,0,nil)
-	if ct>0 then
+	if tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(ct-1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetValue(c100273019.val)
 		tc:RegisterEffect(e1)
 	end
+end
+function c100273019.valfilter(c)
+	return c:IsSetCard(0x255) and c:IsType(TYPE_LINK)
+end
+function c100273019.val(e,c)
+	return Duel.GetMatchingGroupCount(c100273019.valfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)-1
 end
