@@ -62,7 +62,7 @@ end
 function c100273005.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Damage(p,d,REASON_EFFECT) and Duel.IsExistingMatchingCard(c100273005.cfilter,tp,LOCATION_GRAVE,0,1,nil)~=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.GetMatchingGroup(c100273005.tgfilter1,tp,LOCATION_REMOVED,0,nil)
 		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100273005,2)) then
 			Duel.BreakEffect()
