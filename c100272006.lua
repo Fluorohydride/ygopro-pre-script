@@ -3,7 +3,7 @@
 --LUA by Kohana Sonogami
 --
 function c100272006.initial_effect(c)
-	--If you take 1000 or more Special Summon this card
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100272006,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function c100272006.initial_effect(c)
 	e1:SetTarget(c100272006.sptg)
 	e1:SetOperation(c100272006.spop)
 	c:RegisterEffect(e1)
-	--Choose 1 monster in their Deck/Special Summon that target
+	--special summon or todeck
 	local e2=Effect.CreateEffect(c) 
 	e2:SetDescription(aux.Stringid(100272006,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
