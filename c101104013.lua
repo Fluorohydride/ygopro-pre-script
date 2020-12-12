@@ -29,12 +29,9 @@ function c101104013.initial_effect(c)
 	c:RegisterEffect(e2)
 	--remove
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_BATTLE_DESTROY_REDIRECT)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e3:SetValue(LOCATION_REMOVED)
-	e3:SetTarget(c101104013.remtg)
 	c:RegisterEffect(e3)
 end
 function c101104013.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -103,7 +100,4 @@ function c101104013.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101104013.eqlimit(e,c)
 	return c==e:GetLabelObject()
-end
-function c101104013.remtg(e,c)
-	return c==e:GetHandler():GetEquipTarget():GetBattleTarget()
 end
