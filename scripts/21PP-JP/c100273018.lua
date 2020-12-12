@@ -1,12 +1,12 @@
 --サンアバロン・ダフネ
 --Sunavalon Daphne
---LUA by Kohana Sonogami
+--Scripted by Kohana Sonogami
 --
 function c100273018.initial_effect(c)
-	--Link Summon
+	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_PLANT),2,2)
 	c:EnableReviveLimit()
-	--Cannot be targeted for attacks
+	--untargetable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -14,7 +14,7 @@ function c100273018.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
-	--Shuffle 2 Plant Link Monsters into the Extra Deck
+	--todeck
 	local e2=Effect.CreateEffect(c) 
 	e2:SetDescription(aux.Stringid(100273018,0)) 
 	e2:SetCategory(CATEGORY_TOEXTRA)
