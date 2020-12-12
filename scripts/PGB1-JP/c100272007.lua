@@ -1,9 +1,9 @@
 --ヨゲンシャ・ゾルガ
 --Zolga the Prophet
---LUA by Kohana Sonogami
+--Scripted by Kohana Sonogami
 --
 function c100272007.initial_effect(c)
-	--Special Summon this card, then look up to 5 cards
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100272007,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function c100272007.initial_effect(c)
 	e1:SetTarget(c100272007.sptg)
 	e1:SetOperation(c100272007.spop)
 	c:RegisterEffect(e1)
-	--Inflict 2000 damage using this card as a Tribute Summon
+	--damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100272007,0))
 	e2:SetCategory(CATEGORY_RECOVER)
