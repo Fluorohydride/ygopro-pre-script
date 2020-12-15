@@ -1,7 +1,6 @@
---ミレニアムシーカー
+--千年の血族
 --Millenium Seeker
 --LUA by Kohana Sonogami
---
 function c100272006.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -17,10 +16,11 @@ function c100272006.initial_effect(c)
 	e1:SetOperation(c100272006.spop)
 	c:RegisterEffect(e1)
 	--special summon or todeck
-	local e2=Effect.CreateEffect(c) 
+	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100272006,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION) 
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100272006+100)
 	e2:SetTarget(c100272006.tdtg)
@@ -42,10 +42,10 @@ function c100272006.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100272006.filter(c,e,tp)
-	return c:IsAttackAbove(0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetTextAttack()>=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100272006.thfilter(c)
-	return c:IsAttackAbove(0) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:GetTextAttack()>=0 and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100272006.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100272006.filter(chkc,e,tp) end
@@ -57,20 +57,26 @@ function c100272006.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100272006.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local vc=tc:GetTextAttack()
 	if not tc:IsRelateToEffect(e) then return end
+	local vc=tc:GetTextAttack()
+	local sel=1
 	local g=Duel.GetMatchingGroup(c100272006.thfilter,tp,0,LOCATION_DECK,nil)
-	if g:GetCount()>0 and Duel.SelectYesNo(1-tp,aux.Stringid(100272006,2))~=0 then
+	Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(100272006,2))
+	if g:GetCount()>0 then
+		sel=Duel.SelectOption(1-tp,1213,1214)
+	else
+		sel=Duel.SelectOption(1-tp,1214)+1
+	end
+	if sel==0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_CONFIRM)
 		local sg=Duel.SelectMatchingCard(1-tp,c100272006.thfilter,tp,0,LOCATION_DECK,1,1,nil)
-		Duel.ConfirmCards(1-tp,sg)
+		Duel.ConfirmCards(tp,sg)
 		if sg:GetFirst():GetTextAttack()<vc then
 			Duel.ShuffleDeck(1-tp)
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		else
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
-			Duel.ShuffleHand(1-tp)
 		end
 	else
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
