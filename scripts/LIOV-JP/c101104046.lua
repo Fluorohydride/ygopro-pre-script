@@ -43,12 +43,12 @@ function c101104046.efilter(e,te)
 end
 function c101104046.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) and rc:GetType()==TYPE_TRAP and rc:IsSetCard(0x4c,0x89)
-		and rc:IsRelateToEffect(re) and rc:IsCanTurnSet() and rc:IsStatus(STATUS_LEAVE_CONFIRMED) and rp==tp
+	return Duel.GetFlagEffect(tp,101104046)==0 and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP)
+		and rc:GetType()==TYPE_TRAP and rc:IsRelateToEffect(re) and rc:IsCanTurnSet() and rc:IsStatus(STATUS_LEAVE_CONFIRMED) and rc:IsSetCard(0x4c,0x89)
 end
 function c101104046.setop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,101104046)==0 and Duel.SelectYesNo(tp,aux.Stringid(101104046,1)) then
-		local rc=re:GetHandler()
+	local rc=re:GetHandler()
+	if Duel.SelectEffectYesNo(tp,rc,aux.Stringid(101104046,1)) then
 		rc:CancelToGrave()
 		Duel.ChangePosition(rc,POS_FACEDOWN)
 		Duel.RaiseEvent(rc,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
