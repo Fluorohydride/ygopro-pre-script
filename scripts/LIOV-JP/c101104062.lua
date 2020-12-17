@@ -1,7 +1,6 @@
---ブジ交差点
+--武神籬
 --Bujintersection
 --Scripted by Kohana Sonogami
---
 function c101104062.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -14,9 +13,9 @@ function c101104062.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetCondition(c101104062.tgcon)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x88))
-	e2:SetValue(1)
+	e2:SetCondition(c101104062.indcon)
+	e2:SetTarget(c101104062.indtg)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 	--disable
 	local e3=Effect.CreateEffect(c)
@@ -43,15 +42,19 @@ function c101104062.initial_effect(c)
 	e4:SetOperation(c101104062.spop)
 	c:RegisterEffect(e4)
 end
-function c101104062.tgcon(e)
+function c101104062.indcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return not (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
+end
+function c101104062.indtg(c)
+	return c:IsRace(RACE_BEASTWARRIOR) c:IsSetCard(0x88)
 end
 function c101104062.costfilter(c)
 	return c:IsSetCard(0x88) and c:IsAbleToGraveAsCost()
 end
 function c101104062.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101104062.costfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101104062.costfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
@@ -61,14 +64,14 @@ end
 function c101104062.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_ONFIELD) and c101104062.disfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101104062.disfilter,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
 	local g=Duel.SelectTarget(tp,c101104062.disfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function c101104062.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and not tc:IsDisabled() and tc:IsControler(1-tp) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -91,7 +94,7 @@ function c101104062.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function c101104062.spfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x88) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x88) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101104062.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c101104062.spfilter(chkc,e,tp) end
