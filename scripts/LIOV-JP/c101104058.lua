@@ -47,6 +47,7 @@ function c101104058.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function c101104058.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c101104058.setfilter(chkc,e:GetLabel()) end
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
@@ -57,7 +58,7 @@ function c101104058.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectMatchingCard(tp,c101104058.filter,tp,LOCATION_SZONE,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 	local code=g:GetFirst():GetCode()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c101104058.setfilter(chkc,code) end
+	e:SetLabel(code)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local sg=Duel.SelectTarget(tp,c101104058.setfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,code)
 	if sg:GetFirst():IsLocation(LOCATION_GRAVE) then
