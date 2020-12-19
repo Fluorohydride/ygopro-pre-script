@@ -17,7 +17,7 @@ function c101104006.initial_effect(c)
 	--equip
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101104006,1))
-	e2:SetCategory(CATEGORY_ATKCHANGE)
+	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
@@ -57,8 +57,8 @@ function c101104006.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104006.eqfilter1(c,e,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e) and c:GetSummonPlayer()~=tp
-		and Duel.IsExistingMatchingCard(c101104006.eqfilter2,tp,LOCATION_DECK,0,1,nil,c)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e) and c:GetSummonPlayer()==1-tp
+		and Duel.IsExistingMatchingCard(c101104006.eqfilter2,tp,LOCATION_DECK,0,1,nil)
 end
 function c101104006.eqfilter2(c)
 	return c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and not c:IsForbidden()
@@ -66,14 +66,17 @@ end
 function c101104006.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and c101104006.eqfilter1(chkc,e,tp) end
 	if chk==0 then return eg:IsExists(c101104006.eqfilter1,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=eg:FilterSelect(tp,c101104006.eqfilter1,1,1,nil,e,tp)
+	local g=eg:Clone()
+	if #eg>1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		g=eg:FilterSelect(tp,c101104006.eqfilter1,1,1,nil,e,tp)
+	end
 	Duel.SetTargetCard(g)
 end
 function c101104006.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-	if not tc:IsFaceup() or not tc:IsRelateToEffect(e) then return end
+	if not tc:IsFaceup() or not tc:IsRelateToEffect(e) or tc:IsControler(tp) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local sg=Duel.SelectMatchingCard(tp,c101104006.eqfilter2,tp,LOCATION_DECK,0,1,1,nil)
 	local sc=sg:GetFirst()
@@ -108,7 +111,7 @@ function c101104006.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	local ct=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,ct,ct,nil)
+	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_ONFIELD,ct,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,ct,0,0)
 end
 function c101104006.desop(e,tp,eg,ep,ev,re,r,rp)
