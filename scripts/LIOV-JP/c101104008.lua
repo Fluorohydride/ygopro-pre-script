@@ -1,7 +1,6 @@
---驚きアテンダント<Comica>
+--驚楽園の案内人 ＜Comica＞
 --Amazement Attendant <Comica>
 --Scripted by Kohana Sonogami
---
 function c101104008.initial_effect(c)
 	--set
 	local e1=Effect.CreateEffect(c)
@@ -24,7 +23,7 @@ function c101104008.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101104008.setfilter(c)
-	return c:IsSetCard(0x25a) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and c:IsSSetable()
 end
 function c101104008.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101104008.setfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -37,11 +36,11 @@ function c101104008.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104008.eqfilter1(c)
-	return c:IsSetCard(0x25a) and c:IsType(TYPE_TRAP) and c:GetEquipTarget()
+	return c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and c:GetEquipTarget()
 		and Duel.IsExistingTarget(c101104008.eqfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),c,tp)
 end
 function c101104008.eqfilter2(c,ec,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x25d) or not c:IsControler(tp)) and ec:CheckEquipTarget(c)
+	return c:IsFaceup() and (c:IsSetCard(0x25e) or not c:IsControler(tp)) and ec:CheckEquipTarget(c)
 end
 function c101104008.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

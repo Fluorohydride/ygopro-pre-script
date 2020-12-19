@@ -1,7 +1,6 @@
---アメージングタイムチケット
+--アメイジングタイムチケット
 --Amazing Time Ticket
 --Scripted by Kohana Sonogami
---
 function c101104056.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -18,10 +17,10 @@ function c101104056.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,800)
 end
 function c101104056.thfilter(c)
-	return c:IsSetCard(0x25d) and c:IsAbleToHand()
+	return c:IsSetCard(0x25e) and c:IsAbleToHand()
 end
 function c101104056.setfilter(c)
-	return c:IsSetCard(0x25a) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and c:IsSSetable()
 end
 function c101104056.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetTurnPlayer()==tp then
