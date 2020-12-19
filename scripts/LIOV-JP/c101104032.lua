@@ -28,7 +28,7 @@ function c101104032.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x145)
 end
 function c101104032.tgfilter(c)
-	return c:IsAbleToGrave()
+	return c:IsAbleToGraveAsCost()
 end
 function c101104032.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101104032.tgfilter,tp,LOCATION_EXTRA,0,1,nil) end
