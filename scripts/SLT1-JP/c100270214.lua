@@ -11,7 +11,7 @@ function c100270214.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_LEAVE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(c100270214.descon)
 	e1:SetTarget(c100270214.destg)
@@ -30,7 +30,6 @@ function c100270214.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_DESTROYED)
-	e3:SetCondition(c100270214.con)
 	e3:SetOperation(c100270214.op)
 	c:RegisterEffect(e3)
 end
@@ -58,9 +57,9 @@ function c100270214.filter(c,ec)
 	return c:IsFaceup() and c:IsSetCard(0x256) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(ec)
 end
 function c100270214.dmcon(e,tp,eg,ep,ev,re,r,rp)
-	local a,d,c=Duel.GetAttacker(),Duel.GetAttackTarget(),e:GetHandler()
-	local g=Duel.GetMatchingGroup(c100270214.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
-	return d and (a==c or d==c) and a:GetControler()~=d:GetControler() and #g>0
+	local a,d=Duel.GetBattleMonster(tp)
+	local c=e:GetHandler()
+	return d and a==c and Duel.IsExistingMatchingCard(c100270214.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c)
 end
 function c100270214.dmop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -72,9 +71,15 @@ function c100270214.dmop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
-function c100270214.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
-end
 function c100270214.op(e,tp,eg,ep,ev,re,r,rp)
+    local e1=Effect.CreateEffect(e:GetHandler())
+    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    e1:SetCode(EVENT_CHAIN_END)
+    e1:SetRange(LOCATION_MZONE)
+    e1:SetOperation(c100270214.skipop)
+    e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+    Duel.RegisterEffect(e1,tp)
+end
+function c100270214.skipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

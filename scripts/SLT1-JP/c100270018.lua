@@ -24,8 +24,12 @@ function c100270018.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100270018.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>2 end
+	if chk==0 then
+		local g=Duel.GetDecktopGroup(tp,3)
+		return #g>=3 and g:IsExists(Card.IsAbleToHand,1,nil)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,1-tp,500)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function c100270018.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Recover(1-tp,500,REASON_EFFECT)~=0 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 then

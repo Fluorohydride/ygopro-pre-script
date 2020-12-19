@@ -44,15 +44,15 @@ function c100270208.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100270208.tgfilter(c,e,tp)
-	return c:IsType(TYPE_LINK) and (c:IsSetCard(0x255) or c:IsSetCard(0x256)) and c:IsLinkBelow(2) and c:IsLinkState() and Duel.IsExistingMatchingCard(c100270208.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetCode())
+	return c:IsType(TYPE_LINK) and c:IsSetCard(0x255,0x256) and c:IsLinkBelow(2) and c:IsLinkState()
+		and Duel.IsExistingMatchingCard(c100270208.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetCode())
 end
 function c100270208.spfilter(c,e,tp,code)
 	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c100270208.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c100270208.tgfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
-		and Duel.IsExistingTarget(c100270208.tgfilter,tp,LOCATION_MZONE,0,1,e:GetHandler(),e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100270208.tgfilter,tp,LOCATION_MZONE,0,1,e:GetHandler(),e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c100270208.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
@@ -60,7 +60,7 @@ end
 function c100270208.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if tc and tc:IsRelateToEffect(e) then
 		local code=tc:GetCode()
 		local g=Duel.GetMatchingGroup(c100270208.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,code)
 		if #g>0 then

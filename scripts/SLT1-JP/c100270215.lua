@@ -11,7 +11,7 @@ function c100270215.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_LEAVE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(c100270215.descon)
 	e1:SetTarget(c100270215.destg)
@@ -32,6 +32,7 @@ function c100270215.initial_effect(c)
 	e3:SetDescription(aux.Stringid(100270215,2))
 	e3:SetCategory(CATEGORY_RECOVER)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetCode(EVENT_BATTLE_DAMAGE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(c100270215.recon)
@@ -63,10 +64,10 @@ function c100270215.recfilter(c)
 	return c:IsSetCard(0x256) and c:IsType(TYPE_LINK) and c:IsLinkAbove(1)
 end
 function c100270215.rectg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and c100270215.recfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100270215.recfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100270215.recfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100270215.recfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c100270215.recfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100270215.recfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,g:GetFirst():GetLink()*300)
 end
 function c100270215.recop(e,tp,eg,ep,ev,re,r,rp)

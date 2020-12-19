@@ -31,9 +31,12 @@ function c100270019.initial_effect(c)
 	e4:SetCondition(c100270019.damcon)
 	c:RegisterEffect(e4)
 end
+function c100270019.cfilter(c,code)
+	return c:IsFaceup() and c:IsCode(code)
+end
 function c100270019.nsfilter(c,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsAttack(1850) and not c:IsPublic() and c:IsSummonable(true,nil)
-		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,c:GetCode())
+		and not Duel.IsExistingMatchingCard(c100270019.cfilter,tp,LOCATION_MZONE,0,1,nil,c:GetCode())
 end
 function c100270019.nscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -53,7 +56,7 @@ function c100270019.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(e:GetLabelObject())
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
-function c100270019.nsop(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100270019.nsop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
