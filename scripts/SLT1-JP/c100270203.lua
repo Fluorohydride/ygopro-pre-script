@@ -9,7 +9,6 @@ function c100270203.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100270203,1))
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCost(c100270203.cost)
 	e1:SetOperation(c100270203.operation)
@@ -61,24 +60,22 @@ end
 function c100270203.filter(c)
 	return c:IsType(TYPE_XYZ) and c:IsRankBelow(9) and c:IsRace(RACE_DRAGON) and c:IsAbleToExtra()
 end
-function c100270203.xyzfilter(c,mc,e,tp)
-	return mc:IsCanBeXyzMaterial(c)
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
-end
 function c100270203.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100270203.filter,tp,LOCATION_GRAVE,0,1,nli) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100270203.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_GRAVE)
 end
 function c100270203.op(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(c100270203.filter,tp,LOCATION_GRAVE,0,1,nil) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c100270203.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100270203.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	if #g==0 then return end
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 	local c=e:GetHandler()
-	local g=Duel.GetOperatedGroup()
-	if not g then return end
 	local sc=g:GetFirst()
-	if sc and c:IsRelateToEffect(e) and c100270203.xyzfilter(sc,c,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(100270203,4)) then
+	if sc:IsLocation(LOCATION_EXTRA) and c:IsRelateToEffect(e) and c:IsFaceup() and c:IsControler(tp)
+		and c:IsCanBeXyzMaterial(sc) and sc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
+		and Duel.SelectYesNo(tp,aux.Stringid(100270203,4)) then
+		Duel.BreakEffect()
 		local mg=c:GetOverlayGroup()
 		if mg:GetCount()~=0 then
 			Duel.Overlay(sc,mg)

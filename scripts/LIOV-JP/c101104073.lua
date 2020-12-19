@@ -64,7 +64,7 @@ function c101104073.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104073.filter(c,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x25d) or c:IsControler(1-tp))
+	return c:IsFaceup() and (c:IsSetCard(0x25e) or c:IsControler(1-tp))
 end
 function c101104073.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101104073.filter(chkc,tp) end
@@ -120,7 +120,7 @@ function c101104073.atkcon(e)
 	return e:GetHandler():GetEquipTarget():IsControler(1-e:GetHandlerPlayer())
 end
 function c101104073.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x25a) and c:IsType(TYPE_TRAP) and c:GetEquipTarget()
+	return c:IsFaceup() and c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and c:GetEquipTarget()
 end
 function c101104073.atkval(e,c)
 	local ct=Duel.GetMatchingGroupCount(c101104073.atkfilter,e:GetHandlerPlayer(),LOCATION_SZONE,0,nil)

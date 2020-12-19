@@ -57,7 +57,7 @@ function c100270201.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function c100270201.actfilter(c)
-	return c:IsFaceup() and (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
 function c100270201.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100270201.actfilter(chkc) end

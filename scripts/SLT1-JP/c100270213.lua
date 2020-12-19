@@ -97,8 +97,10 @@ end
 function c100270213.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetValue()
 	local sg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=sg:Select(tp,1,ct,nil)
 	if #g>0 then
+		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

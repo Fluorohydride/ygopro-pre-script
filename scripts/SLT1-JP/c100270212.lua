@@ -41,15 +41,16 @@ end
 function c100270212.mfilter(c)
 	return c:IsLinkRace(RACE_PLANT)
 end
-function c100270212.spfilter(c,e,tp)
-	return c:IsSetCard(0x255) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
-end
 function c100270212.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0
 end
+function c100270212.spfilter(c,e,tp)
+	return c:IsSetCard(0x255) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+end
 function c100270212.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c100270212.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100270212.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,1,tp,ev)
 end
 function c100270212.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Recover(tp,ev,REASON_EFFECT)~=0 then
@@ -62,7 +63,7 @@ function c100270212.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100270212.mvcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	return d and d:IsControler(tp) and d:IsFaceup() and e:GetHandler():GetLinkedGroup():IsContains(d)
+	return d and d:IsControler(tp) and e:GetHandler():GetLinkedGroup():IsContains(d)
 end
 function c100270212.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)>0 end

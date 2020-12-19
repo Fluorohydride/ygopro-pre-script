@@ -23,7 +23,7 @@ function c100270014.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Negate
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100270014,0))
+	e3:SetDescription(aux.Stringid(100270014,1))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
@@ -53,7 +53,7 @@ end
 function c100270014.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100270014.tgfilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.CheckReleaseGroupEx(tp,c100270014.filter,1,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c100270014.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(c100270014.tgfilter,tp,LOCATION_DECK,0,nil)
@@ -63,7 +63,7 @@ function c100270014.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		local rct=Duel.Release(g,REASON_EFFECT)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local tg=Duel.SelectMatchingCard(tp,c100270014.tgfilter,tp,LOCATION_DECK,0,1,rct,nil)
+		local tg=Duel.SelectMatchingCard(tp,c100270014.tgfilter,tp,LOCATION_DECK,0,rct,rct,nil)
 		Duel.SendtoGrave(tg,REASON_EFFECT)
 	end
 end

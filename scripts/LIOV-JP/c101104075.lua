@@ -67,7 +67,7 @@ function c101104075.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104075.filter(c,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x25d) or c:IsControler(1-tp))
+	return c:IsFaceup() and (c:IsSetCard(0x25e) or c:IsControler(1-tp))
 end
 function c101104075.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101104075.filter(chkc,tp) end

@@ -4,7 +4,7 @@
 function c100270218.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCountLimit(1,100270218+EFFECT_COUNT_CODE_OATH)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -29,19 +29,18 @@ function c100270218.lkfilter(c)
 end
 function c100270218.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local lk=Duel.GetMatchingGroupCount(c100270218.lkfilter,tp,LOCATION_MZONE,0,nil)
-	if lk>0 then
+	if Duel.IsExistingMatchingCard(c100270218.lkfilter,tp,LOCATION_MZONE,0,1,nil) then
 		local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,g:GetCount(),0,0)
 	end
 end
 function c100270218.actop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local lk=Duel.GetMatchingGroupCount(c100270218.lkfilter,tp,LOCATION_MZONE,0,nil)
-	if lk>0 then
+	if Duel.IsExistingMatchingCard(c100270218.lkfilter,tp,LOCATION_MZONE,0,1,nil) then
 		local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,nil)
 		local tc=g:GetFirst()
 		while tc do
+			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)

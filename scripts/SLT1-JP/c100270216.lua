@@ -11,7 +11,7 @@ function c100270216.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_LEAVE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(c100270216.descon)
 	e1:SetTarget(c100270216.destg)
@@ -62,10 +62,10 @@ function c100270216.atkfilter(c)
 	return c:IsSetCard(0x256) and c:IsType(TYPE_LINK) and c:IsLinkAbove(1)
 end
 function c100270216.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and c100270216.atkfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100270216.atkfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100270216.atkfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100270216.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c100270216.atkfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100270216.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function c100270216.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc,c=Duel.GetFirstTarget(),e:GetHandler()
@@ -73,8 +73,7 @@ function c100270216.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		e1:SetValue(tc:GetLink()*800)
 		c:RegisterEffect(e1)
 	end

@@ -67,7 +67,7 @@ function c101104071.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104071.filter(c,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x25d) or c:IsControler(1-tp))
+	return c:IsFaceup() and (c:IsSetCard(0x25e) or c:IsControler(1-tp))
 end
 function c101104071.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101104071.filter(chkc,tp) end
@@ -124,7 +124,7 @@ function c101104071.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ec and ec:IsControler(1-tp)
 end
 function c101104071.thfilter(c)
-	return c:IsSetCard(0x25d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x25e) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101104071.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101104071.thfilter,tp,LOCATION_DECK,0,1,nil) end

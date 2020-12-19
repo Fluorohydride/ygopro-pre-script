@@ -16,7 +16,7 @@ function c101104058.initial_effect(c)
 	e1:SetTargetRange(LOCATION_SZONE,0)
 	e1:SetCountLimit(1,101104058)
 	e1:SetCondition(c101104058.actcon)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x25a))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x25f))
 	c:RegisterEffect(e1)
 	--set
 	local e2=Effect.CreateEffect(c)
@@ -36,11 +36,11 @@ function c101104058.actcon(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function c101104058.filter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x25a) and c:IsType(TYPE_TRAP) and c:GetEquipTarget() and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and c:GetEquipTarget() and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingTarget(c101104058.setfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,c:GetCode())
 end
 function c101104058.setfilter(c,code)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsSetCard(0x25a) and c:IsType(TYPE_TRAP) and not c:IsCode(code) and c:IsSSetable(true)
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and not c:IsCode(code) and c:IsSSetable(true)
 end
 function c101104058.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
