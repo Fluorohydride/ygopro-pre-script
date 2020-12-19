@@ -35,6 +35,7 @@ function c101104204.initial_effect(c)
 	e3:SetOperation(c101104204.disop)
 	c:RegisterEffect(e3)
 end
+c101104204.xyz_number=39
 function c101104204.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(e:GetHandler())
 end
