@@ -5,6 +5,7 @@
 - **December 5, 2020**: SELECTION 10 (SLT1-JP) : `100270XXX`
 - **December 19, 2020**: PRISMATIC GOD BOX (PGB1-JP) : `100272XXX`
 - **January 16, 2021**: LIGHTNING OVERDRIVE (LIOV-JP): `101104XXX`
+- **January 16, 2021** "Amabie-San" Present Campaign (21CC-JP): `100275XXX`
 - **???? ??, 2021** Premium Pack 2021 (21PP-JP): `100273XXX`
 - **April ??, 2021**: Number Complete File -Piece of Memories- (NOCF?-JP): `100274XXX`
 
