@@ -31,7 +31,7 @@ function c100273018.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c100273018.tdfilter(c)
-	return c:IsType(TYPE_LINK) and c:IsRace(RACE_PLANT) and c:GetCode()~=100273018 and c:IsAbleToExtra()
+	return c:IsType(TYPE_LINK) and c:IsRace(RACE_PLANT) and not c:IsCode(100273018) and c:IsAbleToExtra()
 end
 function c100273018.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100273018.tdfilter(chkc) end
