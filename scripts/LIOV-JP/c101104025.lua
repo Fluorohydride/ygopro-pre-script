@@ -27,22 +27,18 @@ function c101104025.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101104025.opcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_ADVANCE) and c:GetMaterialCount()>0
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE) and (e:GetLabel()==1 or e:GetLabel()==2)
 end
-function c101104025.valfilter1(c)
-	return c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT)
-end
-function c101104025.valfilter2(c)
-	return c:IsRace(RACE_FIEND) and c:IsAttribute(ATTRIBUTE_DARK)
+function c101104025.chkfilter(c,rac,att)
+	return c:IsRace(rac) and c:IsAttribute(att)
 end
 function c101104025.valcheck(e,c)
 	local label=0
 	local g=c:GetMaterial()
-	if g:IsExists(c101104025.valfilter1,1,nil) then
+	if g:IsExists(c101104025.chkfilter,1,nil,RACE_FAIRY,ATTRIBUTE_LIGHT) then
 		label=label+1
 	end
-	if g:IsExists(c101104025.valfilter2,1,nil) then
+	if g:IsExists(c101104025.chkfilter,1,nil,RACE_FIEND,ATTRIBUTE_DARK) then
 		label=label+2
 	end
 	e:GetLabelObject():SetLabel(label)
