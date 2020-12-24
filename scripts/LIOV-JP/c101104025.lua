@@ -86,9 +86,9 @@ function c101104025.opop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	elseif label==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,c101104025.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if g:GetCount()>0 then
-			Duel.SendtoGrave(g,REASON_EFFECT)
+		local g2=Duel.SelectMatchingCard(tp,c101104025.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+		if g2:GetCount()>0 then
+			Duel.SendtoGrave(g2,REASON_EFFECT)
 		end
 	end
 end
