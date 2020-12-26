@@ -1,4 +1,6 @@
---人偶的幸福
+--人形の幸福
+--
+--Script by JoyJ
 function c100273017.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -29,7 +31,7 @@ function c100273017.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100273017.filter(c)
-	return c:IsCode(100273016) or c:IsCode(81587028) and c:IsAbleToHand()
+	return c:IsCode(100273016,81587028) and c:IsAbleToHand()
 end
 function c100273017.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100273017.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -51,7 +53,7 @@ function c100273017.atkcon(e)
 	return Duel.IsExistingMatchingCard(c100273017.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c100273017.atkval(e,c)
-	return c:IsFaceup() and (c:IsAttack(0) or c:IsDefense(0)) and c:IsType(TYPE_NORMAL)
+	return c:IsFaceup() and (c:IsAttack(0) or c:IsDefense(0))
 end
 function c100273017.tgfilter(c)
 	return c:IsAbleToGrave() and c:IsSetCard(0x25d)
