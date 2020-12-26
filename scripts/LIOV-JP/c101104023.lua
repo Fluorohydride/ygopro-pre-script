@@ -8,8 +8,8 @@ function c101104023.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SUMMON_PROC)
-	e1:SetCondition(c101104023.rlcon1)
-	e1:SetOperation(c101104023.rlop1)
+	e1:SetCondition(c101104023.rlcon)
+	e1:SetOperation(c101104023.rlop)
 	e1:SetValue(SUMMON_TYPE_ADVANCE)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -23,9 +23,9 @@ function c101104023.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_HAND)
 	e3:SetRange(LOCATION_HAND)
-	e3:SetCondition(c101104023.rlcon2)
-	e3:SetTarget(c101104023.rltg2)
-	e3:SetOperation(c101104023.rlop2)
+	e3:SetCondition(c101104023.sumcon)
+	e3:SetTarget(c101104023.sumtg)
+	e3:SetOperation(c101104023.sumop)
 	c:RegisterEffect(e3)
 	--tohand
 	local e4=Effect.CreateEffect(c)
@@ -43,36 +43,33 @@ function c101104023.initial_effect(c)
 	e5:SetCondition(c101104023.thcon)
 	c:RegisterEffect(e5)
 end
-function c101104023.rlfilter1(c)
+function c101104023.rlfilter(c)
 	return c:IsType(TYPE_EFFECT)
 end
-function c101104023.rlcon1(e,c,minc)
+function c101104023.rlcon(e,c,minc)
 	if c==nil then return true end
-	local mg=Duel.GetMatchingGroup(c101104023.rlfilter1,0,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local mg=Duel.GetMatchingGroup(c101104023.rlfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
 	return c:IsLevelAbove(6) and minc<=1 and Duel.CheckTribute(c,1,1,mg)
 end
-function c101104023.rlop1(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(c101104023.rlfilter1,0,LOCATION_MZONE,LOCATION_MZONE,nil)
+function c101104023.rlop(e,tp,eg,ep,ev,re,r,rp,c)
+	local mg=Duel.GetMatchingGroup(c101104023.rlfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local sg=Duel.SelectTribute(tp,c,1,1,mg)
 	c:SetMaterial(sg)
 	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
 end
 function c101104023.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK)
+	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK) and not c:IsReason(REASON_DRAW)
 end
-function c101104023.rlcon2(e,tp,eg,ep,ev,re,r,rp)
+function c101104023.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return Duel.GetTurnPlayer()==1-tp and eg:IsExists(c101104023.cfilter,1,nil,1-tp) and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) 
 end
-function c101104023.rlfilter2(c)
-	return not c:IsPublic() or c:IsType(TYPE_MONSTER)
-end
-function c101104023.rltg2(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101104023.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsSummonable(true,nil,1) or c:IsMSetable(true,nil,1) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,c,1,0,0)
 end
-function c101104023.rlop2(e,tp,eg,ep,ev,re,r,rp)
+function c101104023.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local pos=0
@@ -104,6 +101,7 @@ function c101104023.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=#hg
 	local dg=Duel.GetDecktopGroup(p,ct)
 	if ct>0 and dg:FilterCount(Card.IsAbleToRemove,nil,tp,POS_FACEDOWN)==ct and Duel.Remove(dg,POS_FACEDOWN,REASON_EFFECT)==ct then
+		Duel.BreakEffect()
 		local og=Duel.GetOperatedGroup()
 		if Duel.SendtoDeck(hg,p,2,REASON_EFFECT)>0 then
 			Duel.SendtoHand(og,p,REASON_EFFECT)
