@@ -44,10 +44,10 @@ function c101104025.valcheck(e,c)
 	e:GetLabelObject():SetLabel(label)
 end
 function c101104025.thfilter(c)
-	return (c:IsRace(RACE_FAIRY) or c:IsRace(RACE_FIEND)) and (c:IsAttribute(ATTRIBUTE_LIGHT) or c:IsAttribute(ATTRIBUTE_DARK)) and c:IsAbleToHand()
+	return (c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT)) or (c:IsRace(RACE_FIEND) and c:IsAttribute(ATTRIBUTE_DARK)) and c:IsAbleToHand()
 end
 function c101104025.tgfilter(c)
-	return (c:IsRace(RACE_FIEND) or c:IsRace(RACE_FAIRY)) and (c:IsAttribute(ATTRIBUTE_LIGHT) or c:IsAttribute(ATTRIBUTE_DARK)) and c:IsAbleToGrave()
+	return (c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT)) or (c:IsRace(RACE_FIEND) and c:IsAttribute(ATTRIBUTE_DARK)) and c:IsAbleToGrave()
 end
 function c101104025.optg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local label=e:GetLabel()
@@ -81,9 +81,10 @@ function c101104025.opop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,g1)
 		end
 	elseif label==2 then
+		local g=Duel.GetMatchingGroup(c101104025.tgfilter,tp,LOCATION_DECK,0,nil)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g2=Duel.SelectMatchingCard(tp,c101104025.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if g2:GetCount()>0 then
+		local g2=g:SelectSubGroup(tp,aux.drccheck,false,1,2)
+		if g2 then
 			Duel.SendtoGrave(g2,REASON_EFFECT)
 		end
 	end
