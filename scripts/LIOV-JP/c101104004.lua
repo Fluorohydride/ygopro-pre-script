@@ -1,4 +1,4 @@
---最高のアーチ蛇ゴルガ
+--覇蛇大公ゴルゴンダ
 --Supreme Archserpent Golganda
 --Scripted by Kohana Sonogami
 function c101104004.initial_effect(c)
@@ -15,7 +15,6 @@ function c101104004.initial_effect(c)
 	c:RegisterEffect(e1)
 	--destroy replace
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101104004,1))
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
 	e2:SetRange(LOCATION_MZONE)
@@ -33,11 +32,8 @@ function c101104004.initial_effect(c)
 	e3:SetValue(3000)
 	c:RegisterEffect(e3)
 end
-function c101104004.cfilter(c)
-	return c:IsFaceup() and c:IsCode(60884672) 
-end
 function c101104004.spcon(e) 
-	return Duel.IsExistingMatchingCard(c101104004.cfilter,tp,LOCATION_FZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,e:GetHandlerPlayer(),LOCATION_FZONE,0,1,nil)
 end
 function c101104004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -56,14 +52,14 @@ function c101104004.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1,true)
 	end
 end
-function c101104004.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_FZONE) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+function c101104004.repfilter(c)
+	return c:IsFaceup() and c:IsCode(60884672) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function c101104004.rmfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function c101104004.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(c101104004.repfilter,1,nil,tp)
+	if chk==0 then return eg:IsExists(c101104004.repfilter,1,nil)
 		and Duel.IsExistingMatchingCard(c101104004.rmfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -74,8 +70,8 @@ function c101104004.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return false
 end
 function c101104004.repval(e,c)
-	return c101104004.repfilter(c,e:GetHandlerPlayer())
+	return c101104004.repfilter(c)
 end
 function c101104004.atkcon(e) 
-	return Duel.IsExistingMatchingCard(c101104004.cfilter,tp,LOCATION_FZONE,0,1,nil)
+	return Duel.IsEnvironment(60884672)
 end

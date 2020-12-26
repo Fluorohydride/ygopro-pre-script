@@ -1,4 +1,4 @@
---スプリグガンズ・メイブ・メーカー
+--スプリガンズ・メリーメイカー
 --Sprigguns Marry Maker
 --Scripted by Kohana Sonogami
 function c101104041.initial_effect(c)
@@ -10,7 +10,7 @@ function c101104041.initial_effect(c)
 	e1:SetDescription(aux.Stringid(101104041,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,101104041)
 	e1:SetCondition(c101104041.tgcon)
@@ -50,8 +50,7 @@ function c101104041.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101104041.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return not e:GetHandler():IsStatus(STATUS_CHAINING)
-		and Duel.GetTurnPlayer()~=tp and (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
+	return Duel.GetTurnPlayer()~=tp and (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
 end
 function c101104041.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() end
@@ -73,7 +72,9 @@ function c101104041.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		e1:SetOperation(c101104041.retop)
 		Duel.RegisterEffect(e1,tp)
-		if ct>=2 and Duel.IsExistingMatchingCard(c101104041.exfilter,tp,LOCATION_EXTRA,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101104041,2))~=0 then
+		if ct>=2 and Duel.IsExistingMatchingCard(c101104041.exfilter,tp,LOCATION_EXTRA,0,1,nil)
+			and Duel.SelectYesNo(tp,aux.Stringid(101104041,2)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local g=Duel.SelectMatchingCard(tp,c101104041.exfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 			if g:GetCount()>0 then

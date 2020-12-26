@@ -1,4 +1,4 @@
---スプリグガンズ戦利品
+--スプリガンズ・ブーティー
 --Sprigguns Booty
 --Scripted by Kohana Sonogami
 function c101104054.initial_effect(c)
@@ -38,7 +38,7 @@ function c101104054.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101104054.actfilter,1,nil,tp)
 end
 function c101104054.cfilter(c)
-	return c:IsType(TYPE_EFFECT) and c:GetSequence()<5
+	return c:IsType(TYPE_EFFECT) and c:IsFaceup()
 end
 function c101104054.actg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101104054.cfilter(chkc) end
@@ -68,7 +68,7 @@ function c101104054.aftg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101104054.afop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,c101104054.affilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101104054.affilter),tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	if tc then
 		local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 		if fc then
@@ -81,6 +81,6 @@ function c101104054.afop(e,tp,eg,ep,ev,re,r,rp)
 		local tep=tc:GetControler()
 		local cost=te:GetCost()
 		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-		Duel.RaiseEvent(tc,60884672,te,0,tp,tp,Duel.GetCurrentChain())
+		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
 	end
 end

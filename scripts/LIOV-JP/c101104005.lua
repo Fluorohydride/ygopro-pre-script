@@ -1,4 +1,4 @@
---スプリグガンズ・ブラザーズ
+--スプリガンズ・ブラザーズ
 --Sprigguns Brothers
 --Scripted by Kohana Sonogami
 function c101104005.initial_effect(c)
@@ -7,7 +7,7 @@ function c101104005.initial_effect(c)
 	e1:SetDescription(aux.Stringid(101104005,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCountLimit(1,101104005)
 	e1:SetCondition(c101104005.spcon)
@@ -26,7 +26,7 @@ function c101104005.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101104005.spfilter(c,e,tp)
-	return c:IsSetCard(0x155) and not c:IsCode(101104005) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x155) and not c:IsCode(101104005) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101104005.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_DECK)
