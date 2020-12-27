@@ -7,7 +7,6 @@ function c100270204.initial_effect(c)
 	e1:SetDescription(aux.Stringid(100270204,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetTarget(c100270204.sumtg)
 	e1:SetOperation(c100270204.sumop)
 	c:RegisterEffect(e1)
 	--special summon
@@ -34,7 +33,6 @@ function c100270204.sumop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	Duel.RegisterFlagEffect(tp,100270204,RESET_PHASE+PHASE_END,0,1)
 end
-
 function c100270204.cfilter(c,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE) and Duel.GetMZoneCount(tp,c)>0
 end
