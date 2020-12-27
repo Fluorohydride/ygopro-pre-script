@@ -47,5 +47,5 @@ function c100270207.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100270207.tgtg(e,c)
-	return c:IsSetCard(0x255,0x256) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0x1158,0x2158) and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end

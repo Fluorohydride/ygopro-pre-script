@@ -45,7 +45,7 @@ function c100270212.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0
 end
 function c100270212.spfilter(c,e,tp)
-	return c:IsSetCard(0x255) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsSetCard(0x1158) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c100270212.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100270212.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end

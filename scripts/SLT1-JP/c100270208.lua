@@ -44,7 +44,7 @@ function c100270208.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100270208.tgfilter(c,e,tp)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x255,0x256) and c:IsLinkBelow(2) and c:IsLinkState()
+	return c:IsType(TYPE_LINK) and c:IsSetCard(0x1158,0x2158) and c:IsLinkBelow(2) and c:IsLinkState()
 		and Duel.IsExistingMatchingCard(c100270208.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetCode())
 end
 function c100270208.spfilter(c,e,tp,code)

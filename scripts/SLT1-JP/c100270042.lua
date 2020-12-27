@@ -26,7 +26,7 @@ function c100270042.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100270042.thfilter(c)
-	return c:IsSetCard(0x25c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x159) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100270042.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100270042.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -41,7 +41,7 @@ function c100270042.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100270042.spfilter(c,e,tp)
-	return c:IsSetCard(0x25c) and c:IsType(TYPE_MONSTER) and not c:IsCode(100270042)
+	return c:IsSetCard(0x159) and c:IsType(TYPE_MONSTER) and not c:IsCode(100270042)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100270042.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

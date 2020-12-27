@@ -28,7 +28,7 @@ function c101104019.initial_effect(c)
 end
 function c101104019.cfilter(c,tp)
 	return c:IsAbleToHandAsCost() and Duel.GetMZoneCount(tp,c)>0
-		and (c:IsSetCard(0x25c) and not c:IsCode(101104019) or c:IsRace(RACE_DRAGON) and c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_LIGHT))
+		and (c:IsSetCard(0x159) and not c:IsCode(101104019) or c:IsRace(RACE_DRAGON) and c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_LIGHT))
 end
 function c101104019.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101104019.cfilter,tp,LOCATION_MZONE,0,1,nil,tp) end

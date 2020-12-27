@@ -47,7 +47,7 @@ function c100270217.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsAbleToGraveAsCost,1,1,REASON_COST)
 end
 function c100270217.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x256)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x2158)
 end
 function c100270217.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100270217.cfilter,tp,LOCATION_MZONE,0,1,nil)

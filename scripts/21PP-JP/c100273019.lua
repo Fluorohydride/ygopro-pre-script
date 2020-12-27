@@ -61,10 +61,10 @@ function c100273019.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function c100273019.cfilter(c,g)
-	return c:IsSetCard(0x255) and c:IsType(TYPE_LINK) and g:IsContains(c)
+	return c:IsSetCard(0x1158) and c:IsType(TYPE_LINK) and g:IsContains(c)
 end
 function c100273019.valfilter(c)
-	return c:IsSetCard(0x256) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x2158) and c:IsType(TYPE_LINK)
 end
 function c100273019.mttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lg=e:GetHandler():GetLinkedGroup()

@@ -43,7 +43,7 @@ function c100270216.mfilter(c)
 end
 function c100270216.cfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
-		and bit.band(c:GetPreviousTypeOnField(),TYPE_LINK)~=0 and c:IsPreviousSetCard(0x256) and c:IsPreviousLocation(LOCATION_MZONE)
+		and bit.band(c:GetPreviousTypeOnField(),TYPE_LINK)~=0 and c:IsPreviousSetCard(0x2158) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100270216.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100270216.cfilter,1,nil,tp)
@@ -59,7 +59,7 @@ function c100270216.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100270216.atkfilter(c)
-	return c:IsSetCard(0x256) and c:IsType(TYPE_LINK) and c:IsLinkAbove(1)
+	return c:IsSetCard(0x2158) and c:IsType(TYPE_LINK) and c:IsLinkAbove(1)
 end
 function c100270216.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100270216.atkfilter(chkc) end

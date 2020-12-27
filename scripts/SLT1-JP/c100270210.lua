@@ -60,7 +60,7 @@ function c100270210.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSequence()>4 and e:GetLabel()==1
 end
 function c100270210.thfilter(c)
-	return c:IsSetCard(0x255) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x1158) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100270210.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100270210.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -75,7 +75,7 @@ function c100270210.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100270210.spfilter(c,e,tp)
-	return c:IsSetCard(0x255) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsSetCard(0x1158) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c100270210.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0

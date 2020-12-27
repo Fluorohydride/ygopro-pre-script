@@ -14,7 +14,7 @@ function c100270045.initial_effect(c)
 end
 function c100270045.filter(c)
 	return c:IsAbleToHand()
-		and (c:IsSetCard(0x25c) and c:IsType(TYPE_MONSTER) or c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(7))
+		and (c:IsSetCard(0x159) and c:IsType(TYPE_MONSTER) or c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(7))
 end
 function c100270045.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100270045.filter,tp,LOCATION_DECK,0,1,nil) end

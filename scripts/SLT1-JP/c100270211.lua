@@ -34,10 +34,10 @@ function c100270211.lcheck(g)
 	return g:IsExists(c100270211.lcfilter,1,nil)
 end
 function c100270211.lcfilter(c)
-	return c:IsLinkType(TYPE_LINK) and c:IsLinkSetCard(0x256)
+	return c:IsLinkType(TYPE_LINK) and c:IsLinkSetCard(0x2158)
 end
 function c100270211.spfilter(c,e,tp)
-	return c:IsSetCard(0x255) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsSetCard(0x1158) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c100270211.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0

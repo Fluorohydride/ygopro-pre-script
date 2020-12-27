@@ -38,7 +38,7 @@ function c100270214.mfilter(c)
 end
 function c100270214.cfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
-		and bit.band(c:GetPreviousTypeOnField(),TYPE_LINK)~=0 and c:IsPreviousSetCard(0x256) and c:IsPreviousLocation(LOCATION_MZONE)
+		and bit.band(c:GetPreviousTypeOnField(),TYPE_LINK)~=0 and c:IsPreviousSetCard(0x2158) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100270214.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100270214.cfilter,1,nil,tp)
@@ -54,7 +54,7 @@ function c100270214.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100270214.filter(c,ec)
-	return c:IsFaceup() and c:IsSetCard(0x256) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(ec)
+	return c:IsFaceup() and c:IsSetCard(0x2158) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(ec)
 end
 function c100270214.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	local a,d=Duel.GetBattleMonster(tp)
