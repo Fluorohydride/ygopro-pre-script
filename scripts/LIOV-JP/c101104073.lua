@@ -86,7 +86,6 @@ function c101104073.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetValue(c101104073.eqlimit)
-			e1:SetLabelObject(tc)
 			c:RegisterEffect(e1)
 		end
 	elseif c:IsRelateToEffect(e) and not c:IsStatus(STATUS_LEAVE_CONFIRMED) then
@@ -94,7 +93,7 @@ function c101104073.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104073.eqlimit(e,c)
-	return e:GetLabelObject()==c
+	return c:IsSetCard(0x25e) or c:IsControler(1-e:GetHandlerPlayer())
 end
 function c101104073.con(e)
 	return e:GetHandler():GetEquipTarget():IsControler(e:GetHandlerPlayer())

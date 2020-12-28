@@ -36,11 +36,11 @@ function c101104008.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104008.eqfilter1(c)
-	return c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and c:GetEquipTarget()
-		and Duel.IsExistingTarget(c101104008.eqfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),c,tp)
+	return c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and c:IsFaceup() and c:GetEquipTarget()
+		and Duel.IsExistingTarget(c101104008.eqfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
 end
-function c101104008.eqfilter2(c,ec,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x25e) or not c:IsControler(tp)) and ec:CheckEquipTarget(c)
+function c101104008.eqfilter2(c,tp)
+	return c:IsFaceup() and (c:IsSetCard(0x25e) or not c:IsControler(tp))
 end
 function c101104008.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -50,14 +50,24 @@ function c101104008.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=g1:GetFirst()
 	e:SetLabelObject(tc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g2=Duel.SelectTarget(tp,c101104008.eqfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc:GetEquipTarget(),tc,tp)
+	local g2=Duel.SelectTarget(tp,c101104008.eqfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc:GetEquipTarget(),tp)
 end
 function c101104008.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetLabelObject()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tc=g:GetFirst()
 	if tc==ec then tc=g:GetNext() end
-	if ec:IsFaceup() and ec:IsRelateToEffect(e) and ec:CheckEquipTarget(tc) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if ec:IsFaceup() and ec:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.Equip(tp,ec,tc)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
+		e1:SetCode(EFFECT_EQUIP_LIMIT)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetValue(c101104008.eqlimit)
+		ec:RegisterEffect(e1)
 	end
+end
+function c101104008.eqlimit(e,c)
+	return c:IsSetCard(0x25e) or c:IsControler(1-e:GetHandlerPlayer())
 end
