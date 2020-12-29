@@ -28,7 +28,7 @@ end
 function c100273021.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and (c:IsSetCard(0xb) or c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevel(8) and c:IsType(TYPE_SYNCHRO))
-		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE) and c:GetReasonPlayer()==tp
+		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE) and c:GetReasonPlayer()==1-tp
 end
 function c100273021.desfilter(c)
 	return c:IsSetCard(0xb) and c:IsAbleToRemove()
@@ -36,10 +36,10 @@ end
 function c100273021.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return eg:IsExists(c100273021.repfilter,1,nil,tp)
-		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100273021.desfilter),tp,LOCATION_GRAVE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c100273021.desfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100273021.desfilter),tp,LOCATION_GRAVE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c100273021.desfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 		return true
 	else return false end
