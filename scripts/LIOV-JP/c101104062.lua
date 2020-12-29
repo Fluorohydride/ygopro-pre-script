@@ -47,7 +47,7 @@ function c101104062.indcon(e)
 	return not (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
 end
 function c101104062.indtg(c)
-	return c:IsRace(RACE_BEASTWARRIOR) c:IsSetCard(0x88)
+	return c:IsRace(RACE_BEASTWARRIOR) and c:IsSetCard(0x88)
 end
 function c101104062.costfilter(c)
 	return c:IsSetCard(0x88) and c:IsAbleToGraveAsCost()
