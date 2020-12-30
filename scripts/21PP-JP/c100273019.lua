@@ -42,7 +42,7 @@ function c100273019.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c100273019.spfilter(c,e,tp)
-	return c:IsCode(100270206) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(27520594) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100273019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
