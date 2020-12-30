@@ -25,7 +25,7 @@ function c100273019.initial_effect(c)
 	e2:SetValue(aux.imval1)
 	c:RegisterEffect(e2)
 	--multi attack
-	local e3=Effect.CreateEffect(c) 
+	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100273019,1))
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)

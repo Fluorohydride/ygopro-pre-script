@@ -13,7 +13,7 @@ function c101104057.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101104057.thfilter(c,tp,e)
-	return c:IsFaceup() and c:IsSetCard(0x25e) and c:IsLocation(LOCATION_MZONE) 
+	return c:IsFaceup() and c:IsSetCard(0x25e) and c:IsLocation(LOCATION_MZONE)
 		and c:IsControler(tp) and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function c101104057.spcon(e,tp,eg,ep,ev,re,r,rp)

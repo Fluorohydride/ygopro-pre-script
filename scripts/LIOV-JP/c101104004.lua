@@ -32,7 +32,7 @@ function c101104004.initial_effect(c)
 	e3:SetValue(3000)
 	c:RegisterEffect(e3)
 end
-function c101104004.spcon(e) 
+function c101104004.spcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsFaceup,e:GetHandlerPlayer(),LOCATION_FZONE,0,1,nil)
 end
 function c101104004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -72,6 +72,6 @@ end
 function c101104004.repval(e,c)
 	return c101104004.repfilter(c)
 end
-function c101104004.atkcon(e) 
+function c101104004.atkcon(e)
 	return Duel.IsEnvironment(60884672)
 end

@@ -82,7 +82,7 @@ end
 function c100272007.dmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then 
+	if tc:IsRelateToEffect(e) then
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
 			Duel.Damage(1-tp,2000,REASON_EFFECT)
 		end

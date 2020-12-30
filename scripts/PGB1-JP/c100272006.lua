@@ -19,13 +19,13 @@ function c100272006.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100272006,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SEARCH)
-	e2:SetType(EFFECT_TYPE_IGNITION) 
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100272006+100)
 	e2:SetTarget(c100272006.tdtg)
 	e2:SetOperation(c100272006.tdop)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 end
 function c100272006.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and ev>=1000 and bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0
@@ -81,4 +81,4 @@ function c100272006.tdop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
-end 
+end

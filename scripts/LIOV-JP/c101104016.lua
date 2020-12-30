@@ -68,7 +68,7 @@ function c101104016.setfilter(c)
 	return c:GetType()==TYPE_TRAP and c:IsSetCard(0x4c,0x89) and c:IsSSetable()
 end
 function c101104016.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101104016.setfilter(chkc) end 
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101104016.setfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101104016.setfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectTarget(tp,c101104016.setfilter,tp,LOCATION_GRAVE,0,1,1,nil)

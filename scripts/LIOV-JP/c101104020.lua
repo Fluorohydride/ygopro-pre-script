@@ -46,8 +46,8 @@ function c101104020.llpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,101104020)
 	Duel.SetLP(1-tp,Duel.GetLP(1-tp)-500)
 end
-function c101104020.tdfilter(c) 
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() 
+function c101104020.tdfilter(c)
+	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function c101104020.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

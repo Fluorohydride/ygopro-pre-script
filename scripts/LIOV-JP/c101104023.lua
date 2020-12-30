@@ -62,7 +62,7 @@ function c101104023.cfilter(c,tp)
 end
 function c101104023.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==1-tp and eg:IsExists(c101104023.cfilter,1,nil,1-tp) and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) 
+	return Duel.GetTurnPlayer()==1-tp and eg:IsExists(c101104023.cfilter,1,nil,1-tp) and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function c101104023.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -95,7 +95,7 @@ function c101104023.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,dg,ct,1-tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,hg,ct,0,0)
 end
-function c101104023.thop(e,tp,eg,ep,ev,re,r,rp) 
+function c101104023.thop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local hg=Duel.GetFieldGroup(p,LOCATION_HAND,0)
 	local ct=#hg
