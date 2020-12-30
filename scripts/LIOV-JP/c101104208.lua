@@ -54,7 +54,7 @@ function c101104208.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=Duel.GetLP(1-tp)-2000 and aux.exccon(e)
 end
 function c101104208.thfilter(c)
-	return c:IsSetCard(0x7e) and not c:IsCode(101104208) and c:IsAbleToHand()
+	return c:IsSetCard(0x7e) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(101104208) and c:IsAbleToHand()
 end
 function c101104208.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101104208.thfilter(chkc) end
