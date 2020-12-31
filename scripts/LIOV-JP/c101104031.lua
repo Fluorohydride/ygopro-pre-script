@@ -32,10 +32,7 @@ function c101104031.atklm(e)
 	return Duel.IsExistingMatchingCard(c101104031.atkfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101104031.cfilter(c,tp)
-	return c:GetPreviousControler()==1-tp and c:IsType(TYPE_MONSTER)
-end
-function c101104031.cfilter(c,tp)
-	return c:GetPreviousControler()==tp
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==1-tp and c:IsType(TYPE_MONSTER)
 end
 function c101104031.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101104031.cfilter,1,nil,1-tp)
