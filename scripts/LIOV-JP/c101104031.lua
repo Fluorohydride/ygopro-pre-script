@@ -19,7 +19,7 @@ function c101104031.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_TO_GRAVE) 
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,101104031)
+	e2:SetCountLimit(1,id)
 	e2:SetCondition(c101104031.tkcon)
 	e2:SetTarget(c101104031.tktg)
 	e2:SetOperation(c101104031.tkop)
@@ -32,7 +32,10 @@ function c101104031.atklm(e)
 	return Duel.IsExistingMatchingCard(c101104031.atkfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101104031.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==1-tp and c:IsType(TYPE_MONSTER)
+	return c:GetPreviousControler()==1-tp and c:IsType(TYPE_MONSTER)
+end
+function c101104031.cfilter(c,tp)
+	return c:GetPreviousControler()==tp
 end
 function c101104031.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101104031.cfilter,1,nil,1-tp)
@@ -45,31 +48,33 @@ function c101104031.tkfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_TOKEN)
 end
 function c101104031.tkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if e:GetHandler():AddCounter(0x59,1)~=0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,101104100,0,0x4011,0,0,1,RACE_BEAST,ATTRIBUTE_EARTH) then
-		Duel.BreakEffect()
-		local token=Duel.CreateToken(tp,101104100)
-		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
-	end
-	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c101104031.tkfilter,tp,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(c:GetCounter(0x59))
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e2:SetValue(c:GetCounter(0x59)*500)
-		tc:RegisterEffect(e2)
-		local e3=e2:Clone() 
-		e3:SetCode(EFFECT_UPDATE_DEFENSE)
-		tc:RegisterEffect(e3)
+		local ct=c:GetCounter(0x59)
+		while ct>0 do
+			local token=Duel.CreateToken(tp,101104100)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_LEVEL)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+			e1:SetValue(c:GetCounter(0x59))
+			token:RegisterEffect(e1)
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_SET_ATTACK)
+			e2:SetValue(c:GetCounter(0x59)*500)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+			token:RegisterEffect(e2)
+			local e3=Effect.CreateEffect(c)
+			e3:SetType(EFFECT_TYPE_SINGLE)
+			e3:SetCode(EFFECT_SET_DEFENSE)
+			e3:SetValue(c:GetCounter(0x59)*500)
+			e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+			token:RegisterEffect(e3)
+			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
+			ct=ct-1
+		end
 	end
 end
