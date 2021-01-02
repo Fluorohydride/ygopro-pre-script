@@ -63,8 +63,9 @@ function c101104012.thfilter(c,code)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x88) and not c:IsCode(code) and c:IsAbleToHand()
 end
 function c101104012.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101104012.thcfilter,tp,LOCATION_HAND,0,1,nil) end
-	local g=Duel.SelectMatchingCard(tp,c101104012.thcfilter,tp,LOCATION_HAND,0,1,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101104012.thcfilter,tp,LOCATION_HAND,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c101104012.thcfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
 	e:SetLabel(g:GetFirst():GetCode())
 	Duel.SendtoGrave(g,REASON_COST)
 end
@@ -74,7 +75,7 @@ function c101104012.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101104012.thop(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101104012.thfilter,tp,LOCATION_GRAVE,0,1,1,nil,code)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
