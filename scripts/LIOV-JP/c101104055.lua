@@ -52,7 +52,7 @@ function c101104055.fcheck(tp,sg,fc)
 	if sg:IsExists(c101104055.chkfilter,1,nil,tp) then
 		return sg:IsExists(Card.IsRace,1,nil,RACE_DRAGON)
 	else
-		return sg:IsExists(Card.IsRace,1,nil,RACE_DRAGON) and sg:FilterCount(c101104055.exfilter,nil,tp)<=0
+		return sg:IsExists(Card.IsRace,1,nil,RACE_DRAGON) and not sg:IsExists(c101104055.exfilter,1,nil,tp)
 	end
 end
 function c101104055.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -60,7 +60,7 @@ function c101104055.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local chkf=tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(c101104055.filter2,nil,e)
 		local mg2=Duel.GetMatchingGroup(c101104055.filter1,tp,LOCATION_GRAVE,0,nil,e)
-		if mg1:IsExists(c101104055.chkfilter,1,nil,tp) and mg2:GetCount()>0 then
+		if mg1:IsExists(c101104055.chkfilter,1,nil,tp) and mg2:GetCount()>0 or mg2:IsExists(c101104055.chkfilter,1,nil,tp) then
 			mg1:Merge(mg2)
 		end
 		aux.FCheckAdditional=c101104055.fcheck
@@ -84,7 +84,7 @@ function c101104055.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c101104055.filter2,nil,e)
 	local mg2=Duel.GetMatchingGroup(c101104055.filter1,tp,LOCATION_GRAVE,0,nil,e)
-	if mg1:IsExists(c101104055.chkfilter,1,nil,tp) and mg2:GetCount()>0 then
+	if mg1:IsExists(c101104055.chkfilter,1,nil,tp) and mg2:GetCount()>0 or mg2:IsExists(c101104055.chkfilter,1,nil,tp) then
 		mg1:Merge(mg2)
 	end
 	aux.FCheckAdditional=c101104055.fcheck
