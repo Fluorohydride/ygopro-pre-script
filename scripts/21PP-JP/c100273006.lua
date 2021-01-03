@@ -14,7 +14,7 @@ function c100273006.initial_effect(c)
 	--add/ss rock monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100273006,1))
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_BATTLE_DESTROYED)

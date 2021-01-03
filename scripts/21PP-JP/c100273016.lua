@@ -29,9 +29,6 @@ function c100273016.initial_effect(c)
 	c:RegisterEffect(e2)
 	if not c100273016.global_check then
 		c100273016.global_check=true
-		c100273016[0]=nil
-		c100273016[1]=nil
-		c100273016[2]=nil
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DETACH_MATERIAL)
@@ -86,7 +83,7 @@ function c100273016.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	tc:RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c100273016.filter(c,e,tp)
-	return c:IsType(TYPE_NORMAL) and (c:IsAttack(0) or c:IsDefense(0)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_NORMAL) and (c:IsAttack(0) or c:IsDefense(0)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100273016.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -98,7 +95,7 @@ function c100273016.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)<1 then return end
 	if Duel.GetMZoneCount(tp)<2 or Duel.IsPlayerAffectedByEffect(tp,59822133) then max=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c100273016.filter,tp,LOCATION_GRAVE,0,1,max,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100273016.filter),tp,LOCATION_GRAVE,0,1,max,nil,e,tp)
 	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		local e1=Effect.CreateEffect(tc)

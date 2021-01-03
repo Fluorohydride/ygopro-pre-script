@@ -50,7 +50,7 @@ function c100273017.atkfilter(c)
 	return c:IsCode(75574498) and c:IsFaceup()
 end
 function c100273017.atkcon(e)
-	return Duel.IsExistingMatchingCard(c100273017.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100273017.atkfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function c100273017.atkval(e,c)
 	return c:IsFaceup() and (c:IsAttack(0) or c:IsDefense(0))
