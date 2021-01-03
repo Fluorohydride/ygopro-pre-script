@@ -21,11 +21,13 @@ function c101104063.filter2(c,e,tp,lv)
 		and Duel.IsExistingMatchingCard(c101104063.filter3,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetOriginalLevel()+lv)
 end
 function c101104063.filter3(c,e,tp,lv)
-	return c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_SYNCHRO) and c:IsLevel(lv)
+		and Duel.GetLocationCountFromEx(tp,tp,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101104063.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c101104063.filter1,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c101104063.filter1,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(c101104063.filter3,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv)
 	local g1=Duel.SelectTarget(tp,c101104063.filter1,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g1,2,0,0)
