@@ -25,9 +25,11 @@ end
 function c101104056.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetTurnPlayer()==tp then
 		if chk==0 then return Duel.IsExistingMatchingCard(c101104056.thfilter,tp,LOCATION_DECK,0,1,nil) end
+		e:SetCategory(CATEGORY_SEARCH)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	else
 		if chk==0 then return Duel.IsExistingMatchingCard(c101104056.setfilter,tp,LOCATION_DECK,0,1,nil) end
+		e:SetCategory(0)
 	end
 end
 function c101104056.activate(e,tp,eg,ep,ev,re,r,rp)
