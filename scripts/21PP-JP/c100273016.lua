@@ -2,6 +2,7 @@
 --
 --Script by JoyJ & mercury233
 function c100273016.initial_effect(c)
+	Duel.EnableGlobalFlag(GLOBALFLAG_DETACH_EVENT)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100273016,0))
