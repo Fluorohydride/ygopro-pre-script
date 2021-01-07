@@ -28,7 +28,7 @@ function c101104077.thfilter(c)
 	return c:IsFaceup() and c:IsAbleToHand()
 end
 function c101104077.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c:IsControler(1-tp) and c101104077.thfilter(chkc) end
+	if chkc then return chkc:IsOnField() and c:IsControler(1-tp) and c101104077.thfilter(chkc) end
 	if chk==0 then return Duel.IsExistingMatchingCard(c101104077.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(c101104077.thfilter,tp,0,LOCATION_ONFIELD,1,nil) end
 	local g=Duel.GetMatchingGroup(c101104077.cfilter,tp,LOCATION_MZONE,0,nil)
