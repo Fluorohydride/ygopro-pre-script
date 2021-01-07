@@ -43,7 +43,7 @@ function c101104015.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104015.link_rating(e,c)
-	return c:IsLinkAbove(3)
+	return e:GetHandler():GetColumnGroup():IsContains(c) and c:IsLinkAbove(3)
 end
 function c101104015.matfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x156) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
