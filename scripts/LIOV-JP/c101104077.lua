@@ -30,11 +30,11 @@ end
 function c101104077.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c:IsControler(1-tp) and c101104077.thfilter(chkc) end
 	if chk==0 then return Duel.IsExistingMatchingCard(c101104077.cfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingTarget(c101104077.thfilter,tp,0,LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingTarget(c101104077.thfilter,tp,0,LOCATION_ONFIELD,1,nil) end
 	local g=Duel.GetMatchingGroup(c101104077.cfilter,tp,LOCATION_MZONE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local sg=Duel.SelectTarget(tp,c101104077.thfilter,tp,0,LOCATION_MZONE,1,ct,nil)
+	local sg=Duel.SelectTarget(tp,c101104077.thfilter,tp,0,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,sg:GetCount(),0,0)
 end
 function c101104077.activate(e,tp,eg,ep,ev,re,r,rp)
