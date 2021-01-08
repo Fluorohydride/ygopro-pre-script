@@ -1,4 +1,4 @@
---ドッグ・タッグ
+--S－Force ドッグ・タッグ
 --Security Force Dog Tag
 --Scripted by Kohana Sonogami
 function c101104014.initial_effect(c)
@@ -7,12 +7,11 @@ function c101104014.initial_effect(c)
 	e1:SetDescription(aux.Stringid(101104014,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
-	e1:SetCondition(c101104014.spcon)
 	e1:SetCountLimit(1,101104014)
+	e1:SetCondition(c101104014.spcon)
 	e1:SetTarget(c101104014.sptg)
 	e1:SetOperation(c101104014.spop)
 	c:RegisterEffect(e1)
@@ -32,10 +31,11 @@ function c101104014.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x156)
 end
 function c101104014.cfilter(c,tp)
-	return c:GetSummonPlayer()==1-tp and Duel.IsExistingMatchingCard(c101104014.spfilter,tp,LOCATION_MZONE,0,1,nil)
+	return c:GetSummonPlayer()==1-tp
 end
 function c101104014.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101104014.cfilter,1,nil,tp)
+		and Duel.IsExistingMatchingCard(c101104014.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101104014.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

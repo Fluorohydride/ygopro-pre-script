@@ -1,4 +1,4 @@
---エッジ・レイザー
+--S－Force エッジ・レイザー
 --Security Force Edge Laser
 --Scripted by Kohana Sonogami
 function c101104015.initial_effect(c)
@@ -7,6 +7,7 @@ function c101104015.initial_effect(c)
 	e1:SetDescription(aux.Stringid(101104015,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,101104015)
 	e1:SetTarget(c101104015.sptg)
@@ -21,12 +22,12 @@ function c101104015.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetValue(c101104015.link_rating)
+	e3:SetValue(c101104015.linklimit)
 	e3:SetTarget(c101104015.matlimit)
 	c:RegisterEffect(e3)
 end
 function c101104015.spfilter(c,e,tp)
-	return c:IsSetCard(0x156) and c:IsType(TYPE_MONSTER) and not c:IsCode(101104015) 
+	return c:IsSetCard(0x156) and not c:IsCode(101104015) 
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 end
 function c101104015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -42,7 +43,7 @@ function c101104015.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 	end
 end
-function c101104015.link_rating(e,c)
+function c101104015.linklimit(e,c)
 	return e:GetHandler():GetColumnGroup():IsContains(c) and c:IsLinkAbove(3)
 end
 function c101104015.matfilter(c,tp)
