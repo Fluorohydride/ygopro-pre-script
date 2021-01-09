@@ -24,6 +24,7 @@ function c101104014.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_TRIGGER)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
+	e3:SetCondition(c101104014.actcon)
 	e3:SetTarget(c101104014.actlimit)
 	c:RegisterEffect(e3)
 end
@@ -47,6 +48,10 @@ function c101104014.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
+end
+function c101104014.actcon(e)
+	local ph=Duel.GetCurrentPhase()
+	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function c101104014.actfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x156) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
