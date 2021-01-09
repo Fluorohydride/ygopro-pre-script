@@ -44,6 +44,12 @@ function c101104060.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetOperation(c101104060.damop)
 	e2:SetLabelObject(e1)
 	Duel.RegisterEffect(e2,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,c101104060.thfilter,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	end
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -52,12 +58,6 @@ function c101104060.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetTarget(c101104060.splimit)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c101104060.thfilter,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
-	if #g>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-	end
 end
 function c101104060.regop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then return end
