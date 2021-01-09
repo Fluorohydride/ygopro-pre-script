@@ -45,7 +45,7 @@ function c101104059.spcon2(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsReason(REASON_DESTROY) and Duel.GetTurnPlayer()~=tp
 end
 function c101104059.spfilter2(c,e,tp)
-	return (c:IsCode(73580471) or aux.IsCodeListed(c,73580471)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return (c:IsCode(73580471) or aux.IsCodeListed(c,73580471)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101104059.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101104059.spfilter1,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,1,nil,e,tp) end
@@ -56,6 +56,6 @@ function c101104059.spop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101104059.spfilter1,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
