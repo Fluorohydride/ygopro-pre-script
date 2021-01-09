@@ -35,7 +35,7 @@ function c101104008.setop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,tc)
 	end
 end
-function c101104008.eqfilter1(c)
+function c101104008.eqfilter1(c,tp)
 	return c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and c:IsFaceup() and c:GetEquipTarget()
 		and Duel.IsExistingTarget(c101104008.eqfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
 end
@@ -44,9 +44,9 @@ function c101104008.eqfilter2(c,tp)
 end
 function c101104008.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c101104008.eqfilter1,tp,LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101104008.eqfilter1,tp,LOCATION_SZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g1=Duel.SelectTarget(tp,c101104008.eqfilter1,tp,LOCATION_SZONE,0,1,1,nil)
+	local g1=Duel.SelectTarget(tp,c101104008.eqfilter1,tp,LOCATION_SZONE,0,1,1,nil,tp)
 	local tc=g1:GetFirst()
 	e:SetLabelObject(tc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
