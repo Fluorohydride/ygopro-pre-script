@@ -53,9 +53,9 @@ function c101104060.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e3:SetTargetRange(1,0)
-	e3:SetTarget(c101104060.splimit)
+	e3:SetTarget(c101104060.actlimit)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
@@ -72,6 +72,7 @@ end
 function c101104060.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(tp,2300,REASON_EFFECT)
 end
-function c101104060.splimit(e,c)
-	return not c:IsRace(RACE_CYBERSE)
+function c101104060.actlimit(e,re,rp) 
+	local rc=re:GetHandler()
+	return re:IsActiveType(TYPE_MONSTER) and not rc:IsRace(RACE_CYBERSE)
 end
