@@ -35,18 +35,19 @@ function c101104021.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101104021.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
-		if Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp) and Duel.GetFlagEffect(tp,101104021)==0 then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetDescription(aux.Stringid(101104021,2))
-			e1:SetType(EFFECT_TYPE_FIELD)
-			e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-			e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-			e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x24))
-			e1:SetReset(RESET_PHASE+PHASE_END)
-			Duel.RegisterEffect(e1,tp)
-			Duel.RegisterFlagEffect(tp,101104021,RESET_PHASE+PHASE_END,0,1)
-		end
+	if tc:IsRelateToEffect(e) then
+		Duel.Destroy(tc,REASON_EFFECT)
+	end
+	if Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp) and Duel.GetFlagEffect(tp,101104021)==0 then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(aux.Stringid(101104021,2))
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+		e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
+		e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x24))
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+		Duel.RegisterFlagEffect(tp,101104021,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function c101104021.thcon(e,tp,eg,ep,ev,re,r,rp)
