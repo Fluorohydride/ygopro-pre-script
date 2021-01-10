@@ -55,7 +55,7 @@ function c101104076.cfilter(c,tp)
 	return c:IsSetCard(0x135) and c:IsReason(REASON_BATTLE)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c101104076.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101104076.cfilter,1,nil,tp)
 end
 function c101104076.spfilter(c,e,tp)
