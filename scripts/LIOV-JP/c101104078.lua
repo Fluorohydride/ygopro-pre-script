@@ -12,7 +12,7 @@ function c101104078.initial_effect(c)
 	e1:SetOperation(c101104078.operation)
 	c:RegisterEffect(e1)
 end
-function c59464593.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101104078.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
