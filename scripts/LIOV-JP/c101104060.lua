@@ -1,4 +1,4 @@
---めぐり-Ai-
+--めぐりーAiー
 --When A.I. First Met You
 --Scripted by Kohana Sonogami
 function c101104060.initial_effect(c)
