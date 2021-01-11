@@ -54,6 +54,7 @@ function c101104010.thop(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.SelectMatchingCard(tp,c101104010.dtfilter,tp,LOCATION_DECK,0,1,1,nil)
 		local dc=dg:GetFirst()
 		if dc then
+			Duel.ShuffleDeck(tp)
 			Duel.MoveSequence(dc,0)
 			if Duel.IsExistingMatchingCard(c101104010.sumfilter,tp,LOCATION_HAND,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101104010,3)) then
 				Duel.BreakEffect()
