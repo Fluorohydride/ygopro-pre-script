@@ -56,6 +56,7 @@ function c101104010.thop(e,tp,eg,ep,ev,re,r,rp)
 		if dc then
 			Duel.ShuffleDeck(tp)
 			Duel.MoveSequence(dc,0)
+			Duel.ConfirmDecktop(tp,1)
 			if Duel.IsExistingMatchingCard(c101104010.sumfilter,tp,LOCATION_HAND,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101104010,3)) then
 				Duel.BreakEffect()
 				Duel.ShuffleHand(tp)
