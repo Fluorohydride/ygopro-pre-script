@@ -1,4 +1,4 @@
---ユウーAiー
+--ユウ－Ai－
 --You & A.I.
 --Scripted by Kohana Sonogami
 function c101104061.initial_effect(c)
@@ -44,21 +44,20 @@ function c101104061.initial_effect(c)
 	e4:SetOperation(c101104061.attrop3)
 	c:RegisterEffect(e4)
 end
-function c101104061.filter(c,tp,att)
-	return c:GetAttack()==2300 and c:IsRace(RACE_CYBERSE) and c:IsAttribute(att)
+function c101104061.filter(c,att)
+	return c:GetBaseAttack()==2300 and c:IsRace(RACE_CYBERSE) and c:IsAttribute(att)
 end
 function c101104061.attrcon1(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101104061.filter,1,nil,tp,ATTRIBUTE_WIND+ATTRIBUTE_LIGHT)
-end
-function c101104061.cfilter(c)
-	return c:IsFaceup()
+	return eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_EARTH+ATTRIBUTE_WATER)
 end
 function c101104061.attrtg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101104061.cfilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.nzatk,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
 function c101104061.attrop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.SelectMatchingCard(tp,c101104061.cfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local g=Duel.SelectMatchingCard(tp,aux.nzatk,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	if #g==0 then return end
 	Duel.HintSelection(g)
 	local tc=g:GetFirst()
 	local e1=Effect.CreateEffect(c)
@@ -69,15 +68,17 @@ function c101104061.attrop1(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e1)
 end
 function c101104061.attrcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101104061.filter,1,nil,tp,ATTRIBUTE_EARTH+ATTRIBUTE_WATER)
+	return eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_WIND+ATTRIBUTE_LIGHT)
 end
 function c101104061.attrtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function c101104061.attrop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.SelectMatchingCard(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
+	local g=Duel.SelectMatchingCard(tp,aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	if #g==0 then return end
 	Duel.HintSelection(g)
 	local tc=g:GetFirst()
 	Duel.NegateRelatedChain(tc,RESET_TURN_SET)
@@ -94,7 +95,7 @@ function c101104061.attrop2(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e2)
 end
 function c101104061.attrcon3(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101104061.filter,1,nil,tp,ATTRIBUTE_FIRE+ATTRIBUTE_DARK)
+	return eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_FIRE+ATTRIBUTE_DARK)
 end
 function c101104061.attrtg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -103,6 +104,8 @@ function c101104061.attrtg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
 end
 function c101104061.attrop3(e,tp,eg,ep,ev,re,r,rp)
-	local token=Duel.CreateToken(tp,11738490)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,11738490,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) then return end
+	local token=Duel.CreateToken(tp,101104161)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 end
