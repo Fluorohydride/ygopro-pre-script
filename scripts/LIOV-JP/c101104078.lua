@@ -12,15 +12,18 @@ function c101104078.initial_effect(c)
 	e1:SetOperation(c101104078.operation)
 	c:RegisterEffect(e1)
 end
+function c101104078.cfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+end
 function c101104078.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101104078.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101104078.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 	e:SetLabelObject(g:GetFirst())
 end
 function c101104078.thfilter(c)
-	return c:IsLevel(1) and c:IsAbleToHand()
+	return c:IsLevel(1) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsAbleToHand()
 end
 function c101104078.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c101104078.thfilter(chkc) and chkc~=e:GetLabelObject() end
