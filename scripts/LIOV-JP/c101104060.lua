@@ -65,8 +65,7 @@ function c101104060.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101104060.regop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then return end
-	local tc=eg:GetFirst()
-	if tc:IsCode(e:GetLabel()) then
+	if eg:IsExists(Card.IsCode,1,nil,e:GetLabel()) then
 		e:SetLabel(0)
 	end
 end
