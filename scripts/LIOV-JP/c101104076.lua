@@ -44,14 +44,14 @@ end
 function c101104076.atkval(e)
 	return Duel.GetMatchingGroupCount(Card.IsFaceup,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil)*-100
 end
-function c101104076.cfilter(c,tp)
+function c101104076.actfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x135) and c:IsControler(tp)
 end
 function c101104076.actcon(e)
 	local tp=e:GetHandlerPlayer()
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return (a and c101104076.cfilter(a,tp)) or (d and c101104076.cfilter(d,tp))
+	return (a and c101104076.actfilter(a,tp)) or (d and c101104076.actfilter(d,tp))
 end
 function c101104076.cfilter(c,tp)
 	return c:IsSetCard(0x135) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
