@@ -3,10 +3,13 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **January 16, 2021**: LIGHTNING OVERDRIVE (LIOV-JP): `101104XXX`
-- **January 16, 2021** "Amabie-San" Present Campaign (21CC-JP): `100275XXX`
+- **March 6, 2021**: Deck Build Pack: Ancient Guardians (DBAG-JP): `100416XXX`
 - **April ??, 2021**: Number Complete File -Piece of Memories- (NOCF?-JP): `100274XXX`
+- **?? ??, 2021**: "Amabie-San" Present Campaign (21CC-JP): `100275XXX`
 
 # Announced
+- **April 17, 2021**: DAWN OF MAJESTY (????-JP) : `101105XXX`
+- **May 15, 2021**: Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
 
 # Archived
 ## Other packs
