@@ -111,7 +111,7 @@ function c100416033.cfilter(c,e,tp,mc)
 	end
 end
 function c100416033.excostfilter(c,tp)
-	return c:IsSetCard(0x261) and c:IsLevelAbove(7) and c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
+	return c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
 end
 function c100416033.cfilter2(c,e,tp,ft)
 	return Duel.IsExistingMatchingCard(c100416033.thfilter,tp,LOCATION_GRAVE,0,1,c,e,tp,ft)
