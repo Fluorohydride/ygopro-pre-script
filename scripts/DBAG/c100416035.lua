@@ -3,13 +3,13 @@
 --Scripted by Kohana Sonogami
 function c100416035.initial_effect(c)
 	c:EnableReviveLimit()
-	--spsummon condition
+	--special summon rule
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--special summon rule
+	--spsummon condition
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -94,20 +94,19 @@ function c100416035.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return tg and tg:IsExists(c100416035.negfilter,1,nil) and Duel.IsChainNegatable(ev)
 end
-function c100416035.costfilter(c)
-	if c:IsLocation(LOCATION_HAND+LOCATION_MZONE) then
+function c100416035.costfilter(c,tp)
+	if c:IsLocation(LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE) then
 		return c:IsType(TYPE_MONSTER) and c:IsReleasable()
 	else
-		return c:IsSetCard(0x261) and c:IsLevelAbove(7)
-			and c:IsAbleToRemove() and c:IsHasEffect(100416035,tp)
+		return c:IsLevelAbove(7) and c:IsSetCard(0x261) and c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
 	end
 end
 function c100416035.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100416035.costfilter,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100416035.costfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,c100416035.costfilter,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100416035.costfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
 	local tc=g:GetFirst()
-	local te=tc:IsHasEffect(100416035,tp)
+	local te=tc:IsHasEffect(100416038,tp)
 	if te then
 		te:UseCountLimit(tp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
