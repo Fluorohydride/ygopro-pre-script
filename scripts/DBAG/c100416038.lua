@@ -11,11 +11,11 @@ function c100416038.initial_effect(c)
 	--change cost
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetTargetRange(LOCATION_GRAVE,0)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(100416038)
 	e2:SetCountLimit(1)
-	e2:SetTarget(c100416038.reptg)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x261))
+	e2:SetTargetRange(1,0)
 	c:RegisterEffect(e2)
 	--counter
 	local e3=Effect.CreateEffect(c)
@@ -38,15 +38,12 @@ function c100416038.initial_effect(c)
 	e4:SetOperation(c100416038.tkcop)
 	c:RegisterEffect(e4)
 end
-function c100416038.reptg(e,c)
-	return c:IsSetCard(0x261) and c:IsLevelAbove(7)
-end
 function c100416038.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x60,1)
 end
 function c100416038.tkccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x60,7,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x60,REASON_COST)
+	e:GetHandler():RemoveCounter(tp,0x60,e:GetHandler():GetCounter(0x60),REASON_COST)
 end
 function c100416038.tkctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsControlerCanBeChanged() end
