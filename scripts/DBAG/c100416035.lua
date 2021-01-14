@@ -99,7 +99,7 @@ function c100416035.costfilter(c)
 		return c:IsType(TYPE_MONSTER) and c:IsReleasable()
 	else
 		return c:IsSetCard(0x261) and c:IsLevelAbove(7)
-			and c:IsAbleToRemove() and c:IsHasEffect(18319762,tp)
+			and c:IsAbleToRemove() and c:IsHasEffect(100416035,tp)
 	end
 end
 function c100416035.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
