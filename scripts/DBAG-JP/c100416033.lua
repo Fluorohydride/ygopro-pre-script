@@ -111,10 +111,10 @@ function c100416033.cfilter(c,e,tp,mc)
 	end
 end
 function c100416033.excostfilter(c,tp)
-	return c:IsSetCard(0x261) c:IsLevelAbove(7) and c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
+	return c:IsSetCard(0x261) and c:IsLevelAbove(7) and c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
 end
 function c100416033.cfilter2(c,e,tp,ft)
-	return Duel.IsExistingMatchingCard(c100416033.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,ft,c)
+	return Duel.IsExistingMatchingCard(c100416033.thfilter,tp,LOCATION_GRAVE,0,1,c,e,tp,ft)
 end
 function c100416033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetReleaseGroup(tp):Filter(c100416033.rfilter,nil,tp)
@@ -146,8 +146,8 @@ function c100416033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		end
 	end
 end
-function c100416033.thfilter(c,e,tp,ft,mc)
-	return c:IsSetCard(0x261) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not ft or ft>0)) and (not mc or mc~=c)
+function c100416033.thfilter(c,e,tp,ft)
+	return c:IsSetCard(0x261) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not ft or ft>0))
 end
 function c100416033.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100416033.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
