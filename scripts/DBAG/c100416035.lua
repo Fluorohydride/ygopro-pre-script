@@ -2,6 +2,7 @@
 --Bearcti - Grand Chariot
 --Scripted by Kohana Sonogami
 function c100416035.initial_effect(c)
+	c:EnableReviveLimit()
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
