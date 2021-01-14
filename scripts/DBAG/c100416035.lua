@@ -102,9 +102,9 @@ function c100416035.costfilter(c)
 	end
 end
 function c100416035.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100416035.costfilter,LOCATION_HAND+LOCATION_MZONE+LOCATION_REMOVED,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100416035.costfilter,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,c100416035.costfilter,LOCATION_HAND+LOCATION_MZONE+LOCATION_REMOVED,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100416035.costfilter,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	local tc=g:GetFirst()
 	local te=tc:IsHasEffect(100416035,tp)
 	if te then
