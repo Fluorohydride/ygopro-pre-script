@@ -94,8 +94,11 @@ function c100416033.actop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
 	end
 end
-function c100416033.rfilter(c,e,tp)
-	return c:IsLevelAbove(7) and (c:IsControler(tp) or c:IsFaceup()) and Duel.IsExistingMatchingCard(c100416033.cfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
+function c100416033.rfilter(c,tp)
+	return c:IsLevelAbove(7) and (c:IsControler(tp) or c:IsFaceup())
+end
+function c100416033.rfilter2(c,e,tp)
+	return Duel.IsExistingMatchingCard(c100416033.cfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function c100416033.cfilter(c,e,tp,mc)
 	if not (c:IsSetCard(0x261) and c:IsType(TYPE_MONSTER)) then return false end
@@ -107,14 +110,44 @@ function c100416033.cfilter(c,e,tp,mc)
 		return b1 or b2
 	end
 end
-function c100416033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c100416033.rfilter,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,c100416033.rfilter,1,1,nil,e,tp)
-	Duel.Release(g,REASON_COST)
+function c100416033.excostfilter(c,tp)
+	return c:IsSetCard(0x261) c:IsLevelAbove(7) and c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
 end
-function c100416033.thfilter(c,e,tp)
-	return c:IsSetCard(0x261) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+function c100416033.cfilter2(c,e,tp,ft)
+	return Duel.IsExistingMatchingCard(c100416033.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,ft,c)
+end
+function c100416033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g1=Duel.GetReleaseGroup(tp):Filter(c100416033.rfilter,nil)
+	local g2=Duel.GetMatchingGroup(c100416033.excostfilter,tp,LOCATION_GRAVE,0,nil,tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local b1=g1:IsExists(c100416033.rfilter2,1,nil,e,tp)
+	local b2=g2:IsExists(c100416033.cfilter2,1,nil,e,tp,ft)
+	if chk==0 then return b1 or b2 end
+	local s=0
+	if b1 and not b2 then
+		s=0
+	elseif not b1 and b2 then
+		s=1
+	elseif b1 and b2 then
+		s=Duel.SelectOption(tp,aux.Stringid(100416039,0),aux.Stringid(100416039,1))
+	end
+	local tc
+	if s==0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		tc=g1:FilterSelect(tp,c100416033.rfilter2,1,1,nil,e,tp):GetFirst()
+		Duel.Release(tc,REASON_COST)
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		tc=g2:FilterSelect(tp,c100416033.cfilter2,1,1,nil,e,tp,ft):GetFirst()
+		local te=tc:IsHasEffect(100416038,tp)
+		if te then
+			te:UseCountLimit(tp)
+			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
+		end
+	end
+end
+function c100416033.thfilter(c,e,tp,ft,mc)
+	return c:IsSetCard(0x261) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not ft or ft>0)) and (not mc or mc~=c)
 end
 function c100416033.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100416033.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
