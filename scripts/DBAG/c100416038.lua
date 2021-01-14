@@ -10,10 +10,11 @@ function c100416038.initial_effect(c)
 	c:RegisterEffect(e1)
 	--change cost
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetTargetRange(LOCATION_GRAVE,0)
+	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(100416038)
-	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1)
 	c:RegisterEffect(e2)
 	--counter
