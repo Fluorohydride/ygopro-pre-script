@@ -11,11 +11,11 @@ function c100416038.initial_effect(c)
 	--change cost
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetTargetRange(LOCATION_GRAVE,0)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(100416038)
 	e2:SetCountLimit(1)
+	e2:SetTarget(c100416038.reptg)
 	c:RegisterEffect(e2)
 	--counter
 	local e3=Effect.CreateEffect(c)
@@ -37,6 +37,9 @@ function c100416038.initial_effect(c)
 	e4:SetTarget(c100416038.tkctg) 
 	e4:SetOperation(c100416038.tkcop)
 	c:RegisterEffect(e4)
+end
+function c100416038.reptg(e,c)
+	return c:IsSetCard(0x261) and c:IsLevelAbove(7)
 end
 function c100416038.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x60,1)
