@@ -129,7 +129,7 @@ function c100416033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif not b1 and b2 then
 		s=1
 	elseif b1 and b2 then
-		s=Duel.SelectOption(tp,aux.Stringid(100416039,0),aux.Stringid(100416039,1))
+		s=Duel.SelectOption(tp,aux.Stringid(100416033,2),aux.Stringid(100416033,3))
 	end
 	local tc
 	if s==0 then
