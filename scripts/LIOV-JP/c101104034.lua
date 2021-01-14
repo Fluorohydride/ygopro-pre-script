@@ -37,7 +37,7 @@ function c101104034.atkval(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_REMOVED,0)*-100
 end
 function c101104034.cfilter(c,e,rc,re)
-	return (c:IsFaceup() and re:IsActivated() and rc:IsRace(c:GetOriginalRace()) or rc==c)
+	return (c:IsFaceup() and re:IsActivated() and c:IsRace(rc:GetOriginalRace()) or rc==c)
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToRemove()
 end
 function c101104034.remtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
