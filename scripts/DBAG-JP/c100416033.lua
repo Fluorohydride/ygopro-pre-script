@@ -117,7 +117,7 @@ function c100416033.cfilter2(c,e,tp,ft)
 	return Duel.IsExistingMatchingCard(c100416033.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,ft,c)
 end
 function c100416033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.GetReleaseGroup(tp):Filter(c100416033.rfilter,nil)
+	local g1=Duel.GetReleaseGroup(tp):Filter(c100416033.rfilter,nil,tp)
 	local g2=Duel.GetMatchingGroup(c100416033.excostfilter,tp,LOCATION_GRAVE,0,nil,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local b1=g1:IsExists(c100416033.rfilter2,1,nil,e,tp)
