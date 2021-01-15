@@ -1,3 +1,4 @@
+--ヤモイモリ
 --Yamoimori
 --Scripted by Kohana Sonogami
 function c101104029.initial_effect(c)
@@ -56,7 +57,7 @@ function c101104029.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(0)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc2:RegisterEffect(e1)
 		end
 	end
