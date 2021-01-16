@@ -36,25 +36,32 @@ end
 function c101104034.atkval(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_REMOVED,0)*-100
 end
-function c101104034.cfilter(c,e,rc,re)
-	return (c:IsFaceup() and re:IsActivated() and c:IsRace(rc:GetOriginalRace()) or rc==c)
+function c101104034.cfilter(c,e,rc)
+	return c:IsFaceup() and (c:GetOriginalRace()==rc:GetOriginalRace() or c==rc)
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToRemove()
 end
+function c101104034.rmfilter(c,tc)
+	return c:IsFaceup() and c:GetOriginalRace()==tc:GetOriginalRace()
+end
 function c101104034.remtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local rc=re:GetHandler()
-	if chkc then return eg:IsContains(chkc) and c101104034.cfilter(chkc,e,rc,re) end
-	if chk==0 then return rc and eg:IsExists(c101104034.cfilter,1,nil,e,rc,re) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=eg:FilterSelect(tp,c101104034.cfilter,1,1,nil,e,rc,re)
-	Duel.SetTargetCard(g)
+	if chkc then return eg:IsContains(chkc) and c101104034.cfilter(chkc,e,re:GetHandler()) end
+	if chk==0 then return re and re:IsActivated() and eg:IsExists(c101104034.cfilter,1,nil,e,re:GetHandler()) end
+	local tc=eg:GetFirst()
+	if #eg>1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		tc=eg:FilterSelect(tp,c101104034.cfilter,1,1,nil,e,re:GetHandler()):GetFirst()
+	end
+	Duel.SetTargetCard(tc)
+	local g=Duel.GetMatchingGroup(c101104034.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tc)
+	g:AddCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function c101104034.remop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		local g=Group.FromCards(tc)
 		if tc:IsFaceup() then
-			g=g+Duel.GetMatchingGroup(aux.FilterBoolFunction(Card.IsRace,tc:GetOriginalRace()),tp,LOCATION_MZONE,LOCATION_MZONE,tc)
+			g=g+Duel.GetMatchingGroup(c101104034.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tc)
 		end
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
