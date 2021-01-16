@@ -11,6 +11,15 @@ function c101104027.initial_effect(c)
 	e1:SetTarget(c101104027.drtg)
 	e1:SetOperation(c101104027.drop)
 	c:RegisterEffect(e1)
+	--destroy replace
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetCode(EFFECT_DESTROY_REPLACE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1)
+	e2:SetTarget(c101104027.reptg)
+	c:RegisterEffect(e2)
 end
 function c101104027.drfilter(c)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToRemoveAsCost()
@@ -60,4 +69,16 @@ function c101104027.drop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
 		end
 	end
+end
+function c101104027.repfilter(c)
+	return c:IsType(TYPE_TRAP) and c:IsAbleToRemove()
+end
+function c101104027.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE) and Duel.IsExistingMatchingCard(c101104027.repfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local g=Duel.SelectMatchingCard(tp,c101104027.repfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		return true
+	else return false end
 end
