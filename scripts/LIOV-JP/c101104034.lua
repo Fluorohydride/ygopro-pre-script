@@ -45,7 +45,8 @@ function c101104034.rmfilter(c,tc)
 end
 function c101104034.remtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and c101104034.cfilter(chkc,e,re:GetHandler()) end
-	if chk==0 then return re and re:IsActivated() and eg:IsExists(c101104034.cfilter,1,nil,e,re:GetHandler()) end
+	if chk==0 then return re and re:IsActivated() and re:IsActiveType(TYPE_MONSTER)
+		and eg:IsExists(c101104034.cfilter,1,nil,e,re:GetHandler()) end
 	local tc=eg:GetFirst()
 	if #eg>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
