@@ -1,57 +1,64 @@
 --ユウ－Ai－
 --You & A.I.
---Scripted by Kohana Sonogami
+--Scripted by Kohana Sonogami & mercury233
 function c101104061.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--EARTH or WATER
+	--select effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101104061,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,101104061)
-	e2:SetCondition(c101104061.attrcon1)
-	e2:SetTarget(c101104061.attrtg1)
-	e2:SetOperation(c101104061.attrop1)
+	e2:SetTarget(c101104061.target)
 	c:RegisterEffect(e2)
-	--WIND or LIGHT
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(101104061,1))
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1,101104061+100)
-	e3:SetCondition(c101104061.attrcon2)
-	e3:SetTarget(c101104061.attrtg2)
-	e3:SetOperation(c101104061.attrop2)
-	c:RegisterEffect(e3)
-	--FIRE or DARK
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(101104061,2))
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_DELAY)
-	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCountLimit(1,101104061+200)
-	e4:SetCondition(c101104061.attrcon3)
-	e4:SetTarget(c101104061.attrtg3)
-	e4:SetOperation(c101104061.attrop3)
-	c:RegisterEffect(e4)
 end
-function c101104061.filter(c,att)
-	return c:GetBaseAttack()==2300 and c:IsRace(RACE_CYBERSE) and c:IsAttribute(att)
+function c101104061.filter(c,att,used)
+	return c:GetBaseAttack()==2300 and c:IsRace(RACE_CYBERSE) and c:IsAttribute(att) and c:GetAttribute()&used==0
 end
-function c101104061.attrcon1(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_EARTH+ATTRIBUTE_WATER)
-end
-function c101104061.attrtg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.nzatk,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+function c101104061.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 and not eg:IsExists(c101104061.filter,1,nil,0xff,0) then return false end
+	local b1=Duel.IsExistingMatchingCard(aux.nzatk,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	local b2=Duel.IsExistingMatchingCard(aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	local b3=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,11738490,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK)
+	local used=Duel.GetFlagEffectLabel(tp,101104061)
+	if used==nil then
+		used=0
+		Duel.RegisterFlagEffect(tp,101104061,RESET_PHASE+PHASE_END,0,1,used)
+	end
+	local att=0
+	if b1 and eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_EARTH,used) then att=att|ATTRIBUTE_EARTH end
+	if b1 and eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_WATER,used) then att=att|ATTRIBUTE_WATER end
+	if b2 and eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_WIND,used) then att=att|ATTRIBUTE_WIND end
+	if b2 and eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_LIGHT,used) then att=att|ATTRIBUTE_LIGHT end
+	if b3 and eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_FIRE,used) then att=att|ATTRIBUTE_FIRE end
+	if b3 and eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_DARK,used) then att=att|ATTRIBUTE_DARK end
+	if chk==0 then return att>0 end
+	if att&(att-1)~=0 then
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101104061,1))
+		att=Duel.AnnounceAttribute(tp,1,att)
+	end
+	used=used|att
+	Duel.SetFlagEffectLabel(tp,101104061,used)
+	if att&(ATTRIBUTE_EARTH+ATTRIBUTE_WATER)>0 then
+		e:SetCategory(CATEGORY_ATKCHANGE)
+		e:SetOperation(c101104061.attrop1)
+	end
+	if att&(ATTRIBUTE_WIND+ATTRIBUTE_LIGHT)>0 then
+		e:SetCategory(0)
+		e:SetOperation(c101104061.attrop2)
+	end
+	if att&(ATTRIBUTE_FIRE+ATTRIBUTE_DARK)>0 then
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e:SetOperation(c101104061.attrop3)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
+		Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
+	end
 end
 function c101104061.attrop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -66,13 +73,6 @@ function c101104061.attrop1(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e1:SetValue(math.ceil(tc:GetAttack()/2))
 	tc:RegisterEffect(e1)
-end
-function c101104061.attrcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_WIND+ATTRIBUTE_LIGHT)
-end
-function c101104061.attrtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function c101104061.attrop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -93,15 +93,6 @@ function c101104061.attrop2(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetValue(RESET_TURN_SET)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e2)
-end
-function c101104061.attrcon3(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101104061.filter,1,nil,ATTRIBUTE_FIRE+ATTRIBUTE_DARK)
-end
-function c101104061.attrtg3(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,11738490,0,0x4011,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
 end
 function c101104061.attrop3(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
