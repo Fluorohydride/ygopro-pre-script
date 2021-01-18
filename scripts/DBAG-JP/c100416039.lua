@@ -47,10 +47,12 @@ function c100416039.mnfilter2(c,mc,lv)
 	return c:GetLevel()-mc:GetLevel()==lv
 end
 function c100416039.spfilter(c,e,tp,g,lv)
-	return c:IsSetCard(0x261) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,g,c)>0 and (not g and c:GetLevel()==lv or g:IsExists(c100416039.mnfilter,1,nil,g,c:GetLevel()))
+	return c:IsSetCard(0x261) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,g,c)>0
+		and (not g and c:IsLevel(lv) or g:IsExists(c100416039.mnfilter,1,nil,g,c:GetLevel()))
 end
 function c100416039.fselect(g,e,tp)
-	return g:GetCount()==2 and g:IsExists(Card.IsType,1,nil,TYPE_TUNER) and g:IsExists(aux.NOT(Card.IsType),1,nil,TYPE_TUNER) and Duel.IsExistingMatchingCard(c100416039.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g)
+	return g:GetCount()==2 and g:IsExists(Card.IsType,1,nil,TYPE_TUNER) and g:IsExists(aux.NOT(Card.IsType),1,nil,TYPE_TUNER)
+		and Duel.IsExistingMatchingCard(c100416039.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g)
 end
 function c100416039.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(c100416039.thfilter,tp,LOCATION_GRAVE,0,1,nil)
