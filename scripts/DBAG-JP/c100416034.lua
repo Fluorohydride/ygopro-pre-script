@@ -71,10 +71,10 @@ function c100416034.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoGrave(tg,REASON_COST)
 end
 function c100416034.distg(e,c)
-	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsLevel(0)
+	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsLevel(0)
 end
 function c100416034.cfilter(c,sp)
-	return c:IsSummonPlayer(sp)
+	return c:GetSummonPlayer()==sp
 end
 function c100416034.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100416034.cfilter,1,nil,1-tp)
