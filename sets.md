@@ -6,6 +6,7 @@
 - **March 6, 2021**: Deck Build Pack: Ancient Guardians (DBAG-JP): `100416XXX`
 - **April ??, 2021**: Number Complete File -Piece of Memories- (NOCF?-JP): `100274XXX`
 - **?? ??, 2021**: "Amabie-San" Present Campaign (21CC-JP): `100275XXX`
+- **?? ??, 2021**: Yu-Gi-Oh! OCG Structures Volume 3 promotional card (YO03-JP): `100276XXX`
 
 # Announced
 - **April 17, 2021**: DAWN OF MAJESTY (????-JP) : `101105XXX`
