@@ -106,7 +106,7 @@ function c100416039.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100416039.cfilter(c,tp)
-	return c:IsPreviousSetCard(0x261) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousTypeOnField()&TYPE_SYNCHRO~=0 and c:IsPreviousControler(tp)
+	return c:IsPreviousSetCard(0x261) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousTypeOnField()&TYPE_SYNCHRO~=0 and c:GetPreviousControler()==tp
 end
 function c100416039.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100416039.cfilter,1,nil,tp) and Duel.GetAttacker():IsControler(1-tp)
