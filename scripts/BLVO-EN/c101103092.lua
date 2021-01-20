@@ -17,5 +17,5 @@ function c101103092.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101103092.disable(e,c)
-	return (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT) and c:GetControler()==1-Duel.GetTurnPlayer()
+	return (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT) and c:IsControler(1-Duel.GetTurnPlayer())
 end
