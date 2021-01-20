@@ -29,7 +29,6 @@ function c101103098.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101103098.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
-	if chk==0 then
 	return true
 end
 function c101103098.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
