@@ -46,7 +46,7 @@ function c101103083.thfilter(c)
 end
 function c101103083.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLP(tp)>=2000 end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_GRAVE)
 end
 function c101103083.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLP(tp)<2000 then return end
