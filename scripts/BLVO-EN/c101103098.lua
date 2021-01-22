@@ -41,7 +41,7 @@ function c101103098.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(0)
 	e:GetHandler():RemoveCounter(tp,0x61,1,REASON_COST)
 	if e:GetHandler():GetCounter(0x61)==0 then
-		Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+		Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 	end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
