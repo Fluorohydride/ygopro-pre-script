@@ -2,6 +2,7 @@
 --Scripted by Kohana Sonogami
 function c101103098.initial_effect(c)
 	c:EnableCounterPermit(0x61,LOCATION_SZONE)
+	c:SetUniqueOnField(1,0,101103098)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
