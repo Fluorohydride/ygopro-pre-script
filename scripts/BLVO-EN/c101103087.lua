@@ -78,7 +78,7 @@ function c101103087.activate(e,tp,eg,ep,ev,re,r,rp)
 		if res then
 			tc:CompleteProcedure()
 			--cannot be destroyed
-			local e1=Effect.CreateEffect(c)
+			local e1=Effect.CreateEffect(tc)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -87,13 +87,21 @@ function c101103087.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 			--pierce
-			local e2=Effect.CreateEffect(c)
+			local e2=Effect.CreateEffect(tc)
 			e2:SetDescription(aux.Stringid(101103087,0))
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_PIERCE)
 			e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
+			if not tc:IsType(TYPE_EFFECT) then
+				local e3=Effect.CreateEffect(tc)
+				e3:SetType(EFFECT_TYPE_SINGLE)
+				e3:SetCode(EFFECT_ADD_TYPE)
+				e3:SetValue(TYPE_EFFECT)
+				e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+				tc:RegisterEffect(e3,true)
+			end
 		end
 	end
 	aux.FCheckAdditional=nil
