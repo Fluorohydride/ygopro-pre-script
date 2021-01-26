@@ -29,7 +29,6 @@ function c101104029.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabelObject(g1:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSITION)
 	local g2=Duel.SelectTarget(tp,c101104029.filter2,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g2,1,0,0)
 end
 function c101104029.activate(e,tp,eg,ep,ev,re,r,rp)
