@@ -1,4 +1,4 @@
---地久神一カルボン
+--地久神－カルボン
 --Jikyu Shinichi Carbon
 --Scripted by Kohana Sonogami
 function c101104028.initial_effect(c)
@@ -52,13 +52,15 @@ function c101104028.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104028.cfilter(c,tp)
-	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_FAIRY) and c:IsControler(tp)
+	return c:IsRace(RACE_FAIRY)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
+end
+function c101104028.tdcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c101104028.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
 function c101104028.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeck() end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c101104028.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
