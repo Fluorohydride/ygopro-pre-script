@@ -46,12 +46,10 @@ function c101104029.activate(e,tp,eg,ep,ev,re,r,rp)
 		sel=Duel.SelectOption(tp,aux.Stringid(101104029,0))+1
 	end
 	if sel==0 then
-		local tc
 		if tc1:IsRelateToEffect(e) and tc1:IsFaceup() and Duel.ChangePosition(tc1,POS_FACEUP_DEFENSE)~=0 and tc2:IsRelateToEffect(e) then
 			Duel.ChangePosition(tc2,POS_FACEUP_DEFENSE)
 		end
 	else
-		local c=e:GetHandler()
 		if tc1:IsRelateToEffect(e) and tc1:IsFaceup() and Duel.Destroy(tc1,REASON_EFFECT)~=0 and tc2:IsRelateToEffect(e) then
 			local e1=Effect.CreateEffect(tc2)
 			e1:SetType(EFFECT_TYPE_SINGLE)
