@@ -43,7 +43,7 @@ function c100416032.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g2=Duel.GetMatchingGroup(c100416032.excostfilter,tp,LOCATION_GRAVE,0,nil,tp)
 	g1:Merge(g2)
 	if chk==0 then return g1:GetCount()>0 end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100416032,2))
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	tc=g1:Select(tp,1,1,nil):GetFirst()
 	if tc:IsLocation(LOCATION_GRAVE) then
 		local te=tc:IsHasEffect(100416038,tp)
