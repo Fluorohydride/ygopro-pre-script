@@ -1,5 +1,6 @@
---ベアルクティーミクポーラ
---Bearcti – Micpola
+--ベアルクティ－ミクポーラ
+--Bearcti - Micpola
+--Scripted by Kohana Sonogami
 function c100416027.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

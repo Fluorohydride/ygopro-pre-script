@@ -1,4 +1,4 @@
---ベアルクティーグラン=シャリオ
+--ベアルクティ－グラン＝シャリオ
 --Bearcti - Grand Chariot
 --Scripted by Kohana Sonogami
 function c100416035.initial_effect(c)
