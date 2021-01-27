@@ -34,7 +34,7 @@ function c101104070.initial_effect(c)
 	e5:SetDescription(aux.Stringid(101104070,0))
 	e5:SetCode(EFFECT_ADD_SETCODE)
 	e5:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-	e5:SetValue(0x25e)
+	e5:SetValue(0x15b)
 	c:RegisterEffect(e5)
 end
 function c101104070.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -63,7 +63,7 @@ function c101104070.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104070.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x15c) and c:IsType(TYPE_TRAP) and c:IsControler(tp)
 end
 function c101104070.filter(c,tp)
 	return c:IsFaceup() and c:GetEquipGroup():IsExists(c101104070.cfilter,1,nil,tp) and c:IsControlerCanBeChanged()

@@ -13,7 +13,7 @@ function c101104057.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101104057.thfilter(c,tp,e)
-	return c:IsFaceup() and c:IsSetCard(0x25e) and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsSetCard(0x15b) and c:IsLocation(LOCATION_MZONE)
 		and c:IsControler(tp) and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function c101104057.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -31,7 +31,7 @@ function c101104057.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,sg,1,0,0)
 end
 function c101104057.spfilter(c,e,tp)
-	return c:IsSetCard(0x25e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x15b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101104057.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

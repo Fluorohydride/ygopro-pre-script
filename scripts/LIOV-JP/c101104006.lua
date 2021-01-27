@@ -61,7 +61,7 @@ function c101104006.eqfilter1(c,e,tp)
 		and Duel.IsExistingMatchingCard(c101104006.eqfilter2,tp,LOCATION_DECK,0,1,nil)
 end
 function c101104006.eqfilter2(c)
-	return c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and not c:IsForbidden()
+	return c:IsSetCard(0x15c) and c:IsType(TYPE_TRAP) and not c:IsForbidden()
 end
 function c101104006.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and c101104006.eqfilter1(chkc,e,tp) end
@@ -96,7 +96,7 @@ function c101104006.eqlimit(e,c)
 	return e:GetLabelObject()==c
 end
 function c101104006.costfilter(c)
-	return c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x15c) and c:IsType(TYPE_TRAP) and c:IsAbleToRemoveAsCost()
 end
 function c101104006.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101104006.costfilter,tp,LOCATION_GRAVE,0,1,nil) end

@@ -67,7 +67,7 @@ function c101104072.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104072.filter(c,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x25e) or c:IsControler(1-tp))
+	return c:IsFaceup() and (c:IsSetCard(0x15b) or c:IsControler(1-tp))
 end
 function c101104072.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101104072.filter(chkc,tp) end
@@ -96,7 +96,7 @@ function c101104072.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104072.eqlimit(e,c)
-	return c:IsSetCard(0x25e) or c:IsControler(1-e:GetHandlerPlayer())
+	return c:IsSetCard(0x15b) or c:IsControler(1-e:GetHandlerPlayer())
 end
 function c101104072.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()

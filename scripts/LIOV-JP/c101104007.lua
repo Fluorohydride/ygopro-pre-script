@@ -25,7 +25,7 @@ function c101104007.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101104007.eqfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSetCard(0x25f)
+	return c:IsType(TYPE_TRAP) and c:IsSetCard(0x15c)
 end
 function c101104007.eqtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -61,11 +61,11 @@ function c101104007.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function c101104007.eqfilter1(c,tp)
-	return c:IsSetCard(0x25f) and c:IsType(TYPE_TRAP) and c:IsFaceup() and c:GetEquipTarget()
+	return c:IsSetCard(0x15c) and c:IsType(TYPE_TRAP) and c:IsFaceup() and c:GetEquipTarget()
 		and Duel.IsExistingTarget(c101104007.eqfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
 end
 function c101104007.eqfilter2(c,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x25e) or not c:IsControler(tp))
+	return c:IsFaceup() and (c:IsSetCard(0x15b) or not c:IsControler(tp))
 end
 function c101104007.eqtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -94,5 +94,5 @@ function c101104007.eqop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104007.eqlimit2(e,c)
-	return c:IsSetCard(0x25e) or c:IsControler(1-e:GetHandlerPlayer())
+	return c:IsSetCard(0x15b) or c:IsControler(1-e:GetHandlerPlayer())
 end

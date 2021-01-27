@@ -115,7 +115,7 @@ function c101104033.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(101104033)>0
 end
 function c101104033.thfilter(c)
-	if not (c:IsSetCard(0x260) and c:IsType(TYPE_SPELL+TYPE_TRAP)) then return false end
+	if not (c:IsSetCard(0x15d) and c:IsType(TYPE_SPELL+TYPE_TRAP)) then return false end
 	return c:IsAbleToHand() or c:IsSSetable()
 end
 function c101104033.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

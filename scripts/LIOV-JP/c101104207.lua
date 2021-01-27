@@ -16,7 +16,7 @@ end
 function c101104207.filter(c)
 	return ((c:IsSetCard(0x107e,0x207e) and c:IsType(TYPE_MONSTER))
 		or (c:IsSetCard(0x7e) and c:IsType(TYPE_SPELL+TYPE_TRAP))
-		or (c:IsSetCard(0x95,0x25b) and c:IsType(TYPE_SPELL))) and c:IsAbleToHand()
+		or (c:IsSetCard(0x95,0x15e) and c:IsType(TYPE_SPELL))) and c:IsAbleToHand()
 end
 function c101104207.tdfilter(c)
 	return not c:IsPublic() and c:IsAbleToDeck()
