@@ -72,7 +72,7 @@ function c100416027.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100416027.splimit(e,c)
-	return not c:IsLevel(0)
+	return c:IsLevel(0)
 end
 function c100416027.thfilter(c)
 	return c:IsLevelBelow(0x261) and c:IsType(TYPE_MONSTER) and not c:IsCode(100416027) and c:IsAbleToHand()
