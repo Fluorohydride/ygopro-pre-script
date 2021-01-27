@@ -33,6 +33,7 @@ function c100416038.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetCountLimit(1)
+	e4:SetCondition(c100416038.tkccon)
 	e4:SetCost(c100416038.tkccost)
 	e4:SetTarget(c100416038.tkctg) 
 	e4:SetOperation(c100416038.tkcop)
@@ -40,6 +41,12 @@ function c100416038.initial_effect(c)
 end
 function c100416038.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x60,1)
+end
+function c100416038.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x261) and c:IsType(TYPE_SYNCHRO)
+end
+function c100416038.tkccon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c100416038.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function c100416038.tkccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x60,7,REASON_COST) end
