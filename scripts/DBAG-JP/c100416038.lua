@@ -15,7 +15,7 @@ function c100416038.initial_effect(c)
 	e2:SetCode(100416038)
 	e2:SetCountLimit(1)
 	e2:SetTarget(c100416038.repfilter)
-	e2:SetTargetRange(1,0)
+	e2:SetTargetRange(LOCATION_GRAVE,0)
 	c:RegisterEffect(e2)
 	--counter
 	local e3=Effect.CreateEffect(c)
