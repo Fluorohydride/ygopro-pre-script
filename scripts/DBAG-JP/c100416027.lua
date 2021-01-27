@@ -29,25 +29,27 @@ function c100416027.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100416027.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
-function c100416027.rfilter(c)
-	if c:IsLocation(LOCATION_HAND+LOCATION_GRAVE) then
-		return c:IsFaceup() and c:IsSetCard(0x261) and c:IsReleasable()
-	else
-		return c:IsLevelAbove(7) and c:IsSetCard(0x261) and c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
-	end
+function c100416027.rfilter(c,tp)
+	return c:IsLevelAbove(7) and (c:IsControler(tp) and c:IsLocation(LOCATION_HAND) or c:IsFaceup() and c:IsControler(1-tp))
+end
+function c100416027.excostfilter(c,tp)
+	return c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
 end
 function c100416027.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c100416038.rfilter,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE) 
-	local g=Duel.SelectMatchingCard(tp,c100416038.rfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp)
-	local tc=g:GetFirst()
-	local te=tc:IsHasEffect(100416038,tp)
-	if te then
-		te:UseCountLimit(tp)
-		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
+	local g1=Duel.GetReleaseGroup(tp,true):Filter(c100416027.rfilter,e:GetHandler(),tp)
+	local g2=Duel.GetMatchingGroup(c100416027.excostfilter,tp,LOCATION_GRAVE,0,nil,tp)
+	g1:Merge(g2)
+	if chk==0 then return g1:GetCount()>0 end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	tc=g1:Select(tp,1,1,nil):GetFirst()
+	if tc:IsLocation(LOCATION_GRAVE) then
+		local te=tc:IsHasEffect(100416038,tp)
+		if te then
+			te:UseCountLimit(tp)
+			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
+		end
 	else
 		Duel.Release(tc,REASON_COST)
 	end
@@ -72,7 +74,7 @@ function c100416027.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100416027.splimit(e,c)
-	return not c:IsLevel(0)
+	return c:IsLevel(0)
 end
 function c100416027.thfilter(c)
 	return c:IsLevelBelow(0x261) and c:IsType(TYPE_MONSTER) and not c:IsCode(100416027) and c:IsAbleToHand()
