@@ -27,7 +27,8 @@ function c101103094.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101103094.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x263) and c:IsControler(tp)
+	return c:IsFaceup() and (c:IsSetCard(0x263) and c:IsType(TYPE_MONSTER) or c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR))
+		and c:IsControler(tp)
 end
 function c101103094.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101103094.cfilter,1,nil,tp)
