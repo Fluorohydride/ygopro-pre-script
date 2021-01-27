@@ -71,7 +71,7 @@ function c101103000.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101103000.repfilter(c,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x263)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_WARRIOR)
 		and c:IsControler(tp) and c:IsReason(REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function c101103000.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
