@@ -30,19 +30,19 @@ function c101103098.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101103098.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
-	return true
+	if chk==0 then return true end
 end
 function c101103098.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then
-		if e:GetLabel()==0 then
-			e:SetLabel(0)
-			return Duel.IsPlayerCanDraw(tp,1) and e:GetHandler():IsCanRemoveCounter(tp,0x61,1,REASON_COST)
-		else return false end
+		if e:GetLabel()==0 then return false end
+		e:SetLabel(0)
+		return Duel.IsPlayerCanDraw(tp,1) and c:IsCanRemoveCounter(tp,0x61,1,REASON_COST)
 	end
 	e:SetLabel(0)
-	e:GetHandler():RemoveCounter(tp,0x61,1,REASON_COST)
-	if e:GetHandler():GetCounter(0x61)==0 then
-		Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
+	c:RemoveCounter(tp,0x61,1,REASON_COST)
+	if c:GetCounter(0x61)==0 then
+		Duel.SendtoGrave(c,REASON_EFFECT)
 	end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
