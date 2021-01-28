@@ -95,7 +95,7 @@ function c101103087.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
 			if not tc:IsType(TYPE_EFFECT) then
-				local e3=Effect.CreateEffect(tc)
+				local e3=Effect.CreateEffect(c)
 				e3:SetType(EFFECT_TYPE_SINGLE)
 				e3:SetCode(EFFECT_ADD_TYPE)
 				e3:SetValue(TYPE_EFFECT)
