@@ -50,7 +50,7 @@ function c100416035.tgrfilter1(c)
 	return c:IsType(TYPE_TUNER) and c:IsLevelAbove(8)
 end
 function c100416035.tgrfilter2(c)
-	return not c:IsType(TYPE_TUNER)
+	return not c:IsType(TYPE_TUNER) and c:IsType(TYPE_SYNCHRO)
 end
 function c100416035.mnfilter(c,g)
 	return g:IsExists(c100416035.mnfilter2,1,c,c)
