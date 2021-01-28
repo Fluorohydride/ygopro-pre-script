@@ -56,8 +56,7 @@ function c100416039.spfilter2(c,e,tp,lv)
 	return c100416039.spfilter(c,e,tp,nil) and c:IsLevel(lv)
 end
 function c100416039.fselect(g,e,tp)
-	return g:GetCount()==2 and g:IsExists(Card.IsType,1,nil,TYPE_TUNER) and g:IsExists(aux.NOT(Card.IsType),1,nil,TYPE_TUNER)
-		and Duel.IsExistingMatchingCard(c100416039.spfilter1,tp,LOCATION_EXTRA,0,1,nil,e,tp,g)
+	return g:GetCount()==2 and Duel.IsExistingMatchingCard(c100416039.spfilter1,tp,LOCATION_EXTRA,0,1,nil,e,tp,g)
 end
 function c100416039.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(c100416039.thfilter,tp,LOCATION_GRAVE,0,1,nil)
@@ -98,9 +97,9 @@ function c100416039.activate(e,tp,eg,ep,ev,re,r,rp)
 		if rg and rg:GetCount()==2 then
 			local c1=rg:GetFirst()
 			local c2=rg:GetNext()
+			local lv=c1:GetLevel()-c2:GetLevel()
+			if lv<0 then lv=-lv end
 			if Duel.Release(rg,REASON_EFFECT)==2 then
-				local lv=c1:GetLevel()-c2:GetLevel()
-				if lv<0 then lv=-lv end
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local sg=Duel.SelectMatchingCard(tp,c100416039.spfilter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,lv)
 				if sg:GetCount()>0 then
