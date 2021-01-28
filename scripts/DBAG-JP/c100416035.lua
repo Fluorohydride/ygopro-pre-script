@@ -31,7 +31,7 @@ function c100416035.initial_effect(c)
 	--negate
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100416035,1))
-	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e4:SetCategory(CATEGORY_NEGATE)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
@@ -86,20 +86,20 @@ function c100416035.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end
-function c100416035.negfilter(c)
+function c100416035.negfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x261) and c:IsOnField() and c:IsControler(tp)
 end
 function c100416035.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return tg and tg:IsExists(c100416035.negfilter,1,nil) and Duel.IsChainNegatable(ev)
+	return tg and tg:IsExists(c100416035.negfilter,1,nil,tp) and Duel.IsChainNegatable(ev)
 end
 function c100416035.costfilter(c,tp)
-	if c:IsLocation(LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE) then
+	if c:IsLocation(LOCATION_HAND+LOCATION_MZONE) then
 		return c:IsType(TYPE_MONSTER) and c:IsReleasable()
 	else
-		return c:IsLevelAbove(7) and c:IsSetCard(0x261) and c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
+		return c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
 	end
 end
 function c100416035.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -118,12 +118,7 @@ end
 function c100416035.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
-	end
 end
 function c100416035.negop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(eg,REASON_EFFECT)
-	end
+	Duel.NegateActivation(ev)
 end
