@@ -1,4 +1,4 @@
---変導機クロックアーク
+--変導機咎 クロックアーク
 --Partial Derivative Clockarc
 --Scripted by Kohana Sonogami
 function c101104030.initial_effect(c)
@@ -37,13 +37,10 @@ function c101104030.initial_effect(c)
 	--self destruction
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_SUMMON_SUCCESS)
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetCondition(c101104030.descon)
 	e4:SetOperation(c101104030.desop)
 	c:RegisterEffect(e4)
-	local e5=e4:Clone()
-	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e5)
 	--indestructable battle
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
