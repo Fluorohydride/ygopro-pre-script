@@ -23,7 +23,7 @@ end
 function c101104066.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=:GetHandler()
 	local turn=Duel.GetTurnPlayer()
-	if Duel.Recover(turn,1000,REASON_EFFECT)~=0 then
+	if Duel.Recover(turn,500,REASON_EFFECT)~=0 then
 		--cannot disable summon
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
