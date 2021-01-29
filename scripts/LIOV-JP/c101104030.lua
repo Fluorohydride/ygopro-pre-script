@@ -11,7 +11,7 @@ function c101104030.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCondition(c101104030.sccon)
-	e1:SetValue(3)
+	e1:SetValue(-3)
 	c:RegisterEffect(e1)
 	--left scale
 	local e2=Effect.CreateEffect(c)
