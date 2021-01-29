@@ -30,14 +30,7 @@ function c101103085.initial_effect(c)
 	e4:SetCode(EFFECT_MATERIAL_CHECK)
 	e4:SetValue(c101103085.valcheck)
 	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e5:SetCondition(c101103085.regcon)
-	e5:SetOperation(c101103085.regop)
-	c:RegisterEffect(e5)
-	e4:SetLabelObject(e5)
+	e4:SetLabelObject(e1)
 end
 function c101103085.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
@@ -48,10 +41,11 @@ function c101103085.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local atk=0
 	local tc=g:GetFirst()
 	while tc do
+		local lk
 		if tc:IsType(TYPE_XYZ) then
-			local lk=tc:GetOriginalRank()
+			lk=tc:GetOriginalRank()
 		else
-			local lk=tc:GetOriginalLevel()
+			lk=tc:GetOriginalLevel()
 		end
 		atk=atk+lk
 		tc=g:GetNext()
@@ -62,6 +56,9 @@ function c101103085.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(atk*100)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 	c:RegisterEffect(e1)
+	if e:GetLabel()==1 then
+		c:RegisterFlagEffect(101103085,RESET_EVENT+RESETS_STANDARD,0,1)
+	end
 end
 function c101103085.desfilter(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk) and not c:IsType(TYPE_LINK)
@@ -92,10 +89,4 @@ function c101103085.valcheck(e,c)
 	else
 		e:GetLabelObject():SetLabel(0)
 	end
-end
-function c101103085.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and e:GetLabel()==1
-end
-function c101103085.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(101103085,RESET_EVENT+RESETS_STANDARD,0,1)
 end
