@@ -20,7 +20,7 @@ function c101104035.initial_effect(c)
 	--negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101104035,1))
-	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
@@ -92,7 +92,6 @@ end
 function c101104035.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_EXTRA+LOCATION_GRAVE)
 end
 function c101104035.spfilter(c,e,tp)
 	if not (c:IsCode(73580471) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) then return false end
