@@ -17,10 +17,11 @@ function c100274202.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100274202,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BE_BATTLE_TARGET)
+	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c100274202.nacon)
 	e2:SetCost(c100274202.nacost)
+	e2:SetTarget(c100274202.natg)
 	e2:SetOperation(c100274202.naop)
 	c:RegisterEffect(e2)
 end
@@ -77,21 +78,27 @@ function c100274202.atklimit(e,c)
 	return c==e:GetHandler()
 end
 function c100274202.wincon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and e:GetHandler():GetBattledGroupCount()==0 and c100274202.effcon(e)
+	return Duel.GetTurnPlayer()==1-tp and e:GetHandler():GetBattledGroupCount()==0 and c100274202.effcon(e)
 end
 function c100274202.winop(e,tp,eg,ep,ev,re,r,rp)
 	local WIN_REASON_NUMERONIUS_NUMERONIA=0x21
 	Duel.Win(tp,WIN_REASON_NUMERONIUS_NUMERONIA)
 end
 function c100274202.nacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.GetAttacker():IsControler(1-tp)
 end
 function c100274202.nacost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
+function c100274202.natg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local b=Duel.GetAttacker()
+	if chk==0 then return b and b:IsRelateToBattle() and b:IsFaceup() end
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,b:GetAttack())
+end
 function c100274202.naop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateAttack() then
-		Duel.Recover(tp,Duel.GetAttacker():GetAttack(),REASON_EFFECT)
+	local b=Duel.GetAttacker()
+	if Duel.NegateAttack() and b and b:IsRelateToBattle() and b:IsFaceup() then
+		Duel.Recover(tp,b:GetAttack(),REASON_EFFECT)
 	end
 end
