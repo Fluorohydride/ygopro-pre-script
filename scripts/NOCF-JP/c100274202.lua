@@ -16,6 +16,7 @@ function c100274202.initial_effect(c)
 	--Negate Attack/Gains LP
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100274202,0))
+	e2:SetCategory(CATEGORY_RECOVER)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_MZONE)
