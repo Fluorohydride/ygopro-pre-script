@@ -4,9 +4,11 @@
 function c101104057.initial_effect(c)
 	--tohand and spsummon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101104057,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCondition(c101104057.spcon)
 	e1:SetTarget(c101104057.sptg)
 	e1:SetOperation(c101104057.spop)

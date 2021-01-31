@@ -31,8 +31,8 @@ function c101104209.spfilter(c,e,tp)
 end
 function c101104209.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c101104209.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_DECK,0,1,nil)
-		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>1 end
+		and Duel.IsExistingMatchingCard(c101104209.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c101104209.spop(e,tp,eg,ep,ev,re,r,rp)

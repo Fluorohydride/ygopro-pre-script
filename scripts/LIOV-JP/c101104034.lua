@@ -31,7 +31,7 @@ function c101104034.initial_effect(c)
 	e3:SetCountLimit(1,101104034)
 	e3:SetTarget(c101104034.remtg)
 	e3:SetOperation(c101104034.remop)
-	c:RegisterEffect(e3) 
+	c:RegisterEffect(e3)
 end
 function c101104034.atkval(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_REMOVED,0)*-100

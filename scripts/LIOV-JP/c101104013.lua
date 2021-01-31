@@ -18,7 +18,6 @@ function c101104013.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101104013,1))
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,101104013+100)
@@ -29,7 +28,7 @@ function c101104013.initial_effect(c)
 end
 function c101104013.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST+REASON_RELEASE)
+	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c101104013.spfilter(c,e,tp)
 	return c:IsSetCard(0x88) and not c:IsCode(101104013) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -53,7 +52,7 @@ function c101104013.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104013.eqfilter(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(0x88) and c:IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsSummonPlayer(tp) and c:IsSetCard(0x88) and c:IsType(TYPE_XYZ) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c101104013.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101104013.eqfilter,1,nil,tp)
@@ -64,11 +63,11 @@ function c101104013.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if #eg==1 then
 		tg=eg:Clone()
 	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		tg=eg:FilterSelect(tp,c101104013.eqfilter,1,1,nil,e,tp)
 	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SetTargetCard(tg)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function c101104013.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -91,6 +90,7 @@ function c101104013.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_BATTLE_DESTROY_REDIRECT)
 	e2:SetValue(LOCATION_REMOVED)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
 end
 function c101104013.eqlimit(e,c)

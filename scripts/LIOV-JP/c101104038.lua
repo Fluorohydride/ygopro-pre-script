@@ -11,7 +11,6 @@ function c101104038.initial_effect(c)
 	e1:SetDescription(aux.Stringid(101104038,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetCondition(c101104038.damcon)
 	e1:SetTarget(c101104038.damtg)
@@ -59,8 +58,7 @@ function c101104038.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,PLAYER_ALL,2000)
 end
 function c101104038.desop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+	if e:GetHandler():IsRelateToEffect(e) and Duel.Destroy(e:GetHandler(),REASON_EFFECT)>0 then
 		Duel.Damage(tp,2000,REASON_EFFECT)
 		Duel.BreakEffect()
 		Duel.Damage(1-tp,2000,REASON_EFFECT)

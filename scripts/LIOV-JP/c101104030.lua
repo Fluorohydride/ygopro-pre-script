@@ -66,8 +66,8 @@ end
 function c101104030.cfilter(c)
 	return c:IsFacedown() or not c:IsType(TYPE_PENDULUM)
 end
-function c101104030.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c101104030.cfilter,tp,LOCATION_MZONE,0,1,nil)
+function c101104030.sccon(e)
+	return not Duel.IsExistingMatchingCard(c101104030.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c101104030.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp

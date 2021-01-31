@@ -26,11 +26,13 @@ function c101104064.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c101104064.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectTarget(tp,c101104064.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,2,2,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,2,0,0)
 end
+function c101104064.filter(c,e)
+	return c:IsRelateToEffect(e) and c:IsLocation(LOCATION_MZONE)
+end
 function c101104064.posop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(c101104064.filter,nil,e)
 	if g:GetCount()>0 then
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 	end

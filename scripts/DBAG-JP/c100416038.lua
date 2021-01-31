@@ -35,7 +35,7 @@ function c100416038.initial_effect(c)
 	e4:SetCountLimit(1)
 	e4:SetCondition(c100416038.tkccon)
 	e4:SetCost(c100416038.tkccost)
-	e4:SetTarget(c100416038.tkctg) 
+	e4:SetTarget(c100416038.tkctg)
 	e4:SetOperation(c100416038.tkcop)
 	c:RegisterEffect(e4)
 end

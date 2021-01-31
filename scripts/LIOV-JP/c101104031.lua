@@ -17,7 +17,7 @@ function c101104031.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101104031,0))
 	e2:SetCategory(CATEGORY_COUNTER+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_TO_GRAVE) 
+	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101104031)
 	e2:SetCondition(c101104031.tkcon)
@@ -40,9 +40,6 @@ end
 function c101104031.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanAddCounter(0x59,1) end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0)
-end
-function c101104031.tkfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TOKEN)
 end
 function c101104031.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -76,7 +76,7 @@ function c101104047.repfilter(c,tp)
 end
 function c101104047.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return eg:IsExists(c101104047.repfilter,1,c,tp) and c:IsAbleToRemove() and not c:IsStatus(STATUS_DESTROY_CONFIRMED)  end
+	if chk==0 then return eg:IsExists(c101104047.repfilter,1,c,tp) and c:IsAbleToRemove() and not c:IsStatus(STATUS_DESTROY_CONFIRMED) end
 	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function c101104047.desrepval(e,c)

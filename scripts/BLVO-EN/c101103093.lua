@@ -53,7 +53,7 @@ function c101103093.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 		Duel.BreakEffect()
 		local sg=Duel.GetMatchingGroup(c101103093.atkfilter,tp,LOCATION_MZONE,0,nil)
-		local tc=sg:GetFirst() 
+		local tc=sg:GetFirst()
 		for tc in aux.Next(sg) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

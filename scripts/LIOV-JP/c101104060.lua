@@ -75,7 +75,7 @@ end
 function c101104060.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(tp,2300,REASON_EFFECT)
 end
-function c101104060.actlimit(e,re,rp) 
+function c101104060.actlimit(e,re,rp)
 	local rc=re:GetHandler()
 	return re:IsActiveType(TYPE_MONSTER) and not rc:IsRace(RACE_CYBERSE)
 end

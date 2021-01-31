@@ -62,15 +62,18 @@ function c101104045.seqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101104045.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not (c:IsRelateToEffect(e) and c:IsFaceup() and c:IsControler(tp)) then return end
-	local zone=bit.band(e:GetHandler():GetLinkedZone(),0x1f)
+	if not (c:IsRelateToEffect(e) and c:IsFaceup()) then return end
+	local zone=bit.band(e:GetHandler():GetLinkedZone(tp),0x1f)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0,zone)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	local flag=bit.bxor(zone,0xff)
-	local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,flag)
+	local s=zone
+	if s&(s-1)~=0 then
+		local flag=bit.bxor(zone,0xff)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+		s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,flag)
+	end
 	local nseq=math.log(s,2)
 	Duel.MoveSequence(c,nseq)
-	if c:GetSequence()==nseq and Duel.SelectYesNo(tp,aux.Stringid(101104045,2)) then
+	if c:GetSequence()==nseq and Duel.SelectEffectYesNo(tp,c,aux.Stringid(101104045,2)) then
 		Duel.BreakEffect()
 		local attr=Duel.AnnounceAttribute(tp,1,0xff-c:GetAttribute())
 		local e1=Effect.CreateEffect(c)

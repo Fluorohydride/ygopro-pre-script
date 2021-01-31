@@ -11,7 +11,6 @@ function c101104025.initial_effect(c)
 	--option
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101104025,0))
-	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -26,9 +25,6 @@ function c101104025.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
-function c101104025.opcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE) and (e:GetLabel()==1 or e:GetLabel()==2)
-end
 function c101104025.chkfilter(c,rac,att)
 	return c:IsRace(rac) and c:IsAttribute(att)
 end
@@ -42,6 +38,9 @@ function c101104025.valcheck(e,c)
 		label=label+2
 	end
 	e:GetLabelObject():SetLabel(label)
+end
+function c101104025.opcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE) and e:GetLabel()>0
 end
 function c101104025.thfilter(c)
 	return (c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT)) or (c:IsRace(RACE_FIEND) and c:IsAttribute(ATTRIBUTE_DARK)) and c:IsAbleToHand()

@@ -56,7 +56,7 @@ function c101103096.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 	local g=Duel.GetMatchingGroup(c101103096.atkfilter,tp,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst() 
+	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

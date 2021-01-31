@@ -38,7 +38,7 @@ function c101104033.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101104033.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and Duel.GetCurrentPhase()&PHASE_DAMAGE==0 and Duel.GetCurrentPhase()&PHASE_DAMAGE_CAL==0
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and Duel.GetCurrentPhase()&(PHASE_DAMAGE+PHASE_DAMAGE_CAL)==0
 end
 function c101104033.filter1(c,e)
 	return c:IsAbleToRemove() and not c:IsImmuneToEffect(e)

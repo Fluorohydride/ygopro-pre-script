@@ -25,11 +25,11 @@ function c101104005.initial_effect(c)
 	e2:SetOperation(c101104005.ovop)
 	c:RegisterEffect(e2)
 end
-function c101104005.spfilter(c,e,tp)
-	return c:IsSetCard(0x155) and not c:IsCode(101104005) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-end
 function c101104005.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_DECK)
+end
+function c101104005.spfilter(c,e,tp)
+	return c:IsSetCard(0x155) and not c:IsCode(101104005) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101104005.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c101104005.spfilter(chkc,e,tp) end

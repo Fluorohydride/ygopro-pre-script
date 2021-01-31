@@ -27,7 +27,7 @@ function c101104015.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101104015.spfilter(c,e,tp)
-	return c:IsSetCard(0x156) and not c:IsCode(101104015) 
+	return c:IsSetCard(0x156) and not c:IsCode(101104015)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 end
 function c101104015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

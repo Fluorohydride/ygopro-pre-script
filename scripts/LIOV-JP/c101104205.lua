@@ -31,13 +31,6 @@ function c101104205.initial_effect(c)
 	e3:SetTarget(c101104205.eqtg)
 	e3:SetOperation(c101104205.eqop)
 	c:RegisterEffect(e3)
-	--atkup
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_EQUIP)
-	e0:SetCode(EFFECT_UPDATE_ATTACK)
-	e0:SetValue(3000)
-	e0:SetCondition(c101104205.atkcon)
-	c:RegisterEffect(e0)
 	--special summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101104205,2))
@@ -49,10 +42,6 @@ function c101104205.initial_effect(c)
 	e4:SetTarget(c101104205.sptg)
 	e4:SetOperation(c101104205.spop)
 	c:RegisterEffect(e4)
-end
-function c101104205.atkcon(e)
-	local c=e:GetHandler()
-	return c:GetFlagEffect(101104205)>0 or c:GetFlagEffect(101104204)>0
 end
 function c101104205.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -104,7 +93,12 @@ function c101104205.equip_monster(c,tp,tc)
 	e1:SetValue(c101104205.eqlimit)
 	e1:SetLabelObject(tc)
 	c:RegisterEffect(e1)
-	c:RegisterFlagEffect(101104205,RESET_EVENT+RESETS_STANDARD,0,0)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_EQUIP)
+	e2:SetCode(EFFECT_UPDATE_ATTACK)
+	e2:SetValue(3000)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e2)
 end
 function c101104205.eqlimit(e,c)
 	return c==e:GetLabelObject()

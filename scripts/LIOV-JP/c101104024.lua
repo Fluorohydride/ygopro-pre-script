@@ -17,7 +17,6 @@ function c101104024.initial_effect(c)
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,101104024)
 	e2:SetTarget(c101104024.tdtg)
 	e2:SetOperation(c101104024.tdop)
@@ -48,8 +47,8 @@ function c101104024.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101104024.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return true end
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 end
 function c101104024.tdop(e,tp,eg,ep,ev,re,r,rp)

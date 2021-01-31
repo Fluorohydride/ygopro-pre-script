@@ -1,4 +1,4 @@
---ジーナの蠱惑魔
+--ジーナの蟲惑魔
 
 --Scripted by mallu11
 function c101104016.initial_effect(c)
