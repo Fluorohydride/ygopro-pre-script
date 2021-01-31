@@ -35,10 +35,10 @@ function c100274203.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,100274203)>0
 end
 function c100274203.xyzfilter1(c)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x114a) and c:IsCanOverlay()
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x114a) and c:IsCanOverlay() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function c100274203.xyzfilter2(c)
-	return c:IsCode(41418852) and c:IsCanOverlay()
+	return c:IsCode(41418852) and c:IsCanOverlay() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function c100274203.xyzfilter3(c,e,tp)
 	return c:IsCode(100274201) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
@@ -51,7 +51,12 @@ function c100274203.xyztg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local sg1=Duel.SelectTarget(tp,c100274203.xyzfilter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local sg2=Duel.SelectTarget(tp,c100274203.xyzfilter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,4,nil)
+	local sg2=Duel.SelectTarget(tp,c100274203.xyzfilter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,4,4,nil)
+	sg1:Merge(sg2)
+	local g=sg1:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
+	if #g>0 then
+		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,#g,0,0)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100274203.mtfilter(c,e)
@@ -67,7 +72,7 @@ function c100274203.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(10000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		sc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetValue(1000)
@@ -75,10 +80,8 @@ function c100274203.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		sc:RegisterEffect(e2)
 		local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 		local g=tg:Filter(c100274203.mtfilter,nil,e)
-		local tc=g:GetFirst()
-		while tc do
-			Duel.Overlay(sc,Group.FromCards(tc))
-			tc=g:GetNext()
+		if #g==5 then
+			Duel.Overlay(sc,g)
 		end
 	end
 	Duel.SpecialSummonComplete()
