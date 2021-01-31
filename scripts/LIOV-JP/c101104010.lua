@@ -28,7 +28,7 @@ function c101104010.initial_effect(c)
 end
 function c101104010.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_EFFECT)
+	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c101104010.thfilter(c,tp,solve)
 	return c:IsCode(17720747) and c:IsAbleToHand() and (solve or Duel.IsExistingMatchingCard(c101104010.dtfilter,tp,LOCATION_DECK,0,1,c))
