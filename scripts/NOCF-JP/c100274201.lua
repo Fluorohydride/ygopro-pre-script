@@ -8,6 +8,7 @@ function c100274201.initial_effect(c)
 	--Destroy 1 other monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100274201,0))
+	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -52,7 +53,7 @@ function c100274201.destg1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100274201.desop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,aux.ExceptThisCard(e))
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)
@@ -81,7 +82,7 @@ end
 function c100274201.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetOverlayCount()>0 and c:IsPreviousLocation(LOCATION_MZONE)
-		and rp==1-tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
+		and rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp
 end
 function c100274201.spfilter(c,e,tp)
 	return c:IsCode(100274202) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
