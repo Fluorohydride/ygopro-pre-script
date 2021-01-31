@@ -15,7 +15,7 @@ function c101104077.initial_effect(c)
 	--banish replace
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(101104077)
+	e2:SetCode(55049722)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,101104077+100)
