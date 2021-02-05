@@ -1,4 +1,4 @@
---Triphasic Dealmon Coordius
+--Coordius the Triphasic Dealmon
 
 --Scripted by mallu11
 function c101103083.initial_effect(c)

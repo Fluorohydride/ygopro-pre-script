@@ -40,7 +40,7 @@ function c101103082.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101103082.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetLabelObject()
-	if chk==0 then return bc and aux.disfilter1(bc) end
+	if chk==0 then return bc end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,bc,1,0,0)
 end
 function c101103082.disop(e,tp,eg,ep,ev,re,r,rp)

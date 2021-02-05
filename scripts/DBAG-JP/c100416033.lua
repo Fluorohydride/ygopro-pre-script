@@ -69,18 +69,13 @@ function c100416033.actfilter(c,tp)
 end
 function c100416033.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100416033.actfilter,tp,LOCATION_DECK,0,1,nil,tp) end
-	if not Duel.CheckPhaseActivity() then e:SetLabel(1) else e:SetLabel(0) end
 end
 function c100416033.actop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	if e:GetLabel()==1 then Duel.RegisterFlagEffect(tp,15248873,RESET_CHAIN,0,1) end
 	local g=Duel.SelectMatchingCard(tp,c100416033.actfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
-	Duel.ResetFlagEffect(tp,15248873)
 	local tc=g:GetFirst()
 	if tc then
 		local te=tc:GetActivateEffect()
-		if e:GetLabel()==1 then Duel.RegisterFlagEffect(tp,15248873,RESET_CHAIN,0,1) end
-		Duel.ResetFlagEffect(tp,15248873)
 		local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 		if fc then
 			Duel.SendtoGrave(fc,REASON_RULE)

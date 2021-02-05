@@ -1,4 +1,4 @@
---War Lock Skyler
+--War Rock Skyler
 --Scripted by Kohana Sonogami
 function c101103096.initial_effect(c)
 	--atkup
@@ -15,31 +15,46 @@ function c101103096.initial_effect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1,101103096)
 	e2:SetCondition(c101103096.spcon)
 	e2:SetTarget(c101103096.sptg)
 	e2:SetOperation(c101103096.spop)
 	c:RegisterEffect(e2)
+	if not c101103096.global_check then
+		c101103096.global_check=true
+		local ge1=Effect.GlobalEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_BATTLED)
+		ge1:SetOperation(c101103096.checkop)
+		Duel.RegisterEffect(ge1,0)
+	end
 end
-function c101103096.atkfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+function c101103096.check(c)
+	return c and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH)
+end
+function c101103096.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local c0,c1=Duel.GetBattleMonster(0)
+	if c101103096.check(c0) then
+		Duel.RegisterFlagEffect(0,101103096,RESET_PHASE+PHASE_END,0,1)
+	end
+	if c101103096.check(c1) then
+		Duel.RegisterFlagEffect(1,101103096,RESET_PHASE+PHASE_END,0,1)
+	end
 end
 function c101103096.val(e,c)
-	return Duel.GetMatchingGroupCount(c101103096.atkfilter,c:GetControler(),0,LOCATION_MZONE,nil)*100
-end
-function c101103096.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and c:GetBattledGroupCount()>0
+	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)*100
 end
 function c101103096.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101103096.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetFlagEffect(tp,101103096)>0
 		and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function c101103096.spfilter(c,e,tp)
-	return c:IsLevelAbove(5) and c:IsSetCard(0x263) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelAbove(5) and c:IsRace(RACE_WARRIOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101103096.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c101103096.spfilter(chkc,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101103096.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c101103096.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -62,7 +77,7 @@ function c101103096.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END,Duel.GetTurnPlayer()==tp and 2 or 1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 		e1:SetValue(200)
 		tc:RegisterEffect(e1)
 	end

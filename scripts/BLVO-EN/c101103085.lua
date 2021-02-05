@@ -78,7 +78,7 @@ function c101103085.desop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			local atk=tc:GetBaseAttack()
 			if atk<0 then atk=0 end
-			Duel.Damage(1-tp,atk/2,REASON_EFFECT)
+			Duel.Damage(1-tp,math.ceil(atk/2),REASON_EFFECT)
 		end
 	end
 end

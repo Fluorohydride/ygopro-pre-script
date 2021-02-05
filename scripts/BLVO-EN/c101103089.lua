@@ -27,8 +27,8 @@ function c101103089.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.HintSelection(g)
 		if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) and tc:IsType(TYPE_MONSTER) then
-			local atk=tc:GetTextAttack()
-			local def=tc:GetTextDefense()
+			local atk=tc:GetBaseAttack()
+			local def=tc:GetBaseDefense()
 			local rec=atk>=def and atk or def
 			if rec>0 then
 				Duel.BreakEffect()

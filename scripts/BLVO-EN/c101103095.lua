@@ -28,7 +28,7 @@ end
 function c101103095.ntcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return minc==0 and c:IsLevelAbove(4) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return minc==0 and c:IsLevelAbove(5) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and (Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 or not Duel.IsExistingMatchingCard(c101103095.cfilter,tp,LOCATION_MZONE,0,1,nil))
 end
 function c101103095.tgfilter(c)
@@ -38,14 +38,8 @@ function c101103095.check(c,tp)
 	return c and c:IsControler(tp) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR)
 end
 function c101103095.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetAttackTarget()~=nil
-		and (c101103095.check(Duel.GetAttacker(),tp) or c101103095.check(Duel.GetAttackTarget(),tp))
+	if chk==0 then return (c101103095.check(Duel.GetAttacker(),tp) or c101103095.check(Duel.GetAttackTarget(),tp))
 		and Duel.IsExistingMatchingCard(c101103095.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-	if c101103095.check(Duel.GetAttacker(),tp) then
-		Duel.SetTargetCard(Duel.GetAttackTarget())
-	else
-		Duel.SetTargetCard(Duel.GetAttacker())
-	end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c101103095.atkfilter(c)
@@ -55,7 +49,7 @@ function c101103095.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101103095.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT) then
+	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 then
 		Duel.BreakEffect()
 		local sg=Duel.GetMatchingGroup(c101103095.atkfilter,tp,LOCATION_MZONE,0,nil)
 		local tc=sg:GetFirst()
@@ -64,7 +58,7 @@ function c101103095.tgop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END,Duel.GetTurnPlayer()==tp and 2 or 1)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 			e1:SetValue(200)
 			tc:RegisterEffect(e1)
 		end
