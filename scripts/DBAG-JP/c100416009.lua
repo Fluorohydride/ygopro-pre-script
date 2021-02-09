@@ -45,7 +45,7 @@ function c100416009.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100416009.tgfilter(c)
-	return not (c:IsFaceup() and c:IsSummonLocation(LOCATION_GRAVE)) and c:IsAbleToGrave()
+	return not (c:IsFaceup() and c:IsSummonLocation(LOCATION_GRAVE) and c:GetOriginalType()&TYPE_MONSTER~=0) and c:IsAbleToGrave()
 end
 function c100416009.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100416009.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
