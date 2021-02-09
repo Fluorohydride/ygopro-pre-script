@@ -20,7 +20,7 @@ function c100416042.filter(c)
 	return c:IsRace(RACE_REPTILE) and c:IsAbleToDeck() 
 end
 function c100416042.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100416042.filter,tp,LOCATION_GRAVE,0,3,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100416042.filter,tp,LOCATION_GRAVE,0,4,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,4,tp,LOCATION_GRAVE)
 end
 function c100416042.activate(e,tp,eg,ep,ev,re,r,rp)
