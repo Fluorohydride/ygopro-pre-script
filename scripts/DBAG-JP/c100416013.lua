@@ -33,9 +33,11 @@ function c100416013.operation(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100416013.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+		if #g>=2 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+		end
 	else
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
