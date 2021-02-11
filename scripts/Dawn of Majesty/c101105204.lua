@@ -51,7 +51,7 @@ function c101105204.mfilter(c)
 	return c:IsCode(21159309) and c:IsSynchroType(TYPE_TUNER)
 end
 function c101105204.cfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO)
+	return c:IsRace(RACE_DRAGON) and c:IsSynchroType(TYPE_SYNCHRO)
 end
 function c101105204.gfilter(g,syncard,c1)
 	local sg=g:Clone()
