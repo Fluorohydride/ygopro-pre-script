@@ -51,29 +51,19 @@ function c100416004.drop(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetCount()>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
-			local sg=Group.CreateGroup()
-			local tg1=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-			if tg1:GetCount()>0 then
-				Duel.ShuffleHand(tp)
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-				local tc1=tg1:Select(tp,1,1,nil):GetFirst()
-				if tc1 then
-					sg:AddCard(tc1)
-				end
-			end
-			local tg2=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-			if tg2:GetCount()>0 then
-				Duel.ShuffleHand(1-tp)
-				Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
-				local tc2=tg2:Select(1-tp,1,1,nil):GetFirst()
-				if tc2 then
-					sg:AddCard(tc2)
-				end
-			end
-			if sg:GetCount()>0 then
-				Duel.BreakEffect()
-				Duel.SendtoGrave(sg,REASON_EFFECT)
-			end
+			local turnp=Duel.GetTurnPlayer()
+			local tg1=Duel.GetFieldGroup(turnp,LOCATION_HAND,0)
+			local tg2=Duel.GetFieldGroup(1-turnp,LOCATION_HAND,0)
+			if tg1:GetCount()<1 or tg2:GetCount()<1 then return end
+			Duel.BreakEffect()
+			Duel.ShuffleHand(turnp)
+			Duel.Hint(HINT_SELECTMSG,turnp,HINTMSG_TOGRAVE)
+			local tc1=tg1:Select(turnp,1,1,nil):GetFirst()
+			Duel.SendtoGrave(tc1,REASON_EFFECT)
+			Duel.ShuffleHand(1-turnp)
+			Duel.Hint(HINT_SELECTMSG,1-turnp,HINTMSG_TOGRAVE)
+			local tc2=tg2:Select(1-turnp,1,1,nil):GetFirst()
+			Duel.SendtoGrave(tc2,REASON_EFFECT)
 		end
 	end
 end
