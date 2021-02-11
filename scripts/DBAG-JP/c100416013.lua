@@ -25,7 +25,6 @@ function c100416013.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		or res>=8 and Duel.IsExistingMatchingCard(c100416013.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_GRAVE)
 end
 function c100416013.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sub=Duel.GetMatchingGroup(c100416013.cfilter,tp,LOCATION_GRAVE,0,nil)
