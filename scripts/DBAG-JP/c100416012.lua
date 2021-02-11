@@ -36,8 +36,8 @@ function c100416012.rfilter(c,tp)
 	return c:IsRace(RACE_REPTILE) and (c:IsControler(tp) or c:IsFaceup()) and Duel.GetMZoneCount(tp,c)>0
 end
 function c100416012.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100416012.rfilter,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectReleaseGroup(tp,c100416012.rfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
