@@ -45,7 +45,7 @@ function c100416012.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100416012.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100416012.spfilter(chkc,e,tp) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and c100416012.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(c100416012.spfilter,tp,0,LOCATION_GRAVE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100416012.spfilter,tp,0,LOCATION_GRAVE,1,1,nil,e,tp)
