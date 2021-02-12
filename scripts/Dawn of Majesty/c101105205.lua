@@ -62,7 +62,7 @@ function c101105205.optg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsPlayerCanDraw(tp,1) and Duel.GetFlagEffect(tp,101105205)==0
 	local b2=Duel.IsExistingMatchingCard(c101105205.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.GetFlagEffect(tp,101105205+100)==0
 	if chk==0 then
-		return c:RegisterFlagEffect(101105205,RESET_CHAIN,0,1) and b1 or b2
+		return c:RegisterFlagEffect(101105205,RESET_CHAIN,0,1) and (b1 or b2)
 	end
 	c:RegisterFlagEffect(101105205,RESET_CHAIN,0,1)
 end
