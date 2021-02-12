@@ -32,8 +32,8 @@ function c101105208.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local sg=eg:Filter(c101105208.spfilter,nil,r,re,tp):IsExists(Card.IsCanBeSpecialSummoned,1,nil,e,0,tp,false,false)
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sg and Duel.GetFlagEffect(tp,101105208)==0
-	local b2=Duel.IsExistingMatchingCard(c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208)==0
-	local b3=Duel.GetFlagEffect(tp,101105208)==0
+	local b2=Duel.IsExistingMatchingCard(c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208+100)==0
+	local b3=Duel.GetFlagEffect(tp,101105208+200)==0
 	if chk==0 then
 		return c:GetFlagEffect(101105208)==0 and (b1 or b2 or b3)
 	end
@@ -46,8 +46,8 @@ function c101105208.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=nil
 	local sg=eg:Filter(c101105208.spfilter,nil,r,re,tp):IsExists(Card.IsCanBeSpecialSummoned,1,nil,e,0,tp,false,false)
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sg and Duel.GetFlagEffect(tp,101105208)==0
-	local b2=Duel.IsExistingMatchingCard(c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208)==0
-	local b3=Duel.GetFlagEffect(tp,101105208)==0
+	local b2=Duel.IsExistingMatchingCard(c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208+100)==0
+	local b3=Duel.GetFlagEffect(tp,101105208+200)==0
 	if b1 and b2 and b3 then op=Duel.SelectOption(tp,aux.Stringid(101105208,0),aux.Stringid(101105208,1),aux.Stringid(101105208,2))
 	elseif b1 then op=Duel.SelectOption(tp,aux.Stringid(101105208,0)) --Special Summon 1 of those monsters
 	elseif b2 then op=Duel.SelectOption(tp,aux.Stringid(101105208,1))+1 --Banish 1 monster your opponent controls or in their GY
