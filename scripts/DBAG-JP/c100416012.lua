@@ -17,6 +17,7 @@ function c100416012.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,100416012)
 	e2:SetCost(c100416012.spcost)
+	e2:SetCondition(c100416012.spcon)
 	e2:SetTarget(c100416012.sptg)
 	e2:SetOperation(c100416012.spop)
 	c:RegisterEffect(e2)
@@ -32,6 +33,10 @@ function c100416012.initial_effect(c)
 	e3:SetTarget(c100416012.tgtg)
 	e3:SetOperation(c100416012.tgop)
 	c:RegisterEffect(e3)
+end
+function c100416012.spcon(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
+	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c100416012.rfilter(c,tp)
 	return c:IsRace(RACE_REPTILE) and (c:IsControler(tp) or c:IsFaceup()) and Duel.GetMZoneCount(tp,c)>0
