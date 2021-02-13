@@ -64,7 +64,7 @@ function c101105208.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #rg==0 then return end
 		Duel.HintSelection(rg)
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
-		Duel.RegisterFlagEffect(tp,101105208,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,101105208+100,RESET_PHASE+PHASE_END,0,1)
 	else
 		local c=e:GetHandler()
 		local e1=Effect.CreateEffect(c)
@@ -75,7 +75,7 @@ function c101105208.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(c101105208.val)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
-		Duel.RegisterFlagEffect(tp,101105208,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,101105208+200,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function c101105208.val(e,re,dam,r,rp,rc)
