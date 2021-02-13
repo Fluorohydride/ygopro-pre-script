@@ -29,7 +29,7 @@ end
 function c100416013.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sub=Duel.GetMatchingGroup(c100416013.cfilter,tp,LOCATION_GRAVE,0,nil)
 	local res=sub:GetClassCount(Card.GetCode)
-	if res>=8 and Duel.IsExistingMatchingCard(c100416013.spfilter,tp,LOCATION_GRAVE,0,2,nil,e,tp) and (not Duel.IsPlayerCanSpecialSummonMonster(tp,100416111,0,0x4011,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK) or Duel.SelectYesNo(tp,aux.Stringid(100416013,0))) then
+	if res>=8 and Duel.IsExistingMatchingCard(c100416013.spfilter,tp,LOCATION_GRAVE,0,2,nil,e,tp) and (not Duel.IsPlayerCanSpecialSummonMonster(tp,100416113,0,0x4011,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK) or Duel.SelectYesNo(tp,aux.Stringid(100416013,0))) then
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100416013.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
@@ -41,9 +41,9 @@ function c100416013.operation(e,tp,eg,ep,ev,re,r,rp)
 	else
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
-		if not Duel.IsPlayerCanSpecialSummonMonster(tp,100416111,0,0x4011,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK) then return end
+		if not Duel.IsPlayerCanSpecialSummonMonster(tp,100416113,0,0x4011,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK) then return end
 		for i=1,2 do
-			local token=Duel.CreateToken(tp,100416111)
+			local token=Duel.CreateToken(tp,100416113)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		end
 		Duel.SpecialSummonComplete()
