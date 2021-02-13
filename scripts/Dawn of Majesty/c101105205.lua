@@ -15,7 +15,7 @@ function c101105205.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_TO_DECK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetTargetRange(1,0)
+	e2:SetTargetRange(1,1)
 	e2:SetTarget(c101105205.tdlimit)
 	c:RegisterEffect(e2)
 	--apply
