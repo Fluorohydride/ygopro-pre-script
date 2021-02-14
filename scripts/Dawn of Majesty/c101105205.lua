@@ -36,7 +36,7 @@ function c101105205.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.GetMatchingGroup(c101105205.tdfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil)
-	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101105205,0)) then
+	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
 		if tc:IsLocation(LOCATION_DECK) then
