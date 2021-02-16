@@ -83,15 +83,16 @@ function c100416020.rfilter2(c)
 	return c:IsType(TYPE_EFFECT) 
 end
 function c100416020.pfilter(c) 
-	if not c:IsType(TYPE_PENDULUM) then return false end
-	return (c:GetLeftScale()%2==0 or c:GetRightScale()%2==0)
+	local lsc=c:GetLeftScale()
+	local rsc=c:GetRightScale()
+	return (lsc%2==0 or rsc%2==0) and c:IsType(TYPE_PENDULUM)
 end
 function c100416020.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(c100416020.rfilter2,tp,0,LOCATION_MZONE,1,nil) end
 	if Duel.IsExistingMatchingCard(c100416020.pfilter,tp,LOCATION_PZONE,0,1,nil)
 		and Duel.IsExistingTarget(c100416020.rfilter1,tp,0,LOCATION_SZONE,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(100416020,0)) then
+		and Duel.SelectYesNo(tp,aux.Stringid(100416020,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 		Duel.SelectTarget(tp,c100416020.rfilter1,tp,0,LOCATION_SZONE,1,1,nil)
 	else
