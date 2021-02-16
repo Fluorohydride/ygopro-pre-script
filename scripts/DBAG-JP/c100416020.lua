@@ -40,17 +40,42 @@ function c100416020.initial_effect(c)
 	e4:SetOperation(c100416020.desop)
 	c:RegisterEffect(e4)
 end
-function c100416020.actfilter(c,tp)
+function c100416020.actfilter1(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x265) and c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
-function c100416020.actcon(e,tp,eg,ep,ev,re,r,rp)
+function c100416020.actcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100416020.actfilter,1,nil,tp)
 end
-function c100416020.actop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetChainLimitTillChainEnd(c100416020.chlimit)
+function c100416020.actop1(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if Duel.GetCurrentChain()==0 then
+		Duel.SetChainLimitTillChainEnd(c100416020.chlimit)
+	elseif Duel.GetCurrentChain()==1 then
+		c:RegisterFlagEffect(100416020,RESET_EVENT+RESETS_STANDARD,0,1)
+		local e1=Effect.CreateEffect(c) 
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_CHAINING) 
+		e1:SetOperation(c100416020.resetop)
+		Duel.RegisterEffect(e1,tp)
+		local e2=e1:Clone() 
+		e2:SetCode(EVENT_BREAK_EFFECT)
+		e2:SetReset(RESET_CHAIN)
+		Duel.RegisterEffect(e2,tp)
+	end
+end
+function c100416020.resetop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	c:ResetFlagEffect(100416020)
+	c:Reset()
+end
+function c100416020.subop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:GetFlagEffect(100416020)~=0 then
+		Duel.SetChainLimitTillChainEnd(c100416020.chlimit)
+	end
 end
 function c100416020.chlimit(e,ep,tp)
-	return tp==ep
+	return ep==tp or e:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function c100416020.rfilter1(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP)
