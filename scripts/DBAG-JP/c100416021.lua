@@ -158,7 +158,8 @@ function c100416021.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local tc2=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
 	if not tc1 and not tc2 then return false end
-	local lsc,rsc
+	local lsc=0
+	local rsc=0
 	if tc1 then
 		lsc=tc1:GetLeftScale()
 	end
