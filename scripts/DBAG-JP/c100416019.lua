@@ -77,8 +77,7 @@ function c100416019.chlimit(e,ep,tp)
 	return ep==tp or e:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function c100416019.cfilter(c,e,tp)
-	return Duel.IsExistingMatchingCard(c100416019.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLeftScale())
-		and c:GetSequence()<5 and (c:IsControler(tp) or c:IsFaceup())
+	return (c:IsControler(tp) or c:IsFaceup()) and Duel.IsExistingMatchingCard(c100416019.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLeftScale())
 end
 function c100416019.spfilter(c,e,tp,sc)
 	return c:IsSetCard(0x265) and c:IsType(TYPE_MONSTER) and not c:IsCode(100416019)
