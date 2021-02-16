@@ -100,8 +100,8 @@ function c100416018.aclimit(e,re,tp)
 end
 function c100416018.actcon(e)
 	local a=Duel.GetAttacker()
-	if not (a and c100416018.cfilter(a,tp)) then return false end
 	local tp=e:GetHandlerPlayer()
+	if not (a and c100416018.cfilter(a,tp)) then return false end
 	local tc1=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local tc2=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
 	local lsc,rsc
