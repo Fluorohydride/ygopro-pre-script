@@ -43,7 +43,7 @@ function c100416019.actfilter1(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x265) and c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c100416019.actcon1(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100416019.actfilter,1,nil,tp)
+	return eg:IsExists(c100416019.actfilter1,1,nil,tp)
 end
 function c100416019.actop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
