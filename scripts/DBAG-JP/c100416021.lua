@@ -96,6 +96,7 @@ function c100416021.spcon(e,c)
 end
 function c100416021.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetReleaseGroup(tp):Filter(c100416021.rfilter,nil,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local sg=rg:SelectSubGroup(tp,aux.mzctcheckrel,false,2,2,tp)
 	Duel.Release(sg,REASON_COST)
 end
