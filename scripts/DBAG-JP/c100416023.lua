@@ -13,7 +13,7 @@ function c100416023.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100416023.cfilter(c)
-	return c:IsSetCard(0x265) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+	return c:IsSetCard(0x265) and c:IsOriginalType(TYPE_PENDULUM) and c:IsFaceup()
 end
 function c100416023.tpfilter(c)
 	return c:IsSetCard(0x265) and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and not c:IsForbidden()
@@ -25,7 +25,7 @@ function c100416023.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_PZONE,0,1,nil,TYPE_PENDULUM) and Duel.IsExistingMatchingCard(c100416023.tpfilter,tp,LOCATION_EXTRA,0,1,nil) and Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0)>0
 	local b2=Duel.IsExistingMatchingCard(c100416023.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	local b3=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)
-	local g=Duel.GetMatchingGroup(c100416023.cfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(c100416023.cfilter,tp,LOCATION_ONFIELD,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	if chk==0 then return ((ct>=3 and b1) or (ct>=5 and b2) or (ct>=7 and b3)) end
 	local res=Group.CreateGroup()
