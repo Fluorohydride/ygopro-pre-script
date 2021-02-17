@@ -8,6 +8,7 @@ function c100416023.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCountLimit(1,100416023+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100416023.target)
 	c:RegisterEffect(e1)
 end
