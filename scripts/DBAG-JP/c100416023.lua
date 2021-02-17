@@ -13,7 +13,7 @@ function c100416023.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100416023.cfilter(c)
-	return c:IsSetCard(0x265) and c:IsOriginalType(TYPE_PENDULUM) and c:IsFaceup()
+	return c:IsSetCard(0x265) and c:GetOriginalType()&TYPE_PENDULUM>0 and c:IsFaceup()
 end
 function c100416023.tpfilter(c)
 	return c:IsSetCard(0x265) and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and not c:IsForbidden()
