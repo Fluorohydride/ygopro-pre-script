@@ -26,14 +26,14 @@ function c100416023.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b3=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)
 	local g=Duel.GetMatchingGroup(c100416023.cfilter,tp,LOCATION_MZONE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
-	if chk==0 then return ((ct>=1 and b1) or (ct>=2 and b2) or (ct>=3 and b3)) end
-	if ct>=1 and b1 then
+	if chk==0 then return ((ct>=3 and b1) or (ct>=5 and b2) or (ct>=7 and b3)) end
+	if ct>=3 and b1 then
 		c100416023.place(e,tp,eg,ep,ev,re,r,rp)
 	end
-	if ct>=2 and b2 then
+	if ct>=5 and b2 then
 		c100416023.specialsummon(e,tp,eg,ep,ev,re,r,rp)
 	end
-	if ct>=3 and b3 then
+	if ct>=7 and b3 then
 		c100416023.destroy(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
