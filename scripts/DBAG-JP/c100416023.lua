@@ -38,6 +38,8 @@ function c100416023.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if ct>=7 and b3 and (#res==0 or Duel.SelectYesNo(tp,aux.Stringid(100416023,2))) then
 		c100416023.destroy(e,tp,eg,ep,ev,re,r,rp)
 	end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c100416023.place(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
