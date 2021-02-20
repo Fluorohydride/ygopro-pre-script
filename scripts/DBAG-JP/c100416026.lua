@@ -32,7 +32,7 @@ function c100416026.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,c100416026.tdfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 	local tc=g:GetFirst()
-	if tc and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_DECK) and Duel.IsExistingMatchingCard(c100416026.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then
+	if tc and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) and Duel.IsExistingMatchingCard(c100416026.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then
 		Duel.BreakEffect()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -59,5 +59,5 @@ function c100416026.efilter(e,re)
 	return re==e:GetLabelObject()
 end
 function c100416026.rmlimit(e,c,tp,r,re)
-	return c:IsControler(e:GetHandlerPlayer()) and c:IsLocation(LOCATION_PZONE) and r&REASON_EFFECT~=0 and re==e:GetLabelObject()
+	return c:IsControler(e:GetHandlerPlayer()) and c:IsLocation(LOCATION_PZONE) and r&REASON_EFFECT~=0 and re and re==e:GetLabelObject()
 end
