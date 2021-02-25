@@ -118,7 +118,7 @@ end
 function c100416039.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,nil)
 	if chk==0 then return g:GetCount()>=7 end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,7,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,7,1-tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
 end
 function c100416039.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToDeck),tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,nil)
