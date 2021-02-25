@@ -31,7 +31,7 @@ function c100416033.initial_effect(c)
 	--to hand/spsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100416033,1))
-	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_ACTION+CATEGORY_GRAVE_SPSUMMON)
+	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,100416033+100)
@@ -122,6 +122,8 @@ function c100416033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100416033.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100416033.tgfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,true) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c100416033.thop(e,tp,eg,ep,ev,re,r,rp)
 	local check=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
