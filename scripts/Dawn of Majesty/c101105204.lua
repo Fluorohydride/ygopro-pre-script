@@ -102,6 +102,10 @@ function c101105204.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsAbleToRemove() and aux.nbcon(tp,re) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,c,1,0,0)
+ 	if re:GetHandler():IsRelateToEffect(re) then
+ 		local g=eg:Clone()+c
+ 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
+ 	end
 end
 function c101105204.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
