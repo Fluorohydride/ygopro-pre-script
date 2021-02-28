@@ -1,4 +1,4 @@
---冥界の呼び較
+--溟界の呼び蛟
 
 --scripted by Xylen5967
 function c100416013.initial_effect(c)
