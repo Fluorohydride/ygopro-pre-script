@@ -33,7 +33,7 @@ function c100416020.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100416020,2))
 	e4:SetCategory(CATEGORY_DESTROY)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_BATTLE_START)
 	e4:SetCountLimit(1)
 	e4:SetTarget(c100416020.destg)
@@ -77,11 +77,8 @@ end
 function c100416020.chlimit(e,ep,tp)
 	return ep==tp or e:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
-function c100416020.rfilter1(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
-function c100416020.rfilter2(c)
-	return c:IsType(TYPE_EFFECT) 
+function c100416020.rfilter(c,szone)
+	return c:IsFaceup() and (c:IsType(TYPE_EFFECT) or szone and c:IsType(TYPE_SPELL+TYPE_TRAP))
 end
 function c100416020.pfilter(c) 
 	local lsc=c:GetLeftScale()
@@ -89,47 +86,48 @@ function c100416020.pfilter(c)
 	return (lsc%2==0 or rsc%2==0) and c:IsType(TYPE_PENDULUM)
 end
 function c100416020.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c100416020.rfilter2,tp,0,LOCATION_MZONE,1,nil) end
-	if Duel.IsExistingMatchingCard(c100416020.pfilter,tp,LOCATION_PZONE,0,1,nil)
-		and Duel.IsExistingTarget(c100416020.rfilter1,tp,0,LOCATION_SZONE,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(100416020,1)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		Duel.SelectTarget(tp,c100416020.rfilter1,tp,0,LOCATION_SZONE,1,1,nil)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		Duel.SelectTarget(tp,c100416020.rfilter2,tp,0,LOCATION_MZONE,1,1,nil)
-	end
+	local szone=Duel.IsExistingMatchingCard(c100416020.pfilter,tp,LOCATION_PZONE,0,1,nil)
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and c100416020.rfilter(chkc,szone) end
+	if chk==0 then return Duel.IsExistingTarget(c100416020.rfilter,tp,0,LOCATION_ONFIELD,1,nil,szone) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.SelectTarget(tp,c100416020.rfilter1,tp,0,LOCATION_ONFIELD,1,1,nil,szone)
 end
 function c100416020.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(100416020,1))
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT+RESET_PHASE+PHASE_END)
 		e1:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e1,true)
 	end
 end
-function c100416020.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100416020.descon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local p1=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local p2=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	local sp1=0
-	local sp2=0
-	local sp1=p1 and p1:GetLeftScale() or -1
-	local sp2=p2 and p2:GetRightScale() or -1
-	local atk=math.max(sp1,sp2)
-	local bc=Duel.GetAttackTarget()
-	if chk==0 then return atk>0 and Duel.GetAttacker()==c
-		and bc and bc:IsFaceup() and bc:IsAttackAbove(atk*300) end
+	local sp1=255
+	local sp2=255
+	if p1 then sp1=p1:GetLeftScale() end
+	if p2 then sp2=p2:GetRightScale() end
+	local scale=math.min(sp1,sp2)
+	local bc=c:GetBattleTarget()
+	if chk==0 then return scale<255 and bc and bc:IsFaceup() and bc:IsAttackAbove(scale*300) end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,bc,1,0,0)
+end
+function c100416020.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local c=e:GetHandler()
+	local bc=c:GetBattleTarget()
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,bc,1,0,0)
 end
 function c100416020.desop(e,tp,eg,ep,ev,re,r,rp)
-	local bc=Duel.GetAttackTarget()
+	local c=e:GetHandler()
+	local bc=c:GetBattleTarget()
 	if bc:IsRelateToBattle() then
 		Duel.Destroy(bc,REASON_EFFECT)
 	end
