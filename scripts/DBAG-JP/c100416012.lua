@@ -1,4 +1,4 @@
---冥界の席
+--溟界の虚
 
 --scripted by Xylen5967
 function c100416012.initial_effect(c)
