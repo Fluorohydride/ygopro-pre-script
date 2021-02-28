@@ -54,9 +54,7 @@ function c101105204.cfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsSynchroType(TYPE_SYNCHRO)
 end
 function c101105204.gfilter(g,syncard,c1)
-	local sg=g:Clone()
-	sg:RemoveCard(c1)
-	return sg:IsExists(c101105204.cfilter,1,nil)
+	return g:IsExists(c101105204.cfilter,1,c1)
 end
 function c101105204.disfilter(c)
 	return aux.disfilter1(c) and c:IsType(TYPE_EFFECT)
