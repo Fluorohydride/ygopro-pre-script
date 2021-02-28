@@ -1,0 +1,96 @@
+--セイヴァー・ミラージュ
+
+--scripted by Xylen5967 & mercury233
+function c101105208.initial_effect(c)
+	aux.AddCodeList(c,44508094)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e1)
+	--apply
+	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_ACTION)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_LEAVE_FIELD)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCondition(c101105208.condition)
+	e2:SetTarget(c101105208.target)
+	e2:SetOperation(c101105208.activate)
+	c:RegisterEffect(e2)
+end
+function c101105208.cfilter(c,tp,re,rp)
+	return c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
+		and (c:IsCode(44508094) or c:IsType(TYPE_SYNCHRO) and aux.IsCodeListed(c,44508094))
+		and (c:IsReason(REASON_COST) and re:GetHandler():IsControler(tp) or c:IsReason(REASON_EFFECT) and rp==tp)
+end
+function c101105208.condition(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c101105208.cfilter,1,nil,tp,re,rp)
+end
+function c101105208.rfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+end
+function c101105208.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:Filter(c101105208.cfilter,nil,tp,re,rp):IsExists(Card.IsCanBeSpecialSummoned,1,nil,e,0,tp,false,false) and Duel.GetFlagEffect(tp,101105208)==0
+		local b2=Duel.IsExistingMatchingCard(c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208+100)==0
+		local b3=Duel.GetFlagEffect(tp,101105208+200)==0
+		return b1 or b2 or b3
+	end
+end
+function c101105208.activate(e,tp,eg,ep,ev,re,r,rp)
+	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:Filter(c101105208.cfilter,nil,tp,re,rp):IsExists(Card.IsCanBeSpecialSummoned,1,nil,e,0,tp,false,false) and Duel.GetFlagEffect(tp,101105208)==0
+	local b2=Duel.IsExistingMatchingCard(c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208+100)==0
+	local b3=Duel.GetFlagEffect(tp,101105208+200)==0
+	local off=1
+	local ops={}
+	local opval={}
+	if b1 then
+		ops[off]=aux.Stringid(101105208,0)
+		opval[off-1]=1
+		off=off+1
+	end
+	if b2 then
+		ops[off]=aux.Stringid(101105208,1)
+		opval[off-1]=2
+		off=off+1
+	end
+	if b3 then
+		ops[off]=aux.Stringid(101105208,2)
+		opval[off-1]=3
+		off=off+1
+	end
+	if off==1 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
+	local op=Duel.SelectOption(tp,table.unpack(ops))
+	if op==0 then
+		local sg=eg:Filter(c101105208.cfilter,nil,tp,re,rp)
+		if #sg>1 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			sg=eg:Filter(c101105208.cfilter,nil,tp,re,rp):FilterSelect(tp,Card.IsCanBeSpecialSummoned,1,1,nil,e,0,tp,false,false)
+		end
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+		Duel.RegisterFlagEffect(tp,101105208,RESET_PHASE+PHASE_END,0,1)
+	elseif op==1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local rg=Duel.SelectMatchingCard(tp,c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+		Duel.HintSelection(rg)
+		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
+		Duel.RegisterFlagEffect(tp,101105208+100,RESET_PHASE+PHASE_END,0,1)
+	else
+		local c=e:GetHandler()
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CHANGE_DAMAGE)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
+		e1:SetValue(c101105208.val)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+		Duel.RegisterFlagEffect(tp,101105208+200,RESET_PHASE+PHASE_END,0,1)
+	end
+end
+function c101105208.val(e,re,dam,r,rp,rc)
+	return math.floor(val/2)
+end
