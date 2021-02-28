@@ -1,4 +1,4 @@
---冥界の淵源
+--溟界の淵源
 
 --scripted by Xylen5967
 function c100416011.initial_effect(c)
