@@ -71,9 +71,9 @@ function c100416012.cfilter(c)
 	return not c:IsRace(RACE_REPTILE) and c:IsFaceup() and c:IsAbleToGrave() 
 end
 function c100416012.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(c100416012.cfilter,tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return #g>0 end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 end
 function c100416012.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100416012.cfilter,tp,LOCATION_MZONE,0,nil)
