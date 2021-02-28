@@ -1,6 +1,6 @@
 --ドレミコード・ハルモニア
 
---scripted by Xylen5967
+--scripted by Xylen5967 & mercury233
 function c100416024.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -73,14 +73,17 @@ function c100416024.scop(e,tp,eg,ep,ev,re,r,rp)
 		sc:RegisterEffect(e2)
 	end
 end
-function c100416019.desfilter(c) 
-	local lsc=c:GetLeftScale()
-	local rsc=c:GetRightScale()
-	return ((lsc%2~=0 or rsc%2~=0) and (lsc%2~=0 or rsc%2~=0)) and c:GetOriginalType()&TYPE_PENDULUM>0 and c:IsFaceup()
+function c100416024.getscale(c)
+	if c:GetSequence()>0 and c:IsLocation(LOCATION_PZONE) then return c:GetRightScale() else return c:GetLeftScale() end
+end
+function c100416024.desfilter(c,odevity) 
+	local sc=c100416024.getscale(c)
+	return sc%2==odevity and c:GetOriginalType()&TYPE_PENDULUM>0 and c:IsFaceup()
 end
 function c100416024.descon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100416024.desfilter,tp,LOCATION_MZONE,0,nil)
-	return g:GetClassCount(Card.GetCode)>=3
+	local g1=Duel.GetMatchingGroup(c100416024.desfilter,tp,LOCATION_ONFIELD,0,nil,1)
+	local g2=Duel.GetMatchingGroup(c100416024.desfilter,tp,LOCATION_ONFIELD,0,nil,0)
+	return g1:GetClassCount(c100416024.getscale)>=3 or g2:GetClassCount(c100416024.getscale)>=3
 end
 function c100416024.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
