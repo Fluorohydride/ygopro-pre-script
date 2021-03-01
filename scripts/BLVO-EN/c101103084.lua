@@ -48,7 +48,7 @@ function c101103084.matcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c101103084.matfilter(c)
-	return c:IsSetCard(0x262) and c:IsType(TYPE_MONSTER) and c:IsCanOverlay()
+	return c:IsSetCard(0x160) and c:IsType(TYPE_MONSTER) and c:IsCanOverlay()
 end
 function c101103084.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) and Duel.IsExistingMatchingCard(c101103084.matfilter,tp,LOCATION_DECK,0,1,nil) end

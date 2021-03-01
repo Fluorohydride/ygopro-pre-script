@@ -32,7 +32,7 @@ function c101103000.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101103000.thfilter(c)
-	return c:IsSetCard(0x263) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x15f) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101103000.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -54,7 +54,7 @@ function c101103000.cfilter2(c,code)
 	return c:IsFaceup() and c:IsCode(code)
 end
 function c101103000.spfilter(c,e,tp)
-	return c:IsSetCard(0x263) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x15f) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not Duel.IsExistingMatchingCard(c101103000.cfilter2,tp,LOCATION_ONFIELD,0,1,nil,c:GetCode())
 end
 function c101103000.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

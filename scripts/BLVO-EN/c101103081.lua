@@ -27,7 +27,7 @@ function c101103081.costfilter(c,e,tp)
 	return c:IsDiscardable() and Duel.IsExistingMatchingCard(c101103081.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c,e,tp,c:IsType(TYPE_NORMAL))
 end
 function c101103081.spfilter(c,e,tp,normal)
-	return (normal and c:IsSetCard(0x262) or c:IsLevel(3) and c:IsType(TYPE_NORMAL)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (normal and c:IsSetCard(0x160) or c:IsLevel(3) and c:IsType(TYPE_NORMAL)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101103081.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100,0)

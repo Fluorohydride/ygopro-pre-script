@@ -62,7 +62,7 @@ function c101103096.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101103096.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x263)
+	return c:IsFaceup() and c:IsSetCard(0x15f)
 end
 function c101103096.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

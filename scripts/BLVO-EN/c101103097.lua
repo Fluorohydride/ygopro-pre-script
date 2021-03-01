@@ -51,7 +51,7 @@ function c101103097.dracon(e,tp,eg,ep,ev,re,r,rp)
 		and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function c101103097.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x263)
+	return c:IsFaceup() and c:IsSetCard(0x15f)
 end
 function c101103097.draop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

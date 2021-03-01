@@ -26,7 +26,7 @@ function c101103093.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101103093.thfilter(c)
-	return c:IsSetCard(0x263) and not c:IsCode(101103093) and c:IsAbleToHand()
+	return c:IsSetCard(0x15f) and not c:IsCode(101103093) and c:IsAbleToHand()
 end
 function c101103093.check(c,tp)
 	return c and c:IsControler(tp) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR)
@@ -37,7 +37,7 @@ function c101103093.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101103093.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x263)
+	return c:IsFaceup() and c:IsSetCard(0x15f)
 end
 function c101103093.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -66,7 +66,7 @@ function c101103093.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function c101103093.spfilter(c,e,tp)
-	return c:IsLevelAbove(5) and c:IsSetCard(0x263) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelAbove(5) and c:IsSetCard(0x15f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101103093.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

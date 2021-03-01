@@ -2,7 +2,7 @@
 --Scripted by Kohana Sonogami
 function c101103098.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_SELF_TOGRAVE)
-	c:EnableCounterPermit(0x61,LOCATION_SZONE)
+	c:EnableCounterPermit(0x5a,LOCATION_SZONE)
 	c:SetUniqueOnField(1,0,101103098)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -25,7 +25,7 @@ function c101103098.initial_effect(c)
 end
 function c101103098.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:AddCounter(0x61,3)
+	c:AddCounter(0x5a,3)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -36,22 +36,22 @@ function c101103098.activate(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function c101103098.sdcon(e)
-	return e:GetHandler():GetCounter(0x61)==0
+	return e:GetHandler():GetCounter(0x5a)==0
 end
 function c101103098.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local at=tc:GetBattleTarget()
 	return eg:GetCount()==1 and tc:IsLocation(LOCATION_GRAVE) and tc:IsReason(REASON_BATTLE)
-		and at:IsRelateToBattle() and at:IsControler(tp) and at:IsSetCard(0x263)
+		and at:IsRelateToBattle() and at:IsControler(tp) and at:IsSetCard(0x15f)
 end
 function c101103098.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x61,1,REASON_EFFECT) and Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x5a,1,REASON_EFFECT) and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c101103098.drop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():RemoveCounter(tp,0x61,1,REASON_EFFECT) then
+	if e:GetHandler():RemoveCounter(tp,0x5a,1,REASON_EFFECT) then
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Draw(p,d,REASON_EFFECT)
 	end

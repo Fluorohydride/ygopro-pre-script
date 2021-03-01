@@ -43,7 +43,7 @@ function c101103095.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c101103095.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x263)
+	return c:IsFaceup() and c:IsSetCard(0x15f)
 end
 function c101103095.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
