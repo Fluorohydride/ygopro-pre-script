@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **February 20, 2021**: "Amabie-San" Present Campaign (21CC-JP): `100275XXX`
 - **March 6, 2021**: Deck Build Pack: Ancient Guardians (DBAG-JP): `100416XXX`
 - **March 19, 2021**: The Valuable Book EX (VX01-JP) : `100277XXX`
 - **April 2, 2021**: Yu-Gi-Oh! OCG Structures Volume 3 promotional card (YO03-JP): `100276XXX`
@@ -91,6 +90,7 @@
 - SELECTION 10 (SLT1-JP) : `100270XXX`
 - PRISMATIC GOD BOX (PGB1-JP) : `100272XXX`
 - Premium Pack 2021 (21PP-JP): `100273XXX`
+- "Amabie-San" Present Campaign (21CC-JP): `100275XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
