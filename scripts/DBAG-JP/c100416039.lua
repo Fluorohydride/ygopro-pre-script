@@ -116,15 +116,16 @@ function c100416039.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100416039.cfilter,1,nil,tp) and Duel.GetAttacker():IsControler(1-tp)
 end
 function c100416039.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,nil)
-	if chk==0 then return g:GetCount()>=7 end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,7,0,0)
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+	if chk==0 then return #g>7 end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,#g-7,1-tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
 end
 function c100416039.tdop(e,tp,eg,ep,ev,re,r,rp)
+	local ct=Duel.GetMatchingGroupCount(nil,tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,nil)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToDeck),tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+	if ct<=7 or #g==0 then return end
+	local tct=math.min(ct-7,#g)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TODECK)
-	local sg=g:Select(1-tp,7,7,nil)
-	if sg and sg:GetCount()==7 then
-		Duel.SendtoDeck(sg,nil,2,REASON_RULE)
-	end
+	local sg=g:Select(1-tp,tct,tct,nil)
+	Duel.SendtoDeck(sg,nil,2,REASON_RULE)
 end
