@@ -77,7 +77,7 @@ function c100416012.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100416012.tgcon1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc:GetFlagEffectLabel(595626)~=e:GetLabel() then
+	if tc:GetFlagEffectLabel(100416012)~=e:GetLabel() then
 		e:Reset()
 		return false
 	else return true end
