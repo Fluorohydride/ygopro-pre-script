@@ -30,6 +30,7 @@ function c100277001.initial_effect(c)
 	c:RegisterEffect(e2)
 	--
 	if not c100277001.global_check then
+		c100277001.global_check=true
 		_GetFusionMaterial=Duel.GetFusionMaterial
 		function Duel.GetFusionMaterial(tp)
 			local g=_GetFusionMaterial(tp)
