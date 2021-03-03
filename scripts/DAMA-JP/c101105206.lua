@@ -5,7 +5,7 @@ function c101105206.initial_effect(c)
 	aux.AddCodeList(c,44508094)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOGRAVE)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101105206)
@@ -30,7 +30,6 @@ end
 function c101105206.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101105206.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,0,0,0)
 end
 function c101105206.cfilter(c)
 	return c:IsFaceup() and (c:IsCode(44508094) or c:IsType(TYPE_SYNCHRO) and aux.AddCodeList(c,44508094))
@@ -55,7 +54,7 @@ function c101105206.lvltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101105206.lvlfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101105206.lvlfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local g=Duel.SelectTarget(tp,c101105206.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101105206.lvlfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c101105206.lvlop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
