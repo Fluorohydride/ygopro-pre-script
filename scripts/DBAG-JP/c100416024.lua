@@ -34,6 +34,7 @@ function c100416024.initial_effect(c)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetCountLimit(1,100416024+200)
 	e4:SetCondition(c100416024.descon)
+	e4:SetTarget(c100416024.destg)
 	e4:SetOperation(c100416024.desop)
 	c:RegisterEffect(e4)
 end
@@ -85,8 +86,13 @@ function c100416024.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.GetMatchingGroup(c100416024.desfilter,tp,LOCATION_ONFIELD,0,nil,0)
 	return g1:GetClassCount(c100416024.getscale)>=3 or g2:GetClassCount(c100416024.getscale)>=3
 end
+function c100416024.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+end
 function c100416024.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=g:Select(tp,1,1,nil)
