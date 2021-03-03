@@ -112,6 +112,7 @@ function c100416035.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		te:UseCountLimit(tp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 	else
+		aux.UseExtraReleaseCount(Group.FromCards(tc),tp)
 		Duel.Release(tc,REASON_COST)
 	end
 end

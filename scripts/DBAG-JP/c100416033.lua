@@ -117,6 +117,7 @@ function c100416033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 		end
 	else
+		aux.UseExtraReleaseCount(Group.FromCards(tc),tp)
 		Duel.Release(tc,REASON_COST)
 	end
 end
