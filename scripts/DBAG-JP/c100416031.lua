@@ -3,19 +3,9 @@
 --Scripted by mallu11
 function c100416031.initial_effect(c)
 	--spsummon
-	local e1=Effect.CreateEffect(c)
+	local e1=aux.AddUrsarcticSpSummonEffect(c)
 	e1:SetDescription(aux.Stringid(100416031,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,100416031)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
-	e1:SetCondition(c100416031.spcon)
-	e1:SetCost(c100416031.spcost)
-	e1:SetTarget(c100416031.sptg)
-	e1:SetOperation(c100416031.spop)
-	c:RegisterEffect(e1)
 	--position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100416031,1))
@@ -29,24 +19,40 @@ function c100416031.initial_effect(c)
 	e2:SetOperation(c100416031.posop)
 	c:RegisterEffect(e2)
 end
-function c100416031.spcon(e,tp,eg,ep,ev,re,r,rp)
+if Auxiliary.AddUrsarcticSpSummonEffect==nil then
+--Ursarctic common summon from hand effect
+function Auxiliary.AddUrsarcticSpSummonEffect(c)
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetCondition(Auxiliary.UrsarcticSpSummonCondition)
+	e1:SetCost(Auxiliary.UrsarcticSpSummonCost)
+	e1:SetTarget(Auxiliary.UrsarcticSpSummonTarget)
+	e1:SetOperation(Auxiliary.UrsarcticSpSummonOperation)
+	c:RegisterEffect(e1)
+	return e1
+end
+function Auxiliary.UrsarcticSpSummonCondition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
-function c100416031.rfilter(c,tp)
+function Auxiliary.UrsarcticReleaseFilter(c,tp)
 	return c:IsLevelAbove(7) and (c:IsControler(tp) and c:IsLocation(LOCATION_HAND) or c:IsFaceup() and c:IsControler(1-tp))
 end
-function c100416031.excostfilter(c,tp)
-	return c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
+function Auxiliary.UrsarcticExCostFilter(c,tp)
+	return c:IsAbleToRemoveAsCost() and (c:IsHasEffect(100416036,tp) or c:IsHasEffect(100416038,tp))
 end
-function c100416031.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.GetReleaseGroup(tp,true):Filter(c100416031.rfilter,e:GetHandler(),tp)
-	local g2=Duel.GetMatchingGroup(c100416031.excostfilter,tp,LOCATION_GRAVE,0,nil,tp)
+function Auxiliary.UrsarcticSpSummonCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g1=Duel.GetReleaseGroup(tp,true):Filter(Auxiliary.UrsarcticReleaseFilter,e:GetHandler(),tp)
+	local g2=Duel.GetMatchingGroup(Auxiliary.UrsarcticExCostFilter,tp,LOCATION_GRAVE,0,nil,tp)
 	g1:Merge(g2)
 	if chk==0 then return g1:GetCount()>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	tc=g1:Select(tp,1,1,nil):GetFirst()
 	if tc:IsLocation(LOCATION_GRAVE) then
-		local te=tc:IsHasEffect(100416038,tp)
+		local te=tc:IsHasEffect(100416036,tp) or tc:IsHasEffect(100416038,tp)
 		if te then
 			te:UseCountLimit(tp)
 			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
@@ -55,12 +61,12 @@ function c100416031.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Release(tc,REASON_COST)
 	end
 end
-function c100416031.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function Auxiliary.UrsarcticSpSummonTarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function c100416031.spop(e,tp,eg,ep,ev,re,r,rp)
+function Auxiliary.UrsarcticSpSummonOperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
@@ -70,12 +76,13 @@ function c100416031.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
-	e1:SetTarget(c100416031.splimit)
+	e1:SetTarget(Auxiliary.UrsarcticSpSummonLimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c100416031.splimit(e,c)
+function Auxiliary.UrsarcticSpSummonLimit(e,c)
 	return c:IsLevel(0)
+end
 end
 function c100416031.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x261)
