@@ -45,6 +45,7 @@ function c100416012.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100416012.rfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectReleaseGroup(tp,c100416012.rfilter,1,1,nil,tp)
+	aux.UseExtraReleaseCount(g,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c100416012.spfilter(c,e,tp)
@@ -59,13 +60,34 @@ function c100416012.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100416012.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		local fid=e:GetHandler():GetFieldID()
+		tc:RegisterFlagEffect(100416012,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetCountLimit(1)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetLabel(fid)
+		e1:SetLabelObject(tc)
+		e1:SetCondition(c100416012.tgcon1)
+		e1:SetOperation(c100416012.tgop1)
+		Duel.RegisterEffect(e1,tp)
 	end
+end
+function c100416012.tgcon1(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffectLabel(595626)~=e:GetLabel() then
+		e:Reset()
+		return false
+	else return true end
+end
+function c100416012.tgop1(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SendtoGrave(e:GetLabelObject(),REASON_EFFECT)
 end
 function c100416012.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetSequence()<5
 end
 function c100416012.cfilter(c)
 	return not c:IsRace(RACE_REPTILE) and c:IsFaceup() and c:IsAbleToGrave() 
