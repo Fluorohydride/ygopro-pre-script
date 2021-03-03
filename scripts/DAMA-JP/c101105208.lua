@@ -10,7 +10,7 @@ function c101105208.initial_effect(c)
 	c:RegisterEffect(e1)
 	--apply
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_ACTION)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON+CATEGORY_GRAVE_ACTION)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
@@ -20,28 +20,38 @@ function c101105208.initial_effect(c)
 	e2:SetOperation(c101105208.activate)
 	c:RegisterEffect(e2)
 end
-function c101105208.cfilter(c,tp,re,rp)
+function c101105208.cfilter(c,tp,rp)
 	return c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
-		and (c:IsCode(44508094) or c:IsType(TYPE_SYNCHRO) and aux.IsCodeListed(c,44508094))
-		and (c:IsReason(REASON_COST) and re:GetHandler():IsControler(tp) or c:IsReason(REASON_EFFECT) and rp==tp)
+		and (c:IsCode(44508094) or c:GetPreviousTypeOnField()&TYPE_SYNCHRO~=0 and aux.IsCodeListed(c,44508094))
+		and c:IsReason(REASON_COST+REASON_EFFECT) and rp==tp
 end
 function c101105208.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101105208.cfilter,1,nil,tp,re,rp)
+	return eg:IsExists(c101105208.cfilter,1,nil,tp,rp)
+end
+function c101105208.spfilter(c,e,tp)
+	if not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
+	if c:IsFaceup() and c:IsLocation(LOCATION_EXTRA) then
+		return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	end
+	if c:IsLocation(LOCATION_GRAVE) or c:IsFaceup() and c:IsLocation(LOCATION_REMOVED) then
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	end
+	return false
 end
 function c101105208.rfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function c101105208.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:Filter(c101105208.cfilter,nil,tp,re,rp):IsExists(Card.IsCanBeSpecialSummoned,1,nil,e,0,tp,false,false) and Duel.GetFlagEffect(tp,101105208)==0
+		local b1=eg:Filter(c101105208.cfilter,nil,tp,rp):IsExists(c101105208.spfilter,1,nil,e,tp) and Duel.GetFlagEffect(tp,101105208)==0
 		local b2=Duel.IsExistingMatchingCard(c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208+100)==0
 		local b3=Duel.GetFlagEffect(tp,101105208+200)==0
 		return b1 or b2 or b3
 	end
 end
 function c101105208.activate(e,tp,eg,ep,ev,re,r,rp)
-	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:Filter(c101105208.cfilter,nil,tp,re,rp):IsExists(Card.IsCanBeSpecialSummoned,1,nil,e,0,tp,false,false) and Duel.GetFlagEffect(tp,101105208)==0
-	local b2=Duel.IsExistingMatchingCard(c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208+100)==0
+	local b1=eg:Filter(c101105208.cfilter,nil,tp,rp):IsExists(c101105208.spfilter,1,nil,e,tp) and Duel.GetFlagEffect(tp,101105208)==0
+	local b2=Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101105208.rfilter),tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208+100)==0
 	local b3=Duel.GetFlagEffect(tp,101105208+200)==0
 	local off=1
 	local ops={}
@@ -64,17 +74,17 @@ function c101105208.activate(e,tp,eg,ep,ev,re,r,rp)
 	if off==1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
 	local op=Duel.SelectOption(tp,table.unpack(ops))
-	if op==0 then
-		local sg=eg:Filter(c101105208.cfilter,nil,tp,re,rp)
+	if opval[op]==1 then
+		local sg=eg:Filter(c101105208.cfilter,nil,tp,rp):Filter(c101105208.spfilter,nil,e,tp)
 		if #sg>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			sg=eg:Filter(c101105208.cfilter,nil,tp,re,rp):FilterSelect(tp,Card.IsCanBeSpecialSummoned,1,1,nil,e,0,tp,false,false)
+			sg=sg:Select(tp,1,1,nil)
 		end
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		Duel.RegisterFlagEffect(tp,101105208,RESET_PHASE+PHASE_END,0,1)
-	elseif op==1 then
+	elseif opval[op]==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local rg=Duel.SelectMatchingCard(tp,c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+		local rg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101105208.rfilter),tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
 		Duel.HintSelection(rg)
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 		Duel.RegisterFlagEffect(tp,101105208+100,RESET_PHASE+PHASE_END,0,1)
