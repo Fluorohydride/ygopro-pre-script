@@ -9,6 +9,7 @@ function c100416023.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100416023+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100416023.target)
+	e1:SetOperation(c100416023.operation)
 	c:RegisterEffect(e1)
 end
 function c100416023.cfilter(c)
@@ -37,18 +38,16 @@ function c100416023.operation(e,tp,eg,ep,ev,re,r,rp)
 	local b1=ct>=3 and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_PZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c100416023.tpfilter,tp,LOCATION_EXTRA,0,1,nil)
 		and Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0)>0
-	local b2=ct>=5 and Duel.IsExistingMatchingCard(c100416023.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	local b3=ct>=7 and Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)>0
 	if b1 and Duel.SelectYesNo(tp,aux.Stringid(100416023,0)) then
 		c100416023.place(e,tp,eg,ep,ev,re,r,rp)
 	end
-	b2=ct>=5 and Duel.IsExistingMatchingCard(c100416023.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
+	local b2=ct>=5 and Duel.IsExistingMatchingCard(c100416023.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	if b2 and Duel.SelectYesNo(tp,aux.Stringid(100416023,1)) then
 		Duel.BreakEffect()
 		c100416023.specialsummon(e,tp,eg,ep,ev,re,r,rp)
 	end
+	local b3=ct>=7 and Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)>0
 	if b3 and Duel.SelectYesNo(tp,aux.Stringid(100416023,2)) then
 		Duel.BreakEffect()
 		c100416023.destroy(e,tp,eg,ep,ev,re,r,rp)
