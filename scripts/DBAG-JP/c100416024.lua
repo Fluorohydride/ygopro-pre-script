@@ -78,7 +78,7 @@ function c100416024.getscale(c)
 end
 function c100416024.desfilter(c,odevity) 
 	local sc=c100416024.getscale(c)
-	return sc%2==odevity and c:GetOriginalType()&TYPE_PENDULUM>0 and c:IsFaceup()
+	return c:IsSetCard(0x265) and c:GetOriginalType()&TYPE_PENDULUM>0 and c:IsFaceup() and sc%2==odevity
 end
 function c100416024.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(c100416024.desfilter,tp,LOCATION_ONFIELD,0,nil,1)
