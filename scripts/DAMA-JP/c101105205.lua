@@ -55,7 +55,7 @@ function c101105205.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105205.tdlimit(e,c)
-	return (c:IsCode(44508094) or c:IsType(TYPE_SYNCHRO) and aux.AddCodeList(c,44508094)) and c:IsOnField()
+	return (c:IsCode(44508094) or c:IsType(TYPE_SYNCHRO) and aux.IsCodeListed(c,44508094)) and c:IsOnField()
 end
 function c101105205.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)

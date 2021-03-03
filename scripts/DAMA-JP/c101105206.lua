@@ -32,7 +32,7 @@ function c101105206.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c101105206.cfilter(c)
-	return c:IsFaceup() and (c:IsCode(44508094) or c:IsType(TYPE_SYNCHRO) and aux.AddCodeList(c,44508094))
+	return c:IsFaceup() and (c:IsCode(44508094) or c:IsType(TYPE_SYNCHRO) and aux.IsCodeListed(c,44508094))
 end
 function c101105206.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chk=Duel.IsExistingMatchingCard(c101105206.cfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
