@@ -10,7 +10,7 @@ function c101105208.initial_effect(c)
 	c:RegisterEffect(e1)
 	--apply
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_ACTION)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON+CATEGORY_GRAVE_ACTION)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
@@ -44,7 +44,7 @@ function c101105208.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101105208.activate(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:Filter(c101105208.cfilter,nil,tp,rp):IsExists(c101105208.spfilter,1,nil,e,tp) and Duel.GetFlagEffect(tp,101105208)==0
-	local b2=Duel.IsExistingMatchingCard(c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208+100)==0
+	local b2=Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101105208.rfilter),tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208+100)==0
 	local b3=Duel.GetFlagEffect(tp,101105208+200)==0
 	local off=1
 	local ops={}
@@ -77,7 +77,7 @@ function c101105208.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterFlagEffect(tp,101105208,RESET_PHASE+PHASE_END,0,1)
 	elseif opval[op]==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local rg=Duel.SelectMatchingCard(tp,c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+		local rg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101105208.rfilter),tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
 		Duel.HintSelection(rg)
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 		Duel.RegisterFlagEffect(tp,101105208+100,RESET_PHASE+PHASE_END,0,1)
