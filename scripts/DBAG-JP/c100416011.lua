@@ -12,7 +12,7 @@ function c100416011.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100416011,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetCountLimit(1,100416011)
@@ -26,8 +26,7 @@ function c100416011.initial_effect(c)
 	e3:SetCategory(CATEGORY_DECKDES)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetRange(LOCATION_FZONE)
+	e3:SetCode(EVENT_DESTROYED)
 	e3:SetCountLimit(1,100416011+100)
 	e3:SetCondition(c100416011.tgcon2)
 	e3:SetTarget(c100416011.tgtg2)
@@ -36,7 +35,7 @@ function c100416011.initial_effect(c)
 end
 function c100416011.cfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousPosition(POS_FACEUP) and bit.band(c:GetPreviousTypeOnField(),TYPE_MONSTER)~=0
+		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousRaceOnField()&RACE_REPTILE~=0
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)
 end
 function c100416011.tgcon1(e,tp,eg,ep,ev,re,r,rp)
@@ -57,7 +56,7 @@ function c100416011.tgop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100416011.tgcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and rp==1-tp and c:IsReason(REASON_EFFECT)
+	return rp==1-tp and c:IsReason(REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_FZONE) and c:GetPreviousControler()==tp
 end
 function c100416011.tgtg2(e,tp,eg,ep,ev,re,r,rp,chk)
