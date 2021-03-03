@@ -1,6 +1,6 @@
 --シドレミコード・ビューティア
 
---scripted by Xylen5967
+--scripted by Xylen5967 & mercury233
 function c100416020.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
@@ -36,6 +36,7 @@ function c100416020.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_BATTLE_START)
 	e4:SetCountLimit(1)
+	e4:SetCondition(c100416020.descon)
 	e4:SetTarget(c100416020.destg)
 	e4:SetOperation(c100416020.desop)
 	c:RegisterEffect(e4)
@@ -106,7 +107,7 @@ function c100416020.rmop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1,true)
 	end
 end
-function c100416020.descon(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100416020.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local p1=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local p2=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
@@ -116,8 +117,7 @@ function c100416020.descon(e,tp,eg,ep,ev,re,r,rp,chk)
 	if p2 then sp2=p2:GetRightScale() end
 	local scale=math.min(sp1,sp2)
 	local bc=c:GetBattleTarget()
-	if chk==0 then return scale<255 and bc and bc:IsFaceup() and bc:IsAttackAbove(scale*300) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,bc,1,0,0)
+	return scale<255 and bc and bc:IsFaceup() and bc:IsAttackAbove(scale*300)
 end
 function c100416020.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
