@@ -7,6 +7,7 @@ function c100416013.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN+CATEGORY_GRAVE_SPSUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE) 
 	e1:SetCode(EVENT_FREE_CHAIN) 
+	e1:SetCountLimit(1,100416013+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100416013.target)
 	e1:SetOperation(c100416013.operation)
 	c:RegisterEffect(e1)
@@ -22,8 +23,8 @@ function c100416013.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) or Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return false end
 		local cg=Duel.GetMatchingGroup(c100416013.cfilter,tp,LOCATION_GRAVE,0,nil)
 		local tg=Duel.GetMatchingGroup(c100416013.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-		return Duel.IsPlayerCanSpecialSummonMonster(tp,100416113,0,0x4011,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK)
-			or cg:GetClassCount(Card.GetCode)>=8 and tg:GetClassCount(Card.GetCode)>=2
+		return (Duel.IsPlayerCanSpecialSummonMonster(tp,100416113,0,0x4011,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK)
+			or cg:GetClassCount(Card.GetCode)>=8) and tg:GetClassCount(Card.GetCode)>=2
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
