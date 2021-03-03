@@ -95,12 +95,12 @@ function c101105208.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_DAMAGE)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,0)
-		e1:SetValue(c101105208.val)
+		e1:SetValue(c101105208.damval)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		Duel.RegisterFlagEffect(tp,101105208+200,RESET_PHASE+PHASE_END,0,1)
 	end
 end
-function c101105208.val(e,re,dam,r,rp,rc)
+function c101105208.damval(e,re,val,r,rp,rc)
 	return math.floor(val/2)
 end
