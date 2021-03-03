@@ -38,7 +38,7 @@ function c100416035.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(c100416035.negcon)
-	e4:SetCost(c100416035.negcost)
+	e4:SetCost(aux.UrsarcticTributeCost(1,1))
 	e4:SetTarget(c100416035.negtg)
 	e4:SetOperation(c100416035.negop)
 	c:RegisterEffect(e4)
@@ -95,30 +95,42 @@ function c100416035.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return tg and tg:IsExists(c100416035.negfilter,1,nil,tp) and Duel.IsChainNegatable(ev)
 end
-function c100416035.costfilter(c,tp)
-	if c:IsLocation(LOCATION_HAND+LOCATION_MZONE) then
-		return c:IsType(TYPE_MONSTER) and c:IsReleasable()
-	else
-		return c:IsAbleToRemove() and (c:IsHasEffect(100416036,tp) or c:IsHasEffect(100416038,tp))
-	end
-end
-function c100416035.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100416035.costfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,c100416035.costfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
-	local tc=g:GetFirst()
-	local te=tc:IsHasEffect(100416036,tp) or tc:IsHasEffect(100416038,tp)
-	if te then
-		te:UseCountLimit(tp)
-		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
-	else
-		Duel.Release(tc,REASON_COST)
-	end
-end
 function c100416035.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function c100416035.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
+end
+function Auxiliary.replacefilter(c,tp) 
+	return (c:IsHasEffect(100416036,tp) or c:IsHasEffect(100416038,tp)) 
+end
+function Auxiliary.releasefilter(c) 
+	return c:IsType(TYPE_MONSTER) and c:IsReleasable() 
+end
+function Auxiliary.UrsarcticTributeCost(min,max)
+	if not minc then minc=min end
+	if not maxc then maxc=max end
+	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
+				local b1=Duel.IsExistingMatchingCard(Auxiliary.releasefilter,tp,LOCATION_HAND+LOCATION_MZONE,0,min,nil)
+				local b2=Duel.IsExistingMatchingCard(Auxiliary.replacefilter,tp,LOCATION_GRAVE,0,1,nil,tp)
+				if chk==0 then return b1 or b2 end
+				if b2 and (not b1 or Duel.SelectYesNo(tp,226)) then
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+					local g=Duel.SelectMatchingCard(tp,Auxiliary.replacefilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
+					local tc=g:GetFirst()
+					local te=tc:IsHasEffect(100416036,tp) or tc:IsHasEffect(100416038,tp) 
+					te:UseCountLimit(tp)
+					if tc:IsCode(100416036) then
+						Duel.Hint(HINT_CARD,tp,100416036)
+						Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
+					else
+						Duel.Hint(HINT_CARD,tp,100416038)
+						Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
+					end
+				else
+					local g=Duel.SelectMatchingCard(tp,Auxiliary.releasefilter,tp,LOCATION_HAND+LOCATION_MZONE,0,min,max,nil)
+					Duel.Release(g,REASON_COST)
+				end
+			end
 end
