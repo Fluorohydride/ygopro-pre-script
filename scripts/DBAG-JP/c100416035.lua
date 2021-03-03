@@ -99,7 +99,7 @@ function c100416035.costfilter(c,tp)
 	if c:IsLocation(LOCATION_HAND+LOCATION_MZONE) then
 		return c:IsType(TYPE_MONSTER) and c:IsReleasable()
 	else
-		return c:IsAbleToRemove() and c:IsHasEffect(100416038,tp)
+		return c:IsAbleToRemove() and (c:IsHasEffect(100416036,tp) or c:IsHasEffect(100416038,tp))
 	end
 end
 function c100416035.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -107,7 +107,7 @@ function c100416035.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectMatchingCard(tp,c100416035.costfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
 	local tc=g:GetFirst()
-	local te=tc:IsHasEffect(100416038,tp)
+	local te=tc:IsHasEffect(100416036,tp) or tc:IsHasEffect(100416038,tp)
 	if te then
 		te:UseCountLimit(tp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
