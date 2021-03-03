@@ -5,8 +5,10 @@ function c101105205.initial_effect(c)
 	aux.AddCodeList(c,44508094)
 	--to deck
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(c101105205.target)
 	e1:SetOperation(c101105205.activate)
 	c:RegisterEffect(e1)
 	--cannot to deck
@@ -32,10 +34,13 @@ end
 function c101105205.tdfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsLevel(1) and c:IsAbleToDeck() 
 end
+function c101105205.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101105205.tdfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+end
 function c101105205.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.GetMatchingGroup(c101105205.tdfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.GetMatchingGroup(c101105205.tdfilter,tp,LOCATION_DECK+LOCATION_HAND,0,nil)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
@@ -44,12 +49,13 @@ function c101105205.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MoveSequence(tc,0)
 			Duel.ConfirmDecktop(tp,1)
 		else
-			Duel.SendtoDeck(g,nil,0,REASON_EFFECT) 
+			Duel.ConfirmCards(1-tp,tc)
+			Duel.SendtoDeck(tc,nil,0,REASON_EFFECT) 
 		end
 	end
 end
 function c101105205.tdlimit(e,c)
-	return (c:IsCode(44508094) or c:IsType(TYPE_SYNCHRO) and aux.AddCodeList(c,44508094))
+	return (c:IsCode(44508094) or c:IsType(TYPE_SYNCHRO) and aux.AddCodeList(c,44508094)) and c:IsOnField()
 end
 function c101105205.cfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsControler(tp)
