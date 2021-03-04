@@ -49,13 +49,11 @@ function Auxiliary.UrsarcticSpSummonCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	g1:Merge(g2)
 	if chk==0 then return g1:GetCount()>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	tc=g1:Select(tp,1,1,nil):GetFirst()
-	if tc:IsLocation(LOCATION_GRAVE) then
-		local te=tc:IsHasEffect(100416036,tp) or tc:IsHasEffect(100416038,tp)
-		if te then
-			te:UseCountLimit(tp)
-			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
-		end
+	local tc=g1:Select(tp,1,1,nil):GetFirst()
+	local te=tc:IsHasEffect(100416036,tp) or tc:IsHasEffect(100416038,tp)
+	if te then
+		te:UseCountLimit(tp)
+		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 	else
 		Duel.Release(tc,REASON_COST)
 	end
