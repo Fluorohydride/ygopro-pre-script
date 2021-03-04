@@ -45,7 +45,6 @@ function c100416012.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100416012.rfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectReleaseGroup(tp,c100416012.rfilter,1,1,nil,tp)
-	aux.UseExtraReleaseCount(g,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c100416012.spfilter(c,e,tp)

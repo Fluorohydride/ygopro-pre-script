@@ -96,23 +96,25 @@ function c100416035.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return tg and tg:IsExists(c100416035.negfilter,1,nil,tp) and Duel.IsChainNegatable(ev)
 end
 function c100416035.costfilter(c,tp)
-	if c:IsLocation(LOCATION_HAND+LOCATION_MZONE) then
-		return c:IsType(TYPE_MONSTER) and c:IsReleasable()
-	else
-		return c:IsAbleToRemove() and (c:IsHasEffect(100416036,tp) or c:IsHasEffect(100416038,tp))
-	end
+	return c:IsType(TYPE_MONSTER) --and (c:IsControler(tp) or c:IsFaceup())
+end
+function c100416035.excostfilter(c,tp)
+	return c:IsAbleToRemove() and (c:IsHasEffect(100416036,tp) or c:IsHasEffect(100416038,tp))
 end
 function c100416035.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100416035.costfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
+	local g1=Duel.GetReleaseGroup(tp,true):Filter(c100416035.costfilter,nil,tp)
+	local g2=Duel.GetMatchingGroup(c100416035.excostfilter,tp,LOCATION_GRAVE,0,nil,tp)
+	g1:Merge(g2)
+	if chk==0 then return #g1>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,c100416035.costfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
-	local tc=g:GetFirst()
+	local rg=g1:Select(tp,1,1,nil)
+	local tc=rg:GetFirst()
 	local te=tc:IsHasEffect(100416036,tp) or tc:IsHasEffect(100416038,tp)
 	if te then
 		te:UseCountLimit(tp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 	else
-		aux.UseExtraReleaseCount(Group.FromCards(tc),tp)
+		aux.UseExtraReleaseCount(rg,tp)
 		Duel.Release(tc,REASON_COST)
 	end
 end

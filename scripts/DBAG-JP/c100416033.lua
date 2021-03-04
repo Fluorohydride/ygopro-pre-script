@@ -104,20 +104,19 @@ function c100416033.tgfilter(c,e,tp,check)
 		and (c:IsAbleToHand() or check and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c100416033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.GetReleaseGroup(tp):Filter(c100416033.rfilter,e:GetHandler(),tp)
+	local g1=Duel.GetReleaseGroup(tp):Filter(c100416033.rfilter,nil,tp)
 	local g2=Duel.GetMatchingGroup(c100416033.excostfilter,tp,LOCATION_GRAVE,0,nil,tp)
 	g1:Merge(g2)
 	if chk==0 then return g1:IsExists(c100416033.costfilter,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	tc=g1:FilterSelect(tp,c100416033.costfilter,1,1,nil,e,tp):GetFirst()
-	if tc:IsLocation(LOCATION_GRAVE) then
-		local te=tc:IsHasEffect(100416036,tp) or tc:IsHasEffect(100416038,tp)
-		if te then
-			te:UseCountLimit(tp)
-			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
-		end
+	local rg=g1:FilterSelect(tp,c100416033.costfilter,1,1,nil,e,tp)
+	local tc=rg:GetFirst()
+	local te=tc:IsHasEffect(100416036,tp) or tc:IsHasEffect(100416038,tp)
+	if te then
+		te:UseCountLimit(tp)
+		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 	else
-		aux.UseExtraReleaseCount(Group.FromCards(tc),tp)
+		aux.UseExtraReleaseCount(rg,tp)
 		Duel.Release(tc,REASON_COST)
 	end
 end
