@@ -39,38 +39,33 @@ function c100416023.operation(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(c100416023.tpfilter,tp,LOCATION_EXTRA,0,1,nil)
 		and Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0)>0
 	if b1 and Duel.SelectYesNo(tp,aux.Stringid(100416023,0)) then
-		c100416023.place(e,tp,eg,ep,ev,re,r,rp)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_PZONE,0,1,1,nil)
+		if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+			local sg=Duel.SelectMatchingCard(tp,c100416023.tpfilter,tp,LOCATION_EXTRA,0,1,1,nil)
+			local tc=sg:GetFirst()
+			if tc then
+				Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
+			end
+		end
 	end
+	g=Duel.GetMatchingGroup(c100416023.cfilter,tp,LOCATION_ONFIELD,0,nil)
+	ct=g:GetClassCount(Card.GetCode)
 	local b2=ct>=5 and Duel.IsExistingMatchingCard(c100416023.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	if b2 and Duel.SelectYesNo(tp,aux.Stringid(100416023,1)) then
 		Duel.BreakEffect()
-		c100416023.specialsummon(e,tp,eg,ep,ev,re,r,rp)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectMatchingCard(tp,c100416023.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
+	g=Duel.GetMatchingGroup(c100416023.cfilter,tp,LOCATION_ONFIELD,0,nil)
+	ct=g:GetClassCount(Card.GetCode)
 	local b3=ct>=7 and Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)>0
 	if b3 and Duel.SelectYesNo(tp,aux.Stringid(100416023,2)) then
 		Duel.BreakEffect()
-		c100416023.destroy(e,tp,eg,ep,ev,re,r,rp)
+		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)
+		Duel.Destroy(g,REASON_EFFECT)
 	end
-end
-function c100416023.place(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_PZONE,0,1,1,nil)
-	if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local sg=Duel.SelectMatchingCard(tp,c100416023.tpfilter,tp,LOCATION_EXTRA,0,1,1,nil)
-		local tc=sg:GetFirst()
-		if tc then
-			Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
-		end
-	end
-end
-function c100416023.specialsummon(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c100416023.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-end
-function c100416023.destroy(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)
-	Duel.Destroy(g,REASON_EFFECT)
 end
