@@ -109,7 +109,8 @@ function c100416019.actfilter2(c,tp)
 end
 function c100416019.actcon2(e)
 	local a=Duel.GetAttacker()
-	return a and a:IsControler(e:GetHandlerPlayer()) and a:IsSetCard(0x265)
+	local tp=e:GetHandlerPlayer()
+	return a and a:IsControler(tp) and a:IsSetCard(0x265)
 		and Duel.IsExistingMatchingCard(c100416019.pfilter,tp,LOCATION_PZONE,0,1,nil)
 end
 function c100416019.actlimit2(e,re,tp)
