@@ -12,7 +12,7 @@ function c100277002.initial_effect(c)
 	e1:SetCost(c100277002.spcost)
 	e1:SetTarget(c100277002.sptg)
 	e1:SetOperation(c100277002.spop)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--attack up
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100277002,1))

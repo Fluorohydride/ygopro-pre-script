@@ -4,8 +4,8 @@
 function c100416012.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE) 
-	e1:SetCode(EVENT_FREE_CHAIN) 
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -89,7 +89,7 @@ function c100416012.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetSequence()<5
 end
 function c100416012.cfilter(c)
-	return not c:IsRace(RACE_REPTILE) and c:IsFaceup() and c:IsAbleToGrave() 
+	return not c:IsRace(RACE_REPTILE) and c:IsFaceup() and c:IsAbleToGrave()
 end
 function c100416012.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -30,7 +30,7 @@ function c101105207.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c101105207.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	local op
 	if b1 and b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(101105207,0),aux.Stringid(101105207,1),aux.Stringid(101105207,2)) 
+		op=Duel.SelectOption(tp,aux.Stringid(101105207,0),aux.Stringid(101105207,1),aux.Stringid(101105207,2))
 	elseif b1 then
 		op=Duel.SelectOption(tp,aux.Stringid(101105207,0))
 	else

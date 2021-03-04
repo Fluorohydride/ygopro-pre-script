@@ -38,7 +38,7 @@ function c101105206.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chk=Duel.IsExistingMatchingCard(c101105206.cfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 	local g=Duel.SelectMatchingCard(tp,c101105206.tgfilter,tp,LOCATION_DECK,0,1,1,nil,chk)
-	local tc=g:GetFirst() 
+	local tc=g:GetFirst()
 	if tc then
 		if chk and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not tc:IsAbleToGrave() or Duel.SelectOption(tp,1191,1152)==1) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
@@ -62,7 +62,7 @@ function c101105206.lvlop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		local opt=0
 		if tc:IsLevel(1) then
-			opt=Duel.SelectOption(tp,aux.Stringid(101105206,1)) 
+			opt=Duel.SelectOption(tp,aux.Stringid(101105206,1))
 		else
 			opt=Duel.SelectOption(tp,aux.Stringid(101105206,1),aux.Stringid(101105206,2)) --increase / decrease
 		end

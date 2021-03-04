@@ -34,14 +34,14 @@ function c100416022.toexfilter2(c)
 end
 function c100416022.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(c100416022.pendfilter,tp,LOCATION_DECK,0,1,nil)
-		and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) 
+		and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
 	local b2=Duel.IsExistingMatchingCard(c100416022.toexfilter,tp,LOCATION_HAND,0,1,nil)
 		and Duel.IsExistingMatchingCard(c100416022.pendfilter1,tp,LOCATION_DECK,0,1,nil)
 		and Duel.IsExistingMatchingCard(c100416022.pendfilter2,tp,LOCATION_DECK,0,1,nil)
 		and Duel.CheckLocation(tp,LOCATION_PZONE,0) and Duel.CheckLocation(tp,LOCATION_PZONE,1)
 	local b3=Duel.IsExistingMatchingCard(c100416022.toexfilter1,tp,LOCATION_PZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c100416022.toexfilter2,tp,LOCATION_PZONE,0,1,nil)
-		and Duel.IsPlayerCanDraw(tp,2) 
+		and Duel.IsPlayerCanDraw(tp,2)
 	if chk==0 then return b1 or b2 or b3 end
 	local off=1
 	local ops,opval={},{}
@@ -87,16 +87,16 @@ function c100416022.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100416022,3))
 		local g=Duel.SelectMatchingCard(tp,c100416022.toexfilter,tp,LOCATION_HAND,0,1,1,nil)
 		if g:GetCount()>0 and Duel.SendtoExtraP(g,tp,REASON_EFFECT)~=0 then
-			local g1=Duel.GetMatchingGroup(c100416022.pendfilter1,tp,LOCATION_DECK,0,nil) 
-			local g2=Duel.GetMatchingGroup(c100416022.pendfilter2,tp,LOCATION_DECK,0,nil) 
+			local g1=Duel.GetMatchingGroup(c100416022.pendfilter1,tp,LOCATION_DECK,0,nil)
+			local g2=Duel.GetMatchingGroup(c100416022.pendfilter2,tp,LOCATION_DECK,0,nil)
 			if g1:GetCount()>0 and g2:GetCount()>0 then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-				local sg1=g1:Select(tp,1,1,nil) 
+				local sg1=g1:Select(tp,1,1,nil)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 				local sg2=g2:Select(tp,1,1,nil)
-				sg1:Merge(sg2) 
-				local tc=sg1:GetFirst() 
+				sg1:Merge(sg2)
+				local tc=sg1:GetFirst()
 				while tc do
 					Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 					tc=sg1:GetNext()

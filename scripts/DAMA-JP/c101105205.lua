@@ -50,7 +50,7 @@ function c101105205.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmDecktop(tp,1)
 		else
 			Duel.ConfirmCards(1-tp,tc)
-			Duel.SendtoDeck(tc,nil,0,REASON_EFFECT) 
+			Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
 		end
 	end
 end

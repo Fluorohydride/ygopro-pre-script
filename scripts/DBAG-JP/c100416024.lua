@@ -6,7 +6,7 @@ function c100416024.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100416024,0))
@@ -61,7 +61,7 @@ function c100416024.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100416024.scop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100416024.scfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
-	local sc=g:GetFirst() 
+	local sc=g:GetFirst()
 	if sc then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -77,7 +77,7 @@ end
 function c100416024.getscale(c)
 	if c:GetSequence()>0 and c:IsLocation(LOCATION_PZONE) then return c:GetRightScale() else return c:GetLeftScale() end
 end
-function c100416024.desfilter(c,odevity) 
+function c100416024.desfilter(c,odevity)
 	local sc=c100416024.getscale(c)
 	return c:IsSetCard(0x265) and c:GetOriginalType()&TYPE_PENDULUM>0 and c:IsFaceup() and sc%2==odevity
 end

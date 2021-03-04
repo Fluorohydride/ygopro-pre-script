@@ -23,7 +23,8 @@ function c100416025.chkfilter(c,tp,odevity)
 	end
 end
 function c100416025.spfilter(c,e,tp,odevity)
-	return c:IsFaceup() and c:IsSetCard(0x265) and c:IsType(TYPE_PENDULUM) and c:GetLeftScale()%2==odevity  and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsFaceup() and c:IsSetCard(0x265) and c:IsType(TYPE_PENDULUM) and c:GetLeftScale()%2==odevity
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c100416025.chkcon(g,e,tp,odevity)
 	return g:IsExists(c100416025.chkfilter,1,nil,tp,odevity) and Duel.IsExistingMatchingCard(c100416025.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,odevity)
