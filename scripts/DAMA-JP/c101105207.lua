@@ -46,63 +46,47 @@ function c101105207.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101105207.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	local op=e:GetLabel()
 	if op==0 then
-		c101105207.equip(e,tp,eg,ep,ev,re,r,rp)
-	elseif op==1 then
-		c101105207.directattack(e,tp,eg,ep,ev,re,r,rp)
-	else
-		c101105207.damage(e,tp,eg,ep,ev,re,r,rp)
-	end
-end
-function c101105207.equip(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g=Duel.SelectMatchingCard(tp,c101105207.eqfilter,tp,0,LOCATION_MZONE,1,1,nil)
-		local ec=g:GetFirst()
-		if ec then
-			if not Duel.Equip(tp,ec,tc) then return end
-			--equip limit
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_EQUIP_LIMIT)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetLabelObject(tc)
-			e1:SetValue(c101105207.eqlimit)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			ec:RegisterEffect(e1)
+		if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+			local g=Duel.SelectMatchingCard(tp,c101105207.eqfilter,tp,0,LOCATION_MZONE,1,1,nil)
+			local ec=g:GetFirst()
+			if ec then
+				if not Duel.Equip(tp,ec,tc) then return end
+				--equip limit
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_EQUIP_LIMIT)
+				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+				e1:SetLabelObject(tc)
+				e1:SetValue(c101105207.eqlimit)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				ec:RegisterEffect(e1)
+			end
 		end
-	end
-end
-function c101105207.eqlimit(e,c)
-	return c==e:GetLabelObject()
-end
-function c101105207.directattack(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	elseif op==1 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+	else
+		tc:RegisterFlagEffect(101105207,RESET_EVENT+RESETS_STANDARD,0,1,tc:GetFieldID())
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_BATTLE_DESTROYING)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetLabelObject(tc)
+		e1:SetCondition(c101105207.damcon)
+		e1:SetOperation(c101105207.damop)
+		Duel.RegisterEffect(e1,tp)
 	end
 end
-function c101105207.damage(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) then return end
-	tc:RegisterFlagEffect(101105207,RESET_EVENT+RESETS_STANDARD,0,1,tc:GetFieldID())
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_BATTLE_DESTROYING)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e1:SetLabelObject(tc)
-	e1:SetCondition(c101105207.damcon)
-	e1:SetOperation(c101105207.damop)
-	Duel.RegisterEffect(e1,tp)
+function c101105207.eqlimit(e,c)
+	return c==e:GetLabelObject()
 end
 function c101105207.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
@@ -114,7 +98,7 @@ function c101105207.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	local bc=tc:GetBattleTarget()
 	if not bc then return end
-	local dam=math.max(bc:GetBaseAttack(),0)
+	local dam=bc:GetBaseAttack()
 	if dam>0 then
 		Duel.Hint(HINT_CARD,0,101105207)
 		Duel.Damage(1-tp,dam,REASON_EFFECT)
