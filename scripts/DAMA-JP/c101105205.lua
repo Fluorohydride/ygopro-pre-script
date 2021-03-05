@@ -68,17 +68,23 @@ function c101105205.spfilter(c,e,tp)
 end
 function c101105205.optg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local b1=Duel.IsPlayerCanDraw(tp,1) and Duel.GetFlagEffect(tp,101105205)==0
-	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101105205.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.GetFlagEffect(tp,101105205+100)==0
+	local b1=Duel.IsPlayerCanDraw(tp,1)
+		and Duel.GetFlagEffect(tp,101105205)==0
+	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101105205.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
+		and Duel.GetFlagEffect(tp,101105205+100)==0
 	if chk==0 then return b1 or b2 end
 end
 function c101105205.opop(e,tp,eg,ep,ev,re,r,rp)
-	local b1=Duel.IsPlayerCanDraw(tp,1) and Duel.GetFlagEffect(tp,101105205)==0
-	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101105205.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.GetFlagEffect(tp,101105205+100)==0
+	local b1=Duel.IsPlayerCanDraw(tp,1)
+		and Duel.GetFlagEffect(tp,101105205)==0
+	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101105205.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
+		and Duel.GetFlagEffect(tp,101105205+100)==0
 	local op=0
 	if b1 and b2 then op=Duel.SelectOption(tp,aux.Stringid(101105205,1),aux.Stringid(101105205,2))
-	elseif b1 then op=Duel.SelectOption(tp,aux.Stringid(101105205,1)) --Draw 1 Card
-	elseif b2 then op=Duel.SelectOption(tp,aux.Stringid(101105205,2))+1 --Special Summoned 1 Tuner from your hand
+	elseif b1 then op=Duel.SelectOption(tp,aux.Stringid(101105205,1))
+	elseif b2 then op=Duel.SelectOption(tp,aux.Stringid(101105205,2))+1
 	else return end
 	if op==0 then
 		Duel.Draw(tp,1,REASON_EFFECT)

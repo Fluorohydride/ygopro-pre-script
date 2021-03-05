@@ -5,7 +5,7 @@ function c101105206.initial_effect(c)
 	aux.AddCodeList(c,44508094)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101105206)
@@ -24,23 +24,29 @@ function c101105206.initial_effect(c)
 	e2:SetOperation(c101105206.lvlop)
 	c:RegisterEffect(e2)
 end
-function c101105206.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xa3) and c:IsAbleToGrave()
-end
-function c101105206.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101105206.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+function c101105206.tgfilter(c,check)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xa3)
+		and (c:IsAbleToGrave() or check and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c101105206.cfilter(c)
 	return c:IsFaceup() and (c:IsCode(44508094) or c:IsType(TYPE_SYNCHRO) and aux.IsCodeListed(c,44508094))
 end
+function c101105206.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		local check=Duel.IsExistingMatchingCard(c101105206.cfilter,tp,LOCATION_MZONE,0,1,nil)
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		return Duel.IsExistingMatchingCard(c101105206.tgfilter,tp,LOCATION_DECK,0,1,nil,check)
+	end
+end
 function c101105206.activate(e,tp,eg,ep,ev,re,r,rp)
-	local chk=Duel.IsExistingMatchingCard(c101105206.cfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local check=Duel.IsExistingMatchingCard(c101105206.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local g=Duel.SelectMatchingCard(tp,c101105206.tgfilter,tp,LOCATION_DECK,0,1,1,nil,chk)
+	local g=Duel.SelectMatchingCard(tp,c101105206.tgfilter,tp,LOCATION_DECK,0,1,1,nil,check)
 	local tc=g:GetFirst()
 	if tc then
-		if chk and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not tc:IsAbleToGrave() or Duel.SelectOption(tp,1191,1152)==1) then
+		if check and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			and (not tc:IsAbleToGrave() or Duel.SelectOption(tp,1191,1152)==1) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		else
 			Duel.SendtoGrave(tc,REASON_EFFECT)
@@ -48,10 +54,10 @@ function c101105206.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105206.lvlfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xa3)
+	return c:IsFaceup() and c:IsSetCard(0xa3) and c:IsLevelAbove(0)
 end
 function c101105206.lvltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101105206.lvlfilter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101105206.lvlfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101105206.lvlfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 	local g=Duel.SelectTarget(tp,c101105206.lvlfilter,tp,LOCATION_MZONE,0,1,1,nil)
@@ -64,7 +70,7 @@ function c101105206.lvlop(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsLevel(1) then
 			opt=Duel.SelectOption(tp,aux.Stringid(101105206,1))
 		else
-			opt=Duel.SelectOption(tp,aux.Stringid(101105206,1),aux.Stringid(101105206,2)) --increase / decrease
+			opt=Duel.SelectOption(tp,aux.Stringid(101105206,1),aux.Stringid(101105206,2))
 		end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

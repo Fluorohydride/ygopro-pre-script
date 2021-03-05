@@ -19,23 +19,42 @@ end
 function c101105207.eqfilter(c)
 	return c:IsFaceup() and c:IsAbleToChangeControler()
 end
+function c101105207.dafilter(c)
+	return c101105207.filter(c) and not c:IsHasEffect(EFFECT_DIRECT_ATTACK)
+end
 function c101105207.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101105207.filter(chkc) end
 	local b1=Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c101105207.eqfilter,tp,0,LOCATION_MZONE,1,nil)
 	local b2=aux.bpcon()
-	if chk==0 then return (b1 or b2)
+		and Duel.IsExistingTarget(c101105207.dafilter,tp,LOCATION_MZONE,0,1,nil)
+	local b3=aux.bpcon()
+	if chk==0 then return (b1 or b2 or b3)
 		and Duel.IsExistingTarget(c101105207.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c101105207.filter,tp,LOCATION_MZONE,0,1,1,nil)
-	local op
-	if b1 and b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(101105207,0),aux.Stringid(101105207,1),aux.Stringid(101105207,2))
-	elseif b1 then
-		op=Duel.SelectOption(tp,aux.Stringid(101105207,0))
-	else
-		op=Duel.SelectOption(tp,aux.Stringid(101105207,1),aux.Stringid(101105207,2))+1
+	b2=aux.bpcon() and not g:GetFirst():IsHasEffect(EFFECT_DIRECT_ATTACK)
+	local off=1
+	local ops={}
+	local opval={}
+	if b1 then
+		ops[off]=aux.Stringid(101105207,0)
+		opval[off-1]=0
+		off=off+1
 	end
+	if b2 then
+		ops[off]=aux.Stringid(101105207,1)
+		opval[off-1]=1
+		off=off+1
+	end
+	if b3 then
+		ops[off]=aux.Stringid(101105207,2)
+		opval[off-1]=2
+		off=off+1
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
+	local sel=Duel.SelectOption(tp,table.unpack(ops))
+	local op=opval[sel]
 	e:SetLabel(op)
 	if op==0 then
 		e:SetCategory(CATEGORY_EQUIP)

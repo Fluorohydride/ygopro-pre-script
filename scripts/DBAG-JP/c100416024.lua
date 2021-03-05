@@ -54,13 +54,14 @@ function c100416024.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100416024.scfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x265) and c:GetOriginalType()&TYPE_PENDULUM>0
+	return c:IsFaceup() and c:IsSetCard(0x265) and c:IsLevelAbove(0)
 end
 function c100416024.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100416024.scfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100416024.scfilter,tp,LOCATION_PZONE,0,1,nil) end
 end
 function c100416024.scop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.SelectMatchingCard(tp,c100416024.scfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local g=Duel.SelectMatchingCard(tp,c100416024.scfilter,tp,LOCATION_PZONE,0,1,1,nil)
 	local sc=g:GetFirst()
 	if sc then
 		local e1=Effect.CreateEffect(e:GetHandler())
