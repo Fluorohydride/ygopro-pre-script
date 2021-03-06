@@ -15,9 +15,10 @@ function c100416012.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetHintTiming(0,TIMING_MAIN_END)
 	e2:SetCountLimit(1,100416012)
-	e2:SetCost(c100416012.spcost)
 	e2:SetCondition(c100416012.spcon)
+	e2:SetCost(c100416012.spcost)
 	e2:SetTarget(c100416012.sptg)
 	e2:SetOperation(c100416012.spop)
 	c:RegisterEffect(e2)
@@ -27,8 +28,6 @@ function c100416012.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCountLimit(1,100416012+100)
 	e3:SetCondition(c100416012.tgcon)
 	e3:SetTarget(c100416012.tgtg)
 	e3:SetOperation(c100416012.tgop)
@@ -39,7 +38,8 @@ function c100416012.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c100416012.rfilter(c,tp)
-	return c:IsRace(RACE_REPTILE) and (c:IsControler(tp) or c:IsFaceup()) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsRace(RACE_REPTILE) and c:IsType(TYPE_EFFECT)
+		and (c:IsControler(tp) or c:IsFaceup()) and Duel.GetMZoneCount(tp,c)>0
 end
 function c100416012.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100416012.rfilter,1,nil,tp) end

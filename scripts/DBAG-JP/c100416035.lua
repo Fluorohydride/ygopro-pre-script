@@ -96,7 +96,7 @@ function c100416035.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return tg and tg:IsExists(c100416035.negfilter,1,nil,tp) and Duel.IsChainNegatable(ev)
 end
 function c100416035.costfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) --and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsType(TYPE_MONSTER) and (c:IsControler(tp) or c:IsFaceup())
 end
 function c100416035.excostfilter(c,tp)
 	return c:IsAbleToRemove() and (c:IsHasEffect(100416036,tp) or c:IsHasEffect(100416038,tp))

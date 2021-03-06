@@ -19,7 +19,7 @@ function c100416023.tpfilter(c)
 	return c:IsSetCard(0x265) and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and not c:IsForbidden()
 end
 function c100416023.spfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x265) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x265) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100416023.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100416023.cfilter,tp,LOCATION_ONFIELD,0,nil)

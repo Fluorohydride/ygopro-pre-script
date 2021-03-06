@@ -42,7 +42,9 @@ function c100416006.thfilter(c,tp)
 end
 function c100416006.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100416006.thfilter),tp,0,LOCATION_GRAVE,1,nil,tp) and Duel.SelectYesNo(1-tp,aux.Stringid(100416006,2)) then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
+		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100416006.thfilter),tp,0,LOCATION_GRAVE,1,nil,tp)
+		and Duel.SelectYesNo(1-tp,aux.Stringid(100416006,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(1-tp,aux.NecroValleyFilter(c100416006.thfilter),tp,0,LOCATION_GRAVE,1,1,nil,tp)

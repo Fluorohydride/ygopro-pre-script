@@ -34,7 +34,7 @@ function c100416011.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100416011.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousRaceOnField()&RACE_REPTILE~=0
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)
 end
@@ -57,7 +57,7 @@ end
 function c100416011.tgcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp==1-tp and c:IsReason(REASON_EFFECT)
-		and c:IsPreviousLocation(LOCATION_FZONE) and c:GetPreviousControler()==tp
+		and c:IsPreviousLocation(LOCATION_FZONE) and c:IsPreviousControler(tp)
 end
 function c100416011.tgtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroup(Card.IsRace,tp,LOCATION_GRAVE,0,nil,RACE_REPTILE):GetClassCount(Card.GetCode)

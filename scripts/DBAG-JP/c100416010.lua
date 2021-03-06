@@ -7,7 +7,7 @@ function c100416010.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,100416010)
+	e1:SetCountLimit(1,100416010+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100416010.target)
 	e1:SetOperation(c100416010.activate)
 	c:RegisterEffect(e1)
@@ -28,13 +28,11 @@ end
 function c100416010.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100416010.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()==0 then return end
-	if Duel.SendtoGrave(g,REASON_EFFECT)==0 then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local cg=Duel.GetMatchingGroup(c100416010.cfilter,tp,LOCATION_GRAVE,0,nil)
-	local ct=cg:GetClassCount(Card.GetCode)
-	if ct<5 then return end	
-	if Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100416010.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)
+	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0
+		and Duel.GetOperatedGroup():GetFirst():IsLocation(LOCATION_GRAVE)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetMatchingGroup(c100416010.cfilter,tp,LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)>=5
+		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100416010.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(100416010,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

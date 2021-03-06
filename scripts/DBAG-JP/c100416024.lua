@@ -39,10 +39,11 @@ function c100416024.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100416024.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x265) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x265) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c100416024.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100416024.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_EXTRA)
 end
 function c100416024.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -58,6 +59,7 @@ function c100416024.scfilter(c)
 end
 function c100416024.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100416024.scfilter,tp,LOCATION_PZONE,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function c100416024.scop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
@@ -89,6 +91,7 @@ function c100416024.descon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100416024.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end

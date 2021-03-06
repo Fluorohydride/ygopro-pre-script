@@ -44,7 +44,8 @@ function c100416003.spfilter(c,e,tp,atk)
 end
 function c100416003.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 and Duel.IsExistingTarget(c100416003.tgfilter,tp,0,LOCATION_MZONE,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
+		and Duel.IsExistingTarget(c100416003.tgfilter,tp,0,LOCATION_MZONE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=Duel.SelectTarget(tp,c100416003.tgfilter,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
 	e:SetLabelObject(g1:GetFirst())
@@ -59,7 +60,8 @@ function c100416003.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local lc=tg:GetFirst()
 	if lc==tc then lc=tg:GetNext() end
-	if lc:IsRelateToEffect(e) and Duel.SpecialSummon(lc,0,tp,1-tp,false,false,POS_FACEUP)~=0 and tc:IsRelateToEffect(e) and tc:IsControler(1-tp) then
+	if lc:IsRelateToEffect(e) and Duel.SpecialSummon(lc,0,tp,1-tp,false,false,POS_FACEUP)~=0
+		and tc:IsRelateToEffect(e) and tc:IsControler(1-tp) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
 end

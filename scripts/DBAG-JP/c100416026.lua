@@ -16,7 +16,8 @@ function c100416026.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x265)
 end
 function c100416026.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100416026.confilter,tp,LOCATION_PZONE,0,1,nil) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and rp==1-tp
+	return Duel.IsExistingMatchingCard(c100416026.confilter,tp,LOCATION_PZONE,0,1,nil)
+		and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and rp==1-tp
 end
 function c100416026.tdfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsAbleToDeck()
@@ -32,7 +33,8 @@ function c100416026.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,c100416026.tdfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 	local tc=g:GetFirst()
-	if tc and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) and Duel.IsExistingMatchingCard(c100416026.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then
+	if tc and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(c100416026.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then
 		Duel.BreakEffect()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)

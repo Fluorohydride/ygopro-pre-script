@@ -73,11 +73,8 @@ end
 function c100416034.distg(e,c)
 	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsLevel(0)
 end
-function c100416034.cfilter(c,sp)
-	return c:GetSummonPlayer()==sp
-end
 function c100416034.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100416034.cfilter,1,nil,1-tp)
+	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function c100416034.thfilter(c)
 	return c:IsSetCard(0x261) and c:IsAbleToHand()

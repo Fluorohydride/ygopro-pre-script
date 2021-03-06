@@ -77,7 +77,8 @@ function c100416019.chlimit(e,ep,tp)
 	return ep==tp or e:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function c100416019.cfilter(c,e,tp)
-	return (c:IsControler(tp) or c:IsFaceup()) and c:IsSetCard(0x265) and c:IsType(TYPE_PENDULUM)
+	return (c:IsControler(tp) or c:IsFaceup()) and Duel.GetMZoneCount(tp,c)>0
+		and c:IsSetCard(0x265) and c:IsType(TYPE_PENDULUM)
 		and Duel.IsExistingMatchingCard(c100416019.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLeftScale())
 end
 function c100416019.spfilter(c,e,tp,sc)
@@ -91,7 +92,7 @@ end
 function c100416019.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectReleaseGroup(tp,c100416019.cfilter,1,1,nil,e,tp)
-	if Duel.Release(g,REASON_COST)>0 then
+	if Duel.Release(g,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,c100416019.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,g:GetFirst():GetLeftScale())
 		if sg:GetCount()>0 then
@@ -103,9 +104,6 @@ function c100416019.pfilter(c)
 	local lsc=c:GetLeftScale()
 	local rsc=c:GetRightScale()
 	return (lsc%2~=0 or rsc%2~=0) and c:IsType(TYPE_PENDULUM)
-end
-function c100416019.actfilter2(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x265) and c:IsControler(tp)
 end
 function c100416019.actcon2(e)
 	local a=Duel.GetAttacker()

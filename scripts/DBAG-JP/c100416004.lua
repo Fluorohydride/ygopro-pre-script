@@ -5,7 +5,7 @@ function c100416004.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100416004,0))
-	e1:SetCategory(CATEGORY_DRAW+CATEGORY_TOHAND)
+	e1:SetCategory(CATEGORY_DRAW+CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_HANDES)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -40,7 +40,8 @@ function c100416004.drfilter(c)
 	return not c:IsCode(100416004) and c:IsSetCard(0x264) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100416004.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) and Duel.IsExistingMatchingCard(c100416004.drfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1)
+		and Duel.IsExistingMatchingCard(c100416004.drfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
