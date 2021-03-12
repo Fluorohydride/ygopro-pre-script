@@ -34,8 +34,8 @@ function c101105043.effcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105043.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local chk1=c:GetMaterial():FilterCount(Card.IsCode,nil,72717433)>0
-	local chk2=c:GetMaterial():FilterCount(Card.IsCode,nil,18106132)>0
+	local chk1=c:GetMaterial():FilterCount(Card.IsCode,nil,101105011)>0
+	local chk2=c:GetMaterial():FilterCount(Card.IsCode,nil,101105012)>0
 	if chk==0 then return (chk1 and Duel.IsPlayerCanDraw(tp,1) or chk2) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
@@ -43,8 +43,8 @@ function c101105043.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101105043.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local chk1=c:GetMaterial():FilterCount(Card.IsCode,nil,72717433)>0
-	local chk2=c:GetMaterial():FilterCount(Card.IsCode,nil,18106132)>0
+	local chk1=c:GetMaterial():FilterCount(Card.IsCode,nil,101105011)>0
+	local chk2=c:GetMaterial():FilterCount(Card.IsCode,nil,101105012)>0
 	if chk1 then
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Draw(p,d,REASON_EFFECT)
