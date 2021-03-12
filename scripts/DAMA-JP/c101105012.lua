@@ -11,7 +11,7 @@ function c101105012.initial_effect(c)
 	e1:SetCountLimit(1,101105012)
 	e1:SetCondition(c101105012.sprcon)
 	c:RegisterEffect(e1)
-	--to hand
+	--to hand or special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101105012,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
