@@ -15,7 +15,7 @@ function c101105073.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101105073.cfilter(c)
-	return (c:IsSetCard(0x18f) and c:IsType(TYPE_RITUAL) or c:IsSetCard(0x18f) and c:IsType(TYPE_MONSTER) and c:IsSummonLocation(LOCATION_EXTRA)) 
+	return (c:IsSetCard(0x266) and c:IsType(TYPE_RITUAL) or c:IsSetCard(0x18f) and c:IsType(TYPE_MONSTER) and c:IsSummonLocation(LOCATION_EXTRA)) 
 end
 function c101105073.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(c101105073.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
