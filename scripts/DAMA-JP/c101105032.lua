@@ -29,7 +29,7 @@ function c101105032.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101105032.srfilter(c)
-	return c:IsSetCard(0x18f) and c:IsAbleToHand()
+	return c:IsSetCard(0x266) and c:IsAbleToHand()
 end
 function c101105032.srcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
@@ -47,7 +47,7 @@ function c101105032.srop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105032.cfilter(c)
-	return c:IsType(TYPE_NORMAL)
+	return (c:IsType(TYPE_NORMAL) or c:IsType(TYPE_RITUAL) and c:IsSetCard(0x266))
 end
 function c101105032.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
