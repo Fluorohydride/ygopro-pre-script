@@ -4,6 +4,12 @@ function c100341201.initial_effect(c)
 	c:EnableReviveLimit()
 	--mat="Cyberdark Dragon" + "Cyber End Dragon"
 	aux.AddFusionProcCode2(c,40418351,1546123,true,true)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e4:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e4:SetValue(aux.fuslimit)
+	c:RegisterEffect(e4)
 	--Must be either Fusion Summoned, or Special Summoned by Tributing 1 Level 10 or lower "Cyberdark" Fusion Monster equipped with "Cyber End Dragon".
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)
@@ -38,21 +44,26 @@ function c100341201.initial_effect(c)
 end
 function c100341201.rfilter(c,tc)
 	local tp=tc:GetControler()
-	return c:IsLevelBelow(10) and c:IsSetCard(0x4093) and c:GetEquipGroup():IsExists(aux.AND(Card.IsCode,1,nil,1546123) and Duel.GetLocationCountFromEx(tp,tp,c,tc)
+	return c:IsConteroler(tp) and c:IsLevelBelow(10) and c:IsSetCard(0x4093) and c:IsFusionType(TYPE_FUSION) and c:GetEquipGroup():IsExists(aux.AND(Card.IsCode,1,nil,1546123) and Duel.GetLocationCountFromEx(tp,tp,c,tc) and c:IsCanBeFusionMaterial(tc,SUMMON_TYPE_SPECIAL)
 end
 function c100341201.sprcon(e,c)
 	if c==nil then return true end
 	return Duel.CheckReleaseGroup(c:GetControler(),c100341201.rfilter,1,nil,c)
 end
 function c100341201.sprop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Release(Duel.SelectReleaseGroup(c:GetControler(),c100341201.rfilter,1,1,nil),REASON_COST)
+	local g=Duel.SelectReleaseGroup(c:GetControler(),c100341201.rfilter,1,1,nil)
+	c:SetMaterial(g)
+	Duel.Release(g,REASON_COST)
 end
 function c100341201.efilter(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActivated()
 end
+function c100341201.eqfilter(c,tp)
+	return c:IsType(TYPE_MONSTER) and c:CheckUniqueOnField(tp) and not c:IsForbidden() and (c:IsControler(tp) or c:IsAbleToChangeControler())
+end
 function c100341201.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(aux.AND(Card.CheckUniqueOnField,aux.NOT(Card.IsForbidden)),tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,tp) end
+		and Duel.IsExistingMatchingCard(c100341201.eqfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,PLAYER_ALL,0)
 end
@@ -60,7 +71,7 @@ function c100341201.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(aux.AND(Card.CheckUniqueOnField,aux.NOT(Card.IsForbidden))),tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100341201.eqfilter),tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,tp):GetFirst()
 	if tc then
 		if not Duel.Equip(tp,tc,c) then return end
 		local e1=Effect.CreateEffect(c)
