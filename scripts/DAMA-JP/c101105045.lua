@@ -29,6 +29,12 @@ function c101105045.matcon(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101105045.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_OATH)
+	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e:GetHandler():RegisterEffect(e1)
 	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function c101105045.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
