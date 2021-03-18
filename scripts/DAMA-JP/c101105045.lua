@@ -3,7 +3,7 @@
 --Script by XyleN5967
 function c101105045.initial_effect(c)
 	--xyz procedure
-	aux.AddXyzProcedure(c,nil,4,2)
+	aux.AddXyzProcedure(c,nil,7,2)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
