@@ -14,7 +14,7 @@ function c101105012.initial_effect(c)
 	--to hand or special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101105012,0))
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101105012+100)
@@ -29,26 +29,24 @@ function c101105012.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c101105012.sprfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c101105012.sprfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c101105012.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK)
 end
 function c101105012.filter(c,e,tp)
 	return c:IsCode(101105011) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c101105012.operation(e,tp,eg,ep,ev,re,r,rp)
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	Duel.ConfirmDecktop(p,3)
-	local g=Duel.GetDecktopGroup(p,3)
-	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101105012,1)) then
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
-		local sg=g:FilterSelect(p,c101105012.filter,1,1,nil,e,tp)
+	local g=Duel.GetDecktopGroup(tp,3)
+	if #g<3 then return end
+	Duel.ConfirmDecktop(tp,3)
+	local tg=g:Filter(c101105012.filter,nil,e,tp)
+	if #tg>0 and Duel.SelectYesNo(tp,aux.Stringid(101105012,1)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
+		local sg=tg:Select(tp,1,1,nil)
 		local tc=sg:GetFirst()
-		if tc and tc:IsAbleToHand() and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) or Duel.SelectOption(tp,1190,1152)==0) then
+		if tc:IsAbleToHand() and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) or Duel.SelectOption(tp,1190,1152)==0) then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,tc)
 		else
