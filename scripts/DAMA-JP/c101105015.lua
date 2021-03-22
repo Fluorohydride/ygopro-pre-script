@@ -25,7 +25,7 @@ function c101105015.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101105015.spfilter(c,e,tp)
-	return c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:GetTextAttack()==c:GetTextDefense() and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101105015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -51,7 +51,7 @@ function c101105015.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end
 function c101105015.atkfilter2(c)
-	return c:IsFaceup() and c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE)
+	return c:IsFaceup() and c:GetTextAttack()==c:GetTextDefense() and c:IsRace(RACE_MACHINE)
 end
 function c101105015.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
