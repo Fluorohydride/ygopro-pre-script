@@ -1,4 +1,4 @@
---驚楽園の助手<Delia>
+--驚楽園の助手 ＜Delia＞
 
 --scripted by XyleN5967
 function c101105020.initial_effect(c)
@@ -44,24 +44,26 @@ function c101105020.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-function c101105020.costfilter(c)
+function c101105020.costfilter(c,ft)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_TRAP) and c:IsSetCard(0x15c) and c:IsAbleToGraveAsCost()
+		and (ft>0 or c:IsOnField() and ft>-1)
 end
 function c101105020.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101105020.costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) end
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101105020.costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,ft) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c101105020.costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101105020.costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,ft)
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function c101105020.setfilter(c)
-	return c:IsSetCard(0x15c) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+function c101105020.setfilter(c,chk)
+	return c:IsSetCard(0x15c) and c:IsType(TYPE_TRAP) and c:IsSSetable(chk)
 end
 function c101105020.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101105020.setfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101105020.setfilter,tp,LOCATION_DECK,0,1,nil,true) end
 end
 function c101105020.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectMatchingCard(tp,c101105020.setfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101105020.setfilter,tp,LOCATION_DECK,0,1,1,nil,false)
 	if g:GetCount()>0 then
 		Duel.SSet(tp,g:GetFirst())
 	end
