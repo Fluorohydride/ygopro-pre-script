@@ -1,5 +1,5 @@
+--弩級軍貫－いくら型一番艦
 --Dreadnought Suship – Roe-class First Wardish
-
 --scripted by XyleN5967
 function c101105043.initial_effect(c)
 	--xyz procedure
@@ -37,17 +37,16 @@ function c101105043.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local chk1=c:GetMaterial():FilterCount(Card.IsCode,nil,101105011)>0
 	local chk2=c:GetMaterial():FilterCount(Card.IsCode,nil,101105012)>0
 	if chk==0 then return (chk1 and Duel.IsPlayerCanDraw(tp,1) or chk2) end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	if chk1 then
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	end
 end
 function c101105043.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local chk1=c:GetMaterial():FilterCount(Card.IsCode,nil,101105011)>0
 	local chk2=c:GetMaterial():FilterCount(Card.IsCode,nil,101105012)>0
 	if chk1 then
-		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-		Duel.Draw(p,d,REASON_EFFECT)
+		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 	if chk2 then
 		local e1=Effect.CreateEffect(c)
@@ -60,7 +59,7 @@ function c101105043.effop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105043.descon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
-	return ep~=tp and rc:IsControler(tp) and rc:IsSetCard(0x19a) and rc:IsSummonLocation(LOCATION_EXTRA)
+	return ep~=tp and rc:IsControler(tp) and rc:IsSetCard(0x267) and rc:IsSummonLocation(LOCATION_EXTRA)
 end
 function c101105043.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() end
