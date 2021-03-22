@@ -1,5 +1,5 @@
+--魔鍵銃－バトスバスター
 --Magikey - Bastosbuster
-
 --scripted by XyleN5967
 function c101105032.initial_effect(c)
 	c:EnableReviveLimit()
@@ -28,11 +28,11 @@ function c101105032.initial_effect(c)
 	e2:SetOperation(c101105032.disop)
 	c:RegisterEffect(e2)
 end
-function c101105032.srfilter(c)
-	return c:IsSetCard(0x266) and c:IsAbleToHand()
-end
 function c101105032.srcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+end
+function c101105032.srfilter(c)
+	return c:IsSetCard(0x266) and c:IsAbleToHand()
 end
 function c101105032.srtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101105032.srfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -46,26 +46,24 @@ function c101105032.srop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c101105032.cfilter(c)
-	return (c:IsType(TYPE_NORMAL) or c:IsType(TYPE_RITUAL) and c:IsSetCard(0x266))
+function c101105032.cfilter(c,attr)
+	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266)) and c:IsAttribute(attr)
 end
 function c101105032.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
-	local attr=0
-	for tc in aux.Next(Duel.GetMatchingGroup(c101105032.cfilter,tp,LOCATION_GRAVE,0,nil)) do
-		attr=attr|tc:GetAttribute()
-	end
 	e:SetLabelObject(tc)
-	return tc and tc:IsFaceup() and tc:IsControler(1-tp) and tc:IsType(TYPE_MONSTER)
-		and tc:GetAttribute()==attr and not tc:IsStatus(STATUS_DISABLED) 
+	return tc and tc:IsFaceup() and tc:IsControler(1-tp) and tc:IsType(TYPE_MONSTER) and not tc:IsStatus(STATUS_DISABLED)
+		and Duel.IsExistingMatchingCard(c101105032.cfilter,tp,LOCATION_GRAVE,0,1,nil,tc:GetAttribute())
 end
 function c101105032.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
-	if chk==0 then return Duel.IsPlayerCanDraw(tp) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp)
+		and Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c101105032.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -81,6 +79,9 @@ function c101105032.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		tc:RegisterEffect(e2)
 		Duel.BreakEffect()
 		Duel.Draw(p,g:GetCount(),REASON_EFFECT)
 	end
