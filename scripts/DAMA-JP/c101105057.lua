@@ -1,5 +1,5 @@
+--魔鍵施解
 --Magikey - Unsealing
-
 --scripted by XyleN5967
 function c101105057.initial_effect(c)
 	--Activate
@@ -25,13 +25,13 @@ function c101105057.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetCountLimit(1,101105057)
+	e3:SetCountLimit(1,101105057+100)
 	e3:SetTarget(c101105057.thtg)
 	e3:SetOperation(c101105057.thop)
 	c:RegisterEffect(e3)
 end
 function c101105057.filter(c)
-	return c:IsSetCard(0x266) and c:IsAbleToHand()
+	return c:IsSetCard(0x266) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101105057.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
