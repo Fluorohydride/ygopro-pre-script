@@ -12,7 +12,8 @@ function c101105045.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1)
+	e1:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
+	e1:SetCondition(c101105045.nomatcon)
 	e1:SetCost(c101105045.descost)
 	e1:SetTarget(c101105045.destg)
 	e1:SetOperation(c101105045.desop)
@@ -23,29 +24,34 @@ function c101105045.initial_effect(c)
 	e2:SetCondition(c101105045.matcon)
 	c:RegisterEffect(e2)
 end
-function c101105045.matcon(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101105045.nomatcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return not c:GetOverlayGroup():IsExists(Card.IsRace,1,nil,RACE_DRAGON)
+end
+function c101105045.matcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetOverlayGroup():IsExists(Card.IsRace,1,nil,RACE_DRAGON)
 end
 function c101105045.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local c=e:GetHandler()
+	if chk==0 then return c:CheckRemoveOverlayCard(tp,2,REASON_COST) and c:GetAttackAnnouncedCount()==0 end
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_OATH)
-	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e:GetHandler():RegisterEffect(e1)
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
+	c:RegisterEffect(e1)
+	c:RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function c101105045.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc~=e:GetHandler() end
+	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
-function c101105045.checkfilter(c,tp)
-	return (c:IsPreviousControler(tp) or c:IsPreviousControler(1-tp)) and c:GetPreviousTypeOnField()&TYPE_MONSTER~=0
+function c101105045.checkfilter(c)
+	return c:GetPreviousTypeOnField()&TYPE_MONSTER~=0
 end
 function c101105045.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -53,9 +59,11 @@ function c101105045.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Destroy(tc,REASON_EFFECT)
 		local og=Duel.GetOperatedGroup()
-		if og:IsExists(c101105045.checkfilter,1,nil,tp) and Duel.SelectYesNo(tp,aux.Stringid(101105045,1)) then
-			if tc:IsType(TYPE_XYZ) then atk=tc:GetRank() else atk=tc:GetLevel() end
-			local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil) 
+		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil) 
+		if og:IsExists(c101105045.checkfilter,1,nil) and #g>0
+			and Duel.SelectYesNo(tp,aux.Stringid(101105045,1)) then
+			if tc:IsType(TYPE_XYZ) then atk=tc:GetOriginalRank() else atk=tc:GetOriginalLevel() end
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101105045,2))
 			local sg=g:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)
 			local tc=sg:GetFirst() 
