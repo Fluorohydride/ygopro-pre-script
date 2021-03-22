@@ -1,5 +1,5 @@
+--いくらの軍貫
 --Roe Suship
-
 --scripted by XyleN5967
 function c101105012.initial_effect(c)
 	--special summon
