@@ -66,6 +66,7 @@ function c101105037.linop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105037.linop2(e,tp,eg,ep,ev,re,r,rp)
+	-- error
 	if e:GetHandler():GetFlagEffect(101105037)~=0 then Duel.SetChainLimitTillChainEnd(tp==rp) end
 	e:GetHandler():ResetFlagEffect(101105037)
 end
@@ -75,7 +76,6 @@ function c101105037.resetlinop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105037.tgfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266))
-		and Duel.IsExistingMatchingCard(c101105037.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
 function c101105037.desfilter(c,att)
 	return c:IsAttribute(att) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
@@ -92,9 +92,7 @@ function c101105037.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		local g=Duel.GetMatchingGroup(c101105037.desfilter,tp,0,LOCATION_MZONE,nil,tc:GetAttribute())
-		if #g>0 then
-			Duel.Destroy(g,REASON_EFFECT)
-		end
+		if #g>0 then Duel.Destroy(g,REASON_EFFECT) end
 	end
 end
 function c101105037.drfilter(c,tp,att)
@@ -103,6 +101,7 @@ end
 function c101105037.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local att,mat=0,e:GetHandler():GetMaterial()
 	if e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and mat:GetClassCount(Card.GetAttribute)>1 then
+		--error
 		for tc in ~Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER) do
 			att=att|tc:GetAttribute()
 		end
