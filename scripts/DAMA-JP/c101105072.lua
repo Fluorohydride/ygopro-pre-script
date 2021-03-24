@@ -105,38 +105,41 @@ function c101105072.fusop(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-function c101105072.ritfilter(c,e,tp,m)
-	if bit.band(c:GetType(),0x81)~=0x81 or not c:IsSetCard(0x266)
-		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
-	if c.mat_filter then
-		m=m:Filter(c.mat_filter,nil,tp)
-	end
-	return m:CheckWithSumEqual(Card.GetRitualLevel,c:GetLevel(),1,99,c)
-end
-function c101105072.matfilter(c)
-	return c:IsAbleToGrave() and c:IsType(TYPE_MONSTER)
+function c101105072.ritfilter(c,e,tp)
+	return c:IsSetCard(0x266)
 end
 function c101105072.rittg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local mg=Duel.GetMatchingGroup(c101105072.matfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
-		return Duel.IsExistingMatchingCard(c101105072.ritfilter,tp,LOCATION_HAND,0,1,nil,e,tp,mg)
+		local mg=Duel.GetRitualMaterial(tp)
+		local res=Duel.IsExistingMatchingCard(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,1,nil,c101105072.ritfilter,e,tp,mg,dg,Card.GetLevel,"Greater")
+		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c101105072.ritop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local mg=Duel.GetMatchingGroup(c101105072.matfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+	local m=Duel.GetRitualMaterial(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tg=Duel.SelectMatchingCard(tp,c101105072.ritfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg)
-	if tg:GetCount()>0 then
-		local tc=tg:GetFirst()
+	local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(aux.RitualUltimateFilter),tp,LOCATION_HAND,0,1,1,nil,c101105072.ritfilter,e,tp,m,dg,Card.GetLevel,"Greater")
+	local tc=tg:GetFirst()
+	if tc then
+		local mg=m:Filter(Card.IsCanBeRitualMaterial,tc,tc)
+		mg:Merge(dg)
 		if tc.mat_filter then
-			mg=mg:Filter(tc.mat_filter,nil,tp)
+			mg=mg:Filter(tc.mat_filter,tc,tp)
+		else
+			mg:RemoveCard(tc)
 		end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local mat=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetLevel(),1,99,tc)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		aux.GCheckAdditional=aux.RitualCheckAdditional(tc,tc:GetLevel(),"Greater")
+		local mat=mg:SelectSubGroup(tp,aux.RitualCheck,false,1,tc:GetLevel(),tp,tc,tc:GetLevel(),"Greater")
+		aux.GCheckAdditional=nil
 		tc:SetMaterial(mat)
-		Duel.SendtoGrave(mat,REASON_EFFECT+REASON_MATERIAL+REASON_RITUAL)
+		local dmat=mat:Filter(Card.IsLocation,nil,LOCATION_DECK)
+		if dmat:GetCount()>0 then
+			mat:Sub(dmat)
+			Duel.SendtoGrave(dmat,REASON_EFFECT+REASON_MATERIAL+REASON_RITUAL)
+		end
+		Duel.ReleaseRitualMaterial(mat)
 		Duel.BreakEffect()
 		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 		tc:CompleteProcedure()
