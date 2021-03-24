@@ -5,18 +5,12 @@ function c101105037.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcMix(c,true,true,c101105037.mfilter1,c101105037.mfilter2)
 	--no activation on fusion summon
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e0:SetCondition(c101105037.lincon)
-	e0:SetOperation(c101105037.linop)
-	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_CHAIN_END)
-	e1:SetCondition(c101105037.lincon)
-	e1:SetOperation(c101105037.linop2)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetCondition(c101105037.matcon)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -37,7 +31,6 @@ function c101105037.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(c101105037.drcon)
-	e3:SetTarget(c101105037.drtg)
 	e3:SetOperation(c101105037.drop)
 	c:RegisterEffect(e3)
 end
@@ -47,32 +40,8 @@ end
 function c101105037.mfilter2(c)
 	return c:IsType(TYPE_NORMAL) and not c:IsType(TYPE_TOKEN)
 end
-function c101105037.lincon(e,tp,eg,ep,ev,re,r,rp)
+function c101105037.matcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
-end
-function c101105037.linop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentChain()==0 then Duel.SetChainLimitTillChainEnd(tp==rp)
-	elseif Duel.GetCurrentChain()==1 then
-		e:GetHandler():RegisterFlagEffect(101105037,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_CHAINING)
-		e1:SetOperation(c101105037.resetlinop)
-		Duel.RegisterEffect(e1,tp)
-		local e2=e1:Clone()
-		e2:SetCode(EVENT_BREAK_EFFECT)
-		e2:SetReset(RESET_CHAIN)
-		Duel.RegisterEffect(e2,tp)
-	end
-end
-function c101105037.linop2(e,tp,eg,ep,ev,re,r,rp)
-	-- error
-	if e:GetHandler():GetFlagEffect(101105037)~=0 then Duel.SetChainLimitTillChainEnd(tp==rp) end
-	e:GetHandler():ResetFlagEffect(101105037)
-end
-function c101105037.resetlinop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():ResetFlagEffect(101105037)
-	e:Reset()
 end
 function c101105037.tgfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266))
@@ -96,25 +65,22 @@ function c101105037.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105037.drfilter(c,tp,att)
-	return c:IsPreviousControler(1-tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetAttribute()&att>0
+	local p = c:GetControler()
+	return c:IsPreviousControler(p) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetAttribute()&att>0
 end
 function c101105037.drcon(e,tp,eg,ep,ev,re,r,rp)
-	local att,mat=0,e:GetHandler():GetMaterial()
-	if e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and mat:GetClassCount(Card.GetAttribute)>1 then
-		--error
-		for tc in ~Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER) do
+	local c=e:GetHandler()
+	local att=0
+	local check=c:GetMaterial()
+	local p = e:GetHandlerPlayer()
+	if c:IsSummonType(SUMMON_TYPE_FUSION) and check:GetClassCount(Card.GetAttribute)>1 then
+		for tc in aux.Next(Duel.GetMatchingGroup(Card.IsType,p,LOCATION_GRAVE,0,nil,TYPE_MONSTER)) do
 			att=att|tc:GetAttribute()
 		end
-		return att>0 and eg:IsExists(c101105037.drfilter,1,nil,tp,att)
+		return att>0 and eg:IsExists(c101105037.drfilter,1,nil,tp,att) and Duel.IsPlayerCanDraw(p,1)
 	end
 end
-function c101105037.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,1,tp,LOCATION_DECK)
-end
 function c101105037.drop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
+	local p = e:GetHandlerPlayer()
+	Duel.Draw(p,1,REASON_EFFECT)
 end

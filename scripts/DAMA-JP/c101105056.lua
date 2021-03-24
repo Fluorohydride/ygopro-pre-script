@@ -29,8 +29,8 @@ function c101105056.spop(e,tp,eg,ep,ev,re,r,rp)
 		if opt==0 then
 			c101105056.fusop(e,tp,eg,ep,ev,re,r,rp)
 		else
-			aux.AddRitualProcGreater2(c,c101105056.ritfilter)
-			-- c101105056.ritop(e,tp,eg,ep,ev,re,r,rp)
+			-- aux.AddRitualProcGreater2(c,c101105056.ritfilter)
+			c101105056.ritop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
@@ -58,8 +58,6 @@ function c101105056.fustg(e,tp,eg,ep,ev,re,r,rp,chk)
 			end
 		end
 		local res=Duel.IsExistingMatchingCard(c101105056.fusfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
-		aux.FCheckAdditional=nil
-		aux.GCheckAdditional=nil
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
@@ -87,8 +85,6 @@ function c101105056.fusop(e,tp,eg,ep,ev,re,r,rp)
 	local sg1=Duel.GetMatchingGroup(c101105056.fusfilter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	local mg2=nil
 	local sg2=nil
-	aux.FCheckAdditional=nil
-	aux.GCheckAdditional=nil
 	local ce=Duel.GetChainMaterial(tp)
 	if ce~=nil then
 		local fgroup=ce:GetTarget()
@@ -116,32 +112,38 @@ function c101105056.fusop(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-function c101105056.ritfilter(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_RITUAL) and c:IsSetCard(0x266)
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
+function c101105056.ritfilter(c,e,tp,m)
+	if bit.band(c:GetType(),0x81)~=0x81 or not c:IsSetCard(0x266)
+		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
+	if c.mat_filter then
+		m=m:Filter(c.mat_filter,nil,tp)
+	end
+	return m:CheckWithSumEqual(Card.GetRitualLevel,c:GetLevel(),1,99,c)
+end
+function c101105056.matfilter(c)
+	return c:IsAbleToGrave() and c:IsType(TYPE_MONSTER)
 end
 function c101105056.rittg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local mg1=Duel.GetRitualMaterial(tp)
-		return Duel.IsExistingMatchingCard(c101105056.ritfilter,tp,LOCATION_HAND,0,1,nil,e,tp,mg1)
+		local mg=Duel.GetMatchingGroup(c101105056.matfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+		return Duel.IsExistingMatchingCard(c101105056.ritfilter,tp,LOCATION_HAND,0,1,nil,e,tp,mg)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c101105056.ritop(e,tp,eg,ep,ev,re,r,rp)
-	local mg=Duel.GetRitualMaterial(tp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	local mg=Duel.GetMatchingGroup(c101105056.matfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tg=Duel.SelectMatchingCard(tp,c101105056.ritfilter,tp,LOCATION_HAND,0,1,1,nil,nil,e,tp,mg,nil,Card.GetOriginalLevel,"Greater")
-	local tc=tg:GetFirst()
-	if tc then
-		mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
-		mg:RemoveCard(tc)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local lv=Card.GetOriginalLevel(tc)
-		aux.GCheckAdditional=aux.RitualCheckAdditional(tc,lv,"Greater")
-		local mat=mg:SelectSubGroup(tp,aux.RitualCheck,false,1,lv,tp,tc,lv,"Greater")
-		aux.GCheckAdditional=nil
+	local tg=Duel.SelectMatchingCard(tp,c101105056.ritfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg)
+	if tg:GetCount()>0 then
+		local tc=tg:GetFirst()
+		if tc.mat_filter then
+			mg=mg:Filter(tc.mat_filter,nil,tp)
+		end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		local mat=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetLevel(),1,99,tc)
 		tc:SetMaterial(mat)
-		Duel.ReleaseRitualMaterial(mat)
+		Duel.SendtoGrave(mat,REASON_EFFECT+REASON_MATERIAL+REASON_RITUAL)
 		Duel.BreakEffect()
 		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 		tc:CompleteProcedure()
