@@ -5,7 +5,6 @@ function c101105021.initial_effect(c)
 	--add counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101105021,0))
-	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_TO_GRAVE)
@@ -26,6 +25,7 @@ function c101105021.initial_effect(c)
 	e2:SetOperation(c101105021.desop)
 	c:RegisterEffect(e2)
 end
+c101105021.counter_add_list={0x100e}
 function c101105021.ctfilter(c) 
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
@@ -39,7 +39,7 @@ end
 function c101105021.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		tc:AddCounter(0x100e,2)
 	end
 end
