@@ -42,7 +42,6 @@ function c101105047.initial_effect(c)
 	e4:SetValue(aux.TRUE) 
 	c:RegisterEffect(e4)
 end
-c101105047.counter_add_list={0x100e}
 function c101105047.thcon(e,tp,eg,ep,ev,re,r,rp) 
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
