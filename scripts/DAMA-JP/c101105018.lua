@@ -26,8 +26,15 @@ function c101105018.initial_effect(c)
 	e2:SetOperation(c101105018.tgop)
 	c:RegisterEffect(e2)
 end
+if Auxiliary.AtkEqualsDef==nil then
+	function Auxiliary.AtkEqualsDef(c)
+		if not c:IsType(TYPE_MONSTER) or c:IsType(TYPE_LINK) then return false end
+		if c:GetAttack()~=c:GetDefense() then return false end
+		return c:IsLocation(LOCATION_MZONE) or c:GetTextAttack()>=0 and c:GetTextDefense()>=0
+	end
+end
 function c101105018.cfilter(c)
-	return c:IsFaceup() and c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE)
+	return c:IsFaceup() and aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE)
 end
 function c101105018.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101105018.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -44,11 +51,11 @@ function c101105018.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105018.tcfilter(c,tp)
 	local lv=c:GetLevel()
-	return c:IsFaceup() and lv>0 and c:GetAttack()==c:GetDefense()
+	return c:IsFaceup() and lv>0 and aux.AtkEqualsDef(c)
 		and Duel.IsExistingMatchingCard(c101105018.tgfilter,tp,LOCATION_DECK,0,1,nil,lv)
 end
 function c101105018.tgfilter(c,lv)
-	return c:GetTextAttack()==c:GetTextDefense() and c:GetLevel()<lv
+	return aux.AtkEqualsDef(c) and c:GetLevel()<lv
 		and c:IsRace(RACE_MACHINE) and c:IsAbleToGrave()
 end
 function c101105018.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

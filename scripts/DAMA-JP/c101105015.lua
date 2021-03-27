@@ -24,8 +24,15 @@ function c101105015.initial_effect(c)
 	e2:SetOperation(c101105015.atkop)
 	c:RegisterEffect(e2)
 end
+if Auxiliary.AtkEqualsDef==nil then
+	function Auxiliary.AtkEqualsDef(c)
+		if not c:IsType(TYPE_MONSTER) or c:IsType(TYPE_LINK) then return false end
+		if c:GetAttack()~=c:GetDefense() then return false end
+		return c:IsLocation(LOCATION_MZONE) or c:GetTextAttack()>=0 and c:GetTextDefense()>=0
+	end
+end
 function c101105015.spfilter(c,e,tp)
-	return c:GetTextAttack()>=0 and c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE)
+	return aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101105015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -42,7 +49,7 @@ function c101105015.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105015.atkfilter(c)
-	return c:IsFaceup() and c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE)
+	return c:IsFaceup() and aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE)
 end
 function c101105015.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101105015.atkfilter(chkc) end

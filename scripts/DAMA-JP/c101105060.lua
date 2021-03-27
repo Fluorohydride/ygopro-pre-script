@@ -42,13 +42,20 @@ function c101105060.initial_effect(c)
 	e5:SetCondition(c101105060.actlimitcon)
 	c:RegisterEffect(e5)
 end
+if Auxiliary.AtkEqualsDef==nil then
+	function Auxiliary.AtkEqualsDef(c)
+		if not c:IsType(TYPE_MONSTER) or c:IsType(TYPE_LINK) then return false end
+		if c:GetAttack()~=c:GetDefense() then return false end
+		return c:IsLocation(LOCATION_MZONE) or c:GetTextAttack()>=0 and c:GetTextDefense()>=0
+	end
+end
 function c101105060.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function c101105060.thfilter(c)
-	return c:GetTextAttack()==c:GetTextDefense() and c:IsRace(RACE_MACHINE) and c:IsAbleToHand()
+	return aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE) and c:IsAbleToHand()
 end
 function c101105060.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -69,7 +76,7 @@ function c101105060.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105060.cfilter(c,tp)
-	return c:IsControler(tp) and c:GetTextAttack()==c:GetTextDefense() and c:IsRace(RACE_MACHINE) and c:IsFaceup()
+	return c:IsControler(tp) and aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE) and c:IsFaceup()
 end
 function c101105060.countercon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101105060.cfilter,1,nil,tp)
