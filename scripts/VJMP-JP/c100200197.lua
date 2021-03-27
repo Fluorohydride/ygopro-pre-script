@@ -1,4 +1,4 @@
---陰おん魔も羅ら鬼き
+--陰魔羅鬼
 --
 --script by zerovoros a.k.a faultzone
 function c100200197.initial_effect(c)
@@ -7,7 +7,7 @@ function c100200197.initial_effect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,100200197)
 	e1:SetCondition(c100200197.drcon1)
 	e1:SetTarget(c100200197.drtg)
