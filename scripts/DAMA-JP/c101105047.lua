@@ -38,7 +38,7 @@ function c101105047.initial_effect(c)
 	e3:SetValue(POS_FACEUP_DEFENSE)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone() 
-	e4:SetCode(EFFECT_CANNOT_ACTIVATE) 
+	e4:SetCode(EFFECT_CANNOT_TRIGGER) 
 	e4:SetValue(aux.TRUE) 
 	c:RegisterEffect(e4)
 end
