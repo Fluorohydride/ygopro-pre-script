@@ -1,4 +1,4 @@
---機巧鳥-常世宇受賣長鳴
+--機巧鳥－常世宇受賣長鳴
 --
 --Script by XyleN5967
 function c101105016.initial_effect(c)
@@ -25,19 +25,18 @@ function c101105016.initial_effect(c)
 	e2:SetOperation(c101105016.thop)
 	c:RegisterEffect(e2)
 end
-function c101105016.costfilter(c,e,tp,ft)
-	return c:GetTextAttack()==c:GetTextDefense() and c:IsRace(RACE_MACHINE)
-		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
+function c101105016.costfilter(c,e,tp)
+	return c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE) and c:GetLevel()>1
+		and Duel.GetMZoneCount(tp,c)>0 and (c:IsControler(tp) or c:IsFaceup())
 		and Duel.IsExistingMatchingCard(c101105016.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
 end
 function c101105016.spfilter(c,e,tp,lv)
-	return c:GetTextAttack()==c:GetTextDefense() and c:IsRace(RACE_MACHINE)
+	return c:GetTextAttack()>=0 and c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE)
 		and c:GetLevel()<lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101105016.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroup(tp,c101105016.costfilter,1,nil,e,tp,ft) end
-	local sg=Duel.SelectReleaseGroup(tp,c101105016.costfilter,1,1,nil,e,tp,ft)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c101105016.costfilter,1,nil,e,tp) end
+	local sg=Duel.SelectReleaseGroup(tp,c101105016.costfilter,1,1,nil,e,tp)
 	e:SetLabel(sg:GetFirst():GetLevel())
 	Duel.Release(sg,REASON_COST)
 end
@@ -52,7 +51,8 @@ function c101105016.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end
 function c101105016.thfilter(c)
-	return c:IsFacedown() and c:GetTextAttack()==c:GetTextDefense() and c:IsRace(RACE_MACHINE)
+	return c:IsFacedown() and c:GetTextAttack()>=0 and c:GetAttack()==c:GetDefense()
+		and c:IsRace(RACE_MACHINE) and c:IsAbleToHand()
 end
 function c101105016.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101105016.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
