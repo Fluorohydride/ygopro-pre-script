@@ -1,4 +1,4 @@
---機巧猪一伊服岐電荒神口
+--機巧猪－伊服岐雹荒神
 --
 --Script by XyleN5967
 function c101105018.initial_effect(c)
@@ -27,7 +27,7 @@ function c101105018.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101105018.cfilter(c)
-	return c:GetTextAttack()==c:GetTextDefense() and c:IsRace(RACE_MACHINE)
+	return c:IsFaceup() and c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE)
 end
 function c101105018.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101105018.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -44,7 +44,7 @@ function c101105018.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105018.tcfilter(c,tp)
 	local lv=c:GetLevel()
-	return c:IsFaceup() and lv>0 and c:GetTextAttack()==c:GetTextDefense()
+	return c:IsFaceup() and lv>0 and c:GetAttack()==c:GetDefense()
 		and Duel.IsExistingMatchingCard(c101105018.tgfilter,tp,LOCATION_DECK,0,1,nil,lv)
 end
 function c101105018.tgfilter(c,lv)
@@ -64,14 +64,16 @@ function c101105018.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg=Duel.SelectMatchingCard(tp,c101105018.tgfilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetLevel())
-	local atk=sg:GetFirst():GetLevel()
-	e:SetLabel(atk)
 	if sg:GetCount()>0 and Duel.SendtoGrave(sg,REASON_EFFECT)~=0 then
+		local atk=sg:GetFirst():GetLevel()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk*100)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_UPDATE_DEFENSE)
+		tc:RegisterEffect(e2)
 	end
 end
