@@ -1,4 +1,4 @@
---機巧蛙一整盾多適貝久
+--機巧蛙－磐盾多邇具久
 --
 --Script by XyleN5967
 function c101105017.initial_effect(c)
@@ -29,7 +29,7 @@ function c101105017.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101105017.tdfilter(c)
-	return c:GetTextAttack()==c:GetTextDefense() and c:IsRace(RACE_MACHINE)
+	return c:GetTextAttack()>=0 and c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE)
 end
 function c101105017.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101105017.tdfilter,tp,LOCATION_DECK,0,1,nil)
@@ -46,7 +46,8 @@ function c101105017.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105017.spfilter(c,e,tp)
-	return c:IsRace(RACE_MACHINE) and c:GetTextAttack()==c:GetTextDefense() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_MACHINE) and c:GetTextAttack()>=0 and c:GetAttack()==c:GetDefense()
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101105017.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101105017.filter(chkc,e,tp) end
@@ -59,7 +60,7 @@ end
 function c101105017.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRace(RACE_MACHINE) and tc:GetTextAttack()==tc:GetTextDefense() and tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	if tc:IsRelateToEffect(e) then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
