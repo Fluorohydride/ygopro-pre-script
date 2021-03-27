@@ -65,22 +65,19 @@ function c101105037.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105037.drfilter(c,tp,att)
-	local p = c:GetControler()
-	return c:IsPreviousControler(p) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetAttribute()&att>0
+	return c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetAttribute()&att>0
 end
 function c101105037.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local att=0
 	local check=c:GetMaterial()
-	local p = e:GetHandlerPlayer()
 	if c:IsSummonType(SUMMON_TYPE_FUSION) and check:GetClassCount(Card.GetAttribute)>1 then
-		for tc in aux.Next(Duel.GetMatchingGroup(Card.IsType,p,LOCATION_GRAVE,0,nil,TYPE_MONSTER)) do
+		for tc in aux.Next(Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)) do
 			att=att|tc:GetAttribute()
 		end
-		return att>0 and eg:IsExists(c101105037.drfilter,1,nil,tp,att) and Duel.IsPlayerCanDraw(p,1)
+		return att>0 and eg:IsExists(c101105037.drfilter,1,nil,tp,att) and Duel.IsPlayerCanDraw(tp,1)
 	end
 end
 function c101105037.drop(e,tp,eg,ep,ev,re,r,rp)
-	local p = e:GetHandlerPlayer()
-	Duel.Draw(p,1,REASON_EFFECT)
+	Duel.Draw(tp,1,REASON_EFFECT)
 end

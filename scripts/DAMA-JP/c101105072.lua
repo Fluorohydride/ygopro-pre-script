@@ -141,7 +141,7 @@ function c101105072.ritop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.ReleaseRitualMaterial(mat)
 		Duel.BreakEffect()
-		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
+		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP_DEFENSE)
 		tc:CompleteProcedure()
 	end
 end
