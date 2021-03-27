@@ -1,4 +1,4 @@
---機巧竞—稻羽之於歧素
+--機巧菟－稻羽之淤岐素
 --
 --Script by XyleN5967
 function c101105015.initial_effect(c)
@@ -25,7 +25,8 @@ function c101105015.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101105015.spfilter(c,e,tp)
-	return c:GetTextAttack()==c:GetTextDefense() and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:GetTextAttack()>=0 and c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101105015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -40,25 +41,22 @@ function c101105015.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-function c101105015.atkfilter1(c)
+function c101105015.atkfilter(c)
 	return c:IsFaceup() and c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE)
 end
 function c101105015.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101105015.atkfilter1(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101105015.atkfilter1,tp,LOCATION_MZONE,0,1,nil) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101105015.atkfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101105015.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c101105015.atkfilter1,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101105015.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
-end
-function c101105015.atkfilter2(c)
-	return c:IsFaceup() and c:GetTextAttack()==c:GetTextDefense() and c:IsRace(RACE_MACHINE)
 end
 function c101105015.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local atk=0
-		local g=Duel.GetMatchingGroup(c101105015.atkfilter2,tp,LOCATION_MZONE,0,nil)
+		local g=Duel.GetMatchingGroup(c101105015.atkfilter,tp,LOCATION_MZONE,0,nil)
 		if g:GetCount()>0 then atk=g:GetSum(Card.GetBaseAttack) end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
