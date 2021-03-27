@@ -1,11 +1,10 @@
---機巧一神使記紀图
+--機巧伝－神使記紀図
 --
 --Script by XyleN5967
 function c101105060.initial_effect(c)
 	c:EnableCounterPermit(0x61,LOCATION_FZONE)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
@@ -34,12 +33,11 @@ function c101105060.initial_effect(c)
 	--act limit
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e5:SetCode(EFFECT_CANNOT_TRIGGER)
 	e5:SetRange(LOCATION_FZONE)
-	e5:SetTargetRange(1,1)
-	e5:SetValue(c101105060.actlimit)
+	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e5:SetCondition(c101105060.actlimitcon)
+	e5:SetTarget(c101105060.actlimittg)
 	c:RegisterEffect(e5)
 end
 if Auxiliary.AtkEqualsDef==nil then
@@ -51,7 +49,6 @@ if Auxiliary.AtkEqualsDef==nil then
 end
 function c101105060.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 end
-	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function c101105060.thfilter(c)
@@ -64,7 +61,7 @@ function c101105060.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,3)
 	if g:GetCount()>0 then
 		Duel.DisableShuffleCheck()
-		if g:IsExists(c101105060.thfilter,1,nil) and Duel.SelectYesNo(p,aux.Stringid(101105060,1)) then
+		if g:IsExists(c101105060.thfilter,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101105060,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg=g:FilterSelect(tp,c101105060.thfilter,1,1,nil)
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
@@ -75,11 +72,11 @@ function c101105060.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT+REASON_REVEAL)
 	end
 end
-function c101105060.cfilter(c,tp)
-	return c:IsControler(tp) and aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE) and c:IsFaceup()
+function c101105060.cfilter(c)
+	return aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE) and c:IsFaceup()
 end
 function c101105060.countercon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101105060.cfilter,1,nil,tp)
+	return eg:IsExists(c101105060.cfilter,1,nil)
 end
 function c101105060.counterop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x61,1)
@@ -87,8 +84,6 @@ end
 function c101105060.actlimitcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetCounter(0x61)>=10
 end
-function c101105060.actlimit(e,re,tp)
-	local rc=re:GetHandler()
-	local loc=re:GetActivateLocation()
-	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and rc:GetTextAttack()~=rc:GetTextDefense()
+function c101105060.actlimittg(e,c)
+	return c:GetAttack()~=c:GetDefense()
 end
