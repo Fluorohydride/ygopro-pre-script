@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **March 6, 2021**: Deck Build Pack: Ancient Guardians (DBAG-JP): `100416XXX`
 - **March 19, 2021**: The Valuable Book EX (VX01-JP) : `100277XXX`
 - **April 2, 2021**: Yu-Gi-Oh! OCG Structures Volume 3 promotional card (YO03-JP): `100276XXX`
 - **April 17, 2021**: DAWN OF MAJESTY (DAMA-JP) : `101105XXX`
@@ -132,6 +131,7 @@
 - Deck Build Pack: Mystic Fighters (DBMF-JP) : `100413XXX`
 - Deck Build Pack: Secret Slayers (DBSS-JP) : `100414XXX`
 - Deck Build Pack: Genesis Impactors (DBGI-JP): `100415XXX`
+- Deck Build Pack: Ancient Guardians (DBAG-JP): `100416XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
