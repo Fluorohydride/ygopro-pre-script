@@ -112,7 +112,7 @@ end
 function c101105056.exritfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsAbleToGrave()
 end
-function c101105056.ritfilter(c,e,tp)
+function c101105056.ritfilter(c)
 	return c:IsSetCard(0x266)
 end
 function c101105056.rittg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -124,7 +124,7 @@ function c101105056.rittg(e,tp,eg,ep,ev,re,r,rp,chk)
 				mg:Merge(sg)
 			end
 		end
-		local res=Duel.IsExistingMatchingCard(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,1,nil,c101105056.ritfilter,e,tp,mg,dg,Card.GetLevel,"Greater")
+		local res=Duel.IsExistingMatchingCard(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,1,nil,c101105056.ritfilter,e,tp,mg,nil,Card.GetLevel,"Greater")
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
@@ -138,11 +138,10 @@ function c101105056.ritop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(aux.RitualUltimateFilter),tp,LOCATION_HAND,0,1,1,nil,c101105056.ritfilter,e,tp,m,dg,Card.GetLevel,"Greater")
+	local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(aux.RitualUltimateFilter),tp,LOCATION_HAND,0,1,1,nil,c101105056.ritfilter,e,tp,m,nil,Card.GetLevel,"Greater")
 	local tc=tg:GetFirst()
 	if tc then
 		local mg=m:Filter(Card.IsCanBeRitualMaterial,tc,tc)
-		mg:Merge(dg)
 		if tc.mat_filter then
 			mg=mg:Filter(tc.mat_filter,tc,tp)
 		else
