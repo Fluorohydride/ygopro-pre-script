@@ -1,4 +1,4 @@
---ドーン・オブ・マジェスティ
+--魔鍵－マフテア
 --
 --scripted by zerovoros a.k.a faultzone
 function c101105056.initial_effect(c)
@@ -46,24 +46,34 @@ end
 function c101105056.exfusfilter(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_NORMAL) and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
 end
+function c101105056.fcheck(tp,sg,fc)
+	return sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1
+end
+function c101105056.gcheck(sg)
+	return sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1
+end
 function c101105056.fustg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsAbleToGrave,nil)
 		if Duel.IsExistingMatchingCard(c101105056.cfilter,tp,LOCATION_MZONE,0,1,nil) then
-			local sg=Duel.GetMatchingGroup(c101105056.exfusfilter,tp,LOCATION_DECK,0,nil,e)
-			if sg:GetCount()>0 then
-				mg1:Merge(sg)
+			local mg2=Duel.GetMatchingGroup(c101105056.exfusfilter,tp,LOCATION_DECK,0,nil,e)
+			if mg2:GetCount()>0 then
+				mg1:Merge(mg2)
+				Auxiliary.FCheckAdditional=c101105056.fcheck
+				Auxiliary.GCheckAdditional=c101105056.gcheck
 			end
 		end
 		local res=Duel.IsExistingMatchingCard(c101105056.fusfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
+		Auxiliary.FCheckAdditional=nil
+		Auxiliary.GCheckAdditional=nil
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
 				local fgroup=ce:GetTarget()
-				local mg2=fgroup(ce,e,tp)
+				local mg3=fgroup(ce,e,tp)
 				local mf=ce:GetValue()
-				res=Duel.IsExistingMatchingCard(c101105056.fusfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,chkf)
+				res=Duel.IsExistingMatchingCard(c101105056.fusfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg3,mf,chkf)
 			end
 		end
 		return res
@@ -73,21 +83,29 @@ end
 function c101105056.fusop(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c101105056.fusfilter1,nil,e)
+	local exmat=false
 	if Duel.IsExistingMatchingCard(c101105056.cfilter,tp,LOCATION_MZONE,0,1,nil) then
-		local sg=Duel.GetMatchingGroup(c101105056.exfusfilter,tp,LOCATION_DECK,0,nil,e)
-		if sg:GetCount()>0 then
-			mg1:Merge(sg)
+		local mg2=Duel.GetMatchingGroup(c101105056.exfusfilter,tp,LOCATION_DECK,0,nil,e)
+		if mg2:GetCount()>0 then
+			mg1:Merge(mg2)
+			exmat=true
 		end
 	end
+	if exmat then
+		Auxiliary.FCheckAdditional=c101105056.fcheck
+		Auxiliary.GCheckAdditional=c101105056.gcheck
+	end
 	local sg1=Duel.GetMatchingGroup(c101105056.fusfilter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
-	local mg2=nil
+	Auxiliary.FCheckAdditional=nil
+	Auxiliary.GCheckAdditional=nil
+	local mg3=nil
 	local sg2=nil
 	local ce=Duel.GetChainMaterial(tp)
 	if ce~=nil then
 		local fgroup=ce:GetTarget()
-		mg2=fgroup(ce,e,tp)
+		mg3=fgroup(ce,e,tp)
 		local mf=ce:GetValue()
-		sg2=Duel.GetMatchingGroup(c101105056.fusfilter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
+		sg2=Duel.GetMatchingGroup(c101105056.fusfilter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg3,mf,chkf)
 	end
 	if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
 		local sg=sg1:Clone()
@@ -95,14 +113,21 @@ function c101105056.fusop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tg=sg:Select(tp,1,1,nil)
 		local tc=tg:GetFirst()
+		mg1:RemoveCard(tc)
 		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
+			if exmat then
+				Auxiliary.FCheckAdditional=c101105056.fcheck
+				Auxiliary.GCheckAdditional=c101105056.gcheck
+			end
 			local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
+			Auxiliary.FCheckAdditional=nil
+			Auxiliary.GCheckAdditional=nil
 			tc:SetMaterial(mat1)
 			Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 			Duel.BreakEffect()
 			Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
 		else
-			local mat2=Duel.SelectFusionMaterial(tp,tc,mg2,nil,chkf)
+			local mat2=Duel.SelectFusionMaterial(tp,tc,mg3,nil,chkf)
 			local fop=ce:GetOperation()
 			fop(ce,e,tp,tc,mat2)
 		end
@@ -115,16 +140,26 @@ end
 function c101105056.ritfilter(c)
 	return c:IsSetCard(0x266)
 end
+function c101105056.rcheck(tp,g,c)
+	return g:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1
+end
+function c101105056.rgcheck(g)
+	return g:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1
+end
 function c101105056.rittg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg=Duel.GetRitualMaterial(tp)
 		if Duel.IsExistingMatchingCard(c101105056.cfilter,tp,LOCATION_MZONE,0,1,nil) then
-			local sg=Duel.GetMatchingGroup(c101105056.exritfilter,tp,LOCATION_DECK,0,nil,e)
-			if sg:GetCount()>0 then
-				mg:Merge(sg)
+			local mg2=Duel.GetMatchingGroup(c101105056.exritfilter,tp,LOCATION_DECK,0,nil,e)
+			if mg2:GetCount()>0 then
+				mg:Merge(mg2)
 			end
 		end
+		aux.RCheckAdditional=c101105056.rcheck
+		aux.RGCheckAdditional=c101105056.rgcheck
 		local res=Duel.IsExistingMatchingCard(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,1,nil,c101105056.ritfilter,e,tp,mg,nil,Card.GetLevel,"Greater")
+		aux.RCheckAdditional=nil
+		aux.RGCheckAdditional=nil
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
@@ -132,12 +167,14 @@ end
 function c101105056.ritop(e,tp,eg,ep,ev,re,r,rp)
 	local m=Duel.GetRitualMaterial(tp)
 	if Duel.IsExistingMatchingCard(c101105056.cfilter,tp,LOCATION_MZONE,0,1,nil) then
-		local sg=Duel.GetMatchingGroup(c101105056.exritfilter,tp,LOCATION_DECK,0,nil,e)
-		if sg:GetCount()>0 then
-			m:Merge(sg)
+		local mg2=Duel.GetMatchingGroup(c101105056.exritfilter,tp,LOCATION_DECK,0,nil,e)
+		if mg2:GetCount()>0 then
+			m:Merge(mg2)
 		end
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	aux.RCheckAdditional=c101105056.rcheck
+	aux.RGCheckAdditional=c101105056.rgcheck
 	local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(aux.RitualUltimateFilter),tp,LOCATION_HAND,0,1,1,nil,c101105056.ritfilter,e,tp,m,nil,Card.GetLevel,"Greater")
 	local tc=tg:GetFirst()
 	if tc then
@@ -151,6 +188,11 @@ function c101105056.ritop(e,tp,eg,ep,ev,re,r,rp)
 		aux.GCheckAdditional=aux.RitualCheckAdditional(tc,tc:GetLevel(),"Greater")
 		local mat=mg:SelectSubGroup(tp,aux.RitualCheck,false,1,tc:GetLevel(),tp,tc,tc:GetLevel(),"Greater")
 		aux.GCheckAdditional=nil
+		if not mat or mat:GetCount()==0 then
+			aux.RCheckAdditional=nil
+			aux.RGCheckAdditional=nil
+			return
+		end
 		tc:SetMaterial(mat)
 		local dmat=mat:Filter(Card.IsLocation,nil,LOCATION_DECK)
 		if dmat:GetCount()>0 then
@@ -162,4 +204,6 @@ function c101105056.ritop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 		tc:CompleteProcedure()
 	end
+	aux.RCheckAdditional=nil
+	aux.RGCheckAdditional=nil
 end
