@@ -31,10 +31,10 @@ function c101105046.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101105046.indesfilter(c) 
-	return c:IsFaceup() and c:IsSummonLocation(LOCATION_GRAVE) and not c:IsCode(101105046)
+	return c:IsSummonLocation(LOCATION_GRAVE) and (c:IsFacedown() or not c:IsCode(101105046))
 end
 function c101105046.indescon(e)
-	return Duel.IsExistingMatchingCard(c101105046.indesfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) 
+	return Duel.IsExistingMatchingCard(c101105046.indesfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil) 
 end
 function c101105046.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
