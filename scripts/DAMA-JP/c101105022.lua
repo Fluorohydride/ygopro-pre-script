@@ -5,9 +5,9 @@ function c101105022.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101105022,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCountLimit(1,101105022)
 	e1:SetCondition(c101105022.spcon)
@@ -32,20 +32,17 @@ end
 function c101105022.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
-function c101105022.costfilter(c,e)
+function c101105022.tdfilter(c)
 	return c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST+RACE_INSECT+RACE_PLANT)
 end
-function c101105022.fselect(g)
-	return g:GetClassCount(Card.GetRace)==g:GetCount() 
-end 
 function c101105022.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(c101105022.costfilter,tp,LOCATION_GRAVE,0,e:GetHandler()):Filter(Card.IsCanBeEffectTarget,nil,e)
+	local g=Duel.GetMatchingGroup(c101105022.tdfilter,tp,LOCATION_GRAVE,0,e:GetHandler()):Filter(Card.IsCanBeEffectTarget,nil,e)
 	if chkc then return false end
-	if chk==0 then return g and g:CheckSubGroup(c101105022.fselect,2,2)
+	if chk==0 then return g:CheckSubGroup(aux.drccheck,2,2)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local sg=g:SelectSubGroup(tp,c101105022.fselect,false,2,2)
+	local sg=g:SelectSubGroup(tp,aux.drccheck,false,2,2)
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),0,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
