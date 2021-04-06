@@ -2,7 +2,7 @@
 --
 --Script by XyleN5967
 function c101105060.initial_effect(c)
-	c:EnableCounterPermit(0x61,LOCATION_FZONE)
+	c:EnableCounterPermit(0x161,LOCATION_FZONE)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -79,10 +79,10 @@ function c101105060.countercon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101105060.cfilter,1,nil)
 end
 function c101105060.counterop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x61,1)
+	e:GetHandler():AddCounter(0x161,1)
 end
 function c101105060.actlimitcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetCounter(0x61)>=10
+	return e:GetHandler():GetCounter(0x161)>=10
 end
 function c101105060.actlimittg(e,c)
 	return c:GetAttack()~=c:GetDefense()

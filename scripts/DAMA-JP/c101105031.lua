@@ -28,7 +28,7 @@ function c101105031.initial_effect(c)
 end
 function c101105031.seqfilter(c,e,tp)
 	local g=e:GetHandler():GetColumnGroup()
-	if not (c:IsFaceup() and g:IsContains(c) and c:IsCanAddCounter(0x1062,1)) then return false end
+	if not (c:IsFaceup() and g:IsContains(c) and c:IsCanAddCounter(0x1162,1)) then return false end
 	for i=0,4 do
 		local s1=Duel.CheckLocation(tp,LOCATION_MZONE,i)
 		local s2=Duel.CheckLocation(1-tp,LOCATION_MZONE,4-i)
@@ -66,10 +66,10 @@ function c101105031.seqop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveSequence(tc,seq2) 
 		if tc:IsFaceup() then
 			Duel.BreakEffect()
-			tc:AddCounter(0x1062,1)
+			tc:AddCounter(0x1162,1)
 		end
 	end
 end
 function c101105031.atkval(e,c)
-	return c:GetCounter(0x1062)*-200
+	return c:GetCounter(0x1162)*-200
 end
