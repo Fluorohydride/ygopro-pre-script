@@ -28,12 +28,13 @@ function c101105031.initial_effect(c)
 end
 function c101105031.seqfilter(c,e,tp)
 	local g=e:GetHandler():GetColumnGroup()
-	if not (c:IsFaceup() or g:IsContains(c)) then return false end
+	if not (c:IsFaceup() and g:IsContains(c) and c:IsCanAddCounter(0x1062,1)) then return false end
 	for i=0,4 do
 		local s1=Duel.CheckLocation(tp,LOCATION_MZONE,i)
 		local s2=Duel.CheckLocation(1-tp,LOCATION_MZONE,4-i)
 		if s1 and s2 then return true end
 	end
+	return false
 end
 function c101105031.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c101105031.seqfilter(chkc,e,tp) end
@@ -46,8 +47,8 @@ end
 function c101105031.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) or not tc:IsRelateToEffect(e) or tc:IsControler(tp) or c:IsImmuneToEffect(e)
-		or tc:IsImmuneToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or Duel.GetLocationCount(1-tp,LOCATION_MZONE)<=0 then return end
+	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) or c:IsImmuneToEffect(e)
+		or not tc:IsRelateToEffect(e) or tc:IsControler(tp) or tc:IsImmuneToEffect(e) then return end
 	local filter=0
 	for i=0,4 do
 		local s1=Duel.CheckLocation(tp,LOCATION_MZONE,i)
@@ -65,10 +66,10 @@ function c101105031.seqop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveSequence(tc,seq2) 
 		if tc:IsFaceup() then
 			Duel.BreakEffect()
-			tc:AddCounter(0x62,1)
+			tc:AddCounter(0x1062,1)
 		end
 	end
 end
 function c101105031.atkval(e,c)
-	return c:GetCounter(0x62)*-200
+	return c:GetCounter(0x1062)*-200
 end
