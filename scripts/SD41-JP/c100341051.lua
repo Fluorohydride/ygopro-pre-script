@@ -67,7 +67,7 @@ function c100341051.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_COST)
 end
 function c100341051.efilter(e,re)
-	return e:GetHandlerPlayer()~=re:GetOwnerPlayer() and re:IsActivated()
+	return e:GetHandlerPlayer()~=re:GetHandlerPlayer() and re:IsActivated()
 end
 function c100341051.eqfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and (c:IsControler(tp) or c:IsAbleToChangeControler())
