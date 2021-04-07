@@ -5,10 +5,12 @@
 - **March 19, 2021**: The Valuable Book EX (VX01-JP) : `100277XXX`
 - **April 2, 2021**: Yu-Gi-Oh! OCG Structures Volume 3 promotional card (YO03-JP): `100276XXX`
 - **April 17, 2021**: DAWN OF MAJESTY (DAMA-JP) : `101105XXX`
-- **April ??, 2021**: Number Complete File -Piece of Memories- (NOCF?-JP): `100274XXX`
+- **April 28, 2021**: Number Complete File -Piece of Memories- (NCF1-JP): `100274XXX`
+- **May 15, 2021**: Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
 
 # Announced
-- **May 15, 2021**: Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
+- **May 22, 2021**: Duelist Pack: Duelists of Whirlwind (DP25-JP) : `100425XXX`
+- **June 25, 2021**: King's Court (KICO-EN) : `100278XXX`
 
 # Archived
 ## Other packs

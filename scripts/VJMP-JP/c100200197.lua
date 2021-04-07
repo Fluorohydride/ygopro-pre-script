@@ -1,6 +1,6 @@
 --陰魔羅鬼
 --
---script by zerovoros a.k.a faultzone
+--script by pyrQ
 function c100200197.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)

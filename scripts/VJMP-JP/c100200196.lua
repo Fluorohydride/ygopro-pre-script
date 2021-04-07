@@ -1,6 +1,6 @@
 --破魔のカラス天狗
 --
---script by zerovoros a.k.a faultzone
+--script by pyrQ
 function c100200196.initial_effect(c)
 	--destroy
 	local e1=Effect.CreateEffect(c)

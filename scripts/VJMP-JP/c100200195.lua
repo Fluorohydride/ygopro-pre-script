@@ -1,6 +1,6 @@
 --鎧竜－アームド・ドラゴン－
 --
---Script by zerovoros a.k.a faultzone
+--Script by pyrQ
 function c100200195.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
