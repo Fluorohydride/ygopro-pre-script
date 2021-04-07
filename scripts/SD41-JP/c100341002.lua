@@ -43,8 +43,8 @@ function c100341002.initial_effect(c)
 			end
 			local rg=tg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 			tg:Sub(rg)
-			if rg:IsExists(aux.fus_mat_hack_exmat_filter,1,nil) then
-				local tc=rg:Filter(aux.fus_mat_hack_exmat_filter,nil):GetFirst()
+			local tc=rg:Filter(aux.fus_mat_hack_exmat_filter,nil):GetFirst()
+			if tc then
 				local te=tc:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL,tc:GetControler())
 				te:UseCountLimit(tc:GetControler())
 			end
