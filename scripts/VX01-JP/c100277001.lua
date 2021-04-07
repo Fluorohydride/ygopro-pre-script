@@ -29,12 +29,15 @@ function c100277001.initial_effect(c)
 	e2:SetValue(c100277001.mtval)
 	c:RegisterEffect(e2)
 	--
-	if not c100277001.global_check then
-		c100277001.global_check=true
+	if not aux.fus_mat_hack_check then
+		aux.fus_mat_hack_check=true
+		function aux.fus_mat_hack_exmat_filter(c)
+			return c:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL,c:GetControler())
+		end
 		_GetFusionMaterial=Duel.GetFusionMaterial
 		function Duel.GetFusionMaterial(tp)
 			local g=_GetFusionMaterial(tp)
-			local exg=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_GRAVE,0,nil,EFFECT_EXTRA_FUSION_MATERIAL)
+			local exg=Duel.GetMatchingGroup(aux.fus_mat_hack_exmat_filter,tp,LOCATION_GRAVE,0,nil)
 			return g+exg
 		end
 		_SendtoGrave=Duel.SendtoGrave
@@ -44,6 +47,11 @@ function c100277001.initial_effect(c)
 			end
 			local rg=tg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 			tg:Sub(rg)
+			local tc=rg:Filter(aux.fus_mat_hack_exmat_filter,nil):GetFirst()
+			if tc then
+				local te=tc:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL,tc:GetControler())
+				te:UseCountLimit(tc:GetControler())
+			end
 			local ct1=_SendtoGrave(tg,reason)
 			local ct2=Duel.Remove(rg,POS_FACEUP,reason)
 			return ct1+ct2
