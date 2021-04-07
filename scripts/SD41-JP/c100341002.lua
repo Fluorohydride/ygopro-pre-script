@@ -25,12 +25,15 @@ function c100341002.initial_effect(c)
 	e2:SetOperation(c100341002.tgop)
 	c:RegisterEffect(e2)
 	--
-	if not c100341002.global_check then
-		c100341002.global_check=true
+	if not aux.fus_mat_hack_check then
+		aux.fus_mat_hack_check=true
+		function aux.fus_mat_hack_exmat_filter(c)
+			return c:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL,c:GetControler())
+		end
 		_GetFusionMaterial=Duel.GetFusionMaterial
 		function Duel.GetFusionMaterial(tp)
 			local g=_GetFusionMaterial(tp)
-			local exg=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_GRAVE,0,nil,EFFECT_EXTRA_FUSION_MATERIAL)
+			local exg=Duel.GetMatchingGroup(aux.fus_mat_hack_exmat_filter,tp,LOCATION_GRAVE,0,nil)
 			return g+exg
 		end
 		_SendtoGrave=Duel.SendtoGrave
@@ -40,9 +43,10 @@ function c100341002.initial_effect(c)
 			end
 			local rg=tg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 			tg:Sub(rg)
-			if rg:IsExists(Card.IsHasEffect,1,nil,EFFECT_EXTRA_FUSION_MATERIAL) then
-				local tc=rg:Filter(Card.IsHasEffect,nil,EFFECT_EXTRA_FUSION_MATERIAL):GetFirst()
-				Duel.ResetFlagEffect(tc:GetControler(),100341002)
+			if rg:IsExists(aux.fus_mat_hack_exmat_filter,1,nil) then
+				local tc=rg:Filter(aux.fus_mat_hack_exmat_filter,nil):GetFirst()
+				local te=tc:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL,tc:GetControler())
+				te:UseCountLimit(tc:GetControler())
 			end
 			local ct1=_SendtoGrave(tg,reason)
 			local ct2=Duel.Remove(rg,POS_FACEUP,reason)
@@ -76,37 +80,34 @@ function c100341002.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetTargetRange(0xff,0xff)
-	e1:SetTarget(aux.NOT(aux.TargetBoolFunction(Card.IsRace,RACE_DRAGON+RACE_MACHINE)))
+	e1:SetTarget(c100341002.limittg)
 	e1:SetValue(c100341002.fuslimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	local fid=e:GetHandler():GetFieldID()
-	Duel.RegisterFlagEffect(tp,100341002,RESET_PHASE+PHASE_END,0,1,fid)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetDescription(aux.Stringid(100341002,2))
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_EXTRA_FUSION_MATERIAL)
 	e2:SetTargetRange(LOCATION_GRAVE,0)
-	e2:SetLabel(fid)
-	e2:SetCondition(c100341002.mtcon)
+	e2:SetCountLimit(1,100341202)
 	e2:SetTarget(c100341002.mttg)
 	e2:SetValue(c100341002.fuslimit)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
+function c100341002.limittg(e,c)
+	return not (c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsSetCard(0x93))
+end
 function c100341002.fuslimit(e,c,sumtype)
 	if not c then return false end
 	return c:IsControler(e:GetHandlerPlayer())
-end
-function c100341002.mtcon(e)
-	local fid=Duel.GetFlagEffectLabel(e:GetHandlerPlayer(),100341002)
-	return fid and fid==e:GetLabel()
 end
 function c100341002.mttg(e,c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function c100341002.tgfilter(c,tp)
-	return c:IsSetCard(0x4093) and c:IsType(TYPE_MONSTER) and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,c:GetCode()) and c:IsAbleToGrave()
+	return c:IsSetCard(0x4093) and c:IsType(TYPE_MONSTER)
+		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,c:GetCode()) and c:IsAbleToGrave()
 end
 function c100341002.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100341002.tgfilter,tp,LOCATION_DECK,0,1,nil,tp) end
