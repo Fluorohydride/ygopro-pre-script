@@ -31,7 +31,7 @@ function c101105023.indescon(e,tp,eg,ep,ev,re,r,rp)
 	if not d then return false end
 	if a:IsControler(1-tp) then a,d=d,a end
 	e:SetLabelObject(a)
-	return a:IsFaceup() and a:IsControler(tp) and a:IsType(TYPE_NORMAL) and d:IsControler(1-tp)
+	return a and a:IsFaceup() and a:IsControler(tp) and a:IsType(TYPE_NORMAL) and d:IsControler(1-tp)
 end
 function c101105023.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
@@ -43,7 +43,7 @@ end
 function c101105023.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local a=e:GetLabelObject()
-	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)>0
+	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)>0 and a
 		and a:IsRelateToBattle() and a:IsControler(tp) and a:IsType(TYPE_MONSTER) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -70,7 +70,7 @@ function c101105023.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101105023.desop(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	if d:IsRelateToBattle() then
+	if d and d:IsRelateToBattle() then
 		Duel.Destroy(d,REASON_EFFECT)
 	end
 end
