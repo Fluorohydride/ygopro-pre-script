@@ -33,9 +33,9 @@ end
 function c101105054.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)~=0 then
+		Duel.BreakEffect()
 		local g=Duel.GetMatchingGroup(c101105054.selfilter,tp,LOCATION_DECK,0,nil)
 		if g:GetCount()>0 then
-			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 			g=g:Select(tp,1,1,nil)
 		end
@@ -64,8 +64,8 @@ function c101105054.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_FUSION) 
 end
 function c101105054.repfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION)
-		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_MZONE)
+		and c:IsControler(tp) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function c101105054.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c101105054.repfilter,1,nil,tp) end
