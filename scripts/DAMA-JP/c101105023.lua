@@ -26,12 +26,9 @@ function c101105023.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101105023.indescon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local d=a:GetBattleTarget()
-	if not d then return false end
-	if a:IsControler(1-tp) then a,d=d,a end
+	local a,d=Duel.GetBattleMonster(tp)
 	e:SetLabelObject(a)
-	return a and a:IsFaceup() and a:IsControler(tp) and a:IsType(TYPE_NORMAL) and d:IsControler(1-tp)
+	return a and d and a:IsFaceup() and a:IsType(TYPE_NORMAL)
 end
 function c101105023.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
@@ -44,12 +41,12 @@ function c101105023.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local a=e:GetLabelObject()
 	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)>0 and a
-		and a:IsRelateToBattle() and a:IsControler(tp) and a:IsType(TYPE_MONSTER) then
+		and a:IsRelateToBattle() and a:IsControler(tp) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 		a:RegisterEffect(e1)
 	end
 end
@@ -64,13 +61,16 @@ function c101105023.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c101105023.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local d=Duel.GetAttackTarget()
-	if chk==0 then return Duel.GetAttacker()==e:GetHandler() and d end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,d,1,0,0)
+	local tc=e:GetHandler():GetBattleTarget()
+	if chk==0 then return tc and tc:IsControler(1-tp) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 end
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
 function c101105023.desop(e,tp,eg,ep,ev,re,r,rp)
-	local d=Duel.GetAttackTarget()
-	if d and d:IsRelateToBattle() then
-		Duel.Destroy(d,REASON_EFFECT)
+	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)>0 then
+		local tc=e:GetHandler():GetBattleTarget()
+		if tc:IsRelateToBattle() then
+			Duel.Destroy(tc,REASON_EFFECT)
+		end
 	end
 end
