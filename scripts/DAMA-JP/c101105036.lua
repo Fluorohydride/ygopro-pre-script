@@ -1,6 +1,8 @@
---魔键召兽-安希亚拉波斯
+--魔鍵召獣－アンシャラボラス
+--
+--script by REIKAI
 function c101105036.initial_effect(c)
-   --fusion material
+	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,c101105036.ffilter,c101105036.ffilter2,true)
 	--fusion success

@@ -1,4 +1,4 @@
---魔键炮-加雷斯维特
+--魔鍵砲－ガレスヴェート
 --
 --script by REIKAI
 function c101105033.initial_effect(c)

@@ -1,8 +1,8 @@
---绊醒师 塞姆贝尔
+--絆醒師セームベル
 --
 --script by REIKAI
 function c101105030.initial_effect(c)
-   --pendulum summon
+	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--SpecialSummon
 	local e1=Effect.CreateEffect(c)

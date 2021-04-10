@@ -1,4 +1,6 @@
---魔键召龙-安托比姆斯
+--魔鍵召竜－アンドラビムス
+--
+--script by REIKAI
 function c101105037.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
@@ -77,10 +79,10 @@ function c101105037.chlimit(e,ep,tp)
 	return tp==ep
 end
 function c101105037.ckfilter(c)
-	return  (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266)) and Duel.IsExistingMatchingCard(c101105037.ckfilter2,tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
+	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266)) and Duel.IsExistingMatchingCard(c101105037.ckfilter2,tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
 function c101105037.ckfilter2(c,at)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER)   and  c:GetAttribute()&at~=0
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:GetAttribute()&at~=0
 end
 function c101105037.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101105037.ckfilter(chkc) end
@@ -93,7 +95,7 @@ function c101105037.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101105037.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.IsExistingMatchingCard(c101105037.ckfilter2,tp,0,LOCATION_MZONE,1,nil,tc:GetAttribute())  then 
+	if tc:IsRelateToEffect(e) and Duel.IsExistingMatchingCard(c101105037.ckfilter2,tp,0,LOCATION_MZONE,1,nil,tc:GetAttribute()) then 
 		local g=Duel.GetMatchingGroup(c101105037.ckfilter2,tp,0,LOCATION_MZONE,nil,tc:GetAttribute())
 		Duel.Destroy(g,REASON_EFFECT)
 	end
