@@ -28,7 +28,8 @@ function c101105007.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101105007.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and c:IsFaceup()
+	local p=c:GetControler()
+	return (p==tp or p==1-tp) and c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and c:IsFaceup()
 end
 function c101105007.discon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101105007.cfilter,1,nil,tp)
@@ -62,7 +63,8 @@ function c101105007.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105007.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,REASON_FUSION)~=0
+	local c=e:GetHandler()
+	return c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and r==REASON_FUSION
 end
 function c101105007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
