@@ -64,7 +64,8 @@ function c101105007.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105007.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and r==REASON_FUSION
+	return c:IsPreviousLocation(LOCATION_HAND+LOCATION_ONFIELD) 
+		and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and r==REASON_FUSION
 end
 function c101105007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
