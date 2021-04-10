@@ -1,4 +1,5 @@
 --烙印開幕
+--
 --Scripted by Rimi-Chan
 function c101105054.initial_effect(c)
 	--Activate
@@ -22,7 +23,7 @@ function c101105054.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101105054.selfilter(c,e,tp)
-	return c:IsSetCard(0x3268) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+	return c:IsSetCard(0x269) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c101105054.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101105054.selfilter,tp,LOCATION_DECK,0,nil)

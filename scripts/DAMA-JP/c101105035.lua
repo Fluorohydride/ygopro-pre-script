@@ -1,9 +1,10 @@
 --デスピアン・プロスケニオン
+--
 --Scripted by Rimi-Chan
 function c101105035.initial_effect(c)
 	--fusion procedure
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,false,true,aux.FilterBoolFunction(Card.IsFusionSetCard,0x3268),c101105035.matfilter1,c101105035.matfilter2,nil)
+	aux.AddFusionProcMix(c,false,true,aux.FilterBoolFunction(Card.IsFusionSetCard,0x269),c101105035.matfilter1,c101105035.matfilter2,nil)
 	--special summon or banish
 	local e1=Effect.CreateEffect(c) 
 	e1:SetDescription(aux.Stringid(101105035,0)) 

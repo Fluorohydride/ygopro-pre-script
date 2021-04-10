@@ -4,7 +4,7 @@
 function c101105034.initial_effect(c)
 	--fusion summon
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x3268),c101105034.matfilter,true)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x269),c101105034.matfilter,true)
 	--atk change
 	local e1=Effect.CreateEffect(c) 
 	e1:SetDescription(aux.Stringid(101105034,0)) 
@@ -57,7 +57,7 @@ function c101105034.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c101105034.thfilter(c,e,tp)
-	if not (c:IsSetCard(0x3268) and c:IsType(TYPE_MONSTER) or c:IsCode(68468459)) then return false end
+	if not (c:IsSetCard(0x269) and c:IsType(TYPE_MONSTER) or c:IsCode(68468459)) then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	return c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
