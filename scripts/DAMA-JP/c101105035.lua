@@ -3,7 +3,7 @@
 function c101105035.initial_effect(c)
 	--fusion procedure
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x3268),c101105035.matfilter,true)
+	aux.AddFusionProcMix(c,false,true,aux.FilterBoolFunction(Card.IsFusionSetCard,0x3268),c101105035.matfilter1,c101105035.matfilter2,nil)
 	--special summon or banish
 	local e1=Effect.CreateEffect(c) 
 	e1:SetDescription(aux.Stringid(101105035,0)) 
@@ -30,8 +30,11 @@ function c101105035.initial_effect(c)
 	e2:SetOperation(c101105035.damop)
 	c:RegisterEffect(e2)
 end
-function c101105035.matfilter(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
+function c101105035.matfilter1(c)
+	return c:IsAttribute(ATTRIBUTE_LIGHT)
+end
+function c101105035.matfilter2(c)
+	return c:IsAttribute(ATTRIBUTE_DARK)
 end
 function c101105035.rmfilter(c,e,tp)
 	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and (c:IsAbleToRemove() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
