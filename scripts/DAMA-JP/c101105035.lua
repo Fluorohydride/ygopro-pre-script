@@ -13,8 +13,9 @@ function c101105035.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCountLimit(1,101105035)
+	e1:SetCondition(c101105035.effcon)
 	e1:SetTarget(c101105035.efftg)
 	e1:SetOperation(c101105035.effop)
 	c:RegisterEffect(e1)
@@ -26,16 +27,20 @@ function c101105035.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetCountLimit(1,101105035+100)
-	e2:SetCondition(aux.bdcon)
+	e2:SetCondition(aux.bdocon)
 	e2:SetTarget(c101105035.damtg)
 	e2:SetOperation(c101105035.damop)
 	c:RegisterEffect(e2)
 end
 function c101105035.matfilter1(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT)
+	return c:IsFusionAttribute(ATTRIBUTE_LIGHT)
 end
 function c101105035.matfilter2(c)
-	return c:IsAttribute(ATTRIBUTE_DARK)
+	return c:IsFusionAttribute(ATTRIBUTE_DARK)
+end
+function c101105035.effcon(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
+	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c101105035.rmfilter(c,e,tp)
 	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and (c:IsAbleToRemove() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
@@ -59,12 +64,11 @@ function c101105035.effop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105035.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	local dam=bc:GetBaseAttack()
-	if bc:GetAttack() < bc:GetDefense() then dam=bc:GetDefense() end
-	if dam<0 then dam=0 end
+	if bc:GetBaseAttack()<bc:GetBaseDefense() then dam=bc:GetBaseDefense() end
+	if chk==0 then return dam>0 end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(dam)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)

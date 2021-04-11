@@ -90,13 +90,12 @@ function c101105053.fusop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105053.cfilter(c,tp,rp)
-	return rp==1-tp
-		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
-		and not (c:IsRace(RACE_FAIRY) and c:IsType(TYPE_FUSION))
-		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT))
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
+		and c:GetPreviousRaceOnField()&RACE_FAIRY~=0 and c:GetPreviousTypeOnField()&TYPE_FUSION==0
+		and (c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT)))
 end
 function c101105053.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101105053.cfilter,1,nil,tp,rp) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(c101105053.cfilter,1,nil,tp,rp)
 end
 function c101105053.spfilter(c,e,tp)
 	return c:IsType(TYPE_FUSION) and c:IsLevelAbove(8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

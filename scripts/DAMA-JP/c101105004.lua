@@ -49,18 +49,16 @@ end
 function c101105004.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
-function c101105004.rfilter(c,ft,tp)
-	return c:IsType(TYPE_FUSION) and ft>0 or (c:IsControler(tp) and c:GetSequence()<5)
+function c101105004.rfilter(c,tp)
+	return c:IsType(TYPE_FUSION) and (c:IsControler(tp) or c:IsFaceup()) and Duel.GetMZoneCount(tp,c)>0
 end
 function c101105004.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroup(tp,c101105004.rfilter,1,nil,ft,tp) end
-	local rg=Duel.SelectReleaseGroup(tp,c101105004.rfilter,1,1,nil,ft,tp)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c101105004.rfilter,1,nil,tp) end
+	local rg=Duel.SelectReleaseGroup(tp,c101105004.rfilter,1,1,nil,tp)
 	Duel.Release(rg,REASON_COST)
 end
 function c101105004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101105004.spop(e,tp,eg,ep,ev,re,r,rp)

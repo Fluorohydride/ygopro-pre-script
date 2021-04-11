@@ -7,7 +7,7 @@ function c101105005.initial_effect(c)
 	e1:SetDescription(aux.Stringid(101105005,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCountLimit(1,101105005)
 	e1:SetCondition(c101105005.thcon)
@@ -24,7 +24,7 @@ function c101105005.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,101105005)
-	e3:SetCost(c101105005.setcost)
+	e3:SetCost(aux.bfgcost)
 	e3:SetTarget(c101105005.settg)
 	e3:SetOperation(c101105005.setop)
 	c:RegisterEffect(e3)
@@ -33,7 +33,7 @@ function c101105005.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function c101105005.thfilter(c)
-	return c:IsSetCard(0x269) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x269) and not c:IsCode(101105005) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101105005.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101105005.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -46,10 +46,6 @@ function c101105005.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function c101105005.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c101105005.setfilter(c)
 	return c:IsSetCard(0x15d) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()

@@ -7,7 +7,7 @@ function c101105006.initial_effect(c)
 	e1:SetDescription(aux.Stringid(101105006,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,101105006)
 	e1:SetTarget(c101105006.thtg)
@@ -46,8 +46,8 @@ function c101105006.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105006.cfilter(c,tp,rp)
-	return  rp==1-tp and c:IsPreviousControler(tp) and bit.band(c:GetPreviousTypeOnField(),TYPE_FUSION)~=0
-		and c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and bit.band(c:GetPreviousTypeOnField(),TYPE_FUSION)~=0
+		and (c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT)))
 end
 function c101105006.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101105006.cfilter,1,nil,tp,rp) and not eg:IsContains(e:GetHandler())
@@ -69,8 +69,8 @@ function c101105006.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not c:IsRelateToEffect(e) then return end
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and not tc:IsDisabled() and tc:IsControler(1-tp) then
-		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+		if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
