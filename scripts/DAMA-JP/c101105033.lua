@@ -51,7 +51,7 @@ function c101105033.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101105033.atkval(e,c)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,TYPE_MONSTER)
 	return g:GetClassCount(Card.GetAttribute)*300
 end
 function c101105033.matcon(e,tp,eg,ep,ev,re,r,rp)
