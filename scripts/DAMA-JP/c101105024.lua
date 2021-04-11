@@ -76,10 +76,11 @@ function c101105024.tgcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105024.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetTargetCard(eg)
+	local g=eg:Filter(Card.IsLocation,nil,LOCATION_MZONE)
+	Duel.SetTargetCard(g)
 end
 function c101105024.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()>0 then
 		local tc=g:GetFirst()
 		while tc do
