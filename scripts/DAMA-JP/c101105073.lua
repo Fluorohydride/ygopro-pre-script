@@ -29,7 +29,7 @@ function c101105073.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c101105073.attfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) 
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
 function c101105073.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

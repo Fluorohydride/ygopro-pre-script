@@ -27,7 +27,7 @@ function c101105060.initial_effect(c)
 	e3:SetCondition(c101105060.countercon)
 	e3:SetOperation(c101105060.counterop)
 	c:RegisterEffect(e3)
-	local e4=e3:Clone() 
+	local e4=e3:Clone()
 	e4:SetCode(EVENT_SUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 	--act limit

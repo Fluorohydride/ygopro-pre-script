@@ -18,8 +18,8 @@ function c101105045.initial_effect(c)
 	e1:SetTarget(c101105045.destg)
 	e1:SetOperation(c101105045.desop)
 	c:RegisterEffect(e1)
-	local e2=e1:Clone() 
-	e2:SetType(EFFECT_TYPE_QUICK_O) 
+	local e2=e1:Clone()
+	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCondition(c101105045.matcon)
 	c:RegisterEffect(e2)
@@ -59,14 +59,14 @@ function c101105045.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Destroy(tc,REASON_EFFECT)
 		local og=Duel.GetOperatedGroup()
-		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil) 
+		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 		if og:IsExists(c101105045.checkfilter,1,nil) and #g>0
 			and Duel.SelectYesNo(tp,aux.Stringid(101105045,1)) then
 			if tc:IsType(TYPE_XYZ) then atk=tc:GetOriginalRank() else atk=tc:GetOriginalLevel() end
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101105045,2))
 			local sg=g:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)
-			local tc=sg:GetFirst() 
+			local tc=sg:GetFirst()
 			if tc then
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)

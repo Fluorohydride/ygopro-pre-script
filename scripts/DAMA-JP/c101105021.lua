@@ -27,7 +27,7 @@ function c101105021.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 c101105021.counter_add_list={0x100e}
-function c101105021.ctfilter(c) 
+function c101105021.ctfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
 function c101105021.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -38,7 +38,7 @@ function c101105054.activate(e,tp,eg,ep,ev,re,r,rp)
 		local check=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 		local g=Duel.SelectMatchingCard(tp,c101105054.selfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,check)
-		local tc=g:GetFirst() 
+		local tc=g:GetFirst()
 		if check and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 			and (not tc:IsAbleToHand() or Duel.SelectOption(tp,1190,1152)==1) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
@@ -59,7 +59,7 @@ function c101105054.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105054.splimit(e,c)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_FUSION) 
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_FUSION)
 end
 function c101105054.repfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_MZONE)

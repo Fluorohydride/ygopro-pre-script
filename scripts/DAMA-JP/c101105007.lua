@@ -16,9 +16,9 @@ function c101105007.initial_effect(c)
 	e1:SetOperation(c101105007.disop)
 	c:RegisterEffect(e1)
 	--special summon itself
-	local e2=Effect.CreateEffect(c) 
-	e2:SetDescription(aux.Stringid(101105007,1)) 
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON) 
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101105007,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_BE_MATERIAL)
@@ -64,7 +64,7 @@ function c101105007.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105007.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_HAND+LOCATION_ONFIELD) 
+	return c:IsPreviousLocation(LOCATION_HAND+LOCATION_ONFIELD)
 		and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and r==REASON_FUSION
 end
 function c101105007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

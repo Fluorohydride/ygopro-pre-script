@@ -12,7 +12,7 @@ function c101105017.initial_effect(c)
 	e1:SetTarget(c101105017.tdtg)
 	e1:SetOperation(c101105017.tdop)
 	c:RegisterEffect(e1)
-	local e2=e1:Clone() 
+	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	--revive

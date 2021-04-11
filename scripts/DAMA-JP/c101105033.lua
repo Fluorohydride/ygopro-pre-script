@@ -8,7 +8,7 @@ function c101105033.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_MATERIAL_CHECK)
 	e0:SetValue(c101105033.valcheck)
-	c:RegisterEffect(e0) 
+	c:RegisterEffect(e0)
 	 --atkup
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -26,7 +26,7 @@ function c101105074.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101105074.cfilter(c)
-	return c:IsCode(101105011) and not c:IsPublic() 
+	return c:IsCode(101105011) and not c:IsPublic()
 end
 function c101105074.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -42,7 +42,7 @@ function c101105074.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c101105074.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x267) and c:IsAbleToHand() 
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x267) and c:IsAbleToHand()
 end
 function c101105074.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101105074.thfilter,tp,LOCATION_DECK,0,nil)

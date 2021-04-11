@@ -27,7 +27,7 @@ end
 function c101105020.cfilter(c)
 	return c:IsSetCard(0x15c) and c:IsType(TYPE_TRAP) and not c:IsPublic()
 end
-function c101105020.spcost(e,tp,eg,ep,ev,re,r,rp,chk) 
+function c101105020.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101105020.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,c101105020.cfilter,tp,LOCATION_HAND,0,1,1,nil)

@@ -63,7 +63,7 @@ function c101105031.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local seq1=math.log(flag,2)
 	local seq2=4-math.log(flag,2)
 	if Duel.MoveSequence(c,seq1)~=0 then
-		Duel.MoveSequence(tc,seq2) 
+		Duel.MoveSequence(tc,seq2)
 		if tc:IsFaceup() then
 			Duel.BreakEffect()
 			tc:AddCounter(0x1162,1)
