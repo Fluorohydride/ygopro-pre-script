@@ -33,31 +33,18 @@ function c101105024.initial_effect(c)
 	e2:SetTarget(c101105024.sptg)
 	e2:SetOperation(c101105024.spop)
 	c:RegisterEffect(e2)
-	--chk
+	--to graveyard
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetOperation(c101105024.chkop)
+	e3:SetCondition(c101105024.tgcon)
+	e3:SetTarget(c101105024.tgtg)
+	e3:SetOperation(c101105024.tgop)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
-	--to graveyard
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(101105024,1))
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e5:SetCode(EVENT_CUSTOM+101105024)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetTarget(c101105024.tgtg)
-	e5:SetOperation(c101105024.tgop)
-	c:RegisterEffect(e5)
-	local ng=Group.CreateGroup()
-	ng:KeepAlive()
-	e3:SetLabelObject(e5)
-	e4:SetLabelObject(e5)
-	e5:SetLabelObject(ng)
 end
 function c101105024.rmtarget(e,c)
 	return c:GetOriginalType()&TYPE_MONSTER==0
@@ -84,32 +71,19 @@ function c101105024.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c101105024.chkop(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsContains(e:GetHandler()) then return end
-	local ee=e:GetLabelObject()
-	local g=eg:Filter(Card.IsLocation,nil,LOCATION_MZONE)
-	local tc=g:GetFirst()
-	while tc do
-		tc:CreateEffectRelation(ee)
-		ee:GetLabelObject():AddCard(tc)
-		tc=g:GetNext()
-	end
-	Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+101105024,e,0,tp,0,0)
+function c101105024.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	return not eg:IsContains(e:GetHandler())
 end
 function c101105024.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(101105124)==0 end
-	c:RegisterFlagEffect(101105124,RESET_CHAIN,0,1)
-	local g=e:GetLabelObject():Filter(Card.IsRelateToEffect,nil,e)
-	e:GetLabelObject():Clear()
-	Duel.SetTargetCard(g)
+	if chk==0 then return true end
+	Duel.SetTargetCard(eg)
 end
 function c101105024.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=eg:Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()>0 then
 		local tc=g:GetFirst()
 		while tc do
-			tc:RegisterFlagEffect(101105224,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			tc:RegisterFlagEffect(101105024,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 			tc=g:GetNext()
 		end
 		g:KeepAlive()
@@ -125,7 +99,7 @@ function c101105024.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105024.desfilter(c)
-	return c:GetFlagEffect(101105224)~=0
+	return c:GetFlagEffect(101105024)~=0
 end
 function c101105024.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():IsExists(c101105024.desfilter,1,nil)
