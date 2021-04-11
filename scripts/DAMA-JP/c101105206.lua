@@ -24,7 +24,7 @@ function c101105206.initial_effect(c)
 	e2:SetOperation(c101105206.lvlop)
 	c:RegisterEffect(e2)
 end
-function c101105206.tgfilter(c,check)
+function c101105206.tgfilter(c,e,tp,check)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xa3)
 		and (c:IsAbleToGrave() or check and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
@@ -35,14 +35,14 @@ function c101105206.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local check=Duel.IsExistingMatchingCard(c101105206.cfilter,tp,LOCATION_MZONE,0,1,nil)
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		return Duel.IsExistingMatchingCard(c101105206.tgfilter,tp,LOCATION_DECK,0,1,nil,check)
+		return Duel.IsExistingMatchingCard(c101105206.tgfilter,tp,LOCATION_DECK,0,1,nil,e,tp,check)
 	end
 end
 function c101105206.activate(e,tp,eg,ep,ev,re,r,rp)
 	local check=Duel.IsExistingMatchingCard(c101105206.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local g=Duel.SelectMatchingCard(tp,c101105206.tgfilter,tp,LOCATION_DECK,0,1,1,nil,check)
+	local g=Duel.SelectMatchingCard(tp,c101105206.tgfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,check)
 	local tc=g:GetFirst()
 	if tc then
 		if check and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
