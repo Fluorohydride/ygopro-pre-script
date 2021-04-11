@@ -14,7 +14,7 @@ function c101105006.initial_effect(c)
 	e1:SetOperation(c101105006.thop)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone() 
-	e2:SetCode(EVENT_SPUMMON_SUCCESS) 
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	--special summon & disable
 	local e3=Effect.CreateEffect(c)
