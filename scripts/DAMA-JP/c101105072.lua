@@ -14,7 +14,7 @@ function c101105072.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101105072.thfilter(c)
-	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266)) and c:IsAbleToHand()
+	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266) and c:IsType(TYPE_MONSTER)) and c:IsAbleToHand()
 end
 function c101105072.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101105072.thfilter(chkc) end
