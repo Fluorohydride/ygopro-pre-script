@@ -39,10 +39,16 @@ function c101105071.spfilter(c,e,tp)
 	return c:IsLevel(8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101105071.spsfilter(c,e,tp,solve)
-	return solve and aux.NecroValleyFilter(c101105071.spfilter(c,e,tp)) or c101105071.spfilter(c,e,tp)
+	if solve then
+		return aux.NecroValleyFilter(c101105071.spfilter)(c,e,tp)
+	else
+		return c101105071.spfilter(c,e,tp)
+	end
 end
 function c101105071.tefilter(c,e,tp,ev,solve1,solve2)
-	return c:IsFaceup() and c:IsSetCard(0x155) and c:IsType(TYPE_XYZ) and c:IsAbleToExtra() and (solve1 or (Duel.IsChainDisablable(ev) or Duel.GetMZoneCount(tp,c)>0 and Duel.IsExistingMatchingCard(c101105071.spsfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,solve2)))
+	return c:IsFaceup() and c:IsSetCard(0x155) and c:IsType(TYPE_XYZ) and c:IsAbleToExtra()
+		and (solve1 or (Duel.IsChainDisablable(ev) or Duel.GetMZoneCount(tp,c)>0
+		and Duel.IsExistingMatchingCard(c101105071.spsfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,solve2)))
 end
 function c101105071.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101105071.tefilter,tp,LOCATION_MZONE,0,1,nil,e,tp,ev) end
@@ -51,15 +57,16 @@ end
 function c101105071.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local tc=Duel.SelectMatchingCard(tp,c101105071.tefilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,ev,false,true):GetFirst()
-	local brk=tc and true or false
 	if not tc then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		tc=Duel.SelectMatchingCard(tp,c101105071.tefilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,ev,true,true):GetFirst()
 	end
 	if tc and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) then
-		if brk then
-			Duel.BreakEffect()
+		if not Duel.IsChainDisablable(ev) and not (Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and Duel.IsExistingMatchingCard(c101105071.spsfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,true)) then
+			return
 		end
+		Duel.BreakEffect()
 		if Duel.IsChainDisablable(ev) and (Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not Duel.IsExistingMatchingCard(c101105071.spsfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,true) or Duel.SelectOption(tp,aux.Stringid(101105071,2),1152)==0) then
 			Duel.NegateEffect(ev)
 		else
@@ -70,7 +77,8 @@ function c101105071.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105071.atkfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousTypeOnField()&TYPE_XYZ~=0 and c:IsReason(REASON_EFFECT)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousTypeOnField()&TYPE_XYZ~=0
+		and c:IsReason(REASON_EFFECT)
 end
 function c101105071.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101105071.atkfilter,1,nil,tp)
