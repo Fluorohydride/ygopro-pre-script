@@ -95,7 +95,7 @@ function c101105037.chlimit(e,ep,tp)
 	return tp==ep
 end
 function c101105037.ckfilter(c,tp)
-	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266))
+	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266) and c:IsType(TYPE_MONSTER))
 		and Duel.IsExistingMatchingCard(c101105037.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
 function c101105037.desfilter(c,at)
@@ -123,7 +123,7 @@ function c101105037.drfilter(c,tp)
 		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,0,LOCATION_GRAVE,1,nil,c:GetAttribute())
 end
 function c101105037.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101105037.drfilter,1,nil,1-tp)
+	return eg:IsExists(c101105037.drfilter,1,nil,1-tp) and e:GetHandler():GetFlagEffect(101105037+100)~=0
 end
 function c101105037.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -139,5 +139,5 @@ function c101105037.matcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()==1
 end
 function c101105037.matop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(101105037,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101105037,2))
+	e:GetHandler():RegisterFlagEffect(101105037+100,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101105037,2))
 end
