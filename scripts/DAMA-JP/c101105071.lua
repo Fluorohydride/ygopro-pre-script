@@ -67,7 +67,9 @@ function c101105071.activate(e,tp,eg,ep,ev,re,r,rp)
 			return
 		end
 		Duel.BreakEffect()
-		if Duel.IsChainDisablable(ev) and (Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not Duel.IsExistingMatchingCard(c101105071.spsfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,true) or Duel.SelectOption(tp,aux.Stringid(101105071,2),1152)==0) then
+		if Duel.IsChainDisablable(ev) and (Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+			or not Duel.IsExistingMatchingCard(c101105071.spsfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,true)
+			or Duel.SelectOption(tp,aux.Stringid(101105071,2),1152)==0) then
 			Duel.NegateEffect(ev)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
