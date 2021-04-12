@@ -29,7 +29,7 @@ end
 function c101105054.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local check=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil)
-		and Duel.IsExistingMatchingCard(c101105054.selfilter,tp,LOCATION_DECK,0,1,nil,check) end
+		and Duel.IsExistingMatchingCard(c101105054.selfilter,tp,LOCATION_DECK,0,1,nil,e,tp,check) end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function c101105054.activate(e,tp,eg,ep,ev,re,r,rp)
