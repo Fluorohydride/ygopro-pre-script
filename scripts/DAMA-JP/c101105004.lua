@@ -36,14 +36,14 @@ end
 function c101105004.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(c101105004.cfilter,nil,tp) and Duel.IsChainDisablable(ev)
+	return g and g:IsExists(c101105004.cfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
 end
 function c101105004.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c101105004.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED) end
+	if chk==0 then return not re:GetHandler():IsDisabled() end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function c101105004.disop(e,tp,eg,ep,ev,re,r,rp)
