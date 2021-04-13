@@ -28,7 +28,7 @@ function c101105009.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101105009.cfilter(c)
-	return c:IsFaceup() and c:IsStatus(STATUS_DISABLED)
+	return c:IsFaceup() and c:IsDisabled()
 end
 function c101105009.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
