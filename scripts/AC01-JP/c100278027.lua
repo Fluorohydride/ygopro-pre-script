@@ -2,7 +2,7 @@
 --Script by XyLeN
 function c100278027.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,4,3)
+	aux.AddXyzProcedure(c,nil,5,3)
 	c:EnableReviveLimit()
 	--equip
 	local e1=Effect.CreateEffect(c)
