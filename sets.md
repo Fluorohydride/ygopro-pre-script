@@ -7,10 +7,11 @@
 - **April 17, 2021**: DAWN OF MAJESTY (DAMA-JP) : `101105XXX`
 - **April 28, 2021**: Number Complete File -Piece of Memories- (NCF1-JP): `100274XXX`
 - **May 15, 2021**: Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
+- **June 12, 2021**: ANIMATION CHRONICLE 2021 (AC01-JP) : `100278XXX`
 
 # Announced
 - **May 22, 2021**: Duelist Pack: Duelists of Whirlwind (DP25-JP) : `100425XXX`
-- **June 25, 2021**: King's Court (KICO-EN) : `100278XXX`
+- **June 25, 2021**: King's Court (KICO-EN) : `100279XXX`
 
 # Archived
 ## Other packs
