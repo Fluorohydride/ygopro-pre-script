@@ -3,26 +3,15 @@
 --Scripted by mallu11
 function c101105019.initial_effect(c)
 	--special summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetCode(EVENT_BATTLE_DESTROYED)
-	e1:SetCondition(c101105019.regcon)
-	e1:SetOperation(c101105019.regop)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetCondition(c101105019.regcon2)
-	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101105019,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCode(EVENT_CUSTOM+101105019)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCountLimit(1,101105019)
+	e3:SetCondition(c101105019.spcon)
 	e3:SetTarget(c101105019.sptg)
 	e3:SetOperation(c101105019.spop)
 	c:RegisterEffect(e3)
@@ -40,21 +29,47 @@ function c101105019.initial_effect(c)
 	local e5=e4:Clone()
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
+	if not c101105019.global_check then
+		c101105019.global_check=true
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_BATTLE_DESTROYED)
+		ge1:SetCondition(c101105019.regcon)
+		ge1:SetOperation(c101105019.regop)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=ge1:Clone()
+		ge2:SetCode(EVENT_TO_GRAVE)
+		ge2:SetCondition(c101105019.regcon2)
+		Duel.RegisterEffect(ge2,0)
+	end
 end
 function c101105019.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0x10)
 end
 function c101105019.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101105019.cfilter,1,nil)
+	if eg:IsExists(c101105019.cfilter,1,nil) then
+		e:SetLabel(PLAYER_ALL)
+		return true
+	end
+	e:SetLabel(PLAYER_NONE)
+	return false
 end
-function c101105019.cfilter2(c,tp)
-	return not c:IsReason(REASON_BATTLE) and c:IsControler(tp) and c101105019.cfilter(c)
+function c101105019.cfilter2(c,p)
+	return not c:IsReason(REASON_BATTLE) and c:IsControler(p) and c101105019.cfilter(c)
 end
 function c101105019.regcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101105019.cfilter2,1,nil,tp)
+	local v=0
+	if eg:IsExists(c101105019.cfilter2,1,nil,0) then v=v+1 end
+	if eg:IsExists(c101105019.cfilter2,1,nil,1) then v=v+2 end
+	if v==0 then return false end
+	e:SetLabel(({0,1,PLAYER_ALL})[v])
+	return true
 end
 function c101105019.regop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+101105019,e,0,tp,0,0)
+	Duel.RaiseEvent(eg,EVENT_CUSTOM+101105019,re,r,rp,ep,e:GetLabel())
+end
+function c101105019.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return ev==tp or ev==PLAYER_ALL
 end
 function c101105019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
