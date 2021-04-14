@@ -73,7 +73,7 @@ function c100278028.desfilter(c)
 	return c:IsType(TYPE_MONSTER)
 end
 function c100278028.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and c100278028.desfilter(chkc) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c100278028.desfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100278028.desfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,c100278028.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
