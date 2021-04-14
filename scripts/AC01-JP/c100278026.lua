@@ -23,7 +23,7 @@ function c100278026.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100278026.spfilter(c,e,tp)
-	return not c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
+	return not c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100278026.eqfilter(c)
 	return c:IsSetCard(0x107f) and c:IsType(TYPE_MONSTER)
@@ -41,7 +41,7 @@ function c100278026.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100278026.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	local tc=g:GetFirst() 
-	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,true,POS_FACEUP)~=0 then
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
