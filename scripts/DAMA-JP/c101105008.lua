@@ -42,7 +42,7 @@ function c101105008.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabel(2)
 		e:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,0,0)
-		Duel.SetOperationInfo(0,CATEGORY_DRAW,0,0,tp,1)
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	end
 	if tc:IsLocation(LOCATION_DECK) and c:IsLocation(LOCATION_GRAVE) then
 		e:SetLabel(3)
