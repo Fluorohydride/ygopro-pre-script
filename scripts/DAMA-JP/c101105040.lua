@@ -53,7 +53,7 @@ function c101105040.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=Duel.GetMatchingGroup(c101105040.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 		return g:CheckSubGroup(c101105040.fselect,2,2,tp)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c101105040.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerCanSpecialSummonCount(tp,2) and not Duel.IsPlayerAffectedByEffect(tp,59822133) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 then
