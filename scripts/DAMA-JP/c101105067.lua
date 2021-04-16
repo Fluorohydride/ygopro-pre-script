@@ -49,7 +49,7 @@ function c101105067.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,c101105067.ffilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,ft):GetFirst()
 	if tc then
 		Duel.ConfirmCards(1-tp,tc)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101105067,0))
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101105067.spfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tc,e,tp,ft)
 		local cc=g:GetFirst()
 		if cc then
