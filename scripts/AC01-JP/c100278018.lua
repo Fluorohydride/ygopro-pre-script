@@ -17,7 +17,7 @@ function c100278018.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100278018,1))
+	e3:SetDescription(aux.Stringid(100278018,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
@@ -42,7 +42,7 @@ function c100278018.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100278018.filter1(c,e)
-	return c:IsOnField() and not c:IsImmuneToEffect(e)
+	return c:IsLocation(LOCATION_MZONE+LOCATION_HAND) and not c:IsImmuneToEffect(e)
 end
 function c100278018.filter2(c,e,tp,m,f,gc,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c))
@@ -52,7 +52,7 @@ function c100278018.fustg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
 		local chkf=tp
-		local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil)
+		local mg1=Duel.GetFusionMaterial(tp):Filter(c100278018.filter1,nil,e)
 		local res=Duel.IsExistingMatchingCard(c100278018.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,c,chkf)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
