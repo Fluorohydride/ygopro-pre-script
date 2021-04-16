@@ -49,7 +49,7 @@ function c100425036.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100425036.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return eg:IsExists(c100425036.filter1,1,nil,e,tp) end
+	if chk==0 then return eg and eg:IsExists(c100425036.filter1,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=eg:FilterSelect(tp,c100425036.filter1,1,1,nil,e,tp)
 	Duel.SetTargetCard(g)
