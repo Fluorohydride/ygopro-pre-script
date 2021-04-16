@@ -85,7 +85,7 @@ function c101105009.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_DRAW)
 		Duel.SetTargetPlayer(tp)
 		Duel.SetTargetParam(2)
-		Duel.SetOperationInfo(0,CATEGORY_DRAW,0,0,tp,2)
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 	else
 		e:SetCategory(CATEGORY_DESTROY)
 		local g=eg:Filter(c101105009.desfilter,nil,tp)
