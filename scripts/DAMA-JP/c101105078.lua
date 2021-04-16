@@ -51,7 +51,7 @@ function c101105078.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return a and a:IsAbleToHand() and Duel.GetFlagEffect(tp,101105078)==0 and c:GetFlagEffect(101105178)==0 end
 	Duel.RegisterFlagEffect(tp,101105078,RESET_CHAIN,0,1)
 	c:RegisterFlagEffect(101105178,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-	local g=a:GetColumnGroup()
+	local g=a:GetColumnGroup():Filter(Card.IsAbleToHand,nil)
 	g:AddCard(a)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
