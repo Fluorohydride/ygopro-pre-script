@@ -63,7 +63,7 @@ function c101105048.teop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-unction c101105048.cfilter(c,tp)
+function c101105048.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x163) and c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c101105048.tgfilter(c,tp,g)
