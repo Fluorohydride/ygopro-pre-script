@@ -1,4 +1,4 @@
---時花の賢者ーフルール・ド・サージュ
+--時花の賢者－フルール・ド・サージュ
 --Script by XyLeN
 function c100425020.initial_effect(c)
 	--special summon
