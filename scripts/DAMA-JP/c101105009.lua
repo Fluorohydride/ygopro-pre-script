@@ -17,6 +17,7 @@ function c101105009.initial_effect(c)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101105009,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -62,17 +63,17 @@ function c101105009.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ops={}
 	local opval={}
 	if b1 then
-		ops[off]=aux.Stringid(101105009,1)
+		ops[off]=aux.Stringid(101105009,2)
 		opval[off-1]=1
 		off=off+1
 	end
 	if b2 then
-		ops[off]=aux.Stringid(101105009,2)
+		ops[off]=aux.Stringid(101105009,3)
 		opval[off-1]=2
 		off=off+1
 	end
 	if b3 then
-		ops[off]=aux.Stringid(101105009,3)
+		ops[off]=aux.Stringid(101105009,4)
 		opval[off-1]=3
 		off=off+1
 	end
