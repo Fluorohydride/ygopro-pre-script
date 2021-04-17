@@ -1,4 +1,6 @@
+--グランドレミコード・ミューゼシア
 --Grandoremichord Musesea
+--Script by TheOnePharaoh
 function c101105048.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
@@ -40,13 +42,11 @@ end
 function c101105048.chkcon(g,e,tp,odevity)
 	return g:IsExists(c101105048.chkfilter,1,nil,odevity) and Duel.IsExistingMatchingCard(c101105048.thfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,odevity)
 end
-
 function c101105048.tetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101105048.tefilter,tp,LOCATION_HAND,0,nil)
-	if chk==0 then return g:IsExists(c101105048.chkcon,1,nil,1) or g:IsExists(c101105048.chkcon,1,nil,0) end
+	if chk==0 then return c101105048.chkcon(g,e,tp,0) or c101105048.chkcon(g,e,tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_EXTRA)
-
 end
 function c101105048.teop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101105048,3))
@@ -64,13 +64,13 @@ function c101105048.teop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105048.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x163) and c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(0x162) and c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c101105048.tgfilter(c,tp,g)
 	return g:IsContains(c) and Duel.IsExistingMatchingCard(c101105048.adfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function c101105048.adfilter(c,scale)
-	return c:IsSetCard(0x163) and c:IsType(TYPE_MONSTER) and not c:GetLevel()==scale and c:IsAbleToHand()
+	return c:IsSetCard(0x162) and c:IsType(TYPE_MONSTER) and not c:GetLevel()==scale and c:IsAbleToHand()
 end
 function c101105048.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and eg:IsExists(c101105048.cfilter,1,nil,tp)
