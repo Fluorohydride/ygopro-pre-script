@@ -1,4 +1,6 @@
---先史遗产 维摩那
+--先史遺産ヴィマナ
+--
+--Script by JustFish
 function c101105044.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,5,2)

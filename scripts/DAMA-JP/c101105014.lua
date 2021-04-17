@@ -1,4 +1,6 @@
---先史遗产 阿坎巴罗土偶
+--先史遺産アカンバロの土偶
+--
+--Script by JustFish
 function c101105014.initial_effect(c)
 	--destroy replace
 	local e1=Effect.CreateEffect(c)

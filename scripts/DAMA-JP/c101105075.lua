@@ -1,4 +1,6 @@
---先史遗产石纹
+--先史遺産石紋
+--
+--Script by JustFish
 function c101105075.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

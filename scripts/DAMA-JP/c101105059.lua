@@ -1,4 +1,6 @@
---先史遗产惊神殿-三巨石
+--先史遺産驚神殿－トリリトン
+--
+--Script by JustFish
 function c101105059.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
