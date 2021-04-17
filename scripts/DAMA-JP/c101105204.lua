@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c101105204.initial_effect(c)
+	aux.AddMaterialCodeList(c,21159309)
 	aux.AddCodeList(c,44508094)
 	--synchro summon
 	aux.AddSynchroMixProcedure(c,c101105204.mfilter,nil,nil,aux.NonTuner(nil),1,99,c101105204.gfilter)
