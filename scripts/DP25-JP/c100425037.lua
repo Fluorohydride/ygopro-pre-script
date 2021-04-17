@@ -1,4 +1,6 @@
+--LL－プロム・スラッシュ
 --Lyrilusc - Prom Thrush
+--Script by TheOnePharaoh
 function c100425037.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,nil,1,2,nil,nil,99)
@@ -32,7 +34,6 @@ function c100425037.initial_effect(c)
 	e3:SetCost(c100425037.cost)
 	e3:SetOperation(c100425037.operation)
 	c:RegisterEffect(e3)
-
 end
 function c100425037.atkval(e,c)
 	return c:GetOverlayCount()*500
@@ -47,7 +48,7 @@ end
 function c100425037.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c100425037.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100425037.filter,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c100425037.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end
