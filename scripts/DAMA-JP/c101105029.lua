@@ -30,7 +30,7 @@ end
 function c101105029.adjustop(e,tp,eg,ep,ev,re,r,rp) 
 	for p=0,1 do
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,p,LOCATION_MZONE,0,nil)
-			for lv=1,99 do
+			for lv=1,19 do
 				c101105029[p][lv]=g:FilterCount(Card.IsLevel,nil,lv)
 			end
 	end
@@ -38,7 +38,7 @@ end
 function c101105029.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	for lv=1,99 do 
+	for lv=1,19 do 
 		if c101105029[tp][lv]>1 then
 			return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,LOCATION_MZONE)>=2
