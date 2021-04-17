@@ -1,4 +1,6 @@
+--スロワースワロー
 --Slower Swallow
+--Script by TheOnePharaoh
 function c101105029.initial_effect(c)
 	--special summon rule
 	local e1=Effect.CreateEffect(c)
@@ -6,6 +8,7 @@ function c101105029.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCountLimit(1,101105029+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c101105029.spcon)
 	c:RegisterEffect(e1)
 	--draw
@@ -16,36 +19,19 @@ function c101105029.initial_effect(c)
 	e2:SetCost(c101105029.cost)
 	e2:SetOperation(c101105029.operation)
 	c:RegisterEffect(e2)	
-	if not c101105029.global_check then
-		c101105029.global_check=true
-		c101105029[0]={}
-		c101105029[1]={}
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_ADJUST)
-		e2:SetOperation(c101105029.adjustop)
-		Duel.RegisterEffect(e2,0)
-	end
 end
-function c101105029.adjustop(e,tp,eg,ep,ev,re,r,rp) 
-	for p=0,1 do
-		local g=Duel.GetMatchingGroup(Card.IsFaceup,p,LOCATION_MZONE,0,nil)
-			for lv=1,19 do
-				c101105029[p][lv]=g:FilterCount(Card.IsLevel,nil,lv)
-			end
-	end
+function c101105029.spfilter1(c)
+    return c:IsFaceup() and c:IsLevelAbove(0)
+		and Duel.IsExistingMatchingCard(c101105029.spfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetLevel())
+end
+function c101105029.spfilter2(c,lv)
+    return c:IsFaceup() and c:IsLevel(lv)
 end
 function c101105029.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	for lv=1,19 do 
-		if c101105029[tp][lv]>1 then
-			return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,LOCATION_MZONE)>=2
-		else
-			return false
-		end
-	end
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101105029.spfilter1,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function c101105029.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
@@ -57,7 +43,7 @@ function c101105029.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_DRAW_COUNT)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_DRAW)
+	e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN)
 	e1:SetValue(2)
 	Duel.RegisterEffect(e1,tp)
 end
