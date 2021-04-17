@@ -1,4 +1,4 @@
---LL－比翼の霊鳥
+--LL－比翼の麗鳥
 
 --Scripted by mallu11
 function c100425040.initial_effect(c)
