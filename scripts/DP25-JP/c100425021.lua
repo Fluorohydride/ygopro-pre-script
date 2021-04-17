@@ -26,7 +26,7 @@ function c100425021.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100425021.spfilter(c)
-	return c:IsFaceup() and c:IsLevel(2)
+	return c:IsFaceup() and c:IsLevelBelow(2)
 end
 function c100425021.spcon(e,c)
 	if c==nil then return true end
@@ -39,14 +39,14 @@ function c100425021.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100425021.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and aux.TRUE(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c100425021.negop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.NegateAttack()~=0 then
+	if Duel.NegateAttack() and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
