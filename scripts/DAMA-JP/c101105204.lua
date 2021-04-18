@@ -47,6 +47,22 @@ function c101105204.initial_effect(c)
 	e4:SetOperation(c101105204.negop)
 	c:RegisterEffect(e4)
 end
+if Auxiliary.AddMaterialCodeList==nil then
+	function Auxiliary.AddMaterialCodeList(c,...)
+		if c:IsStatus(STATUS_COPYING_EFFECT) then return end
+		local mat={}
+		for _,code in ipairs{...} do
+			mat[code]=true
+		end
+		if c.material==nil then
+			local mt=getmetatable(c)
+			mt.material=mat
+		end
+		for index,_ in pairs(mat) do
+			Auxiliary.AddCodeList(c,index)
+		end
+	end
+end
 c101105204.material_type=TYPE_SYNCHRO
 function c101105204.mfilter(c)
 	return c:IsCode(21159309) and c:IsSynchroType(TYPE_TUNER)
