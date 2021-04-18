@@ -37,10 +37,10 @@ function c100278026.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_MZONE)
 end
 function c100278026.spop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()  
+	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100278026.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	local tc=g:GetFirst() 
+	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -58,7 +58,7 @@ function c100278026.spop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.SelectMatchingCard(tp,c100278026.eqfilter,tp,LOCATION_MZONE,0,1,1,tc)
 		local ec=sg:GetFirst()
 		if ec then
-			c100278026.equip_monster1(c,tp,tc) 
+			c100278026.equip_monster1(c,tp,tc)
 			c100278026.equip_monster2(ec,tp,tc)
 			c:RegisterFlagEffect(100278026,RESET_EVENT+RESETS_STANDARD,1,0)
 		end
@@ -118,7 +118,7 @@ function c100278026.checkop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabel(fid)
 end
 function c100278026.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler() 
+	local c=e:GetHandler()
 	return c:GetFlagEffect(100278026)~=0
 		and Duel.GetAttacker()==c:GetEquipTarget()
 end

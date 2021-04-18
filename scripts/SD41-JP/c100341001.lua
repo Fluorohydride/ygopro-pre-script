@@ -69,7 +69,7 @@ end
 function c100341001.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-function c100341001.spcon(e,tp,eg,ep,ev,re,r,rp) 
+function c100341001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetPreviousLocation()==LOCATION_SZONE and not c:IsReason(REASON_LOST_TARGET)
 end

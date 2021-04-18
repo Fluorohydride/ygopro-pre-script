@@ -43,7 +43,7 @@ function c101105014.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT+REASON_DISCARD)
 end
 function c101105014.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) and Duel.GetCustomActivityCount(101105014,tp,ACTIVITY_SPSUMMON)==0  end
+	if chk==0 then return Duel.CheckLPCost(tp,1000) and Duel.GetCustomActivityCount(101105014,tp,ACTIVITY_SPSUMMON)==0 end
 	Duel.PayLPCost(tp,1000)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)

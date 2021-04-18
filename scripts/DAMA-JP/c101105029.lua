@@ -21,11 +21,11 @@ function c101105029.initial_effect(c)
 	c:RegisterEffect(e2)	
 end
 function c101105029.spfilter1(c)
-    return c:IsFaceup() and c:IsLevelAbove(0)
+	return c:IsFaceup() and c:IsLevelAbove(0)
 		and Duel.IsExistingMatchingCard(c101105029.spfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetLevel())
 end
 function c101105029.spfilter2(c,lv)
-    return c:IsFaceup() and c:IsLevel(lv)
+	return c:IsFaceup() and c:IsLevel(lv)
 end
 function c101105029.spcon(e,c)
 	if c==nil then return true end

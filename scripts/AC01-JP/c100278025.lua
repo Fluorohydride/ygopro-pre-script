@@ -86,7 +86,7 @@ function c100278025.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c100278025.cfilter,1,nil,tp)
 end
 function c100278025.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler() 
+	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -13,22 +13,22 @@ function c101105028.initial_effect(c)
 	e1:SetOperation(c101105028.rmop)
 	c:RegisterEffect(e1)
 	--handle the e1
-	local e2=Effect.CreateEffect(c) 
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetOperation(c101105028.regop)
 	c:RegisterEffect(e2)
 	--to grave
-	local e3=Effect.CreateEffect(c) 
-	e3:SetDescription(aux.Stringid(101105028,1)) 
-	e3:SetCategory(CATEGORY_TOGRAVE) 
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O) 
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(101105028,1))
+	e3:SetCategory(CATEGORY_TOGRAVE)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCountLimit(1,101105028)
-	e3:SetCondition(c101105028.tgcon) 
+	e3:SetCondition(c101105028.tgcon)
 	e3:SetTarget(c101105028.tgtg)
-	e3:SetOperation(c101105028.tgop) 
+	e3:SetOperation(c101105028.tgop)
 	c:RegisterEffect(e3)
 	--special summon
 	local e4=Effect.CreateEffect(c)
@@ -51,7 +51,7 @@ function c101105028.initial_effect(c)
 	end
 	if not Card.IsSpellTrap then
 		function Card.IsSpellTrap(c)
-			return c:IsType(TYPE_SPELL|TYPE_TRAP) 
+			return c:IsType(TYPE_SPELL|TYPE_TRAP)
 		end
 	end
 end
@@ -59,7 +59,7 @@ function c101105028.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(Card.IsMonster,tp,0,LOCATION_GRAVE,nil)>Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,0,LOCATION_GRAVE,nil)
 end
 function c101105028.rmfilter(c)
-	return c:IsMonster() and c:IsAbleToRemove() 
+	return c:IsMonster() and c:IsAbleToRemove()
 end
 function c101105028.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101105028.rmfilter,tp,0,LOCATION_GRAVE,nil)
@@ -82,7 +82,7 @@ function c101105028.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,0,LOCATION_GRAVE,nil)>Duel.GetMatchingGroupCount(Card.IsMonster,tp,0,LOCATION_GRAVE,nil)
 end
 function c101105028.tgfilter(c)
-	return c:IsMonster() and c:IsAbleToGrave() 
+	return c:IsMonster() and c:IsAbleToGrave()
 end
 function c101105028.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101105028.tgfilter,tp,0,LOCATION_MZONE,nil)

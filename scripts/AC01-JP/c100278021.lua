@@ -2,7 +2,7 @@
 --Script by XyLeN
 function c100278021.initial_effect(c)
 	--Activate
-	local e0=Effect.CreateEffect(c) 
+	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
@@ -19,8 +19,8 @@ function c100278021.initial_effect(c)
 	e1:SetOperation(c100278021.tkop)
 	c:RegisterEffect(e1)
 	--destroy
-	local e2=Effect.CreateEffect(c) 
-	e2:SetDescription(aux.Stringid(100278021,1)) 
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100278021,1))
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetCode(EVENT_LEAVE_FIELD_P)
 	e2:SetOperation(c100278021.desop)
@@ -46,9 +46,9 @@ function c100278021.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0
 		and Duel.GetLocationCount(p,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(p,100278121,0,0x4011,-2,-2,1,RACE_SPELLCASTER,ATTRIBUTE_DARK) then
-		local atk=tc:GetAttack() 
+		local atk=tc:GetAttack()
 		local def=tc:GetDefense()
-		local token=Duel.CreateToken(tp,100278121) 
+		local token=Duel.CreateToken(tp,100278121)
 		Duel.SpecialSummonStep(token,0,p,p,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

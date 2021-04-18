@@ -31,7 +31,7 @@ function c101105075.xyzfilter(c,e,tp,mg)
 	return c:IsSetCard(0x70) and c:IsXyzSummonable(mg,2,2) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function c101105075.mfilter1(c,mg,exg)
-	return mg:IsExists(c101105075.mfilter2,1,c,c,exg) 
+	return mg:IsExists(c101105075.mfilter2,1,c,c,exg)
 end
 function c101105075.mfilter2(c,mc,exg)
 	return exg:IsExists(Card.IsXyzSummonable,1,nil,Group.FromCards(c,mc))
