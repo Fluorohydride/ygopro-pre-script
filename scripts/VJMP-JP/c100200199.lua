@@ -1,6 +1,8 @@
---深海艺术指导
+--深海のコレペティ
+--
+--Script by JustFish
 function c100200199.initial_effect(c)
-	aux.AddCodeList(c,78868119)
+	aux.AddMaterialCodeList(c,78868119)
 	--synchro summon
 	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsCode,78868119),aux.NonTuner(nil),1)
 	c:EnableReviveLimit()
@@ -11,6 +13,7 @@ function c100200199.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCountLimit(1)
 	e1:SetCost(c100200199.atkcost)
 	e1:SetOperation(c100200199.atkop)
@@ -51,7 +54,8 @@ function c100200199.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c100200199.spfilter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelAbove(5) and not c:IsCode(100200199) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelAbove(5) and not c:IsCode(100200199)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100200199.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100200199.spfilter(chkc,e,tp) end

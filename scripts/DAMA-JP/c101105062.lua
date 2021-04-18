@@ -1,4 +1,6 @@
---直播☆双子麻烦桑
+--Live☆Twin トラブルサン
+--
+--Script by JustFish
 function c101105062.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
