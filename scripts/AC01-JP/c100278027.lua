@@ -52,25 +52,9 @@ function c100278027.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,c100278027.eqfilter,tp,LOCATION_EXTRA+LOCATION_DECK,0,1,1,nil,tp)
 		local tc=g:GetFirst()
 		if not tc then return end
-		local mt=_G["c"..tc:GetOriginalCode()]
-		if mt.equip_monster then
-			mt.equip_monster(tc,tp,c)
-		else
-			if not Duel.Equip(tp,tc,c) then return end
-			--equip limit
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetCode(EFFECT_EQUIP_LIMIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e1:SetLabelObject(c)
-			e1:SetValue(c100278027.eqlimit)
-			tc:RegisterEffect(e1)
-		end
+		local mt=_G["c"..tc:GetCode()]
+		mt.zw_equip_monster(tc,tp,c)
 	end
-end
-function c100278027.eqlimit(e,c)
-	return c==e:GetLabelObject()
 end
 function c100278027.discon(e)
 	local c=e:GetHandler()

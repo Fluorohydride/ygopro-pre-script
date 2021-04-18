@@ -58,8 +58,8 @@ function c100278026.spop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.SelectMatchingCard(tp,c100278026.eqfilter,tp,LOCATION_MZONE,0,1,1,tc)
 		local ec=sg:GetFirst()
 		if ec then
-			c100278026.equip_monster1(c,tp,tc)
-			c100278026.equip_monster2(ec,tp,tc)
+			c100278026.equip_monster(c,c,tp,tc)
+			c100278026.equip_monster(c,ec,tp,tc)
 			c:RegisterFlagEffect(100278026,RESET_EVENT+RESETS_STANDARD,1,0)
 		end
 	end
@@ -83,8 +83,8 @@ function c100278026.spop(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e4,tp)
 end
-function c100278026.equip_monster1(c,tp,tc)
-	if not Duel.Equip(tp,c,tc) then return end
+function c100278026.equip_monster(c,ec,tp,tc)
+	if not Duel.Equip(tp,ec,tc) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
@@ -92,17 +92,14 @@ function c100278026.equip_monster1(c,tp,tc)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetValue(c100278026.eqlimit)
 	e1:SetLabelObject(tc)
-	c:RegisterEffect(e1)
+	ec:RegisterEffect(e1)
 	--atkup
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(1700)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e2)
-end
-function c100278026.equip_monster2(c,tp,tc)
-	c100278026.equip_monster1(c,tp,tc)
+	ec:RegisterEffect(e2)
 end
 function c100278026.eqlimit(e,c)
 	return c==e:GetLabelObject()
