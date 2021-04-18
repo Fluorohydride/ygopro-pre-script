@@ -3,15 +3,21 @@
 --Scripted by mallu11
 function c101105025.initial_effect(c)
 	--special summon
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e0:SetCode(EVENT_CHAIN_SOLVED)
+	e0:SetRange(LOCATION_HAND)
+	e0:SetCondition(c101105025.regcon)
+	e0:SetOperation(c101105025.regop)
+	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101105025,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_CHAINING)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_CUSTOM+101105025)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101105025)
-	e1:SetCondition(c101105025.spcon)
 	e1:SetTarget(c101105025.sptg)
 	e1:SetOperation(c101105025.spop)
 	c:RegisterEffect(e1)
@@ -37,9 +43,12 @@ function c101105025.initial_effect(c)
 	e3:SetOperation(c101105025.indop)
 	c:RegisterEffect(e3)
 end
-function c101105025.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c101105025.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc,race=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_RACE)
 	return rp==tp and re:IsActiveType(TYPE_MONSTER) and loc&LOCATION_MZONE~=0 and race&RACE_FAIRY~=0
+end
+function c101105025.regop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+101105025,re,0,0,0,0)
 end
 function c101105025.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
