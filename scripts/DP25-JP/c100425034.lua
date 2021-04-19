@@ -42,7 +42,8 @@ end
 function c100425034.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and not Duel.IsPlayerAffectedByEffect(tp,59822133) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 then
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and not Duel.IsPlayerAffectedByEffect(tp,59822133) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 then
 		local g=Group.FromCards(c,tc)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
@@ -76,6 +77,7 @@ function c100425034.efop(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(rc)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_CHANGE_CONTROL)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e2,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e3=Effect.CreateEffect(c)
