@@ -44,17 +44,20 @@ end
 function c101105012.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,3)
 	Duel.ConfirmDecktop(tp,3)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local tg=g:Filter(c101105012.filter,nil,e,tp,ft)
-	if #tg>0 and Duel.SelectYesNo(tp,aux.Stringid(101105012,1)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-		local sg=tg:Select(tp,1,1,nil)
-		local tc=sg:GetFirst()
-		if tc:IsAbleToHand() and (ft<=0 or not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) or Duel.SelectOption(tp,1190,1152)==0) then
-			Duel.SendtoHand(tc,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,tc)
-		else
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	if #g>0 then
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local tg=g:Filter(c101105012.filter,nil,e,tp,ft)
+		if #tg>0 and Duel.SelectYesNo(tp,aux.Stringid(101105012,1)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
+			local sg=tg:Select(tp,1,1,nil)
+			local tc=sg:GetFirst()
+			if tc:IsAbleToHand() and (ft<=0 or not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) or Duel.SelectOption(tp,1190,1152)==0) then
+				Duel.SendtoHand(tc,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,tc)
+			else
+				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+			end
 		end
+		Duel.ShuffleDeck(tp)
 	end
 end
