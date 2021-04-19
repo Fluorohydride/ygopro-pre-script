@@ -1,5 +1,5 @@
 --LL－アンサンブルー・ロビン
---Lyrilusc – Ensembl(u)e Robin
+--Lyrilusc - Ensemblue Robin
 --Script by TheOnePharaoh
 function c100425036.initial_effect(c)
 	c:EnableReviveLimit()
@@ -16,7 +16,7 @@ function c100425036.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100425036,0))
 	e2:SetCategory(CATEGORY_TOHAND)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
