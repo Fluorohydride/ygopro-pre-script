@@ -55,7 +55,9 @@ function c101105016.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101105016.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,e:GetLabel())
-	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	end
 end
 function c101105016.thfilter(c)
 	return c:IsFacedown() and aux.AtkEqualsDef(c)
