@@ -56,13 +56,16 @@ function c100278027.eqop(e,tp,eg,ep,ev,re,r,rp)
 		mt.zw_equip_monster(tc,tp,c)
 	end
 end
-function c100278027.discon(e)
+function c100278027.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x107e) and c:GetOriginalType()&TYPE_MONSTER~=0
+end
+function c100278027.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local eg=c:GetEquipGroup()
-	return #eg>0 and eg:IsExists(Card.IsSetCard,1,nil,0x107e)
+	local g=c:GetEquipGroup()
+	return #g>0 and g:IsExists(c100278027.cfilter,1,nil)
 end
 function c100278027.disfilter(c)
-	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_EFFECT) and c:GetAttack()>0
+	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_EFFECT)
 end
 function c100278027.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c100278027.disfilter(chkc) end
@@ -88,6 +91,7 @@ function c100278027.disop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
+		Duel.AdjustInstantly()
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_SET_ATTACK_FINAL)
