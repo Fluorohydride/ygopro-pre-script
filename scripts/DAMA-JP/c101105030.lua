@@ -20,7 +20,7 @@ function c101105030.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101105030,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101105030+100)
@@ -38,7 +38,7 @@ end
 function c101105030.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	local tc=Duel.GetFirstMatchingCard(c101105030.filter,tp,LOCATION_PZONE,0,c,c)
+	local tc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,c)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
@@ -66,6 +66,8 @@ function c101105030.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101105030.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not (c:IsRelateToEffect(e) and c:IsFaceup()) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,c101105030.spfilter2,tp,LOCATION_HAND,0,1,1,nil,e,tp,c)
 	if sg:GetCount()>0 then
