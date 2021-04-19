@@ -1,11 +1,11 @@
 --いくらの軍貫
---Roe Suship
+
 --scripted by XyleN5967
 function c101105012.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101105012)
@@ -32,21 +32,25 @@ function c101105012.sprcon(e,c)
 		and Duel.IsExistingMatchingCard(c101105012.sprfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c101105012.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 end
+	local g=Duel.GetDecktopGroup(tp,3)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3
+		and (g:IsExists(Card.IsAbleToHand,1,nil) or ft>0
+		and Duel.IsPlayerCanSpecialSummon(tp) and not Duel.IsPlayerAffectedByEffect(tp,63060238) and not Duel.IsPlayerAffectedByEffect(tp,97148796)) end
 end
-function c101105012.filter(c,e,tp)
-	return c:IsCode(101105011) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+function c101105012.filter(c,e,tp,ft)
+	return c:IsCode(101105011) and (c:IsAbleToHand() or ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c101105012.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,3)
-	if #g<3 then return end
 	Duel.ConfirmDecktop(tp,3)
-	local tg=g:Filter(c101105012.filter,nil,e,tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local tg=g:Filter(c101105012.filter,nil,e,tp,ft)
 	if #tg>0 and Duel.SelectYesNo(tp,aux.Stringid(101105012,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 		local sg=tg:Select(tp,1,1,nil)
 		local tc=sg:GetFirst()
-		if tc:IsAbleToHand() and (not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) or Duel.SelectOption(tp,1190,1152)==0) then
+		if tc:IsAbleToHand() and (ft<=0 or not tc:IsCanBeSpecialSummoned(e,0,tp,false,false) or Duel.SelectOption(tp,1190,1152)==0) then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,tc)
 		else
