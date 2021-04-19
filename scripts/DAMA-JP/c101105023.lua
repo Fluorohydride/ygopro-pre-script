@@ -17,7 +17,7 @@ function c101105023.initial_effect(c)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101105023,1))
-	e2:SetCategory(CATEGORY_DESTROY)
+	e2:SetCategory(CATEGORY_HANDES+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_START)
 	e2:SetCost(c101105023.descost)
@@ -34,7 +34,7 @@ function c101105023.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function c101105023.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function c101105023.indesop(e,tp,eg,ep,ev,re,r,rp)
@@ -62,14 +62,15 @@ function c101105023.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101105023.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetBattleTarget()
+	e:SetLabelObject(tc)
 	if chk==0 then return tc and tc:IsControler(1-tp) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
 function c101105023.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)>0 then
-		local tc=e:GetHandler():GetBattleTarget()
-		if tc:IsRelateToBattle() then
+		local tc=e:GetLabelObject()
+		if tc and tc:IsRelateToBattle() and tc:IsControler(1-tp) then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	end
