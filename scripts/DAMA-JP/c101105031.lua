@@ -10,7 +10,7 @@ function c101105031.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetHintTiming(0,TIMING_END_PHASE+TIMINGS_CHECK_MONSTER)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,101105031)
+	e1:SetCountLimit(1)
 	e1:SetTarget(c101105031.seqtg)
 	e1:SetOperation(c101105031.seqop)
 	c:RegisterEffect(e1)
@@ -38,8 +38,8 @@ function c101105031.seqfilter(c,e,tp)
 end
 function c101105031.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c101105031.seqfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)>0
+		and Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)>0
 		and Duel.IsExistingTarget(c101105031.seqfilter,tp,0,LOCATION_MZONE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c101105031.seqfilter,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
@@ -62,7 +62,8 @@ function c101105031.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local flag=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~filter)
 	local seq1=math.log(flag,2)
 	local seq2=4-math.log(flag,2)
-	if Duel.MoveSequence(c,seq1)~=0 then
+	Duel.MoveSequence(c,seq1)
+	if c:GetSequence()==seq1 then
 		Duel.MoveSequence(tc,seq2)
 		if tc:IsFaceup() then
 			Duel.BreakEffect()
