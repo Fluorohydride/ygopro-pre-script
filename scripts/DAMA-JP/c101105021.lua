@@ -18,6 +18,7 @@ function c101105021.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101105021,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,101105021+100)
 	e2:SetCondition(aux.exccon)
@@ -28,7 +29,7 @@ function c101105021.initial_effect(c)
 end
 c101105021.counter_add_list={0x100e}
 function c101105021.ctfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsCanAddCounter(0x100e,2)
 end
 function c101105021.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and c101105021.ctfilter(chkc) end

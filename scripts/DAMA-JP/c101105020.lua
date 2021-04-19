@@ -46,7 +46,7 @@ function c101105020.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105020.costfilter(c,ft)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_TRAP) and c:IsSetCard(0x15c) and c:IsAbleToGraveAsCost()
-		and (ft>0 or c:IsOnField() and ft>-1)
+		and (ft>0 or c:IsLocation(LOCATION_SZONE) and ft>-1)
 end
 function c101105020.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)

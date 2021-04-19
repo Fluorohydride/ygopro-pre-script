@@ -14,12 +14,11 @@ function c101105015.initial_effect(c)
 	--atk up
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101105015,1))
-	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(aux.bfgcost)
-	e2:SetCountLimit(1,id)
+	e2:SetCountLimit(1,101105015)
 	e2:SetTarget(c101105015.atktg)
 	e2:SetOperation(c101105015.atkop)
 	c:RegisterEffect(e2)
@@ -51,11 +50,16 @@ end
 function c101105015.atkfilter(c)
 	return c:IsFaceup() and aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE)
 end
+function c101105015.cfilter(c,atk)
+	return c101105015.atkfilter(c) and not (c:IsAttack(atk) and c:IsDefense(atk))
+end
 function c101105015.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101105015.atkfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101105015.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c101105015.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.GetMatchingGroup(c101105015.atkfilter,tp,LOCATION_MZONE,0,nil)
+	if g:GetCount()>0 then atk=g:GetSum(Card.GetBaseAttack) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101105015.cfilter(chkc,atk) end
+	if chk==0 then return g:GetCount()>0 and Duel.IsExistingTarget(c101105015.cfilter,tp,LOCATION_MZONE,0,1,nil,atk) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local g=Duel.SelectTarget(tp,c101105015.cfilter,tp,LOCATION_MZONE,0,1,1,nil,atk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end
 function c101105015.atkop(e,tp,eg,ep,ev,re,r,rp)
