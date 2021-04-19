@@ -64,8 +64,7 @@ function c101105014.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101105014.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local fid=c:GetFieldID()
 		c:RegisterFlagEffect(101105014,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(e:GetHandler())
