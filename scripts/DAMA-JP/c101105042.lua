@@ -65,12 +65,14 @@ function c101105042.eqfilter(c)
 	return c:IsFaceup() and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function c101105042.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101105042.eqfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(c101105042.eqfilter,tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingTarget(c101105042.eqfilter,tp,LOCATION_MZONE,0,1,nil)
+		and c:CheckUniqueOnField(tp,LOCATION_SZONE) and not c:IsForbidden() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,c101105042.eqfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,0,0)
 end
 function c101105042.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -79,6 +81,7 @@ function c101105042.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:IsFacedown() or not tc:IsRelateToEffect(e) then
 		return
 	end
+	if not c:CheckUniqueOnField(tp,LOCATION_SZONE) or c:IsForbidden() then return end
 	if not Duel.Equip(tp,c,tc) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
