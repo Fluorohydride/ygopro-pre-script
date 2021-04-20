@@ -20,6 +20,7 @@ function c100425036.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e2:SetCondition(c100425036.thcon)
 	e2:SetCost(c100425036.thcost)
 	e2:SetTarget(c100425036.thtg)
 	e2:SetOperation(c100425036.thop)
@@ -39,21 +40,29 @@ end
 function c100425036.atkval(e,c)
 	return c:GetOverlayCount()*500
 end
-function c100425036.filter1(c,e,tp)
-	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e)
-		and c:IsAbleToHand()
+function c100425036.filter1(c,g)
+	return g:IsContains(c)
+end
+function c100425036.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function c100425036.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c100425036.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
-	if chk==0 then return eg and eg:IsExists(c100425036.filter1,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=eg:FilterSelect(tp,c100425036.filter1,1,1,nil,e,tp)
-	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+	local g=eg:Filter(Card.IsAbleToHand,nil):Filter(Card.IsLocation,nil,LOCATION_MZONE)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100425036.filter1(chkc,g) end
+	if chk==0 then return Duel.IsExistingTarget(c100425036.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g) end
+	local sg=Group.CreateGroup()
+	if g:GetCount()==1 then
+		sg=g:Clone()
+		Duel.SetTargetCard(sg)
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+		sg=Duel.SelectTarget(tp,c100425036.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,g)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,sg,1,0,0)
 end
 function c100425036.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
