@@ -66,10 +66,10 @@ function c101105048.teop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.SendtoExtraP(tc,tp,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) then
 		local odevity=tc:GetCurrentScale()%2
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,c101105048.thfilter,tp,LOCATION_EXTRA,0,1,1,nil,odevity)
-		if g:GetCount()>0 then
-			Duel.SendtoHand(g,tp,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
+		local g2=Duel.SelectMatchingCard(tp,c101105048.thfilter,tp,LOCATION_EXTRA,0,1,1,nil,odevity)
+		if g2:GetCount()>0 then
+			Duel.SendtoHand(g2,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g2)
 		end
 	end
 end
