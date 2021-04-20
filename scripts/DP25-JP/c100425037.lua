@@ -12,13 +12,14 @@ function c100425037.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(c100425037.atkval)
 	c:RegisterEffect(e1)
-	--destroy
+	--to deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100425037,0))
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCountLimit(1)
 	e2:SetCost(c100425037.descost)
 	e2:SetTarget(c100425037.destg)
 	e2:SetOperation(c100425037.desop)
@@ -27,7 +28,7 @@ function c100425037.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100425037,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_START)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(c100425037.condition)
@@ -59,12 +60,10 @@ function c100425037.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100425037.condition(e,tp,eg,ep,ev,re,r,rp)
-	local phase=Duel.GetCurrentPhase()
-	if phase~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return (a:GetControler()==tp and a~=e:GetHandler() and a:IsRelateToBattle())
-		or (d and d:GetControler()==tp and d~=e:GetHandler() and d:IsRelateToBattle())
+	return (a:IsControler(tp) and a:IsFaceup() and a~=e:GetHandler() and a:IsRelateToBattle())
+		or (d and d:IsControler(tp) and d:IsFaceup() and d~=e:GetHandler() and d:IsRelateToBattle())
 end
 function c100425037.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -79,10 +78,12 @@ function c100425037.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetTurnPlayer()~=tp then a=Duel.GetAttackTarget() end
 	if not a:IsRelateToBattle() then return end
 	if a==e:GetHandler() then return end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e1:SetValue(ct*300)
-	a:RegisterEffect(e1)
+	if a:IsFaceup() then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetValue(ct*300)
+		a:RegisterEffect(e1)
+	end
 end
