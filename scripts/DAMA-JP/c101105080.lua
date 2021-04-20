@@ -13,7 +13,7 @@ function c101105080.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101105080.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end
 function c101105080.activate(e,tp,eg,ep,ev,re,r,rp,chk)
