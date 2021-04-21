@@ -20,7 +20,7 @@ function c101105075.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function c101105075.tgfilter(c,e,tp)
-	if c:GetOriginalType()&TYPE_XYZ==0 or c:IsFacedown() or not c:IsCanBeEffectTarget(e) then return false end
+	if c:GetOriginalType()&TYPE_XYZ==0 or c:IsFacedown() then return false end
 	local mg=Duel.GetMatchingGroup(c101105075.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp,c:GetRank())
 	return Duel.IsExistingMatchingCard(c101105075.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg)
 end
@@ -43,7 +43,7 @@ function c101105075.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and Duel.IsExistingTarget(c101105075.tgfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c101105075.tgfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SelectTarget(tp,c101105075.tgfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE)
 end
 function c101105075.activate(e,tp,eg,ep,ev,re,r,rp)
