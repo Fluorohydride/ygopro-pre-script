@@ -74,7 +74,7 @@ function c101105048.teop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105048.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x162) and c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(0x162) and c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsType(TYPE_PENDULUM)
 end
 function c101105048.tgfilter(c,tp,g)
 	return g:IsContains(c) and Duel.IsExistingMatchingCard(c101105048.adfilter,tp,LOCATION_DECK,0,1,nil,c:GetCurrentScale())
