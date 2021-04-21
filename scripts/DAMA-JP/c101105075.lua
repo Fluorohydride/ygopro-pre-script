@@ -44,7 +44,7 @@ function c101105075.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(c101105075.tgfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c101105075.tgfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK+LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE)
 end
 function c101105075.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanSpecialSummonCount(tp,2) then return end
@@ -52,7 +52,7 @@ function c101105075.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
-	local mg=Duel.GetMatchingGroup(c101105075.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp,tc:GetRank())
+	local mg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101105075.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp,tc:GetRank())
 	local exg=Duel.GetMatchingGroup(c101105075.xyzfilter,tp,LOCATION_EXTRA,0,nil,e,tp,mg)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g1=mg:FilterSelect(tp,c101105075.mfilter1,1,1,nil,mg,exg)
