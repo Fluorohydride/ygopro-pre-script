@@ -40,9 +40,6 @@ end
 function c100425036.atkval(e,c)
 	return c:GetOverlayCount()*500
 end
-function c100425036.filter1(c,g)
-	return g:IsContains(c)
-end
 function c100425036.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
@@ -52,15 +49,15 @@ function c100425036.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100425036.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=eg:Filter(Card.IsAbleToHand,nil):Filter(Card.IsLocation,nil,LOCATION_MZONE)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100425036.filter1(chkc,g) end
-	if chk==0 then return Duel.IsExistingTarget(c100425036.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g) end
-	local sg=Group.CreateGroup()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and aux.IsInGroup(chkc,g) end
+	if chk==0 then return Duel.IsExistingTarget(aux.IsInGroup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g) end
+	local sg
 	if g:GetCount()==1 then
 		sg=g:Clone()
 		Duel.SetTargetCard(sg)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-		sg=Duel.SelectTarget(tp,c100425036.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,g)
+		sg=Duel.SelectTarget(tp,aux.IsInGroup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,g)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,sg,1,0,0)
 end
