@@ -109,7 +109,7 @@ function c101105076.naop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local ec=e:GetHandler():GetEquipTarget()
 	if Duel.NegateAttack()~=0 and ec then
-		Duel.GetControl(ec,1-tp,PHASE_BATTLE,1)
+		Duel.GetControl(ec,1-ec:GetControler(),PHASE_BATTLE,1)
 	end
 end
 function c101105076.thcon(e,tp,eg,ep,ev,re,r,rp)
