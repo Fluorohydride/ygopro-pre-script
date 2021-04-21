@@ -20,11 +20,15 @@ function c101105080.activate(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 	if g:GetCount()>0 then
-		local opt=Duel.SelectOption(tp,aux.Stringid(101105080,0),aux.Stringid(101105080,1))
-		if opt==0 then
-			Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
-		else
+		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then
 			Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
+		else
+			local opt=Duel.SelectOption(tp,aux.Stringid(101105080,0),aux.Stringid(101105080,1))
+			if opt==0 then
+				Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+			else
+				Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
+			end
 		end
 	end
 end
