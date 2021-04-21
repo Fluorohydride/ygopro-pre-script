@@ -11,10 +11,10 @@ function c100425004.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(c100425004.imcon)
-	e1:SetTarget(c100425004.imtg)
 	e1:SetOperation(c100425004.imop)
 	c:RegisterEffect(e1)
 	--negate
@@ -44,33 +44,30 @@ function c100425004.initial_effect(c)
 end
 c100425004.material_type=TYPE_SYNCHRO
 function c100425004.imcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRelateToEffect(re)
-end
-function c100425004.imtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return re:GetHandler():GetBaseAttack()>0 end
+	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and aux.dscon()
 end
 function c100425004.imop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and rc:IsRelateToEffect(re) and rc:IsControler(1-tp) and rc:GetBaseAttack()>0 and not c:IsImmuneToEffect(e) then
-		local atk=rc:GetBaseAttack()
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e1)
-		if not c:IsHasEffect(EFFECT_REVERSE_UPDATE) then
-			local e2=Effect.CreateEffect(c)
-			e2:SetDescription(aux.Stringid(100425004,3))
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetRange(LOCATION_MZONE)
-			e2:SetCode(EFFECT_IMMUNE_EFFECT)
-			e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			e2:SetValue(c100425004.efilter)
-			c:RegisterEffect(e2)
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		if rc:IsRelateToEffect(re) and rc:IsControler(1-tp) and rc:GetBaseAttack()>0 then
+			local atk=rc:GetBaseAttack()
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(atk)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
+			c:RegisterEffect(e1)
 		end
+		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(aux.Stringid(100425004,3))
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetRange(LOCATION_MZONE)
+		e2:SetCode(EFFECT_IMMUNE_EFFECT)
+		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetValue(c100425004.efilter)
+		c:RegisterEffect(e2)
 	end
 end
 function c100425004.efilter(e,te)
