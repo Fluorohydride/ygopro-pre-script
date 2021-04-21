@@ -51,7 +51,7 @@ function c101105018.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105018.tcfilter(c,tp)
 	local lv=c:GetLevel()
-	return c:IsFaceup() and lv>0 and aux.AtkEqualsDef(c)
+	return c:IsFaceup() and lv>0 and aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE)
 		and Duel.IsExistingMatchingCard(c101105018.tgfilter,tp,LOCATION_DECK,0,1,nil,lv)
 end
 function c101105018.tgfilter(c,lv)

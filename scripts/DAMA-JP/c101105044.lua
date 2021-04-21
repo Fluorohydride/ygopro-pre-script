@@ -11,9 +11,11 @@ function c101105044.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetHintTiming(TIMINGS_CHECK_MONSTER+TIMING_END_PHASE+TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1)
+	e1:SetCondition(aux.dscon)
 	e1:SetTarget(c101105044.atktg)
 	e1:SetOperation(c101105044.atkop)
 	c:RegisterEffect(e1)
@@ -37,7 +39,8 @@ function c101105044.atkfilter(c)
 end
 function c101105044.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsExistingTarget(c101105044.atkfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingTarget(c101105044.atkfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
 	e:SetLabelObject(g:GetFirst())
@@ -52,15 +55,18 @@ function c101105044.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) or not sc:IsRelateToEffect(e) then return end
 	local ac=e:GetLabelObject()
 	if tc==ac then tc=sc end
-	local atk=tc:GetAttack()
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(math.ceil(atk/2))
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	ac:RegisterEffect(e1)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.Overlay(e:GetHandler(),tc)
+	if not ac:IsImmuneToEffect(e) then
+		local atk=tc:GetAttack()
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(math.ceil(atk/2))
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		ac:RegisterEffect(e1)
+		if not ac:IsHasEffect(EFFECT_REVERSE_UPDATE) and e:GetHandler():IsRelateToEffect(e) then
+			Duel.BreakEffect()
+			Duel.Overlay(e:GetHandler(),tc)
+		end
 	end
 end
 function c101105044.discon(e,tp,eg,ep,ev,re,r,rp)
