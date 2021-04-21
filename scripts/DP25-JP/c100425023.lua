@@ -73,7 +73,7 @@ function c100425023.spfilter(c,e,tp)
 end
 function c100425023.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100425023.spfilter(chkc,e,tp) end
-	if chk==0 then return GetMZoneCount(tp,e:GetHandler())>0
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
 		and Duel.IsExistingTarget(c100425023.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and e:GetHandler():IsAbleToExtra() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
