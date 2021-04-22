@@ -11,12 +11,6 @@ function c100425024.initial_effect(c)
 	e1:SetTarget(c100425024.target)
 	e1:SetOperation(c100425024.operation)
 	c:RegisterEffect(e1)
-	--destroy
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e2:SetCode(EVENT_LEAVE_FIELD)
-	e2:SetOperation(c100425024.desop)
-	c:RegisterEffect(e2)
 	--atk up
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
@@ -36,7 +30,7 @@ function c100425024.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100425024.filter(c,e,tp)
-	return c:IsLevelBelow(2) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100425024.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100425024.filter(chkc,e,tp) end
@@ -50,8 +44,8 @@ end
 function c100425024.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e)
+		and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -69,14 +63,36 @@ function c100425024.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e3:SetValue(c100425024.eqlimit)
 		c:RegisterEffect(e3)
+		--Destroy
+		local e4=Effect.CreateEffect(c)
+		e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+		e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e4:SetCode(EVENT_LEAVE_FIELD_P)
+		e4:SetOperation(c100425024.checkop)
+		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+		c:RegisterEffect(e4)
+		local e5=Effect.CreateEffect(c)
+		e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+		e5:SetCode(EVENT_LEAVE_FIELD)
+		e5:SetOperation(c100425024.desop)
+		e5:SetReset(RESET_EVENT+RESET_OVERLAY+RESET_TOFIELD)
+		e5:SetLabelObject(e4)
+		c:RegisterEffect(e5)
 	end
 	Duel.SpecialSummonComplete()
 end
 function c100425024.eqlimit(e,c)
 	return e:GetOwner()==c
 end
+function c100425024.checkop(e,tp,eg,ep,ev,re,r,rp)
+	if e:GetHandler():IsDisabled() then
+		e:SetLabel(1)
+	else e:SetLabel(0) end
+end
 function c100425024.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetHandler():GetFirstCardTarget()
+	e:Reset()
+	if e:GetLabelObject():GetLabel()~=0 then return end
+	local tc=e:GetHandler():GetEquipTarget()
 	if tc and tc:IsLocation(LOCATION_MZONE) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
