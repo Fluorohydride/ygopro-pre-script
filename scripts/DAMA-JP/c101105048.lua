@@ -37,12 +37,13 @@ function c101105048.thfilter(c,odevity)
 		and c:IsAbleToHand()
 end
 function c101105048.chkcon(g,tp,odevity)
-	return g:IsExists(c101105048.chkfilter,1,nil,odevity) and Duel.IsExistingMatchingCard(c101105048.thfilter,tp,LOCATION_EXTRA,0,1,nil,odevity)
+	return g:IsExists(c101105048.chkfilter,1,nil,odevity)
+		and Duel.IsExistingMatchingCard(c101105048.thfilter,tp,LOCATION_EXTRA,0,1,nil,odevity)
 end
 function c101105048.tetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_HAND,0,nil,TYPE_PENDULUM)
 	if chk==0 then return c101105048.chkcon(g,tp,0) or c101105048.chkcon(g,tp,1) end
-	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_EXTRA)
 end
 function c101105048.teop(e,tp,eg,ep,ev,re,r,rp)
