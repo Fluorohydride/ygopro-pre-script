@@ -56,7 +56,7 @@ function c100425025.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100425025.checkfilter(c,e,tp)
 	local code=c:GetOriginalCode()
-	return c:IsFaceup() and code and Duel.IsExistingMatchingCard(c100425025.spfilter2,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,code,e,tp)
+	return code and Duel.IsExistingMatchingCard(c100425025.spfilter2,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,code,e,tp)
 end
 function c100425025.spfilter2(c,code,e,tp)
 	return not c:IsCode(code) and c:IsSetCard(0x1017) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
