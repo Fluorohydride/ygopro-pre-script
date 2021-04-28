@@ -42,7 +42,7 @@ function c101105074.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c101105074.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x267) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x166) and c:IsAbleToHand()
 end
 function c101105074.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101105074.thfilter,tp,LOCATION_DECK,0,nil)
@@ -64,7 +64,7 @@ function c101105074.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105074.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x267) and c:IsAbleToDeck()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x166) and c:IsAbleToDeck()
 end
 function c101105074.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101105074.tdfilter(chkc) end

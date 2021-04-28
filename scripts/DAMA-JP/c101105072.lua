@@ -14,7 +14,7 @@ function c101105072.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101105072.thfilter(c)
-	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266) and c:IsType(TYPE_MONSTER)) and c:IsAbleToHand()
+	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x165) and c:IsType(TYPE_MONSTER)) and c:IsAbleToHand()
 end
 function c101105072.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101105072.thfilter(chkc) end
@@ -27,11 +27,11 @@ function c101105072.ffilter1(c,e)
 	return not c:IsImmuneToEffect(e)
 end
 function c101105072.ffilter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x266) and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x165) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false,POS_FACEUP_DEFENSE) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c101105072.rfilter(c,e,tp)
-	return c:IsSetCard(0x266) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(0x165) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true,POS_FACEUP_DEFENSE)
 end
 function c101105072.activate(e,tp,eg,ep,ev,re,r,rp)
 	local th=Duel.GetFirstTarget()

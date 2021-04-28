@@ -4,7 +4,7 @@
 function c101105036.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x266),c101105036.ffilter,true)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x165),c101105036.ffilter,true)
 	--fusion success
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101105036,0))
@@ -61,7 +61,7 @@ function c101105036.filter(c,tp)
 		and Duel.IsExistingMatchingCard(c101105036.gfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetAttribute())
 end
 function c101105036.gfilter(c,att)
-	return c:IsAttribute(att) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266))
+	return c:IsAttribute(att) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x165))
 end
 function c101105036.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c101105036.filter(chkc,tp) end

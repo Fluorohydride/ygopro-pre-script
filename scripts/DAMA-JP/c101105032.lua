@@ -32,7 +32,7 @@ function c101105032.srcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
 end
 function c101105032.srfilter(c)
-	return c:IsSetCard(0x266) and c:IsAbleToHand()
+	return c:IsSetCard(0x165) and c:IsAbleToHand()
 end
 function c101105032.srtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101105032.srfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -47,7 +47,7 @@ function c101105032.srop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105032.cfilter(c,attr)
-	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266)) and c:IsAttribute(attr)
+	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x165)) and c:IsAttribute(attr)
 end
 function c101105032.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

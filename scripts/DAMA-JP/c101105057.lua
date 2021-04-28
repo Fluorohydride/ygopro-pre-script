@@ -31,7 +31,7 @@ function c101105057.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101105057.filter(c)
-	return c:IsSetCard(0x266) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x165) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101105057.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

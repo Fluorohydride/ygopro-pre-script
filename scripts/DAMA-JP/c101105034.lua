@@ -4,7 +4,7 @@
 function c101105034.initial_effect(c)
 	--fusion summon
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x269),c101105034.matfilter,true)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x164),c101105034.matfilter,true)
 	--atk change
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101105034,0))
@@ -61,7 +61,7 @@ function c101105034.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c101105034.thfilter(c,e,tp,check)
-	return c:IsSetCard(0x269) and c:IsType(TYPE_MONSTER) or c:IsCode(68468459)
+	return c:IsSetCard(0x164) and c:IsType(TYPE_MONSTER) or c:IsCode(68468459)
 		and (c:IsAbleToHand() or check and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c101105034.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

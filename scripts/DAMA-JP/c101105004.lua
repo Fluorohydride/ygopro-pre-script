@@ -30,7 +30,7 @@ function c101105004.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101105004.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x269) and c:IsControler(tp) and c:IsOnField()
+	return c:IsFaceup() and c:IsSetCard(0x164) and c:IsControler(tp) and c:IsOnField()
 end
 function c101105004.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)) then return false end

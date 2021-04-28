@@ -58,7 +58,7 @@ function c101105037.initial_effect(c)
 	e0:SetLabelObject(e5)
 end
 function c101105037.mtfilter(c)
-	return c:IsFusionSetCard(0x266) and c:IsFusionType(TYPE_EFFECT)
+	return c:IsFusionSetCard(0x165) and c:IsFusionType(TYPE_EFFECT)
 end
 function c101105037.mtfilter2(c)
 	return c:IsFusionType(TYPE_NORMAL) and not c:IsType(TYPE_TOKEN)
@@ -95,7 +95,7 @@ function c101105037.chlimit(e,ep,tp)
 	return tp==ep
 end
 function c101105037.ckfilter(c,tp)
-	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x266) and c:IsType(TYPE_MONSTER))
+	return (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x165) and c:IsType(TYPE_MONSTER))
 		and Duel.IsExistingMatchingCard(c101105037.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
 function c101105037.desfilter(c,at)

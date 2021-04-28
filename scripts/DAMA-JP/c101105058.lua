@@ -37,18 +37,18 @@ function c101105058.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101105058.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x267) and c:IsSummonPlayer(tp)
+	return c:IsFaceup() and c:IsSetCard(0x166) and c:IsSummonPlayer(tp)
 end
 function c101105058.dtcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101105058.cfilter,1,nil,tp)
 end
 function c101105058.dttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>1
-		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,0x267) end
+		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,0x166) end
 end
 function c101105058.dtop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101105058,1))
-	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,1,nil,0x267)
+	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,1,nil,0x166)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.ShuffleDeck(tp)
@@ -57,7 +57,7 @@ function c101105058.dtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105058.cfilter2(c,tp)
-	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsPreviousSetCard(0x267) and c:GetReasonPlayer()==1-tp
+	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsPreviousSetCard(0x166) and c:GetReasonPlayer()==1-tp
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c101105058.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -74,7 +74,7 @@ function c101105058.spfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(c101105058.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function c101105058.xyzfilter(c,e,tp,mc)
-	return c:IsSetCard(0x267) and mc:IsCanBeXyzMaterial(c) and c:IsType(TYPE_XYZ)
+	return c:IsSetCard(0x166) and mc:IsCanBeXyzMaterial(c) and c:IsType(TYPE_XYZ)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end

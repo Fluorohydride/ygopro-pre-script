@@ -59,7 +59,7 @@ function c101105043.effop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105043.descon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
-	return ep~=tp and rc:IsControler(tp) and rc:IsSetCard(0x267) and rc:IsSummonLocation(LOCATION_EXTRA)
+	return ep~=tp and rc:IsControler(tp) and rc:IsSetCard(0x166) and rc:IsSummonLocation(LOCATION_EXTRA)
 end
 function c101105043.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() end

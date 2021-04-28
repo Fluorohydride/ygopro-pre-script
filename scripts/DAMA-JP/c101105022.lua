@@ -58,7 +58,7 @@ function c101105022.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101105022.thfilter(c)
-	return c:IsSetCard(0x1268,0x2268) and c:IsType(TYPE_MONSTER) and not c:IsCode(101105022) and c:IsAbleToHand()
+	return c:IsSetCard(0x1167,0x2167) and c:IsType(TYPE_MONSTER) and not c:IsCode(101105022) and c:IsAbleToHand()
 end
 function c101105022.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101105022.thfilter,tp,LOCATION_DECK,0,1,nil) end
