@@ -7,7 +7,7 @@ function c101105053.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--fusion summon
+	--fusion proc
 	local e2=aux.AddFusionEffectProcUltimate(c,{
 		filter=aux.FilterBoolFunction(Card.IsLevelAbove,8),
 		mat_location=LOCATION_MZONE+LOCATION_HAND,
