@@ -22,6 +22,7 @@ function c100278018.initial_effect(c)
 		include_this_card=true,
 		reg=false
 	})
+	e3:SetDescription(aux.Stringid(100278018,1))
 	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_MZONE)
 	c:RegisterEffect(e3)
