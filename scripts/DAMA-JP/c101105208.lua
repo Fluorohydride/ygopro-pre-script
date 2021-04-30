@@ -29,28 +29,21 @@ function c101105208.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101105208.cfilter,1,nil,tp,rp)
 end
 function c101105208.spfilter(c,e,tp)
-	if not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
-	if c:IsFaceup() and c:IsLocation(LOCATION_EXTRA) then
-		return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
-	end
-	if c:IsLocation(LOCATION_GRAVE) or c:IsFaceup() and c:IsLocation(LOCATION_REMOVED) then
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	end
-	return false
+	return (c:IsLocation(LOCATION_GRAVE) or (c:IsFaceup() and c:IsLocation(LOCATION_REMOVED))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101105208.rfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function c101105208.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local b1=eg:Filter(c101105208.cfilter,nil,tp,rp):IsExists(c101105208.spfilter,1,nil,e,tp) and Duel.GetFlagEffect(tp,101105208)==0
+		local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:Filter(c101105208.cfilter,nil,tp,rp):IsExists(c101105208.spfilter,1,nil,e,tp) and Duel.GetFlagEffect(tp,101105208)==0
 		local b2=Duel.IsExistingMatchingCard(c101105208.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208+100)==0
 		local b3=Duel.GetFlagEffect(tp,101105208+200)==0
 		return b1 or b2 or b3
 	end
 end
 function c101105208.activate(e,tp,eg,ep,ev,re,r,rp)
-	local b1=eg:Filter(c101105208.cfilter,nil,tp,rp):IsExists(c101105208.spfilter,1,nil,e,tp) and Duel.GetFlagEffect(tp,101105208)==0
+	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:Filter(c101105208.cfilter,nil,tp,rp):IsExists(c101105208.spfilter,1,nil,e,tp) and Duel.GetFlagEffect(tp,101105208)==0
 	local b2=Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101105208.rfilter),tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,101105208+100)==0
 	local b3=Duel.GetFlagEffect(tp,101105208+200)==0
 	local off=1
