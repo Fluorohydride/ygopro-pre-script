@@ -50,22 +50,6 @@ function c24696097.initial_effect(c)
 	e4:SetOperation(c24696097.sumop)
 	c:RegisterEffect(e4)
 end
-if Auxiliary.AddMaterialCodeList==nil then
-	function Auxiliary.AddMaterialCodeList(c,...)
-		if c:IsStatus(STATUS_COPYING_EFFECT) then return end
-		local mat={}
-		for _,code in ipairs{...} do
-			mat[code]=true
-		end
-		if c.material==nil then
-			local mt=getmetatable(c)
-			mt.material=mat
-		end
-		for index,_ in pairs(mat) do
-			Auxiliary.AddCodeList(c,index)
-		end
-	end
-end
 c24696097.material_type=TYPE_SYNCHRO
 function c24696097.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5

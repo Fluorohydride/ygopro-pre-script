@@ -19,8 +19,10 @@ function c101105008.costfilter(c)
 end
 function c101105008.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local b1=Duel.IsExistingMatchingCard(c101105008.costfilter,tp,LOCATION_HAND,0,1,c) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	local b2=Duel.IsExistingMatchingCard(c101105008.costfilter,tp,LOCATION_DECK,0,1,nil) and c:IsAbleToDeck() and (c:IsLocation(LOCATION_GRAVE) or Duel.IsPlayerCanDraw(tp,1))
+	local b1=Duel.IsExistingMatchingCard(c101105008.costfilter,tp,LOCATION_HAND,0,1,c)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	local b2=Duel.IsExistingMatchingCard(c101105008.costfilter,tp,LOCATION_DECK,0,1,nil)
+		and c:IsAbleToDeck() and (c:IsLocation(LOCATION_GRAVE) or Duel.IsPlayerCanDraw(tp,1))
 	if chk==0 then return b1 or b2 end
 	local g=Group.CreateGroup()
 	local g1=Duel.GetMatchingGroup(c101105008.costfilter,tp,LOCATION_HAND,0,c)

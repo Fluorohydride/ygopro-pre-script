@@ -21,7 +21,7 @@ function c101105034.initial_effect(c)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101105034,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_DECKDES)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_LEAVE_FIELD)
@@ -41,8 +41,11 @@ end
 function c101105034.atkfilter(c)
 	return c:IsFaceup() and not (c:IsLevelAbove(8) and c:IsType(TYPE_FUSION))
 end
+function c101105034.atkfilter1(c)
+	return c101105034.atkfilter(c) and c:GetAttack()>0
+end
 function c101105034.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101105034.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101105034.atkfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
 function c101105034.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101105034.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -58,10 +61,10 @@ function c101105034.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105034.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE)
+	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 function c101105034.thfilter(c,e,tp,check)
-	return c:IsSetCard(0x164) and c:IsType(TYPE_MONSTER) or c:IsCode(68468459)
+	return (c:IsSetCard(0x164) and c:IsType(TYPE_MONSTER) or c:IsCode(68468459))
 		and (c:IsAbleToHand() or check and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c101105034.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

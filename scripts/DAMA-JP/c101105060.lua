@@ -11,7 +11,7 @@ function c101105060.initial_effect(c)
 	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101105060,0))
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1,101105060)
@@ -22,7 +22,6 @@ function c101105060.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCondition(c101105060.countercon)
 	e3:SetOperation(c101105060.counterop)
@@ -39,13 +38,6 @@ function c101105060.initial_effect(c)
 	e5:SetCondition(c101105060.actlimitcon)
 	e5:SetTarget(c101105060.actlimittg)
 	c:RegisterEffect(e5)
-end
-if Auxiliary.AtkEqualsDef==nil then
-	function Auxiliary.AtkEqualsDef(c)
-		if not c:IsType(TYPE_MONSTER) or c:IsType(TYPE_LINK) then return false end
-		if c:GetAttack()~=c:GetDefense() then return false end
-		return c:IsLocation(LOCATION_MZONE) or c:GetTextAttack()>=0 and c:GetTextDefense()>=0
-	end
 end
 function c101105060.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 end
@@ -85,5 +77,5 @@ function c101105060.actlimitcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetCounter(0x5d)>=10
 end
 function c101105060.actlimittg(e,c)
-	return c:GetAttack()~=c:GetDefense()
+	return not c:IsDefense(c:GetAttack())
 end

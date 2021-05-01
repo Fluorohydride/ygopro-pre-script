@@ -12,9 +12,11 @@ function c100200199.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1)
+	e1:SetCondition(aux.dscon)
 	e1:SetCost(c100200199.atkcost)
 	e1:SetOperation(c100200199.atkop)
 	c:RegisterEffect(e1)
@@ -30,22 +32,6 @@ function c100200199.initial_effect(c)
 	e2:SetTarget(c100200199.sptg)
 	e2:SetOperation(c100200199.spop)
 	c:RegisterEffect(e2)
-end
-if Auxiliary.AddMaterialCodeList==nil then
-	function Auxiliary.AddMaterialCodeList(c,...)
-		if c:IsStatus(STATUS_COPYING_EFFECT) then return end
-		local mat={}
-		for _,code in ipairs{...} do
-			mat[code]=true
-		end
-		if c.material==nil then
-			local mt=getmetatable(c)
-			mt.material=mat
-		end
-		for index,_ in pairs(mat) do
-			Auxiliary.AddCodeList(c,index)
-		end
-	end
 end
 function c100200199.costfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelBelow(4) and c:IsDiscardable()

@@ -33,7 +33,7 @@ function c101105073.attfilter(c)
 end
 function c101105073.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.NegateActivation(ev)~=0 and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)~=0
 		and Duel.SelectYesNo(tp,aux.Stringid(101105073,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)

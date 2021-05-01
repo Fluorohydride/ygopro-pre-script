@@ -75,7 +75,8 @@ function c101105025.posfilter(c)
 end
 function c101105025.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c101105025.rmfilter,tp,0,LOCATION_ONFIELD,1,nil) and Duel.IsExistingTarget(c101105025.posfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101105025.rmfilter,tp,0,LOCATION_ONFIELD,1,nil)
+		and Duel.IsExistingTarget(c101105025.posfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=Duel.SelectTarget(tp,c101105025.rmfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	e:SetLabelObject(g1:GetFirst())
@@ -89,7 +90,9 @@ function c101105025.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local lc=tg:GetFirst()
 	if lc==tc then lc=tg:GetNext() end
-	if tc:IsRelateToEffect(e) and tc:IsControler(1-tp) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_REMOVED) and lc:IsRelateToEffect(e) and lc:IsControler(tp) then
+	if tc:IsRelateToEffect(e) and tc:IsControler(1-tp)
+		and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_REMOVED)
+		and lc:IsRelateToEffect(e) and lc:IsControler(tp) then
 		Duel.ChangePosition(lc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE)
 	end
 end

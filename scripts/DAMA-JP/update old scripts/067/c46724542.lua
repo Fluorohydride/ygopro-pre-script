@@ -21,22 +21,6 @@ function c46724542.initial_effect(c)
 	e2:SetOperation(c46724542.operation)
 	c:RegisterEffect(e2)
 end
-if Auxiliary.AddMaterialCodeList==nil then
-	function Auxiliary.AddMaterialCodeList(c,...)
-		if c:IsStatus(STATUS_COPYING_EFFECT) then return end
-		local mat={}
-		for _,code in ipairs{...} do
-			mat[code]=true
-		end
-		if c.material==nil then
-			local mt=getmetatable(c)
-			mt.material=mat
-		end
-		for index,_ in pairs(mat) do
-			Auxiliary.AddCodeList(c,index)
-		end
-	end
-end
 function c46724542.lcheck(g,lc)
 	return g:IsExists(Card.IsLinkCode,1,nil,70095154)
 end

@@ -28,22 +28,6 @@ function c37993923.initial_effect(c)
 	e2:SetOperation(c37993923.operation)
 	c:RegisterEffect(e2)
 end
-if Auxiliary.AddMaterialCodeList==nil then
-	function Auxiliary.AddMaterialCodeList(c,...)
-		if c:IsStatus(STATUS_COPYING_EFFECT) then return end
-		local mat={}
-		for _,code in ipairs{...} do
-			mat[code]=true
-		end
-		if c.material==nil then
-			local mt=getmetatable(c)
-			mt.material=mat
-		end
-		for index,_ in pairs(mat) do
-			Auxiliary.AddCodeList(c,index)
-		end
-	end
-end
 c37993923.material_setcode=0x1017
 function c37993923.tfilter(c)
 	return c:IsCode(63977008) or c:IsHasEffect(20932152)

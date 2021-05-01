@@ -66,7 +66,7 @@ end
 function c101105058.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local tg=eg:Filter(c101105058.cfilter2,nil,tp)
-	local def=tg:GetSum(Card.GetPreviousDefenseOnField)
+	local def=tg:GetSum(Card.GetBaseDefense)
 	e:SetLabel(def)
 end
 function c101105058.spfilter(c,e,tp)

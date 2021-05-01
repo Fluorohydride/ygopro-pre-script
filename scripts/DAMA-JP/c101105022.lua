@@ -32,11 +32,11 @@ end
 function c101105022.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
-function c101105022.tdfilter(c)
-	return c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST+RACE_INSECT+RACE_PLANT)
+function c101105022.tdfilter(c,e)
+	return c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST+RACE_INSECT+RACE_PLANT) and c:IsCanBeEffectTarget(e)
 end
 function c101105022.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(c101105022.tdfilter,tp,LOCATION_GRAVE,0,e:GetHandler()):Filter(Card.IsCanBeEffectTarget,nil,e)
+	local g=Duel.GetMatchingGroup(c101105022.tdfilter,tp,LOCATION_GRAVE,0,e:GetHandler(),e)
 	if chkc then return false end
 	if chk==0 then return g:CheckSubGroup(aux.drccheck,2,2)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

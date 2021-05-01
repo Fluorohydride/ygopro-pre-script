@@ -28,13 +28,6 @@ function c101105017.initial_effect(c)
 	e3:SetOperation(c101105017.spop)
 	c:RegisterEffect(e3)
 end
-if Auxiliary.AtkEqualsDef==nil then
-	function Auxiliary.AtkEqualsDef(c)
-		if not c:IsType(TYPE_MONSTER) or c:IsType(TYPE_LINK) then return false end
-		if c:GetAttack()~=c:GetDefense() then return false end
-		return c:IsLocation(LOCATION_MZONE) or c:GetTextAttack()>=0 and c:GetTextDefense()>=0
-	end
-end
 function c101105017.tdfilter(c)
 	return aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE)
 end

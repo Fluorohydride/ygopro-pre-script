@@ -30,12 +30,6 @@ function c100341002.initial_effect(c)
 		function aux.fus_mat_hack_exmat_filter(c)
 			return c:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL,c:GetControler())
 		end
-		_GetFusionMaterial=Duel.GetFusionMaterial
-		function Duel.GetFusionMaterial(tp)
-			local g=_GetFusionMaterial(tp)
-			local exg=Duel.GetMatchingGroup(aux.fus_mat_hack_exmat_filter,tp,LOCATION_GRAVE,0,nil)
-			return g+exg
-		end
 		_SendtoGrave=Duel.SendtoGrave
 		function Duel.SendtoGrave(tg,reason)
 			if reason~=REASON_EFFECT+REASON_MATERIAL+REASON_FUSION or Auxiliary.GetValueType(tg)~="Group" then

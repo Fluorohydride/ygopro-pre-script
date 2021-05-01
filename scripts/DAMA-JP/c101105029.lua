@@ -18,7 +18,7 @@ function c101105029.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCost(c101105029.cost)
 	e2:SetOperation(c101105029.operation)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function c101105029.spfilter1(c)
 	return c:IsFaceup() and c:IsLevelAbove(0)

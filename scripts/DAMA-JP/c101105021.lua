@@ -32,7 +32,7 @@ function c101105021.ctfilter(c)
 	return c:IsFaceup() and c:IsCanAddCounter(0x100e,2)
 end
 function c101105021.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and c101105021.ctfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101105021.ctfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101105021.ctfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)
 	local g=Duel.SelectTarget(tp,c101105021.ctfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
@@ -41,7 +41,7 @@ end
 function c101105021.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		tc:AddCounter(0x100e,2)
 	end
 end

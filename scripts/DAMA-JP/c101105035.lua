@@ -42,14 +42,16 @@ function c101105035.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
-function c101105035.rmfilter(c,e,tp)
-	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and (c:IsAbleToRemove() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+function c101105035.rmfilter(c,e,tp,check)
+	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
+		and (c:IsAbleToRemove() or check and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c101105035.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and c101105035.rmfilter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c101105035.rmfilter,tp,0,LOCATION_GRAVE,1,nil,e,tp) end
+	local check=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and c101105035.rmfilter(chkc,e,tp,check) end
+	if chk==0 then return Duel.IsExistingTarget(c101105035.rmfilter,tp,0,LOCATION_GRAVE,1,nil,e,tp,check) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c101105035.rmfilter,tp,0,LOCATION_GRAVE,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c101105035.rmfilter,tp,0,LOCATION_GRAVE,1,1,nil,e,tp,check)
 end
 function c101105035.effop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

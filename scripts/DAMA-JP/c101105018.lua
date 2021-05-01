@@ -26,13 +26,6 @@ function c101105018.initial_effect(c)
 	e2:SetOperation(c101105018.tgop)
 	c:RegisterEffect(e2)
 end
-if Auxiliary.AtkEqualsDef==nil then
-	function Auxiliary.AtkEqualsDef(c)
-		if not c:IsType(TYPE_MONSTER) or c:IsType(TYPE_LINK) then return false end
-		if c:GetAttack()~=c:GetDefense() then return false end
-		return c:IsLocation(LOCATION_MZONE) or c:GetTextAttack()>=0 and c:GetTextDefense()>=0
-	end
-end
 function c101105018.cfilter(c)
 	return c:IsFaceup() and aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE)
 end
@@ -63,7 +56,7 @@ function c101105018.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c101105018.tcfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,c101105018.tcfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c101105018.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

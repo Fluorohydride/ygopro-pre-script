@@ -83,7 +83,20 @@ function c101105037.limop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SetChainLimitTillChainEnd(c101105037.chlimit)
 	elseif Duel.GetCurrentChain()==1 then
 		e:GetHandler():RegisterFlagEffect(101105037,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_CHAINING)
+		e1:SetOperation(c101105037.resetop)
+		Duel.RegisterEffect(e1,tp)
+		local e2=e1:Clone()
+		e2:SetCode(EVENT_BREAK_EFFECT)
+		e2:SetReset(RESET_CHAIN)
+		Duel.RegisterEffect(e2,tp)
 	end
+end
+function c101105037.resetop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():ResetFlagEffect(47679935)
+	e:Reset()
 end
 function c101105037.limop2(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(101105037)~=0 then

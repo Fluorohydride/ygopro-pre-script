@@ -47,7 +47,7 @@ function c101105036.thfilter(c)
 end
 function c101105036.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101105036.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function c101105036.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -56,12 +56,12 @@ function c101105036.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end
+function c101105036.gfilter(c,att)
+	return c:IsAttribute(att) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x165))
+end
 function c101105036.filter(c,tp)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition()
 		and Duel.IsExistingMatchingCard(c101105036.gfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetAttribute())
-end
-function c101105036.gfilter(c,att)
-	return c:IsAttribute(att) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x165))
 end
 function c101105036.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c101105036.filter(chkc,tp) end

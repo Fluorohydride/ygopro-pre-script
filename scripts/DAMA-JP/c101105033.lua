@@ -23,6 +23,7 @@ function c101105033.initial_effect(c)
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101105033)
 	e2:SetCondition(c101105033.condition)
@@ -92,16 +93,16 @@ function c101105033.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_RITUAL)
 end
-function c101105033.thfilter(c,tp)
+function c101105033.thfilter(c)
 	return c:IsSetCard(0x165) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101105033.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101105033.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101105033.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101105033.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local hg=Duel.SelectMatchingCard(tp,c101105033.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
+	local hg=Duel.SelectMatchingCard(tp,c101105033.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if hg:GetCount()>0 then
 		Duel.SendtoHand(hg,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,hg)

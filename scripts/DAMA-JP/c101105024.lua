@@ -35,6 +35,7 @@ function c101105024.initial_effect(c)
 	c:RegisterEffect(e2)
 	--to graveyard
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(101105024,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	e3:SetRange(LOCATION_MZONE)
@@ -57,7 +58,8 @@ function c101105024.tefilter(c)
 end
 function c101105024.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(c101105024.tefilter,tp,LOCATION_HAND+LOCATION_PZONE,0,1,c) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.IsExistingMatchingCard(c101105024.tefilter,tp,LOCATION_HAND+LOCATION_PZONE,0,1,c)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_HAND+LOCATION_PZONE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
@@ -79,8 +81,11 @@ function c101105024.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(Card.IsLocation,nil,LOCATION_MZONE)
 	Duel.SetTargetCard(g)
 end
+function c101105024.tgfilter(c,e)
+	return c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e)
+end
 function c101105024.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e):Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(c101105024.tgfilter,nil,e)
 	if g:GetCount()>0 then
 		local tc=g:GetFirst()
 		while tc do

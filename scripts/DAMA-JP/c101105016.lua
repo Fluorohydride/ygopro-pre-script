@@ -25,13 +25,6 @@ function c101105016.initial_effect(c)
 	e2:SetOperation(c101105016.thop)
 	c:RegisterEffect(e2)
 end
-if Auxiliary.AtkEqualsDef==nil then
-	function Auxiliary.AtkEqualsDef(c)
-		if not c:IsType(TYPE_MONSTER) or c:IsType(TYPE_LINK) then return false end
-		if c:GetAttack()~=c:GetDefense() then return false end
-		return c:IsLocation(LOCATION_MZONE) or c:GetTextAttack()>=0 and c:GetTextDefense()>=0
-	end
-end
 function c101105016.costfilter(c,e,tp)
 	return aux.AtkEqualsDef(c) and c:IsRace(RACE_MACHINE) and c:GetLevel()>1
 		and Duel.GetMZoneCount(tp,c)>0 and (c:IsControler(tp) or c:IsFaceup())

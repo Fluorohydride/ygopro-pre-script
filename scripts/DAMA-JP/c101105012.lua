@@ -43,8 +43,8 @@ function c101105012.filter(c,e,tp,ft)
 end
 function c101105012.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,3)
-	Duel.ConfirmDecktop(tp,3)
-	if #g>0 then
+	if #g==3 then
+		Duel.ConfirmDecktop(tp,3)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local tg=g:Filter(c101105012.filter,nil,e,tp,ft)
 		if #tg>0 and Duel.SelectYesNo(tp,aux.Stringid(101105012,1)) then
