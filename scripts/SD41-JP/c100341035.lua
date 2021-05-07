@@ -35,7 +35,7 @@ function c100341035.eqfilter(c,tp)
 	return c:IsSetCard(0x4093) and c:IsFaceup() and Duel.IsExistingMatchingCard(c100341035.eqfilter2,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,c,tp)
 end
 function c100341035.eqfilter2(c,tc,tp)
-	return (c:IsRace(RACE_DRAGON) or c:IsRace(RACE_MACHINE)) and not c:IsForbidden()
+	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and not c:IsForbidden()
 end
 function c100341035.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100341035.eqfilter(chkc) end
@@ -73,7 +73,7 @@ function c100341035.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function c100341035.cfilter(c)
-	return c:IsType(TYPE_EQUIP) and c:GetEquipTarget():IsRace(RACE_MACHINE) and c:IsAbleToGrave()
+	return c:IsFaceup() and c:GetEquipTarget() and c:GetEquipTarget():IsRace(RACE_MACHINE) and c:IsAbleToGraveAsCost()
 end
 function c100341035.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100341035.cfilter,tp,LOCATION_SZONE,0,1,nil) end
