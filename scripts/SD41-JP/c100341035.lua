@@ -32,7 +32,8 @@ function c100341035.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100341035.eqfilter(c,tp)
-	return c:IsSetCard(0x4093) and c:IsFaceup() and Duel.IsExistingMatchingCard(c100341035.eqfilter2,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,c,tp)
+	return c:IsSetCard(0x4093) and c:IsFaceup() and c:IsType(TYPE_EFFECT)
+		and Duel.IsExistingMatchingCard(c100341035.eqfilter2,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,c,tp)
 end
 function c100341035.eqfilter2(c,tc,tp)
 	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and not c:IsForbidden()
@@ -41,7 +42,7 @@ function c100341035.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100341035.eqfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(c100341035.eqfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c100341035.eqfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 end
@@ -77,9 +78,9 @@ function c100341035.cfilter(c)
 end
 function c100341035.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100341035.cfilter,tp,LOCATION_SZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100341035.cfilter,tp,LOCATION_SZONE,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100341035.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
