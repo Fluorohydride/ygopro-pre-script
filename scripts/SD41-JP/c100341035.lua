@@ -27,7 +27,7 @@ function c100341035.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
-	e2:SetHintTiming(0,TIMING_END_PHASE)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e2:SetCost(c100341035.descost)
 	e2:SetTarget(c100341035.destg)
 	e2:SetOperation(c100341035.desop)
@@ -41,9 +41,11 @@ function c100341035.eqfilter2(c,tc,tp)
 	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and not c:IsForbidden()
 end
 function c100341035.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100341035.eqfilter(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100341035.eqfilter(chkc,tp) end
+	if chk==0 then return Duel.GetFlagEffect(tp,100341035)==0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(c100341035.eqfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+	Duel.RegisterFlagEffect(tp,100341035,RESET_PHASE+PHASE_END,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c100341035.eqfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
@@ -85,7 +87,10 @@ function c100341035.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100341035.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.GetFlagEffect(tp,100341035+100)==0
+		and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+	Duel.RegisterFlagEffect(tp,100341035+100,RESET_PHASE+PHASE_END,0,1)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
