@@ -84,7 +84,7 @@ function c100425007.spop(e,tp,eg,ep,ev,re,r,rp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if c:IsRelateToEffect(e) and ft>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,100425007,0x2016,TYPES_NORMAL_TRAP_MONSTER,0,0,1,RACE_MACHINE,ATTRIBUTE_WIND)~=0 then
 			c:AddMonsterAttribute(TYPE_NORMAL)
-			Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP_DEFENSE)
+			Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
 		end
 	end
 end
