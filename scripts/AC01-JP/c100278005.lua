@@ -72,7 +72,7 @@ function c100278005.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(c100278005.spfilter,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278002)
 		and Duel.IsExistingMatchingCard(c100278005.spfilter,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278003)
 		and Duel.IsExistingMatchingCard(c100278005.spfilter,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278004)
-		and Duel.IsExistingMatchingCard(c100278005.spfilter,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,40640057)
+		and Duel.IsExistingMatchingCard(c100278005.spfilter,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,40640057) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,5,tp,LOCATION_GRAVE+LOCATION_HAND)
 end
