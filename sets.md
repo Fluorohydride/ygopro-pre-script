@@ -8,6 +8,7 @@
 - **May ?, 2021**: LEGENDARY MONSTERS PACK (VP21-JP) : `100279XXX`
 - **June 12, 2021**: ANIMATION CHRONICLE 2021 (AC01-JP) : `100278XXX`
 - **June 26, 2021**: Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
+- **July 17, 2021**: BURST OF DESTINY (BUDE?-JP) : `101106XXX`
 
 # Announced
 - **June 25, 2021**: King's Court (KICO-EN) : `100280XXX`
