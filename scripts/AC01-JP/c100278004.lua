@@ -1,6 +1,5 @@
---栗子珠
+--クリベー
 --Script by REIKAI
-
 function c100278004.initial_effect(c)
    --atkup
 	local e1=Effect.CreateEffect(c)

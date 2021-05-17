@@ -1,6 +1,5 @@
---栗子丸
+--クリバー
 --Script by REIKAI
-
 function c100278001.initial_effect(c)
 	--special summon Tri_O
 	local e1=Effect.CreateEffect(c)

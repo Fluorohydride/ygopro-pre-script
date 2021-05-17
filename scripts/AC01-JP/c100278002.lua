@@ -1,6 +1,5 @@
---栗子团
+--クリビー
 --Script by REIKAI
-
 function c100278002.initial_effect(c)
 	--to_hand Tri_O
 	local e1=Effect.CreateEffect(c)

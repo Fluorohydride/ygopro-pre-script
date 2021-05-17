@@ -1,6 +1,5 @@
---栗子圆
+--クリブー
 --Script by REIKAI
-
 function c100278003.initial_effect(c)
    --destroy
 	local e1=Effect.CreateEffect(c)
