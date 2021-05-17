@@ -28,7 +28,7 @@ function c100278001.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100278001.spfilter(c,e,tp)
-	return c:IsDefense(200) and c:IsAttack(300) and c:IsCode(100278001) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsDefense(200) and c:IsAttack(300) and not c:IsCode(100278001) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100278001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

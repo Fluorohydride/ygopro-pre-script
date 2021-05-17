@@ -54,7 +54,7 @@ function c100278004.filter1(c,code1,code2,code3,code4)
 	return not c:IsCode(code1,code2,code3,code4)
 end
 function c100278004.rlfilter(g)
-	return not g:IsExists(c100278004.filter1,1,nil,40640057,100278002,100278003,100278004) and aux.dncheck(g)
+	return not g:IsExists(c100278004.filter1,1,nil,40640057,100278002,100278003,100278001) and g:GetClassCount(Card.GetCode)==#g
 end
 function c100278004.scost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsReleasable,tp,LOCATION_ONFIELD+LOCATION_HAND,0,e:GetHandler())
@@ -69,7 +69,8 @@ function c100278004.sfilter1(c)
 end
 function c100278004.stg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100278004.sfilter1,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c100278004.sumfilter(c)
 	return c:IsSummonable(true,nil) and c:IsRace(RACE_FIEND)
@@ -85,7 +86,7 @@ function c100278004.sop1(e,tp,eg,ep,ev,re,r,rp)
 				local sg=Duel.SelectMatchingCard(tp,c100278004.sumfilter,tp,LOCATION_HAND,0,1,1,nil)
 				if sg:GetCount()>0 then
 					local tc=sg:GetFirst()
-					Duel.Summon(tp,c,true,nil)
+					Duel.Summon(tp,tc,true,nil)
 				end
 			end
 		end

@@ -28,7 +28,7 @@ function c100278002.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100278002.thfilter(c)
-	return aux.IsCodeListed(c,40640057) and c:IsAbleToHand()
+	return aux.IsCodeListed(c,40640057) and c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c100278002.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100278002.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -36,7 +36,7 @@ function c100278002.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100278002.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100278002.spfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100278002.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
