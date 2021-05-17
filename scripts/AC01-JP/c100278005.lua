@@ -38,7 +38,7 @@ function c100278005.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100278005.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
+	return Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)>Duel.GetMatchingGroupCount(Card.IsType,1-tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
 end
 function c100278005.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -67,18 +67,19 @@ function c100278005.spfilter(c,e,tp,code)
 end
 function c100278005.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)>0
-		and Duel.IsExistingMatchingCard(c100278005.spfilter,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278001)
-		and Duel.IsExistingMatchingCard(c100278005.spfilter,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278002)
-		and Duel.IsExistingMatchingCard(c100278005.spfilter,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278003)
-		and Duel.IsExistingMatchingCard(c100278005.spfilter,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278004)
-		and Duel.IsExistingMatchingCard(c100278005.spfilter,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,40640057) end
+	if chk==0 then return c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)>=5 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
+		and Duel.IsExistingMatchingCard(c100278005.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278001)
+		and Duel.IsExistingMatchingCard(c100278005.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278002)
+		and Duel.IsExistingMatchingCard(c100278005.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278003)
+		and Duel.IsExistingMatchingCard(c100278005.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278004)
+		and Duel.IsExistingMatchingCard(c100278005.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,40640057) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,5,tp,LOCATION_GRAVE+LOCATION_HAND)
 end
 function c100278005.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_HAND) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_HAND)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=5 and not Duel.IsPlayerAffectedByEffect(tp,59822133) then
 		local g1=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100278005.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp,100278001)
 		local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100278005.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp,100278002)
 		local g3=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100278005.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp,100278003)
