@@ -35,7 +35,7 @@ function c100341001.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():CheckUniqueOnField(tp)
 end
 function c100341001.filter(c)
-	return c:IsFaceup() and (c:IsRace(RACE_DRAGON) or c:IsRace(RACE_MACHINE) and c:IsSetCard(0x93))
+	return c:IsFaceup() and c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsSetCard(0x93)
 end
 function c100341001.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100341001.filter(chkc) end
@@ -71,10 +71,10 @@ function c100341001.eqlimit(e,c)
 end
 function c100341001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetPreviousLocation()==LOCATION_SZONE and not c:IsReason(REASON_LOST_TARGET)
+	return c:IsPreviousLocation(LOCATION_SZONE) and not c:IsReason(REASON_LOST_TARGET)
 end
 function c100341001.spfilter(c,e,tp)
-	return (c:IsRace(RACE_DRAGON) or c:IsRace(RACE_MACHINE) and c:IsSetCard(0x93)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsSetCard(0x93) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100341001.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
