@@ -1,6 +1,7 @@
 --クリバビロン
 --Script by XyLeN
 function c100278005.initial_effect(c)
+	aux.AddCodeList(c,40640057)
 	--special summon itself
 	local e1=Effect.CreateEffect(c) 
 	e1:SetDescription(aux.Stringid(100278005,0)) 

@@ -1,7 +1,8 @@
 --クリビー
 --Script by REIKAI
 function c100278002.initial_effect(c)
-	--to_hand Tri_O
+	aux.AddCodeList(c,40640057)
+	--to_hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100278002,1))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -43,7 +44,7 @@ function c100278002.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100278002.cfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousSetCard(0xa4)
+	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:IsPreviousSetCard(0xa4)
 end
 function c100278002.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100278002.cfilter,1,nil,tp)
@@ -56,6 +57,7 @@ function c100278002.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100278002.negop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100278002.atfilter,tp,LOCATION_MZONE,0,e:GetHandler())
+	if #g==0 then return end
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
