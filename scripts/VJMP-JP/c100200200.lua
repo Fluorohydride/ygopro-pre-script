@@ -1,4 +1,4 @@
---ハーピィズペット竜一セイント・ファイアー・ギガ
+--ハーピィズペット竜－セイント・ファイアー・ギガ
 --Script by XyLeN
 function c100200200.initial_effect(c)
 	--special summon
@@ -17,7 +17,7 @@ function c100200200.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(0,LOCATION_MZONE)
+	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetValue(c100200200.atlimit)
 	c:RegisterEffect(e2)
 	--burial
