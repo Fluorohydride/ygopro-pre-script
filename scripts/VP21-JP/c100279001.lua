@@ -1,4 +1,4 @@
---ホーリー・エルフーホーリー・バースト・ストリーム
+--ホーリー・エルフ－ホーリー・バースト・ストリーム
 --Script by XyLeN
 function c100279001.initial_effect(c)
 	--special summon itself
@@ -14,13 +14,13 @@ function c100279001.initial_effect(c)
 	e1:SetTarget(c100279001.sptg1)
 	e1:SetOperation(c100279001.spop1)
 	c:RegisterEffect(e1)
-	--special summon in grave
+	--special summon from grave
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100279001,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_ATTACK)
+	e2:SetHintTiming(0,TIMING_BATTLE_START)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,100279001+100)
 	e2:SetCondition(c100279001.spcon2)
@@ -32,9 +32,10 @@ function c100279001.cfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsLevelAbove(5) and c:IsFaceup() 
 end
 function c100279001.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(c100279001.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
-	if not Duel.IsChainDisablable(ev) then return false end
-	return ep~=tp and re:IsActiveType(TYPE_MONSTER)
+	local loc=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION)
+	local tc=re:GetHandler()
+	return tc:IsControler(1-tp) and loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+		and Duel.IsExistingMatchingCard(c100279001.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100279001.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
