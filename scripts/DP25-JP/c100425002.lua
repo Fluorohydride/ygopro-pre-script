@@ -47,7 +47,7 @@ function c100425002.spfilter(c,e,tp,lv,code)
 end
 function c100425002.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100425002.tdfilter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c100425002.tdfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100425002.tdfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c100425002.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
@@ -71,7 +71,7 @@ function c100425002.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			tc:RegisterEffect(e2)
+			Duel.SpecialSummonComplete()
 		end
-		Duel.SpecialSummonComplete()
 	end
 end
