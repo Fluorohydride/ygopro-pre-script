@@ -44,11 +44,6 @@ function c100341051.initial_effect(c)
 	e5:SetCode(EFFECT_EXTRA_ATTACK)
 	e5:SetValue(c100341051.atkval)
 	c:RegisterEffect(e5)
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetCode(EFFECT_CANNOT_ATTACK)
-	e6:SetCondition(c100341051.atkcon)
-	c:RegisterEffect(e6)
 end
 function c100341051.eqspfilter(c)
 	return c:IsFaceup() and c:IsCode(1546123)
@@ -75,8 +70,8 @@ end
 function c100341051.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c100341051.eqfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,PLAYER_ALL,LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,PLAYER_ALL,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function c100341051.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -102,7 +97,4 @@ function c100341051.eqlimit(e,c)
 end
 function c100341051.atkval(e,c)
 	return e:GetHandler():GetEquipCount()-1
-end
-function c100341051.atkcon(e)
-	return e:GetHandler():GetEquipCount()==0
 end
