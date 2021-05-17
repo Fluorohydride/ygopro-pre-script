@@ -1,4 +1,6 @@
---双持手枪龙
+--デュアルウィール・ドラゴン
+--
+--Script by RukioRuler
 function c101106201.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

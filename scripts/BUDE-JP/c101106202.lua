@@ -1,4 +1,6 @@
---装弹枪管暴动龙
+--ヴァレルロード・R・ドラゴン
+--
+--Script by RukioRuler
 function c101106202.initial_effect(c)
 	c:EnableReviveLimit()
 	--disable spsummon
