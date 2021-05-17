@@ -20,7 +20,6 @@ function c100425007.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE) 
 	e2:SetCountLimit(1,100425007+EFFECT_COUNT_CODE_DUEL)
 	e2:SetCondition(c100425007.spcon)
-	e2:SetCost(c100425007.spcost)
 	e2:SetTarget(c100425007.sptg)
 	e2:SetOperation(c100425007.spop)
 	c:RegisterEffect(e2)
@@ -35,10 +34,10 @@ function c100425007.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100425007.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToHand() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c100425007.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -51,22 +50,14 @@ function c100425007.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and Duel.GetTurnPlayer()==tp
 end
-function c100425007.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	return true
-end
 function c100425007.lvfilter(c)
 	return c:IsSetCard(0x2016) and c:GetLevel()>0 and c:IsFaceup()
 end
 function c100425007.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100425007.lvfilter(chkc) end
-	if chk==0 then
-		if e:GetLabel()==0 then return false end
-		e:SetLabel(0)
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,100425007,0x2016,TYPES_NORMAL_TRAP_MONSTER,0,0,1,RACE_MACHINE,ATTRIBUTE_WIND)
-			and Duel.IsExistingTarget(c100425007.lvfilter,tp,LOCATION_MZONE,0,1,nil) end
-	e:SetLabel(0)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100425007,0x2016,TYPES_NORMAL_TRAP_MONSTER+TYPE_TUNER,0,0,1,RACE_MACHINE,ATTRIBUTE_WIND)
+		and Duel.IsExistingTarget(c100425007.lvfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100425007.lvfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
@@ -74,16 +65,16 @@ end
 function c100425007.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsImmuneToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(-1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if c:IsRelateToEffect(e) and ft>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,100425007,0x2016,TYPES_NORMAL_TRAP_MONSTER,0,0,1,RACE_MACHINE,ATTRIBUTE_WIND)~=0 then
-			c:AddMonsterAttribute(TYPE_NORMAL)
+		if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,100425007,0x2016,TYPES_NORMAL_TRAP_MONSTER+TYPE_TUNER,0,0,1,RACE_MACHINE,ATTRIBUTE_WIND)~=0 then
+			c:AddMonsterAttribute(TYPE_NORMAL+TYPE_TUNER)
 			Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
 		end
 	end
