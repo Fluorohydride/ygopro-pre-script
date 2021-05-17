@@ -11,7 +11,7 @@ function c101106201.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101106201)
 	e1:SetCost(c101106201.spcost)
-	e1:SetTarget(c101106201.target)
+	e1:SetTarget(c101106201.sptg)
 	e1:SetOperation(c101106201.spop)
 	c:RegisterEffect(e1)
 	--search
@@ -20,7 +20,7 @@ function c101106201.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,1011062011)
+	e2:SetCountLimit(1,101106201+100)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c101106201.thtg)
 	e2:SetOperation(c101106201.thop)
@@ -31,12 +31,13 @@ function c101106201.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c101106201.spfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCanBeEffectTarget(e)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x102) and c:IsCanBeEffectTarget(e)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
-function c101106201.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101106201.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101106201.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	if chk==0 then return g:GetClassCount(Card.GetCode)>=2 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	if chk==0 then return Duel.GetMZoneCount(tp,c)>=2 and g:GetClassCount(Card.GetCode)>=2 end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g1=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
 	Duel.SetTargetCard(g1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,2,0,0)
@@ -48,17 +49,16 @@ function c101106201.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-
 function c101106201.thfilter(c)
 	return c:IsCode(101106203) or c:IsCode(67526112) and c:IsAbleToHand()
 end
 function c101106201.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101106201.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101106201.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c101106201.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c101106201.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101106201.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
