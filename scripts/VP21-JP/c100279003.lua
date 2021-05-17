@@ -1,4 +1,4 @@
---魔導騎士ギルティアーソウル・スピア
+--魔導騎士ギルティア－ソウル・スピア
 --Script by XyLeN
 function c100279003.initial_effect(c)
 	--summon with no tribute
@@ -16,7 +16,6 @@ function c100279003.initial_effect(c)
 	e2:SetCategory(CATEGORY_REMOVE) 
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O) 
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetTarget(c100279003.rmtg)
 	e2:SetOperation(c100279003.rmop)
 	c:RegisterEffect(e2)
