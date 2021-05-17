@@ -43,8 +43,8 @@ function c100425003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=c:GetMaterial()
 	local ct=mg:GetCount()
 	local b1=Duel.IsExistingMatchingCard(c100425003.thfilter,tp,LOCATION_DECK,0,1,nil)
-	local b2=c:IsSummonType(SUMMON_TYPE_SYNCHRO) and not Duel.IsPlayerAffectedByEffect(tp,59822133) and ct>0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct and mg:FilterCount(c100425003.spfilter,nil,e,tp,c)==ct and e:GetLabel()==1
+	local b2=e:GetLabel()==1 and ct>0 and mg:FilterCount(c100425003.spfilter,nil,e,tp,c)==ct
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct and not Duel.IsPlayerAffectedByEffect(tp,59822133)
 	if chk==0 then return b1 or b2 end
 	local off=1
 	local ops,opval={},{}
