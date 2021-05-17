@@ -23,20 +23,20 @@ function c100278005.initial_effect(c)
 	local e3=e2:Clone() 
 	e3:SetCode(EFFECT_UPDATE_DEFENSE) 
 	c:RegisterEffect(e3)
-	--special summon in grave
+	--special summon from grave
 	local e4=Effect.CreateEffect(c) 
 	e4:SetDescription(aux.Stringid(100278005,1)) 
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON) 
 	e4:SetType(EFFECT_TYPE_QUICK_O) 
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE) 
-	e4:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_END)
 	e4:SetCountLimit(1,100278005)
 	e4:SetCondition(c100278005.spcon2)
 	e4:SetTarget(c100278005.sptg2)
 	e4:SetOperation(c100278005.spop2)
 	c:RegisterEffect(e4)
 end
+c100278005.spchecks=aux.CreateChecks(Card.IsCode,{100278001,100278002,100278003,100278004,40640057})
 function c100278005.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)>Duel.GetMatchingGroupCount(Card.IsType,1-tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
 end
@@ -52,7 +52,7 @@ function c100278005.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100278005.atkfilter(c)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSetCard(0xa4) 
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSetCard(0xa4) and c:IsType(TYPE_MONSTER)
 end
 function c100278005.atkval(e)
 	return Duel.GetMatchingGroupCount(c100278005.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE+LOCATION_GRAVE,0,nil)*300
@@ -62,45 +62,26 @@ function c100278005.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 		and (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
 end
-function c100278005.spfilter(c,e,tp,code)
-	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
+function c100278005.spfilter(c,e,tp)
+	return c:IsCode(100278001,100278002,100278003,100278004,40640057) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 end
 function c100278005.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(c100278005.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
 	if chk==0 then return c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)>=5 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
-		and Duel.IsExistingMatchingCard(c100278005.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278001)
-		and Duel.IsExistingMatchingCard(c100278005.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278002)
-		and Duel.IsExistingMatchingCard(c100278005.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278003)
-		and Duel.IsExistingMatchingCard(c100278005.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,100278004)
-		and Duel.IsExistingMatchingCard(c100278005.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp,40640057) end
+		and g:CheckSubGroupEach(c100278005.spchecks) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,5,tp,LOCATION_GRAVE+LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,5,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c100278005.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_HAND)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=5 and not Duel.IsPlayerAffectedByEffect(tp,59822133) then
-		local g1=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100278005.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp,100278001)
-		local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100278005.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp,100278002)
-		local g3=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100278005.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp,100278003)
-		local g4=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100278005.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp,100278004)
-		local g5=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100278005.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp,40640057)
-		if g1:GetCount()>0 and g2:GetCount()>0 and g3:GetCount()>0 and g4:GetCount()>0 and g5:GetCount()>0 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg1=g1:Select(tp,1,1,nil)
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg2=g2:Select(tp,1,1,nil)
-			sg1:Merge(sg2)
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg3=g3:Select(tp,1,1,nil)
-			sg1:Merge(sg3)
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg4=g4:Select(tp,1,1,nil)
-			sg1:Merge(sg4)
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg5=g5:Select(tp,1,1,nil)
-			sg1:Merge(sg5)
-			Duel.SpecialSummon(sg1,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100278005.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sg=g:SelectSubGroupEach(tp,c100278005.spchecks,false)
+		if sg then
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 		end
 	end
 end
