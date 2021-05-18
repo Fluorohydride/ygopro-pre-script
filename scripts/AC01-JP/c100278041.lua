@@ -1,4 +1,4 @@
---キ — Ａｉ —
+--キ－Ai－
 --scripted by XyleN
 function c100278041.initial_effect(c)
 	--Activate
