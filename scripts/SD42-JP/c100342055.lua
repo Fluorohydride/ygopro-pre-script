@@ -78,7 +78,7 @@ function c100342055.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetTargetCard(eg)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		Duel.SelectTarget(tp,c100342055.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,tp,eg)
+		Duel.SelectTarget(tp,c100342055.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,eg)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
