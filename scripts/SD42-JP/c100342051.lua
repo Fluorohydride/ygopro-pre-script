@@ -59,7 +59,7 @@ function c100342051.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,2,REASON_COST)
 		and Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
 		and Duel.GetFlagEffect(tp,100342051+100)==0
-		and (Duel.GetFlagEffect(tp,100342051)==0 or tc:GetFlagEffect(100342051)~=0) end
+		and (Duel.GetFlagEffect(tp,100342051)==0 or c:GetFlagEffect(100342051)~=0) end
 	--splimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -88,9 +88,7 @@ function c100342051.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
 function c100342051.spfilter(c,e,tp)
-	local m=_G["c"..c:GetCode()]
-	if not m then return false end
-	local no=m.xyz_number
+	local no=c.xyz_number
 	return no and no>=1 and no<=100 and c:IsSetCard(0x48)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
