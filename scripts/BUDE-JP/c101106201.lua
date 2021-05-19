@@ -36,18 +36,25 @@ function c101106201.spfilter(c,e,tp)
 end
 function c101106201.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101106201.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	if chk==0 then return Duel.GetMZoneCount(tp,c)>=2 and g:GetClassCount(Card.GetCode)>=2 end
+	if chk==0 then return Duel.GetMZoneCount(tp,c)>=2 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
+		and g:GetClassCount(Card.GetCode)>=2 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g1=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
 	Duel.SetTargetCard(g1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,2,0,0)
 end
 function c101106201.spop(e,tp,eg,ep,ev,re,r,rp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft<=0 then return end
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if sg:GetCount()>0 then
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-	end
+	if sg:GetCount()==0 then return end
+	if sg:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
+	if sg:GetCount()>ft then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		sg=sg:Select(tp,ft,ft,nil)
+    end
+	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101106201.thfilter(c)
 	return c:IsCode(101106203) or c:IsCode(67526112) and c:IsAbleToHand()
