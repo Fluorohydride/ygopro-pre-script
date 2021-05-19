@@ -81,7 +81,11 @@ function c100425005.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100425005.spop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_SYNCHRO)
+	local ft=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_SYNCHRO)
+	local ect=(c29724053 and Duel.IsPlayerAffectedByEffect(tp,29724053) and c29724053[tp]) or ft
+	local ct=math.min(ft,ect,2)
+	if ct<=0 then return end
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 	local g=Duel.GetMatchingGroup(c100425005.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ct)
