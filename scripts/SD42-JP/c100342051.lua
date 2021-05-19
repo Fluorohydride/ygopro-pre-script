@@ -57,7 +57,7 @@ end
 function c100342051.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,2,REASON_COST)
-		and Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
+		and Duel.GetCustomActivityCount(100342051,tp,ACTIVITY_SPSUMMON)==0
 		and Duel.GetFlagEffect(tp,100342051+100)==0
 		and (Duel.GetFlagEffect(tp,100342051)==0 or c:GetFlagEffect(100342051)~=0) end
 	--splimit
