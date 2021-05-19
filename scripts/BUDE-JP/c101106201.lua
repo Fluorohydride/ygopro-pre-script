@@ -36,7 +36,7 @@ function c101106201.spfilter(c,e,tp)
 end
 function c101106201.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101106201.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	if chk==0 then return Duel.GetMZoneCount(tp,c)>=2 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>=2 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and g:GetClassCount(Card.GetCode)>=2 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g1=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
