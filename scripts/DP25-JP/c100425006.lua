@@ -6,6 +6,7 @@ function c100425006.initial_effect(c)
 	e1:SetCategory(CATEGORY_DICE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,100425006+EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(c100425006.cost)
 	e1:SetTarget(c100425006.target)
 	e1:SetOperation(c100425006.activate)
@@ -26,6 +27,7 @@ function c100425006.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function c100425006.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local dc=Duel.TossDice(tp,1)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
@@ -34,8 +36,20 @@ function c100425006.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100425006.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:SelectWithSumEqual(tp,Card.GetLevel,dc,1,ft)
-	if sg and sg:GetCount()>0 then
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+	if #sg>0 then
+		local tc=sg:GetFirst() 
+		for tc in aux.Next(sg) do
+			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_DISABLE_EFFECT)
+			tc:RegisterEffect(e2)
+		end
+		Duel.SpecialSummonComplete()
 	else
 		local lp=Duel.GetLP(tp)
 		Duel.SetLP(tp,lp-dc*500)
