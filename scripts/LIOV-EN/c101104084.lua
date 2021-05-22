@@ -7,25 +7,43 @@ function c101104084.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCost(c101104084.cost)
 	e1:SetTarget(c101104084.target)
 	e1:SetOperation(c101104084.activate)
 	c:RegisterEffect(e1)
 end
-function c101104084.cfilter(c)
-	return c:IsRace(RACE_WARRIOR) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
-end
 function c101104084.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c101104084.cfilter,1,nil) end
-	local g=Duel.SelectReleaseGroup(tp,c101104084.cfilter,1,1,nil)
-	Duel.Release(g,REASON_COST)
+	e:SetLabel(1)
+	return true
+end
+function c101104084.desfilter(c,tc,ec)
+	return c:GetEquipTarget()~=tc and c~=ec
+end
+function c101104084.cfilter(c,ec,tp)
+	if not c:IsRace(RACE_WARRIOR) then return false end
+	return Duel.IsExistingTarget(c101104084.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,c,c,ec)
 end
 function c101104084.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
-		and Duel.IsPlayerCanDraw(tp,1) end
+	local c=e:GetHandler()
+	if chkc then return chkc:IsOnField() and chkc~=c end
+	if chk==0 then
+		if e:GetLabel()==1 then
+			e:SetLabel(0)
+			return Duel.CheckReleaseGroup(tp,c101104084.cfilter,1,c,c,tp)
+				and Duel.IsPlayerCanDraw(tp,1)
+		else
+			return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
+				and Duel.IsPlayerCanDraw(tp,1)
+		end
+	end
+	if e:GetLabel()==1 then
+		e:SetLabel(0)
+		local sg=Duel.SelectReleaseGroup(tp,c101104084.cfilter,1,1,c,c,tp)
+		Duel.Release(sg,REASON_COST)
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
