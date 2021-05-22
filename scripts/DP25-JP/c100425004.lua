@@ -11,7 +11,6 @@ function c100425004.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(c100425004.imcon)
@@ -44,7 +43,7 @@ function c100425004.initial_effect(c)
 end
 c100425004.material_type=TYPE_SYNCHRO
 function c100425004.imcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and aux.dscon()
+	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)
 end
 function c100425004.imop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
