@@ -34,6 +34,6 @@ function c101104085.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=g:Filter(c101104085.filter,nil,LOCATION_GRAVE,e)
 	local tc2=g:Filter(c101104085.filter,nil,LOCATION_REMOVED,e)
 	if Duel.Remove(tc1,POS_FACEUP,REASON_EFFECT)>0 then
-		Duel.SendtoGrave(tc2,REASON_EFFECT)
+		Duel.SendtoGrave(tc2,REASON_EFFECT+REASON_RETURN)
 	end
 end
