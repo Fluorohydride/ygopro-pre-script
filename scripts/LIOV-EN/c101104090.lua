@@ -21,15 +21,15 @@ end
 function c101104090.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101104090.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c101104090.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
+		and Duel.IsExistingTarget(c101104090.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c101104090.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c101104090.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101104090.activate(e,tp,eg,ep,ev,re,r,rp)
-	local op=0
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
+	local op=0
 	if tc:IsRelateToEffect(e) then
 		op=Duel.SelectOption(tp,aux.Stringid(101104090,0),aux.Stringid(101104090,1)) 
 	else
