@@ -64,7 +64,7 @@ end
 function c101104088.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ac=e:GetLabelObject()
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,ac,1,0,0)
 end
 function c101104088.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
