@@ -35,13 +35,13 @@ function c100341035.initial_effect(c)
 end
 function c100341035.eqfilter(c,tp)
 	return c:IsSetCard(0x4093) and c:IsFaceup() and c:IsType(TYPE_EFFECT)
-		and Duel.IsExistingMatchingCard(c100341035.eqfilter2,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,c,tp)
+		and Duel.IsExistingMatchingCard(c100341035.eqfilter2,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
 end
-function c100341035.eqfilter2(c,tc,tp)
+function c100341035.eqfilter2(c)
 	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and not c:IsForbidden()
 end
 function c100341035.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100341035.eqfilter(chkc,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100341035.eqfilter(chkc,tp) end
 	if chk==0 then return Duel.GetFlagEffect(tp,100341035)==0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(c100341035.eqfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())

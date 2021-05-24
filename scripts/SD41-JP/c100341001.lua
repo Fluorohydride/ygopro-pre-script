@@ -8,7 +8,6 @@ function c100341001.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
-	e1:SetCondition(c100341001.eqcon)
 	e1:SetTarget(c100341001.eqtg)
 	e1:SetOperation(c100341001.eqop)
 	c:RegisterEffect(e1)
@@ -31,15 +30,13 @@ function c100341001.initial_effect(c)
 	e3:SetOperation(c100341001.spop)
 	c:RegisterEffect(e3)
 end
-function c100341001.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():CheckUniqueOnField(tp)
-end
 function c100341001.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsSetCard(0x93)
 end
 function c100341001.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100341001.filter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and e:GetHandler():CheckUniqueOnField(tp)
 		and Duel.IsExistingTarget(c100341001.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,c100341001.filter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
@@ -53,9 +50,6 @@ function c100341001.eqop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(c,REASON_EFFECT)
 		return
 	end
-	c100341001.equip_cyber_monster(c,tp,tc)
-end
-function c100341001.equip_cyber_monster(c,tp,tc)
 	if not Duel.Equip(tp,c,tc) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

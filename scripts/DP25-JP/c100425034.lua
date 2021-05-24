@@ -28,12 +28,10 @@ end
 function c100425034.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100425034.spfilter(chkc,e,tp) end
-	if chk==0 then
-		if Duel.IsPlayerAffectedByEffect(tp,59822133) then return false end
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 then return false end
-		if not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
-		return Duel.IsExistingTarget(c100425034.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-	end
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.IsExistingTarget(c100425034.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100425034.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	g:AddCard(c)

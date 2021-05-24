@@ -3,16 +3,19 @@
 function c100425007.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100425007,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCost(c100425007.cost)
 	e1:SetTarget(c100425007.target)
 	e1:SetOperation(c100425007.activate)
 	c:RegisterEffect(e1)
 	--substitute as a monster
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100425007,0))
+	e2:SetDescription(aux.Stringid(100425007,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -51,7 +54,7 @@ function c100425007.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and Duel.GetTurnPlayer()==tp
 end
 function c100425007.lvfilter(c)
-	return c:IsSetCard(0x2016) and c:GetLevel()>0 and c:IsFaceup()
+	return c:IsSetCard(0x2016) and c:GetLevel()>1 and c:IsFaceup()
 end
 function c100425007.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100425007.lvfilter(chkc) end

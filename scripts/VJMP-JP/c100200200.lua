@@ -56,7 +56,7 @@ function c100200200.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100200200.tgfilter(c)
-	return c:IsRace(RACE_WINDBEAST) and c:IsAbleToGrave()
+	return c:IsRace(RACE_WINDBEAST) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsAbleToGrave()
 end
 function c100200200.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100200200.tgfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -11,8 +11,8 @@ function c100425003.initial_effect(c)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,100425003)
-	e1:SetCost(c100425003.cost)
 	e1:SetCondition(c100425003.condition)
+	e1:SetCost(c100425003.cost)
 	e1:SetTarget(c100425003.target)
 	e1:SetOperation(c100425003.operation)
 	c:RegisterEffect(e1)
@@ -29,6 +29,20 @@ function c100425003.counterfilter(c)
 end
 function c100425003.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+end
+function c100425003.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetCustomActivityCount(100425003,tp,ACTIVITY_SPSUMMON)==0 end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c100425003.splimit)
+	Duel.RegisterEffect(e1,tp)
+end
+function c100425003.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+	return not c:IsAttribute(ATTRIBUTE_WIND)
 end
 function c100425003.thfilter(c)
 	return c:IsSetCard(0x2016) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
@@ -87,20 +101,6 @@ function c100425003.operation(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<g:GetCount() then return end
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function c100425003.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetCustomActivityCount(100425003,tp,ACTIVITY_SPSUMMON)==0 end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(c100425003.splimit)
-	Duel.RegisterEffect(e1,tp)
-end
-function c100425003.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsAttribute(ATTRIBUTE_WIND)
 end
 function c100425003.mfilter(c)
 	return not c:IsSetCard(0x2016)

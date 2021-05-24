@@ -24,7 +24,7 @@ function c100341022.initial_effect(c)
 end
 function c100341022.spfilter(c,e,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return c:IsSetCard(0x93) and c:IsType(TYPE_FUSION)
+	return c:IsSetCard(0x93) and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_FUSION)
 		and (c:IsAbleToExtra() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)))
 end
 function c100341022.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -47,7 +47,7 @@ function c100341022.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100341022.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x93) and c:IsType(TYPE_FUSION)
+	return c:IsFaceup() and c:IsSetCard(0x93) and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_FUSION)
 		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function c100341022.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

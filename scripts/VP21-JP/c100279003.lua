@@ -63,9 +63,10 @@ function c100279003.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end
 function c100279003.thfilter(c)
-	return ((c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevel(7) and c:IsRace(RACE_DRAGON))
-		or (c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevel(6) and c:IsRace(RACE_MACHINE))
-		or (c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevel(5) and c:IsRace(RACE_WARRIOR))) and c:IsAbleToHand()
+	return c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
+		and ((c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevel(7) and c:IsRace(RACE_DRAGON))
+			or (c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevel(6) and c:IsRace(RACE_MACHINE))
+			or (c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevel(5) and c:IsRace(RACE_WARRIOR)))
 end
 function c100279003.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100279003.thfilter,tp,LOCATION_DECK,0,1,nil) end

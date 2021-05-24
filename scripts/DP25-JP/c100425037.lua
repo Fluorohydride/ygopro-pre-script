@@ -60,10 +60,8 @@ function c100425037.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100425037.condition(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
-	return (a:IsControler(tp) and a:IsFaceup() and a~=e:GetHandler() and a:IsRelateToBattle())
-		or (d and d:IsControler(tp) and d:IsFaceup() and d~=e:GetHandler() and d:IsRelateToBattle())
+	local tc=Duel.GetBattleMonster(tp)
+	return tc:IsFaceup() and tc~=e:GetHandler() and tc:IsRelateToBattle()
 end
 function c100425037.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -72,18 +70,17 @@ function c100425037.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=c:RemoveOverlayCard(tp,1,rt,REASON_COST)
 	e:SetLabel(ct)
 end
-function c100425037.operation(e,tp,eg,ep,ev,re,r,rp,chk)
-	local a=Duel.GetAttacker()
-	local ct=e:GetLabel()
-	if Duel.GetTurnPlayer()~=tp then a=Duel.GetAttackTarget() end
-	if not a:IsRelateToBattle() then return end
-	if a==e:GetHandler() then return end
-	if a:IsFaceup() then
-		local e1=Effect.CreateEffect(e:GetHandler())
+function c100425037.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=Duel.GetBattleMonster(tp)
+	if not tc or tc==c then return end
+	if tc:IsFaceup() and tc:IsRelateToBattle() and tc:IsControler(tp) then
+		local ct=e:GetLabel()
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(ct*300)
-		a:RegisterEffect(e1)
+		tc:RegisterEffect(e1)
 	end
 end

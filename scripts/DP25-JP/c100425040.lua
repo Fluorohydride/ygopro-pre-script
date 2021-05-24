@@ -27,7 +27,9 @@ function c100425040.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100425040.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xf7) and (Duel.IsExistingMatchingCard(c100425040.atkfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack()) or Duel.IsExistingMatchingCard(c100425040.lvfilter,tp,0,LOCATION_MZONE,1,nil))
+	return c:IsFaceup() and c:IsSetCard(0xf7)
+		and (Duel.IsExistingMatchingCard(c100425040.atkfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
+			or Duel.IsExistingMatchingCard(c100425040.lvfilter,tp,0,LOCATION_MZONE,1,nil))
 end
 function c100425040.atkfilter(c,atk)
 	return c:IsFaceup() and not c:IsAttack(atk)
@@ -75,26 +77,22 @@ function c100425040.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100425040.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local b=Duel.GetAttackTarget()
-	if not b then return false end
-	e:SetLabelObject(b)
-	return b:IsFaceup() and b:IsControler(tp) and b:IsSetCard(0xf7) and a:IsControler(1-tp)
+	local a,d=Duel.GetBattleMonster(1-tp)
+	if not (a and d) then return false end
+	return d:IsFaceup() and d:IsSetCard(0xf7)
 end
 function c100425040.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local a=Duel.GetAttacker()
-	local b=e:GetLabelObject()
-	if chk==0 then return b and b:GetAttack()~=a:GetAttack() end
+	local a,d=Duel.GetBattleMonster(1-tp)
+	if chk==0 then return d:GetAttack()~=a:GetAttack() end
 end
 function c100425040.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local b=e:GetLabelObject()
-	if b and b:IsRelateToBattle() and a:IsRelateToBattle() and b:IsFaceup() and b:IsControler(tp) and a:IsFaceup() and a:IsControler(1-tp) and b:GetAttack()~=a:GetAttack() then
+	local a,d=Duel.GetBattleMonster(1-tp)
+	if d:IsRelateToBattle() and a:IsRelateToBattle() and d:IsFaceup() and a:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(a:GetAttack())
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		b:RegisterEffect(e1)
+		d:RegisterEffect(e1)
 	end
 end

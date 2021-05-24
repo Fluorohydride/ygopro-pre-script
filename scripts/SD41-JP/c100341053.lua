@@ -33,7 +33,8 @@ function c100341053.fselect(g,tp)
 end
 function c100341053.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100341053.costfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
-	if chk==0 then return Duel.GetCustomActivityCount(100341053,tp,ACTIVITY_SPSUMMON)==0 and g:CheckSubGroup(c100341053.fselect,2,2,tp) end
+	if chk==0 then return Duel.GetCustomActivityCount(100341053,tp,ACTIVITY_SPSUMMON)==0
+		and g:CheckSubGroup(c100341053.fselect,2,2,tp) end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
