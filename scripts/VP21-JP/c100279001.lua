@@ -29,7 +29,7 @@ function c100279001.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100279001.cfilter(c)
-	return c:IsType(TYPE_NORMAL) and c:IsLevelAbove(5) and c:IsFaceup() 
+	return c:IsType(TYPE_NORMAL) and c:IsLevelAbove(5) and c:IsFaceup()
 end
 function c100279001.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION)

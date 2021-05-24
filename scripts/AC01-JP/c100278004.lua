@@ -2,7 +2,7 @@
 --Script by REIKAI
 function c100278004.initial_effect(c)
 	aux.AddCodeList(c,40640057)
-   --atkup
+	--atkup
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100278004,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -15,7 +15,7 @@ function c100278004.initial_effect(c)
 	e1:SetCost(c100278004.atkcost)
 	e1:SetTarget(c100278004.atktg)
 	e1:SetOperation(c100278004.atkop)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--tohand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100278004,1))

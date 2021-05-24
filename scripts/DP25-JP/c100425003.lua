@@ -31,7 +31,7 @@ function c100425003.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c100425003.thfilter(c)
-	return c:IsSetCard(0x2016) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() 
+	return c:IsSetCard(0x2016) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100425003.spfilter(c,e,tp,sync)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
@@ -65,7 +65,7 @@ function c100425003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	else
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON) 
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetTargetCard(mg)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,mg,ct,0,0)
 	end

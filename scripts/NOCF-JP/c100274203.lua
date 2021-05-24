@@ -22,7 +22,7 @@ function c100274203.initial_effect(c)
 	end
 end
 function c100274203.cfilter(c)
-	return c:GetPreviousLocation()&LOCATION_ONFIELD>0 and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==79747096
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==79747096
 		and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():IsActiveType(TYPE_MONSTER)
 end
 function c100274203.checkop(e,tp,eg,ep,ev,re,r,rp)

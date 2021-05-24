@@ -82,7 +82,7 @@ end
 function c100274201.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetOverlayCount()>0 and c:IsPreviousLocation(LOCATION_MZONE)
-		and rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp
+		and rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
 end
 function c100274201.spfilter(c,e,tp)
 	return c:IsCode(100274202) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

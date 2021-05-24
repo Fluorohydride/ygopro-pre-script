@@ -1,7 +1,7 @@
 --クリブー
 --Script by REIKAI
 function c100278003.initial_effect(c)
-   --destroy
+	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100278003,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

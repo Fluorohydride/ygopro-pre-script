@@ -101,7 +101,7 @@ end
 function c100342051.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_SMATERIAL) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,c100342051.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst() 
+	local tc=Duel.SelectMatchingCard(tp,c100342051.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		tc:CompleteProcedure()

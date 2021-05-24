@@ -2,9 +2,9 @@
 --Script by XyLeN
 function c100341035.initial_effect(c)
 	--Activate
-	local e0=Effect.CreateEffect(c) 
-	e0:SetType(EFFECT_TYPE_ACTIVATE) 
-	e0:SetCode(EVENT_FREE_CHAIN) 
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
 	--equip
 	local e1=Effect.CreateEffect(c)

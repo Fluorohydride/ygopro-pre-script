@@ -53,7 +53,7 @@ function c101106201.spop(e,tp,eg,ep,ev,re,r,rp)
 	if sg:GetCount()>ft then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		sg=sg:Select(tp,ft,ft,nil)
-    end
+	end
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101106201.thfilter(c)
