@@ -60,18 +60,17 @@ function c100425002.spop(e,tp,eg,ep,ev,re,r,rp)
 		local lv,code=tc:GetLevel(),tc:GetCode()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c100425002.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,lv,code)
-		local tc=g:GetFirst() 
-		if tc then
-			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+		local sc=g:GetFirst() 
+		if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
+			sc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			tc:RegisterEffect(e2)
-			Duel.SpecialSummonComplete()
+			sc:RegisterEffect(e2)
 		end
+		Duel.SpecialSummonComplete()
 	end
 end
