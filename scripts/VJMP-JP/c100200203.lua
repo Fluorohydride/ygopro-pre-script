@@ -1,5 +1,5 @@
 --モーターシェル
---Sctipt By JSY1728
+--Sctipted By JSY1728
 function c100200203.initial_effect(c)
 	--"Motor Token" Summon
 	local e1=Effect.CreateEffect(c)
