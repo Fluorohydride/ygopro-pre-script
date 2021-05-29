@@ -29,7 +29,7 @@ function c100278032.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100278032.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(c100278032.desfilter,tp,0,LOCATION_ONFIELD,aux.ExceptThisCard(e))
-	if Duel.Destroy(sg,REASON_EFFECT)~=0 then
+	if Duel.Destroy(sg,REASON_EFFECT)>0 then
 		Duel.Damage(1-tp,1000,REASON_EFFECT)
 	end
 end
