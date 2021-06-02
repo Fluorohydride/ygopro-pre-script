@@ -54,7 +54,7 @@ function c100278023.aclimit(e,re,tp)
 end
 function c100278023.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if tc:IsCode(e:GetLabel()) then
+	if tc:IsSummonPlayer(tp) and tc:IsCode(e:GetLabel()) then
 		e:GetLabelObject():Reset()
 		e:Reset()
 	end
