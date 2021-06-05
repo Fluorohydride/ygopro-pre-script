@@ -27,14 +27,14 @@ function c100278039.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return false end
 	e:SetLabelObject(tc)
 	return tc:IsFaceup() and tc:IsSetCard(0xe5)
-		and Duel.IsExistingMatchingCard(c100278039.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetCode())
+		and Duel.IsExistingMatchingCard(c100278039.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,tc,tc:GetCode())
 end
 function c100278039.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if tc:IsRelateToBattle() and tc:IsControler(tp) and tc:IsFaceup() and tc:IsSetCard(0xe5) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(tc:GetAttack()*2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 		tc:RegisterEffect(e1)
