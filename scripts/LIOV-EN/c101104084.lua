@@ -22,7 +22,7 @@ function c101104084.desfilter(c,tc,ec)
 end
 function c101104084.cfilter(c,ec,tp)
 	if not c:IsRace(RACE_WARRIOR) then return false end
-	return Duel.IsExistingTarget(c101104084.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,c,c,ec)
+	return Duel.IsExistingTarget(c101104084.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c,c,ec)
 end
 function c101104084.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
