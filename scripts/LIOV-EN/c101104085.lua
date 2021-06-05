@@ -23,18 +23,17 @@ function c101104085.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,rt,nil) 
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE) 
 	local g2=Duel.SelectTarget(tp,Card.IsAbleToGrave,tp,0,LOCATION_REMOVED,#g1,#g1,nil) 
-	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g1,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,#g1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g1,#g1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g2,#g2,0,0)
 end
 function c101104085.filter(c,loc,e)
 	return c:IsLocation(loc) and c:IsRelateToEffect(e)
 end
 function c101104085.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tc1=g:Filter(c101104085.filter,nil,LOCATION_GRAVE,e)
-	local tc2=g:Filter(c101104085.filter,nil,LOCATION_REMOVED,e)
-	if Duel.Remove(tc1,POS_FACEUP,REASON_EFFECT)>0 then
-		Duel.SendtoGrave(tc2,REASON_EFFECT+REASON_RETURN)
+	local tg1=g:Filter(c101104085.filter,nil,LOCATION_GRAVE,e)
+	local tg2=g:Filter(c101104085.filter,nil,LOCATION_REMOVED,e)
+	if Duel.Remove(tg1,POS_FACEUP,REASON_EFFECT)>0 then
+		Duel.SendtoGrave(tg2,REASON_EFFECT+REASON_RETURN)
 	end
 end
