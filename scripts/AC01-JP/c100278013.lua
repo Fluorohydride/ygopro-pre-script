@@ -12,11 +12,12 @@ function c100278013.initial_effect(c)
 	--to grave
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100278013,0))
-	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_TODECK+CATEGORY_TOHAND+CATEGORY_GRAVE_ACTION)
+	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_TOHAND+CATEGORY_GRAVE_ACTION)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,100278013)
+	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100278013.tgtg)
 	e2:SetOperation(c100278013.tgop)
@@ -29,7 +30,8 @@ end
 function c100278013.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetBattleMonster(1-tp)
-	if at:IsRelateToBattle() then
+	if tc:IsRelateToBattle() then
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -73,7 +75,6 @@ function c100278013.tgop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sg)
 		end
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
