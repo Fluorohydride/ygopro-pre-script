@@ -13,7 +13,8 @@ function c101104092.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101104092.cfilter(c,tp,rp)
-	return c:IsSetCard(0x15f) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and rp==1-tp and c:IsReason(REASON_EFFECT)
+	return c:IsSetCard(0x15f) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
+		and c:IsPreviousLocation(LOCATION_MZONE) and rp==1-tp and c:IsReason(REASON_EFFECT)
 end
 function c101104092.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
