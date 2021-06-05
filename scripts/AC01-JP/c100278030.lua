@@ -22,6 +22,7 @@ function c100278030.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e2:SetCondition(c100278030.descon)
 	e2:SetTarget(c100278030.destg)
 	e2:SetOperation(c100278030.desop)
@@ -54,8 +55,10 @@ end
 function c100278030.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local tc=Duel.SelectMatchingCard(tp,c100278030.desfilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
-	if tc and Duel.Destroy(tc,REASON_EFFECT)~=0 then
-		Duel.Damage(1-tp,math.ceil(tc:GetAttack()/2),REASON_EFFECT)
+	if not tc then return end
+	local dam=math.floor(tc:GetAttack()/2)
+	if Duel.Destroy(tc,REASON_EFFECT)~=0 then
+		Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end
 function c100278030.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -77,7 +80,7 @@ function c100278030.matfilter(c)
 end
 function c100278030.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)
-	if ft==0 then return end
+	if ft<=0 then return end
 	ft=math.min(ft,e:GetLabel())
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	local ect=c29724053 and Duel.IsPlayerAffectedByEffect(tp,29724053) and c29724053[tp]
@@ -89,8 +92,8 @@ function c100278030.spop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100278030.matfilter),tp,LOCATION_GRAVE,0,nil)
 		local res=false
 		local tc=og:GetFirst()
-		while og do
-			if sg:GetCount()>0 then return end
+		while tc do
+			if sg:GetCount()==0 then return end
 			if Duel.SelectEffectYesNo(tp,tc,aux.Stringid(100278030,2)) then
 				if res==false then
 					res=true
