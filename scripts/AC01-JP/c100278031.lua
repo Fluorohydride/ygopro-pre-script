@@ -13,6 +13,7 @@ function c100278031.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e1:SetCondition(c100278031.descon)
 	e1:SetTarget(c100278031.destg)
 	e1:SetOperation(c100278031.desop)
@@ -71,7 +72,7 @@ function c100278031.spfilter(c,e,tp)
 end
 function c100278031.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c100278031.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c100278031.spfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c100278031.matfilter(c)
@@ -83,14 +84,14 @@ function c100278031.spop(e,tp,eg,ep,ev,re,r,rp)
 	ft=math.min(ft,e:GetLabel())
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100278031.spfilter),tp,LOCATION_GRAVE,0,1,ft,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100278031.spfilter),tp,LOCATION_GRAVE,0,1,ft,e:GetHandler(),e,tp)
 	if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_MZONE)
 		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100278031.matfilter),tp,LOCATION_GRAVE,0,nil)
 		local res=false
 		local tc=og:GetFirst()
-		while og do
-			if sg:GetCount()>0 then return end
+		while tc do
+			if sg:GetCount()==0 then return end
 			if Duel.SelectEffectYesNo(tp,tc,aux.Stringid(100278031,2)) then
 				if res==false then
 					res=true
