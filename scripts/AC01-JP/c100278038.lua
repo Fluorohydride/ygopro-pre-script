@@ -59,7 +59,7 @@ function c100278038.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100278038.lvfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe5) and not c:IsLevel(8) and c:IsLevelAbove(1)
+	return c:IsFaceup() and c:IsSetCard(0xe5) and c:IsLevelAbove(1) and c:GetLevel()~=8
 end
 function c100278038.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100278038.lvfilter(chkc) end
