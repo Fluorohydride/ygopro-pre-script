@@ -89,6 +89,7 @@ function c101106203.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_IMMUNE_EFFECT)
 		e2:SetValue(c101106203.immval)
 		tc:RegisterEffect(e2,true)
+		tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101106203,3))
 	end
 end
 function c101106203.descheck(g,mg2,dg)
