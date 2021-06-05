@@ -2,7 +2,7 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **May ?, 2021**: LEGENDARY MONSTERS PACK (VP21-JP) : `100279XXX`
+- **May 21, 2021**: LEGENDARY MONSTERS PACK (VP21-JP) : `100279XXX`
 - **June 12, 2021**: ANIMATION CHRONICLE 2021 (AC01-JP) : `100278XXX`
 - **June 26, 2021**: Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
 - **July 17, 2021**: BURST OF DESTINY (BODE-JP) : `101106XXX`
