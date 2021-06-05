@@ -4,16 +4,17 @@
 function c100278044.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_REMOVE)
+	e1:SetDescription(aux.Stringid(100278044,0))
+	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(c100278044.condition)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetTarget(c100278044.target)
 	e1:SetOperation(c100278044.activate)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100278044,0))
+	e2:SetDescription(aux.Stringid(100278044,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
@@ -41,7 +42,9 @@ function c100278044.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ct=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_REMOVED):GetCount()
 		local sg=Duel.GetMatchingGroup(c100278044.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if ct>0 and sg:GetCount()>0 and ft>0 and Duel.SelectYesNo(tp,aux.Stringid(100278044,1)) then
+		if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+		ct=math.min(ct,ft)
+		if ct>0 and sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100278044,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local tg=sg:Select(tp,1,ct,nil)
