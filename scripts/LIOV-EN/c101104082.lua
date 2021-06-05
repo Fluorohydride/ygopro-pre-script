@@ -15,8 +15,8 @@ function c101104082.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101104082.filter(c,tp)
-	return c:IsAttribute(ATTRIBUTE_EARTH) and c:GetOriginalRace()==RACE_FAIRY
-		and c:IsPreviousLocation(LOCATION_HAND+LOCATION_MZONE) and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)
+	return c:GetOriginalAttribute()==ATTRIBUTE_EARTH and c:GetOriginalRace()==RACE_FAIRY
+		and c:IsPreviousLocation(LOCATION_HAND+LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function c101104082.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101104082.filter,1,nil,tp)
