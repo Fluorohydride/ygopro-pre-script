@@ -2,9 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **April 28, 2021**: Number Complete File -Piece of Memories- (NCF1-JP): `100274XXX`
-- **May 15, 2021**: Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
-- **May 22, 2021**: Duelist Pack: Duelists of Whirlwind (DP25-JP) : `100425XXX`
 - **May ?, 2021**: LEGENDARY MONSTERS PACK (VP21-JP) : `100279XXX`
 - **June 12, 2021**: ANIMATION CHRONICLE 2021 (AC01-JP) : `100278XXX`
 - **June 26, 2021**: Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
@@ -96,6 +93,7 @@
 - "Amabie-San" Present Campaign (21CC-JP): `100275XXX`
 - Yu-Gi-Oh! OCG Structures Volume 3 promotional card (YO03-JP): `100276XXX`
 - The Valuable Book EX (VX01-JP) : `100277XXX`
+- Number Complete File -Piece of Memories- (NCF1-JP): `100274XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -126,6 +124,7 @@
 - Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
 - Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
 - Structure Deck: Ice Barrier of the Frozen Prison (SD40-JP) : `100340XXX`
+- Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
@@ -147,6 +146,7 @@
 - Duelist Pack: Legend Duelist 5 (DP22-JP) : `100422XXX`
 - Duelist Pack: Legend Duelist 6 (DP23-JP) : `100423XXX`
 - Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
+- Duelist Pack: Duelists of Whirlwind (DP25-JP) : `100425XXX`
 
 ## Booster packs
 - THE DARK ILLUSION (TDIL-JP) : `100909XXX`
