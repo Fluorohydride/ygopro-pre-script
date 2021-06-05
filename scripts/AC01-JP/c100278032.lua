@@ -1,5 +1,6 @@
 --ヌメロン・ストーム
 --Numeron Storm
+--Script By JSY1728
 function c100278032.initial_effect(c)
 	--Destroy
 	local e1=Effect.CreateEffect(c)
