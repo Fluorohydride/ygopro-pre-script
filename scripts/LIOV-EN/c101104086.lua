@@ -27,20 +27,19 @@ function c101104086.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101104086.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttackTarget()
-		and (Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():IsAttribute(ATTRIBUTE_EARTH) and Duel.GetAttacker():IsRace(RACE_WARRIOR)
-			or Duel.GetAttackTarget():IsControler(tp) and Duel.GetAttackTarget():IsAttribute(ATTRIBUTE_EARTH) and Duel.GetAttackTarget():IsRace(RACE_WARRIOR))
+	local a,d=Duel.GetBattleMonster(tp)
+	return a and d and a:IsAttribute(ATTRIBUTE_EARTH) and a:IsRace(RACE_WARRIOR)
 end
 function c101104086.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,800) end
 	Duel.PayLPCost(tp,800)
 end
 function c101104086.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttacker()
-	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
+	local tc=Duel.GetBattleMonster(tp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetValue(800)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e1)
