@@ -37,30 +37,28 @@ function c101104087.check(c,tp)
 end
 function c101104087.dstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return (c101104087.check(Duel.GetAttacker(),tp) or c101104087.check(Duel.GetAttackTarget(),tp))
-		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_SZONE,1,nil) end
+		and Duel.IsExistingTarget(Card.IsType,tp,0,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_SZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsType,tp,0,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c101104087.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x15f)
 end
 function c101104087.dsop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if sg:GetCount()>0 and Duel.Destroy(sg,REASON_EFFECT) then
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
 		Duel.BreakEffect()
 		local ag=Duel.GetMatchingGroup(c101104087.atkfilter,tp,LOCATION_MZONE,0,nil)
-		local tc=ag:GetFirst()
-		for tc in aux.Next(ag) do
-			local c=e:GetHandler()
+		for tc2 in aux.Next(ag) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 			e1:SetValue(200)
-			tc:RegisterEffect(e1)
+			tc2:RegisterEffect(e1)
 		end
 	end
 end
