@@ -32,8 +32,8 @@ function c100278024.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,c100278024.filter2,tp,LOCATION_DECK,0,1,1,nil,tc:GetCode(),e,tp)
-	local tc=sg:GetFirst() 
-	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	local sc=sg:GetFirst() 
+	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -42,7 +42,7 @@ function c100278024.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetAbsoluteRange(tp,1,0)
 		e1:SetTarget(c100278024.splimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1,true)
+		sc:RegisterEffect(e1,true)
 	end
 end
 function c100278024.splimit(e,c)
