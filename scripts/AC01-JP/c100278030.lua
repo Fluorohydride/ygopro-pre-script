@@ -37,6 +37,13 @@ function c100278030.initial_effect(c)
 	e3:SetTarget(c100278030.sptg)
 	e3:SetOperation(c100278030.spop)
 	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e4:SetCode(EVENT_LEAVE_FIELD_P)
+	e4:SetOperation(c100278030.regop)
+	e4:SetLabelObject(e3)
+	c:RegisterEffect(e4)
 end
 c100278030.xyz_number=4
 function c100278030.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -61,11 +68,14 @@ function c100278030.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end
-function c100278030.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c100278030.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=c:GetOverlayCount()
-	e:SetLabel(ct)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_XYZ) and ct>0
+	e:GetLabelObject():SetLabel(ct)
+end
+function c100278030.spcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()>0
 end
 function c100278030.spfilter(c,e,tp)
 	return c:IsCode(100278031) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
