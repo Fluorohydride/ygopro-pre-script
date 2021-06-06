@@ -17,11 +17,11 @@ function c101104089.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x15f)
 end
 function c101104089.actcon(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsChainDisablable(ev) then return false end
-	if not Duel.IsExistingMatchingCard(c101104089.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
-	return (re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsControler(1-tp))
-		or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
-			and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and ep==1-tp)
+	return ep==1-tp and Duel.IsChainDisablable(ev)
+		and Duel.IsExistingMatchingCard(c101104089.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		and ((re:IsActiveType(TYPE_MONSTER) and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE)
+			or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+				and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))))
 end
 function c101104089.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
