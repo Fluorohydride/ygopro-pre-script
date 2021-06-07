@@ -35,6 +35,13 @@ function c100278031.initial_effect(c)
 	e3:SetTarget(c100278031.sptg)
 	e3:SetOperation(c100278031.spop)
 	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e4:SetCode(EVENT_LEAVE_FIELD_P)
+	e4:SetOperation(c100278031.regop)
+	e4:SetLabelObject(e3)
+	c:RegisterEffect(e4)
 end
 function c100278031.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
@@ -61,11 +68,14 @@ end
 function c100278031.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(100278031,RESET_EVENT+RESET_TURN_SET+RESET_TOHAND+RESET_TODECK+RESET_TOFIELD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100278031,3))
 end
-function c100278031.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c100278031.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=c:GetOverlayCount()
-	e:SetLabel(ct)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetFlagEffect(100278031)>0 and ct>0
+	e:GetLabelObject():SetLabel(ct)
+end
+function c100278031.spcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetFlagEffect(100278031)>0 and e:GetLabel()>0
 end
 function c100278031.spfilter(c,e,tp)
 	return c:IsSetCard(0x269) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
