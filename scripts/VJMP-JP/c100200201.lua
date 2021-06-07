@@ -1,5 +1,5 @@
 --アストラル・クリボー
---scripted by XyLeN
+--scripted by XyLeN & JSY1728
 function c100200201.initial_effect(c)
 	--sp summon
 	local e1=Effect.CreateEffect(c)
