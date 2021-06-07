@@ -23,7 +23,7 @@ function c101104088.initial_effect(c)
 	--twice attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101104088,1))
-	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
