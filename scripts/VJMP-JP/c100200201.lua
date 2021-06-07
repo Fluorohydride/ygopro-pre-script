@@ -82,4 +82,12 @@ function c100200201.efop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetValue(aux.indoval)
 	rc:RegisterEffect(e2,true)
+		if not rc:IsType(TYPE_EFFECT) then
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_ADD_TYPE)
+		e3:SetValue(TYPE_EFFECT)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		rc:RegisterEffect(e3,true)
+	end
 end
