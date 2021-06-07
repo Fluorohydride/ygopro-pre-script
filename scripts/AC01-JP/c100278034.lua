@@ -107,7 +107,7 @@ function c100278034.copyop(e,tp,eg,ep,ev,re,r,rp)
 			local cid=c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
 		end
 		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(aux.Stringid(100278034,3))
+		e2:SetDescription(aux.Stringid(100278034,4))
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
