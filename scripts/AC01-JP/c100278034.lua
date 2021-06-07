@@ -26,11 +26,12 @@ function c100278034.initial_effect(c)
 	c:RegisterEffect(e3)
 	--reduce to 0
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(16178681,0))
+	e4:SetDescription(aux.Stringid(100278034,0))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e4:SetRange(LOCATION_PZONE)
 	e4:SetCountLimit(1)
+	e4:SetCondition(c100278034.rdcon)
 	e4:SetOperation(c100278034.rdop)
 	c:RegisterEffect(e4)
 	--copy
@@ -71,8 +72,12 @@ end
 function c100278034.atkval(e,c)
 	return Duel.GetCounter(0,1,1,0x104f)*-200
 end
+function c100278034.rdcon(e,tp,eg,ep,ev,re,r,rp)
+	return ep==tp
+end
 function c100278034.rdop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectYesNo(tp,aux.Stringid(100278034,3)) then
+		Duel.Hint(HINT_CARD,0,100278034)
 		Duel.ChangeBattleDamage(tp,0)
 	end
 end
