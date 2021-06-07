@@ -112,7 +112,7 @@ function c101104088.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,101104088)>0
 		and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and aux.dscon()
 end
-function c101104088.atkfilter(c) 
+function c101104088.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x15f)
 end
 function c101104088.atktg(e,tp,eg,ep,ev,re,r,rp,chk)

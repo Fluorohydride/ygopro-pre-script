@@ -50,11 +50,11 @@ function c100278014.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTarget(c100278014.splimit)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
-	local e3=e2:Clone() 
+	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	Duel.RegisterEffect(e3,tp)
 end
-function c100278014.extrasumtg(e,c) 
+function c100278014.extrasumtg(e,c)
 	return c:IsAttribute(ATTRIBUTE_WATER)
 end
 function c100278014.splimit(e,c)

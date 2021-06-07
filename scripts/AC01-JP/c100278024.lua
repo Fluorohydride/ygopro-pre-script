@@ -12,7 +12,7 @@ function c100278024.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100278024.filter(c,e,tp)
-	return c:IsFaceup() and c:IsLevelBelow(3) and c:IsAttribute(ATTRIBUTE_WATER) 
+	return c:IsFaceup() and c:IsLevelBelow(3) and c:IsAttribute(ATTRIBUTE_WATER)
 		and Duel.IsExistingMatchingCard(c100278024.filter2,tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
 end
 function c100278024.filter2(c,code,e,tp)
@@ -32,7 +32,7 @@ function c100278024.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,c100278024.filter2,tp,LOCATION_DECK,0,1,1,nil,tc:GetCode(),e,tp)
-	local sc=sg:GetFirst() 
+	local sc=sg:GetFirst()
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)

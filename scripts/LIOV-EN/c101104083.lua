@@ -26,7 +26,7 @@ function c101104083.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		if ct>=10 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
 		return ct>0
 	end
-	if ct>=10 then 
+	if ct>=10 then
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_ONFIELD)
 	end
 end
