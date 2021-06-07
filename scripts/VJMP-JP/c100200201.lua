@@ -1,5 +1,6 @@
 --アストラル・クリボー
 --Astral Kuriboh
+--Scripted By XyLen & JSY1728
 function c100200201.initial_effect(c)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
