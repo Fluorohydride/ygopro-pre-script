@@ -39,7 +39,7 @@ function c100342036.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100342036.cfilter2(c,tp)
-	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsSummonPlayer(tp)
+	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsSummonPlayer(1-tp)
 end
 function c100342036.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100342036.cfilter2,1,nil,tp)
@@ -59,8 +59,7 @@ end
 function c100342036.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100342036.tgfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,1,nil)
 		and aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_XMATERIAL)
-		and e:GetHandler():IsCanOverlay()
-		and Duel.IsExistingMatchingCard(c100342036.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,e:GetHandler()) end
+		and e:GetHandler():IsCanOverlay() and Duel.IsExistingMatchingCard(c100342036.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
