@@ -85,7 +85,7 @@ function c101106017.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101106017.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetLabelObject()
-	if bc:IsFaceup() and bc:IsRelateToBattle() then
+	if bc:IsFaceup() and bc:IsRelateToBattle() and bc:IsControler(1-tp) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
