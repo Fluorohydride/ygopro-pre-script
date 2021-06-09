@@ -23,7 +23,7 @@ function c101104088.initial_effect(c)
 	--twice attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101104088,1))
-	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
@@ -112,7 +112,7 @@ function c101104088.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,101104088)>0
 		and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and aux.dscon()
 end
-function c101104088.atkfilter(c) 
+function c101104088.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x15f)
 end
 function c101104088.atktg(e,tp,eg,ep,ev,re,r,rp,chk)

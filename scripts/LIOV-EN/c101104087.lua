@@ -35,7 +35,8 @@ end
 function c101104087.check(c,tp)
 	return c and c:IsControler(tp) and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH)
 end
-function c101104087.dstg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101104087.dstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsType(TYPE_SPELL+TYPE_TRAP) end
 	if chk==0 then return (c101104087.check(Duel.GetAttacker(),tp) or c101104087.check(Duel.GetAttackTarget(),tp))
 		and Duel.IsExistingTarget(Card.IsType,tp,0,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

@@ -80,7 +80,7 @@ function c100278033.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		sg=g:SelectSubGroup(tp,aux.gfcheck,2,2,false,Card.IsCode,code1,code2)
 	end
-	local sc=sg:GetFirst() 
+	local sc=sg:GetFirst()
 	while sc do
 		Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(sc)
@@ -107,7 +107,7 @@ function c100278033.matcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function c100278033.matfilter(c)
-	return c:IsCode(44190146) and c:IsFaceup() and c:IsCanOverlay() 
+	return c:IsCode(44190146) and c:IsFaceup() and c:IsCanOverlay()
 end
 function c100278033.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100278033.matfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -119,7 +119,7 @@ function c100278033.matop(e,tp,eg,ep,ev,re,r,rp)
 	if g1:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g2=Duel.SelectMatchingCard(tp,c100278033.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
-		local tc=g2:GetFirst() 
+		local tc=g2:GetFirst()
 		if tc and Duel.Overlay(tc,g1)~=0 then
 			Duel.BreakEffect()
 			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
