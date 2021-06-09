@@ -39,7 +39,7 @@ function c101106017.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
 end
 function c101106017.thfilter(c)
-	return c:IsSetCard(0x270) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x26a) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c101106017.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101106017.thfilter,tp,LOCATION_DECK,0,1,nil) end
