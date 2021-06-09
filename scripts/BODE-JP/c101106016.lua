@@ -48,7 +48,7 @@ function c101106016.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function c101106016.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x270) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x26a) and c:IsAbleToHand()
 end
 function c101106016.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101106016.thfilter(chkc) end
