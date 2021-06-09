@@ -26,7 +26,8 @@ function c101106074.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101106074.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	local ph=Duel.GetCurretnPhase()
+	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c101106074.sumfilter(c)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_WINDBEAST) and c:IsSummonable(true,nil)
