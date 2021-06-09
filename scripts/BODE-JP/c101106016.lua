@@ -18,6 +18,7 @@ function c101106016.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCondition(c101106016.recon)
 	e2:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e2)
@@ -52,6 +53,7 @@ end
 function c101106016.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101106016.thfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101106016.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c101106016.thfilter,tp,LOCATION_REMOVED,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,0,0,0)
@@ -61,8 +63,10 @@ function c101106016.sumfilter(c)
 end
 function c101106016.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) and Duel.IsExistingMatchingCard(c101106016.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101106016,2)) then
+	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND)
+		and Duel.IsExistingMatchingCard(c101106016.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101106016,2)) then
 		Duel.BreakEffect()
+		Duel.ShuffleHand(tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 		local sg=Duel.SelectMatchingCard(tp,c101106016.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 		if sg:GetCount()>0 then
