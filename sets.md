@@ -2,13 +2,13 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **May 21, 2021**: LEGENDARY MONSTERS PACK (VP21-JP) : `100279XXX`
 - **June 12, 2021**: ANIMATION CHRONICLE 2021 (AC01-JP) : `100278XXX`
 - **June 26, 2021**: Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
 - **July 17, 2021**: BURST OF DESTINY (BODE-JP) : `101106XXX`
 
 # Announced
-- **June 25, 2021**: King's Court (KICO-EN) : `100280XXX`
+- **July 9, 2021**: King's Court (KICO-EN) : `100280XXX`
+- **August 7, 2021**: Structure Deck R: Lost Sanctuary (SR12-JP) : `100312XXX`
 - **August 28, 2021**: Deck Build Pack: Grand Creators (DB??-JP) : `100417XXX`
 
 # Archived
@@ -94,6 +94,7 @@
 - Yu-Gi-Oh! OCG Structures Volume 3 promotional card (YO03-JP): `100276XXX`
 - The Valuable Book EX (VX01-JP) : `100277XXX`
 - Number Complete File -Piece of Memories- (NCF1-JP): `100274XXX`
+- LEGENDARY MONSTERS PACK (VP21-JP) : `100279XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
