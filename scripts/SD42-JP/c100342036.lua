@@ -31,7 +31,7 @@ function c100342036.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100342036.cfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) 
+	return c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c100342036.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c100342036.cfilter,1,nil,tp) then
@@ -53,13 +53,13 @@ function c100342036.tgfilter(c)
 		and c:IsCode(27062594) and c:IsAbleToGrave()
 end
 function c100342036.spfilter(c,e,tp)
-	return c:IsSetCard(0x107f,0x7f) and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_LIGHT)
+	return c:IsSetCard(0x7f) and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_LIGHT)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c100342036.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100342036.tgfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,1,nil)
-		and aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_XMATERIAL)
-		and e:GetHandler():IsCanOverlay() and Duel.IsExistingMatchingCard(c100342036.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,e:GetHandler()) end
+		and aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_XMATERIAL) and e:GetHandler():IsCanOverlay()
+		and Duel.IsExistingMatchingCard(c100342036.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
