@@ -68,7 +68,7 @@ function c100342052.atklimit(e,c)
 	return not c:IsSetCard(0x48)
 end
 function c100342052.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x107f,0x7f) and c:GetOriginalAttribute()==ATTRIBUTE_LIGHT and not c:IsCode(100342052)
+	return c:IsFaceup() and c:IsSetCard(0x7f) and c:GetOriginalAttribute()==ATTRIBUTE_LIGHT and not c:IsCode(100342052)
 		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function c100342052.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
