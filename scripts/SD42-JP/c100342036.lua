@@ -1,8 +1,8 @@
 --運命の契約
 --scripted by XyLeN
 function c100342036.initial_effect(c)
-	c:EnableCounterPermit(0x70,LOCATION_SZONE)
-	c:SetCounterLimit(0x70,1)
+	c:EnableCounterPermit(0x15e,LOCATION_SZONE)
+	c:SetCounterLimit(0x15e,1)
 	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
@@ -35,7 +35,7 @@ function c100342036.cfilter(c,tp)
 end
 function c100342036.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c100342036.cfilter,1,nil,tp) then
-		e:GetHandler():AddCounter(0x70,1)
+		e:GetHandler():AddCounter(0x15e,1)
 	end
 end
 function c100342036.cfilter2(c,tp)
@@ -45,8 +45,8 @@ function c100342036.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100342036.cfilter2,1,nil,tp)
 end
 function c100342036.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x70,1,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x70,1,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x15e,1,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,0x15e,1,REASON_COST)
 end
 function c100342036.tgfilter(c)
 	return (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or c:IsFaceup())
