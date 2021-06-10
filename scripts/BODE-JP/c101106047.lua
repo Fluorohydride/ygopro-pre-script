@@ -9,8 +9,8 @@ function c101106047.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(c101106047.regcon)
-	e1:SetOperation(c101106047.regop)
+	e1:SetCondition(c101106047.matcon)
+	e1:SetOperation(c101106047.matop)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -64,10 +64,10 @@ function c101106047.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c101106047.regcon(e,tp,eg,ep,ev,re,r,rp)
+function c101106047.matcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()==1
 end
-function c101106047.regop(e,tp,eg,ep,ev,re,r,rp)
+function c101106047.matop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(101106047,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101106047,3))
 end
 function c101106047.valcheck(e,c)
