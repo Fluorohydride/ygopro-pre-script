@@ -48,8 +48,8 @@ function c101106077.activate(e,tp,eg,ep,ev,re,r,rp)
 		g=g:Select(tp,ft,ft,nil)
 	end
 	local res=Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-	local b1=Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,nil)
-	local b2=Duel.IsExistingMatchingCard(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,nil,nil)
+	local b1=Duel.IsExistingMatchingCard(c101106077.syncsumfilter,tp,LOCATION_EXTRA,0,1,nil)
+	local b2=Duel.IsExistingMatchingCard(c101106077.xyzsumfilter,tp,LOCATION_EXTRA,0,1,nil)
 	if res~=0 and (b1 or b2) then
 		Duel.BreakEffect()
 		local off=1
@@ -77,3 +77,4 @@ function c101106077.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+	
