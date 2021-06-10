@@ -1,4 +1,4 @@
---LL-バード・ストライク 魔
+--LL－バード・ストライク
 --scripted by XyLeN
 function c100278036.initial_effect(c)
 	--Activate
