@@ -1,4 +1,6 @@
+--SRスクラッチ
 --Speedroid Scratch
+--Script by TheOnePharaoh
 function c100278035.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
