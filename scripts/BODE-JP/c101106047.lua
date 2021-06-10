@@ -30,10 +30,10 @@ function c101106047.initial_effect(c)
 	e3:SetTarget(c101106047.thtg)
 	e3:SetOperation(c101106047.thop)
 	c:RegisterEffect(e3)
-	--banish
+	--tograve
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101106047,1))
-	e4:SetCategory(CATEGORY_REMOVE)
+	e4:SetCategory(CATEGORY_TOGRAVE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_BATTLE_START)
 	e4:SetCondition(c101106047.rmcon)
@@ -95,7 +95,7 @@ function c101106047.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101106047.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetLabelObject(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetLabelObject(),1,0,0)
 end
 function c101106047.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
