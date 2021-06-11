@@ -60,11 +60,7 @@ end
 function c101106048.discon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	local turn=Duel.GetTurnPlayer()
-	if turn==tp then
-		return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
-	elseif turn~=tp then
-		return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
-	end
+	return (turn==tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) or turn==1-tp and (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE))
 end
 function c101106048.ctfilter(c)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsSetCard(0x166)
@@ -78,7 +74,7 @@ function c101106048.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return ct>0 and Duel.IsExistingTarget(c101106048.disfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,c101106048.disfilter,tp,0,LOCATION_MZONE,1,ct,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c101106048.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
