@@ -1,4 +1,4 @@
---空母軍賞一しらうお型特務艦
+--空母軍貫－しらうお型特務艦
 --scripted by XyLeN
 function c101106049.initial_effect(c)
 	--xyz summon
@@ -7,7 +7,6 @@ function c101106049.initial_effect(c)
 	--apply the effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101106049,0))
-	e1:SetCategory(CATEGORY_DRAW+CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,101106049)
@@ -40,11 +39,15 @@ function c101106049.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local chk1=c:GetMaterial():FilterCount(Card.IsCode,nil,24639891)>0
 	local chk2=c:GetMaterial():FilterCount(Card.IsCode,nil,101106023)>0
-	if chk==0 then return (chk1 and Duel.IsPlayerCanDraw(tp,1) or Duel.IsExistingMatchingCard(c101106049.thfilter,tp,LOCATION_DECK,0,1,nil) and chk2) end
+	if chk==0 then return chk1 and Duel.IsPlayerCanDraw(tp,1)
+		or chk2 and Duel.IsExistingMatchingCard(c101106049.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	e:SetCategory(0)
 	if chk1 then
+		e:SetCategory(CATEGORY_DRAW)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	end
 	if chk2 then
+		e:SetCategory(e:GetCategory()|(CATEGORY_TOHAND+CATEGORY_SEARCH))
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
 end
@@ -59,6 +62,7 @@ function c101106049.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c101106049.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if g:GetCount()>0 then
+			Duel.BreakEffect()
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
 		end
@@ -71,5 +75,5 @@ function c101106049.indestg(e,c)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsSetCard(0x166)
 end
 function c101106049.atkval(e,c)
-	return c:GetTextDefense()
+	return c:GetBaseDefense()
 end
