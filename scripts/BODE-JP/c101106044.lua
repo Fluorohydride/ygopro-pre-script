@@ -1,4 +1,4 @@
---魔鍵交鬼一トランスフルミネ
+--魔鍵変鬼－トランスフルミネ
 --scripted by XyLeN
 function c101106044.initial_effect(c)
 	--synchro summon
@@ -41,7 +41,7 @@ function c101106044.initial_effect(c)
 	e5:SetDescription(aux.Stringid(101106044,1))
 	e5:SetCategory(CATEGORY_DESTROY)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetCode(EVENT_SUMMON_SUCCESS)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1,101106044+100)
@@ -52,6 +52,24 @@ function c101106044.initial_effect(c)
 	local e6=e5:Clone()
 	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e6)
+end
+function c101106044.matcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()==1
+end
+function c101106044.matop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(101106044,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101106044,2))
+end
+function c101106044.attfilter(c,rc)
+	return c:GetAttribute()>0
+end
+function c101106044.valcheck(e,c)
+	local mg=c:GetMaterial()
+	local fg=mg:Filter(c101106044.attfilter,nil,c)
+	if fg:GetClassCount(Card.GetAttribute)>=2 then
+		e:GetLabelObject():SetLabel(1)
+	else
+		e:GetLabelObject():SetLabel(0)
+	end
 end
 function c101106044.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(101106044)~=0
@@ -69,41 +87,22 @@ function c101106044.setop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,g:GetFirst())
 	end
 end
-function c101106044.matcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()==1
-end
-function c101106044.matop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(101106044,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101106044,2))
-end
-function c101106044.attfilter(c,rc)
-	return c:GetAttribute()>0
-end
-function c101106044.valcheck(e,c)
-	local mg=c:GetMaterial()
-	local fg=mg:Filter(c71159974.attfilter,nil,c)
-	if fg:GetClassCount(Card.GetAttribute)==2 then
-		e:GetLabelObject():SetLabel(1)
-	else
-		e:GetLabelObject():SetLabel(0)
-	end
-end
-function c101106044.cfilter(c,tp,attr)
-	return c:IsAttribute(attr) and c:IsSummonPlayer(1-tp)
+function c101106044.cfilter(c,tp)
+	return c:IsSummonPlayer(1-tp)
+		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_GRAVE,0,1,nil,c:GetAttribute())
 end
 function c101106044.descon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_GRAVE,0,nil)
-	local tc=g:GetFirst() 
-	local attr=0
-	while tc do
-		attr=attr|tc:GetAttribute() 
-		tc=g:GetNext() 
-	end
-	return eg:IsExists(c101106044.cfilter,1,nil,tp,attr)
+	return eg:IsExists(c101106044.cfilter,1,nil,tp)
 end
 function c101106044.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,eg:GetCount(),0,0)
+	local g=eg:Filter(c101106044.cfilter,nil,tp)
+	Duel.SetTargetCard(g)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c101106044.desop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(eg,REASON_EFFECT)
+	local g=eg:Filter(c101106044.cfilter,nil,tp):Filter(Card.IsRelateToEffect,nil,e)
+	if g:GetCount()>0 then
+		Duel.Destroy(g,REASON_EFFECT)
+	end
 end
