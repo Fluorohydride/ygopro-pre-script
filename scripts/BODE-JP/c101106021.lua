@@ -41,14 +41,14 @@ function c101106021.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x165) 
 end
 function c101106021.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,101106021)==0
-		and Duel.IsExistingMatchingCard(c101106021.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c101106021.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101106021.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function c101106021.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp) end
+	if chk==0 then return Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp)
+		and Duel.GetFlagEffect(tp,101106021)==0 end
 end
 function c101106021.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -62,7 +62,8 @@ function c101106021.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,101106021,RESET_PHASE+PHASE_END,0,1)
 end
 function c101106021.spfilter(c,e,tp)
-	return (c:IsLevelBelow(4) and c:IsType(TYPE_NORMAL) or c:IsSetCard(0x165)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsLevelBelow(4) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x165))
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101106021.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101106021.spfilter(chkc,e,tp) end
