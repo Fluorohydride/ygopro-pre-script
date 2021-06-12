@@ -4,24 +4,10 @@ function c101106047.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
-	--mass register
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(c101106047.matcon)
-	e1:SetOperation(c101106047.matop)
-	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_MATERIAL_CHECK)
-	e2:SetValue(c101106047.valcheck)
-	e2:SetLabelObject(e1)
-	c:RegisterEffect(e2)
 	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101106047,0))
-	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_GRAVE_ACTION)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
@@ -64,29 +50,14 @@ function c101106047.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c101106047.matcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()==1
-end
-function c101106047.matop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(101106047,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101106047,3))
-end
-function c101106047.valcheck(e,c)
-	local g=c:GetMaterial()
-	if g:IsExists(Card.IsType,1,nil,TYPE_NORMAL) then
-		e:GetLabelObject():SetLabel(1)
-	else
-		e:GetLabelObject():SetLabel(0)
-	end
-end
 function c101106047.attrchkfilter(c,attr) 
 	return c:IsAttribute(attr) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x165))
 end
 function c101106047.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetAttackTarget()
-	if tc==c then tc=Duel.GetAttacker() end
+	local tc=c:GetBattleTarget()
 	e:SetLabelObject(tc)
-	return tc~=nil and c:GetFlagEffect(101106047)>0
+	return tc~=nil and c:GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_NORMAL)
 		and Duel.IsExistingMatchingCard(c101106047.attrchkfilter,tp,LOCATION_GRAVE,0,1,nil,tc:GetAttribute())
 end
 function c101106047.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -100,6 +71,6 @@ end
 function c101106047.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if tc:IsRelateToBattle() then
-		Duel.SendtoGrave(tc,REASON_EFFECT)
+		Duel.SendtoGrave(tc,REASON_RULE)
 	end
 end
