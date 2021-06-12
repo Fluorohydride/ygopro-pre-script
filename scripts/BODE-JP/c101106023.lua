@@ -25,7 +25,7 @@ function c101106023.initial_effect(c)
 end
 function c101106023.cfilter(c)
 	local oc=c:GetOverlayGroup()
-	return (oc and oc:IsExists(Card.IsCode,1,nil,24639891) and c:IsType(TYPE_XYZ) or c:IsCode(24639891))
+	return c:IsCode(24639891) or c:IsType(TYPE_XYZ) and oc and oc:IsExists(Card.IsCode,1,nil,24639891)
 end
 function c101106023.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101106023.cfilter,tp,LOCATION_MZONE,0,1,nil)
