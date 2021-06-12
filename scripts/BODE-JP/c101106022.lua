@@ -48,7 +48,8 @@ function c101106022.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=e:GetLabelObject()
 		if not tc:IsRelateToEffect(e) then return end
 		if tc:IsCode(24639891) then
-			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(101106022,2)) then
+			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+				and Duel.SelectYesNo(tp,aux.Stringid(101106022,2)) then
 				Duel.BreakEffect()
 				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 			end
