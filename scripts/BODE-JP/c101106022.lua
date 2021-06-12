@@ -15,7 +15,7 @@ function c101106022.initial_effect(c)
 	--change level
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101106022,1))
-	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -33,8 +33,9 @@ function c101106022.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,c101106022.cfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
-	g:KeepAlive()
-	e:SetLabelObject(g)
+	local tc=g:GetFirst()
+	tc:CreateEffectRelation(e)
+	e:SetLabelObject(tc)
 end
 function c101106022.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -44,20 +45,21 @@ end
 function c101106022.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local g=e:GetLabelObject()
-		local tc=g:GetFirst()
-		if tc:GetCode()==24639891 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(101106022,2)) then
+		local tc=e:GetLabelObject()
+		if not tc:IsRelateToEffect(e) then return end
+		if tc:IsCode(24639891) then
+			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(101106022,2)) then
+				Duel.BreakEffect()
+				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+			end
+		else
 			Duel.BreakEffect()
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-		elseif tc:IsAbleToDeck() then
-			Duel.BreakEffect()
-			Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+			Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
 		end
-		g:DeleteGroup()
 	end
 end
 function c101106022.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x166)
+	return c:IsFaceup() and c:IsSetCard(0x166) and c:IsLevelAbove(0)
 end
 function c101106022.lvltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101106022.filter(chkc) end
@@ -71,11 +73,14 @@ end
 function c101106022.lvlop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	local sel=1
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		sel=Duel.SelectOption(tp,aux.Stringid(101106022,3),aux.Stringid(101106022,4))
+	if not tc:IsFaceup() and tc:IsRelateToEffect(e) then return end
+	local sel=0
+	if tc:IsLevel(4) then
+		sel=Duel.SelectOption(tp,aux.Stringid(101106022,4))+1
+	elseif tc:IsLevel(5) then
+		sel=Duel.SelectOption(tp,aux.Stringid(101106022,3))
 	else
-		sel=Duel.SelectOption(tp,aux.Stringid(101106022,3))+1
+		sel=Duel.SelectOption(tp,aux.Stringid(101106022,3),aux.Stringid(101106022,4))
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -88,7 +93,8 @@ function c101106022.lvlop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc:RegisterEffect(e1)
-	if Duel.IsExistingMatchingCard(c101106022.thfilter,tp,LOCATION_DECK,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101106022,5)) then
+	if Duel.IsExistingMatchingCard(c101106022.thfilter,tp,LOCATION_DECK,0,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(101106022,5)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c101106022.thfilter,tp,LOCATION_DECK,0,1,1,nil)
