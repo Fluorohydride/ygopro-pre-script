@@ -60,7 +60,7 @@ function c100278005.atkval(e)
 end
 function c100278005.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentChain()==0
 		and (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
 end
 function c100278005.spfilter(c,e,tp)
