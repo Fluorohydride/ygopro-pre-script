@@ -1,4 +1,4 @@
---ZW-天風精靈翼
+--ZW－天風精霊翼
 --Script by XyLeN
 function c100278025.initial_effect(c)
 	c:SetUniqueOnField(1,0,100278025)
@@ -18,6 +18,7 @@ function c100278025.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100278025,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
@@ -80,24 +81,25 @@ function c100278025.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function c100278025.cfilter(c,tp)
-	return c:IsSummonPlayer(1-tp) and Duel.GetCurrentChain()>0
+	return c:IsSummonPlayer(1-tp)
 end
 function c100278025.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c100278025.cfilter,1,nil,tp)
+	return re and re:IsActivated() and e:GetOwnerPlayer()==1-re:GetOwnerPlayer() and eg:IsExists(c100278025.cfilter,1,nil,tp)
 end
 function c100278025.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local ec=c:GetEquipTarget()
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1600)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e1)
+	ec:RegisterEffect(e1)
 end
 function c100278025.repcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_COST)~=0 and re:IsActivated() and re:IsActiveType(TYPE_XYZ) and re:GetHandler():GetOverlayCount()>=ev-1
 		and e:GetHandler():GetEquipTarget()==re:GetHandler() and e:GetHandler():IsAbleToGraveAsCost() and ep==e:GetOwnerPlayer()
 end
 function c100278025.repop(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.SendtoGrave(e:GetHandler(),POS_FACEUP,REASON_COST)
+	return Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end

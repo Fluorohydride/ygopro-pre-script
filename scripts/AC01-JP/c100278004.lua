@@ -74,7 +74,7 @@ function c100278004.thfilter(c)
 	return c:IsCode(16404809) and c:IsAbleToHand()
 end
 function c100278004.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100278004.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100278004.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,tp,LOCATION_HAND)
 end
@@ -84,7 +84,7 @@ end
 function c100278004.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100278004.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
-	if g:GetCount()>0 and Duel.SendtoHand(g,tp,REASON_EFFECT)>0 then
+	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
 		Duel.ConfirmCards(1-tp,g)
 		if Duel.IsExistingMatchingCard(c100278004.sumfilter,tp,LOCATION_HAND,0,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(100278004,2)) then

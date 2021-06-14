@@ -31,6 +31,7 @@ function c100278031.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DESTROYED)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCondition(c100278031.spcon)
 	e3:SetTarget(c100278031.sptg)
 	e3:SetOperation(c100278031.spop)
@@ -57,8 +58,10 @@ function c100278031.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100278031.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local tc=Duel.SelectMatchingCard(tp,c100278031.desfilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	local g=Duel.SelectMatchingCard(tp,c100278031.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	local tc=g:GetFirst()
 	if tc then
+		Duel.HintSelection(g)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

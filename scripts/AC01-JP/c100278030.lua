@@ -62,8 +62,10 @@ function c100278030.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100278030.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local tc=Duel.SelectMatchingCard(tp,c100278030.desfilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	local g=Duel.SelectMatchingCard(tp,c100278030.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	local tc=g:GetFirst()
 	if not tc then return end
+	Duel.HintSelection(g)
 	local dam=math.floor(tc:GetAttack()/2)
 	if Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.Damage(1-tp,dam,REASON_EFFECT)
