@@ -49,7 +49,7 @@ function c101106023.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(c101106023.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
-function c101106023.filter(c) 
+function c101106023.filter(c)
 	return c:IsCode(24639891) and c:IsAbleToDeck()
 end
 function c101106023.spop2(e,tp,eg,ep,ev,re,r,rp)
@@ -62,7 +62,7 @@ function c101106023.spop2(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local dg=sg:Select(tp,1,#sg,nil)
 			Duel.BreakEffect()
-			local tc=dg:GetFirst() 
+			local tc=dg:GetFirst()
 			while tc do
 				if tc:IsLocation(LOCATION_GRAVE) then
 					Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)

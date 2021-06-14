@@ -8,7 +8,7 @@ function c101106021.initial_effect(c)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetValue(c101106021.matlimit)
 	c:RegisterEffect(e0)
-	local e1=e0:Clone() 
+	local e1=e0:Clone()
 	e1:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 	c:RegisterEffect(e1)
 	--extra summon
@@ -38,7 +38,7 @@ function c101106021.matlimit(e,c)
 	return not c:IsSetCard(0x165)
 end
 function c101106021.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x165) 
+	return c:IsFaceup() and c:IsSetCard(0x165)
 end
 function c101106021.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101106021.cfilter,tp,LOCATION_MZONE,0,1,nil)
