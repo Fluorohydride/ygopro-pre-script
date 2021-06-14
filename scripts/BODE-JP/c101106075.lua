@@ -19,7 +19,7 @@ function c101106075.cfilter2(c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function c101106075.discon(e,tp,eg,ep,ev,re,r,rp)	
-	return tp~=ep and Duel.GetCurrentChain()==0 
+	return tp~=ep and Duel.GetCurrentChain()==0
 		and Duel.IsExistingMatchingCard(c101106075.cfilter1,tp,LOCATION_MZONE,0,1,nil)
 		and not Duel.IsExistingMatchingCard(c101106075.cfilter2,tp,LOCATION_MZONE,0,1,nil)
 end

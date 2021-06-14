@@ -26,7 +26,6 @@ function c100278021.initial_effect(c)
 	c:RegisterEffect(e3)
 	--destroy
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(100278021,1))
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e4:SetCode(EVENT_LEAVE_FIELD_P)
 	e4:SetOperation(c100278021.desop)
@@ -76,6 +75,6 @@ function c100278021.tkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100278021.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsFacedown() then return end
-	local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_MZONE,LOCATION_MZONE,0,nil,100278121)
+	local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,0,nil,100278121)
 	Duel.Destroy(g,REASON_EFFECT)
 end

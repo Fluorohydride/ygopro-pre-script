@@ -16,7 +16,7 @@ function c100278006.initial_effect(c)
 end
 c100278006.spchecks=aux.CreateChecks(Card.IsCode,{100278001,100278002,100278003,100278004,40640057})
 function c100278006.cfilter(c,tp)
-	return c:IsFaceup() and c:IsLevel(5) and Duel.GetMZoneCount(tp,c)>=5
+	return c:IsFaceup() and c:IsLevel(5) and c:IsReleasable() and Duel.GetMZoneCount(tp,c)>=5
 end
 function c100278006.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

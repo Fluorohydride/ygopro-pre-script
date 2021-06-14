@@ -22,7 +22,7 @@ function c100200201.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100200201.cfilter(c)
-	return c:IsSetCard(0x48) and not c:IsPublic()
+	return c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) and not c:IsPublic()
 end
 function c100200201.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100200201.cfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -54,7 +54,7 @@ function c100200201.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetAbsoluteRange(tp,1,0)
 		e2:SetTarget(c100200201.splimit)
-		e2:SetReset(RESET_PHASE+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
 	end
 	Duel.SpecialSummonComplete()

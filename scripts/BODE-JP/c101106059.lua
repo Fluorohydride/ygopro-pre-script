@@ -46,13 +46,14 @@ function c101106059.ottg(e,c)
 	local mi,ma=c:GetTributeRequirement()
 	return mi<=2 and ma>=2
 end
-function c101106059.otop(e,tp,eg,ep,ev,re,r,rp)
+function c101106059.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=Duel.SelectMatchingCard(tp,c101106059.otfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g2=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)
 	Duel.SendtoGrave(g1,REASON_COST)
+	c:SetMaterial(nil)
 end
 function c101106059.drfilter(c)
 	return c:IsRace(RACE_WINDBEAST) and c:IsAbleToDeck() and not c:IsPublic()

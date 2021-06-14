@@ -14,14 +14,14 @@ function c100278035.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100278035.costfilter(c)
-    return c:IsSetCard(0x2016) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x2016) and c:IsAbleToGraveAsCost()
 end
 function c100278035.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100278035.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,c100278035.costfilter,1,1,REASON_COST)
 end
 function c100278035.filter(c)
-    return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100278035.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100278035.filter,tp,LOCATION_DECK,0,1,nil) end

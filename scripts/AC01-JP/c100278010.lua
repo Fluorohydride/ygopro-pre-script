@@ -28,17 +28,17 @@ function c100278010.costfilter(c,e,tp)
 	return c:IsSetCard(0xc008) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingMatchingCard(c100278010.thfilter,tp,LOCATION_GRAVE,0,1,c,e,tp)
 end
+function c100278010.thfilter(c,e,tp)
+	if not (c:IsSetCard(0xc008) and c:IsType(TYPE_MONSTER)) then return false end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	return c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+end
 function c100278010.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100278010.costfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c100278010.costfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-end
-function c100278010.thfilter(c,e,tp)
-	if not (c:IsSetCard(0xc008) and c:IsType(TYPE_MONSTER)) then return false end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c100278010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

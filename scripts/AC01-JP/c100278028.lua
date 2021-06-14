@@ -53,7 +53,6 @@ function c100278028.activate(e,tp,eg,ep,ev,re,r,rp)
 		while lc do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
 			e1:SetValue(lv)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)

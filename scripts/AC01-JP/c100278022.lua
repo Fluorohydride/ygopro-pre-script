@@ -62,6 +62,7 @@ function c100278022.descon(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return false end
 	e:SetLabelObject(tc)
 	return tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() and tc:GetAttack()<Duel.GetLP(tp)
+		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,62499965)
 end
 function c100278022.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()

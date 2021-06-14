@@ -120,7 +120,7 @@ function c100278033.matop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g2=Duel.SelectMatchingCard(tp,c100278033.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 		local tc=g2:GetFirst()
-		if tc and Duel.Overlay(tc,g1)~=0 then
+		if tc and not tc:IsImmuneToEffect(e) and Duel.Overlay(tc,g1)~=0 then
 			Duel.BreakEffect()
 			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		end

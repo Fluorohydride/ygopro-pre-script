@@ -6,7 +6,6 @@ function c100278026.initial_effect(c)
 	e1:SetDescription(aux.Stringid(100278026,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(c100278026.sptg)
 	e1:SetOperation(c100278026.spop)
@@ -26,12 +25,12 @@ function c100278026.spfilter(c,e,tp)
 	return not c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100278026.eqfilter(c)
-	return c:IsSetCard(0x107f) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x107f) and c:IsFaceup()
 end
 function c100278026.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>1
 		and Duel.IsExistingMatchingCard(c100278026.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c100278026.eqfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_MZONE)
@@ -52,8 +51,7 @@ function c100278026.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
-		if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and not c:IsRelateToEffect(e) then return end
-		if c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return end
+		if Duel.GetLocationCount(tp,LOCATION_SZONE)<2 or not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		local sg=Duel.SelectMatchingCard(tp,c100278026.eqfilter,tp,LOCATION_MZONE,0,1,1,tc)
 		local ec=sg:GetFirst()
@@ -122,6 +120,7 @@ end
 function c100278026.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetEquipTarget()
+	if tc:IsImmuneToEffect(e) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
