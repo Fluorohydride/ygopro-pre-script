@@ -49,11 +49,8 @@ function c100312001.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectMatchingCard(tp,c100312001.spcfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function c100312001.cfilter(c)
-	return c:IsFaceup() and c:IsCode(56433456)
-end
 function c100312001.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	local check=Duel.IsExistingMatchingCard(c100312001.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
+	local check=Duel.IsEnvironment(56433456) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,56433456)
 	if check then return e:GetHandler():GetFlagEffect(100312001)<2
 	else return e:GetHandler():GetFlagEffect(100312001)<1 end
 end
