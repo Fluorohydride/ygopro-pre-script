@@ -32,7 +32,7 @@ function c100280001.initial_effect(c)
 end
 c100280001.tgchecks=aux.CreateChecks(Card.IsCode,{25652259,64788463,90876561})
 function c100280001.cfilter(c)
-	return c:IsCode(25652259,64788463,90876561) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
+	return c:IsCode(25652259,64788463,90876561) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()
 end
 function c100280001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100280001.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
