@@ -6,6 +6,7 @@ function c100280005.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,100280005+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100280005.target)
 	e1:SetOperation(c100280005.activate)
 	c:RegisterEffect(e1)
@@ -62,7 +63,7 @@ function c100280005.activate(e,tp,eg,ep,ev,re,r,rp)
 	if c100280005.excon(tp) then
 		local mg2=Duel.GetMatchingGroup(c100280005.fexfilter,tp,LOCATION_DECK,0,nil)
 		if mg2:GetCount()>0 then
-			mg1:Merge(fmg2)
+			mg1:Merge(mg2)
 			exmat=true
 		end
 	end
