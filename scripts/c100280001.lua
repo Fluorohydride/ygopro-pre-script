@@ -30,14 +30,16 @@ function c100280001.initial_effect(c)
 	e3:SetOperation(c100280001.desop)
 	c:RegisterEffect(e3)
 end
+c100280001.tgchecks=aux.CreateChecks(Card.IsCode,{25652259,64788463,90876561})
 function c100280001.cfilter(c)
 	return c:IsCode(25652259,64788463,90876561) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function c100280001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100280001.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,e:GetHandler()) end
+	local g=Duel.GetMatchingGroup(c100280001.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+	if chk==0 then return g:CheckSubGroupEach(c100280001.tgchecks) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100280001.cfilter,tp,LOCATION_HAND+LOCATION_MZONE, 0,1,1,e:GetHandler())
-	Duel.SendtoGrave(g,REASON_COST)
+	local sg=g:SelectSubGroupEach(tp,c100280001.tgchecks,false)
+	Duel.SendtoGrave(sg,REASON_COST)
 end
 function c100280001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
