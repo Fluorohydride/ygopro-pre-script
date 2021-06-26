@@ -18,6 +18,7 @@ function c100280002.initial_effect(c)
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,100280002+100)
 	e2:SetTarget(c100280002.thtg)
@@ -41,7 +42,8 @@ function c100280002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100280002.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local code=e:GetLabel()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -58,7 +60,7 @@ function c100280002.tdfilter(c)
 end
 function c100280002.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100280002.tdfilter(chkc) and chkc~=c end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100280002.tdfilter(chkc) and chkc~=c end
 	if chk==0 then return Duel.IsExistingTarget(c100280002.tdfilter,tp,LOCATION_GRAVE,0,1,c) and c:IsAbleToHand() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c100280002.tdfilter,tp,LOCATION_GRAVE,0,1,1,c)
