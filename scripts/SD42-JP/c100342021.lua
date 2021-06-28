@@ -37,13 +37,13 @@ function c100342021.initial_effect(c)
 	e4:SetOperation(c100342021.tdop)
 	c:RegisterEffect(e4)
 end
-function c100342021.cfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsType(TYPE_XYZ)
+function c100342021.cfilter(c,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsFaceup() and c:IsType(TYPE_XYZ)
 end
 function c100342021.chainop(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if tg and tg:IsExists(c100342021.cfilter,1,nil) and ep==tp then
+	if tg and tg:IsExists(c100342021.cfilter,1,nil,tp) and ep==tp then
 		Duel.SetChainLimit(c100342021.chainlm)
 	end
 end
