@@ -1,6 +1,7 @@
 --Arcana Triumph Joker
 --scripted by XyLeN
 function c100280001.initial_effect(c)
+	aux.AddCodeList(c,25652259,64788463,90876561)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100280001,0))
@@ -36,14 +37,13 @@ function c100280001.cfilter(c)
 end
 function c100280001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100280001.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
-	if chk==0 then return g:CheckSubGroupEach(c100280001.tgchecks) end
+	if chk==0 then return g:CheckSubGroupEach(c100280001.tgchecks,aux.mzctcheck,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local sg=g:SelectSubGroupEach(tp,c100280001.tgchecks,false)
+	local sg=g:SelectSubGroupEach(tp,c100280001.tgchecks,false,aux.mzctcheck,tp)
 	Duel.SendtoGrave(sg,REASON_COST)
 end
 function c100280001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100280001.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -77,7 +77,9 @@ function c100280001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabel(0)
 		return true
 	end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tp,tp,0,0)
+	local type=e:GetLabel()
+	local g=Duel.GetMatchingGroup(c100280001.desfilter,tp,0,LOCATION_ONFIELD,nil,type)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function c100280001.desop(e,tp,eg,ep,ev,re,r,rp)
 	local type=e:GetLabel()
