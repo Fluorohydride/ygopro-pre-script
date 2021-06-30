@@ -1,7 +1,10 @@
---王牌百搭
+--Joker's Wild
+--script by 222DIY
 function c100280007.initial_effect(c)
+	aux.AddCodeList(c,25652259,64788463,90876561)
 	--copy
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100280007,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100280007)
@@ -12,7 +15,7 @@ function c100280007.initial_effect(c)
 	c:RegisterEffect(e1)
 	--tohand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100280007,2))
+	e2:SetDescription(aux.Stringid(100280007,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -28,8 +31,8 @@ function c100280007.cpcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
 end
 function c100280007.cpfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost() --and c:IsCode(100280004,100280006)
-		and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost() and c:CheckActivateEffect(false,true,false)~=nil
+		and aux.IsCodeListed(c,25652259) and aux.IsCodeListed(c,64788463) and aux.IsCodeListed(c,90876561)
 end
 function c100280007.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
@@ -78,6 +81,5 @@ function c100280007.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,c)
 	end
 end
