@@ -1,5 +1,7 @@
---王牌顺子
+--Joker's Straight
+--script by 222DIY
 function c100280004.initial_effect(c)
+	aux.AddCodeList(c,25652259,64788463,90876561)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100280004,0))
@@ -43,24 +45,26 @@ function c100280004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100280004.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=Duel.SelectMatchingCard(tp,c100280004.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if g1:GetCount()>0 and Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g2=Duel.SelectMatchingCard(tp,c100280004.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if g2:GetCount()>0 then
-			Duel.SendtoHand(g2,tp,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g2)
-		  if Duel.IsExistingMatchingCard(Card.IsSummonable,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,true,nil) and Duel.SelectYesNo(tp,aux.Stringid(100280004,1)) then
-			Duel.BreakEffect()
-			Duel.ShuffleHand(tp)
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-			local sg=Duel.SelectMatchingCard(tp,Card.IsSummonable,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,true,nil)
-			if sg:GetCount()>0 then
-				Duel.Summon(tp,sg:GetFirst(),true,nil)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g1=Duel.SelectMatchingCard(tp,c100280004.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+		if g1:GetCount()>0 and Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)~=0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local g2=Duel.SelectMatchingCard(tp,c100280004.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+			if g2:GetCount()>0 then
+				Duel.SendtoHand(g2,tp,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,g2)
+				if Duel.IsExistingMatchingCard(Card.IsSummonable,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,true,nil)
+					and Duel.SelectYesNo(tp,aux.Stringid(100280004,1)) then
+					Duel.BreakEffect()
+					Duel.ShuffleHand(tp)
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
+					local sg=Duel.SelectMatchingCard(tp,Card.IsSummonable,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,true,nil)
+					if sg:GetCount()>0 then
+						Duel.Summon(tp,sg:GetFirst(),true,nil)
+					end
+				end
 			end
-		  end
 		end
 	end
 	local e1=Effect.CreateEffect(c)
@@ -92,15 +96,5 @@ function c100280004.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,c)
 	end
 end
-
-
-
-
-
-
-
-
-
