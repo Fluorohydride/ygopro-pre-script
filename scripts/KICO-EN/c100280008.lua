@@ -1,5 +1,7 @@
---牌之宫廷
+--Court of Cards
+--script by 222DIY
 function c100280008.initial_effect(c)
+	aux.AddCodeList(c,25652259,64788463,90876561)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -80,24 +82,3 @@ function c100280008.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
