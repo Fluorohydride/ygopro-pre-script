@@ -1,4 +1,5 @@
---磁力感应
+--Magnet Induction
+--script by 222DIY
 function c100280009.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,7 +31,7 @@ function c100280009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100280009.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-    if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
         --change damage
         local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
