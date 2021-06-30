@@ -1,5 +1,7 @@
---大王小王
+--Imperial Bower
+--script by 222DIY
 function c100280003.initial_effect(c)
+	aux.AddCodeList(c,25652259,64788463,90876561)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100280003,0))
@@ -13,12 +15,12 @@ function c100280003.initial_effect(c)
 	e1:SetOperation(c100280003.spop)
 	c:RegisterEffect(e1)
 end
+function c100280003.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
+end
 function c100280003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
-end
-function c100280003.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function c100280003.thfilter(c)
 	return c:IsAbleToHand() and c:IsCode(64788463,25652259,90876561)
@@ -30,14 +32,16 @@ function c100280003.opfilter(c,e,tp)
 	return c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCode(64788463,25652259,90876561)
 end
 function c100280003.opcheck(g,e,tp)
-	return g:GetClassCount(Card.GetCode)==#g and (g:FilterCount(c100280003.thfilter,nil)==2 or g:FilterCount(c100280003.spfilter,nil,e,tp)==2)
+	return g:GetClassCount(Card.GetCode)==#g
+		and (g:FilterCount(c100280003.thfilter,nil)==2 or g:FilterCount(c100280003.spfilter,nil,e,tp)==2)
 end
 function c100280003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetMZoneCount(tp,e:GetHandler())
 	if chk==0 then
 		local g1=Duel.GetMatchingGroup(c100280003.thfilter,tp,LOCATION_DECK,0,nil)
 		local g2=Duel.GetMatchingGroup(c100280003.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-		return (g1:GetClassCount(Card.GetCode)>=2 or (not Duel.IsPlayerAffectedByEffect(tp,59822133) and ft>1 and g2:GetClassCount(Card.GetCode)>=2)) end
+		return g1:GetClassCount(Card.GetCode)>=2
+			or not Duel.IsPlayerAffectedByEffect(tp,59822133) and ft>1 and g2:GetClassCount(Card.GetCode)>=2 end
 end
 function c100280003.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -66,12 +70,5 @@ function c100280003.spop(e,tp,eg,ep,ev,re,r,rp)
 		else 
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
-	else end
+	end
 end
-
-
-
-
-
-
-
