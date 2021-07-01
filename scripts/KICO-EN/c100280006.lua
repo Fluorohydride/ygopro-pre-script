@@ -1,0 +1,62 @@
+--Thunderspeed Summon
+--script by 222DIY
+function c100280006.initial_effect(c)
+	aux.AddCodeList(c,25652259,64788463,90876561)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,100280006+EFFECT_COUNT_CODE_OATH)
+	e1:SetCondition(c100280006.condition)
+	e1:SetTarget(c100280006.target)
+	e1:SetOperation(c100280006.operation)
+	c:RegisterEffect(e1)
+end
+function c100280006.condition(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
+	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
+end
+function c100280006.checkfilter(c)
+	return c:IsFaceup() and c:IsCode(64788463,25652259,90876561)
+end
+function c100280006.sumfilter(c)
+	return c:IsSummonable(true,nil) and c:IsLevel(10)
+end
+function c100280006.thfilter(c)
+	return c:GetTextAttack()==-2 and c:IsAbleToHand() and c:IsType(TYPE_MONSTER) and c:IsLevel(10) and not c:IsAttribute(ATTRIBUTE_DARK)
+end
+function c100280006.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=Duel.GetMatchingGroup(c100280006.checkfilter,tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100280006.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil)
+		or (g:GetClassCount(Card.GetCode)==3 and Duel.IsExistingMatchingCard(c100280006.thfilter,tp,LOCATION_DECK,0,1,nil)) end
+end
+function c100280006.operation(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(c100280006.checkfilter,tp,LOCATION_MZONE,0,nil)
+	local check1=g:GetClassCount(Card.GetCode)==3
+	if check1 and Duel.IsExistingMatchingCard(c100280006.thfilter,tp,LOCATION_DECK,0,1,nil)
+		and (not Duel.IsExistingMatchingCard(c100280006.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil)
+			or Duel.SelectYesNo(tp,aux.Stringid(100280006,1))) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g=Duel.SelectMatchingCard(tp,c100280006.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+		if Duel.IsExistingMatchingCard(c100280006.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil)
+			and Duel.SelectYesNo(tp,aux.Stringid(100280006,2)) then
+			Duel.BreakEffect()
+			Duel.ShuffleHand(tp)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
+			local sg=Duel.SelectMatchingCard(tp,c100280006.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+			if sg:GetCount()>0 then
+				Duel.Summon(tp,sg:GetFirst(),true,nil)
+			end
+		end
+	elseif Duel.IsExistingMatchingCard(c100280006.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
+		local g=Duel.SelectMatchingCard(tp,c100280006.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+		local tc=g:GetFirst()
+		if tc then
+			Duel.Summon(tp,tc,true,nil)
+		end
+	end
+end
