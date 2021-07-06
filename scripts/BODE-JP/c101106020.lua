@@ -45,11 +45,11 @@ function c101106020.spop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=math.min(#cg,(Duel.GetLocationCount(tp,LOCATION_MZONE)))
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 		local g=Duel.GetMatchingGroup(c101106020.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
-		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101106020,1)) then
+		if g:GetCount()>0 and ct>0 and Duel.SelectYesNo(tp,aux.Stringid(101106020,1)) then
 			Duel.BreakEffect()
 			if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=g:Select(tp,ct,ct,nil)
+			local sg=g:Select(tp,1,ct,nil)
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
