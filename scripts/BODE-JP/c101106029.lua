@@ -53,6 +53,6 @@ function c101106029.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101106029.efilter(e,re,rp)
-	local rc=re:GetHandler()
-	return rc and e:GetHandler():IsRace(rc)
+	local race=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_RACE)
+	return re:IsActiveType(TYPE_MONSTER) and e:GetHandler():IsRace(race)
 end
