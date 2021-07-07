@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **June 26, 2021**: Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
 - **July 9, 2021**: King's Court (KICO-EN) : `100280XXX`
 - **July 17, 2021**: BURST OF DESTINY (BODE-JP) : `101106XXX`
 - **August 7, 2021**: Structure Deck R: Lost Sanctuary (SR12-JP) : `100312XXX`
@@ -126,6 +125,7 @@
 - Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
 - Structure Deck: Ice Barrier of the Frozen Prison (SD40-JP) : `100340XXX`
 - Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
+- Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
