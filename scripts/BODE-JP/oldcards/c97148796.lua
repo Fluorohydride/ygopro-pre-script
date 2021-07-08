@@ -8,7 +8,7 @@ function c97148796.initial_effect(c)
 	e1:SetValue(c97148796.splimit)
 	c:RegisterEffect(e1)
 	--spsummon
-	local e2=aux.AddDrytronSpSummonEffect(c,97148796,c97148796.extraop) 
+	local e2=aux.AddDrytronSpSummonEffect(c,c97148796.extraop) 
 	e2:SetDescription(aux.Stringid(97148796,0)) 
 	e2:SetCountLimit(1,97148796)
 end
