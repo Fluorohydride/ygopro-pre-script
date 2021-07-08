@@ -1,16 +1,16 @@
---竜輝巧－バンα
-function c97148796.initial_effect(c)
+--竜輝巧－エルγ
+function c60037599.initial_effect(c)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(c97148796.splimit)
+	e1:SetValue(c60037599.splimit)
 	c:RegisterEffect(e1)
 	--spsummon
-	local e2=aux.AddDrytronSpSummonEffect(c,c97148796.extraop) 
-	e2:SetDescription(aux.Stringid(97148796,0)) 
-	e2:SetCountLimit(1,97148796)
+	local e2=aux.AddDrytronSpSummonEffect(c,c60037599.extraop) 
+	e2:SetDescription(aux.Stringid(60037599,0)) 
+	e2:SetCountLimit(1,60037599)
 end
 if Auxiliary.AddDrytronSpSummonEffect==nil then
 	function Auxiliary.AddDrytronSpSummonEffect(c,func) 
@@ -89,19 +89,18 @@ function Auxiliary.DrytronSpSummonOperation(func)
 		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then func(e,tp) end
 	end
 end
-function c97148796.splimit(e,se,sp,st)
+function c60037599.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(0x154)
 end
-function c97148796.thfilter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+function c60037599.rbfilter(c,e,tp)
+	return c:IsSetCard(0x154) and c:IsAttack(2000) and not c:IsCode(60037599) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c97148796.extraop(e,tp)
-	local g=Duel.GetMatchingGroup(c97148796.thfilter,tp,LOCATION_DECK,0,nil)
-	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(97148796,1)) then
+function c60037599.extraop(e,tp)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c60037599.rbfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
+	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60037599,1)) then
 		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
-		Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg)
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

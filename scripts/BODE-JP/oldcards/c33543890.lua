@@ -1,16 +1,16 @@
---竜輝巧－バンα
-function c97148796.initial_effect(c)
+--竜輝巧－ラスβ
+function c33543890.initial_effect(c)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(c97148796.splimit)
+	e1:SetValue(c33543890.splimit)
 	c:RegisterEffect(e1)
 	--spsummon
-	local e2=aux.AddDrytronSpSummonEffect(c,c97148796.extraop) 
-	e2:SetDescription(aux.Stringid(97148796,0)) 
-	e2:SetCountLimit(1,97148796)
+	local e2=aux.AddDrytronSpSummonEffect(c,c33543890.extraop) 
+	e2:SetDescription(aux.Stringid(33543890,0)) 
+	e2:SetCountLimit(1,33543890)
 end
 if Auxiliary.AddDrytronSpSummonEffect==nil then
 	function Auxiliary.AddDrytronSpSummonEffect(c,func) 
@@ -89,19 +89,18 @@ function Auxiliary.DrytronSpSummonOperation(func)
 		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then func(e,tp) end
 	end
 end
-function c97148796.splimit(e,se,sp,st)
+function c33543890.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(0x154)
 end
-function c97148796.thfilter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+function c33543890.tgfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x154) and c:IsType(TYPE_MONSTER)
 end
-function c97148796.extraop(e,tp)
-	local g=Duel.GetMatchingGroup(c97148796.thfilter,tp,LOCATION_DECK,0,nil)
-	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(97148796,1)) then
+function c33543890.extraop(e,tp)
+	local g=Duel.GetMatchingGroup(c33543890.tgfilter,tp,LOCATION_REMOVED,0,nil)
+	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(33543890,1)) then
 		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg=g:Select(tp,1,1,nil)
-		Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg)
+		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_RETURN)
 	end
 end
