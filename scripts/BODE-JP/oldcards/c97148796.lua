@@ -13,7 +13,7 @@ function c97148796.initial_effect(c)
 	e2:SetCountLimit(1,97148796)
 end
 if Auxiliary.AddDrytronSpSummonEffect==nil then
-	function Auxiliary.AddDrytronSpSummonEffect(c,activityid,func) 
+	function Auxiliary.AddDrytronSpSummonEffect(c,func) 
 		local e1=Effect.CreateEffect(c)
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SEARCH)
 		e1:SetType(EFFECT_TYPE_IGNITION)
@@ -22,7 +22,7 @@ if Auxiliary.AddDrytronSpSummonEffect==nil then
 		e1:SetTarget(Auxiliary.DrytronSpSummonTarget)
 		e1:SetOperation(Auxiliary.DrytronSpSummonOperation(func))
 		c:RegisterEffect(e1)
-		Duel.AddCustomActivityCounter(activityid,ACTIVITY_SPSUMMON,Auxiliary.DrytronCounterFilter)
+		Duel.AddCustomActivityCounter(97148796,ACTIVITY_SPSUMMON,Auxiliary.DrytronCounterFilter)
 		return e1
 	end
 end
