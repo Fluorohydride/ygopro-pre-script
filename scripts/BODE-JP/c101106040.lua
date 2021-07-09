@@ -1,3 +1,4 @@
+--天極輝艦－熊斗竜巧
 --Ursatron, the Celestial Polar Illuminaship
 --scripted by XyLeN
 function c101106040.initial_effect(c)
@@ -13,11 +14,11 @@ function c101106040.initial_effect(c)
 	e1:SetDescription(aux.Stringid(101106040,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(c101106040.thcon)
+	e1:SetCondition(c101106040.thcon1)
 	e1:SetTarget(c101106040.thtg1)
 	e1:SetOperation(c101106040.thop1)
 	c:RegisterEffect(e1)
@@ -33,11 +34,11 @@ function c101106040.initial_effect(c)
 	e2:SetOperation(c101106040.thop2)
 	c:RegisterEffect(e2)
 end
-function c101106040.cfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSummonPlayer(tp)
+function c101106040.cfilter1(c,tp)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsControler(tp)
 end
-function c101106040.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c101106040.cfilter,1,nil,tp)
+function c101106040.thcon1(e,tp,eg,ep,ev,re,r,rp)
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c101106040.cfilter1,1,nil,tp)
 end
 function c101106040.thfilter1(c)
 	return c:IsSetCard(0x163,0x154) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
@@ -58,7 +59,7 @@ function c101106040.thfilter2(c)
 	return c101106040.thfilter1(c) and c:IsFaceup()
 end
 function c101106040.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101106040.thfilter2(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101106040.thfilter2(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101106040.thfilter2,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c101106040.thfilter2,tp,LOCATION_REMOVED,0,1,1,nil)
