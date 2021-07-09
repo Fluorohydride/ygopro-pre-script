@@ -7,9 +7,10 @@ function c100280007.initial_effect(c)
 	e1:SetDescription(aux.Stringid(100280007,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_START)
 	e1:SetCountLimit(1,100280007)
-	e1:SetCost(c100280007.cpcost)
 	e1:SetCondition(c100280007.cpcon)
+	e1:SetCost(c100280007.cpcost)
 	e1:SetTarget(c100280007.cptg)
 	e1:SetOperation(c100280007.cpop)
 	c:RegisterEffect(e1)
@@ -79,7 +80,8 @@ end
 function c100280007.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA)
+		and c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end
 end
