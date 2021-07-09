@@ -31,7 +31,7 @@ function c100280008.initial_effect(c)
 	e3:SetTarget(c100280008.drtg)
 	e3:SetOperation(c100280008.drop)
 	c:RegisterEffect(e3)
-end 
+end
 function c100280008.confilter(c)
 	return c:IsFaceup() and c:IsCode(64788463,25652259,90876561)
 end

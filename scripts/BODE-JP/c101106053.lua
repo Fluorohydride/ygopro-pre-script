@@ -24,7 +24,7 @@ function c101106053.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101106053.thfilter(c,check)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() 
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 		and ((check and c:IsRace(RACE_WYRM)) or c:IsSetCard(0x26d))
 end
 function c101106053.checkfilter(c)

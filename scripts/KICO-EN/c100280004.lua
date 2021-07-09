@@ -34,7 +34,7 @@ end
 function c100280004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_HAND,0,1,e:GetHandler())
-		and Duel.IsExistingMatchingCard(c100280004.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) 
+		and Duel.IsExistingMatchingCard(c100280004.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 		and Duel.IsExistingMatchingCard(c100280004.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)

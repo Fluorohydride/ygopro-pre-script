@@ -60,14 +60,14 @@ end
 function c101106006.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then 
+	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c101106006.descon(e,tp,eg,ep,ev,re,r,rp)
 	local a,d=Duel.GetBattleMonster(tp)
-	return a and d and a:IsFaceup() and a:IsRelateToBattle() and a:IsRace(RACE_WYRM) 
-		and d:IsFaceup() and d:IsRelateToBattle() and d:IsSummonLocation(LOCATION_EXTRA) 
+	return a and d and a:IsFaceup() and a:IsRelateToBattle() and a:IsRace(RACE_WYRM)
+		and d:IsFaceup() and d:IsRelateToBattle() and d:IsSummonLocation(LOCATION_EXTRA)
 end
 function c101106006.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -79,8 +79,8 @@ function c101106006.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local a,d=Duel.GetBattleMonster(tp)
 	if c:IsFaceup() and c:IsRelateToEffect(e) and d and d:IsRelateToBattle() then
-	   local g=Group.FromCards(d,c)
-	   Duel.Destroy(g,REASON_EFFECT)
+		local g=Group.FromCards(d,c)
+		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
 function c101106006.remcon(e,tp,eg,ep,ev,re,r,rp)

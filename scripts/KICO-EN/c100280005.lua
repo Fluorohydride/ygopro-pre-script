@@ -13,7 +13,7 @@ function c100280005.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100280005.exconfilter(c)
-	return c:IsCode(25652259,64788463,90876561) and c:IsFaceup() 
+	return c:IsCode(25652259,64788463,90876561) and c:IsFaceup()
 end
 function c100280005.excon(tp)
 	return Duel.IsExistingMatchingCard(c100280005.exconfilter,tp,LOCATION_MZONE,0,1,nil)

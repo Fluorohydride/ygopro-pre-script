@@ -32,20 +32,20 @@ end
 function c100280009.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-        --change damage
-        local e1=Effect.CreateEffect(c)
+		--change damage
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetReset(RESET_PHASE+PHASE_END)
-        e1:SetTarget(c100280009.indtg)
+		e1:SetTarget(c100280009.indtg)
 		e1:SetValue(1)
-        Duel.RegisterEffect(e1,tp)
-        local e2=e1:Clone()
-        e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-        e2:SetValue(aux.indoval)
-        Duel.RegisterEffect(e2,tp)
-    end
+		Duel.RegisterEffect(e1,tp)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e2:SetValue(aux.indoval)
+		Duel.RegisterEffect(e2,tp)
+	end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100280009.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
@@ -54,5 +54,5 @@ function c100280009.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100280009.indtg(e,c)
-    return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x2066) or c:IsSetCard(0xe9)) and c:IsFaceup()
+	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x2066) or c:IsSetCard(0xe9)) and c:IsFaceup()
 end

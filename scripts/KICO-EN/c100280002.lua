@@ -27,7 +27,7 @@ function c100280002.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100280002.cfilter(c)
-	return c:IsCode(25652259,64788463,90876561) and c:IsAbleToGraveAsCost() 
+	return c:IsCode(25652259,64788463,90876561) and c:IsAbleToGraveAsCost()
 end
 function c100280002.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100280002.cfilter,tp,LOCATION_DECK,0,1,nil) end
