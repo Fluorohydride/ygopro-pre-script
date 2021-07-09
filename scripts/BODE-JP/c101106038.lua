@@ -1,4 +1,6 @@
 --赫灼竜マスカレイド
+--
+--Script by 222DIY
 function c101106038.initial_effect(c)
 	--fusion summon
 	c:EnableReviveLimit()
@@ -24,7 +26,7 @@ function c101106038.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(101106038,1))
+	e3:SetDescription(aux.Stringid(101106038,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -38,15 +40,15 @@ end
 function c101106038.matfilter(c)
 	return c:IsFusionAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
 end
+function c101106038.costcon(e)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+end
 function c101106038.costchk(e,te_or_c,tp)
 	local ct=Duel.GetFlagEffect(tp,101106038)
 	return Duel.CheckLPCost(tp,ct*600)
 end
 function c101106038.costop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.PayLPCost(tp,600)
-end
-function c101106038.costcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c101106038.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
@@ -72,6 +74,3 @@ function c101106038.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-
-
-
