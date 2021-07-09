@@ -1,4 +1,6 @@
---相剑师-莫邪
+--相剣師－莫邪
+--
+--Script by 222DIY
 function c101106003.initial_effect(c)
 	--token
 	local e1=Effect.CreateEffect(c)
@@ -27,7 +29,7 @@ function c101106003.initial_effect(c)
 	e3:SetOperation(c101106003.drop)
 	c:RegisterEffect(e3)
 end
-function c101106003.costfilter1(c)
+function c101106003.costfilter(c)
 	return (c:IsSetCard(0x26d) or (c:IsRace(RACE_WYRM) and c:IsType(TYPE_MONSTER))) and not c:IsPublic()
 end
 function c101106003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -39,13 +41,13 @@ function c101106003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101106003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,101106103,0,TYPES_TOKEN_MONSTER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,101106103,0,TYPES_TOKEN_MONSTER+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c101106003.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,101106103,0,TYPES_TOKEN_MONSTER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,101106103,0,TYPES_TOKEN_MONSTER+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER) then
 		local token=Duel.CreateToken(tp,101106103)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -76,4 +78,3 @@ function c101106003.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-

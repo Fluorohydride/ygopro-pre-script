@@ -1,4 +1,6 @@
---相剑大师-赤霄
+--相剣大師－赤霄
+--
+--Script by 222DIY
 function c101106041.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsRace,RACE_WYRM),1)
@@ -33,7 +35,7 @@ function c101106041.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c101106041.filter(c)
-	return c:IsSetCard(0x26d) and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return c:IsSetCard(0x26d) and (c:IsAbleToHand() or c:IsAbleToRemove())
 end
 function c101106041.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101106041.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -83,6 +85,3 @@ function c101106041.disop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e3)
 	end
 end
-
-
-

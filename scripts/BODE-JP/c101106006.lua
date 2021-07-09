@@ -1,4 +1,6 @@
---相剑瑞兽-纯钧
+--相剣瑞獣－純鈞
+--
+--Script by 222DIY
 function c101106006.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -42,13 +44,13 @@ function c101106006.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
-function c101106006.rfilter(c,e,tp)
+function c101106006.rfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and Duel.GetMZoneCount(tp,c)>0
 end
 function c101106006.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c101106006.rfilter,1,nil,e,tp) end
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c101106006.rfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,c101106006.rfilter,1,1,nil,e,tp)
+	local g=Duel.SelectReleaseGroup(tp,c101106006.rfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c101106006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -63,26 +65,20 @@ function c101106006.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101106006.descon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local d=a:GetBattleTarget()
-	if a:IsControler(1-tp) then a,d=d,a end
+	local a,d=Duel.GetBattleMonster(tp)
 	return a and d and a:IsFaceup() and a:IsRelateToBattle() and a:IsRace(RACE_WYRM) 
-		and d:IsFaceup() and d:IsRelateToBattle() and a:GetControler()~=d:GetControler() and d:IsSummonLocation(LOCATION_EXTRA) 
+		and d:IsFaceup() and d:IsRelateToBattle() and d:IsSummonLocation(LOCATION_EXTRA) 
 end
 function c101106006.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local a=Duel.GetAttacker()
-	local d=a:GetBattleTarget()
-	if a:IsControler(1-tp) then a,d=d,a end
+	local a,d=Duel.GetBattleMonster(tp)
 	local g=Group.FromCards(d,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
 end
 function c101106006.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local a=Duel.GetAttacker()
-	local d=a:GetBattleTarget()
-	if a:IsControler(1-tp) then a,d=d,a end
-	if c:IsFaceup() and c:IsRelateToEffect(e) and a:IsRelateToBattle() and a:IsRace(RACE_WYRM) and d:IsSummonLocation(LOCATION_EXTRA) and d:IsFaceup() and d:IsRelateToBattle() and a:GetControler()~=d:GetControler() then
+	local a,d=Duel.GetBattleMonster(tp)
+	if c:IsFaceup() and c:IsRelateToEffect(e) and d and d:IsRelateToBattle() then
 	   local g=Group.FromCards(d,c)
 	   Duel.Destroy(g,REASON_EFFECT)
 	end
@@ -121,15 +117,3 @@ function c101106006.remop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
-
-
-
-
-
-
-
-
-
-
-
-

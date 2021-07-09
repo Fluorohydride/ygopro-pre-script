@@ -1,4 +1,6 @@
---相剑军师-龙渊
+--相剣軍師－龍淵
+--
+--Script by 222DIY
 function c101106005.initial_effect(c)
 	--special summon (self)
 	local e1=Effect.CreateEffect(c)
@@ -13,6 +15,7 @@ function c101106005.initial_effect(c)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101106005,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
@@ -39,10 +42,10 @@ function c101106005.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if ft>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,101106103,0,TYPES_TOKEN_MONSTER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
+		if ft>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,101106103,0,TYPES_TOKEN_MONSTER+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
 			and Duel.SelectYesNo(tp,aux.Stringid(101106005,2)) then
 				Duel.BreakEffect()
-				local token=Duel.CreateToken(tp,101106103)
+				local token=Duel.CreateToken(tp,101106105)
 				Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_FIELD)
@@ -73,7 +76,3 @@ function c101106005.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
-
-
-
-
