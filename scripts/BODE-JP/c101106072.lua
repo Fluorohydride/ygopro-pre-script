@@ -1,4 +1,6 @@
---瑞相剑究
+--瑞相剣究
+--
+--Script by 222DIY
 function c101106072.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -38,10 +40,8 @@ function c101106072.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local g=Duel.GetMatchingGroup(c101106072.filter,tp,LOCATION_GRAVE,0,nil)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and g:GetCount()>0 then
-		local rnum=5
-		if g:GetCount()<5 then rnum=g:GetCount() end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local sg=g:Select(tp,1,rnum,nil)
+		local sg=g:Select(tp,1,5,nil)
 		local rc=Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -60,7 +60,7 @@ end
 function c101106072.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,101106103,0,TYPES_TOKEN_MONSTER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER) then
-		local token=Duel.CreateToken(tp,101106103)
+		local token=Duel.CreateToken(tp,101106172)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)

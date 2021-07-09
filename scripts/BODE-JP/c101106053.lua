@@ -1,7 +1,10 @@
---龙相剑现
+--龍相剣現
+--
+--Script by 222DIY
 function c101106053.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101106053,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -11,7 +14,7 @@ function c101106053.initial_effect(c)
 	c:RegisterEffect(e1)
 	--level
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101106053,0))
+	e2:SetDescription(aux.Stringid(101106053,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_REMOVE)
@@ -58,9 +61,9 @@ function c101106053.lvop(e,tp,eg,ep,ev,re,r,rp)
 		local sel=0
 		local lvl=1
 		if tc:IsLevel(1) then
-			sel=Duel.SelectOption(tp,aux.Stringid(101106053,1))
+			sel=Duel.SelectOption(tp,aux.Stringid(101106053,2))
 		else
-			sel=Duel.SelectOption(tp,aux.Stringid(101106053,1),aux.Stringid(101106053,2))
+			sel=Duel.SelectOption(tp,aux.Stringid(101106053,2),aux.Stringid(101106053,3))
 		end
 		if sel==1 then
 			lvl=-1

@@ -1,4 +1,6 @@
---相剑暗转
+--相剣暗転
+--
+--Script by 222DIY
 function c101106073.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -32,7 +34,6 @@ function c101106073.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g1=Duel.SelectTarget(tp,c101106073.filter,tp,LOCATION_MZONE,0,1,1,nil)
-	e:SetLabelObject(g1:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,2,2,nil)
 	g1:Merge(g2)
@@ -52,7 +53,7 @@ end
 function c101106073.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,101106103,0,TYPES_TOKEN_MONSTER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER) then
-		local token=Duel.CreateToken(tp,101106103)
+		local token=Duel.CreateToken(tp,101106173)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -69,19 +70,3 @@ end
 function c101106073.splimit(e,c)
 	return not c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_EXTRA)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
