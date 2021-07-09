@@ -37,7 +37,7 @@ function c100280008.confilter(c)
 end
 function c100280008.spcon(e,tp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g==0 or (g:GetCount()>0 and g:FilterCount(c100280008.confilter,nil)==g:GetCount())
+	return #g==0 or (#g>0 and g:FilterCount(c100280008.confilter,nil)==#g)
 end
 function c100280008.spfilter(c,e,tp)
 	return c:IsCode(64788463,25652259,90876561) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

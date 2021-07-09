@@ -7,6 +7,7 @@ function c100280006.initial_effect(c)
 	e1:SetCategory(CATEGORY_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_START)
 	e1:SetCountLimit(1,100280006+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c100280006.condition)
 	e1:SetTarget(c100280006.target)
@@ -34,9 +35,9 @@ end
 function c100280006.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100280006.checkfilter,tp,LOCATION_MZONE,0,nil)
 	local check1=g:GetClassCount(Card.GetCode)==3
+	local check2=Duel.IsExistingMatchingCard(c100280006.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil)
 	if check1 and Duel.IsExistingMatchingCard(c100280006.thfilter,tp,LOCATION_DECK,0,1,nil)
-		and (not Duel.IsExistingMatchingCard(c100280006.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil)
-			or Duel.SelectYesNo(tp,aux.Stringid(100280006,1))) then
+		and (not check2 or Duel.SelectYesNo(tp,aux.Stringid(100280006,1))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c100280006.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
@@ -47,11 +48,9 @@ function c100280006.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ShuffleHand(tp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 			local sg=Duel.SelectMatchingCard(tp,c100280006.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
-			if sg:GetCount()>0 then
-				Duel.Summon(tp,sg:GetFirst(),true,nil)
-			end
+			Duel.Summon(tp,sg:GetFirst(),true,nil)
 		end
-	elseif Duel.IsExistingMatchingCard(c100280006.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) then
+	elseif check2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 		local g=Duel.SelectMatchingCard(tp,c100280006.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 		local tc=g:GetFirst()

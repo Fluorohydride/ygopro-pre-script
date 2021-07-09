@@ -21,7 +21,7 @@ function c100280009.cfilter2(c,code)
 	return c:IsFaceup() and c:IsCode(code)
 end
 function c100280009.spfilter(c,e,tp)
-	return c:IsSetCard(0x2066) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x2066) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not Duel.IsExistingMatchingCard(c100280009.cfilter2,tp,LOCATION_ONFIELD,0,1,nil,c:GetCode())
 end
 function c100280009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
