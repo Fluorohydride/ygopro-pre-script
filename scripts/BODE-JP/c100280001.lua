@@ -38,7 +38,7 @@ function c100280001.spcon(e,c)
 		tc=g:GetNext()
 	end
 	zone=bit.band(zone,0x1f)
-	return zone and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return zone and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function c100280001.spval(e,c) 
 	local tp=c:GetControler() 
@@ -51,15 +51,15 @@ function c100280001.spval(e,c)
 		tc=g:GetNext()
 	end
 	zone=bit.band(zone,0x1f)
-	if zone==0 then return end
 	return 0,zone
 end
 function c100280001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReleasable() end
+	Duel.Release(c,REASON_COST)
 end
 function c100280001.spfilter(c,e,tp)
-	return (c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON) or c:IsRace(RACE_MACHINE)) 
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON+RACE_MACHINE)
 		and not c:IsCode(100280001) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100280001.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
