@@ -15,7 +15,7 @@ function c101106056.cfilter(c,code)
 	return c:IsCode(code) and (c:IsFaceup() or not c:IsOnField())
 end
 function c101106056.thfilter(c,tp)
-	return c:IsSetCard(0x26c) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x26c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(c101106056.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function c101106056.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
