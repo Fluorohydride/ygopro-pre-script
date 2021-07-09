@@ -1,12 +1,11 @@
 --Rokket Caliber
 --scripted by XyLeN
 function c100280001.initial_effect(c)
-	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,100280001+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c100280001.spcon) 
