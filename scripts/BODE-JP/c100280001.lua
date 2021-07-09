@@ -1,15 +1,16 @@
 --Rokket Caliber
 --scripted by XyLeN
 function c100280001.initial_effect(c)
-	--spsummon
+	c:EnableReviveLimit()
+	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100280001,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,100280001)
-	e1:SetTarget(c100280001.sptg)
-	e1:SetOperation(c100280001.spop)
+	e1:SetCountLimit(1,100280001+EFFECT_COUNT_CODE_OATH)
+	e1:SetCondition(c100280001.spcon) 
+	e1:SetValue(c100280001.spval)
 	c:RegisterEffect(e1)
 	--spsummon 2
 	local e2=Effect.CreateEffect(c)
@@ -26,7 +27,9 @@ end
 function c100280001.linkedfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_LINK)
 end
-function c100280001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100280001.spcon(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler() 
 	local g=Duel.GetMatchingGroup(c100280001.linkedfilter,tp,LOCATION_MZONE,0,nil)
 	if g:GetCount()<=0 then return false end
 	local zone=0
@@ -36,25 +39,21 @@ function c100280001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		tc=g:GetNext()
 	end
 	zone=bit.band(zone,0x1f)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
-		and :IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	return zone and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
-function c100280001.spop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		local g=Duel.GetMatchingGroup(c100280001.linkedfilter,tp,LOCATION_MZONE,0,nil)
-		if g:GetCount()<=0 then return end
-		local zone=0
-		local tc=g:GetFirst()
-		while tc do
-			zone=bit.bor(zone,tc:GetLinkedZone(tp))
-			tc=g:GetNext()
-		end
-		zone=bit.band(zone,0x1f)
-		if zone==0 then return end
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
+function c100280001.spval(e,c) 
+	local tp=c:GetControler() 
+	local g=Duel.GetMatchingGroup(c100280001.linkedfilter,tp,LOCATION_MZONE,0,nil)
+	if g:GetCount()<=0 then return end
+	local zone=0
+	local tc=g:GetFirst()
+	while tc do
+		zone=bit.bor(zone,tc:GetLinkedZone(tp))
+		tc=g:GetNext()
 	end
+	zone=bit.band(zone,0x1f)
+	if zone==0 then return end
+	return 0,zone
 end
 function c100280001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
