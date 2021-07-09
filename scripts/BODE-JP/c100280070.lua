@@ -50,13 +50,12 @@ function c100280070.ddcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100280070.ddop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
-	while rc do
-		--forcing to double damage
+	if rc then
+		--double damage
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(100280070)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 		rc:RegisterEffect(e1)
-		rc=eg:GetNext()
 	end
 end
