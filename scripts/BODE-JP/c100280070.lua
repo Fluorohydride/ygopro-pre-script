@@ -49,7 +49,7 @@ function c100280070.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsCode(62279055)
 end
 function c100280070.ddop(e,tp,eg,ep,ev,re,r,rp)
-	local rc=eg:GetFirst()
+	--becomes doubled
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
