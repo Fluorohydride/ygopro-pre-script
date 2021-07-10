@@ -36,6 +36,7 @@ function c101106039.initial_effect(c)
 	e3:SetOperation(c101106039.regop)
 	c:RegisterEffect(e3)
 end
+c101106039.material_setcode=0xc008
 function c101106039.matfilter(c)
 	return c:IsFusionSetCard(0x8) and c:IsLevelAbove(6)
 end
