@@ -20,7 +20,7 @@ function c101106045.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_TRIGGER)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(0,LOCATION_MZONE)
+	e2:SetTargetRange(0,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED)
 	e2:SetValue(1)
 	e2:SetTarget(c101106045.acttg)
 	c:RegisterEffect(e2)
@@ -69,7 +69,7 @@ function c101106045.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function c101106045.cfilter(c,rtype) 
-	return c:IsFaceup() and c:IsSetCard(0x150) and bit.band(c:GetOriginalType(),rtype)
+	return c:IsFaceup() and c:IsSetCard(0x150) and c:GetOriginalType()&rtype>0
 end
 function c101106045.acttg(e,c)
 	local rtype=bit.band(c:GetType(),TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK)
