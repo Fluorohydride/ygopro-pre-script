@@ -32,7 +32,7 @@ function c101106030.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local fid=c:GetFieldID()
-	c:RegisterFlagEffect(101106030,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+	c:RegisterFlagEffect(101106030,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,EFFECT_FLAG_CLIENT_HINT,1,fid,66)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_PUBLIC)
@@ -59,7 +59,7 @@ function c101106030.indtg(e,c)
 	return c:IsFacedown()
 end
 function c101106030.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 		and not re:GetHandler():IsStatus(STATUS_ACT_FROM_HAND)
 end
 function c101106030.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
