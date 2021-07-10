@@ -32,7 +32,7 @@ end
 function c100280010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetTurnPlayer()==tp then
 		if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c100280010.tdfilter(chkc) end
-		if chk==0 then return Duel.IsExistingTarget(c100280010.tdfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) 
+		if chk==0 then return Duel.IsExistingTarget(c100280010.tdfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp)
 			and Duel.IsPlayerCanDraw(tp,1) end
 		e:SetCategory(CATEGORY_DRAW+CATEGORY_TODECK)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -56,7 +56,7 @@ function c100280010.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetFirstTarget()
 		if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK) then
 			Duel.Draw(tp,1,REASON_EFFECT)
-		end 
+		end
 	else
 		local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 		local rg=tg:Filter(Card.IsRelateToEffect,nil,e)

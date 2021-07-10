@@ -22,13 +22,13 @@ function c101106066.initial_effect(c)
 	e3:SetCode(16471775)
 	c:RegisterEffect(e3)
 end
-function c101106066.deckconfilter(c) 
-	return c:IsCode(97148796,27693363) and c:IsFaceup() 
+function c101106066.deckconfilter(c)
+	return c:IsCode(97148796,27693363) and c:IsFaceup()
 end
 function c101106066.deckcon(tp)
 	return Duel.IsExistingMatchingCard(c101106066.deckconfilter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c101106066.cfilter(c) 
+function c101106066.cfilter(c)
 	return c:IsCode(89264428,58793369) and c:IsAbleToRemove()
 end
 function c101106066.fselect(g,e,tp)

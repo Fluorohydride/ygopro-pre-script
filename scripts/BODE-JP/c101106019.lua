@@ -28,8 +28,8 @@ function c101106019.initial_effect(c)
 	e2:SetOperation(c101106019.spop)
 	c:RegisterEffect(e2)
 end
-function c101106019.cfilter1(c) 
-	return c:IsRace(RACE_REPTILE) 
+function c101106019.cfilter1(c)
+	return c:IsRace(RACE_REPTILE)
 end
 function c101106019.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101106019.cfilter1,tp,LOCATION_GRAVE,0,1,nil)

@@ -20,7 +20,7 @@ function c101106020.initial_effect(c)
 	e2:SetValue(c101106020.ntval)
 	c:RegisterEffect(e2)
 end
-function c101106020.cfilter(c) 
+function c101106020.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_REPTILE) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function c101106020.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -32,7 +32,7 @@ function c101106020.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
-function c101106020.cgfilter(c) 
+function c101106020.cgfilter(c)
 	return c:IsFaceup() and c:IsAttack(0)
 end
 function c101106020.spfilter(c,e,tp)
