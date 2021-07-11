@@ -72,7 +72,7 @@ function c101106039.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabel(Duel.GetTurnCount())
 	e1:SetCondition(c101106039.spcon)
 	e1:SetOperation(c101106039.spop)
-	if Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if Duel.GetCurrentPhase()<=PHASE_STANDBY then
 		e1:SetReset(RESET_PHASE+PHASE_STANDBY,2)
 	else
 		e1:SetReset(RESET_PHASE+PHASE_STANDBY)
