@@ -17,12 +17,11 @@ function c101106045.initial_effect(c)
 	--actlimit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_TRIGGER)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(0,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED)
-	e2:SetValue(1)
-	e2:SetTarget(c101106045.acttg)
+	e2:SetTargetRange(0,1)
+	e2:SetValue(c101106045.actlimit)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
@@ -71,9 +70,10 @@ end
 function c101106045.cfilter(c,rtype) 
 	return c:IsFaceup() and c:IsSetCard(0x150) and c:GetOriginalType()&rtype>0
 end
-function c101106045.acttg(e,c)
-	local rtype=bit.band(c:GetType(),TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK)
-	return Duel.IsExistingMatchingCard(c101106045.cfilter,e:GetHandlerPlayer(),LOCATION_SZONE,0,1,nil,rtype)
+function c101106045.actlimit(e,re,rp)
+	local tp=e:GetHandlerPlayer()
+	local rtype=bit.band(re:GetHandler():GetType(),TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK)
+	return re:IsActiveType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(c101106045.cfilter,tp,LOCATION_SZONE,0,1,nil,rtype)
 end
 function c101106045.desfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x150) and Duel.GetMZoneCount(tp,c)>0
