@@ -16,6 +16,7 @@ function c101106028.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(c101106028.hspcon)
+	e2:SetTarget(c101106028.hsptg)
 	e2:SetOperation(c101106028.hspop)
 	c:RegisterEffect(e2)
 	--negate
@@ -48,19 +49,32 @@ end
 function c101106028.hspfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
+function c101106028.hspcheck(g)
+	Duel.SetSelectedCard(g)
+	return g:CheckWithSumGreater(Card.GetLevel,12)
+end
 function c101106028.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return false end
 	local g=Duel.GetMatchingGroup(c101106028.hspfilter,tp,LOCATION_GRAVE,0,c)
-	return g:CheckWithSumGreater(Card.GetLevel,12)
+	return g:CheckSubGroup(c101106028.hspcheck,1,#g)
 end
-function c101106028.hspop(e,tp,eg,ep,ev,re,r,rp,c)
+function c101106028.hsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local g=Duel.GetMatchingGroup(c101106028.hspfilter,tp,LOCATION_GRAVE,0,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local mg=g:SelectWithSumGreater(tp,Card.GetLevel,12)
-	Duel.Remove(mg,POS_FACEUP,REASON_COST)
+	local sg=g:SelectSubGroup(tp,c101106028.hspcheck,true,1,#g)
+	if sg then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
+	else return false end
+end
+function c101106028.hspop(e,tp,eg,ep,ev,re,r,rp,c)
+	local sg=e:GetLabelObject()
+	Duel.Remove(sg,POS_FACEUP,REASON_COST)
+	sg:DeleteGroup()
 end
 function c101106028.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -84,30 +98,22 @@ function c101106028.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
 function c101106028.spfilter(c,e,tp)
-	return c:IsSetCard(0x36) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(1)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x36) and c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101106028.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101106028.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 end
+function c101106028.spcheck(g)
+	return g:GetSum(Card.GetLevel)<=12
+end
 function c101106028.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=math.min((Duel.GetLocationCount(tp,LOCATION_MZONE)),3)
-	local lv=12
 	local tg=Duel.GetMatchingGroup(c101106028.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp)
-	if ft<=0 then return end
+	if ft<=0 or #tg==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	local g=Group.CreateGroup()
-	while tg:GetCount()>0 and ft>0 and lv>0 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=tg:Select(tp,1,1,nil)
-		local tc=sg:GetFirst()
-		g:Merge(sg)
-		ft=ft-1
-		lv=lv-tc:GetLevel()
-		tg:Remove(Card.IsLevelAbove,nil,lv+1)
-		tg:RemoveCard(tc)
-	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=tg:SelectSubGroup(tp,c101106028.spcheck,false,1,ft)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end
