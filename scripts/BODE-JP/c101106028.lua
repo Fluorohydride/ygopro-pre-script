@@ -22,7 +22,7 @@ function c101106028.initial_effect(c)
 	--negate
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101106028,0))
-	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
+	e3:SetCategory(CATEGORY_NEGATE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
