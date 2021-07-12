@@ -27,31 +27,23 @@ end
 function c101106001.linkedfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_LINK)
 end
+function c101106001.checkzone(tp)
+	local zone=0
+	local g=Duel.GetMatchingGroup(c101106001.linkedfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	for tc in aux.Next(g) do
+		zone=bit.bor(zone,tc:GetLinkedZone(tp))
+	end
+	return bit.band(zone,0x1f)
+end
 function c101106001.spcon(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler() 
-	local g=Duel.GetMatchingGroup(c101106001.linkedfilter,tp,LOCATION_MZONE,0,nil)
-	if g:GetCount()<=0 then return false end
-	local zone=0
-	local tc=g:GetFirst() 
-	while tc do
-		zone=bit.bor(zone,tc:GetLinkedZone(tp))
-		tc=g:GetNext()
-	end
-	zone=bit.band(zone,0x1f)
-	return zone and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local tp=c:GetControler()
+	local zone=c101106001.checkzone(tp)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
-function c101106001.spval(e,c) 
-	local tp=c:GetControler() 
-	local g=Duel.GetMatchingGroup(c101106001.linkedfilter,tp,LOCATION_MZONE,0,nil)
-	if g:GetCount()<=0 then return end
-	local zone=0
-	local tc=g:GetFirst()
-	while tc do
-		zone=bit.bor(zone,tc:GetLinkedZone(tp))
-		tc=g:GetNext()
-	end
-	zone=bit.band(zone,0x1f)
+function c101106001.spval(e,c)
+	local tp=c:GetControler()
+	local zone=c101106001.checkzone(tp)
 	return 0,zone
 end
 function c101106001.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
