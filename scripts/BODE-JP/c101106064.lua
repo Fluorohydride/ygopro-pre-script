@@ -73,7 +73,8 @@ end
 function c101106064.checkfilter(c)
 	local att=c:GetAttribute()
 	local race=c:GetRace()
-	return c:IsFaceup() and bit.band(c:GetType(),0x81)==0x81 and Duel.IsExistingMatchingCard(c101106064.tgfilter,tp,LOCATION_DECK,0,1,nil,att,race)
+	return c:IsFaceup() and bit.band(c:GetType(),0x81)==0x81
+		and Duel.IsExistingMatchingCard(c101106064.tgfilter,tp,LOCATION_DECK,0,1,nil,att,race)
 end
 function c101106064.tgfilter(c,att,race)
 	return bit.band(c:GetType(),0x81)==0x81 and (c:IsAttribute(att) or c:IsRace(race)) and c:IsAbleToGrave()
@@ -97,9 +98,3 @@ function c101106064.tgop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
-
-
-
-
-

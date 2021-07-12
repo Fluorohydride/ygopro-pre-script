@@ -20,6 +20,7 @@ function c101106037.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e2:SetCondition(c101106037.rscon)
 	e2:SetCost(c101106037.rscost)
 	e2:SetTarget(c101106037.rstg)
@@ -29,8 +30,8 @@ function c101106037.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101106037,0))
 	e3:SetCategory(CATEGORY_DISABLE)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_RELEASE)
 	e3:SetCondition(c101106037.negcon)
 	e3:SetTarget(c101106037.negtg)
@@ -58,8 +59,6 @@ function c101106037.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.SelectMatchingCard(tp,c101106037.thfilter,tp,LOCATION_DECK,0,1,1,nil,g1:GetFirst())
 	if g2:GetCount()>0 and Duel.SendtoHand(g2,nil,REASON_EFFECT)~=0 then
 		Duel.ConfirmCards(1-tp,g2)
-		Duel.ShuffleDeck(tp)
-		Duel.BreakEffect()
 		Duel.SendtoDeck(g1,nil,2,REASON_EFFECT)
 	end
 end
@@ -139,5 +138,3 @@ function c101106037.negop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
-

@@ -45,8 +45,8 @@ function c101106051.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c101106051.gcheck(g)
-	if #g==1 then return true 
-	else return g:CheckSubGroupEach(aux.CreateChecks(Card.IsSetCard,{0x153,0x152})) end
+	if #g==1 then return true end
+	return aux.gfcheck(g,Card.IsSetCard,0x153,0x152)
 end
 function c101106051.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101106051.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
@@ -66,7 +66,8 @@ function c101106051.costfilter(c,tp)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function c101106051.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(c101106051.costfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_MZONE,0,1,nil,tp) end
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
+		and Duel.IsExistingMatchingCard(c101106051.costfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101106051.costfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
