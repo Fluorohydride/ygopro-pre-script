@@ -44,7 +44,7 @@ function c100312052.cfilter(c)
 	return c:IsCode(56433456) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) 
 end
 function c100312052.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b=Duel.IsExistingMatchingCard(c100312052.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
+	local b=Duel.IsExistingMatchingCard(c100312052.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100312052.tgfilter,tp,LOCATION_DECK,0,1,nil)
 		or b and Duel.IsExistingMatchingCard(c100312052.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
@@ -52,7 +52,7 @@ function c100312052.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100312052.operation(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.IsExistingMatchingCard(c100312052.tgfilter,tp,LOCATION_DECK,0,1,nil)
-	local b=Duel.IsExistingMatchingCard(c100312052.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
+	local b=Duel.IsExistingMatchingCard(c100312052.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
 	if b and Duel.IsExistingMatchingCard(c100312052.thfilter,tp,LOCATION_DECK,0,1,nil) and (not a or Duel.SelectYesNo(tp,aux.Stringid(100312052,2))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c100312052.thfilter,tp,LOCATION_DECK,0,1,1,nil)
