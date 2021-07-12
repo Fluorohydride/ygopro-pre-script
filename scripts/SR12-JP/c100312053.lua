@@ -5,6 +5,7 @@ function c100312053.initial_effect(c)
 	aux.AddCodeList(c,56433456)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCountLimit(1,100312053)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -32,6 +33,13 @@ function c100312053.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(c100312053.actfilter,tp,LOCATION_DECK,0,1,nil,tp)
 	local b2=Duel.IsExistingMatchingCard(c100312053.thfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return b1 or b2 end
+end
+function c100312053.recfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x44,SET_HYPERION)
+end
+function c100312053.activate(e,tp,eg,ep,ev,re,r,rp)
+	local b1=Duel.IsExistingMatchingCard(c100312053.actfilter,tp,LOCATION_DECK,0,1,nil,tp)
+	local b2=Duel.IsExistingMatchingCard(c100312053.thfilter,tp,LOCATION_DECK,0,1,nil)
 	local off=1
 	local ops,opval={},{}
 	if b1 then
@@ -46,20 +54,7 @@ function c100312053.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local op=Duel.SelectOption(tp,table.unpack(ops))+1
 	local sel=opval[op]
-	e:SetLabel(sel)
-	if sel==0 then
-		e:SetCategory(0)
-	else
-		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	end
-end
-function c100312053.recfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x44)
-end
-function c100312053.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sel=e:GetLabel() 
-	local res=false
+	local resolve=false
 	if sel==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 		local g=Duel.SelectMatchingCard(tp,c100312053.actfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
@@ -77,19 +72,19 @@ function c100312053.activate(e,tp,eg,ep,ev,re,r,rp)
 			local cost=te:GetCost()
 			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
 			Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
+			resolve=true
 		end
-		res=true
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c100312053.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if g:GetCount()>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
+			resolve=true
 		end
-		res=true
 	end
 	local ct=Duel.GetMatchingGroupCount(c100312053.recfilter,tp,LOCATION_MZONE,0,nil)
-	if res and ct>0 and Duel.SelectYesNo(tp,aux.Stringid(100312053,2)) then
+	if resolve and ct>0 and Duel.SelectYesNo(tp,aux.Stringid(100312053,2)) then
 		Duel.BreakEffect()
 		Duel.Recover(tp,ct*500,REASON_EFFECT)
 	end
