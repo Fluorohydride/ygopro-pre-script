@@ -53,18 +53,28 @@ function c101106028.hspcheck(g)
 	Duel.SetSelectedCard(g)
 	return g:CheckWithSumGreater(Card.GetLevel,12)
 end
+function c101106028.hspgcheck(g)
+	if g:GetSum(Card.GetLevel)<=12 then return true end
+	Duel.SetSelectedCard(g)
+	return g:CheckWithSumGreater(Card.GetLevel,12)
+end
 function c101106028.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return false end
 	local g=Duel.GetMatchingGroup(c101106028.hspfilter,tp,LOCATION_GRAVE,0,c)
-	return g:CheckSubGroup(c101106028.hspcheck,1,#g)
+	aux.GCheckAdditional=c101106028.hspgcheck
+	local res=g:CheckSubGroup(c101106028.hspcheck,1,#g)
+	aux.GCheckAdditional=nil
+	return res
 end
 function c101106028.hsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local g=Duel.GetMatchingGroup(c101106028.hspfilter,tp,LOCATION_GRAVE,0,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	aux.GCheckAdditional=c101106028.hspgcheck
 	local sg=g:SelectSubGroup(tp,c101106028.hspcheck,true,1,#g)
+	aux.GCheckAdditional=nil
 	if sg then
 		sg:KeepAlive()
 		e:SetLabelObject(sg)
