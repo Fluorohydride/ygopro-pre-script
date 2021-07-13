@@ -41,8 +41,9 @@ end
 function c100200205.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		local res=Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) 
-		if res then
+		local res=false
+		if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
+			res=true
 			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(aux.Stringid(100200205,2))
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_PLAYER_TARGET)
