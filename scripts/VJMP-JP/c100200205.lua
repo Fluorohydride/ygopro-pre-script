@@ -52,6 +52,7 @@ function c100200205.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetAbsoluteRange(tp,1,0)
+			e1:SetTarget(c100200205.splimit)
 			c:RegisterEffect(e1,true)
 		end
 		Duel.SpecialSummonComplete()
@@ -62,16 +63,17 @@ function c100200205.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function c100200205.splimit(e,c)
+	return not c:IsAttribute(ATTRIBUTE_DARK)
+end
 function c100200205.lkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
---currently this line has a error
 function c100200205.lkfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsLinkSummonable(c) 
+	return c:IsRace(RACE_DRAGON) and c:IsLinkSummonable(nil,c)
 end
 function c100200205.lktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsStatus(STATUS_CHAINING)
-		and Duel.IsExistingMatchingCard(c100200205.lkfilter,tp,LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100200205.lkfilter,tp,LOCATION_EXTRA,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100200205.lkop(e,tp,eg,ep,ev,re,r,rp)
@@ -81,6 +83,6 @@ function c100200205.lkop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
-		Duel.LinkSummon(tp,sg:GetFirst(),c)
+		Duel.LinkSummon(tp,sg:GetFirst(),nil,c)
 	end
 end
