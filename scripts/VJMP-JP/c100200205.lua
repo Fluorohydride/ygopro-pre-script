@@ -69,17 +69,17 @@ end
 function c100200205.lkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
-function c100200205.lkfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsLinkSummonable(nil,c)
+function c100200205.lkfilter(c,lc)
+	return c:IsRace(RACE_DRAGON) and c:IsLinkSummonable(nil,lc)
 end
 function c100200205.lktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100200205.lkfilter,tp,LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100200205.lkfilter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100200205.lkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsControler(1-tp) or not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(c100200205.lkfilter,tp,LOCATION_EXTRA,0,nil)
+	local g=Duel.GetMatchingGroup(c100200205.lkfilter,tp,LOCATION_EXTRA,0,nil,c)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
