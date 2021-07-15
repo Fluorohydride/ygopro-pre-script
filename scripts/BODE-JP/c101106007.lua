@@ -1,7 +1,9 @@
---白之圣女 艾克莉西娅
+--白の聖女エクレシア
+--
+--scripted by KillerDJ
 function c101106007.initial_effect(c)
 	aux.AddCodeList(c,68468459)
-	--special summon
+	--special summon self
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -10,7 +12,7 @@ function c101106007.initial_effect(c)
 	e1:SetCountLimit(1,101106007+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c101106007.sspcon)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--special summon other monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101106007,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,7 +26,7 @@ function c101106007.initial_effect(c)
 	e2:SetTarget(c101106007.sptg)
 	e2:SetOperation(c101106007.spop)
 	c:RegisterEffect(e2)
-	--to hand
+	--grave to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101106007,1))
 	e3:SetCategory(CATEGORY_TOHAND)
