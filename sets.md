@@ -5,9 +5,9 @@
 - **July 9, 2021**: King's Court (KICO-EN) : `100280XXX`
 - **July 17, 2021**: BURST OF DESTINY (BODE-JP) : `101106XXX`
 - **August 7, 2021**: Structure Deck R: Lost Sanctuary (SR12-JP) : `100312XXX`
+- **August 28, 2021**: Deck Build Pack: Grand Creators (DBGC-JP) : `100417XXX`
 
 # Announced
-- **August 28, 2021**: Deck Build Pack: Grand Creators (DB??-JP) : `100417XXX`
 
 # Archived
 ## Other packs
