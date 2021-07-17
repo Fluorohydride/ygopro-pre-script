@@ -1,4 +1,4 @@
---P.U.N.K.Mme.スパイダー
+--Jo－P.U.N.K.Mme.スパイダー
 --
 --scripted by XyLeN
 function c100417003.initial_effect(c)
