@@ -1,4 +1,4 @@
---覚府の執行者 プルート
+--冥府の執行者 プルート
 --
 --scripted by XyLeN
 function c100312040.initial_effect(c)
