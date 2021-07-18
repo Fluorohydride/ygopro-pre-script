@@ -1,4 +1,4 @@
---魔鍵關争
+--魔鍵闘争
 --scripted by XyLeN
 function c101106062.initial_effect(c)
 	--Activate
