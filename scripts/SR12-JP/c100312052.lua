@@ -74,7 +74,6 @@ end
 function c100312052.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100312052.costfilter,1,nil) end
 	local rg=Duel.SelectReleaseGroup(tp,c100312052.costfilter,1,1,nil)
-	aux.UseExtraReleaseCount(rg,tp)
 	Duel.Release(rg,REASON_COST)
 end
 function c100312052.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
