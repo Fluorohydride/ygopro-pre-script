@@ -54,7 +54,7 @@ end
 function c101106039.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g1=Duel.SelectMatchingCard(tp,c101106039.desfilter1,tp,LOCATION_ONFIELD,0,1,1,nil)
-	if not g1 then return end
+	if #g1==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g2=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,g1)
 	g1:Merge(g2)
