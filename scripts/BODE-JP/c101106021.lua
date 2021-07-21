@@ -1,4 +1,4 @@
---大魔鍵一マフテアル
+--大魔鍵－マフテアル
 --scripted by XyLeN
 function c101106021.initial_effect(c)
 	--synchro and xyz limit
