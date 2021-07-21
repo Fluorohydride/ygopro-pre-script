@@ -46,7 +46,7 @@ function c101106071.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101106071.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101106071.spfilter(c,e,tp)
-	return c:IsRace(RACE_DRAGON+RACE_MACHINE+RACE_CYBERSE) and c:IsAttribute(ATTRIBUTE_DARK) 
+	return c:IsRace(RACE_DRAGON+RACE_MACHINE+RACE_CYBERSE) and c:IsAttribute(ATTRIBUTE_DARK)
 		and not c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101106071.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

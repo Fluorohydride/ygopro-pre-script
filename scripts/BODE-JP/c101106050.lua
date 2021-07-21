@@ -84,7 +84,7 @@ function c101106050.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(g,REASON_EFFECT)
 end
 function c101106050.rmfilter(c,e,tp,check)
-	return c:IsFaceup() and c:IsAttackAbove(3000) and c:IsAttribute(ATTRIBUTE_DARK) 
+	return c:IsFaceup() and c:IsAttackAbove(3000) and c:IsAttribute(ATTRIBUTE_DARK)
 		and (check or Duel.IsExistingMatchingCard(c101106050.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c))
 end
 function c101106050.spfilter(c,e,tp,tc)

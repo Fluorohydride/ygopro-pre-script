@@ -37,7 +37,7 @@ function c101106045.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101106045.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c101106045.eqfilter(c,ec)
 	return c:IsSetCard(0x150) and not c:IsForbidden()
@@ -68,7 +68,7 @@ end
 function c101106045.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-function c101106045.cfilter(c,rtype) 
+function c101106045.cfilter(c,rtype)
 	return c:IsFaceup() and c:IsSetCard(0x150) and c:GetOriginalType()&rtype>0
 end
 function c101106045.actlimit(e,re,rp)

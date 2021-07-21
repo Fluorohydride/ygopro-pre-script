@@ -29,7 +29,7 @@ function c101106018.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101106018.tdfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and not c:IsExtraDeckMonster() and c:IsSetCard(0xc008)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xc008)
 		and (not c:IsLocation(LOCATION_REMOVED) or c:IsFaceup())
 		and (not c:IsLocation(LOCATION_DECK) or Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>1)
 end
@@ -39,16 +39,26 @@ function c101106018.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c101106018.tdop(e,tp,eg,ep,ev,re,r,rp)
+	local loc=LOCATION_GRAVE+LOCATION_REMOVED
+	if not Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101106018.tdfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,tp)
+		or Duel.IsExistingMatchingCard(c101106018.tdfilter,tp,LOCATION_DECK,0,1,nil,tp)
+			and Duel.SelectYesNo(tp,aux.Stringid(101106018,3)) then
+		loc=loc+LOCATION_DECK
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101106018,2))
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101106018.tdfilter),tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101106018.tdfilter),tp,loc,0,1,1,nil,tp)
 	local tc=g:GetFirst()
 	if tc then
 		if not tc:IsLocation(LOCATION_DECK) then
 			Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
 		end
-		Duel.ShuffleDeck(tp)
-		Duel.MoveSequence(tc,0)
-		Duel.ConfirmDecktop(tp,1)
+		if loc&LOCATION_DECK>0 then
+			Duel.ShuffleDeck(tp)
+		end
+		if tc:IsLocation(LOCATION_DECK) then
+			Duel.MoveSequence(tc,0)
+			Duel.ConfirmDecktop(tp,1)
+		end
 	end
 end
 function c101106018.cfilter(c)
