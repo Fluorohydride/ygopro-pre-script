@@ -55,7 +55,7 @@ function c101106059.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g2=Duel.SelectMatchingCard(tp,c101106059.otfilter2,tp,0,LOCATION_ONFIELD,1,1,nil,e)
 	g1:Merge(g2)
-	Duel.SendtoGrave(g1,REASON_COST)
+	Duel.SendtoGrave(g1,REASON_EFFECT)
 	c:SetMaterial(nil)
 end
 function c101106059.drfilter(c)
