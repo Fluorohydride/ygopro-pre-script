@@ -35,7 +35,7 @@ function c101106032.initial_effect(c)
 end
 if Auxiliary.IsTypeInText==nil then
 	function Auxiliary.IsTypeInText(c,type)
-		return c.hastext_type and type&c.hastext_type==type
+		return c.has_text_type and type&c.has_text_type==type
 	end
 end
 function c101106032.thfilter(c)
