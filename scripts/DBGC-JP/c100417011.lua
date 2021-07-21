@@ -2,7 +2,7 @@
 --
 --Script by REIKAI
 function c100417011.initial_effect(c)
-   --Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +12,7 @@ function c100417011.initial_effect(c)
 	e1:SetCountLimit(1,100417011+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100417011.target)
 	e1:SetOperation(c100417011.activate)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 end
 function c100417011.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and aux.disfilter1(chkc) end

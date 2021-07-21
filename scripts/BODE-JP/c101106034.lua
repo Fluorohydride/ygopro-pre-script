@@ -42,7 +42,7 @@ function c101106034.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101106034.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
 		and Duel.GetFieldGroupCount(tp,LOCATION_FZONE,LOCATION_FZONE)==2 then
 			Duel.BreakEffect()
 			local e1=Effect.CreateEffect(c)
@@ -65,8 +65,3 @@ function c101106034.con2(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetTurnPlayer()==1-tp
 end
-
-
-
-
-

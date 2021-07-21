@@ -96,8 +96,8 @@ end
 function c100417001.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
-function c100417001.syncfilter(c) 
-	return c:IsSetCard(0x26f) and c:IsSynchroSummonable(nil) 
+function c100417001.syncfilter(c)
+	return c:IsSetCard(0x26f) and c:IsSynchroSummonable(nil)
 end
 function c100417001.sctarg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100417001.syncfilter,tp,LOCATION_EXTRA,0,1,nil) end

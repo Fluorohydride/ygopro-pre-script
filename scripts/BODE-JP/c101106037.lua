@@ -2,7 +2,7 @@
 --
 --Script by 222DIY-KillerDJ
 function c101106037.initial_effect(c)
-	c:EnableReviveLimit()  
+	c:EnableReviveLimit()
 	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101106037,0))

@@ -12,7 +12,7 @@ function c100417005.initial_effect(c)
 	e0:SetCost(c100417005.spcost)
 	e0:SetTarget(c100417005.sptg)
 	e0:SetOperation(c100417005.spop)
-	c:RegisterEffect(e0) 
+	c:RegisterEffect(e0)
 	--Special Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100417005,1))

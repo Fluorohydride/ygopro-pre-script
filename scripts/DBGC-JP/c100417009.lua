@@ -18,7 +18,7 @@ function c100417009.initial_effect(c)
 	e2:SetCondition(c100417009.descon2)
 	e2:SetTarget(c100417009.destg2)
 	e2:SetOperation(c100417009.desop2)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 	--Cannot Break
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100417009,1))

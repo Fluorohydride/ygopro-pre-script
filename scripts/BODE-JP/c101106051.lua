@@ -52,7 +52,7 @@ function c101106051.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101106051.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>0 and #g>0 then
-		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end 
+		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:SelectSubGroup(tp,c101106051.gcheck,false,1,math.min(2,ft))
 		if sg then
@@ -61,7 +61,7 @@ function c101106051.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101106051.costfilter(c,tp)
-	return c:IsSetCard(0x2151) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or c:IsFaceup()) 
+	return c:IsSetCard(0x2151) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or c:IsFaceup())
 		and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end

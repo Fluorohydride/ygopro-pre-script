@@ -20,7 +20,7 @@ function c100417010.initial_effect(c)
 	e2:SetCondition(c100417010.discon)
 	e2:SetTarget(c100417010.distg)
 	e2:SetOperation(c100417010.disop)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 	--Cannot Break
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100417010,1))

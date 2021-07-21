@@ -12,7 +12,7 @@ function c100417004.initial_effect(c)
 	e1:SetCost(c100417004.thcost)
 	e1:SetTarget(c100417004.thtg)
 	e1:SetOperation(c100417004.thop)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--atkup
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100417004,1))

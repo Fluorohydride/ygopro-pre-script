@@ -91,7 +91,7 @@ end
 function c101106046.thop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=e:GetHandler():GetReasonCard()
 	local lv=rc:GetLevel()
-	if Duel.Damage(1-tp,lv*100,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(c101106046.thfilter,tp,LOCATION_DECK,0,1,nil) 
+	if Duel.Damage(1-tp,lv*100,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(c101106046.thfilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(101106046,3)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -102,14 +102,3 @@ function c101106046.thop(e,tp,eg,ep,ev,re,r,rp)
 			end
 	end
 end
-
-
-
-
-
-
-
-
-
-
-

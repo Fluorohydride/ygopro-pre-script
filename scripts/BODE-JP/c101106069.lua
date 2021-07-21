@@ -49,7 +49,7 @@ function c101106069.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g3=Duel.SelectMatchingCard(tp,c101106069.filter3,tp,LOCATION_DECK,0,1,1,nil,g2:GetFirst())
-		if g3:GetCount()>0 then 
+		if g3:GetCount()>0 then
 			Duel.SendtoHand(g3,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g3)
 			Duel.Remove(g2,POS_FACEDOWN,REASON_EFFECT)

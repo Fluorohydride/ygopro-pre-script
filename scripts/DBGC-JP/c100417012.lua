@@ -12,7 +12,7 @@ function c100417012.initial_effect(c)
 	e1:SetCountLimit(1,100417012+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100417012.destg)
 	e1:SetOperation(c100417012.desop)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 end
 function c100417012.filter(c,tp)
 	return c:IsFacedown() or (c:IsFaceup() and Duel.IsExistingMatchingCard(c100417012.cfilter,tp,LOCATION_MZONE,0,1,nil))
