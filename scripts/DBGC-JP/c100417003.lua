@@ -49,7 +49,7 @@ function c100417003.cfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsLocation(LOCATION_ONFIELD)
 end
 function c100417003.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:IsSetCard(0x26f) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return rp==tp and re:GetHandler():IsSetCard(0x26f) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 		and eg:IsExists(c100417003.cfilter,1,nil,tp)
 end
 function c100417003.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
