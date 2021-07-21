@@ -1,4 +1,6 @@
---巨星坠
+--巨星墜とし
+--
+--Script by starvevenom
 function c101106079.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

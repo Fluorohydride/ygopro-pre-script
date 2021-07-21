@@ -1,4 +1,6 @@
---夜之逃飞行
+--夜の逃飛行
+--
+--Script by KillerDJ
 function c101106068.initial_effect(c)
 	--return
 	local e1=Effect.CreateEffect(c)
@@ -38,7 +40,3 @@ end
 function c101106068.actlimit(e,re,tp)
 	return re:GetHandler():IsCode(e:GetLabel())
 end
-
-
-
-

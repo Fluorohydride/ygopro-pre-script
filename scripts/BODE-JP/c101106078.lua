@@ -1,4 +1,6 @@
---圣邪之彩色玻璃花窗
+--聖邪のステンドグラス
+--
+--Script by 魔方
 function c101106078.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---迷犬 小玛栗
+--迷犬メリー
+--
+--Script by KillerDJ
 function c101106035.initial_effect(c)
 	--effect 
 	local e1=Effect.CreateEffect(c)
@@ -47,8 +49,3 @@ function c101106035.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
-
-
-
-

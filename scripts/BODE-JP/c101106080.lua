@@ -1,4 +1,6 @@
---洗衣龙女困境
+--ラドリートラップ
+--
+--Script by starvevenom
 function c101106080.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

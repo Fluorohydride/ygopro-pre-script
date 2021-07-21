@@ -1,4 +1,6 @@
 --超自然警戒区域
+--
+--Script by KillerDJ
 function c101106067.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
