@@ -1,4 +1,6 @@
---净琉璃朋克危险口裂
+--Jo－P.U.N.K.デンジャラス・ガブ
+--
+--Script by REIKAI
 function c100417011.initial_effect(c)
    --Activate
 	local e1=Effect.CreateEffect(c)

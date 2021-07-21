@@ -1,4 +1,6 @@
---雅乐朋克粉碎拍子
+--Ga－P.U.N.K.クラッシュ・ビート
+--
+--Script by REIKAI
 function c100417010.initial_effect(c)
 	--ACT
 	local e1=Effect.CreateEffect(c)

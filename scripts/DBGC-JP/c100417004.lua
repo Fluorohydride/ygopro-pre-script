@@ -1,4 +1,6 @@
---能朋克 世阿弥
+--No－P.U.N.K.セアミン
+--
+--Script by REIKAI
 function c100417004.initial_effect(c)
 	--tohand
 	local e1=Effect.CreateEffect(c)

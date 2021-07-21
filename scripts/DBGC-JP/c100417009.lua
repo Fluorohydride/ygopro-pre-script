@@ -1,14 +1,15 @@
---雅乐朋克野蛮弹奏
+--Ga－P.U.N.K.ワイルド・ピッキング
+--
+--Script by REIKAI
 function c100417009.initial_effect(c)
 	--ACT
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100417009,1))
+	e2:SetDescription(aux.Stringid(100417009,0))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_START)
@@ -20,7 +21,7 @@ function c100417009.initial_effect(c)
 	c:RegisterEffect(e2) 
 	--Cannot Break
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100417009,2))
+	e3:SetDescription(aux.Stringid(100417009,1))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_DESTROYED)
@@ -51,8 +52,8 @@ function c100417009.cfilter(c)
 end
 function c100417009.limcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_SZONE) and Duel.GetMatchingGroupCount(c100417009.cfilter,tp,LOCATION_MZONE,0,nil)>0
-
+	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_SZONE)
+		and Duel.GetMatchingGroupCount(c100417009.cfilter,tp,LOCATION_MZONE,0,nil)>0
 end
 function c100417009.limop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100417009.cfilter,tp,LOCATION_MZONE,0,nil)

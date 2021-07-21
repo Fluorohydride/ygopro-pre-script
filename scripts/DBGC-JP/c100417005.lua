@@ -1,4 +1,6 @@
---能朋克 调狐
+--No－P.U.N.K.フォクシー・チューン
+--
+--Script by REIKAI
 function c100417005.initial_effect(c)
 	--spsummon
 	local e0=Effect.CreateEffect(c)

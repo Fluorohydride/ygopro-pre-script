@@ -1,4 +1,6 @@
---净琉璃朋克惊愕梨割
+--Jo－P.U.N.K.ナシワリ・サプライズ
+--
+--Script by REIKAI
 function c100417012.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
