@@ -48,9 +48,10 @@ function c100417007.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+	local ct=math.min(ft,2)
 	local g=Duel.GetMatchingGroup(c100417007.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ft)
+	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ct)
 	if sg then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
