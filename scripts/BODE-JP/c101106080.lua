@@ -8,7 +8,7 @@ function c101106080.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Activate
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(3701074,0))
+	e2:SetDescription(aux.Stringid(101106080,0))
 	e2:SetCategory(CATEGORY_DECKDES)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_SZONE)
@@ -43,10 +43,10 @@ function c101106080.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(p,d,REASON_EFFECT)
 end
 function c101106080.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_DECK) and  e:GetHandler():IsReason(REASON_EFFECT)
+	return e:GetHandler():IsPreviousLocation(LOCATION_DECK) and e:GetHandler():IsReason(REASON_EFFECT)
 end
-function c101106080.thfilter(c,id)
-	return c:GetTurnID()==id and not (c:IsReason(REASON_RETURN) or c:IsCode(101106080)) and c:IsAbleToHand()
+function c101106080.thfilter(c,tid)
+	return c:GetTurnID()==tid and not c:IsReason(REASON_RETURN) and not c:IsCode(101106080) and c:IsAbleToHand()
 end
 function c101106080.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()
@@ -57,11 +57,9 @@ function c101106080.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c101106080.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if not tc then return end
 	if Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) then
-		Duel.ConfirmCards(1-tp,tc)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

@@ -25,7 +25,7 @@ function c101106079.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function c101106079.chainlm(e,rp,tp)
-	return not e:GetHandler():IsType(TYPE_MONSTER) and not e:GetHandler():IsLevel(0)
+	return not (e:GetHandler():IsType(TYPE_MONSTER) and e:GetHandler():IsLevel(0))
 end
 function c101106079.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

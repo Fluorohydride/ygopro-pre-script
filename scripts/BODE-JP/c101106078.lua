@@ -4,6 +4,7 @@
 function c101106078.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101106078,0))
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_TODECK+CATEGORY_HANDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -19,20 +20,15 @@ function c101106078.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local f1=Duel.IsExistingMatchingCard(c101106078.filter,tp,LOCATION_MZONE,0,1,nil,RACE_FAIRY) and Duel.IsPlayerCanDraw(tp,3)
 	local f2=Duel.IsExistingMatchingCard(c101106078.filter,tp,LOCATION_MZONE,0,1,nil,RACE_FIEND) and Duel.IsPlayerCanDraw(1-tp,1)
 	if chk==0 then return f1 or f2 end
-	if f1 then
-		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
-		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,tp,2)
-	end
-	if f2 then
-		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
-		Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,1)
-	end
 end
 function c101106078.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(c101106078.filter,tp,LOCATION_MZONE,0,1,nil,RACE_FAIRY) and Duel.Draw(tp,3,REASON_EFFECT)==3 then
-		Duel.BreakEffect()
+	local f1=Duel.IsExistingMatchingCard(c101106078.filter,tp,LOCATION_MZONE,0,1,nil,RACE_FAIRY) and Duel.IsPlayerCanDraw(tp,3)
+	local f2=Duel.IsExistingMatchingCard(c101106078.filter,tp,LOCATION_MZONE,0,1,nil,RACE_FIEND) and Duel.IsPlayerCanDraw(1-tp,1)
+	local res=false
+	if f1 and (not f2 or Duel.SelectYesNo(tp,aux.Stringid(101106078,1))) and Duel.Draw(tp,3,REASON_EFFECT)==3 then
+		res=true
 		local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
-		if g:GetCount()==0 then return end
+		if #g<2 then return end
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=g:Select(tp,2,2,nil)
@@ -43,12 +39,16 @@ function c101106078.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MoveSequence(mg:GetFirst(),1)
 		end
 	end
-	if Duel.IsExistingMatchingCard(c101106078.filter,tp,LOCATION_MZONE,0,1,nil,RACE_FIEND) and Duel.Draw(1-tp,1,REASON_EFFECT)==1 then
+	if f2 and (not res or Duel.SelectYesNo(tp,aux.Stringid(101106078,2))) and Duel.Draw(1-tp,1,REASON_EFFECT)==1 then
 		Duel.ShuffleHand(1-tp)
 		Duel.BreakEffect()
-		Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)
-		local g1=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_HAND,nil)
+		local g=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0)
+		if #g==0 then return end
+		local sg=g:RandomSelect(1-tp,1)
+		Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
+		local g1=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0)
 		if #g1==0 then return end
+		Duel.BreakEffect()
 		Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)
 	end
 end
