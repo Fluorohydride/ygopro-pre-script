@@ -38,7 +38,7 @@ function c101106037.initial_effect(c)
 	e3:SetOperation(c101106037.negop)
 	c:RegisterEffect(e3)
 end
-function c101106037.tdfilter(c)
+function c101106037.tdfilter(c,tp)
 	return bit.band(c:GetType(),0x82)==0x82 and c:IsAbleToDeck() and not c:IsPublic()
 		and Duel.IsExistingMatchingCard(c101106037.thfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
@@ -46,13 +46,13 @@ function c101106037.thfilter(c,mc)
 	return bit.band(c:GetType(),0x81)==0x81 and c:IsAbleToHand() and aux.IsCodeListed(mc,c:GetCode())
 end
 function c101106037.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101106037.tdfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101106037.tdfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101106037.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g1=Duel.SelectMatchingCard(tp,c101106037.tdfilter,tp,LOCATION_HAND,0,1,1,nil)
+	local g1=Duel.SelectMatchingCard(tp,c101106037.tdfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
 	if g1:GetCount()==0 then return end
 	Duel.ConfirmCards(1-tp,g1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

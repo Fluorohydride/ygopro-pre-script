@@ -17,8 +17,9 @@ function c101106035.thfilter(c)
 	return c:IsCode(11548522) and c:IsAbleToHand()
 end
 function c101106035.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local b1=e:GetHandler():IsAbleToDeck() 
-	local b2=Duel.IsExistingMatchingCard(c101106035.thfilter,tp,LOCATION_DECK,0,1,nil) and e:GetHandler():IsAbleToDeck() 
+	local c=e:GetHandler()
+	local b1=c:IsAbleToDeck() 
+	local b2=Duel.IsExistingMatchingCard(c101106035.thfilter,tp,LOCATION_DECK,0,1,nil) and c:IsAbleToDeck() 
 	if chk==0 then return b1 or b2 end
 	local op=0
 	if b1 and b2 then op=Duel.SelectOption(tp,aux.Stringid(101106035,1),aux.Stringid(101106035,2))
@@ -27,10 +28,10 @@ function c101106035.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabel(op)
 	if op==0 then
 		e:SetCategory(CATEGORY_TODECK)
-		Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,0,0)
 	else
 		e:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_TODECK)
-		Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,0,0)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
 end

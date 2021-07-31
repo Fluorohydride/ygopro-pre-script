@@ -64,7 +64,8 @@ end
 function c101106016.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND)
-		and Duel.IsExistingMatchingCard(c101106016.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(101106016,2)) then
+		and Duel.IsExistingMatchingCard(c101106016.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(101106016,2)) then
 		Duel.BreakEffect()
 		Duel.ShuffleHand(tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
