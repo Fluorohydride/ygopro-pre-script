@@ -8,7 +8,6 @@ function c101106201.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101106201)
 	e1:SetCost(c101106201.spcost)
 	e1:SetTarget(c101106201.sptg)
@@ -57,7 +56,7 @@ function c101106201.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101106201.thfilter(c)
-	return c:IsCode(101106203) or c:IsCode(67526112) and c:IsAbleToHand()
+	return c:IsCode(101106203,67526112) and c:IsAbleToHand()
 end
 function c101106201.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101106201.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

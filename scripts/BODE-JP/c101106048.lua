@@ -22,7 +22,7 @@ function c101106048.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
 	e2:SetCountLimit(1)
 	e2:SetCondition(c101106048.discon)
 	e2:SetTarget(c101106048.distg)
@@ -70,10 +70,10 @@ function c101106048.ctfilter(c)
 end
 function c101106048.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=Duel.GetMatchingGroupCount(c101106048.ctfilter,tp,LOCATION_ONFIELD,0,nil)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and aux.disfilter1(chkc) end
-	if chk==0 then return ct>0 and Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and aux.NegateAnyFilter(chkc) end
+	if chk==0 then return ct>0 and Duel.IsExistingTarget(aux.NegateAnyFilter,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
-	local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_ONFIELD,1,ct,nil)
+	local g=Duel.SelectTarget(tp,aux.NegateAnyFilter,tp,0,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,g:GetCount(),0,0)
 end
 function c101106048.disop(e,tp,eg,ep,ev,re,r,rp)

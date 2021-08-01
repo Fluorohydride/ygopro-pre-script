@@ -15,7 +15,7 @@ function c101106062.filter(c)
 	return (c:IsType(TYPE_NORMAL) or c:IsType(TYPE_MONSTER) and c:IsSetCard(0x165) or c:IsCode(99426088)) and c:IsAbleToDeck()
 end
 function c101106062.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c101106062.filter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101106062.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101106062.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c101106062.filter,tp,LOCATION_GRAVE,0,1,1,nil)

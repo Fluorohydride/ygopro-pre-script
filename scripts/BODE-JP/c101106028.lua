@@ -47,7 +47,7 @@ function c101106028.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101106028.hspfilter(c)
-	return c:IsRace(RACE_MACHINE) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsLevelAbove(1) and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c101106028.hspcheck(g)
 	Duel.SetSelectedCard(g)
@@ -124,6 +124,8 @@ function c101106028.spop(e,tp,eg,ep,ev,re,r,rp)
 	if ft<=0 or #tg==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=tg:SelectSubGroup(tp,c101106028.spcheck,false,1,ft)
+	aux.GCheckAdditional=c101106028.spcheck
+	local g=tg:SelectSubGroup(tp,aux.TRUE,false,1,ft)
+	aux.GCheckAdditional=nil
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end

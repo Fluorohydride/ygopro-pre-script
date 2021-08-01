@@ -32,7 +32,7 @@ function c100417010.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100417010.acfilter(c,tp)
-	return c:IsSetCard(0x26f) and c:IsControler(tp)
+	return c:IsSetCard(0x26f) and c:IsControler(tp) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function c100417010.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end

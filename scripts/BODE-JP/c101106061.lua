@@ -24,7 +24,7 @@ function c101106061.initial_effect(c)
 	e3:SetCategory(CATEGORY_CONTROL+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_CHAINING)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1,101106061+100)
 	e3:SetCondition(c101106061.ctcon)
@@ -75,6 +75,7 @@ end
 function c101106061.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp)
+		and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,21179144,0x3c,TYPES_TOKEN_MONSTER,0,0,1,RACE_REPTILE,ATTRIBUTE_EARTH) then
 		Duel.BreakEffect()
 		local token=Duel.CreateToken(tp,101106061+100)

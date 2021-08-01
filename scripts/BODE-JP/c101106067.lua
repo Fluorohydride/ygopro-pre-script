@@ -53,7 +53,9 @@ function c101106067.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101106067.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE) and rp==1-tp
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp)
+		and rp==1-tp and c:IsReason(REASON_EFFECT)
 end
 function c101106067.spfilter(c,e,tp)
 	return not c:IsType(TYPE_EFFECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

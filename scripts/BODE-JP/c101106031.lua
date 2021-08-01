@@ -63,13 +63,16 @@ function c101106031.spop(e,tp,eg,ep,ev,re,r,rp)
 			end
 	end
 end
+function c101106031.desrepfilter(c)
+	return c:IsRace(RACE_PLANT) and c:IsAbleToGrave()
+end
 function c101106031.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
-		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_DECK,0,1,nil,RACE_PLANT) end
-	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
+		and Duel.IsExistingMatchingCard(c101106031.desrepfilter,tp,LOCATION_DECK,0,1,nil) end
+	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsRace,tp,LOCATION_DECK,0,1,1,nil,RACE_PLANT)
+		local g=Duel.SelectMatchingCard(tp,c101106031.desrepfilter,tp,LOCATION_DECK,0,1,1,nil)
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REPLACE)
 		return true
 	else return false end
