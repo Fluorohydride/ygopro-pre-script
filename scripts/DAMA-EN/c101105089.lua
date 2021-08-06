@@ -56,7 +56,7 @@ function c101105089.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c101105089.spfilter(c,e,tp)
-	return c:IsSetCard(SET_BEETROOPER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_BEETROOPER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101105089.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101105089.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
