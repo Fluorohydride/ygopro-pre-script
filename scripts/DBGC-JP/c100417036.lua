@@ -28,7 +28,7 @@ function c100417036.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=math.min(2,Duel.GetLocationCount(tp,LOCATION_MZONE))
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsCanBeSpecialSummoned),tp,LOCATION_HAND+LOCATION_GRAVE,nil,e,0,tp,false,false):SelectSubGroup(tp,aux.dncheck,false,1,ft)
+	local g1=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsCanBeSpecialSummoned),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,0,tp,false,false):SelectSubGroup(tp,aux.dncheck,false,1,ft)
 	local ct=0
 	for tc in aux.Next(g1) do if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(c)
