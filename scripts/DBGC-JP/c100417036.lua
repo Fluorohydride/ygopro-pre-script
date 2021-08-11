@@ -1,3 +1,4 @@
+--coded by Lyris
 --Resurrection Breath
 function c100417036.initial_effect(c)
 	--If you control "Brave Token": Special Summon up to 2 monsters with different names from your hand and/or GY (but banish them when they leave the field), then you can equip 1 Equip Spell that specifically lists "Brave Token" in its text from your hand or GY to 1 appropriate monster you control. You can only activate 1 "Resurrection Breath" per turn.

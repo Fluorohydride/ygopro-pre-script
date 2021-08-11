@@ -1,3 +1,4 @@
+--coded by Lyris
 --Pazuzule
 function c77384395.initial_effect(c)
 	--P-Once per turn: You can target 1 card in your other Pendulum Zone; this card's Pendulum Scale becomes the Level of that Pendulum Monster Card until the end of this turn, also you cannot Special Summon for the rest of this turn, except by Pendulum Summon.

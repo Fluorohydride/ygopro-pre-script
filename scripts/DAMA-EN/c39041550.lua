@@ -1,3 +1,4 @@
+--coded by Lyris
 --Beetrooper Scale Bomber
 function c39041550.initial_effect(c)
 	--You can only use each effect of "Beetrooper Scale Bomber" once per turn.
