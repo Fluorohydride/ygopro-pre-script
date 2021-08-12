@@ -1,6 +1,6 @@
 --coded by Lyris
 --Pazuzule
-function c77384395.initial_effect(c)
+function c101105082.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--P-Once per turn: You can target 1 card in your other Pendulum Zone; this card's Pendulum Scale becomes the Level of that Pendulum Monster Card until the end of this turn, also you cannot Special Summon for the rest of this turn, except by Pendulum Summon.
 	local e1=Effect.CreateEffect(c)
@@ -8,8 +8,8 @@ function c77384395.initial_effect(c)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetTarget(c77384395.target)
-	e1:SetOperation(c77384395.operation)
+	e1:SetTarget(c101105082.target)
+	e1:SetOperation(c101105082.operation)
 	c:RegisterEffect(e1)
 	--M-Pendulum Summons of your monsters cannot be negated.
 	local g=Group.CreateGroup()
@@ -35,16 +35,16 @@ function c77384395.initial_effect(c)
 	end end)
 	c:RegisterEffect(e2)
 end
-function c77384395.filter(c,tc)
+function c101105082.filter(c,tc)
 	return c:GetOriginalLevel()~=tc:GetCurrentScale()
 end
-function c77384395.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c101105082.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c77384395.filter,tp,LOCATION_PZONE,0,1,c,c) end
-	Duel.SetTargetCard(Duel.GetFirstMatchingCard(c77384395.filter,tp,LOCATION_PZONE,0,c,c))
+	if chk==0 then return Duel.IsExistingTarget(c101105082.filter,tp,LOCATION_PZONE,0,1,c,c) end
+	Duel.SetTargetCard(Duel.GetFirstMatchingCard(c101105082.filter,tp,LOCATION_PZONE,0,c,c))
 end
-function c77384395.operation(e,tp,eg,ep,ev,re,r,rp)
+function c101105082.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
@@ -63,10 +63,10 @@ function c77384395.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(1,0)
-	e3:SetTarget(c77384395.splimit)
+	e3:SetTarget(c101105082.splimit)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
-function c77384395.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+function c101105082.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return sumtype&SUMMON_TYPE_PENDULUM~=SUMMON_TYPE_PENDULUM
 end
