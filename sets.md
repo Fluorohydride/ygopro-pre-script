@@ -4,8 +4,10 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **August 7, 2021**: Structure Deck R: Lost Sanctuary (SR12-JP) : `100312XXX`
 - **August 28, 2021**: Deck Build Pack: Grand Creators (DBGC-JP) : `100417XXX`
+- **October 16, 2021**: BATTLE OF CHAOS (BACH-JP) : `101107XXX`
 
 # Announced
+- **November 20, 2021**: Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
 
 # Archived
 ## Other packs
