@@ -20,7 +20,7 @@ function c100417036.filter(c,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100417036.eqfilter),tp,LOCATION_DECK,0,1,nil,tp,c)
 end
 function c100417036.eqfilter(c,tp,tc)
-	return c:CheckUniqueOnField(tp) and not c:IsForbidden() and c:CheckEquipTarget(tc) and aux.IsCodeListed(c,CARD_BRAVE_TOKEN)
+	return c:CheckUniqueOnField(tp) and not c:IsForbidden() and c:CheckEquipTarget(tc) and aux.IsCodeListed(c,100417125)
 end
 function c100417036.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
