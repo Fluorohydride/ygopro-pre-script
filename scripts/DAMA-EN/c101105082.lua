@@ -12,28 +12,17 @@ function c101105082.initial_effect(c)
 	e1:SetOperation(c101105082.operation)
 	c:RegisterEffect(e1)
 	--M-Pendulum Summons of your monsters cannot be negated.
-	local g=Group.CreateGroup()
-	g:KeepAlive()
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_COST)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_HAND+LOCATION_EXTRA,0)
-	e2:SetCost(function(e,tc) g:AddCard(tc) return true end)
-	e2:SetOperation(function() for tc in aux.Next(g) do
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e3:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM) end)
-		tc:RegisterEffect(e3,true)
-		local e4=Effect.CreateEffect(c)
-		e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-		e4:SetOperation(function() e3:Reset() g:Clear() e4:Reset() end)
-		tc:RegisterEffect(e4)
-	end end)
+	e2:SetCost(c101105082.cost)
+	e2:SetOperation(c101105082.op)
 	c:RegisterEffect(e2)
+	local g=Group.CreateGroup()
+	g:KeepAlive()
+	e2:SetLabelObject(g)
 end
 function c101105082.filter(c,tc)
 	return c:GetOriginalLevel()~=tc:GetCurrentScale()
@@ -42,7 +31,8 @@ function c101105082.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(c101105082.filter,tp,LOCATION_PZONE,0,1,c,c) end
-	Duel.SetTargetCard(Duel.GetFirstMatchingCard(c101105082.filter,tp,LOCATION_PZONE,0,c,c))
+	local tc=Duel.GetFirstMatchingCard(c101105082.filter,tp,LOCATION_PZONE,0,c,c)
+	Duel.SetTargetCard(tc)
 end
 function c101105082.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -69,4 +59,35 @@ function c101105082.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105082.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return sumtype&SUMMON_TYPE_PENDULUM~=SUMMON_TYPE_PENDULUM
+end
+function c101105082.cost(e,c,tp)
+	e:GetLabelObject():AddCard(c)
+	return true
+end
+function c101105082.op(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=e:GetLabelObject()
+	for tc in aux.Next(g) do
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e3:SetCondition(c101105082.condition)
+		tc:RegisterEffect(e3,true)
+		local e4=Effect.CreateEffect(c)
+		e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e4:SetCode(EVENT_SPSUMMON_SUCCESS)
+		e4:SetOperation(c101105082.reset(g,e3))
+		tc:RegisterEffect(e4,true)
+	end
+end
+function c101105082.condition(e)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+end
+function c101105082.reset(g,ef)
+	return	function(e,tp,eg,ep,ev,re,r,rp)
+			g:Clear()
+			ef:Reset()
+			e:Reset()
+		end
 end
