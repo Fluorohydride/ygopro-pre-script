@@ -10,7 +10,7 @@ function c101105086.initial_effect(c)
 	e0:SetCountLimit(1,101105086)
 	e0:SetProperty(EFFECT_FLAG_DELAY)
 	e0:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e0:SetCondition(function(e,tp,eg) return eg:IsExists(c101105086.filter,1,nil,tp) end)
+	e0:SetCondition(c101105086.con)
 	e0:SetTarget(c101105086.tg)
 	e0:SetOperation(c101105086.op)
 	c:RegisterEffect(e0)
@@ -33,6 +33,9 @@ end
 function c101105086.filter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT) and c:IsControler(tp)
 end
+function c101105086.con(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c101105086.filter,1,nil,tp)
+end
 function c101105086.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -41,7 +44,9 @@ function c101105086.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101105086.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) end
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
 end
 function c101105086.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetHandler():IsOnField() and re:GetHandler():IsRelateToEffect(re) and re:IsActiveType(TYPE_MONSTER)
