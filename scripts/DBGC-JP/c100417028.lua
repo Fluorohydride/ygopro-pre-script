@@ -29,15 +29,14 @@ function c100417028.initial_effect(c)
 	e2:SetOperation(c100417028.negop)
 	c:RegisterEffect(e2)
 end
---special summon
 function c100417028.cfilter(c)
-	return c:IsCode(CARD_BRAVE_TOKEN)
+	return c:IsCode(100417125) and c:IsFaceup()
 end
 function c100417028.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) then return false end
 	local ct1=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 	local ct2=Duel.IsExistingMatchingCard(c100417028.cfilter,tp,LOCATION_MZONE,0,1,nil)
-	return not ct1 or ct2
+	return ct1==0 or ct2>0
 end
 function c100417028.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -49,10 +48,9 @@ function c100417028.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
---negate
 function c100417028.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(c100417028.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
-	return rp==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function c100417028.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeck() end
