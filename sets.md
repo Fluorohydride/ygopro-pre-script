@@ -9,6 +9,8 @@
 
 # Announced
 - **November 20, 2021**: Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
+- **December 4, 2021**: Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
+- **January 13, 2022**: The Grand Creators (GRCR-EN) : `100282XXX`
 
 # Archived
 ## Other packs
