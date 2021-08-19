@@ -2,12 +2,15 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **July 9, 2021**: King's Court (KICO-EN) : `100280XXX`
-- **July 17, 2021**: BURST OF DESTINY (BODE-JP) : `101106XXX`
 - **August 7, 2021**: Structure Deck R: Lost Sanctuary (SR12-JP) : `100312XXX`
 - **August 28, 2021**: Deck Build Pack: Grand Creators (DBGC-JP) : `100417XXX`
+- **September 25, 2021**: WORLD PREMIERE PACK 2021 (WPP2-JP) : `100281XXX`
+- **October 16, 2021**: BATTLE OF CHAOS (BACH-JP) : `101107XXX`
 
 # Announced
+- **November 20, 2021**: Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
+- **December 4, 2021**: Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
+- **January 13, 2022**: The Grand Creators (GRCR-EN) : `100282XXX`
 
 # Archived
 ## Other packs
@@ -94,6 +97,7 @@
 - Number Complete File -Piece of Memories- (NCF1-JP): `100274XXX`
 - LEGENDARY MONSTERS PACK (VP21-JP) : `100279XXX`
 - ANIMATION CHRONICLE 2021 (AC01-JP) : `100278XXX`
+- King's Court (KICO-EN) : `100280XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -171,3 +175,4 @@
 - Blazing Vortex (BLVO-JP): `101103XXX`
 - LIGHTNING OVERDRIVE (LIOV-JP): `101104XXX`
 - DAWN OF MAJESTY (DAMA-JP) : `101105XXX`
+- BURST OF DESTINY (BODE-JP) : `101106XXX`
