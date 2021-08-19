@@ -1,34 +1,36 @@
+--失われた聖域
 --Lost Sanctuary
+--coded by Lyris
 function c100312033.initial_effect(c)
-    --When this card is activated: Set 1 "The Sanctuary in the Sky", or 1 Spell/Trap that specifically lists that card in its text, directly from your Deck. You can only activate 1 "Lost Sanctuary" per turn.
+    aux.EnableChangeCode(c,56433456,LOCATION_SZONE+LOCATION_GRAVE)
+    --activate
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetCode(EVENT_FREE_CHAIN)
     e1:SetCountLimit(1,100312033+EFFECT_COUNT_CODE_OATH)
-    e2:SetTarget(c100312033.target)
-    e2:SetOperation(c100312033.activate)
+    e1:SetTarget(c100312033.target)
+    e1:SetOperation(c100312033.activate)
     c:RegisterEffect(e1)
-    --This card's name becomes "The Sanctuary in the Sky" while on the field or in the GY.
-    aux.EnableChangeCode(c,56433456,LOCATION_SZONE+LOCATION_GRAVE)
-    --You can banish 1 Fairy monster from your GY, then target 1 Effect Monster your opponent controls; negate its effects until the end of this turn (even if this card leaves the field). You can only use this effect of "Lost Sanctuary" once per turn.
+    --negate
     local e2=Effect.CreateEffect(c)
+    e2:SetCategory(CATEGORY_DISABLE)
     e2:SetType(EFFECT_TYPE_QUICK_O)
     e2:SetCode(EVENT_FREE_CHAIN)
     e2:SetRange(LOCATION_SZONE)
     e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-    e2:SetCategory(CATEGORY_DISABLE)
-    e2:SetCountLimit(1,100312133)
-    e2:SetCost(c100312033.cost)
+    e2:SetCountLimit(1,100312133+100)
+    e2:SetCost(c100312033.discost)
     e2:SetTarget(c100312033.distg)
     e2:SetOperation(c100312033.disop)
     c:RegisterEffect(e2)
 end
 function c100312033.filter(c)
-    return (c:IsCode(56433456) or aux.IsCodeListed(c,56433456)) and c:IsSSetable()
+    return (c:IsCode(56433456) or aux.IsCodeListed(c,56433456)) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function c100312033.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-        and Duel.IsExistingMatchingCard(c100312033.filter,tp,LOCATION_DECK,0,1,nil) end
+	local ct=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE) then ct=ct-1 end
+    if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(c100312033.filter,tp,LOCATION_DECK,0,1,nil) end
 end
 function c100312033.activate(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
@@ -40,7 +42,7 @@ end
 function c100312033.cfilter(c)
     return c:IsRace(RACE_FAIRY) and c:IsAbleToRemoveAsCost()
 end
-function c100312033.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100312033.discost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(c100312033.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
     local g=Duel.SelectMatchingCard(tp,c100312033.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
