@@ -1,8 +1,8 @@
---coded by Lyris
 --Pazuzule
+--coded by Lyris & mercury233
 function c101105082.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
-	--P-Once per turn: You can target 1 card in your other Pendulum Zone; this card's Pendulum Scale becomes the Level of that Pendulum Monster Card until the end of this turn, also you cannot Special Summon for the rest of this turn, except by Pendulum Summon.
+	--scale
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_PZONE)
@@ -11,21 +11,17 @@ function c101105082.initial_effect(c)
 	e1:SetTarget(c101105082.target)
 	e1:SetOperation(c101105082.operation)
 	c:RegisterEffect(e1)
-	--M-Pendulum Summons of your monsters cannot be negated.
+	--cannot disable spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_SPSUMMON_COST)
+	e2:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(LOCATION_HAND+LOCATION_EXTRA,0)
-	e2:SetCost(c101105082.cost)
-	e2:SetOperation(c101105082.op)
+	e2:SetTarget(c101105082.distg)
 	c:RegisterEffect(e2)
-	local g=Group.CreateGroup()
-	g:KeepAlive()
-	e2:SetLabelObject(g)
 end
 function c101105082.filter(c,tc)
-	return c:GetOriginalLevel()~=tc:GetCurrentScale()
+	return c:GetOriginalLevel()>0 and c:GetOriginalLevel()~=tc:GetCurrentScale()
 end
 function c101105082.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -60,34 +56,6 @@ end
 function c101105082.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return sumtype&SUMMON_TYPE_PENDULUM~=SUMMON_TYPE_PENDULUM
 end
-function c101105082.cost(e,c,tp)
-	e:GetLabelObject():AddCard(c)
-	return true
-end
-function c101105082.op(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local g=e:GetLabelObject()
-	for tc in aux.Next(g) do
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e3:SetCondition(c101105082.condition)
-		tc:RegisterEffect(e3,true)
-		local e4=Effect.CreateEffect(c)
-		e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-		e4:SetOperation(c101105082.reset(g,e3))
-		tc:RegisterEffect(e4,true)
-	end
-end
-function c101105082.condition(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
-end
-function c101105082.reset(g,ef)
-	return	function(e,tp,eg,ep,ev,re,r,rp)
-			g:Clear()
-			ef:Reset()
-			e:Reset()
-		end
+function c101105082.distg(e,c)
+	return c:IsControler(e:GetHandlerPlayer()) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
