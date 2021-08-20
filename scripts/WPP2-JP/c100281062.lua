@@ -5,7 +5,7 @@ function c100281062.initial_effect(c)
 	aux.AddCodeList(c,46986414,38033121)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100281062+EFFECT_COUNT_CODE_OATH)
@@ -19,7 +19,7 @@ function c100281062.initial_effect(c)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetCountLimit(1,100281062)
+	e2:SetCountLimit(1,100281062+100)
 	e2:SetCondition(c100281062.spcon)
 	e2:SetTarget(c100281062.sptg)
 	e2:SetOperation(c100281062.spop)
@@ -28,12 +28,10 @@ function c100281062.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-----------------------
 function c100281062.setfilter(c)
 	return c:IsCode(48680970) and c:IsSSetable()
 end
 function c100281062.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(c100281062.setfilter,tp,LOCATION_DECK,0,nil)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100281062,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
@@ -41,7 +39,6 @@ function c100281062.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,sg)
 	end
 end
-----------------------
 function c100281062.cfilter(c,tp)
 	return c:IsFaceup() and c:IsCode(46986414,38033121) and c:IsSummonPlayer(tp)
 end
