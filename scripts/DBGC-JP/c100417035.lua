@@ -1,7 +1,8 @@
---闪电释放
+--サンダー・ディスチャージ
+--
+--Script by IceBarrierTrishula
 function c100417035.initial_effect(c)
 	aux.AddCodeList(c,100417125)
-	
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100417035,0))
@@ -15,23 +16,18 @@ function c100417035.initial_effect(c)
 	e1:SetOperation(c100417035.op1)
 	c:RegisterEffect(e1)
 end
-
 function c100417035.con1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,100417125)
 end
-
 function c100417035.filter1(c)
 	return c:IsFaceup() and c:GetEquipCount()>0 and c:GetEquipGroup():IsExists(aux.IsCodeListed,1,nil,100417125)
 end
-
 function c100417035.filter2(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk)
 end
-
 function c100417035.efilter(c,tp)
 	return c:IsType(TYPE_EQUIP) and aux.IsCodeListed(c,100417125) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
-
 function c100417035.tar1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c100417035.filter1(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100417035.filter1,tp,LOCATION_MZONE,0,1,nil) end
@@ -39,7 +35,6 @@ function c100417035.tar1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local dg=Duel.GetMatchingGroup(c100417035.filter2,tp,0,LOCATION_MZONE,nil,g:GetFirst():GetAttack())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,dg:GetCount(),0,0)
 end
-
 function c100417035.op1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then

@@ -1,70 +1,70 @@
---流离的狮鹫骑手
+--Wandering Gryphon Rider
+--
+--scripted by RayeHikawa
 function c100417028.initial_effect(c)
-	aux.AddCodeList(c,100417125)
-	
-	--spsummon
+	--special summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100417028,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetRange(LOCATION_HAND)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,100417028)
-	e1:SetCondition(c100417028.con1)
-	e1:SetTarget(c100417028.tar1)
-	e1:SetOperation(c100417028.op1)
+	e1:SetCondition(c100417028.spcon)
+	e1:SetTarget(c100417028.sptg)
+	e1:SetOperation(c100417028.spop)
 	c:RegisterEffect(e1)
-	
 	--negate
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e2:SetDescription(aux.Stringid(100417028,1))
+	e2:SetCategory(CATEGORY_TODECK+CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
+	e2:SetCountLimit(1,100417028+100)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,100417028+100)
-	e2:SetCondition(c100417028.con2)
-	e2:SetTarget(c100417028.tar2)
-	e2:SetOperation(c100417028.op2)
+	e2:SetCondition(c100417028.negcon)
+	e2:SetTarget(c100417028.negtg)
+	e2:SetOperation(c100417028.negop)
 	c:RegisterEffect(e2)
 end
-
-function c100417028.con1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and (Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0,nil)==0 
-		or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,100417125)) 
-		and (Duel.GetCurrentPhase(PHASE_MAIN1) or Duel.GetCurrentPhase(PHASE_MAIN2))
+function c100417028.cfilter(c)
+	return c:IsCode(100417125) and c:IsFaceup()
 end
-
-function c100417028.tar1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+function c100417028.spcon(e,tp,eg,ep,ev,re,r,rp)
+	if not (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) then return false end
+	local ct1=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
+	local ct2=Duel.IsExistingMatchingCard(c100417028.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return ct1==0 or ct2>0
+end
+function c100417028.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-
-function c100417028.op1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+function c100417028.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
-	end
+	if not c:IsRelateToEffect(e) then return end
+	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-
-function c100417028.con2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,100417125) 
-		and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(re)
+function c100417028.negcon(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.IsExistingMatchingCard(c100417028.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
-
-function c100417028.tar2(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100417028.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeck() end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-	   Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0) 
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
-
-function c100417028.op2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
-		Duel.Destroy(eg,REASON_EFFECT)  
+function c100417028.negop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler() 
+	if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,2,REASON_EFFECT)>0 then
+		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+			Duel.Destroy(eg,REASON_EFFECT)
+		end
 	end
 end

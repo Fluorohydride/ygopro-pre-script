@@ -1,7 +1,8 @@
---阿拉弥希亚之仪
+--アラメシアの儀
+--
+--Script by IceBarrierTrishula
 function c100417025.initial_effect(c)
 	aux.AddCodeList(c,100417125)
-	
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -15,21 +16,17 @@ function c100417025.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(100417025,ACTIVITY_CHAIN,c100417025.chainfilter)
 end
-
 function c100417025.con(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,100417125)
 end
-
 function c100417025.chainfilter(re,tp,cid)
 	local rc=re:GetHandler()
 	return not (re:IsActiveType(TYPE_MONSTER) and rc:IsLocation(LOCATION_MZONE) and not rc:IsSummonType(SUMMON_TYPE_SPECIAL))
 end
-
 function c100417025.aclimit(e,re,tp)
 	local rc=re:GetHandler()
 	return re:IsActiveType(TYPE_MONSTER) and not rc:IsSummonType(SUMMON_TYPE_SPECIAL) and rc:IsLocation(LOCATION_MZONE)
 end
-
 function c100417025.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(100417025,tp,ACTIVITY_CHAIN)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -41,14 +38,12 @@ function c100417025.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-
 function c100417025.tar(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
 		Duel.IsPlayerCanSpecialSummonMonster(tp,100417125,0,TYPES_TOKEN_MONSTER,2000,2000,4,RACE_FAIRY,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
-
 function c100417025.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100417125,0,TYPES_TOKEN_MONSTER,2000,2000,4,RACE_FAIRY,ATTRIBUTE_EARTH) then return end

@@ -1,7 +1,8 @@
---遗迹的魔矿战士
+--遺跡の魔鉱戦士
+--
+--Script by IceBarrierTrishula
 function c100417027.initial_effect(c)
 	aux.AddCodeList(c,100417125)
-	
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -12,14 +13,12 @@ function c100417027.initial_effect(c)
 	e1:SetTarget(c100417027.tar1)
 	e1:SetOperation(c100417027.op1)
 	c:RegisterEffect(e1)
-	
 	--cannot atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
 	e2:SetCondition(c100417027.con2)
 	c:RegisterEffect(e2)
-	
 	--set card
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
@@ -40,28 +39,23 @@ function c100417027.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
-
 function c100417027.check(c)
 	return c and aux.IsCodeListed(c,100417125) and c:IsFaceup()
 end
-
 function c100417027.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if c100417027.check(Duel.GetAttacker()) or c100417027.check(Duel.GetAttackTarget()) then
 		Duel.RegisterFlagEffect(tp,100417027,RESET_PHASE+PHASE_END,0,1) 
 		Duel.RegisterFlagEffect(1-tp,100417027,RESET_PHASE+PHASE_END,0,1)
 	end
 end
-
 function c100417027.con1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,100417125)
 end
-
 function c100417027.tar1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-
 function c100417027.op1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
@@ -69,24 +63,19 @@ function c100417027.op1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end 
 end
-
 function c100417027.con2(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,100417125)
 end
-
 function c100417027.con3(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_BATTLE and Duel.GetFlagEffect(tp,100417027)>0
 end
-
 function c100417027.filter3(c)
 	return aux.IsCodeListed(c,100417125) and c:IsType(TYPE_TRAP) and c:IsSSetable()
 end
-
 function c100417027.tar3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
 		and Duel.IsExistingMatchingCard(c100417027.filter3,tp,LOCATION_DECK,0,1,nil) end
 end
-
 function c100417027.op3(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)

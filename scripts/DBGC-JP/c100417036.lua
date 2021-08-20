@@ -1,70 +1,63 @@
---复苏吹吸
+--リザレクション・ブレス
+--Resurrection Breath
+--coded by Lyris
 function c100417036.initial_effect(c)
 	aux.AddCodeList(c,100417125)
-	
-	--Activate
+	--spsummon & equip
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100417036+EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(c100417036.con1)
-	e1:SetTarget(c100417036.tar1)
-	e1:SetOperation(c100417036.op1)
+	e1:SetCondition(c100417036.condition)
+	e1:SetTarget(c100417036.target)
+	e1:SetOperation(c100417036.activate)
 	c:RegisterEffect(e1)
 end
-
-function c100417036.con1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,100417125)
+function c100417036.cfilter(c)
+	return c:IsFaceup() and c:IsCode(100417125)
 end
-
-function c100417036.filter1(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function c100417036.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c100417036.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
-
-function c100417036.tar1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsExistingMatchingCard(c100417036.filter1,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
+function c100417036.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanBeSpecialSummoned,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
-
-function c100417036.efilter(c,tp)
-	return c:IsType(TYPE_EQUIP) and aux.IsCodeListed(c,100417125) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
+function c100417036.filter(c,tp)
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100417036.eqfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp,c)
 end
-
-function c100417036.op1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ct>2 then ct=2 end
-	if ct>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
-	if ct>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100417036.filter1),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
-		if g:GetCount()>0 then
-			local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ct)
-			if sg:GetCount()<=0 then return end
-			local res=Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-			local tc=sg:GetFirst()
-			while tc do
-				local e1=Effect.CreateEffect(e:GetHandler())
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-				e1:SetValue(LOCATION_REMOVED)
-				e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
-				tc:RegisterEffect(e1)
-				tc=sg:GetNext()
-			end
-			if res and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
-				and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100417036.efilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp) 
-				and Duel.SelectYesNo(tp,aux.Stringid(100417036,0)) then
-				Duel.BreakEffect()
-				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100417036,1))
-				local eg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100417036.efilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp)
-				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100417036,2))
-				local mg=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
-				Duel.Equip(tp,eg:GetFirst(),mg:GetFirst())
-			end
+function c100417036.eqfilter(c,tp,tc)
+	return c:CheckUniqueOnField(tp) and not c:IsForbidden() and c:CheckEquipTarget(tc) and aux.IsCodeListed(c,100417125)
+end
+function c100417036.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local ft=math.min(2,(Duel.GetLocationCount(tp,LOCATION_MZONE)))
+	if ft<=0 then return end
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+	local tg=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsCanBeSpecialSummoned),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,0,tp,false,false)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g1=tg:SelectSubGroup(tp,aux.dncheck,false,1,ft)
+	if not g1 then return end
+	for tc in aux.Next(g1) do
+		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetValue(LOCATION_REMOVED)
+			tc:RegisterEffect(e1,true)
 		end
+	end
+	Duel.SpecialSummonComplete()
+	local g2=Duel.GetMatchingGroup(c100417036.filter,tp,LOCATION_MZONE,0,1,nil,tp)
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(100417036,0)) then
+		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		local sc=g2:Select(tp,1,1,nil):GetFirst()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local mg=Duel.SelectMatchingCard(aux.NecroValleyFilter(c100417036.eqfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp,sc)
+		Duel.Equip(tp,mg:GetFirst(),sc)
 	end
 end
