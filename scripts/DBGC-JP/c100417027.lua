@@ -43,10 +43,14 @@ function c100417027.check(c)
 	return c and aux.IsCodeListed(c,100417125) and c:IsFaceup()
 end
 function c100417027.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if c100417027.check(Duel.GetAttacker()) or c100417027.check(Duel.GetAttackTarget()) then
-		Duel.RegisterFlagEffect(tp,100417027,RESET_PHASE+PHASE_END,0,1) 
-		Duel.RegisterFlagEffect(1-tp,100417027,RESET_PHASE+PHASE_END,0,1)
-	end
+	local ac=Duel.GetAttacker()
+    if c100417027.check(ac) then        
+        Duel.RegisterFlagEffect(ac:GetControler(),100417027,RESET_PHASE+PHASE_END,0,1)
+    end
+    local tc=Duel.GetAttackTarget()
+    if c100417027.check(tc) then
+        Duel.RegisterFlagEffect(tc:GetControler(),100417027,RESET_PHASE+PHASE_END,0,1)
+    end
 end
 function c100417027.con1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
