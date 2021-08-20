@@ -1,6 +1,6 @@
 --切り裂かれし闇
 --
---Scripted by KillerDJ
+--Scripted by KillerDJ & mercury233
 function c100281063.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -34,8 +34,22 @@ function c100281063.initial_effect(c)
 	e4:SetCondition(c100281063.atkcon)
 	e4:SetOperation(c100281063.atkop)
 	c:RegisterEffect(e4)
+	if not c100281063.global_check then
+		c100281063.global_check=true
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD)
+		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_RANGE)
+		ge1:SetCode(EFFECT_MATERIAL_CHECK)
+		ge1:SetValue(c100281063.valcheck)
+		Duel.RegisterEffect(ge1,0)
+	end
 end
-----------------------
+function c100281063.valcheck(e,c)
+	local g=c:GetMaterial()
+	if g:IsExists(Card.IsType,1,nil,TYPE_NORMAL) then
+		c:RegisterFlagEffect(100281063,RESET_EVENT+0x4fe0000,0,1)
+	end
+end
 function c100281063.cfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsSummonPlayer(tp) and not c:IsType(TYPE_TOKEN)
 end
@@ -52,28 +66,16 @@ function c100281063.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-----------------------
-function c100281063.mtfilter(c)
-	return c:IsFusionType(TYPE_NORMAL) or c:IsSynchroType(TYPE_NORMAL) or c:IsXyzType(TYPE_NORMAL)
-end
 function c100281063.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local at=Duel.GetAttackTarget()
-	local g1=a:GetMaterial()
-	local g2=at:GetMaterial()
-	return at and ((a:IsControler(tp) 
-		and ((a:IsType(TYPE_NORMAL) and a:IsLevelAbove(5)) 
-		or (a:IsType(TYPE_RITUAL) and g1:IsExists(Card.IsType,1,nil,TYPE_NORMAL)) 
-		or (a:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and g1:IsExists(c100281063.mtfilter,1,nil))))
-		or (at:IsControler(tp) and at:IsFaceup() 
-		and ((at:IsType(TYPE_NORMAL) and at:IsLevelAbove(5))
-		or (at:IsType(TYPE_RITUAL) and g2:IsExists(Card.IsType,1,nil,TYPE_NORMAL)) 
-		or (at:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and g2:IsExists(c100281063.mtfilter,1,nil)))))
+	local a,at=Duel.GetBattleMonster(tp)
+	return a and at and (a:IsType(TYPE_NORMAL) and a:IsLevelAbove(5)
+		or a:GetFlagEffect(100281063)>0 and (a:IsSummonType(SUMMON_TYPE_RITUAL)
+			or a:IsSummonType(SUMMON_TYPE_FUSION)
+			or a:IsSummonType(SUMMON_TYPE_SYNCHRO)
+			or a:IsSummonType(SUMMON_TYPE_XYZ)))
 end
 function c100281063.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local at=Duel.GetAttackTarget()
-	if a:IsControler(1-tp) then a,at=at,a end
+	local a,at=Duel.GetBattleMonster(tp)
 	if not a:IsRelateToBattle() or a:IsFacedown() or not at:IsRelateToBattle() or at:IsFacedown() then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -82,14 +84,3 @@ function c100281063.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(at:GetAttack())
 	a:RegisterEffect(e1)
 end
-
-
-
-
-
-
-
-
-
-
-
