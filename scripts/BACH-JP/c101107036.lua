@@ -64,14 +64,16 @@ function c101107036.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c101107036.remcostfilter(c)
-	return c:IsReleasable() and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and (c:IsControler(tp) or c:IsFaceup())
+function c101107036.remcostfilter(c,tp)
+	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and (c:IsControler(tp) or c:IsFaceup())
+		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,c)
 end
 function c101107036.remcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c101107036.remcostfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetReleaseGroup(tp):Filter(c101107036.remcostfilter,nil,tp)
 	if chk==0 then return g:CheckSubGroup(aux.gfcheck,2,2,Card.IsAttribute,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local sg=g:SelectSubGroup(tp,aux.gfcheck,false,2,2,Card.IsAttribute,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK)
+	aux.UseExtraReleaseCount(sg,tp)
 	Duel.Release(sg,REASON_COST)
 end
 function c101107036.remtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -103,6 +105,3 @@ function c101107036.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-
-
-
