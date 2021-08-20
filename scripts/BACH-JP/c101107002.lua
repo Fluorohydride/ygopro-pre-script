@@ -72,6 +72,3 @@ function c101107002.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SortDecktop(p,p,ct)
 	end
 end
-
-
-
