@@ -42,7 +42,7 @@ function c100417027.initial_effect(c)
 end
 
 function c100417027.check(c)
-	return c and aux.IsCodeListed(c,100417125) and c:IsFaceup() and c:IsControler(tp)
+	return c and aux.IsCodeListed(c,100417125) and c:IsFaceup()
 end
 
 function c100417027.checkop(e,tp,eg,ep,ev,re,r,rp)
