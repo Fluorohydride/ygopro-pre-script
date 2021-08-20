@@ -2,6 +2,7 @@
 --Lost Sanctuary
 --coded by Lyris
 function c100312033.initial_effect(c)
+	aux.AddCodeList(c,56433456)
 	aux.EnableChangeCode(c,56433456,LOCATION_SZONE+LOCATION_GRAVE)
 	--activate
 	local e1=Effect.CreateEffect(c)
