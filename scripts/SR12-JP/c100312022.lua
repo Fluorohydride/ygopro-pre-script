@@ -1,6 +1,7 @@
 --Chorus in the Sky
 --coded by Lyris
 function c100312022.initial_effect(c)
+	aux.AddCodeList(c,56433456)
 	--to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
