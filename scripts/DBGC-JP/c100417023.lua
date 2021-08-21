@@ -1,4 +1,6 @@
 --エクソシスター・カルペディベル
+--
+--Scripted by KillerDJ
 function c100417023.initial_effect(c)
 	--activate
 	local e0=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
 --エクソシスター・バディス
+--
+--Scripted by KillerDJ
 function c100417024.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -83,5 +85,3 @@ end
 function c100417024.splimit(e,c)
 	return not c:IsSetCard(0x270) and c:IsLocation(LOCATION_EXTRA)
 end
-
-

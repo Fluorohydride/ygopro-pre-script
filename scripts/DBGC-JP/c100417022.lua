@@ -1,4 +1,6 @@
 --エクソシスター・アーメント
+--
+--Scripted by KillerDJ
 function c100417022.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

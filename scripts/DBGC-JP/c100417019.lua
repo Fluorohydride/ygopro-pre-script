@@ -1,4 +1,6 @@
 --エクソシスター・ジブリーヌ
+--
+--Scripted by KillerDJ
 function c100417019.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,4,2)
@@ -107,4 +109,3 @@ function c100417019.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp) 
 end
-

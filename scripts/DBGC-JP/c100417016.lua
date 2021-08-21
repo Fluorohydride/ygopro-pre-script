@@ -1,4 +1,6 @@
 --エクソシスター・イレーヌ
+--
+--Scripted by KillerDJ
 function c100417016.initial_effect(c)
 	aux.AddCodeList(c,100417015)
 	--draw
@@ -83,6 +85,3 @@ function c100417016.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
-
-

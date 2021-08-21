@@ -1,4 +1,6 @@
 --エクソシスター・ソフィア
+--
+--Scripted by KillerDJ
 function c100417015.initial_effect(c)
 	aux.AddCodeList(c,100417016)
 	--draw

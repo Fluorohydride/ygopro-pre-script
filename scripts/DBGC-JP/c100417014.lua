@@ -1,4 +1,6 @@
 --エクソシスター・ステラ
+--
+--Scripted by KillerDJ
 function c100417014.initial_effect(c)
 	aux.AddCodeList(c,100417013)
 	--special summon
@@ -80,10 +82,3 @@ function c100417014.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
-
-
-
-
-
-

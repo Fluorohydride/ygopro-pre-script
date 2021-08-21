@@ -85,6 +85,3 @@ function c100417013.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
-
-
