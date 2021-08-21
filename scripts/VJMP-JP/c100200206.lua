@@ -1,16 +1,19 @@
---勇气之天使 维多利卡
+--勇気の天使ヴィクトリカ
+--
+--Script by REIKAI
 function c100200206.initial_effect(c)
+	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100200206,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,100200206)
 	e1:SetTarget(c100200206.sptg)
 	e1:SetOperation(c100200206.spop)
-	c:RegisterEffect(e1) 
---
+	c:RegisterEffect(e1)
+	--tohand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -24,7 +27,7 @@ function c100200206.initial_effect(c)
 	c:RegisterEffect(e2) 
 end
 function c100200206.spfilter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelAbove(5) and c:IsAttribute(ATTRIBUTE_LIGHT) and Duel.GetLP(tp)>=c:GetTextAttack()
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelAbove(5) and c:IsAttribute(ATTRIBUTE_LIGHT)
 end
 function c100200206.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -46,18 +49,15 @@ function c100200206.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(math.ceil(atk*2))
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1,true)
-			Duel.SpecialSummonComplete()
-			local lp=Duel.GetLP(tp)
-			local num=lp-tc:GetTextAttack()
-			if num<0 then
-				num=0
-			end
-			Duel.SetLP(tp,num)
+			local lp=Duel.GetLP(tp)-tc:GetBaseAttack()
+			Duel.SetLP(tp,lp)
 		end
+		Duel.SpecialSummonComplete()
 	end
 end
 function c100200206.cfilter(c,tp)
-	return c:IsLevelAbove(1) and c:IsRace(RACE_FAIRY) and c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(c100200206.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetLevel())
+	return c:IsLevelAbove(1) and c:IsRace(RACE_FAIRY) and c:IsAbleToRemoveAsCost()
+		and Duel.IsExistingMatchingCard(c100200206.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetLevel())
 end
 function c100200206.thfilter(c,lv)
 	return c:IsRace(RACE_FAIRY) and c:IsAbleToHand() and c:IsLevel(lv)
@@ -65,21 +65,19 @@ end
 function c100200206.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	return true
-	
 end
 function c100200206.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()
+	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100200206.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
+	local cg=Duel.GetMatchingGroup(c100200206.cfilter,tp,LOCATION_GRAVE,0,c,tp)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		local cg=Duel.GetMatchingGroup(c100200206.cfilter,tp,LOCATION_GRAVE,0,e:GetHandler(),tp)
 		return cg:GetCount()>0
 	end
-	local cg=Duel.GetMatchingGroup(c100200206.cfilter,tp,LOCATION_GRAVE,0,e:GetHandler(),tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rg=cg:Select(tp,1,1,nil)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
