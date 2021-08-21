@@ -34,9 +34,8 @@ function c100417028.cfilter(c)
 end
 function c100417028.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) then return false end
-	local ct1=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
-	local ct2=Duel.IsExistingMatchingCard(c100417028.cfilter,tp,LOCATION_MZONE,0,1,nil)
-	return ct1==0 or ct2
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
+		or Duel.IsExistingMatchingCard(c100417028.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100417028.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
