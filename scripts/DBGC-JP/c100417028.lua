@@ -1,5 +1,5 @@
+--流離のグリフォンライダー
 --Wandering Gryphon Rider
---
 --scripted by RayeHikawa
 function c100417028.initial_effect(c)
 	--special summon
