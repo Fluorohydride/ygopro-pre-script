@@ -10,15 +10,15 @@ function c100417031.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CONTINUOUS_TARGET)
-	e1:SetTarget(c100417031.tar1)
-	e1:SetOperation(c100417031.op1)
+	e1:SetTarget(c100417031.target)
+	e1:SetOperation(c100417031.activate)
 	c:RegisterEffect(e1)
 	--Equip Limit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_EQUIP_LIMIT)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetValue(1)
+	e2:SetValue(c100417031.eqlimit)
 	c:RegisterEffect(e2)
 	--Decrease Atk
 	local e3=Effect.CreateEffect(c)
@@ -36,21 +36,24 @@ function c100417031.initial_effect(c)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e4:SetCountLimit(1,100417031)
-	e4:SetTarget(c100417031.tar4)
-	e4:SetOperation(c100417031.op4)
+	e4:SetTarget(c100417031.eqtg)
+	e4:SetOperation(c100417031.eqop)
 	c:RegisterEffect(e4)
 end
-function c100417031.tar1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c100417031.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
-function c100417031.op1(e,tp,eg,ep,ev,re,r,rp)
+function c100417031.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if e:GetHandler():IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,e:GetHandler(),tc)
 	end
+end
+function c100417031.eqlimit(e,c)
+	return c:IsControler(e:GetHandlerPlayer())
 end
 function c100417031.atkfilter(c)
 	return c:IsFaceup() and aux.IsCodeListed(c,100417125)
@@ -59,18 +62,24 @@ function c100417031.atkval(e)
 	local g=Duel.GetMatchingGroup(c100417031.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
 	return g:GetClassCount(Card.GetCode)*-500
 end
-function c100417031.tar4(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsCode(100417125) and chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,100417125) 
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_SZONE,0,1,nil,100417031) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,Card.IsCode,tp,LOCATION_MZONE,0,1,1,nil,100417125)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
+function c100417031.cfilter(c)
+	return c:IsCode(100417125) and c:IsFaceup()
 end
-function c100417031.op4(e,tp,eg,ep,ev,re,r,rp)
+function c100417031.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return c100417031.cfilter(chkc) and chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingTarget(c100417031.cfilter,tp,LOCATION_MZONE,0,1,nil) 
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and c:CheckUniqueOnField(tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+	local g=Duel.SelectTarget(tp,c100417031.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,0,0)
+end
+function c100417031.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
-		Duel.Equip(tp,e:GetHandler(),tc)
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and c:IsRelateToEffect(e) and c:CheckUniqueOnField(tp) then
+		Duel.Equip(tp,c,tc)
 	end
 end
