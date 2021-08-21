@@ -57,7 +57,7 @@ function c100417016.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and eg:IsExists(c100417016.filter,1,nil)
 end
 function c100417016.spfilter(c,e,tp,mc)
-	return c:IsSetCard(0x270) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
+	return c:IsSetCard(0x271) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end
 function c100417016.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

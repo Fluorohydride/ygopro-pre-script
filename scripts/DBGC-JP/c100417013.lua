@@ -31,7 +31,7 @@ function c100417013.filter(c)
 	return c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function c100417013.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x270)
+	return c:IsFaceup() and c:IsSetCard(0x271)
 end
 function c100417013.cfilter1(c)
 	return c:IsFaceup() and c:IsCode(100417014)

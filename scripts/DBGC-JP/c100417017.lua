@@ -58,7 +58,7 @@ function c100417017.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100417017.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x270) then
+	if g:IsExists(Card.IsSetCard,1,nil,0x271) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
@@ -88,7 +88,7 @@ function c100417017.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c100417017.thfilter(c)
-	return c:IsSetCard(0x270) and c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0x271) and c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c100417017.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100417017.thfilter,tp,LOCATION_DECK,0,1,nil) end

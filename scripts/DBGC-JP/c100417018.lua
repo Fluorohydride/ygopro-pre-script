@@ -41,7 +41,7 @@ function c100417018.initial_effect(c)
 end
 function c100417018.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x270) then
+	if g:IsExists(Card.IsSetCard,1,nil,0x271) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
@@ -72,7 +72,7 @@ function c100417018.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c100417018.thfilter(c)
-	return c:IsSetCard(0x270) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x271) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
 end
 function c100417018.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100417018.thfilter,tp,LOCATION_DECK,0,1,nil) end

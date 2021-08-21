@@ -44,7 +44,7 @@ function c100417020.initial_effect(c)
 end
 function c100417020.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x270) then
+	if g:IsExists(Card.IsSetCard,1,nil,0x271) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)

@@ -19,11 +19,11 @@ function c100417024.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,800)
 end
 function c100417024.spfilter1(c,e,tp)
-	return c:IsSetCard(0x270) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x271) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(c100417024.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function c100417024.spfilter2(c,e,tp,code)
-	return c:IsSetCard(0x270) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x271) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and aux.IsCodeListed(c,code)
 end
 function c100417024.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -83,5 +83,5 @@ function c100417024.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 end
 function c100417024.splimit(e,c)
-	return not c:IsSetCard(0x270) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsSetCard(0x271) and c:IsLocation(LOCATION_EXTRA)
 end

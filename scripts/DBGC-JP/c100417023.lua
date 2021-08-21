@@ -44,13 +44,13 @@ function c100417023.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100417023.eftg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x270)
+	return c:IsFaceup() and c:IsSetCard(0x271)
 end
 function c100417023.efilter(e,re,rp)
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSummonLocation(LOCATION_GRAVE) and re:GetActivateLocation()==LOCATION_MZONE
 end
 function c100417023.cfilter(c,tp,sumt)
-	return c:IsFaceup() and c:IsSetCard(0x270) and c:IsSummonType(sumt) and c:IsSummonPlayer(tp)
+	return c:IsFaceup() and c:IsSetCard(0x271) and c:IsSummonType(sumt) and c:IsSummonPlayer(tp)
 end
 function c100417023.bancon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100417023.cfilter,1,nil,tp,SUMMON_TYPE_XYZ)
@@ -112,7 +112,7 @@ function c100417023.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100417023.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	return tc:IsSetCard(0x270) and tc:IsControler(tp)
+	return tc:IsSetCard(0x271) and tc:IsControler(tp)
 end
 function c100417023.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

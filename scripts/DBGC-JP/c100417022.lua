@@ -30,12 +30,12 @@ function c100417022.cfilter(c,code)
 	return c:IsFaceup() and c:IsCode(code)
 end
 function c100417022.spfilter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x270)
+	return c:IsFaceup() and c:IsSetCard(0x271)
 		and Duel.IsExistingMatchingCard(c100417022.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 		and aux.MustMaterialCheck(c,tp,EFFECT_MUST_BE_XMATERIAL)
 end
 function c100417022.spfilter2(c,e,tp,mc,att)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x270) and mc:IsCanBeXyzMaterial(c)
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x271) and mc:IsCanBeXyzMaterial(c)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and not Duel.IsExistingMatchingCard(c100417022.cfilter,tp,LOCATION_ONFIELD,0,1,nil,c:GetCode())
 end

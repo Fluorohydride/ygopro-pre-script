@@ -31,7 +31,7 @@ function c100417015.filter(c)
 	return c:IsPreviousLocation(LOCATION_GRAVE) 
 end
 function c100417015.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x270)
+	return c:IsFaceup() and c:IsSetCard(0x271)
 end
 function c100417015.effcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.IsExistingMatchingCard(c100417015.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
@@ -57,7 +57,7 @@ function c100417015.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and eg:IsExists(c100417015.filter,1,nil)
 end
 function c100417015.spfilter(c,e,tp,mc)
-	return c:IsSetCard(0x270) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
+	return c:IsSetCard(0x271) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end
 function c100417015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

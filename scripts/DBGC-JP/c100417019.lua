@@ -59,7 +59,7 @@ function c100417019.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100417019.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x270) then
+	if g:IsExists(Card.IsSetCard,1,nil,0x271) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
