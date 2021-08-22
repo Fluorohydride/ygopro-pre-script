@@ -18,6 +18,7 @@ function c100417013.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100417013,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_MOVE)
 	e2:SetRange(LOCATION_MZONE)
@@ -57,7 +58,7 @@ function c100417013.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and eg:IsExists(c100417013.filter,1,nil)
 end
 function c100417013.spfilter(c,e,tp,mc)
-	return c:IsSetCard(0x696) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
+	return c:IsSetCard(0x271) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end
 function c100417013.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

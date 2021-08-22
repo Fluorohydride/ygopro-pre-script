@@ -1,4 +1,4 @@
---エクソシスター・ソフィア
+--エクソシスター・イレーヌ
 --
 --Scripted by KillerDJ
 function c100417015.initial_effect(c)
@@ -6,11 +6,11 @@ function c100417015.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100417015,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_DRAW+CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,100417015)
-	e1:SetCondition(c100417015.effcon)
+	e1:SetCost(c100417015.effcost)
 	e1:SetTarget(c100417015.efftg)
 	e1:SetOperation(c100417015.effop)
 	c:RegisterEffect(e1)
@@ -18,8 +18,9 @@ function c100417015.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100417015,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_CUSTOM+101107081)
+	e2:SetCode(EVENT_MOVE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100417015+100)
 	e2:SetCondition(c100417015.spcon)
@@ -30,11 +31,11 @@ end
 function c100417015.filter(c)
 	return c:IsPreviousLocation(LOCATION_GRAVE) 
 end
-function c100417015.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x271)
-end
-function c100417015.effcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.IsExistingMatchingCard(c100417015.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+function c100417015.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoDeck(g,nil,1,REASON_COST)
 end
 function c100417015.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -42,13 +43,13 @@ function c100417015.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
-function c100417015.cfilter1(c)
+function c100417015.cfilter(c)
 	return c:IsFaceup() and c:IsCode(100417016)
 end
 function c100417015.effop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)>0
-		and Duel.IsExistingMatchingCard(c100417015.cfilter1,tp,LOCATION_MZONE,0,1,nil) then
+		and Duel.IsExistingMatchingCard(c100417015.cfilter,tp,LOCATION_MZONE,0,1,nil) then
 			Duel.BreakEffect()
 			Duel.Recover(tp,800,REASON_EFFECT)
 	end
