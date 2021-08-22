@@ -57,7 +57,7 @@ function c100417036.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sc=g2:Select(tp,1,1,nil):GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local mg=Duel.SelectMatchingCard(aux.NecroValleyFilter(c100417036.eqfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp,sc)
+		local mg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100417036.eqfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp,sc)
 		Duel.Equip(tp,mg:GetFirst(),sc)
 	end
 end

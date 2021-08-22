@@ -83,8 +83,9 @@ function c100312053.activate(e,tp,eg,ep,ev,re,r,rp)
 			resolve=true
 		end
 	end
+	local check=Duel.IsEnvironment(56433456) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,56433456)
 	local ct=Duel.GetMatchingGroupCount(c100312053.recfilter,tp,LOCATION_MZONE,0,nil)
-	if resolve and ct>0 and Duel.SelectYesNo(tp,aux.Stringid(100312053,2)) then
+	if resolve and check and ct>0 and Duel.SelectYesNo(tp,aux.Stringid(100312053,2)) then
 		Duel.BreakEffect()
 		Duel.Recover(tp,ct*500,REASON_EFFECT)
 	end
