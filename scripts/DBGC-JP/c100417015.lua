@@ -28,13 +28,13 @@ function c100417015.initial_effect(c)
 	e2:SetOperation(c100417015.spop)
 	c:RegisterEffect(e2)
 end
-function c100417015.filter(c)
-	return c:IsPreviousLocation(LOCATION_GRAVE) 
+function c100417015.costfilter(c)
+	return c:IsSetCard(0x271) and c:IsAbleToDeckAsCost()
 end
 function c100417015.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100417015.costfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100417015.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoDeck(g,nil,1,REASON_COST)
 end
 function c100417015.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -53,6 +53,9 @@ function c100417015.effop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Recover(tp,800,REASON_EFFECT)
 	end
+end
+function c100417015.filter(c)
+	return c:IsPreviousLocation(LOCATION_GRAVE) 
 end
 function c100417015.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and eg:IsExists(c100417015.filter,1,nil)

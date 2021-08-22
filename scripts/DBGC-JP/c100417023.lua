@@ -58,8 +58,7 @@ end
 function c100417023.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
-	getmetatable(e:GetHandler()).announce_filter={TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK,OPCODE_ISTYPE,OPCODE_NOT}
-	local ac=Duel.AnnounceCard(tp,table.unpack(getmetatable(e:GetHandler()).announce_filter))
+	local ac=Duel.AnnounceCard(tp)
 	Duel.SetTargetParam(ac)
 	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,0)
 end
@@ -111,8 +110,8 @@ function c100417023.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
 function c100417023.descon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttacker()
-	return tc:IsSetCard(0x271) and tc:IsControler(tp)
+	local tc=Duel.GetBattleMonster(tp)
+	return tc and tc:IsSetCard(0x271) and tc:IsFaceup()
 end
 function c100417023.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

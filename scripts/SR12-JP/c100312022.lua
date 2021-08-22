@@ -41,7 +41,7 @@ function c100312022.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sc=g:Select(tp,1,1,nil)
 			Duel.BreakEffect()
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.SendtoHand(sc,nil,REASON_EFFECT)
 		end
 	end
 end
