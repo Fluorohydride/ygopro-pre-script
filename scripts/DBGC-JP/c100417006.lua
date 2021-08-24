@@ -1,4 +1,6 @@
 --No-P.U.N.K.オーガ・ナンバー 
+--
+--Script by IceBarrierTrishula
 function c100417006.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -16,33 +18,31 @@ function c100417006.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100417006,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_HAND)
+	e2:SetRange(LOCATION_HAND+LOCATION_MZONE)
 	e2:SetCountLimit(1,100417006+100)
 	e2:SetCost(c100417006.thcost)
 	e2:SetTarget(c100417006.thtg)
 	e2:SetOperation(c100417006.thop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetRange(LOCATION_MZONE)
-	c:RegisterEffect(e3)
 	--atk up
-	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_ATKCHANGE)
-	e4:SetType(EFFECT_TYPE_QUICK_O)
-	e4:SetCode(EVENT_CHAINING)
-	e4:SetCountLimit(1)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(c100417006.atkcon)
-	e4:SetOperation(c100417006.atkop)
-	c:RegisterEffect(e4)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100417006,2))
+	e3:SetCategory(CATEGORY_ATKCHANGE)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_CHAINING)
+	e3:SetCountLimit(1)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(c100417006.atkcon)
+	e3:SetOperation(c100417006.atkop)
+	c:RegisterEffect(e3)
 end
-function c100417006.spfilter(c)
-	return c:IsSetCard(0x26f)
+function c100417006.spfilter(c,tp)
+	return c:IsSetCard(0x26f) and (c:IsControler(tp) or c:IsFaceup())
 end
 function c100417006.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c100417006.spfilter,1,nil) end
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c100417006.spfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,c100417006.rfilter,1,1,nil,tp)
+	local g=Duel.SelectReleaseGroup(tp,c100417006.spfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c100417006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
