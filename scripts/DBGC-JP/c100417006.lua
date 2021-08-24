@@ -1,4 +1,4 @@
---No-P.U.N.K.オーガ・ナンバー 
+--No-P.U.N.K.オーガ・ナンバー
 --
 --Script by IceBarrierTrishula
 function c100417006.initial_effect(c)

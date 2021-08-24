@@ -4,7 +4,7 @@
 function c100417031.initial_effect(c)
 	aux.AddCodeList(c,100417125)
 	c:SetUniqueOnField(1,0,100417031)
-	--Activate 
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -68,7 +68,7 @@ end
 function c100417031.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c100417031.cfilter(chkc) and chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingTarget(c100417031.cfilter,tp,LOCATION_MZONE,0,1,nil) 
+	if chk==0 then return Duel.IsExistingTarget(c100417031.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and c:CheckUniqueOnField(tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,c100417031.cfilter,tp,LOCATION_MZONE,0,1,1,nil)

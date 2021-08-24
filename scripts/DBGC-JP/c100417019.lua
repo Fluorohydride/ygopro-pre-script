@@ -107,5 +107,5 @@ function c100417019.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_XYZ))
 	e1:SetValue(800)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp) 
+	Duel.RegisterEffect(e1,tp)
 end

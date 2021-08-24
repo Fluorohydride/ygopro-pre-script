@@ -61,7 +61,7 @@ function c100417027.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-	end 
+	end
 end
 function c100417027.atkcon(e)
 	return not Duel.IsExistingMatchingCard(c100417027.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

@@ -29,7 +29,7 @@ function c100417016.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100417016.filter(c)
-	return c:IsPreviousLocation(LOCATION_GRAVE) 
+	return c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function c100417016.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x271)

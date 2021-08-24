@@ -24,7 +24,7 @@ function c100200206.initial_effect(c)
 	e2:SetCondition(c100200206.thcon)
 	e2:SetTarget(c100200206.thtg)
 	e2:SetOperation(c100200206.thop)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 end
 function c100200206.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelAbove(5) and c:IsAttribute(ATTRIBUTE_LIGHT)
