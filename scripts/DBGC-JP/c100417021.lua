@@ -35,7 +35,6 @@ function c100417021.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tc=Duel.SelectMatchingCard(tp,c100417021.thfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc and Duel.SendtoHand(tc,nil,REASON_EFFECT) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 		if tc:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(c100417021.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tc:GetCode()) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(100417021,0)) then
 			Duel.BreakEffect()
