@@ -14,7 +14,7 @@ function c101105087.initial_effect(c)
 	e1:SetCondition(c101105087.spcon)
 	e1:SetTarget(c101105087.sptg)
 	e1:SetOperation(c101105087.spop)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--th effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101105087,1))

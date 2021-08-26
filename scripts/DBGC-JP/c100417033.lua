@@ -29,7 +29,7 @@ function c100417033.initial_effect(c)
 	e2:SetTarget(c100417033.damtg)
 	e2:SetOperation(c100417033.damop)
 	c:RegisterEffect(e2)
-	--search 
+	--search
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_IGNITION)

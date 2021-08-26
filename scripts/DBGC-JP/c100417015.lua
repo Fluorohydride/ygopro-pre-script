@@ -55,7 +55,7 @@ function c100417015.effop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100417015.filter(c)
-	return c:IsPreviousLocation(LOCATION_GRAVE) 
+	return c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function c100417015.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and eg:IsExists(c100417015.filter,1,nil)

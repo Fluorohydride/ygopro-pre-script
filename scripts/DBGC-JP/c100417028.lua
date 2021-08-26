@@ -61,7 +61,7 @@ function c100417028.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c100417028.negop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler() 
+	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,2,REASON_EFFECT)>0 then
 		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 			Duel.Destroy(eg,REASON_EFFECT)

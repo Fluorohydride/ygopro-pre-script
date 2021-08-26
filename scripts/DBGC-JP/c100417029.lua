@@ -3,7 +3,7 @@
 --Script by IceBarrierTrishula
 function c100417029.initial_effect(c)
 	aux.AddCodeList(c,100417125)
-	--Activate 
+	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
@@ -16,9 +16,9 @@ function c100417029.initial_effect(c)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCountLimit(1,100417029)
 	e1:SetTarget(c100417029.thtg)
-	e1:SetOperation(c100417029.thop) 
+	e1:SetOperation(c100417029.thop)
 	c:RegisterEffect(e1)
-	--equip 
+	--equip
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100417029,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_EQUIP)
@@ -29,7 +29,7 @@ function c100417029.initial_effect(c)
 	e2:SetCountLimit(1,100417029+100)
 	e2:SetTarget(c100417029.eqtg)
 	e2:SetOperation(c100417029.eqop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
