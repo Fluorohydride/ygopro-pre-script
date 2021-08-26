@@ -47,9 +47,9 @@ end
 function c100417035.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local dg=Duel.GetMatchingGroup(c100417035.desfilter,tp,0,LOCATION_MZONE,nil,tc:GetAttack())	 
-		if Duel.Destroy(dg,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
-			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100417035.efilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp) 
+		local dg=Duel.GetMatchingGroup(c100417035.desfilter,tp,0,LOCATION_MZONE,nil,tc:GetAttack())
+		if Duel.Destroy(dg,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100417035.efilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp)
 			and Duel.SelectYesNo(tp,aux.Stringid(100417035,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100417035,1))

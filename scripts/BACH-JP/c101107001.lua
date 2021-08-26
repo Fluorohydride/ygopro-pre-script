@@ -50,7 +50,7 @@ function c101107001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101107001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2) 
+	return (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
 		and Duel.GetFlagEffect(tp,101107001)~=0
 end
 function c101107001.spfilter(c,e,tp)

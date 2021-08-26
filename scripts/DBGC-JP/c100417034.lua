@@ -28,7 +28,7 @@ function c100417034.initial_effect(c)
 	e2:SetTarget(c100417034.drtg)
 	e2:SetOperation(c100417034.drop)
 	c:RegisterEffect(e2)
-	--search 
+	--search
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_IGNITION)

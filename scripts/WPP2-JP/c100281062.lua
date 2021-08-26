@@ -46,7 +46,7 @@ function c100281062.tgfilter(c,e,tp,g)
 	return g:IsContains(c) and Duel.IsExistingMatchingCard(c100281062.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetCode())
 end
 function c100281062.spfilter(c,e,tp,code)
-	return c:IsCode(46986414,38033121) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(code) 
+	return c:IsCode(46986414,38033121) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(code)
 end
 function c100281062.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100281062.cfilter,1,nil,tp)

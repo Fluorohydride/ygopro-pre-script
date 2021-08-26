@@ -29,7 +29,7 @@ function c101107003.cfilter(c,tp)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and (c:IsRace(RACE_SPELLCASTER) or aux.IsCodeListed(c,46986414) and c:IsType(TYPE_SPELL+TYPE_TRAP)) and Duel.GetMZoneCount(tp,c)>0
 end
 function c101107003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return 
+	if chk==0 then return
 		Duel.IsExistingMatchingCard(c101107003.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
