@@ -1,4 +1,6 @@
 --聖殿の水遣い
+--
+--Script by IceBarrierTrishula
 function c100417026.initial_effect(c)
 	aux.AddCodeList(c,100417125)
 	--spsummon
@@ -8,7 +10,7 @@ function c100417026.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,100417026)
-	e1:SetCondition(c100417026.spcon)
+	e1:SetCondition(c100417026.condition)
 	e1:SetTarget(c100417026.sptg)
 	e1:SetOperation(c100417026.spop)
 	c:RegisterEffect(e1)
@@ -29,7 +31,7 @@ function c100417026.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,100417026+200)
-	e3:SetCondition(c100417026.scon)
+	e3:SetCondition(c100417026.condition)
 	e3:SetTarget(c100417026.stg)
 	e3:SetOperation(c100417026.sop)
 	c:RegisterEffect(e3)
@@ -37,7 +39,7 @@ end
 function c100417026.cfilter(c)
 	return c:IsCode(100417125) and c:IsFaceup()
 end
-function c100417026.spcon(e,tp,eg,ep,ev,re,r,rp)
+function c100417026.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100417026.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100417026.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,17 +66,11 @@ function c100417026.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100417026.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c100417026.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100417026.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function c100417026.scfilter(c)
-	return c:IsCode(100417125) and c:IsFaceup()
-end
-function c100417026.scon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100417026.scfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100417026.stfilter(c,tp)
 	return aux.IsCodeListed(c,100417125) and c:IsType(TYPE_FIELD) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
