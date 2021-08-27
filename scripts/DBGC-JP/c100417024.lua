@@ -15,16 +15,16 @@ function c100417024.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100417024.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	 if chk==0 then return Duel.CheckLPCost(tp,800) end
+	if chk==0 then return Duel.CheckLPCost(tp,800) end
 	Duel.PayLPCost(tp,800)
 end
 function c100417024.spfilter1(c,e,tp)
 	return c:IsSetCard(0x271) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(c100417024.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
+		and Duel.IsExistingMatchingCard(c100417024.spfilter2,tp,LOCATION_DECK,0,1,c,e,tp,c)
 end
-function c100417024.spfilter2(c,e,tp,code)
+function c100417024.spfilter2(c,e,tp,ec)
 	return c:IsSetCard(0x271) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and aux.IsCodeListed(c,code)
+		and aux.IsCodeListed(ec,c:GetCode())
 end
 function c100417024.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
@@ -38,7 +38,7 @@ function c100417024.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g1=Duel.SelectMatchingCard(tp,c100417024.spfilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g1==0 then return end
-	local g2=Duel.SelectMatchingCard(tp,c100417024.spfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,g1:GetFirst():GetCode())
+	local g2=Duel.SelectMatchingCard(tp,c100417024.spfilter2,tp,LOCATION_DECK,0,1,1,g1,e,tp,g1:GetFirst())
 	g1:Merge(g2)
 	local tc=g1:GetFirst()
 	while tc do

@@ -15,9 +15,9 @@ function c100417009.initial_effect(c)
 	e2:SetCode(EVENT_BATTLE_START)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,100417009)
-	e2:SetCondition(c100417009.descon2)
-	e2:SetTarget(c100417009.destg2)
-	e2:SetOperation(c100417009.desop2)
+	e2:SetCondition(c100417009.descon)
+	e2:SetTarget(c100417009.destg)
+	e2:SetOperation(c100417009.desop)
 	c:RegisterEffect(e2)
 	--Cannot Break
 	local e3=Effect.CreateEffect(c)
@@ -29,19 +29,19 @@ function c100417009.initial_effect(c)
 	e3:SetOperation(c100417009.limop)
 	c:RegisterEffect(e3)
 end
-function c100417009.descon2(e,tp,eg,ep,ev,re,r,rp)
-	local ac=Duel.GetAttacker()
-	if not ac:IsSetCard(0x26f) or not ac:IsControler(tp) then return false end
+function c100417009.descon(e,tp,eg,ep,ev,re,r,rp)
+	local ac=Duel.GetBattleMonster(tp)
+	if not (ac and ac:IsFaceup() and ac:IsSetCard(0x26f)) then return false end
 	local bc=ac:GetBattleTarget()
 	e:SetLabelObject(bc)
 	return bc and bc:IsControler(1-tp) and bc:IsRelateToBattle()
 end
-function c100417009.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100417009.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetLabelObject()
 	if chk==0 then return bc end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,bc,1,0,0)
 end
-function c100417009.desop2(e,tp,eg,ep,ev,re,r,rp)
+function c100417009.desop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetLabelObject()
 	if bc and bc:IsControler(1-tp) and bc:IsRelateToBattle() then
 		Duel.Destroy(bc,REASON_EFFECT)
@@ -59,12 +59,14 @@ function c100417009.limop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100417009.cfilter,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	while tc do
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(aux.Stringid(100417009,2))
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
 		tc=g:GetNext()
 	end
 end

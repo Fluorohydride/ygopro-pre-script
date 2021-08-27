@@ -34,7 +34,8 @@ function c101105090.filter(c,e,tp)
 end
 function c101105090.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101105090.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c101105090.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(c101105090.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c101105090.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
@@ -53,7 +54,7 @@ function c101105090.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101105090.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousControler(tp) and c:IsRace(RACE_INSECT)
+		and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and c:IsRace(RACE_INSECT)
 end
 function c101105090.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101105090.cfilter,1,nil,tp)

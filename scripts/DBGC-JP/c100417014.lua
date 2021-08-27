@@ -27,9 +27,6 @@ function c100417014.initial_effect(c)
 	e2:SetOperation(c100417014.spop)
 	c:RegisterEffect(e2)
 end
-function c100417014.filter(c)
-	return c:IsPreviousLocation(LOCATION_GRAVE)
-end
 function c100417014.effspfilter(c,e,tp)
 	return c:IsSetCard(0x271) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -46,13 +43,16 @@ function c100417014.effop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100417014.effspfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0
-		and Duel.IsExistingMatchingCard(c100417014.cfilter,tp,LOCATION_MZONE,0,1,nil) then
-			Duel.BreakEffect()
-			Duel.Recover(tp,800,REASON_EFFECT)
+		and Duel.IsExistingMatchingCard(c100417014.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then
+		Duel.BreakEffect()
+		Duel.Recover(tp,800,REASON_EFFECT)
 	end
 end
+function c100417014.filter(c)
+	return c:IsPreviousLocation(LOCATION_GRAVE)
+end
 function c100417014.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and eg:IsExists(c100417014.filter,1,nil)
+	return rp==1-tp and eg:IsExists(c100417014.filter,1,nil)
 end
 function c100417014.spfilter(c,e,tp,mc)
 	return c:IsSetCard(0x271) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)

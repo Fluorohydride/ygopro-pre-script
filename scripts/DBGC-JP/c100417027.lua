@@ -50,7 +50,7 @@ function c100417027.cfilter(c)
 	return c:IsCode(100417125) and c:IsFaceup()
 end
 function c100417027.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100417027.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100417027.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100417027.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -64,7 +64,7 @@ function c100417027.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100417027.atkcon(e)
-	return not Duel.IsExistingMatchingCard(c100417027.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(c100417027.cfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function c100417027.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,100417027)>0
@@ -76,7 +76,6 @@ function c100417027.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100417027.setfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function c100417027.setop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,c100417027.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then

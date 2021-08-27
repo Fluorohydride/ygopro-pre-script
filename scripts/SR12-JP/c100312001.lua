@@ -20,7 +20,6 @@ function c100312001.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_FAIRY))
-	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--banish
 	local e3=Effect.CreateEffect(c)

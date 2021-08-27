@@ -17,7 +17,7 @@ function c101105086.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--When a monster your opponent controls activates its effect (Quick Effect): You can Tribute 1 Insect monster; destroy it.
+	--destroy chain
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_QUICK_O)

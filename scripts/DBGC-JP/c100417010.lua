@@ -4,7 +4,6 @@
 function c100417010.initial_effect(c)
 	--ACT
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
@@ -35,13 +34,11 @@ function c100417010.acfilter(c,tp)
 	return c:IsSetCard(0x26f) and c:IsControler(tp) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function c100417010.discon(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not tg or not tg:IsExists(c100417010.acfilter,1,nil,tp) then return false end
-	return rp~=tp
+	return rp==1-tp and tg and tg:IsExists(c100417010.acfilter,1,nil,tp)
 end
-function c100417010.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100417010.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -59,30 +56,31 @@ function c100417010.cfilter(c)
 end
 function c100417010.limcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_SZONE) and Duel.GetMatchingGroupCount(c100417010.cfilter,tp,LOCATION_MZONE,0,nil)>0
-
+	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_SZONE)
+		and Duel.GetMatchingGroupCount(c100417010.cfilter,tp,LOCATION_MZONE,0,nil)>0
 end
 function c100417010.limop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c100417010.cfilter,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	while tc do
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-			e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			e1:SetValue(c100417010.tgval)
-			e1:SetOwnerPlayer(tp)
-			tc:RegisterEffect(e1,true)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-			e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			e2:SetValue(c100417010.tgval)
-			e2:SetOwnerPlayer(tp)
-			tc:RegisterEffect(e2,true)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetValue(c100417010.tgval)
+		e1:SetOwnerPlayer(tp)
+		tc:RegisterEffect(e1,true)
+		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(aux.Stringid(100417010,2))
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetValue(c100417010.tgval)
+		e2:SetOwnerPlayer(tp)
+		tc:RegisterEffect(e2,true)
 		tc=g:GetNext()
 	end
 end
