@@ -37,7 +37,7 @@ function c100417006.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100417006.spfilter(c,tp)
-	return c:IsSetCard(0x26f) and (c:IsControler(tp) or c:IsFaceup())
+	return Duel.GetMZoneCount(tp,c)>0 and c:IsSetCard(0x26f) and (c:IsControler(tp) or c:IsFaceup())
 end
 function c100417006.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100417006.spfilter,1,nil,tp) end

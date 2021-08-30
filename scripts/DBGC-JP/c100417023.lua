@@ -11,7 +11,7 @@ function c100417023.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e1:SetRange(LOCATION_FZONE)
+	e1:SetRange(LOCATION_SZONE)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(c100417023.eftg)
@@ -49,11 +49,11 @@ end
 function c100417023.efilter(e,re,rp)
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSummonLocation(LOCATION_GRAVE) and re:GetActivateLocation()==LOCATION_MZONE
 end
-function c100417023.cfilter(c,tp,sumt)
-	return c:IsFaceup() and c:IsSetCard(0x271) and c:IsSummonType(sumt) and c:IsSummonPlayer(tp)
+function c100417023.cfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(0x271) and c:IsSummonType(SUMMON_TYPE_XYZ) and c:IsSummonPlayer(tp)
 end
 function c100417023.bancon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100417023.cfilter,1,nil,tp,SUMMON_TYPE_XYZ)
+	return eg:IsExists(c100417023.cfilter,1,nil,tp)
 end
 function c100417023.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -36,7 +36,7 @@ end
 function c100417028.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) then return false end
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
-		or Duel.IsExistingMatchingCard(c100417028.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		or Duel.IsExistingMatchingCard(c100417028.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100417028.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -49,7 +49,7 @@ function c100417028.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c100417028.negcon(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(c100417028.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
+	if not Duel.IsExistingMatchingCard(c100417028.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then return false end
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function c100417028.negtg(e,tp,eg,ep,ev,re,r,rp,chk)

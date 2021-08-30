@@ -25,7 +25,7 @@ function c100417026.initial_effect(c)
 	e2:SetTarget(c100417026.thtg)
 	e2:SetOperation(c100417026.thop)
 	c:RegisterEffect(e2)
-	--set 
+	--set
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100417026,2))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -40,7 +40,7 @@ function c100417026.cfilter(c)
 	return c:IsCode(100417125) and c:IsFaceup()
 end
 function c100417026.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100417026.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100417026.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100417026.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -51,7 +51,7 @@ function c100417026.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-	end 
+	end
 end
 function c100417026.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
@@ -82,6 +82,11 @@ function c100417026.sop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,c100417026.stfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	if tc then
+		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+		if fc then
+			Duel.SendtoGrave(fc,REASON_RULE)
+			Duel.BreakEffect()
+		end
 		Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 	end
 end

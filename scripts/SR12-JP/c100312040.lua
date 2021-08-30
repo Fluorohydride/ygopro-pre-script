@@ -22,7 +22,7 @@ function c100312040.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(TIMING_BATTLE_PHASE,TIMINGS_CHECK_MONSTER+TIMING_BATTLE_PHASE)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e2:SetCondition(c100312040.qkcon)
 	c:RegisterEffect(e2)
 	--to hand
@@ -37,14 +37,11 @@ function c100312040.initial_effect(c)
 	e3:SetOperation(c100312040.thop)
 	c:RegisterEffect(e3)
 end
-function c100312040.cfilter(c)
-	return c:IsCode(56433456) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+function c100312040.qkcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsEnvironment(56433456) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,56433456)
 end
 function c100312040.noqkcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c100312040.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
-end
-function c100312040.qkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100312040.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
+	return not c100312040.qkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100312040.poscostfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_MONSTER)

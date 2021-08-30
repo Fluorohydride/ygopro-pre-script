@@ -40,8 +40,9 @@ function c100417011.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
+		Duel.AdjustInstantly(tc)
 		if Duel.IsExistingMatchingCard(c100417011.cfilter,tp,LOCATION_MZONE,0,1,nil) then
-			Duel.Recover(tp,tc:GetTextAttack(),REASON_EFFECT)
+			Duel.Recover(tp,tc:GetBaseAttack(),REASON_EFFECT)
 		end
 	end
 end

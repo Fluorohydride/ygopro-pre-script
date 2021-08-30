@@ -3,41 +3,41 @@
 --Script by REIKAI
 function c100417005.initial_effect(c)
 	--spsummon
-	local e0=Effect.CreateEffect(c)
-	e0:SetDescription(aux.Stringid(100417005,0))
-	e0:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e0:SetType(EFFECT_TYPE_IGNITION)
-	e0:SetRange(LOCATION_HAND)
-	e0:SetCountLimit(1,100417005)
-	e0:SetCost(c100417005.spcost)
-	e0:SetTarget(c100417005.sptg)
-	e0:SetOperation(c100417005.spop)
-	c:RegisterEffect(e0)
-	--Special Deck
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100417005,1))
+	e1:SetDescription(aux.Stringid(100417005,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
-	e1:SetCountLimit(1,100417005+100)
-	e1:SetCost(c100417005.spcost1)
-	e1:SetTarget(c100417005.sptg1)
-	e1:SetOperation(c100417005.spop1)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetCountLimit(1,100417005)
+	e1:SetCost(c100417005.spcost)
+	e1:SetTarget(c100417005.sptg)
+	e1:SetOperation(c100417005.spop)
 	c:RegisterEffect(e1)
-	--recover(battle)
+	--Special Deck
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100417005,2))
-	e2:SetCategory(CATEGORY_RECOVER)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BATTLE_DESTROYING)
-	e2:SetCountLimit(1)
-	e2:SetCondition(aux.bdocon)
-	e2:SetTarget(c100417005.rctg)
-	e2:SetOperation(c100417005.rcop)
+	e2:SetDescription(aux.Stringid(100417005,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e2:SetCountLimit(1,100417005+100)
+	e2:SetCost(c100417005.spcost1)
+	e2:SetTarget(c100417005.sptg1)
+	e2:SetOperation(c100417005.spop1)
 	c:RegisterEffect(e2)
+	--recover(battle)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100417005,2))
+	e3:SetCategory(CATEGORY_RECOVER)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_BATTLE_DESTROYING)
+	e3:SetCountLimit(1)
+	e3:SetCondition(aux.bdocon)
+	e3:SetTarget(c100417005.rctg)
+	e3:SetOperation(c100417005.rcop)
+	c:RegisterEffect(e3)
 end
 function c100417005.rfilter(c,tp)
-	return Duel.GetMZoneCount(tp,c)>0 and c:IsSetCard(0x26f)
+	return Duel.GetMZoneCount(tp,c)>0 and c:IsSetCard(0x26f) and (c:IsFaceup() or c:IsControler(tp))
 end
 function c100417005.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c100417005.rfilter,1,nil,tp) end
@@ -64,15 +64,16 @@ function c100417005.spfilter(c,e,tp)
 end
 function c100417005.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
-		and Duel.IsExistingMatchingCard(c100417005.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+		and Duel.IsExistingMatchingCard(c100417005.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c100417005.spop1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,1,nil)
 	if tg:GetCount()>0 then
 		if Duel.SendtoGrave(tg,REASON_EFFECT)==0 then return end
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c100417005.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		if g:GetCount()>0 then

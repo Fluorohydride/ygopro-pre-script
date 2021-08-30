@@ -35,6 +35,7 @@ function c100417015.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100417015.costfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,c100417015.costfilter,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.ConfirmCards(1-tp,g)
 	Duel.SendtoDeck(g,nil,1,REASON_COST)
 end
 function c100417015.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -49,16 +50,16 @@ end
 function c100417015.effop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)>0
-		and Duel.IsExistingMatchingCard(c100417015.cfilter,tp,LOCATION_MZONE,0,1,nil) then
-			Duel.BreakEffect()
-			Duel.Recover(tp,800,REASON_EFFECT)
+		and Duel.IsExistingMatchingCard(c100417015.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then
+		Duel.BreakEffect()
+		Duel.Recover(tp,800,REASON_EFFECT)
 	end
 end
 function c100417015.filter(c)
 	return c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function c100417015.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and eg:IsExists(c100417015.filter,1,nil)
+	return rp==1-tp and eg:IsExists(c100417015.filter,1,nil)
 end
 function c100417015.spfilter(c,e,tp,mc)
 	return c:IsSetCard(0x271) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)

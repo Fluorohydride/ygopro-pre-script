@@ -14,17 +14,18 @@ function c100417012.initial_effect(c)
 	e1:SetOperation(c100417012.desop)
 	c:RegisterEffect(e1)
 end
-function c100417012.filter(c,tp)
-	return c:IsFacedown() or (c:IsFaceup() and Duel.IsExistingMatchingCard(c100417012.cfilter,tp,LOCATION_MZONE,0,1,nil))
+function c100417012.filter(c,check)
+	return c:IsFacedown() or c:IsFaceup() and check
 end
 function c100417012.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x26f)
 end
 function c100417012.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c100417012.filter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c100417012.filter,tp,0,LOCATION_ONFIELD,1,nil,tp) end
+	local check=Duel.IsExistingMatchingCard(c100417012.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c100417012.filter(chkc,check) end
+	if chk==0 then return Duel.IsExistingTarget(c100417012.filter,tp,0,LOCATION_ONFIELD,1,nil,check) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c100417012.filter,tp,0,LOCATION_ONFIELD,1,1,nil,tp)
+	local g=Duel.SelectTarget(tp,c100417012.filter,tp,0,LOCATION_ONFIELD,1,1,nil,check)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c100417012.desop(e,tp,eg,ep,ev,re,r,rp)

@@ -25,7 +25,6 @@ function c100417030.initial_effect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
-	e3:SetRange(LOCATION_SZONE)
 	e3:SetValue(c100417030.atkval)
 	c:RegisterEffect(e3)
 	--grave to equip

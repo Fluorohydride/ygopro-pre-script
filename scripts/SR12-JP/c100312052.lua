@@ -9,7 +9,7 @@ function c100312052.initial_effect(c)
 	--to grave or to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100312052,0))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TOGRAVE)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TOGRAVE+CATEGORY_DECKDES+CATEGORY_GRAVE_ACTION)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -40,22 +40,18 @@ end
 function c100312052.thfilter(c)
 	return c:IsCode(91188343) and c:IsAbleToHand()
 end
-function c100312052.cfilter(c)
-	return c:IsCode(56433456) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
-end
 function c100312052.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b=Duel.IsExistingMatchingCard(c100312052.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
+	local b=Duel.IsEnvironment(56433456) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,56433456)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100312052.tgfilter,tp,LOCATION_DECK,0,1,nil)
-		or b and Duel.IsExistingMatchingCard(c100312052.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+		or b and Duel.IsExistingMatchingCard(c100312052.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
 end
 function c100312052.operation(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.IsExistingMatchingCard(c100312052.tgfilter,tp,LOCATION_DECK,0,1,nil)
-	local b=Duel.IsExistingMatchingCard(c100312052.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
-	if b and Duel.IsExistingMatchingCard(c100312052.thfilter,tp,LOCATION_DECK,0,1,nil) and (not a or Duel.SelectYesNo(tp,aux.Stringid(100312052,2))) then
+	local b=Duel.IsEnvironment(56433456) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,56433456)
+	local tg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100312052.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
+	if b and #tg>0 and (not a or Duel.SelectYesNo(tp,aux.Stringid(100312052,2))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,c100312052.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+		local g=tg:Select(tp,1,1,nil)
 		if g:GetCount()>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
@@ -68,12 +64,13 @@ function c100312052.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100312052.costfilter(c)
-	return c:IsRace(RACE_FAIRY)
+function c100312052.costfilter(c,tp)
+	return c:IsRace(RACE_FAIRY) and (c:IsFaceup() or c:IsControler(tp))
+		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,c)
 end
 function c100312052.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c100312052.costfilter,1,nil) end
-	local rg=Duel.SelectReleaseGroup(tp,c100312052.costfilter,1,1,nil)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c100312052.costfilter,1,nil,tp) end
+	local rg=Duel.SelectReleaseGroup(tp,c100312052.costfilter,1,1,nil,tp)
 	Duel.Release(rg,REASON_COST)
 end
 function c100312052.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

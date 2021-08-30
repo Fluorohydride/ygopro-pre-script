@@ -28,14 +28,8 @@ function c100417013.initial_effect(c)
 	e2:SetOperation(c100417013.spop)
 	c:RegisterEffect(e2)
 end
-function c100417013.filter(c)
-	return c:IsPreviousLocation(LOCATION_GRAVE)
-end
 function c100417013.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x271)
-end
-function c100417013.cfilter1(c)
-	return c:IsFaceup() and c:IsCode(100417014)
 end
 function c100417013.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100417013.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -45,17 +39,22 @@ function c100417013.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
+function c100417013.cfilter1(c)
+	return c:IsFaceup() and c:IsCode(100417014)
+end
 function c100417013.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
-		and Duel.IsExistingMatchingCard(c100417013.cfilter1,tp,LOCATION_MZONE,0,1,nil) then
-			Duel.BreakEffect()
-			Duel.Recover(tp,800,REASON_EFFECT)
+		and Duel.IsExistingMatchingCard(c100417013.cfilter1,tp,LOCATION_ONFIELD,0,1,nil) then
+		Duel.BreakEffect()
+		Duel.Recover(tp,800,REASON_EFFECT)
 	end
 end
+function c100417013.filter(c)
+	return c:IsPreviousLocation(LOCATION_GRAVE)
+end
 function c100417013.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and eg:IsExists(c100417013.filter,1,nil)
+	return rp==1-tp and eg:IsExists(c100417013.filter,1,nil)
 end
 function c100417013.spfilter(c,e,tp,mc)
 	return c:IsSetCard(0x271) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)

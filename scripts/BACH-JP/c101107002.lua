@@ -51,8 +51,7 @@ function c101107002.drfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER)
 end
 function c101107002.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c101107002.drfilter,tp,LOCATION_MZONE,0,nil)
-	local ct=g:GetClassCount(Card.GetCode)
+	local ct=Duel.GetMatchingGroupCount(c101107002.drfilter,tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return ct>0 and Duel.IsPlayerCanDraw(tp,ct) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(ct)
@@ -61,11 +60,11 @@ function c101107002.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101107002.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local g=Duel.GetMatchingGroup(c101107002.drfilter,p,LOCATION_MZONE,0,nil)
-	local ct=g:GetClassCount(Card.GetCode)
+	local ct=Duel.GetMatchingGroupCount(c101107002.drfilter,p,LOCATION_MZONE,0,nil)
 	if ct>0 and Duel.Draw(p,ct,REASON_EFFECT)==ct then
 		local tg=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
 		if tg:GetCount()==0 then return end
+		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=tg:Select(p,ct,ct,nil)
 		Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)

@@ -20,8 +20,11 @@ function c100417025.chainfilter(re,tp,cid)
 	local rc=re:GetHandler()
 	return not (re:IsActiveType(TYPE_MONSTER) and rc:IsLocation(LOCATION_MZONE) and not rc:IsSummonType(SUMMON_TYPE_SPECIAL))
 end
+function c100417025.cfilter0(c)
+	return c:IsCode(100417125) and c:IsFaceup()
+end
 function c100417025.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,100417125)
+	return not Duel.IsExistingMatchingCard(c100417025.cfilter0,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100417025.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(100417025,tp,ACTIVITY_CHAIN)==0 end
@@ -29,7 +32,7 @@ function c100417025.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetTargetRange(1,0)
 	e1:SetValue(c100417025.aclimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
@@ -42,7 +45,7 @@ function c100417025.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
 		Duel.IsPlayerCanSpecialSummonMonster(tp,100417125,0,TYPES_TOKEN_MONSTER,2000,2000,4,RACE_FAIRY,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function c100417025.cfilter(c)
 	return c:IsCode(100417029) and c:IsFaceup()

@@ -21,7 +21,7 @@ function c100417035.cfilter(c)
 	return c:IsCode(100417125) and c:IsFaceup()
 end
 function c100417035.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100417035.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100417035.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100417035.tgfilter(c,tp)
 	return c:IsFaceup() and c:GetEquipCount()>0 and c:GetEquipGroup():IsExists(c100417035.cfilter2,1,nil)

@@ -68,7 +68,7 @@ function c100200206.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100200206.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c100200206.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -92,7 +92,7 @@ function c100200206.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100200206.thfilter,tp,LOCATION_DECK,0,1,1,nil,lv)
 	if g:GetCount()>0 then
-		Duel.SendtoHand(g,tp,REASON_EFFECT)
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
