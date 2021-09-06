@@ -1,4 +1,6 @@
 --新鋭の女戦士
+--
+--Script by Trishula9
 function c100200207.initial_effect(c)
 	--atkdown
 	local e1=Effect.CreateEffect(c)
@@ -25,10 +27,8 @@ function c100200207.initial_effect(c)
 end
 function c100200207.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local a,d=Duel.GetBattleMonster(0)
-	if not a or not d or not a:IsFaceup() or not d:IsFaceup() then return false end
-	if a:IsControler(tp) then return a~=c and a:IsRace(RACE_WARRIOR)
-	else return d~=c and d:IsRace(RACE_WARRIOR) end
+	local a,d=Duel.GetBattleMonster(tp)
+	return a and d and a~=c and a:IsFaceup() and a:IsRace(RACE_WARRIOR) and d:IsFaceup()
 end
 function c100200207.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
