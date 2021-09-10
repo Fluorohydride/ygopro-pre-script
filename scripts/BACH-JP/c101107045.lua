@@ -56,7 +56,7 @@ function c101107045.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,4)
 end
 function c101107045.cfilter(c,e,tp)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101107045.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,4,REASON_EFFECT)
