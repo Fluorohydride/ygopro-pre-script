@@ -10,10 +10,10 @@ function c101107014.initial_effect(c)
 	c:RegisterEffect(e1)
 	--discard deck
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101107014,0))
 	e2:SetCategory(CATEGORY_DECKDES+CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetTarget(c101107014.distg)
 	e2:SetOperation(c101107014.disop)
 	c:RegisterEffect(e2)
@@ -36,7 +36,7 @@ function c101107014.sumcon(e)
 	return not Duel.IsExistingMatchingCard(c101107014.sfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c101107014.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,2)
 end
 function c101107014.cfilter(c)
@@ -50,31 +50,36 @@ function c101107014.stfilter(c)
 end
 function c101107014.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,2,REASON_EFFECT)
-	local c=e:GetHandler()
 	local g=Duel.GetOperatedGroup()
 	local ct=g:FilterCount(c101107014.cfilter,nil)
 	if ct>0 then
 		local b1=Duel.IsExistingMatchingCard(c101107014.thfilter,tp,LOCATION_DECK,0,1,nil)
 		local b2=Duel.IsExistingMatchingCard(c101107014.stfilter,tp,0,LOCATION_MZONE,1,nil)
-		local sel=0
-		if b1 and b2 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPTION)
-			if Duel.SelectYesNo(tp,aux.Stringid(101107014,0)) then
-				sel=Duel.SelectOption(tp,aux.Stringid(101107014,1),aux.Stringid(101107014,2))+1
-			end
-		elseif b1 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPTION)
-			if Duel.SelectYesNo(tp,aux.Stringid(101107014,1)) then sel=1 end
-		else
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPTION)
-			if Duel.SelectYesNo(tp,aux.Stringid(101107014,2)) then sel=2 end
+		local off=1
+		local ops,opval={},{}
+		if b1 then
+			ops[off]=aux.Stringid(101107014,1)
+			opval[off]=1
+			off=off+1
 		end
+		if b2 then
+			ops[off]=aux.Stringid(101107014,2)
+			opval[off]=2
+			off=off+1
+		end
+		ops[off]=aux.Stringid(101107014,3)
+		opval[off]=0
+		local op=Duel.SelectOption(tp,table.unpack(ops))+1
+		local sel=opval[op]
 		if sel==1 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg=Duel.SelectMatchingCard(tp,c101107014.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 		elseif sel==2 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 			local sg=Duel.SelectMatchingCard(tp,c101107014.stfilter,tp,0,LOCATION_MZONE,1,1,nil)
+			Duel.HintSelection(sg)
 			Duel.ChangePosition(sg,POS_FACEDOWN_DEFENSE)
 		end
 	end
