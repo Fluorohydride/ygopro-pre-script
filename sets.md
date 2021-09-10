@@ -2,8 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **August 7, 2021**: Structure Deck R: Lost Sanctuary (SR12-JP) : `100312XXX`
-- **August 28, 2021**: Deck Build Pack: Grand Creators (DBGC-JP) : `100417XXX`
 - **September 25, 2021**: WORLD PREMIERE PACK 2021 (WPP2-JP) : `100281XXX`
 - **October 16, 2021**: BATTLE OF CHAOS (BACH-JP) : `101107XXX`
 
@@ -112,6 +110,7 @@
 - Structure Deck R: Warrior's Strike (SR09-JP) : `100309XXX`
 - Structure Deck R: Machiners Command (SR10-JP) : `100310XXX`
 - Structure Deck R: Dragunity Drive (SR11-JP) : `100311XXX`
+- Structure Deck R: Lost Sanctuary (SR12-JP) : `100312XXX`
 -----
 - Starter Deck 2016 (ST16-JP) : `100316XXX`
 - Starter Deck 2017 (ST17-JP) : `100317XXX`
@@ -142,6 +141,7 @@
 - Deck Build Pack: Secret Slayers (DBSS-JP) : `100414XXX`
 - Deck Build Pack: Genesis Impactors (DBGI-JP): `100415XXX`
 - Deck Build Pack: Ancient Guardians (DBAG-JP): `100416XXX`
+- Deck Build Pack: Grand Creators (DBGC-JP) : `100417XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
