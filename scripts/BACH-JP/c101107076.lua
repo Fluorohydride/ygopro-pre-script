@@ -15,20 +15,21 @@ function c101107076.initial_effect(c)
 	e1:SetOperation(c101107076.operation)
 	c:RegisterEffect(e1)
 end
-function c101107076.confilter(c)
+function c101107076.confilter1(c)
+	return c:IsSetCard(0x8d) and c:IsFaceup()
+end
+function c101107076.confilter2(c)
 	return c:IsSetCard(0x8d) and c:IsType(TYPE_LINK)
 end
 function c101107076.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_FZONE,0,1,nil,0x8d)
-		or Duel.IsExistingMatchingCard(c101107076.confilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c101107076.confilter1,tp,LOCATION_FZONE,0,1,nil)
+		or Duel.IsExistingMatchingCard(c101107076.confilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101107076.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsFaceup() end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
+	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function c101107076.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
