@@ -1,4 +1,4 @@
---真血公 吸血鬼
+--真血公ヴァンパイア
 --
 --Script by Trishula9
 function c101107045.initial_effect(c)
@@ -24,7 +24,8 @@ function c101107045.initial_effect(c)
 	c:RegisterEffect(e2)
 	--discard deck
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_DECKDES+CATEGORY_SPECIAL_SUMMON)
+	e3:SetDescription(aux.Stringid(101107045,0))
+	e3:SetCategory(CATEGORY_DECKDES+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,101107045)
@@ -44,7 +45,7 @@ end
 function c101107045.eval(e,re,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return rc~=c and re:IsActiveType(TYPE_MONSTER) and not rc:IsSummonLocation(LOCATION_GRAVE) and rc:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return re:IsActiveType(TYPE_MONSTER) and not rc:IsSummonLocation(LOCATION_GRAVE) and rc:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function c101107045.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -62,12 +63,12 @@ function c101107045.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,4,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	Duel.DiscardDeck(1-tp,4,REASON_EFFECT)
-	local c=e:GetHandler()
 	local g2=Duel.GetOperatedGroup()
 	g:Merge(g2)
 	local fg=g:Filter(c101107045.cfilter,nil,e,tp)
-	if fg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101107045,0)) then
+	if fg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101107045,1)) then
 		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=fg:Select(tp,1,1,nil)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
