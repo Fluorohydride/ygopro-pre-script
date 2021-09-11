@@ -1,4 +1,4 @@
---吸血鬼的幽鬼
+--ヴァンパイアの幽鬼
 --
 --Script by Trishula9
 function c101107015.initial_effect(c)
@@ -27,12 +27,13 @@ function c101107015.initial_effect(c)
 	e2:SetOperation(c101107015.sumop)
 	c:RegisterEffect(e2)
 end
-function c101107015.cosfilter(c)
-	return c:IsSetCard(0x8e) and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or (c:IsLocation(LOCATION_ONFIELD) and c:IsFaceup()))
+function c101107015.costfilter(c)
+	return c:IsSetCard(0x8e) and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function c101107015.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101107015.cosfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler()) end
-	local g=Duel.SelectMatchingCard(tp,c101107015.cosfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler())
+	if chk==0 then return Duel.IsExistingMatchingCard(c101107015.costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c101107015.costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c101107015.filter1(c)
@@ -53,11 +54,11 @@ function c101107015.thop(e,tp,eg,ep,ev,re,r,rp)
 	if g1:GetCount()>0 then
 		Duel.SendtoHand(g1,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g1)
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(tp,c101107015.filter2,tp,LOCATION_DECK,0,1,1,nil)
-	if g2:GetCount()>0 then
-		Duel.SendtoGrave(g2,REASON_EFFECT)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		local g2=Duel.SelectMatchingCard(tp,c101107015.filter2,tp,LOCATION_DECK,0,1,1,nil)
+		if g2:GetCount()>0 then
+			Duel.SendtoGrave(g2,REASON_EFFECT)
+		end
 	end
 end
 function c101107015.sumcon(e,tp,eg,ep,ev,re,r,rp)
