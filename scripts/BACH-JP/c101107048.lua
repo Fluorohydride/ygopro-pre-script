@@ -1,6 +1,6 @@
 --ヴァンパイア・ファシネイター
 --
---Script by Trishula9
+--Script by Trishula9 & mercury233
 function c101107048.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,nil,2,3,c101107048.lcheck)
@@ -45,10 +45,9 @@ function c101107048.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101107048.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 	local e1=Effect.CreateEffect(c)
@@ -63,18 +62,29 @@ end
 function c101107048.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsRace(RACE_ZOMBIE)
 end
-function c101107048.ctfilter(c)
-	return c:IsSetCard(0x8e) and c:IsReleasable()
-end
 function c101107048.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101107048.ctfilter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,c101107048.ctfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.Release(g,REASON_COST)
+	e:SetLabel(1)
+	return true
+end
+function c101107048.rfilter(c,tp)
+	return c:IsSetCard(0x8e) and (c:IsControler(tp) or c:IsFaceup())
+		and Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,c)
 end
 function c101107048.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsControlerCanBeChanged() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then
+		if e:GetLabel()==1 then
+			e:SetLabel(0)
+			return Duel.CheckReleaseGroup(tp,c101107048.rfilter,1,nil,tp)
+		else
+			return Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil)
+		end
+	end
+	if e:GetLabel()==1 then
+		e:SetLabel(0)
+		local sg=Duel.SelectReleaseGroup(tp,c101107048.rfilter,1,1,nil,tp)
+		Duel.Release(sg,REASON_COST)
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectTarget(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
