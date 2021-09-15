@@ -56,7 +56,7 @@ function c101107041.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function c101107041.filter(c,tp)
-	return c:IsSummonPlayer(tp) and c:IsOnField()
+	return c:IsSummonPlayer(1-tp) and c:IsOnField()
 end
 function c101107041.remtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c101107041.filter,1,nil,tp) end
@@ -79,7 +79,7 @@ function c101107041.remop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101107041.remcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep==tp and re:GetHandler():IsRelateToEffect(re) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return ep==1-tp and re:GetHandler():IsRelateToEffect(re) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function c101107041.remtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsAbleToRemove() end
