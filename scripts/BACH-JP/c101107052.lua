@@ -12,6 +12,7 @@ function c101107052.initial_effect(c)
 	c:RegisterEffect(e1)
 	--atk down
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101107052,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
@@ -27,6 +28,7 @@ function c101107052.initial_effect(c)
 end
 function c101107052.thfilter(c)
 	return c:IsSetCard(0x16c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+		and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function c101107052.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101107052.thfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
@@ -38,7 +40,7 @@ function c101107052.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101107052.adfilter(c)
-	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsFaceup()
+	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsFaceup() and c:GetBaseAttack()>0
 end
 function c101107052.adtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101107052.adfilter(chkc) end
@@ -46,25 +48,22 @@ function c101107052.adtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c101107052.adfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	e:SetLabel(g:GetFirst():GetTextAttack())
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,g,1,0,0)
 end
 function c101107052.adop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	local g1=Group.CreateGroup()
-	g1:AddCard(tc)
-	local g2=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	g1:Merge(g2)
-	local tc=g1:GetFirst()
-	while tc do
-		local e1=Effect.CreateEffect(e:GetHandler())
+	if not tc:IsRelateToEffect(e) then return end
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	g:AddCard(tc)
+	local tc1=g:GetFirst()
+	while tc1 do
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetValue(-e:GetLabel())
-		tc:RegisterEffect(e1)
-		tc=g1:GetNext()
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetValue(-tc:GetBaseAttack())
+		tc1:RegisterEffect(e1)
+		tc1=g:GetNext()
 	end
 end
