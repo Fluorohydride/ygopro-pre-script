@@ -45,12 +45,12 @@ function c101107006.actlimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_FLIP_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
 function c101107006.atkcon(e)
-	local tp=e:GetHandler()
+	local tp=e:GetHandlerPlayer()
 	local a,d=Duel.GetBattleMonster(tp)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and a and d and a:IsSetCard(0x16c)
 end
 function c101107006.atktg(e,c)
-	local tp=e:GetHandler()
+	local tp=e:GetHandlerPlayer()
 	local a,d=Duel.GetBattleMonster(tp)
-	return d
+	return c==d
 end
