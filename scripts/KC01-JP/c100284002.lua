@@ -3,7 +3,7 @@
 --Script by Trishula9
 function c100284002.initial_effect(c)
 	c:SetUniqueOnField(1,0,100284002)
-	c:EnableCounterPermit(0x5f)
+	c:EnableCounterPermit(0x15f)
 	--activate 
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -37,22 +37,22 @@ function c100284002.ctcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100284002.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x5f)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x15f)
 end
 function c100284002.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		c:AddCounter(0x5f,1)
+		c:AddCounter(0x15f,1)
 	end
 end
 function c100284002.hdcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_MAIN1 and ph<=PHASE_MAIN2 and e:GetHandler():GetCounter(0x5f)>0
+	return ph>=PHASE_MAIN1 and ph<=PHASE_MAIN2 and e:GetHandler():GetCounter(0x15f)>0
 end
 function c100284002.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGrave() and c:GetFlagEffect(100284002)==0 end
-	e:SetLabel(c:GetCounter(0x5f))
+	e:SetLabel(c:GetCounter(0x15f))
 	c:RegisterFlagEffect(100284002,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
 end
