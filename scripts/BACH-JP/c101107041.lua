@@ -1,4 +1,6 @@
---相剑大邪—七星龙渊
+--相剣大邪－七星龍淵
+--
+--Script by KillerDJSH
 function c101107041.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsRace,RACE_WYRM),1)
