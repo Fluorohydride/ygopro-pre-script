@@ -1,4 +1,6 @@
---思念的相剑
+--憶念の相剣
+--
+--Script by KillerDJSH
 function c101107067.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
