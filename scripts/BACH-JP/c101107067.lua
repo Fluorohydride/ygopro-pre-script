@@ -32,7 +32,8 @@ function c101107067.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101107067.rmfilter(c)
-	return ((c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_WYRM)) or c:IsSetCard(0x16b)) and c:IsAbleToRemove() and (c:IsFaceup() or not c:IsOnField())
+	return (c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_WYRM) or c:IsSetCard(0x16b))
+		and c:IsAbleToRemove() and (c:IsFaceup() or not c:IsOnField())
 end
 function c101107067.remtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101107067.rmfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_DECK,LOCATION_ONFIELD,nil)
@@ -48,14 +49,14 @@ function c101107067.remop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101107067.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,20001444,0x16b,TYPES_TOKEN_MONSTER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,20001444,0x16b,TYPES_TOKEN_MONSTER+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c101107067.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,20001444,0x16b,TYPES_TOKEN_MONSTER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER) then
-		local token=Duel.CreateToken(tp,14821891)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,20001444,0x16b,TYPES_TOKEN_MONSTER+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER) then
+		local token=Duel.CreateToken(tp,101107167)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
