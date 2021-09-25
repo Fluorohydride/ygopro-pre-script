@@ -51,7 +51,7 @@ function c101107007.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
 function c101107007.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsContains(e:GetHandler()) and re:GetHandler():IsControler(1-tp)
+	return eg:IsContains(e:GetHandler()) and rp==1-tp
 end
 function c101107007.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and not c:IsCode(101107007) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -62,8 +62,17 @@ function c101107007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c101107007.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e2:SetCountLimit(1)
+	e2:SetValue(c101107007.indct)
+	c:RegisterEffect(e2)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101107007.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
@@ -82,15 +91,6 @@ function c101107007.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(c101107007.tdop)
 		Duel.RegisterEffect(e1,tp)
 	end
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e2:SetCountLimit(1)
-	e2:SetValue(c101107007.indct)
-	c:RegisterEffect(e2)
 end
 function c101107007.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
