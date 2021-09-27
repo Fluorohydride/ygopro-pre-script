@@ -70,7 +70,7 @@ function c101107008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ec=c:GetEquipTarget()
 	if chk==0 then return ec and ec:IsDefenseAbove(0)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(c101107008.spfilter,tp,0,LOCATION_MZONE,1,nil,ec:GetDefense()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,c101107008.spfilter,tp,0,LOCATION_MZONE,1,1,nil,ec:GetDefense())

@@ -2,7 +2,7 @@
 --
 --Script by Trishula9
 function c101107053.initial_effect(c)
-	--activate 
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -14,7 +14,7 @@ function c101107053.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetOperation(c101107053.disop)
 	c:RegisterEffect(e2)
-	--destroy 
+	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)

@@ -4,12 +4,12 @@
 function c100284002.initial_effect(c)
 	c:SetUniqueOnField(1,0,100284002)
 	c:EnableCounterPermit(0x15f)
-	--activate 
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--add counter 
+	--add counter
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_COUNTER)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)

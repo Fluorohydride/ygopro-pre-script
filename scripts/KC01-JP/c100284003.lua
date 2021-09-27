@@ -2,7 +2,7 @@
 --
 --Script by Trishula9
 function c100284003.initial_effect(c)
-	--activate 
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -33,7 +33,7 @@ function c100284003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=0
 	if e:GetHandler():IsLocation(LOCATION_HAND) then ft=1 end
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and c100284003.filter(chkc,tp,ft) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>ft 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>ft
 		and Duel.IsExistingTarget(c100284003.filter,tp,0,LOCATION_GRAVE,1,nil,tp,ft) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectTarget(tp,c100284003.filter,tp,0,LOCATION_GRAVE,1,1,nil,tp,ft)
@@ -46,11 +46,11 @@ function c100284003.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100284003.costfilter(c)
-	return c:IsCode(83764718) and c:IsAbleToGraveAsCost() 
+	return c:IsCode(83764718) and c:IsAbleToGraveAsCost()
 		and (c:IsLocation(LOCATION_HAND) or (c:IsLocation(LOCATION_SZONE) and c:IsFacedown()))
 end
 function c100284003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() 
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
 		and Duel.IsExistingMatchingCard(c100284003.costfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,1,nil) end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -61,7 +61,7 @@ function c100284003.spfilter(c,e,tp)
 	return c:IsCode(10000000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100284003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100284003.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
@@ -69,7 +69,7 @@ function c100284003.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c100284003.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
-	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0 
+	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0
 		and Duel.GetTurnPlayer()==1-tp then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)

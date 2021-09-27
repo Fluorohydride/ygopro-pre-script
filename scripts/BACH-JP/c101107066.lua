@@ -2,7 +2,7 @@
 --
 --Script by Trishula9
 function c101107066.initial_effect(c)
-	--activate 
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -73,7 +73,7 @@ function c101107066.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101107066.filter(c,tp)
-	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) 
+	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP) and not c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()==1-tp
 end
 function c101107066.thcon(e,tp,eg,ep,ev,re,r,rp)

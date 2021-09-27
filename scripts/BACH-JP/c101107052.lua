@@ -44,7 +44,7 @@ function c101107052.adfilter(c)
 end
 function c101107052.adtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101107052.adfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101107052.adfilter,tp,LOCATION_MZONE,0,1,nil) 
+	if chk==0 then return Duel.IsExistingTarget(c101107052.adfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c101107052.adfilter,tp,LOCATION_MZONE,0,1,1,nil)
