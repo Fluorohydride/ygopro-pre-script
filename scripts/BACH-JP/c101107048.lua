@@ -23,7 +23,7 @@ function c101107048.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101107048+100)
 	e2:SetCost(c101107048.ctcost)
-	e2:SetTarget(c101107048.cttg)	
+	e2:SetTarget(c101107048.cttg)
 	e2:SetOperation(c101107048.ctop)
 	c:RegisterEffect(e2)
 end

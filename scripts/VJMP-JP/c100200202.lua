@@ -7,14 +7,13 @@ function c100200202.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(c100200202.atktg)
 	e1:SetOperation(c100200202.atkop)
 	c:RegisterEffect(e1)
 	--DEF DOWN
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100200202,1))
-	e2:SetCategory(CATEGORY_DEFCHANGE)
+	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DEFCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
@@ -63,13 +62,14 @@ function c100200202.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local atk=c:GetAttack()
+		local def=tc:GetDefense()
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		e2:SetValue(-atk)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
-		if tc:IsDefense(0) then
+		if def~=0 and tc:IsDefense(0) then
 			Duel.BreakEffect()
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
