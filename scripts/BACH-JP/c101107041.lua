@@ -44,8 +44,9 @@ function c101107041.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101107041.drcon(e,tp,eg,ep,ev,re,r,rp)
-	local tg=eg:GetFirst()
-	return eg:GetCount()==1 and tg~=e:GetHandler() and tg:IsSummonType(SUMMON_TYPE_SYNCHRO) and tg:IsSummonPlayer(tp)
+	local tc=eg:GetFirst()
+	return eg:GetCount()==1 and tc~=e:GetHandler() and tc:IsSummonType(SUMMON_TYPE_SYNCHRO) and tc:IsSummonPlayer(tp)
+		and tc:IsRace(RACE_WYRM)
 end
 function c101107041.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
