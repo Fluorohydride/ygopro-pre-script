@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **September 25, 2021**: WORLD PREMIERE PACK 2021 (WPP2-JP) : `100281XXX`
 - **October 16, 2021**: BATTLE OF CHAOS (BACH-JP) : `101107XXX`
 - **November 4, 2021**: Yu-Gi-Oh! OCG Structures Volume 4 promotional card (YO04-JP) : `100283XXX`
 - **April 2022**: 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
@@ -98,6 +97,7 @@
 - LEGENDARY MONSTERS PACK (VP21-JP) : `100279XXX`
 - ANIMATION CHRONICLE 2021 (AC01-JP) : `100278XXX`
 - King's Court (KICO-EN) : `100280XXX`
+- WORLD PREMIERE PACK 2021 (WPP2-JP) : `100281XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
