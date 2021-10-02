@@ -1,4 +1,6 @@
---破坏之代行者 维纳斯
+--破壊の代行者 ヴィーナス
+--
+--Script by Trishula9
 function c101107021.initial_effect(c)
 	--self spsummon
 	local e1=Effect.CreateEffect(c)
