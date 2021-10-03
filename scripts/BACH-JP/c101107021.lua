@@ -4,6 +4,7 @@
 function c101107021.initial_effect(c)
 	--self spsummon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101107021,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -14,6 +15,7 @@ function c101107021.initial_effect(c)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101107021,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -45,33 +47,32 @@ function c101107021.ssop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101107021.spfilter(c,e,tp)
-	return c:IsCode(39552864) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return c:IsCode(39552864) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsCanBeEffectTarget(e) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function c101107021.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return Duel.CheckLPCost(tp,500) and ft>0 end
 	local lp=Duel.GetLP(tp)
 	local g=Duel.GetMatchingGroup(c101107021.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
 	local ct=g:GetCount()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ct>ft then ct=ft end
 	if ct>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 	local t={}
 	for i=1,ct do
-		t[i]=i*500
+		if not Duel.CheckLPCost(tp,i*500) then break end
+		t[i]=i
 	end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101107021,0))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101107021,2))
 	local announce=Duel.AnnounceNumber(tp,table.unpack(t))
-	Duel.PayLPCost(tp,announce)
-	e:SetLabel(announce/500)
+	Duel.PayLPCost(tp,announce*500)
+	e:SetLabel(announce)
 end
 function c101107021.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c101107021.spfilter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c101107021.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c101107021.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
 	local ct=e:GetLabel()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ct>ft then ct=ft end
-	if ct>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c101107021.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,ct,ct,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,g:GetCount(),0,0)
