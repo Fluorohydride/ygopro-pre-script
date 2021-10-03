@@ -81,10 +81,7 @@ end
 function c101107046.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and c101107046.tdfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101107046.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
-	local g=Duel.GetMatchingGroup(c101107046.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
-	local ct=g:GetCount()
-	local reg=e:GetLabel()
-	if ct>reg then ct=reg end
+	local ct=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=Duel.SelectTarget(tp,c101107046.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),0,0)
