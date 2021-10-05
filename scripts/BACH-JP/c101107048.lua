@@ -67,8 +67,8 @@ function c101107048.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c101107048.rfilter(c,tp)
-	return c:IsSetCard(0x8e) and (c:IsControler(tp) or c:IsFaceup())
-		and Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,c)
+	return c:IsSetCard(0x8e) and (c:IsControler(tp) or c:IsFaceup()) and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0
+		and Duel.IsExistingTarget(Card.IsAbleToChangeControler,tp,0,LOCATION_MZONE,1,c)
 end
 function c101107048.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsControlerCanBeChanged() end
