@@ -36,7 +36,8 @@ function c101107025.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_EFFECT)
 end
 function c101107025.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101107025.cfilter,1,nil)
+	local c=e:GetHandler()
+	return eg:IsExists(c101107025.cfilter,1,nil) and (c:IsLocation(LOCATION_HAND) or not eg:IsContains(c))
 end
 function c101107025.spcostfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and not c:IsCode(101107025)
