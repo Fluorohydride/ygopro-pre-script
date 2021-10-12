@@ -4,7 +4,7 @@
 function c101107010.initial_effect(c)
 	--to grave
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOGRAVE)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -34,12 +34,15 @@ end
 function c101107010.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101107010.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_GRAVE)
-	
+	if Duel.GetLP(tp)<=2000 then
+		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
+	end
 end
 function c101107010.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101107010.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and Duel.GetLP(tp)<=2000 then
+		Duel.BreakEffect()
 		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end
 end
