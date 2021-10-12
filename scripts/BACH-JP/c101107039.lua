@@ -37,10 +37,10 @@ function c101107039.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101107039.ffilter(c,fc,sub,mg,sg)
-	return c:IsFusionSetCard(0x173) and (not sg or not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode()))
+	return c:IsFusionSetCard(0x273) and (not sg or not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode()))
 end
 function c101107039.costchange(e,re,rp,val)
-	if re and re:GetHandler():IsSetCard(0x173) 
+	if re and re:GetHandler():IsSetCard(0x273) 
 		and (re:IsActiveType(TYPE_MONSTER) or (re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsType(TYPE_TRAP))) then
 		return 0
 	else return val end
@@ -64,7 +64,7 @@ function c101107039.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
 function c101107039.spfilter(c,e,tp)
-	return c:IsSetCard(0x173) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x273) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101107039.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

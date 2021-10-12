@@ -28,7 +28,7 @@ function c101107009.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101107009.ssfilter(c)
-	return c:IsSetCard(0x173) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x273) and c:IsType(TYPE_TRAP) and c:IsSSetable()
 end
 function c101107009.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -62,7 +62,7 @@ function c101107009.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c101107009.spfilter(c,e,tp)
-	return c:IsSetCard(0x173) and not c:IsCode(101107009) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x273) and not c:IsCode(101107009) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101107009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

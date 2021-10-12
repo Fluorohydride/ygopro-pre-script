@@ -28,7 +28,7 @@ function c101107070.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
 function c101107070.filter(c)
-	return c:IsSetCard(0x173) and c:IsFaceup()
+	return c:IsSetCard(0x273) and c:IsFaceup()
 end
 function c101107070.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101107070.filter,tp,LOCATION_MZONE,0,1,nil)

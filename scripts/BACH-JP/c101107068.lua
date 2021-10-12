@@ -38,7 +38,7 @@ function c101107068.filter1(c,e)
 	return not c:IsImmuneToEffect(e)
 end
 function c101107068.filter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x173) and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x273) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c101107068.target(e,tp,eg,ep,ev,re,r,rp,chk)

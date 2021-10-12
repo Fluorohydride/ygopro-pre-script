@@ -29,7 +29,7 @@ function c101107010.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101107010.tgfilter(c)
-	return c:IsSetCard(0x173) and c:IsAbleToGrave()
+	return c:IsSetCard(0x273) and c:IsAbleToGrave()
 end
 function c101107010.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101107010.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -56,7 +56,7 @@ function c101107010.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c101107010.spfilter(c,e,tp)
-	return c:IsSetCard(0x173) and not c:IsCode(101107010) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x273) and not c:IsCode(101107010) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101107010.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

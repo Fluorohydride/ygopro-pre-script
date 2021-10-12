@@ -37,7 +37,7 @@ function c101107038.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101107038.ffilter(c,fc,sub,mg,sg)
-	return c:IsFusionSetCard(0x173) and (not sg or not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode()))
+	return c:IsFusionSetCard(0x273) and (not sg or not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode()))
 end
 function c101107038.adval(e,c)
 	return -Duel.GetLP(e:GetHandlerPlayer())
@@ -46,7 +46,7 @@ function c101107038.cpcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c101107038.cpfilter(c)
-	return c:GetType()==TYPE_TRAP and c:IsSetCard(0x173) and c:IsAbleToRemoveAsCost() and c:CheckActivateEffect(false,true,false)
+	return c:GetType()==TYPE_TRAP and c:IsSetCard(0x273) and c:IsAbleToRemoveAsCost() and c:CheckActivateEffect(false,true,false)
 end
 function c101107038.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
@@ -81,7 +81,7 @@ function c101107038.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
 function c101107038.spfilter(c,e,tp)
-	return c:IsSetCard(0x173) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x273) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101107038.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
