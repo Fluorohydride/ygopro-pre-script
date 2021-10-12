@@ -90,7 +90,9 @@ function c101107019.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c101107019.spopfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,typ):GetFirst()
-	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) then
-		Duel.SetLP(tp,Duel.GetLP(tp)-tc:GetTextAttack())
+	if not tc then return end
+	local atk=tc:GetBaseAttack()
+	if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
+		Duel.SetLP(tp,Duel.GetLP(tp)-atk)
 	end
 end
