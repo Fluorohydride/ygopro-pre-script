@@ -48,7 +48,7 @@ end
 function c101107030.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()<=0 or Duel.GetLocationCount(tp,LOCATION_MZONE,1-tp,LOCATION_REASON_CONTROL)<=0 then return end
-	local tg=g:GetMaxGroup(Card.GetAttack)
+	local tg=g:GetMinGroup(Card.GetAttack)
 	local tc=tg:GetFirst()
 	if tg:GetCount()>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
@@ -57,6 +57,7 @@ function c101107030.ctop(e,tp,eg,ep,ev,re,r,rp)
 		tc=sg:GetFirst()
 	end
 	Duel.GetControl(tc,tp)
+	if not tc:IsControler(tp) then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -64,13 +65,18 @@ function c101107030.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(1,0)
+	e1:SetCondition(c101107030.limitcon)
 	e1:SetTarget(c101107030.splimit)
 	tc:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_TRIGGER)
+	e2:SetCondition(c101107030.limitcon)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc:RegisterEffect(e2)
+end
+function c101107030.limitcon(e)
+	return e:GetHandler():IsControler(e:GetOwnerPlayer())
 end
 function c101107030.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_LINK)
