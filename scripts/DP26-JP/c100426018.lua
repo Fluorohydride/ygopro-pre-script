@@ -1,4 +1,4 @@
---死亡乌贼
+--デス・クラーケン
 function c100426018.initial_effect(c)
 	aux.AddCodeList(c,22702055)
 	--SpecialSummon

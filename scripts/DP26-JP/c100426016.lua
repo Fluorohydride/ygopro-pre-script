@@ -1,4 +1,4 @@
---大要塞鲸
+--大要塞クジラ
 function c100426016.initial_effect(c)
 	aux.AddCodeList(c,22702055)
 	--direct attack
