@@ -29,7 +29,7 @@ function c101107004.initial_effect(c)
 	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101107004,1))
-	e2:SetCategory(CATEGORY_TOHAND)
+	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_START)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
