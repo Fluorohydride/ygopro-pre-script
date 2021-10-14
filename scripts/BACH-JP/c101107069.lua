@@ -7,7 +7,7 @@ function c101107069.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCountLimit(1,101107069+EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(c101107069.cost)
 	e1:SetTarget(c101107069.target)
@@ -28,7 +28,7 @@ function c101107069.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
 function c101107069.spfilter(c,e,tp)
-	return c:IsSetCard(0x273) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x273) and c:IsLevelBelow(8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101107069.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -41,23 +41,24 @@ end
 function c101107069.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft=math.min((Duel.GetLocationCount(tp,LOCATION_MZONE)),2)
 	local tg=Duel.GetMatchingGroup(c101107069.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	if ft<=0 or #tg==0 then return end
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	aux.GCheckAdditional=c101107069.spcheck
-	local g=tg:SelectSubGroup(tp,aux.TRUE,false,1,ft)
-	aux.GCheckAdditional=nil
-	local tc=g:GetFirst()
-	while tc do
-		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_CANNOT_ATTACK)
-			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1)
+	if ft>0 and #tg>0 then
+		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		aux.GCheckAdditional=c101107069.spcheck
+		local g=tg:SelectSubGroup(tp,aux.TRUE,false,1,ft)
+		aux.GCheckAdditional=nil
+		local tc=g:GetFirst()
+		while tc do
+			if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_CANNOT_ATTACK)
+				e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				tc:RegisterEffect(e1)
+			end
+			tc=g:GetNext()	
 		end
-		tc=g:GetNext()	
 	end
 	Duel.SpecialSummonComplete()
 	local e2=Effect.CreateEffect(e:GetHandler())
