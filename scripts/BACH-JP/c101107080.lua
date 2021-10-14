@@ -7,6 +7,7 @@ function c101107080.initial_effect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCondition(c101107080.condition)
 	e1:SetTarget(c101107080.target)
 	e1:SetOperation(c101107080.operation)
@@ -23,7 +24,7 @@ function c101107080.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101107080.effop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Draw(p,d,REASON_EFFECT)>0 and Duel.GetLP(tp)<10 then
-		Duel.Draw(tp,2,REASON_EFFECT)
+	if Duel.Draw(p,d,REASON_EFFECT)>0 and Duel.GetLP(p)<10 then
+		Duel.Draw(p,2,REASON_EFFECT)
 	end
 end
