@@ -1,4 +1,6 @@
 --電気海月－フィサリア－
+--
+--Script by JustFish
 function c100426019.initial_effect(c)
 	aux.AddCodeList(c,22702055)
 	--SpecialSummon
@@ -66,16 +68,15 @@ end
 function c100426019.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.NegateEffect(ev) and c:IsRelateToEffect(e) and Duel.SelectYesNo(tp,aux.Stringid(100426019,2)) then
-			Duel.BreakEffect()
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(600)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			c:RegisterEffect(e1)
-			local e2=e1:Clone()
-			e2:SetCode(EFFECT_UPDATE_DEFENSE)
-			c:RegisterEffect(e2)
-		end
+		Duel.BreakEffect()
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(600)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_UPDATE_DEFENSE)
+		c:RegisterEffect(e2)
 	end
 end

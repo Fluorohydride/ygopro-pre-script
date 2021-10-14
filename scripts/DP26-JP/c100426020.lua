@@ -1,6 +1,8 @@
 --魚群探知機
+--
+--Script by JustFish
 function c100426020.initial_effect(c)
-	aux.IsCodeListed(c,22702055)
+	aux.AddCodeList(c,22702055)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
@@ -12,8 +14,8 @@ function c100426020.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100426020.filter(c)
-	return c:IsAbleToHand()
-		and (aux.IsCodeListed(c,22702055) or (c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER))) and c:IsLevelBelow(7))
+	return c:IsAbleToHand() and c:IsLevelBelow(7)
+		and (aux.IsCodeListed(c,22702055) or (c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER)))
 end
 function c100426020.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100426020.filter,tp,LOCATION_DECK,0,1,nil) end

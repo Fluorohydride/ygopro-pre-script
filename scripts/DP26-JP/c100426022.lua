@@ -1,6 +1,8 @@
 --暗岩の海竜神
+--
+--Script by JustFish
 function c100426022.initial_effect(c)
-	aux.IsCodeListed(c,22702055)
+	aux.AddCodeList(c,22702055)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

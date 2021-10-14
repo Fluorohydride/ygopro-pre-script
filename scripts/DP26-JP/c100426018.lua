@@ -1,4 +1,6 @@
 --デス・クラーケン
+--
+--Script by JustFish
 function c100426018.initial_effect(c)
 	aux.AddCodeList(c,22702055)
 	--SpecialSummon

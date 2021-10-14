@@ -1,6 +1,8 @@
 --潜海奇襲II
+--
+--Script by JustFish
 function c100426021.initial_effect(c)
-	aux.IsCodeListed(c,22702055)
+	aux.AddCodeList(c,22702055)
 	--code
 	aux.EnableChangeCode(c,22702055,LOCATION_SZONE+LOCATION_GRAVE)
 	--cannot be target
