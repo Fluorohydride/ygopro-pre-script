@@ -30,7 +30,7 @@ function c100426016.initial_effect(c)
 	--Special Summon or tohand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100426016,2))
-	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
+	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES+CATEGORY_GRAVE_SPSUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_DESTROYED)
@@ -60,7 +60,7 @@ function c100426016.target(e,c)
 	return c:IsAttribute(ATTRIBUTE_WATER)
 end
 function c100426016.descon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and Duel.GetTurnPlayer()==1-tp
+	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE and Duel.GetTurnPlayer()==1-tp
 end
 function c100426016.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
