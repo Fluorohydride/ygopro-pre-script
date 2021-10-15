@@ -1,6 +1,6 @@
 --凶導の葬列
 --
---Script by mercury233
+--Script by JoyJ
 function c101107054.initial_effect(c)
 	local e1=aux.AddRitualProcGreater2(c,c101107054.filter,LOCATION_HAND+LOCATION_GRAVE,c101107054.mfilter)
 	local e2=e1:Clone()

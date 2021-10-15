@@ -1,6 +1,6 @@
 --ブルーアイズ・ジェット・ドラゴン
 --
---Script by mercury233
+--Script by JoyJ
 function c101107004.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

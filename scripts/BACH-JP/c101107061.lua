@@ -1,6 +1,6 @@
 --X・Y・Zコンバイン
 --
---Script by mercury233
+--Script by JoyJ
 function c101107061.initial_effect(c)
 	--spsummon from deck
 	local e1=Effect.CreateEffect(c)

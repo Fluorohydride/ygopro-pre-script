@@ -1,6 +1,6 @@
 --凶導の白聖骸
 --
---Script by mercury233
+--Script by JoyJ
 function c101107035.initial_effect(c)
 	--atkup
 	local e1=Effect.CreateEffect(c)

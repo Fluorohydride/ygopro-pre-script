@@ -1,6 +1,6 @@
 --夢魔鏡の逆徒－ネイロイ
 --
---Script by mercury233
+--Script by JoyJ
 function c101107018.initial_effect(c)
 	aux.AddCodeList(c,74665651,1050355)
 	--search

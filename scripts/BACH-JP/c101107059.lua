@@ -1,6 +1,6 @@
 --ベアルクティ・ラディエーション
 --
---Script by mercury233
+--Script by JoyJ
 function c101107059.initial_effect(c)
 	c:SetUniqueOnField(1,0,101107059)
 	c:EnableCounterPermit(0x160)

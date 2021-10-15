@@ -1,4 +1,6 @@
---编年魔术师
+--クロニクル・マジシャン
+--
+--Script by JoyJ
 function c100200208.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
