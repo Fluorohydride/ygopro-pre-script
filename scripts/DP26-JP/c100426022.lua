@@ -24,13 +24,15 @@ function c100426022.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100426022.spfilter(c,e,tp)
-	return (aux.IsCodeListed(c,22702055) or (c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return (aux.IsCodeListed(c,22702055) or (c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER)))
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100426022.spfilter1(c,e,tp)
-	return c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelBelow(6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100426022.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c100426022.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c100426022.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c100426022.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -41,13 +43,14 @@ function c100426022.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetMatchingGroup(c100426022.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g1=tg:SelectSubGroup(tp,aux.dncheck,false,1,ft)
-	if g1 and #g1>0 then
+	if g1 then
 		Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g2=Duel.GetMatchingGroup(c100426022.spfilter1,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 	if ft1>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	if ft1>0 Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(100426022,0)) then
+	if ft1>0 and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
+		and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(100426022,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g3=g2:Select(tp,1,ft1,nil)
