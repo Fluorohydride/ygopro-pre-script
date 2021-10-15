@@ -1,4 +1,6 @@
+--新世壊
 --
+--Script by mercury233
 function c101107062.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

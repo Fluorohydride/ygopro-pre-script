@@ -1,4 +1,6 @@
 --死者所生
+--
+--Script by mercury233
 SUMTYPE_MONSTER_REBORN = 83764718
 function c101107077.initial_effect(c)
 	--Activate

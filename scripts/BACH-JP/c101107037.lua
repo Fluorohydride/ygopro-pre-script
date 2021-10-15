@@ -1,4 +1,6 @@
---青眼暴君龙
+--ブルーアイズ・タイラント・ドラゴン
+--
+--Script by mercury233
 function c101107037.initial_effect(c)
 	--fusion summon
 	c:EnableReviveLimit()

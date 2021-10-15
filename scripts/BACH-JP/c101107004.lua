@@ -1,4 +1,6 @@
---青眼喷气龙
+--ブルーアイズ・ジェット・ドラゴン
+--
+--Script by mercury233
 function c101107004.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

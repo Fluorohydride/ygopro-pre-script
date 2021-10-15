@@ -1,8 +1,9 @@
 --ベアルクティ・ラディエーション
-RADIATION_COUNTER = 0x99
+--
+--Script by mercury233
 function c101107059.initial_effect(c)
 	c:SetUniqueOnField(1,0,101107059)
-	c:EnableCounterPermit(RADIATION_COUNTER)
+	c:EnableCounterPermit(0x160)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -13,7 +14,7 @@ function c101107059.initial_effect(c)
 	--special counter permit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_COUNTER_PERMIT+RADIATION_COUNTER)
+	e2:SetCode(EFFECT_COUNTER_PERMIT+0x160)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetCondition(c101107059.ctpermit)
 	c:RegisterEffect(e2)
@@ -67,8 +68,8 @@ function c101107059.ctpermit(e)
 end
 function c101107059.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsCanAddCounter(tp,RADIATION_COUNTER,7,c) end
-	c:AddCounter(RADIATION_COUNTER,7)
+	if chk==0 then return Duel.IsCanAddCounter(tp,0x160,7,c) end
+	c:AddCounter(0x160,7)
 end
 function c101107059.cfilter(c,tp)
 	return c:IsSummonPlayer(tp) and c:IsSetCard(0x163) and c:IsFaceup()
@@ -79,7 +80,7 @@ end
 
 function c101107059.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsCanRemoveCounter(tp,RADIATION_COUNTER,1,REASON_COST) end
+	if chk==0 then return c:IsCanRemoveCounter(tp,0x160,1,REASON_COST) end
 end
 function c101107059.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

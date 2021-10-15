@@ -1,4 +1,6 @@
---凶导的白圣骸
+--凶導の白聖骸
+--
+--Script by mercury233
 function c101107035.initial_effect(c)
 	--atkup
 	local e1=Effect.CreateEffect(c)
