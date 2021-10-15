@@ -42,7 +42,7 @@ function c100426019.spfilter(c,e,tp)
 end
 function c100426019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c100426019.spfilter,tp,LOCATION_HAND,0,1,e:GetHandler(),e,tp) end
+		and Duel.IsExistingMatchingCard(c100426019.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c100426019.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -54,15 +54,11 @@ function c100426019.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100426019.discon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return re:IsActiveType(TYPE_SPELL+TYPE_MONSTER) and Duel.IsChainDisablable(ev)
-end
-function c100426019.thfilter(c)
-	return c:GetCounter(0x1)>0 and c:IsAbleToHand()
+	return Duel.IsEnvironment(22702055) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+		and ep==1-tp and re:IsActiveType(TYPE_SPELL+TYPE_MONSTER) and Duel.IsChainDisablable(ev)
 end
 function c100426019.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsEnvironment(22702055) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function c100426019.disop(e,tp,eg,ep,ev,re,r,rp)
@@ -73,7 +69,7 @@ function c100426019.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(600)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
