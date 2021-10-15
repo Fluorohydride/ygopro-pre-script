@@ -4,11 +4,12 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **October 16, 2021**: BATTLE OF CHAOS (BACH-JP) : `101107XXX`
 - **November 4, 2021**: Yu-Gi-Oh! OCG Structures Volume 4 promotional card (YO04-JP) : `100283XXX`
+- **November 20, 2021**: Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
+- **December 4, 2021**: Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
+- **December 15, 2021**: Secret Shiny Box (SSB1-JP) : `100285XXX`
 - **April 2022**: 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
 
 # Announced
-- **November 20, 2021**: Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
-- **December 4, 2021**: Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
 - **January 13, 2022**: The Grand Creators (GRCR-EN) : `100282XXX`
 
 # Archived
