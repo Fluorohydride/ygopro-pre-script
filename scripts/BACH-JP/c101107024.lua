@@ -1,4 +1,4 @@
---熟练的栗魔导士
+--熟練の栗魔導士
 --
 --Script by 虚子
 function c101107024.initial_effect(c)
@@ -42,13 +42,11 @@ function c101107024.initial_effect(c)
 	e3:SetOperation(c101107024.operation)
 	c:RegisterEffect(e3)
 end
---add counter
 function c101107024.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(0x1,1)
 	end
 end
---Search
 function c101107024.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,1,REASON_COST) end
 	e:GetHandler():RemoveCounter(tp,0x1,1,REASON_COST)
@@ -68,7 +66,6 @@ function c101107024.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
---atk/lv up
 function c101107024.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then

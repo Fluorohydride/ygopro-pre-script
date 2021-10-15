@@ -1,4 +1,4 @@
---绝神鸟 斯摩夫
+--絶神鳥シムルグ
 --
 --Script by 虚子
 function c101107023.initial_effect(c)
@@ -40,7 +40,6 @@ function c101107023.initial_effect(c)
 	e3:SetOperation(c101107023.operation)
 	c:RegisterEffect(e3)
 end
---Summon Effect
 function c101107023.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
@@ -65,7 +64,6 @@ function c101107023.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Summon(tp,tc,true,nil)
 	end
 end
---Summon Launch Effect 
 function c101107023.cfilter(c)
 	return c:IsSetCard(0x12d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end

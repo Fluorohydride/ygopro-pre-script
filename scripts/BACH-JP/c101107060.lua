@@ -1,4 +1,4 @@
---随风旅鸟与旅行准备
+--ふわんだりぃずと旅じたく
 --
 --Script by 虚子
 function c101107060.initial_effect(c)
@@ -13,7 +13,6 @@ function c101107060.initial_effect(c)
 	e1:SetOperation(c101107060.activate)
 	c:RegisterEffect(e1)
 end
---activate
 function c101107060.cfilter(c,tp)
 	return c:IsRace(RACE_WINDBEAST) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsAbleToRemoveAsCost()
 		and Duel.GetMZoneCount(tp,c)>0
