@@ -55,16 +55,16 @@ function c101107037.cfilter(c)
 end
 function c101107037.sprfilter(c,tp,sc)
 	local eqc=c:GetEquipGroup():FilterCount(c101107037.cfilter,nil)
-	return c:IsFusionCode(89631139) and c:IsReleasable() and eqc>0 and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0 and c:IsCanBeFusionMaterial(sc,SUMMON_TYPE_SPECIAL)
+	return c:IsFusionCode(89631139) and eqc>0 and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0 and c:IsCanBeFusionMaterial(sc,SUMMON_TYPE_SPECIAL)
 end
 function c101107037.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.IsExistingMatchingCard(c101107037.sprfilter,tp,LOCATION_MZONE,0,1,nil,tp,c)
+	return Duel.CheckReleaseGroup(tp,c101107037.sprfilter,1,nil,tp,c)
 end
 function c101107037.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,c101107037.sprfilter,tp,LOCATION_MZONE,0,1,1,nil,tp,c)
+	local g=Duel.SelectReleaseGroup(tp,c101107037.sprfilter,1,1,nil,tp,c)
 	c:SetMaterial(g)
 	Duel.Release(g,REASON_COST)
 end
