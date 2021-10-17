@@ -1,6 +1,7 @@
 --死者所生
 --
 --Script by JoyJ
+--not fully implemented
 SUMTYPE_MONSTER_REBORN = 83764718
 function c101107077.initial_effect(c)
 	--Activate
