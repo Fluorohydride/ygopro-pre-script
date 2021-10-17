@@ -22,7 +22,7 @@ function c100200208.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCountLimit(1,100200208+100)
 	e3:SetTarget(c100200208.atktg)
@@ -31,7 +31,10 @@ function c100200208.initial_effect(c)
 end
 function c100200208.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp)
-		and (c:GetTextAttack()==2500 or c:GetTextDefense()==2500)
+		and (c:GetBaseAttack()==2500 or c:GetBaseDefense()==2500)
+end
+function c100200208.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c100200208.cfilter,1,nil,tp)
 end
 function c100200208.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -42,9 +45,6 @@ function c100200208.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-end
-function c100200208.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100200208.cfilter,1,nil,tp)
 end
 function c100200208.atkfilter(c)
 	return c:IsFaceup() and c:IsCode(46986414,89631139)
