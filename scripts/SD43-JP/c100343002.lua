@@ -60,6 +60,7 @@ function c100343002.thop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 		if sg:GetCount()>0 then
 			Duel.BreakEffect()
+			Duel.ShuffleHand(tp)
 			Duel.SendtoDeck(sg,nil,1,REASON_EFFECT)
 		end
 	end
