@@ -43,12 +43,12 @@ end
 function c101107023.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
-function c101107023.cfilter(c,tp)
+function c101107023.sumcfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_WINDBEAST) and c:IsType(TYPE_MONSTER) and c:IsSummonPlayer(tp)
 end
 function c101107023.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
-		and eg:IsExists(c101107023.cfilter,1,nil,tp)
+		and eg:IsExists(c101107023.sumcfilter,1,nil,tp)
 end
 function c101107023.filter(c)
 	return c:IsSetCard(0x12d) and c:IsType(TYPE_MONSTER) and c:IsSummonable(true,nil)
