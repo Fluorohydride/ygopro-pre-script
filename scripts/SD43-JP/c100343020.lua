@@ -82,11 +82,11 @@ end
 function c100343020.chainlm(e,rp,tp)
 	return tp==rp
 end
-function c100343020.cfilter(c,tp,sumt)
-	return c:IsFaceup() and c:IsSummonType(sumt) and c:IsSummonPlayer(tp)
+function c100343020.cfilter(c,tp)
+	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsSummonPlayer(tp)
 end
 function c100343020.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100343020.cfilter,1,nil,tp,SUMMON_TYPE_FUSION)
+	return eg:IsExists(c100343020.cfilter,1,nil,tp)
 end
 function c100343020.thfilter(c)
 	return (c:IsCode(68468459) or aux.IsCodeListed(c,68468459) and c:IsType(TYPE_MONSTER)) and c:IsAbleToHand()
