@@ -27,8 +27,7 @@ function c100343003.initial_effect(c)
 end
 function c100343003.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-	end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100343003.atkfilter(c)
@@ -40,6 +39,7 @@ function c100343003.atkop(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(c100343003.atkfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(100343003,0)) then
 		local tc=Duel.GetAttacker()
+		Duel.HintSelection(Group.FromCards(tc))
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
@@ -58,10 +58,9 @@ function c100343003.spfilter(c,e,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100343003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=0
-	if e:GetHandler():IsLocation(LOCATION_MZONE) then ft=-1 end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>ft
-		and Duel.IsExistingMatchingCard(c100343003.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetMZoneCount(tp,c)>0
+		and Duel.IsExistingMatchingCard(c100343003.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,c,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c100343003.spop(e,tp,eg,ep,ev,re,r,rp)
