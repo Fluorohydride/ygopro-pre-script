@@ -2,6 +2,7 @@
 --
 --Script by JoyJ
 function c100200208.initial_effect(c)
+	aux.AddCodeList(c,46986414,89631139)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100200208,0))
