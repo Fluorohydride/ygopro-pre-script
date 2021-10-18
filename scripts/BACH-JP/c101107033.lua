@@ -19,7 +19,7 @@ function c101107033.operation(e,tp,eg,ep,ev,re,r,rp)
 	while tc do
 		local batk=tc:GetBaseAttack()
 		local catk=tc:GetAttack()
-		atk=catk-batk+atk
+		atk=math.abs(catk-batk)+atk
 		tc=g:GetNext()
 	end
 	local e1=Effect.CreateEffect(c)
