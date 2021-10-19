@@ -73,7 +73,8 @@ function c101107028.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101107028.thfilter(c)
-	return c:IsRace(RACE_FIEND) and not c:IsCode(101107028) and c:GetTextAttack()+c:GetTextDefense()==2000 and c:IsAbleToHand()
+	return c:IsRace(RACE_FIEND) and not c:IsCode(101107028) and c:IsAbleToHand()
+		and c:IsAttackAbove(0) and c:IsDefenseAbove(0) and c:GetAttack()+c:GetDefense()==2000
 end
 function c101107028.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101107028.thfilter,tp,LOCATION_DECK,0,1,nil) end
