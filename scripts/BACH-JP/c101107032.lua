@@ -2,8 +2,8 @@
 --
 --Script by Trishula9
 function c101107032.initial_effect(c)
-	c:EnableCounterPermit(0x160)
-	c:SetCounterLimit(0x160,4)
+	c:EnableCounterPermit(0x161)
+	c:SetCounterLimit(0x161,4)
 	--battle indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -21,18 +21,18 @@ function c101107032.initial_effect(c)
 end
 function c101107032.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return tc and e:GetHandler():IsCanAddCounter(0x160,1) end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x160)
+	if chk==0 then return tc and e:GetHandler():IsCanAddCounter(0x161,1) end
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x161)
 end
 function c101107032.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		c:AddCounter(0x160,1)
-		local ct=c:GetCounter(0x160)
+		c:AddCounter(0x161,1)
+		local ct=c:GetCounter(0x161)
 		local dg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_DECK,0,nil,TYPE_MONSTER)
 		if ct==1 and dg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101107032,0)) then
 			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101107032,0))
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101107032,4))
 			local g=dg:Select(tp,1,1,nil)
 			local tc=g:GetFirst()
 			if tc then
