@@ -47,7 +47,7 @@ function c101107071.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(0,LOCATION_MZONE)
-	e1:SetValue(c101107171.atklimit)
+	e1:SetValue(c101107071.atklimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	token:RegisterEffect(e1)
 end

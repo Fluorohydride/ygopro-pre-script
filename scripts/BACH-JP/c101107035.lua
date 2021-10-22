@@ -2,6 +2,7 @@
 --
 --Script by JoyJ & mercury233
 function c101107035.initial_effect(c)
+	c:EnableReviveLimit()
 	--atkup
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101107035,0))

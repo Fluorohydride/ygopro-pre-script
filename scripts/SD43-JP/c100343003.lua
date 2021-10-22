@@ -2,6 +2,7 @@
 --
 --Script by Trishula9
 function c100343003.initial_effect(c)
+	aux.AddCodeList(c,68468459)
 	--negate attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

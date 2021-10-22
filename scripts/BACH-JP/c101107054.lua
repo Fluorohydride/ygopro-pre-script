@@ -2,6 +2,7 @@
 --
 --Script by JoyJ
 function c101107054.initial_effect(c)
+	aux.AddCodeList(c,40352445,101107035)
 	local e1=aux.AddRitualProcGreater2(c,c101107054.filter,LOCATION_HAND+LOCATION_GRAVE,c101107054.mfilter)
 	local e2=e1:Clone()
 	e2:SetCountLimit(1,101107054+EFFECT_COUNT_CODE_OATH)

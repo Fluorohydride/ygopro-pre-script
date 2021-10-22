@@ -62,6 +62,7 @@ end
 function c101107059.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanRemoveCounter(tp,0x160,1,REASON_COST) end
+	c:RemoveCounter(tp,0x160,1,REASON_COST)
 end
 function c101107059.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
