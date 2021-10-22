@@ -30,7 +30,7 @@ function c100426003.indfilter(c)
 	return c:IsSetCard(0x48) and c:IsFaceup()
 end
 function c100426003.indcon(e)
-	return Duel.IsExistingMatchingCard(c100426003.indfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(c100426003.indfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function c100426003.ovcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
@@ -58,13 +58,15 @@ function c100426003.ovop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100426003,1)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100426003,0))
-		local tc=g:Select(tp,1,1,nil):GetFirst()
+		local tg=g:Select(tp,1,1,nil)
+		Duel.HintSelection(tg)
+		local tc=tg:GetFirst()
 		if not tc:IsImmuneToEffect(e) then
 			local og=tc:GetOverlayGroup()
 			if og:GetCount()>0 then
 				Duel.SendtoGrave(og,REASON_RULE)
 			end
-			Duel.Overlay(c,Group.FromCards(tc))
+			Duel.Overlay(c,tg)
 		end
 	end
 end
