@@ -50,11 +50,10 @@ function c101107075.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_DISABLE_EFFECT)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,2)
 		tc:RegisterEffect(e3)
-		if tc:GetSummonLocation(LOCATION_EXTRA) then
+		if tc:IsSummonLocation(LOCATION_EXTRA) then
 			local e4=Effect.CreateEffect(c)
 			e4:SetType(EFFECT_TYPE_SINGLE)
 			e4:SetCode(EFFECT_ADD_SETCODE)
-			e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e4:SetValue(0x10af)
 			e4:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,2)
 			tc:RegisterEffect(e4)
