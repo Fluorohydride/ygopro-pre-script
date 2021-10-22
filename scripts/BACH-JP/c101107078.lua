@@ -4,7 +4,7 @@
 function c101107078.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101107078+EFFECT_COUNT_CODE_OATH)
@@ -17,7 +17,7 @@ function c101107078.filter(c,e,tp,race)
 end
 function c101107078.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	local ct=mg:GetClassCount(Card.GetRace)
+	local ct1=mg:GetClassCount(Card.GetRace)
 	local mc=mg:GetFirst()
 	local mrc=0
 	while mc do
@@ -25,13 +25,12 @@ function c101107078.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		mc=mg:GetNext()
 	end
 	local g=Duel.GetMatchingGroup(c101107078.filter,tp,LOCATION_DECK,0,nil,e,tp,mrc)
-	if chk==0 then return ct>=3 and g:CheckSubGroup(aux.drccheck,3,3) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	local ct2=g:GetClassCount(Card.GetRace)
+	if chk==0 then return ct1>=3 and ct2>=3 and g:CheckSubGroup(aux.drccheck,3,3) end
 end
 function c101107078.operation(e,tp,eg,ep,ev,re,r,rp)
 	local mg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	local ct=mg:GetClassCount(Card.GetRace)
+	local ct1=mg:GetClassCount(Card.GetRace)
 	local mc=mg:GetFirst()
 	local mrc=0
 	while mc do
@@ -39,14 +38,16 @@ function c101107078.operation(e,tp,eg,ep,ev,re,r,rp)
 		mc=mg:GetNext()
 	end
 	local g=Duel.GetMatchingGroup(c101107078.filter,tp,LOCATION_DECK,0,nil,e,tp,mrc)
-	if ct<3 or not g:CheckSubGroup(aux.drccheck,3,3) then return end		
+	local ct2=g:GetClassCount(Card.GetRace)
+	if ct1<3 or ct2<3 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local sg=g:SelectSubGroup(tp,aux.drccheck,false,3,3)
-	if #sg>0 then
+	if sg then
 		Duel.ConfirmCards(1-tp,sg)
 		local tc=sg:RandomSelect(1-tp,1):GetFirst()
 		Duel.ConfirmCards(tp,tc)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-			and Duel.SelectYesNo(tp,aux.Stringid(101107078,0)) then
+			and Duel.SelectOption(tp,1190,1152)==1 then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		else
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
