@@ -1,4 +1,6 @@
---DDD 赦俿王 死亡机降神
+--DDD赦俿王デス・マキナ
+--
+--Script by JoyJ
 function c101107044.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),10,2,c101107044.ovfilter,aux.Stringid(101107044,0))

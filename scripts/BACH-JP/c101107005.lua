@@ -1,4 +1,6 @@
---龙之支配者-龙之独裁者-
+--ロード・オブ・ドラゴン－ドラゴンの独裁者－
+--
+--Script by JoyJ
 function c101107005.initial_effect(c)
 	aux.AddCodeList(c,89631139)
 	--special summon

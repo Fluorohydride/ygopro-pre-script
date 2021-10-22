@@ -1,4 +1,6 @@
---治安战警队 拉普斯韦妖
+--S－Force ラプスウェル
+--
+--Script by JoyJ
 function c101107016.initial_effect(c)
 	--equip
 	local e1=Effect.CreateEffect(c)

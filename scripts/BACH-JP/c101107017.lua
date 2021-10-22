@@ -1,4 +1,6 @@
---治安战警队 追溯者
+--S－Force レトロアクティヴ
+--
+--Script by JoyJ
 function c101107017.initial_effect(c)
 	--hand link
 	local e1=Effect.CreateEffect(c)

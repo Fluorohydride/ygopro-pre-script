@@ -1,4 +1,6 @@
---DD 狮鹫
+--DDグリフォン
+--
+--Script by JoyJ
 function c101107013.initial_effect(c)
 	--atk
 	local e1=Effect.CreateEffect(c)

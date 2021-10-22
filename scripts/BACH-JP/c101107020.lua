@@ -1,4 +1,6 @@
---磁石战士ε
+--磁石の戦士ε
+--
+--Script by JoyJ
 function c101107020.initial_effect(c)
 	--cos
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---守护者·奇美拉
+--ガーディアン・キマイラ
+--
+--Script by JoyJ
 function c101107040.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcMix(c,false,false,c101107040.fmat1,c101107040.fmat2,c101107040.fmat3)
