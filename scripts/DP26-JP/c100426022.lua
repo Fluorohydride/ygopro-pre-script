@@ -49,7 +49,7 @@ function c100426022.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g2=Duel.GetMatchingGroup(c100426022.spfilter1,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 	if ft1>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	if ft1>0 and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
+	if ft1>0 and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil)
 		and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(100426022,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
