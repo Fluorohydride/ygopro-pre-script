@@ -16,6 +16,7 @@ function c101107008.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_DEFENSE_ATTACK)
+	e2:SetCondition(c101107008.dacon)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--unequip
@@ -62,6 +63,9 @@ function c101107008.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101107008.eqlimit(e,c)
 	return c==e:GetLabelObject()
+end
+function c101107008.dacon(e,ctp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetEquipTarget():IsSetCard(0x16c)
 end
 function c101107008.spfilter(c,def)
 	return c:IsFaceup() and c:GetAttack()<=def and c:IsAbleToHand()
