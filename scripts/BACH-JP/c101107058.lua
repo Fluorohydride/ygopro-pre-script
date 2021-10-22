@@ -32,11 +32,11 @@ function c101107058.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101107058.costfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingTarget(c101107058.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetOriginalAttribute())
 end
 function c101107058.spfilter(c,e,tp,attr)
-	return c:IsRace(RACE_REPTILE) and not c:IsAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_REPTILE) and c:GetOriginalAttribute()~=attr and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101107058.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101107058.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,e,tp) end
@@ -49,8 +49,7 @@ end
 function c101107058.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local attr=e:GetLabel()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101107058.spfilter(chkc,e,tp,attr) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c101107058.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,attr) end
+	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c101107058.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,attr)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
