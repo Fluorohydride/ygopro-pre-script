@@ -1,6 +1,6 @@
 --運命のウラドラ
 --
---Script by Trishula9
+--Script by Trishula9 & mercury233
 function c101107065.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -34,14 +34,35 @@ function c101107065.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+		e2:SetDescription(aux.Stringid(101107065,0))
+		e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 		e2:SetCode(EVENT_BATTLE_DESTROYING)
-		e2:SetCondition(aux.bdocon)
+		e2:SetLabelObject(tc)
+		e2:SetCondition(c101107065.cmcon)
 		e2:SetTarget(c101107065.cmtg)
 		e2:SetOperation(c101107065.cmop)
-		tc:RegisterEffect(e2)
-		tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101107065,2))
+		e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		Duel.RegisterEffect(e2,tp)
+		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e3:SetCode(EFFECT_DESTROY_REPLACE)
+		e3:SetRange(LOCATION_MZONE)
+		e3:SetCondition(c101107065.regcon)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		tc:RegisterEffect(e3)
 	end
+end
+function c101107065.regcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:GetBattleTarget() and r==REASON_BATTLE then
+		c:RegisterFlagEffect(101107065,RESET_PHASE+PHASE_DAMAGE,0,1)
+	end
+	return false
+end
+function c101107065.cmcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	return eg:IsContains(tc) and tc:GetFlagEffect(101107065)~=0
 end
 function c101107065.cmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 end
@@ -52,10 +73,10 @@ function c101107065.cmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetMinGroup(Card.GetSequence):GetFirst()
 	Duel.MoveSequence(tc,0)
 	Duel.ConfirmDecktop(tp,1)
-	local opt=Duel.SelectOption(tp,aux.Stringid(101107065,0),aux.Stringid(101107065,1))
+	local opt=Duel.SelectOption(tp,aux.Stringid(101107065,1),aux.Stringid(101107065,2))
 	Duel.MoveSequence(tc,opt)
 	if tc:IsRace(RACE_DRAGON) or tc:IsRace(RACE_DINOSAUR) or tc:IsRace(RACE_SEASERPENT) or tc:IsRace(RACE_WYRM) then
-		local d=math.floor(tc:GetTextAttack()/1000)
+		local d=math.floor(tc:GetAttack()/1000)
 		local dn=Duel.Draw(tp,d,REASON_EFFECT)
 		if dn>0 then
 			Duel.BreakEffect()
