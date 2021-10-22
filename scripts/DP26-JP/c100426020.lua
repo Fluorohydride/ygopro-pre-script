@@ -31,7 +31,7 @@ function c100426020.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleHand(tp)
-		if Duel.IsEnvironment(22702055) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
+		if Duel.IsEnvironment(22702055) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsExistingMatchingCard(c100426020.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 			and Duel.SelectYesNo(tp,aux.Stringid(100426020,0)) then
 			Duel.BreakEffect()
