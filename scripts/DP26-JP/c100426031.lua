@@ -1,4 +1,6 @@
---海晶少女 活跃少女斯氏金翅雀鲷
+--海晶乙女スプリンガール
+--
+--Script by JustFish
 function c100426031.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

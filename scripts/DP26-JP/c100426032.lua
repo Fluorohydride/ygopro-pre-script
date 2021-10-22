@@ -1,4 +1,6 @@
---海晶少女 沉睡处女拟态革鲀
+--海晶乙女スリーピーメイデン
+--
+--Script by JustFish
 function c100426032.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

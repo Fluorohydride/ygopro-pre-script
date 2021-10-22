@@ -1,4 +1,6 @@
---海晶少女环流
+--海晶乙女環流
+--
+--Script by JustFish
 function c100426036.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

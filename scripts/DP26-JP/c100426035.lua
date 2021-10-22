@@ -1,4 +1,6 @@
---海晶少女的潜逅
+--海晶乙女の潜逅
+--
+--Script by JustFish
 function c100426035.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

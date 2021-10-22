@@ -1,4 +1,6 @@
---海晶少女 水波葵叶船蛸
+--海晶乙女アクア・アルゴノート
+--
+--Script by JustFish
 function c100426034.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkAttribute,ATTRIBUTE_WATER),2,4)

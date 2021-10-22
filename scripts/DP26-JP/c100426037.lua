@@ -1,4 +1,6 @@
---海晶少女涡轮
+--海晶乙女渦輪
+--
+--Script by JustFish
 function c100426037.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
