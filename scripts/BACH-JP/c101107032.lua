@@ -32,7 +32,7 @@ function c101107032.ctop(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_DECK,0,nil,TYPE_MONSTER)
 		if ct==1 and dg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101107032,0)) then
 			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101107032,4))
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101107032,1))
 			local g=dg:Select(tp,1,1,nil)
 			local tc=g:GetFirst()
 			if tc then
@@ -41,12 +41,12 @@ function c101107032.ctop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.ConfirmDecktop(tp,1)
 			end
 		end
-		if ct==2 and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(101107032,1)) then
+		if ct==2 and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(101107032,0)) then
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 		local mg=Duel.GetMatchingGroup(c101107032.mfilter,tp,LOCATION_DECK,0,nil)
-		if ct==3 and mg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101107032,2)) then
+		if ct==3 and mg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101107032,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local g=mg:Select(tp,1,1,nil)
@@ -56,7 +56,7 @@ function c101107032.ctop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 		local cg=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_DECK,0,nil)
-		if ct==4 and cg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101107032,3)) then
+		if ct==4 and cg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101107032,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local g=cg:Select(tp,1,1,nil)
