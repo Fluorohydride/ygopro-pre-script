@@ -18,7 +18,7 @@ function c101107017.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
-	e2:SetRange(LOCATION_HAND)
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101107017+100)
 	e2:SetCondition(c101107017.spcon)
 	e2:SetTarget(c101107017.sptg)
@@ -27,32 +27,11 @@ function c101107017.initial_effect(c)
 	--banish replace
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(55049722) --eventually not wrong
+	e3:SetCode(55049722)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,101107017+200)
 	c:RegisterEffect(e3)
-end
-function c101107017.spfilter(c,e,tp)
-	return c:IsSetCard(0x156) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function c101107017.spcon(e,tp,eg,ep,ev,re,r,rp)
-	if not (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) then return false end
-end
-function c101107017.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
-		and Duel.IsExistingMatchingCard(c101107017.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
-		and e:GetHandler():IsAbletoHand() end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
-end
-function c101107017.spop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	if Duel.SendtoHand(c,nil,REASON_EFFECT) then
-		local g=Duel.SelectMatchingCard(tp,c101107017.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-	end
 end
 function c101107017.mfilter(c)
 	return c:IsLocation(LOCATION_MZONE)
@@ -63,4 +42,26 @@ end
 function c101107017.matval(e,lc,mg,c,tp)
 	if not lc:IsSetCard(0x156) then return false,nil end
 	return true,not mg or mg:IsExists(c101107017.mfilter,1,nil) and not mg:IsExists(c101107017.exmfilter,1,nil)
+end
+function c101107017.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+end
+function c101107017.spfilter(c,e,tp)
+	return c:IsSetCard(0x156) and c:IsLevelAbove(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function c101107017.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetMZoneCount(tp,c)>0 and c:IsAbleToHand()
+		and Duel.IsExistingMatchingCard(c101107017.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
+end
+function c101107017.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.SendtoHand(c,nil,REASON_EFFECT)>0 and c:IsLocation(LOCATION_HAND) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectMatchingCard(tp,c101107017.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	end
 end
