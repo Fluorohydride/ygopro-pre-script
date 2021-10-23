@@ -14,12 +14,11 @@ function c101107006.initial_effect(c)
 	--cannot activate
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(EFFECT_CANNOT_TRIGGER)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetCondition(c101107006.actcon)
-	e2:SetValue(c101107006.actlimit)
+	e2:SetTarget(c101107006.actlimit)
 	c:RegisterEffect(e2)
 	--atk down
 	local e3=Effect.CreateEffect(c)
@@ -35,14 +34,11 @@ end
 function c101107006.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
-function c101107006.actfilter(c)
-	return c:IsCode(101107052) and c:IsFaceup()
-end
 function c101107006.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101107006.actfilter,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
+	return Duel.IsEnvironment(101107052)
 end
-function c101107006.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_FLIP_SUMMON_TURN+STATUS_SPSUMMON_TURN)
+function c101107006.actlimit(e,c)
+	return not c:IsStatus(STATUS_SUMMON_TURN+STATUS_FLIP_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
 function c101107006.atkcon(e)
 	local tp=e:GetHandlerPlayer()

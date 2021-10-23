@@ -31,7 +31,7 @@ function c100343001.disfilter(c)
 end
 function c100343001.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.IsExistingMatchingCard(c100343001.disfilter,tp,LOCATION_MZONE,0,1,nil) 
+	return Duel.IsExistingMatchingCard(c100343001.disfilter,tp,LOCATION_MZONE,0,1,nil)
 		and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
 		and (c:IsLocation(LOCATION_MZONE) and not c:IsStatus(STATUS_BATTLE_DESTROYED) or c:IsLocation(LOCATION_HAND))
 end

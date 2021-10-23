@@ -23,7 +23,7 @@ function c101107060.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c101107060.thfilter(c)
-	return (c:IsSetCard(0x16d) and c:IsType(TYPE_MONSTER) or c:IsSetCard(0x16d) and c:IsType(TYPE_FIELD)) and c:IsAbleToHand()  
+	return (c:IsSetCard(0x16d) and c:IsType(TYPE_MONSTER) or c:IsSetCard(0x16d) and c:IsType(TYPE_FIELD)) and c:IsAbleToHand()
 end
 function c101107060.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101107060.thfilter,tp,LOCATION_DECK,0,1,nil) end

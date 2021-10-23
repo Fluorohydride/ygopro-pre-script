@@ -48,6 +48,6 @@ function c101107026.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e2:SetValue(attr)
 		token:RegisterEffect(e2)
-		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)	   
+		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

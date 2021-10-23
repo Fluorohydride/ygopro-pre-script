@@ -2,7 +2,7 @@
 --
 --Script by Trishula9
 function c101107046.initial_effect(c)
-	--xyz summon 
+	--xyz summon
 	aux.AddXyzProcedure(c,nil,2,2,nil,nil,99)
 	c:EnableReviveLimit()
 	--remove

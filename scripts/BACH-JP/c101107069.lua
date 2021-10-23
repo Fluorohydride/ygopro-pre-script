@@ -57,7 +57,7 @@ function c101107069.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 				tc:RegisterEffect(e1)
 			end
-			tc=g:GetNext()	
+			tc=g:GetNext()
 		end
 	end
 	Duel.SpecialSummonComplete()

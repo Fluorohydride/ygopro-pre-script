@@ -27,7 +27,7 @@ function c101107023.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--Summon Launch Effect 
+	--Summon Launch Effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101107023,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -75,7 +75,7 @@ function c101107023.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c101107023.thfilter(c)
-	return c:IsSetCard(0x12d) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()   
+	return c:IsSetCard(0x12d) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c101107023.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101107023.thfilter,tp,LOCATION_DECK,0,1,nil) end
