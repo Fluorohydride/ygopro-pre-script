@@ -67,7 +67,7 @@ function c101107013.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101107013.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local ct=Duel.GetMatchingGroupCount(c101107013.atkfilter2,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(c101107013.atkfilter2,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	local atk=g:GetClassCount(Card.GetCode)*500
 	if atk>0 and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
