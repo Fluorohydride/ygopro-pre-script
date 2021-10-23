@@ -67,7 +67,7 @@ function c100426034.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100426034.discon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return bit.band(loc,LOCATION_SZONE)~=0
+	return Duel.GetTurnPlayer()==1-tp and bit.band(loc,LOCATION_SZONE)~=0
 		and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainDisablable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function c100426034.spfilter(c,e,tp,ec)
