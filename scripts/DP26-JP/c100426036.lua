@@ -20,10 +20,12 @@ function c100426036.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100426036.texfilter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_WATER) and Duel.IsExistingMatchingCard(c100426036.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_WATER)
+		and Duel.IsExistingMatchingCard(c100426036.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function c100426036.spfilter(c,e,tp,rc)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsLink(rc:GetLink()) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,rc,c)>0 and not c:IsCode(rc:GetCode())
+	return c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsLink(rc:GetLink()) and not c:IsCode(rc:GetCode())
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,rc,c)>0
 end
 function c100426036.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100426036.texfilter(chkc,e,tp) end
@@ -38,25 +40,25 @@ function c100426036.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c100426036.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc)
-		local tc=g:GetFirst()
-		if tc then
-			tc:SetMaterial(nil)
-			if Duel.SpecialSummon(tc,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP)~=0 then
+		local sc=g:GetFirst()
+		if sc then
+			sc:SetMaterial(nil)
+			if Duel.SpecialSummon(sc,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP)~=0 then
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 				e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 				e1:SetRange(LOCATION_MZONE)
 				e1:SetValue(1)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-				tc:RegisterEffect(e1,true)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				sc:RegisterEffect(e1,true)
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 				e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-				tc:RegisterEffect(e2,true)
-				tc:CompleteProcedure()
+				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				sc:RegisterEffect(e2,true)
+				sc:CompleteProcedure()
 			end
 		end
 	end
