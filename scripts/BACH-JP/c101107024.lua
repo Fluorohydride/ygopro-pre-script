@@ -68,7 +68,7 @@ function c101107024.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101107024.thfilter(c)
-	return (c:IsSetCard(0xa4) and c:IsType(TYPE_MONSTER) or c:IsCode(40703222)) and c:IsAbleToHand()  
+	return (c:IsSetCard(0xa4) and c:IsType(TYPE_MONSTER) or c:IsCode(40703222)) and c:IsAbleToHand()
 end
 function c101107024.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101107024.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

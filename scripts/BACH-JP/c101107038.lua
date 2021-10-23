@@ -12,7 +12,7 @@ function c101107038.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(c101107038.adval)
 	c:RegisterEffect(e1)
-	--copy 
+	--copy
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)

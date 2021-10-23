@@ -52,7 +52,7 @@ function c101107078.operation(e,tp,eg,ep,ev,re,r,rp)
 		else
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,tc)
-		end		
+		end
 		sg:RemoveCard(tc)
 		Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
 		Duel.SortDecktop(p,p,2)

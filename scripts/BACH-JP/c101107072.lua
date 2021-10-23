@@ -27,7 +27,7 @@ function c101107072.cfilter(c)
 	return c:IsSetCard(0x273) and c:IsFaceup()
 end
 function c101107072.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101107072.cfilter,tp,LOCATION_MZONE,0,1,nil) 
+	return Duel.IsExistingMatchingCard(c101107072.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev) and rp==1-tp
 end
 function c101107072.cost(e,tp,eg,ep,ev,re,r,rp,chk)
