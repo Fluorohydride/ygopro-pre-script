@@ -15,11 +15,11 @@ function c101107016.initial_effect(c)
 	c:RegisterEffect(e1)
 	--salvage
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetDescription(aux.Stringid(101107016,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,101107016+100)
+	e2:SetCountLimit(1,101107016+100)
 	e2:SetCost(c101107016.descost)
 	e2:SetTarget(c101107016.destg)
 	e2:SetOperation(c101107016.desop)
@@ -44,35 +44,28 @@ function c101107016.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
-function c101107016.desfilter(c)
+function c101107016.cfilter(c)
 	return c:IsSetCard(0x156) and c:IsAbleToRemoveAsCost()
 end
 function c101107016.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101107016.desfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101107016.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c101107016.desfilter,tp,LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101107016.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function c101107016.ggfilter(c)
-	return c:IsSetCard(0x156) and c:IsFaceup()
+function c101107016.ggfilter(c,tp)
+	return c:IsSetCard(0x156) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
-function c101107016.ggforeach(c,g2)
+function c101107016.desfilter(c,tp)
 	local g=c:GetColumnGroup()
-	g2:Merge(g:Filter(Card.IsType,nil,TYPE_MONSTER))
-end
-function c101107016.getgroup(tp)
-	local g=Duel.GetMatchingGroup(c101107016.ggfilter,tp,LOCATION_MZONE,0,nil)
-	local g2=Group.CreateGroup()
-	g:ForEach(g2)
-	return g2
+	return g:IsExists(c101107016.ggfilter,1,nil,tp)
 end
 function c101107016.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=c101107016.getgroup(tp)
+	local g=Duel.GetMatchingGroup(c101107016.desfilter,tp,0,LOCATION_MZONE,nil,tp)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
-function c101107016.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=c101107016.getgroup(tp)
+function c101107016.desop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(c101107016.desfilter,tp,0,LOCATION_MZONE,nil,tp)
 	Duel.Destroy(g,REASON_EFFECT)
 end
