@@ -101,7 +101,7 @@ end
 function c101107013.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
 end
-function c101107013.costfilter(c)
+function c101107013.drcostfilter(c)
 	return c:IsSetCard(0xae,0xaf) and c:IsDiscardable()
 end
 function c101107013.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
