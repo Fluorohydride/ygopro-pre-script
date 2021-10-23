@@ -18,7 +18,8 @@ end
 function c100426035.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100426035.spfilter(chkc,e,tp) end
 	local b1=Duel.IsExistingTarget(c100426035.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-	local b2=Duel.IsExistingMatchingCard(c100426035.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.IsEnvironment(91027843,tp,LOCATION_FZONE)
+	local b2=Duel.IsExistingMatchingCard(c100426035.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
+		and Duel.IsEnvironment(91027843,tp,LOCATION_FZONE)
 	if chk==0 then return (b1 or b2) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	local op=0
 	if b1 and b2 then
