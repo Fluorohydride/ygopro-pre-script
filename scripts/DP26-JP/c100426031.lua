@@ -50,20 +50,19 @@ function c100426031.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsAttribute(ATTRIBUTE_WATER)
 end
-function c100426031.cfilter(c)
+function c100426031.ctfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x12b)
 end
 function c100426031.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(c100426031.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,ct) end
+	local ct=Duel.GetMatchingGroupCount(c100426031.ctfilter,tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return ct>0 and Duel.IsPlayerCanDiscardDeck(tp,ct) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,ct)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,ct*200)
 end
 function c100426031.ctfilter2(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(0x12b)
 end
 function c100426031.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local ct1=Duel.GetMatchingGroupCount(c100426031.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local ct1=Duel.GetMatchingGroupCount(c100426031.ctfilter,tp,LOCATION_MZONE,0,nil)
 	if ct1>0 then
 		if Duel.DiscardDeck(tp,ct1,REASON_EFFECT)~=0 then
 			local og=Duel.GetOperatedGroup()
