@@ -27,7 +27,7 @@ function c100426031.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100426031.cfilter(c)
-	return c:IsAbleToRemoveAsCost() and c:IsSetCard(0x12b)
+	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x12b)
 end
 function c100426031.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100426031.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -68,7 +68,7 @@ function c100426031.tgop(e,tp,eg,ep,ev,re,r,rp)
 			local og=Duel.GetOperatedGroup()
 			local ct2=og:FilterCount(c100426031.ctfilter2,nil)
 			if ct2>0 then
-				Duel.Damage(tp,ct2*200,REASON_EFFECT)
+				Duel.Damage(1-tp,ct2*200,REASON_EFFECT)
 			end
 		end
 	end
