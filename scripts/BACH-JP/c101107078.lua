@@ -55,9 +55,9 @@ function c101107078.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 		sg:RemoveCard(tc)
 		Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
-		Duel.SortDecktop(p,p,2)
+		Duel.SortDecktop(tp,tp,2)
 		for i=1,2 do
-			local mg=Duel.GetDecktopGroup(p,1)
+			local mg=Duel.GetDecktopGroup(tp,1)
 			Duel.MoveSequence(mg:GetFirst(),1)
 		end
 	end
