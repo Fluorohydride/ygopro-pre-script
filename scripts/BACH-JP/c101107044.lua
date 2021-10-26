@@ -101,7 +101,7 @@ function c101107044.ovlop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		result=Duel.Destroy(g,REASON_EFFECT)
 	end
-	if result>0 and c:IsRelateToEffect(e) and rc:IsRelateToEffect(re) then
+	if result>0 and c:IsRelateToEffect(e) and rc:IsRelateToEffect(re) and not rc:IsImmuneToEffect(e) then
 		local og=rc:GetOverlayGroup()
 		if og:GetCount()>0 then
 			Duel.SendtoGrave(og,REASON_RULE)

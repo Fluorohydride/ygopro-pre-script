@@ -24,6 +24,7 @@ function c101107040.initial_effect(c)
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCondition(c101107040.drcon)
 	e2:SetTarget(c101107040.drtg)
 	e2:SetOperation(c101107040.drop)
@@ -47,7 +48,7 @@ end
 function c101107040.ffilter(c,fc,sub,mg,sg)
 	if not sg then return true end
 	return not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode())
-		and #sg<2 or sg:IsExists(aux.NOT(Card.IsLocation),1,c,c:GetLocation())
+		and (#sg<2 or sg:IsExists(aux.NOT(Card.IsLocation),1,c,c:GetLocation()))
 end
 function c101107040.matlimit(e,c,fc,st)
 	if st~=SUMMON_TYPE_FUSION then return true end
