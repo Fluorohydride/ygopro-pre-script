@@ -48,7 +48,7 @@ end
 function c101107040.ffilter(c,fc,sub,mg,sg)
 	if not sg then return true end
 	return not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode())
-		and (#sg<2 or sg:IsExists(aux.NOT(Card.IsLocation),1,c,c:GetLocation()))
+		and (not c:IsLocation(LOCATION_HAND+LOCATION_MZONE) or #sg<2 or sg:IsExists(aux.NOT(Card.IsLocation),1,c,c:GetLocation()))
 end
 function c101107040.matlimit(e,c,fc,st)
 	if st~=SUMMON_TYPE_FUSION then return true end
