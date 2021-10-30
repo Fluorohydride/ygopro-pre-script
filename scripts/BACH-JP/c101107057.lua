@@ -33,7 +33,7 @@ function c101107057.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c101107057.cfilter(c)
-	return c:IsSetCard(0x8d) and c:IsFacedown()
+	return c:IsSetCard(0x8d) and c:IsFacedown() and c:IsCanChangePosition()
 end
 function c101107057.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

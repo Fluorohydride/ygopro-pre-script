@@ -34,7 +34,7 @@ end
 function c101107062.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101107062.filter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc)
 		if #g>0 then
@@ -50,8 +50,8 @@ function c101107062.activate(e,tp,eg,ep,ev,re,r,rp)
 				e2:SetCode(EFFECT_DISABLE_EFFECT)
 				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 				sc:RegisterEffect(e2)
-				Duel.SpecialSummonComplete()
 			end
+			Duel.SpecialSummonComplete()
 		end
 	end
 end

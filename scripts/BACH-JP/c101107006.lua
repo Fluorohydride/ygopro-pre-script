@@ -31,8 +31,11 @@ function c101107006.initial_effect(c)
 	e3:SetValue(-1000)
 	c:RegisterEffect(e3)
 end
-function c101107006.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
+function c101107006.spcon(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function c101107006.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(101107052)

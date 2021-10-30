@@ -31,7 +31,7 @@ end
 function c101107053.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if rp==1-tp and c:GetFlagEffect(101107053)==0
+	if rp==1-tp and Duel.IsChainDisablable(ev) and c:GetFlagEffect(101107053)==0
 		and re:IsActiveType(TYPE_MONSTER) and (rc:IsAttack(0) or rc:IsDefense(0))
 		--and rc:IsRelateToEffect(re) and rc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED)
 		--and (rc:IsFaceup() or rc:IsLocation(LOCATION_GRAVE))

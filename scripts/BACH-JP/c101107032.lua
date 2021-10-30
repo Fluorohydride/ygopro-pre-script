@@ -12,7 +12,7 @@ function c101107032.initial_effect(c)
 	c:RegisterEffect(e1)
 	--add counter
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_COUNTER)
+	e2:SetCategory(CATEGORY_COUNTER+CATEGORY_DRAW+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
 	e2:SetTarget(c101107032.cttg)
@@ -26,7 +26,7 @@ function c101107032.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101107032.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		c:AddCounter(0x161,1)
 		local ct=c:GetCounter(0x161)
 		local dg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_DECK,0,nil,TYPE_MONSTER)

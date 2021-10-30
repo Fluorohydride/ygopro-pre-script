@@ -32,7 +32,7 @@ function c101107020.cfilter(c,oc)
 end
 function c101107020.spfilter(c,e,tp)
 	return c:IsSetCard(0x2066,0xe9) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and not Duel.IsExistingMatchingCard(c101107020.cfilter,tp,LOCATION_MZONE,0,1,nil,c)
+		and not Duel.IsExistingMatchingCard(c101107020.cfilter,tp,LOCATION_ONFIELD,0,1,nil,c)
 end
 function c101107020.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -44,11 +44,11 @@ function c101107020.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e1:SetValue(e:GetLabel())
 	c:RegisterEffect(e1)
-	if Duel.IsExistingMatchingCard(c101107020.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+	if Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101107020.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(101107020,1)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,c101107020.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101107020.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

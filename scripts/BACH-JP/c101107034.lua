@@ -18,7 +18,7 @@ function c101107034.initial_effect(c)
 	c:RegisterEffect(e1)
 	--disable and spsummon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(86509711,1))
+	e2:SetDescription(aux.Stringid(101107034,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DISABLE+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)

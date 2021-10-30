@@ -68,7 +68,7 @@ function c101107008.dacon(e,ctp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget():IsSetCard(0x16c)
 end
 function c101107008.spfilter(c,def)
-	return c:IsFaceup() and c:GetAttack()<=def and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsAttackBelow(def) and c:IsAbleToHand()
 end
 function c101107008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

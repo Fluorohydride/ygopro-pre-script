@@ -40,7 +40,8 @@ function c101107079.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(s)
 	if s==0 then
 		e:SetCategory(CATEGORY_DESTROY)
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)
+		local g=Duel.GetMatchingGroup(c101107079.desfilter,tp,0,LOCATION_MZONE,nil,dif)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	end
 	if s==1 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)

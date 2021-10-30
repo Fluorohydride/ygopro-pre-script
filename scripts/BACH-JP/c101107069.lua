@@ -59,8 +59,8 @@ function c101107069.operation(e,tp,eg,ep,ev,re,r,rp)
 			end
 			tc=g:GetNext()
 		end
+		Duel.SpecialSummonComplete()
 	end
-	Duel.SpecialSummonComplete()
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
