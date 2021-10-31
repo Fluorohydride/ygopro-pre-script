@@ -34,7 +34,6 @@ function c101107044.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101107044,3))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(c101107044.pencon)
@@ -48,7 +47,8 @@ end
 function c101107044.sptgfilter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
-function c101107044.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101107044.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and c101107044.sptgfilter(chkc) end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,c)
 	if chk==0 then return tc and Duel.GetMZoneCount(tp)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -56,14 +56,17 @@ function c101107044.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101107044,4))
 	local g=Duel.SelectTarget(tp,c101107044.sptgfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tc,1,0,0)
+	if g:GetFirst():IsLocation(LOCATION_GRAVE) then
+		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
+	end
 end
 function c101107044.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,c)
 	local fc=Duel.GetFirstTarget()
-	if not tc or Duel.GetMZoneCount(tp)<1 then return end
-	if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
-		if not fc:IsRelateToEffect(e) then return end
+	if tc and Duel.GetMZoneCount(tp)>0
+		and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
+		and fc:IsRelateToEffect(e) then
 		Duel.MoveToField(fc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end

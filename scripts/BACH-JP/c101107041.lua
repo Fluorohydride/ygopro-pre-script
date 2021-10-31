@@ -58,18 +58,19 @@ function c101107041.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-function c101107041.filter(c,tp)
-	return c:IsSummonPlayer(1-tp) and c:IsOnField()
+function c101107041.filter(c,e,tp)
+	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE) and c:IsAbleToRemove()
+		and (not e or c:IsRelateToEffect(e))
 end
 function c101107041.remtg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(c101107041.filter,1,nil,tp) end
-	Duel.SetTargetCard(eg)
-	local g=eg:Filter(c101107041.filter,nil,tp)
+	if chk==0 then return eg:IsExists(c101107041.filter,1,nil,nil,tp) end
+	local g=eg:Filter(c101107041.filter,nil,nil,tp)
+	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1200)
 end
 function c101107041.remop1(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(c101107041.filter,nil,tp)
+	local g=eg:Filter(c101107041.filter,nil,e,tp)
 	local tc=g:GetFirst()
 	if not tc then return end
 	if g:GetCount()>1 then

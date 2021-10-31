@@ -53,11 +53,11 @@ function c101107059.ctpermit(e)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_SZONE) and c:IsStatus(STATUS_CHAINING)
 end
-function c101107059.cfilter(c,tp)
-	return c:IsSummonPlayer(tp) and c:IsSetCard(0x163) and c:IsFaceup() and c:IsPreviousLocation(LOCATION_HAND+LOCATION_EXTRA)
+function c101107059.cfilter(c)
+	return c:IsSetCard(0x163) and c:IsFaceup() and c:IsPreviousLocation(LOCATION_HAND+LOCATION_EXTRA)
 end
 function c101107059.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101107059.cfilter,1,nil,tp)
+	return eg:IsExists(c101107059.cfilter,1,nil)
 end
 function c101107059.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -77,7 +77,8 @@ end
 function c101107059.tdfilter(c)
 	return c:IsSetCard(0x163) and not c:IsCode(101107059) and c:IsAbleToDeck()
 end
-function c101107059.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101107059.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101107059.tdfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101107059.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c101107059.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)

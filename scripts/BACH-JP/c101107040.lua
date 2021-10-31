@@ -59,12 +59,12 @@ function c101107040.splimit(e,se,sp,st)
 		or st&SUMMON_TYPE_FUSION==SUMMON_TYPE_FUSION
 end
 function c101107040.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_SPELL)
+	local c=e:GetHandler()
+	return re and re:IsActiveType(TYPE_SPELL) and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c101107040.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	local dr,des=e:GetLabel()
-	if chk==0 then return c:IsSummonType(SUMMON_TYPE_FUSION) and dr and des and Duel.IsPlayerCanDraw(tp,dr)
+	if chk==0 then return dr and des and Duel.IsPlayerCanDraw(tp,dr)
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>=des end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,0,dr,tp,0)
 	Duel.SetTargetPlayer(tp)

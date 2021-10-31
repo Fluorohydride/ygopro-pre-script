@@ -96,4 +96,5 @@ function c101107035.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tg=g:FilterSelect(tp,Card.IsAbleToGrave,1,1,nil)
 	Duel.SendtoGrave(tg,REASON_EFFECT)
+	Duel.ShuffleExtra(1-tp)
 end

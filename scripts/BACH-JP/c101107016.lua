@@ -26,7 +26,7 @@ function c101107016.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101107016.spfilter(c,e,tp)
-	return c:IsSetCard(0x156) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x156) and not c:IsCode(101107016)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101107016.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -38,7 +38,6 @@ function c101107016.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101107016.spop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)

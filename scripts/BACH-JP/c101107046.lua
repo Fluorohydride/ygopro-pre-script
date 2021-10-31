@@ -49,7 +49,7 @@ end
 function c101107046.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
-		tc:RegisterFlagEffect(101107046,RESET_EVENT+RESETS_STANDARD+RESET_OPPO_TURN,0,1)
+		tc:RegisterFlagEffect(101107046,RESET_EVENT+RESETS_STANDARD,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -73,15 +73,16 @@ function c101107046.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabel(ct)
 end
 function c101107046.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and e:GetHandler():IsPreviousControler(tp) and e:GetLabel()>0
+	local c=e:GetHandler()
+	return rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c101107046.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToDeck()
 end
 function c101107046.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and c101107046.tdfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101107046.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
 	local ct=e:GetLabel()
+	if chk==0 then return ct>0 and Duel.IsExistingTarget(c101107046.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=Duel.SelectTarget(tp,c101107046.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),0,0)

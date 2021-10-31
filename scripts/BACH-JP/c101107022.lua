@@ -4,7 +4,6 @@
 function c101107022.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -31,10 +30,10 @@ end
 function c101107022.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.CheckReleaseGroup(tp,c101107022.spfilter,1,nil)
+	return Duel.CheckReleaseGroup(tp,c101107022.spfilter,1,nil,tp)
 end
 function c101107022.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,c101107022.spfilter,1,1,nil)
+	local g=Duel.SelectReleaseGroup(tp,c101107022.spfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 	c:RegisterFlagEffect(0,RESET_EVENT+0x4fc0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101107022,1))
 	local atk=g:GetFirst():GetBaseAttack()

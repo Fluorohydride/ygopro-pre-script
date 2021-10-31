@@ -8,7 +8,7 @@ function c101107045.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_XYZ_LEVEL)
-	e1:SetProperty(EFFECT_FLAG_SET_AVAIABLE)
+	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetRange(LOCATION_EXTRA)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(c101107045.lvtg)
@@ -46,6 +46,7 @@ function c101107045.eval(e,re,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	return re:IsActiveType(TYPE_MONSTER) and not rc:IsSummonLocation(LOCATION_GRAVE) and rc:IsSummonType(SUMMON_TYPE_SPECIAL)
+		and re:GetActivateLocation()==LOCATION_MZONE
 end
 function c101107045.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -53,8 +54,7 @@ function c101107045.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101107045.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,4) and Duel.IsPlayerCanDiscardDeck(1-tp,4) end
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,4)
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,4)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,PLAYER_ALL,4)
 end
 function c101107045.cfilter(c,e,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

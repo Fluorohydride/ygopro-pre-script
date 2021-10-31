@@ -33,7 +33,7 @@ function c101107061.initial_effect(c)
 end
 function c101107061.cfilter(c,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)
-		and c:IsType(TYPE_UNION) and c:IsPreviousControler(tp)
+		and c:IsType(TYPE_UNION) and c:IsPreviousControler(tp) and c:IsFaceup()
 end
 function c101107061.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101107061.cfilter,1,nil,tp)
@@ -42,10 +42,12 @@ function c101107061.spfilter(c,e,tp)
 	return c:IsCode(62651957,65622692,64500000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101107061.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101107061.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101107061.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101107061.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101107061.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
@@ -61,8 +63,11 @@ function c101107061.sprcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,c101107061.sprcfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.SendtoDeck(g,nil,2,REASON_COST)
 end
+function c101107061.sprfilter(c,e,tp)
+	return c:IsCode(62651957,65622692,64500000) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function c101107061.sprtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101107061.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101107061.sprfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
 	local max=2
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) or Duel.GetMZoneCount(tp)<2 then max=1 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,max,tp,LOCATION_REMOVED)
@@ -70,8 +75,8 @@ end
 function c101107061.sprop(e,tp,eg,ep,ev,re,r,rp)
 	local max=2
 	if Duel.GetMZoneCount(tp)<1 then return end
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) or Duel.GetMZoneCount(tp)<2 then max=1 end
-	local g=Duel.GetMatchingGroup(c101107061.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp)
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then max=1 end
+	local g=Duel.GetMatchingGroup(c101107061.sprfilter,tp,LOCATION_REMOVED,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,max)
 	if sg then

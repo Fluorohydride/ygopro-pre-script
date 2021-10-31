@@ -17,14 +17,17 @@ function c101107080.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<100
 end
 function c101107080.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
+	local ct=2
+	if Duel.GetLP(tp)<10 then ct=4 end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,ct) end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(2)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+	Duel.SetTargetParam(ct)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
 end
 function c101107080.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)>0 and Duel.GetLP(p)<10 then
+		Duel.BreakEffect()
 		Duel.Draw(p,2,REASON_EFFECT)
 	end
 end
