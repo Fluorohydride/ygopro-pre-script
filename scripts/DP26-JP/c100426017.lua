@@ -30,23 +30,11 @@ function c100426017.initial_effect(c)
 	e3:SetTargetRange(1,1)
 	e3:SetTarget(c100426017.sumlimit)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetRange(LOCATION_MZONE)
+	local e4=e3:Clone()
 	e4:SetCode(EFFECT_CANNOT_SUMMON)
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetCondition(c100426017.condition)
-	e4:SetTargetRange(1,1)
-	e4:SetTarget(c100426017.sumlimit)
 	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetRange(LOCATION_MZONE)
+	local e5=e3:Clone()
 	e5:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
-	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e5:SetCondition(c100426017.condition)
-	e5:SetTargetRange(1,1)
-	e5:SetTarget(c100426017.sumlimit)
 	c:RegisterEffect(e5)
 end
 c100426017[0]=0
@@ -91,9 +79,9 @@ function c100426017.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	if g1:GetCount()==0 then c100426017[tp]=0
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local sg=g1:SelectSubGroup(tp,c100426017.tgselect,false,1,#g1,g1)
+		local sg=g1:SelectSubGroup(tp,c100426017.tgselect,false,#g1-1,#g1-1,g1)
 		if sg then
-			g1:Sub(g1-sg)	
+			g1:Sub(g1-sg)   
 		else
 			g1:Sub(g1)
 		end
@@ -102,9 +90,9 @@ function c100426017.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	if g2:GetCount()==0 then c100426017[1-tp]=0
 	else
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
-		local sg=g2:SelectSubGroup(1-tp,c100426017.tgselect,false,1,#g2,g2)
+		local sg=g2:SelectSubGroup(1-tp,c100426017.tgselect,false,#g2-1,#g2-1,g2)
 		if sg then
-			g2:Sub(g2-sg)			
+			g2:Sub(g2-sg)		   
 		else
 			g2:Sub(g2)
 		end
