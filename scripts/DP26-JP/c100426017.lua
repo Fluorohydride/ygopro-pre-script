@@ -82,7 +82,7 @@ function c100426017.adjustop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg=g1:SelectSubGroup(tp,c100426017.tgselect,false,#g1-1,#g1-1,g1)
 		if sg then
-			g1:Sub(g1-sg)   
+			g1:Sub(g1-sg)
 		else
 			g1:Sub(g1)
 		end
@@ -93,7 +93,7 @@ function c100426017.adjustop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 		local sg=g2:SelectSubGroup(1-tp,c100426017.tgselect,false,#g2-1,#g2-1,g2)
 		if sg then
-			g2:Sub(g2-sg)		  
+			g2:Sub(g2-sg)
 		else
 			g2:Sub(g2)
 		end
