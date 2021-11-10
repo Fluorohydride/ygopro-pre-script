@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **October 16, 2021**: BATTLE OF CHAOS (BACH-JP) : `101107XXX`
 - **November 4, 2021**: Yu-Gi-Oh! OCG Structures Volume 4 promotional card (YO04-JP) : `100283XXX`
 - **November 20, 2021**: Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
 - **December 4, 2021**: Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
@@ -179,3 +178,4 @@
 - LIGHTNING OVERDRIVE (LIOV-JP): `101104XXX`
 - DAWN OF MAJESTY (DAMA-JP) : `101105XXX`
 - BURST OF DESTINY (BODE-JP) : `101106XXX`
+- BATTLE OF CHAOS (BACH-JP) : `101107XXX`
