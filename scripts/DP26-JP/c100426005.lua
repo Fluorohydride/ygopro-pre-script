@@ -97,12 +97,11 @@ function c100426005.fselect(sg,tp)
 	return mg:CheckSubGroup(c100426005.matfilter,1,#mg,tp,sg)
 end
 function c100426005.matfilter(sg,tp,g)
-	local tc=g:GetFirst()
-	while tc do
-		if not sg:IsContains(tc) then return false end
-		tc=g:GetNext()
-	end
+	if sg:Filter(c100426005.contains,nil,g):GetCount()~=g:GetCount() then return false end
 	return Duel.IsExistingMatchingCard(c100426005.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg)
+end
+function c100426005.contains(c,g)
+	return g:IsContains(c)
 end
 function c100426005.xyzfilter(c,mg)
 	return c:IsSetCard(0x48) and c:IsXyzSummonable(mg,#mg,#mg)
@@ -137,15 +136,15 @@ function c100426005.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 		tc=g:GetNext()
 	end
-	Duel.SpecialSummonComplete()	
+	Duel.SpecialSummonComplete()
 	Duel.RaiseEvent(e:GetHandler(),EVENT_ADJUST,nil,0,PLAYER_NONE,PLAYER_NONE,0)
-	if g:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)<2 then return end
+	if g:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)<#g then return end
 	local exg=Duel.GetMatchingGroup(c100426005.xyzfilter2,tp,LOCATION_EXTRA,0,nil)
 	local xyzg=exg:Filter(c100426005.ovfilter,nil,tp,g)
 	if xyzg:GetCount()>0 then
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		local fg=Duel.GetMatchingGroup(c100426005.filter2,tp,LOCATION_MZONE,0,nil)
-		local sg=fg:SelectSubGroup(tp,c100426005.ovxfilter,false,1,5,xyz,g)
+		local sg=fg:SelectSubGroup(tp,c100426005.gselect,false,1,5,xyz,g)
 		Duel.XyzSummon(tp,xyz,sg)
 	end
 end
@@ -155,13 +154,9 @@ end
 function c100426005.ovfilter(c,tp,sg)
 	local mg=Duel.GetMatchingGroup(c100426005.filter2,tp,LOCATION_MZONE,0,nil)
 	mg:Merge(sg)
-	return mg:CheckSubGroup(c100426005.ovxfilter,1,#mg,c,sg)
+	return mg:CheckSubGroup(c100426005.gselect,1,#mg,c,sg)
 end
-function c100426005.ovxfilter(sg,c,g)
-	local tc=g:GetFirst()
-	while tc do
-		if not sg:IsContains(tc) then return false end
-		tc=g:GetNext()
-	end
+function c100426005.gselect(sg,c,g)
+	if sg:Filter(c100426005.contains,nil,g):GetCount()~=g:GetCount() then return false end
 	return c:IsXyzSummonable(sg,#sg,#sg)
 end
