@@ -53,16 +53,10 @@ function c100343032.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=g1:SelectSubGroup(tp,c100343032.fselect,false,1,2)
 	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
-	local tc=g:GetFirst()
-	local flag=1
-	while tc do
-		if not tc:IsLocation(LOCATION_EXTRA) then flag=0 end
-		tc=g:GetNext()
-	end	
-	if flag==1 then
-		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-			Duel.Destroy(eg,REASON_EFFECT)
-		end
+	local fg=g:Filter(Card.IsLocation,nil,LOCATION_EXTRA)
+	if #fg~=#g then return end
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
 function c100343032.fselect(sg)
