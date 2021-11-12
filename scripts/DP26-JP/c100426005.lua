@@ -55,7 +55,7 @@ function c100426005.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100426005.cpfilter(c)
 	return c:GetType()==TYPE_SPELL and c:IsSetCard(0x277) and c:IsAbleToGraveAsCost()
-		and c:CheckActivateEffect(true,false,false)~=nil
+		and c:CheckActivateEffect(true,true,false)~=nil
 end
 function c100426005.cptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
