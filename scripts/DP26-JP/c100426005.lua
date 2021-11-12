@@ -55,7 +55,7 @@ function c100426005.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100426005.cpfilter(c)
 	return c:GetType()==TYPE_SPELL and c:IsSetCard(0x277) and c:IsAbleToGraveAsCost()
-		and c:CheckActivateEffect(true,true,false)~=nil
+		and c:CheckActivateEffect(true,false,false)~=nil
 end
 function c100426005.cptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -144,7 +144,7 @@ function c100426005.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	if xyzg:GetCount()>0 then
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		local fg=Duel.GetMatchingGroup(c100426005.filter2,tp,LOCATION_MZONE,0,nil)
-		local sg=fg:SelectSubGroup(tp,c100426005.gselect,false,1,5,xyz,g)
+		local sg=fg:SelectSubGroup(tp,c100426005.gselect,false,1,7,xyz,g)
 		Duel.XyzSummon(tp,xyz,sg)
 	end
 end
