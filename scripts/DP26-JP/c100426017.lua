@@ -41,7 +41,7 @@ end
 c100426017[0]=0
 c100426017[1]=0
 function c100426017.thfilter(c)
-	return (c:IsCode(22702055) or c:IsSetCard(0x275,0x276)) and c:IsAbleToHand()
+	return (c:IsCode(22702055) or c:IsSetCard(0x275,0x276) and c:IsType(TYPE_SPELL+TYPE_TRAP)) and c:IsAbleToHand()
 end
 function c100426017.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100426017.thfilter,tp,LOCATION_DECK,0,1,nil) end
