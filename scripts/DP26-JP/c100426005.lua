@@ -26,7 +26,6 @@ function c100426005.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_ACTIVATE)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCondition(c100426005.condition)
-	e3:SetCost(c100426005.xyzcost)
 	e3:SetTarget(c100426005.xyztg)
 	e3:SetOperation(c100426005.xyzop)
 	c:RegisterEffect(e3)
@@ -47,7 +46,7 @@ function c100426005.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100426005.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 and e:GetHandler():GetFlagEffect(100426005)~=0
 end
 function c100426005.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
@@ -61,7 +60,7 @@ function c100426005.cptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==0 then return false end
 		e:SetLabel(0)
-		return e:GetHandler():GetFlagEffect(100426005)~=0 and Duel.IsExistingMatchingCard(c100426005.cpfilter,tp,LOCATION_DECK,0,1,nil)
+		return Duel.IsExistingMatchingCard(c100426005.cpfilter,tp,LOCATION_DECK,0,1,nil)
 	end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -82,9 +81,6 @@ function c100426005.cpop(e,tp,eg,ep,ev,re,r,rp)
 	local op=te:GetOperation()
 	if op then op(e,tp,eg,ep,ev,re,r,rp) end
 end
-function c100426005.xyzcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(100426005)~=0 end
-end
 function c100426005.filter1(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -97,11 +93,8 @@ function c100426005.fselect(sg,tp)
 	return mg:CheckSubGroup(c100426005.matfilter,1,#mg,tp,sg)
 end
 function c100426005.matfilter(sg,tp,g)
-	if sg:Filter(c100426005.contains,nil,g):GetCount()~=g:GetCount() then return false end
+	if sg:Filter(aux.IsInGroup,nil,g):GetCount()~=g:GetCount() then return false end
 	return Duel.IsExistingMatchingCard(c100426005.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg)
-end
-function c100426005.contains(c,g)
-	return g:IsContains(c)
 end
 function c100426005.xyzfilter(c,mg)
 	return c:IsSetCard(0x48) and c:IsXyzSummonable(mg,#mg,#mg)
@@ -117,11 +110,12 @@ function c100426005.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
 end
 function c100426005.xyzop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerCanSpecialSummonCount(tp,2) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if not Duel.IsPlayerCanSpecialSummonCount(tp,2) or ft<=0 then return end
 	if ft>2 then ft=2 end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	local mg=Duel.GetMatchingGroup(c100426005.filter1,tp,LOCATION_DECK,0,nil,e,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=mg:SelectSubGroup(tp,c100426005.fselect,false,1,ft,tp)
 	local tc=g:GetFirst()
 	while tc do
@@ -142,6 +136,7 @@ function c100426005.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local exg=Duel.GetMatchingGroup(c100426005.xyzfilter2,tp,LOCATION_EXTRA,0,nil)
 	local xyzg=exg:Filter(c100426005.ovfilter,nil,tp,g)
 	if xyzg:GetCount()>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		local fg=Duel.GetMatchingGroup(c100426005.filter2,tp,LOCATION_MZONE,0,nil)
 		local sg=fg:SelectSubGroup(tp,c100426005.gselect,false,1,7,xyz,g)
@@ -157,6 +152,6 @@ function c100426005.ovfilter(c,tp,sg)
 	return mg:CheckSubGroup(c100426005.gselect,1,#mg,c,sg)
 end
 function c100426005.gselect(sg,c,g)
-	if sg:Filter(c100426005.contains,nil,g):GetCount()~=g:GetCount() then return false end
+	if sg:Filter(aux.IsInGroup,nil,g):GetCount()~=g:GetCount() then return false end
 	return c:IsXyzSummonable(sg,#sg,#sg)
 end
