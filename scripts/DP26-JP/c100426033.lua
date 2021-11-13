@@ -3,7 +3,7 @@
 --Script by Trishula9
 function c100426033.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkAttribute,ATTRIBUTE_WATER),2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x12b),2)
 	c:EnableReviveLimit()
 	--to hand
 	local e1=Effect.CreateEffect(c)
@@ -31,15 +31,8 @@ end
 function c100426033.counterfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER)
 end
-function c100426033.costfilter(c)
-	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToGraveAsCost()
-end
-function c100426033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetCustomActivityCount(100426033,tp,ACTIVITY_SPSUMMON)==0
-		and Duel.IsExistingMatchingCard(c100426033.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100426033.costfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST)
+function c100426033.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetCustomActivityCount(100426033,tp,ACTIVITY_SPSUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -51,6 +44,17 @@ function c100426033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100426033.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsAttribute(ATTRIBUTE_WATER)
+end
+function c100426033.costfilter(c)
+	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToGraveAsCost()
+end
+function c100426033.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return c100426033.cost(e,tp,eg,ep,ev,re,r,rp,0)
+		and Duel.IsExistingMatchingCard(c100426033.costfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c100426033.costfilter,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
+	c100426033.cost(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function c100426033.thfilter(c)
 	return c:IsSetCard(0x12b) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
@@ -71,45 +75,43 @@ function c100426033.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
+function c100426033.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return c100426033.cost(e,tp,eg,ep,ev,re,r,rp,0)
+		and e:GetHandler():IsAbleToRemoveAsCost() end
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	c100426033.cost(e,tp,eg,ep,ev,re,r,rp,1)
+end
 function c100426033.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100426033.fselect(sg)
-	local lt=0
-	local lc=sg:GetFirst()
-	while lc do
-		lt=lt+lc:GetLink()
-		lc=sg:GetNext()
-	end
-	return lt==3
+	return sg:GetSum(Card.GetLink)==3
 end
-function c100426033.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetCustomActivityCount(100426033,tp,ACTIVITY_SPSUMMON)==0
-		and e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)	
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(c100426033.splimit)
-	Duel.RegisterEffect(e1,tp)
+function c100426033.gcheck(sg)
+	return sg:GetSum(Card.GetLink)<=3
 end
 function c100426033.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	local g=Duel.GetMatchingGroup(c100426033.spfilter,tp,LOCATION_GRAVE,0,e:GetHandler(),e,tp)
-	if chk==0 then return ft>0 and g:CheckSubGroup(c100426033.fselect,1,ft) end
+	if chk==0 then
+		if ft<=0 then return false end
+		aux.GCheckAdditional=c100426033.gcheck
+		local res=g:CheckSubGroup(c100426033.fselect,1,ft)
+		aux.GCheckAdditional=nil
+		return res
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c100426033.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	local g=Duel.GetMatchingGroup(c100426033.spfilter,tp,LOCATION_GRAVE,0,e:GetHandler(),e,tp)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100426033.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	aux.GCheckAdditional=c100426033.gcheck
 	local sg=g:SelectSubGroup(tp,c100426033.fselect,false,1,ft)
+	aux.GCheckAdditional=nil
 	if sg:GetCount()>0 then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
