@@ -29,11 +29,10 @@ function c100426007.cfilter(c)
 	if not c:IsType(TYPE_XYZ) then return false end
 	if c100426007.filter(c) then return true end
 	local g=c:GetOverlayGroup()
-	return #g>0 and g:IsExists(c100426007.filter,1,nil)
+	return g:IsExists(c100426007.filter,1,nil)
 end
 function c100426007.disfilter(c,atk)
-	return c:IsFaceup() and not c:IsDisabled() and (c:IsType(TYPE_EFFECT) or c:GetOriginalType()&TYPE_EFFECT~=0)
-		and c:IsAttackBelow(atk)
+	return aux.NegateMonsterFilter(c) and c:IsAttackBelow(atk)
 end
 function c100426007.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100426007.cfilter(chkc) end
@@ -61,6 +60,7 @@ function c100426007.operation(e,tp,eg,ep,ev,re,r,rp)
 	if s==0 then
 		local sg=Duel.GetMatchingGroup(c100426007.disfilter,tp,0,LOCATION_MZONE,nil,tc:GetAttack())
 		if sg:GetCount()>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
 			local sc=sg:Select(tp,1,1,nil):GetFirst()
 			if sc and not sc:IsImmuneToEffect(e) then
 				Duel.NegateRelatedChain(sc,RESET_TURN_SET)
@@ -83,10 +83,8 @@ function c100426007.operation(e,tp,eg,ep,ev,re,r,rp)
 	if s==1 then
 		if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 			local og=tc:GetOverlayGroup()
-			if og:GetCount()>0 then
-				Duel.SendtoGrave(og,REASON_EFFECT)
-			end
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			if og:GetCount()>0 and Duel.SendtoGrave(og,REASON_EFFECT)>0
+				and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 				and Duel.IsExistingMatchingCard(c100426007.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 				and Duel.SelectYesNo(tp,aux.Stringid(100426007,2)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
