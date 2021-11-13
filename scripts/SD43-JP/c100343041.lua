@@ -5,7 +5,7 @@ function c100343041.initial_effect(c)
 	c:SetUniqueOnField(1,0,100343041)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,68468459,aux.FilterBoolFunction(Card.IsType,TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK),1,true,true)
+	aux.AddFusionProcCodeFun(c,68468459,aux.FilterBoolFunction(Card.IsFusionType,TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK),1,true,true)
 	--remove
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -52,12 +52,8 @@ function c100343041.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.Remove(sg,POS_FACEUP,REASON_COST)
-		if Duel.GetTurnPlayer()==tp then
-			e:GetHandler():RegisterFlagEffect(100343041,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,0)
-		else
-			e:GetHandler():RegisterFlagEffect(100343041,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,0)
-		end
 	end
+	e:GetHandler():RegisterFlagEffect(100343041,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
 end
 function c100343041.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
