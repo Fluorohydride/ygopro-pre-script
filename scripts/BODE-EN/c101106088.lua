@@ -17,7 +17,7 @@ function c101106088.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101106088,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
 	e2:SetCountLimit(1,101106088)
@@ -26,7 +26,7 @@ function c101106088.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101106088.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c101106088.regop(e,tp,eg,ep,ev,re,r,rp)
 	--unaffected handle after it was summoned
@@ -47,7 +47,7 @@ function c101106088.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
 function c101106088.spfilter(c,e,tp)
-	return c:IsRace(RACE_INSECT) and c:IsAttackBelow(3000) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
+	return c:IsRace(RACE_INSECT) and c:IsAttackBelow(3000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101106088.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101106088.spfilter(chkc,e,tp) end
@@ -60,6 +60,6 @@ end
 function c101106088.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,true,POS_FACEUP)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
