@@ -23,13 +23,13 @@ function c100285004.initial_effect(c)
 	e2:SetOperation(c100285004.tgop)
 	c:RegisterEffect(e2)
 end
-function c100285004.rfilter(c)
-	return c:IsSetCard(0x121,0xd9) and c:IsType(TYPE_SYNCHRO+TYPE_LINK)
+function c100285004.rfilter(c,tp)
+	return c:IsSetCard(0x121,0xd9) and c:IsType(TYPE_SYNCHRO+TYPE_LINK) and (c:IsControler(tp) or c:IsFaceup())
 end
 function c100285004.limcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c100285004.rfilter,1,nil) end
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c100285004.rfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,c100285004.rfilter,1,1,nil)
+	local g=Duel.SelectReleaseGroup(tp,c100285004.rfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c100285004.limop(e,tp,eg,ep,ev,re,r,rp)
