@@ -25,17 +25,18 @@ function c100200209.initial_effect(c)
 	e2:SetOperation(c100200209.thop)
 	c:RegisterEffect(e2)
 end
-function c100200209.cpfilter(c)
-	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelAbove(1)
+function c100200209.cpfilter(c,ec)
+	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelAbove(1) and (not c:IsLevel(ec:GetLevel()) or c:IsCode(ec:GetCode()))
 end
 function c100200209.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100200209.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c:IsAttribute(ATTRIBUTE_WATER) end
-	local b1=Duel.IsExistingTarget(c100200209.cpfilter,tp,LOCATION_GRAVE,0,1,nil)
+	local c=e:GetHandler()
+	local b1=Duel.IsExistingMatchingCard(c100200209.cpfilter,tp,LOCATION_GRAVE,0,1,nil,c)
 	local b2=Duel.IsEnvironment(22702055) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c100200209.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(c100200209.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	if chk==0 then return b1 or b2 end
 	local s=0
 	local g=nil
@@ -51,7 +52,8 @@ function c100200209.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabel(s)
 	if s==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		g=Duel.SelectTarget(tp,c100200209.cpfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		g=Duel.SelectTarget(tp,c100200209.cpfilter,tp,LOCATION_GRAVE,0,1,1,nil,c)
+		e:SetCategory(0)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		g=Duel.SelectTarget(tp,c100200209.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
