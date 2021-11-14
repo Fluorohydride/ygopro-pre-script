@@ -51,7 +51,7 @@ function c100343041.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg=g:Select(tp,1,1,nil)
-		Duel.Remove(sg,POS_FACEUP,REASON_COST)
+		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	end
 	e:GetHandler():RegisterFlagEffect(100343041,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
 end
