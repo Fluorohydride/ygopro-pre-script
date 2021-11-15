@@ -51,7 +51,7 @@ function c101108034.initial_effect(c)
 	--disable
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(101108034,1))
-	e5:SetCategory(CATEGORY_DISABLE+CATEGORY_SPECIAL_SUMMON)
+	e5:SetCategory(CATEGORY_DISABLE)
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetCode(EVENT_CHAINING)
 	e5:SetRange(LOCATION_MZONE)
@@ -114,6 +114,11 @@ function c101108034.discon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101108034.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
+	if e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) then
+		e:SetCategory(CATEGORY_DISABLE+CATEGORY_SPECIAL_SUMMON)
+	else
+		e:SetCategory(CATEGORY_DISABLE)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function c101108034.spfilter(c,e,tp)
@@ -123,7 +128,7 @@ function c101108034.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) then return end
 	if c:IsRelateToEffect(e) and c:IsFaceup() and not c:IsImmuneToEffect(e) then
-		if Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true) then
+		if Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true) and c:IsLocation(LOCATION_PZONE) then
 			if Duel.NegateEffect(ev) and c:IsSummonType(SUMMON_TYPE_RITUAL)
 				and Duel.IsExistingMatchingCard(c101108034.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 				and Duel.SelectYesNo(tp,aux.Stringid(101108034,2)) then
