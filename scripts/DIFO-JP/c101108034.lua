@@ -121,10 +121,12 @@ function c101108034.spfilter(c,e,tp)
 end
 function c101108034.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.NegateEffect(ev) then
-		if not (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) then return end
-		if c:IsRelateToEffect(e) and c:IsFaceup() and not c:IsImmuneToEffect(e) then
-			if Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true) and c:IsSummonType(SUMMON_TYPE_RITUAL) and Duel.IsExistingMatchingCard(c101108034.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(101108034,2)) then
+	if not (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) then return end
+	if c:IsRelateToEffect(e) and c:IsFaceup() and not c:IsImmuneToEffect(e) then
+		if Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true) then
+			if Duel.NegateEffect(ev) and c:IsSummonType(SUMMON_TYPE_RITUAL)
+				and Duel.IsExistingMatchingCard(c101108034.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
+				and Duel.SelectYesNo(tp,aux.Stringid(101108034,2)) then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local g=Duel.SelectMatchingCard(tp,c101108034.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
