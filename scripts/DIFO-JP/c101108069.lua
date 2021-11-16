@@ -4,6 +4,7 @@
 function c101108069.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101108069,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -54,7 +55,7 @@ function c101108069.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g3=Duel.GetMatchingGroup(c101108069.thfilter2,tp,LOCATION_DECK,0,nil)
 	local g4=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_PZONE,0,nil)
 	local b1=dif==0 and g1:GetCount()>=2
-	local b2=(dif>=1 and dif<=3 and g2:GetCount()>=1)
+	local b2=dif>=1 and dif<=3 and g2:GetCount()>=1
 	local b3=dif>=4 and dif<=6 and g3:GetCount()>=1
 	local b4=dif>=7 and g4:GetCount()>=1
 	if b1 then
@@ -80,7 +81,8 @@ function c101108069.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		local fg=Duel.GetMatchingGroup(c101108069.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and fg:GetCount()>0
-			and Duel.SelectYesNo(tp,aux.Stringid(101108069,0)) then
+			and Duel.SelectYesNo(tp,aux.Stringid(101108069,1)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local mg=fg:Select(tp,1,1,nil)
 			Duel.SpecialSummon(mg,0,tp,tp,false,false,POS_FACEUP)
