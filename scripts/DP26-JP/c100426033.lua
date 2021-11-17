@@ -112,7 +112,7 @@ function c100426033.spop(e,tp,eg,ep,ev,re,r,rp)
 	aux.GCheckAdditional=c100426033.gcheck
 	local sg=g:SelectSubGroup(tp,c100426033.fselect,false,1,ft)
 	aux.GCheckAdditional=nil
-	if sg:GetCount()>0 then
+	if sg then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
