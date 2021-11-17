@@ -35,7 +35,8 @@ function c100426021.eftg(e,c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)
 end
 function c100426021.efilter(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsAttribute(ATTRIBUTE_WATER)
+	local rc=re:GetHandler()
+	return re:IsActiveType(TYPE_MONSTER) and rc:IsControler(1-e:GetHandlerPlayer()) and not rc:IsAttribute(ATTRIBUTE_WATER)
 end
 function c100426021.spfilter(c,e,tp)
 	return (aux.IsCodeListed(c,22702055) or (c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER)))
