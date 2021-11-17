@@ -6,6 +6,7 @@
 - **November 20, 2021**: Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
 - **December 4, 2021**: Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
 - **December 15, 2021**: Secret Shiny Box (SSB1-JP) : `100285XXX`
+- **?? ??, 2021**: Premium Pack 2022 (22PP-JP) : `100286XXX`
 - **January 15, 2022**: DIMENSION FORCE (DIFO-JP) : `101108XXX`
 - **April 2022**: 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
 
