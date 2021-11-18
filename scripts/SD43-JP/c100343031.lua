@@ -63,7 +63,7 @@ function c100343031.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100343031.thfilter(c)
-	return (c:IsCode(68468459) or aux.IsCodeListed(c,68468459) and c:IsType(TYPE_MONSTER)) and c:IsAbleToHand()
+	return (c:IsCode(68468459) or aux.IsCodeListed(c,68468459) and c:IsType(TYPE_MONSTER)) and c:IsFaceup() and c:IsAbleToHand()
 end
 function c100343031.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c100343031.thfilter(chkc) end
