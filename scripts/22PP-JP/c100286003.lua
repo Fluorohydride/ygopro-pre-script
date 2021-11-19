@@ -1,79 +1,60 @@
---パペット・ルーク
+--プロモーシコン
 --
 --Script by Trishula9
 function c100286003.initial_effect(c)
-	--to grave
+	--activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_POSITION+CATEGORY_TOGRAVE)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetTarget(c100286003.tgtg)
-	e1:SetOperation(c100286003.tgop)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCountLimit(1,100286003+EFFECT_COUNT_CODE_OATH)
+	e1:SetTarget(c100286003.target)
+	e1:SetOperation(c100286003.operation)
 	c:RegisterEffect(e1)
-	--must attack
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_MUST_ATTACK)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(0,LOCATION_MZONE)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_MUST_ATTACK_MONSTER)
-	e3:SetValue(c100286003.atklimit)
-	c:RegisterEffect(e3)
-	--castling
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_BE_BATTLE_TARGET)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetCountLimit(1)
-	e4:SetTarget(c100286003.cltg)
-	e4:SetOperation(c100286003.clop)	
-	c:RegisterEffect(e4)
 end
 function c100286003.tgfilter(c)
-	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToGrave()
+	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLevelBelow(3) and c:IsAbleToGrave()
 end
-function c100286003.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAttackPos()
-		and Duel.IsExistingMatchingCard(c100286003.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+function c100286003.spfilter(c,e,tp)
+	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLevelAbove(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100286003.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c100286003.tgfilter,tp,LOCATION_DECK,0,nil)
-	if c:IsFaceup() and c:IsAttackPos() and c:IsRelateToEffect(e) and Duel.ChangePosition(c,POS_FACEUP_DEFENSE) and #g>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local sg=g:Select(tp,1,1,nil)
-		Duel.SendtoGrave(sg,REASON_EFFECT)
-	end
+function c100286003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100286003.tgfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100286003.tgfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c100286003.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectTarget(tp,c100286003.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function c100286003.atklimit(e,c)
-	return c==e:GetHandler()
-end
-function c100286003.clfilter(c,e,tp)
-	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLevelAbove(6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function c100286003.cltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100286003.clfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetMZoneCount(tp,c)>0 and c:IsAbleToGrave()
-		and Duel.IsExistingTarget(c100286003.clfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c100286003.clfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
-	Duel.GetAttacker():CreateEffectRelation(e)
-end
-function c100286003.clop(e,tp,eg,ep,ev,re,r,rp)	
-	local c=e:GetHandler()
+function c100286003.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)>0 and c:IsLocation(LOCATION_GRAVE) and tc:IsRelateToEffect(e)
-		and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
-		local a=Duel.GetAttacker()
-		if a:IsAttackable() and a:IsRelateToEffect(e) and not a:IsImmuneToEffect(e) then
-			Duel.BreakEffect()
-			Duel.CalculateDamage(a,tc)
+	if tc:IsRelateToEffect(e) and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) then
+		local g=Duel.GetMatchingGroup(c100286003.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
+		if g:GetCount()>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sc=g:Select(tp,1,1,nil):GetFirst()
+			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
+			if Duel.IsExistingMatchingCard(c100286003.atkfilter,tp,LOCATION_MZONE,0,1,nil) then
+				Duel.BreakEffect()
+				local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)*100
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_UPDATE_ATTACK)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+				e1:SetValue(ct)
+				sc:RegisterEffect(e1)
+				local e2=Effect.CreateEffect(e:GetHandler())
+				e2:SetType(EFFECT_TYPE_SINGLE)
+				e2:SetCode(EFFECT_UPDATE_DEFENSE)
+				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+				e2:SetValue(ct)
+				sc:RegisterEffect(e2)
+			end
 		end
 	end
+end
+function c100286003.atkfilter(c)
+	return c:GetOriginalRace()==RACE_WARRIOR and c:GetOriginalAttribute()==ATTRIBUTE_EARTH and c:IsSetCard(0x279) and c:IsFaceup()
 end

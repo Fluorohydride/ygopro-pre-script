@@ -32,7 +32,7 @@ function c100286001.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function c100286001.thfilter(c)
-	return c:IsCode(100286002) and c:IsAbleToHand()
+	return c:IsCode(100286003) and c:IsAbleToHand()
 end
 function c100286001.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100286001.thfilter,tp,LOCATION_DECK,0,1,nil) end
