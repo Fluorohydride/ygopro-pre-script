@@ -44,28 +44,28 @@ function c100286017.negfilter(c)
 end
 function c100286017.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100286017.negfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_GRAVE)
 end
 function c100286017.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100286017,0))
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100286017.negfilter),tp,LOCATION_GRAVE,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc and Duel.SendtoExtraP(tc,tp,REASON_EFFECT) and tc:IsLocation(LOCATION_EXTRA) and Duel.NegateAttack()
-		and Duel.SelectYesNo(tp,aux.Stringid(100286017,1)) then
+		and tc:GetAttack()>0 and Duel.SelectYesNo(tp,aux.Stringid(100286017,1)) then
 		Duel.BreakEffect()
 		Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
 	end
 end
 function c100286017.spfilter(c)
-	return c:IsSetCard(0x9f,0x99) and not c:IsCode(100286017) and c:IsFaceup()
+	return c:IsSetCard(0x9f,0x99) and not c:IsCode(100286017) and c:IsFaceup() and c:GetOriginalType()&TYPE_MONSTER~=0
 end
 function c100286017.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100286017.spfilter(c) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c100286017.spfilter(c) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingTarget(c100286017.spfilter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c100286017.spfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		and Duel.IsExistingTarget(c100286017.spfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	Duel.SelectTarget(tp,c100286017.spfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100286017.spop(e,tp,eg,ep,ev,re,r,rp)
