@@ -12,6 +12,7 @@ function c100286018.initial_effect(c)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(c100286018.atkcon)
+	e1:SetTarget(c100286018.atktg)
 	e1:SetOperation(c100286018.atkop)
 	c:RegisterEffect(e1)
 	--to grave
@@ -43,6 +44,9 @@ end
 function c100286018.atkfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
+function c100286018.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100286018.atkfilter,tp,LOCATION_EXTRA,0,1,nil) end
+end
 function c100286018.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=Duel.GetAttacker()
@@ -52,7 +56,7 @@ function c100286018.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-ct)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		bc:RegisterEffect(e1)
 	end
 end
