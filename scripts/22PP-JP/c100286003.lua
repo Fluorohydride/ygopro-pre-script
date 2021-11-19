@@ -13,18 +13,20 @@ function c100286003.initial_effect(c)
 	e1:SetOperation(c100286003.operation)
 	c:RegisterEffect(e1)
 end
-function c100286003.tgfilter(c)
-	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLevelBelow(3) and c:IsAbleToGrave()
+function c100286003.tgfilter(c,tp)
+	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLevelBelow(3)
+		and c:IsAbleToGrave() and Duel.GetMZoneCount(tp,c)>0
 end
 function c100286003.spfilter(c,e,tp)
-	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLevelAbove(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLevelAbove(4)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100286003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100286003.tgfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100286003.tgfilter,tp,LOCATION_MZONE,0,1,nil)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100286003.tgfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100286003.tgfilter,tp,LOCATION_MZONE,0,1,nil,tp)
 		and Duel.IsExistingMatchingCard(c100286003.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectTarget(tp,c100286003.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100286003.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
@@ -42,19 +44,16 @@ function c100286003.operation(e,tp,eg,ep,ev,re,r,rp)
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				e1:SetValue(ct)
 				sc:RegisterEffect(e1)
-				local e2=Effect.CreateEffect(e:GetHandler())
-				e2:SetType(EFFECT_TYPE_SINGLE)
+				local e2=e1:Clone()
 				e2:SetCode(EFFECT_UPDATE_DEFENSE)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
-				e2:SetValue(ct)
 				sc:RegisterEffect(e2)
 			end
 		end
 	end
 end
 function c100286003.atkfilter(c)
-	return c:GetOriginalRace()==RACE_WARRIOR and c:GetOriginalAttribute()==ATTRIBUTE_EARTH and c:IsSetCard(0x279) and c:IsFaceup()
+	return c:GetOriginalRace()==RACE_WARRIOR and c:GetOriginalAttribute()==ATTRIBUTE_EARTH and c:IsSetCard(0x83) and c:IsFaceup()
 end
