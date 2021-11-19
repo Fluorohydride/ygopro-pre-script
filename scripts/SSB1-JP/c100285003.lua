@@ -2,7 +2,7 @@
 --
 --Script by Trishula9
 function c100285003.initial_effect(c)
-	c:SetUniqueOnField(1,0,100343041)
+	c:SetUniqueOnField(1,0,100285003)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_ZOMBIE),2)
