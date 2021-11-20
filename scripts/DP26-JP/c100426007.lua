@@ -23,7 +23,7 @@ function c100426007.filter(c)
 	local m=_G["c"..c:GetCode()]
 	if not m then return false end
 	local no=m.xyz_number
-	return no and no>=101 and no<=107
+	return no and no>=101 and no<=107 and c:IsSetCard(0x48) and c:IsType(TYPE_XYZ)
 end
 function c100426007.cfilter(c)
 	if not c:IsType(TYPE_XYZ) then return false end
@@ -53,11 +53,17 @@ function c100426007.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		s=Duel.SelectOption(tp,aux.Stringid(100426007,0),aux.Stringid(100426007,1))
 	end
 	e:SetLabel(s)
+	if s==0 then
+		e:SetCategory(0)
+	else
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	end
 end
 function c100426007.operation(e,tp,eg,ep,ev,re,r,rp)
 	local s=e:GetLabel()
 	local tc=Duel.GetFirstTarget()
 	if s==0 then
+		if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 		local sg=Duel.GetMatchingGroup(c100426007.disfilter,tp,0,LOCATION_MZONE,nil,tc:GetAttack())
 		if sg:GetCount()>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
@@ -85,11 +91,12 @@ function c100426007.operation(e,tp,eg,ep,ev,re,r,rp)
 			local og=tc:GetOverlayGroup()
 			if og:GetCount()>0 and Duel.SendtoGrave(og,REASON_EFFECT)>0
 				and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-				and Duel.IsExistingMatchingCard(c100426007.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+				and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100426007.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)
 				and Duel.SelectYesNo(tp,aux.Stringid(100426007,2)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local ng=Duel.SelectMatchingCard(tp,c100426007.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+				local ng=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100426007.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 				if ng:GetCount()>0 then
+					Duel.BreakEffect()
 					Duel.SpecialSummon(ng,0,tp,tp,false,false,POS_FACEUP)
 				end
 			end

@@ -9,6 +9,7 @@ function c100426022.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100426022+EFFECT_COUNT_CODE_OATH)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCost(c100426022.cost)
 	e1:SetTarget(c100426022.target)
 	e1:SetOperation(c100426022.activate)
@@ -38,24 +39,42 @@ end
 function c100426022.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ft=math.min(2,(Duel.GetLocationCount(tp,LOCATION_MZONE)))
-	if ft<=0 then return end
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	local tg=Duel.GetMatchingGroup(c100426022.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=tg:SelectSubGroup(tp,aux.dncheck,false,1,ft)
-	if g1 then
-		Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-	end
-	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g2=Duel.GetMatchingGroup(c100426022.spfilter1,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
-	if ft1>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	if ft1>0 and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil)
-		and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(100426022,0)) then
-		Duel.BreakEffect()
+	if ft>0 then
+		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+		local tg=Duel.GetMatchingGroup(c100426022.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g3=g2:Select(tp,1,ft1,nil)
-		if g3 then
-			Duel.SpecialSummon(g3,0,tp,tp,false,false,POS_FACEUP)
+		local g1=tg:SelectSubGroup(tp,aux.dncheck,false,1,ft)
+		if g1 then
+			Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		end
+		local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local g2=Duel.GetMatchingGroup(c100426022.spfilter1,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
+		if ft1>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+		if ft1>0 and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil)
+			and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(100426022,0)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local g3=g2:Select(tp,1,ft1,nil)
+			if g3 then
+				Duel.SpecialSummon(g3,0,tp,tp,false,false,POS_FACEUP)
+			end
 		end
 	end
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(c100426022.splimit)
+		if Duel.GetTurnPlayer()==tp then
+			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+		else
+			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)
+		end
+		Duel.RegisterEffect(e1,tp)
+	end
+end
+function c100426022.splimit(e,c)
+	return not c:IsAttribute(ATTRIBUTE_WATER)
 end

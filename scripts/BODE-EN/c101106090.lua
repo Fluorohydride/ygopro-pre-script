@@ -88,9 +88,7 @@ function c101106090.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101106090.cfilter,tp,LOCATION_GRAVE,0,2,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c101106090.cfilter,tp,LOCATION_GRAVE,0,2,2,e:GetHandler())
-	if #g>0 then
-		Duel.Remove(g,POS_FACEUP,REASON_COST)
-	end
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c101106090.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

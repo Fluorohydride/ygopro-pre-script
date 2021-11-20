@@ -20,7 +20,6 @@ function c100426019.initial_effect(c)
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetCountLimit(1,100426019+100)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c100426019.discon)
@@ -54,7 +53,7 @@ function c100426019.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100426019.discon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsEnvironment(22702055) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	return Duel.IsEnvironment(22702055)
 		and ep==1-tp and re:IsActiveType(TYPE_SPELL+TYPE_MONSTER) and Duel.IsChainDisablable(ev)
 end
 function c100426019.distg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -63,7 +62,8 @@ function c100426019.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100426019.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.NegateEffect(ev) and c:IsRelateToEffect(e) and Duel.SelectYesNo(tp,aux.Stringid(100426019,2)) then
+	if Duel.NegateEffect(ev) and c:IsRelateToEffect(e) and c:IsFaceup()
+		and Duel.SelectYesNo(tp,aux.Stringid(100426019,2)) then
 		Duel.BreakEffect()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

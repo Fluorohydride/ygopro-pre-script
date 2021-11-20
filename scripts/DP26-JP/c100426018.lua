@@ -20,7 +20,8 @@ function c100426018.initial_effect(c)
 	--NegateAttack
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100426018,1))
-	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetCountLimit(1,100426018+100)
@@ -73,7 +74,8 @@ function c100426018.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function c100426018.thop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) and Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT) then
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)>0 and c:IsLocation(LOCATION_HAND) then
 		Duel.NegateAttack()
 	end
 end
