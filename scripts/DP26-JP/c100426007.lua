@@ -23,7 +23,7 @@ function c100426007.filter(c)
 	local m=_G["c"..c:GetCode()]
 	if not m then return false end
 	local no=m.xyz_number
-	return no and no>=101 and no<=107
+	return no and no>=101 and no<=107 and c:IsSetCard(0x48) and c:IsType(TYPE_XYZ)
 end
 function c100426007.cfilter(c)
 	if not c:IsType(TYPE_XYZ) then return false end
@@ -53,6 +53,11 @@ function c100426007.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		s=Duel.SelectOption(tp,aux.Stringid(100426007,0),aux.Stringid(100426007,1))
 	end
 	e:SetLabel(s)
+	if s==0 then
+		e:SetCategory(0)
+	else
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	end
 end
 function c100426007.operation(e,tp,eg,ep,ev,re,r,rp)
 	local s=e:GetLabel()

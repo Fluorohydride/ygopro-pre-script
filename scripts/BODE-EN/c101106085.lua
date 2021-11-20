@@ -54,7 +54,7 @@ function c101106085.atkup(e,c)
 	return Duel.GetMatchingGroupCount(c101106085.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,e:GetHandler())*200
 end
 function c101106085.filter(c)
-	return c:IsSetCard(0x170) and c:IsType(TYPE_MONSTER) and not c:IsCode(101106085)
+	return c:IsSetCard(0x170) and c:IsType(TYPE_MONSTER) and not c:IsCode(101106085) and c:IsAbleToHand()
 end
 function c101106085.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101106085.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -65,5 +65,6 @@ function c101106085.scop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c101106085.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end

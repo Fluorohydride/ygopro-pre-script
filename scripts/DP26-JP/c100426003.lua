@@ -43,7 +43,7 @@ function c100426003.ovfilter(c,sc)
 	local m=_G["c"..c:GetCode()]
 	if not m then return false end
 	local no=m.xyz_number
-	return no and no>=101 and no<=107 and c:IsCanBeXyzMaterial(sc)
+	return no and no>=101 and no<=107 and c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) and c:IsCanBeXyzMaterial(sc)
 end
 function c100426003.ovtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100426003.ovfilter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
@@ -54,13 +54,14 @@ end
 function c100426003.ovop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100426003,0))
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local mg=Duel.SelectMatchingCard(tp,c100426003.ovfilter,tp,LOCATION_EXTRA,0,1,1,nil,c)
+	if #mg==0 then return end
 	Duel.Overlay(c,mg)
 	local g=Duel.GetMatchingGroup(c100426003.ovfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,c)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100426003,1)) then
 		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100426003,0))
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 		local tg=g:Select(tp,1,1,nil)
 		Duel.HintSelection(tg)
 		local tc=tg:GetFirst()

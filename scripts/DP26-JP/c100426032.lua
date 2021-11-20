@@ -36,7 +36,7 @@ function c100426032.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c100426032.filter,tp,LOCATION_ONFIELD,0,1,1,c,c)
+	Duel.SelectTarget(tp,c100426032.filter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c100426032.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -59,7 +59,7 @@ function c100426032.tgfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsType(TYPE_LINK)
 end
 function c100426032.eqfilter(c)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and not c:IsForbidden()
 end
 function c100426032.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100426032.tgfilter(chkc) end

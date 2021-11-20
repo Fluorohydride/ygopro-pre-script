@@ -20,7 +20,7 @@ function c100426036.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100426036.texfilter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_WATER)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToExtra()
 		and Duel.IsExistingMatchingCard(c100426036.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function c100426036.spfilter(c,e,tp,rc)
@@ -33,6 +33,7 @@ function c100426036.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	Duel.SelectTarget(tp,c100426036.texfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100426036.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

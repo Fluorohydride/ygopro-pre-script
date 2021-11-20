@@ -18,6 +18,7 @@ function c100426037.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCondition(aux.bpcon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100426037.attg)
 	e2:SetOperation(c100426037.atop)
@@ -34,7 +35,7 @@ function c100426037.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100426037.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100426037.spfilter),tp,LOCATION_GRAVE+LOCATION_EXTRA,0,nil,e,tp)
-	if Duel.NegateAttack() and #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if Duel.NegateAttack() and #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
