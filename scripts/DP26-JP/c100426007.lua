@@ -58,6 +58,7 @@ function c100426007.operation(e,tp,eg,ep,ev,re,r,rp)
 	local s=e:GetLabel()
 	local tc=Duel.GetFirstTarget()
 	if s==0 then
+		if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 		local sg=Duel.GetMatchingGroup(c100426007.disfilter,tp,0,LOCATION_MZONE,nil,tc:GetAttack())
 		if sg:GetCount()>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
@@ -85,11 +86,12 @@ function c100426007.operation(e,tp,eg,ep,ev,re,r,rp)
 			local og=tc:GetOverlayGroup()
 			if og:GetCount()>0 and Duel.SendtoGrave(og,REASON_EFFECT)>0
 				and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-				and Duel.IsExistingMatchingCard(c100426007.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+				and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100426007.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)
 				and Duel.SelectYesNo(tp,aux.Stringid(100426007,2)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local ng=Duel.SelectMatchingCard(tp,c100426007.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+				local ng=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100426007.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 				if ng:GetCount()>0 then
+					Duel.BreakEffect()
 					Duel.SpecialSummon(ng,0,tp,tp,false,false,POS_FACEUP)
 				end
 			end
