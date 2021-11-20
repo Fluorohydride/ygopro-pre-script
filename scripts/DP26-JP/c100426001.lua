@@ -1,6 +1,6 @@
 --アビス・シャーク
 --
---Script by Trishula9
+--Script by Trishula9 & mercury233
 function c100426001.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -70,7 +70,7 @@ function c100426001.spop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(0,1)
 	e2:SetCondition(c100426001.damcon)
 	e2:SetValue(DOUBLE_DAMAGE)
-	e2:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL+PHASE_END)
+	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function c100426001.splimit(e,c,sump,sumtype,sumpos,targetp,se)
@@ -79,7 +79,12 @@ end
 function c100426001.damcon(e)
 	local tp=e:GetHandlerPlayer()
 	local a,d=Duel.GetBattleMonster(tp)
-	return a and d and a:GetControler()==tp and a:IsSetCard(0x48)
+	if a and d and a:GetControler()==tp and a:IsSetCard(0x48) and a:IsStatus(STATUS_OPPO_BATTLE)
+		and Duel.GetFlagEffect(tp,100426001)==0 then
+		Duel.RegisterFlagEffect(tp,100426001,RESET_PHASE+PHASE_END,0,1)
+		return true
+	end
+	return false
 end
 function c100426001.xyzlv(e,c,rc)
 	if rc:IsSetCard(0x48) then
