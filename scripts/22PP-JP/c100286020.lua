@@ -6,8 +6,7 @@ function c100286020.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCondition(c100286020.descon)
@@ -15,6 +14,7 @@ function c100286020.initial_effect(c)
 	c:RegisterEffect(e1)
 	--scale
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100286020,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -43,11 +43,7 @@ function c100286020.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100286020.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():GetControler()==1-tp and Duel.GetAttackTarget()==nil
-end
-function c100286020.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
+	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function c100286020.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
@@ -57,7 +53,7 @@ function c100286020.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_DISCARD+REASON_COST)
 end
 function c100286020.scfilter(c)
-	return c:GetLeftScale()~=1
+	return c:GetCurrentScale()~=1
 end
 function c100286020.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and c100286020.scfilter(chkc) end
@@ -76,7 +72,6 @@ function c100286020.scop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_RSCALE)
-		e2:SetValue(tc:GetOriginalRightScale())
 		tc:RegisterEffect(e2)
 	end
 end
