@@ -1,4 +1,4 @@
---戰場の惨劇
+--戦場の惨劇
 --
 --Script by Trishula9
 function c100286004.initial_effect(c)
@@ -51,8 +51,7 @@ function c100286004.ssfilter(c)
 	return c:IsCode(100286004) and c:IsSSetable()
 end
 function c100286004.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c100286004.ssfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100286004.ssfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function c100286004.ssop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
