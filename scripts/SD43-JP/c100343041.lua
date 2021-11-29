@@ -57,7 +57,8 @@ function c100343041.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100343041.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetReasonPlayer()==1-tp
+	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp
 end
 function c100343041.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
