@@ -47,6 +47,7 @@ function c100343002.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100343002.thfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x15d) and c:IsAbleToHand()
+		and (not c:IsLocation(LOCATION_REMOVED) or c:IsFaceup())
 end
 function c100343002.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100343002.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
