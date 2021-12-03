@@ -2,11 +2,9 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **November 4, 2021**: Yu-Gi-Oh! OCG Structures Volume 4 promotional card (YO04-JP) : `100283XXX`
-- **November 20, 2021**: Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
 - **December 4, 2021**: Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
-- **December 15, 2021**: Secret Shiny Box (SSB1-JP) : `100285XXX`
 - **December 18, 2021**: Premium Pack 2022 (22PP-JP) : `100286XXX`
+- **December 25, 2021**: Secret Shiny Box (SSB1-JP) : `100285XXX`
 - **January 15, 2022**: DIMENSION FORCE (DIFO-JP) : `101108XXX`
 - **April 2022**: 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
 
@@ -100,6 +98,7 @@
 - ANIMATION CHRONICLE 2021 (AC01-JP) : `100278XXX`
 - King's Court (KICO-EN) : `100280XXX`
 - WORLD PREMIERE PACK 2021 (WPP2-JP) : `100281XXX`
+- Yu-Gi-Oh! OCG Structures Volume 4 promotional card (YO04-JP) : `100283XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -156,6 +155,7 @@
 - Duelist Pack: Legend Duelist 6 (DP23-JP) : `100423XXX`
 - Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
 - Duelist Pack: Duelists of Whirlwind (DP25-JP) : `100425XXX`
+- Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
 
 ## Booster packs
 - THE DARK ILLUSION (TDIL-JP) : `100909XXX`
