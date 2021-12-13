@@ -58,7 +58,7 @@ function c101108020.pop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local g=Group.FromCards(c,tc):Filter(Card.IsRelateToEffect,nil,e)
-	if g:GetCount()>0 then
+	if g:GetCount()==2 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end
