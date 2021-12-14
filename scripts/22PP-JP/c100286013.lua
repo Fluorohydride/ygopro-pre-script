@@ -41,6 +41,15 @@ function c100286013.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_XMATERIAL) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
+function c100286013.gselect(sg,e,tp)
+	local g=Duel.GetMatchingGroup(c100286013.nofilter,tp,LOCATION_EXTRA,0,sg)
+	return g:IsExists(c100286013.spfilter2,1,nil,sg,e,tp)
+end
+function c100286013.spfilter2(c,sg,e,tp)
+	return sg:GetSum(c100286013.nofilter)==c.xyz_number and sg:GetClassCount(Card.GetRank)==4
+		and sg:Filter(Card.IsCanBeXyzMaterial,nil,c):GetCount()==4
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function c100286013.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<0 or not aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_XMATERIAL) then return end
 	local g=Duel.GetMatchingGroup(c100286013.nofilter,tp,LOCATION_EXTRA,0,nil)
@@ -68,13 +77,4 @@ function c100286013.splimitcon(e)
 end
 function c100286013.splimit(e,c)
 	return not c100286013.nofilter(c)
-end
-function c100286013.gselect(sg,e,tp)
-	local g=Duel.GetMatchingGroup(c100286013.nofilter,tp,LOCATION_EXTRA,0,sg)
-	return g:IsExists(c100286013.spfilter2,1,nil,sg,e,tp)
-end
-function c100286013.spfilter2(c,sg,e,tp)
-	return sg:GetSum(c100286013.nofilter)==c.xyz_number and sg:GetClassCount(Card.GetRank)==4
-		and sg:Filter(Card.IsCanBeXyzMaterial,nil,c):GetCount()==4
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
