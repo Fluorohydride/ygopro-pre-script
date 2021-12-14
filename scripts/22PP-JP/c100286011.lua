@@ -58,7 +58,7 @@ function c100286011.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(100286011)>0
 end
 function c100286011.thcheck(c)
-	return c:IsLevelBelow(2) and c:IsRace(RACE_ZOMBIE)  and c:IsType(TYPE_TUNER) and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return c:IsLevelBelow(2) and c:IsRace(RACE_ZOMBIE) and c:IsType(TYPE_TUNER) and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function c100286011.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -66,7 +66,7 @@ function c100286011.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-function c100286011.sumop(e,tp,eg,ep,ev,re,r,rp)	
+function c100286011.sumop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 	local g=Duel.SelectMatchingCard(tp,c100286011.thcheck,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()<=0 then return end

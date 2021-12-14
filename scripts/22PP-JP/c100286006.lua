@@ -64,13 +64,13 @@ function c100286006.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c100286006.rcheck(c)
-	return c:GetTextAttack()>0 
+	return c:GetTextAttack()>0
 end
 function c100286006.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then 
+	if chk==0 then
 			if e:GetLabel()==1 then
-				return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.CheckReleaseGroup(tp,c100286006.rcheck,1,nil) 
+				return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.CheckReleaseGroup(tp,c100286006.rcheck,1,nil)
 			else
 				return false
 			end

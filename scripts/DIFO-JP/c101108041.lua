@@ -12,7 +12,7 @@ function c101108041.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,101108041)
 	e1:SetTarget(c101108041.tgtg)
-	e1:SetOperation(c101108041.tgop)	
+	e1:SetOperation(c101108041.tgop)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)

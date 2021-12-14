@@ -40,9 +40,9 @@ function c100286012.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			mg2=Duel.GetMatchingGroup(c100286012.filter0,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE,0,nil)
 		end
 		if mg2:GetCount()>0 then
-			  mg1:Merge(mg2)
-			  Auxiliary.FCheckAdditional=c100286012.fcheck
-			  Auxiliary.GCheckAdditional=c100286012.gcheck
+			mg1:Merge(mg2)
+			Auxiliary.FCheckAdditional=c100286012.fcheck
+			Auxiliary.GCheckAdditional=c100286012.gcheck
 		end
 		local res=Duel.IsExistingMatchingCard(c100286012.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
 		Auxiliary.FCheckAdditional=nil
