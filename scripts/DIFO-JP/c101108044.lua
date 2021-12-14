@@ -15,6 +15,7 @@ function c101108044.initial_effect(c)
 	c:RegisterEffect(e1)
 	--atk double
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101108044,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -25,6 +26,7 @@ function c101108044.initial_effect(c)
 	c:RegisterEffect(e2)
 	--atk up
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(101108044,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -61,7 +63,7 @@ end
 function c101108044.sop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	if g:GetCount()>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101108044,0))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101108044,2))
 		local sg=g:Select(tp,1,1,nil)
 		local tc=sg:GetFirst()
 		if not tc:IsImmuneToEffect(e) then
