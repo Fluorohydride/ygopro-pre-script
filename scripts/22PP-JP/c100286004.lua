@@ -26,7 +26,7 @@ function c100286004.initial_effect(c)
 	e3:SetCondition(c100286004.tgcon)
 	e3:SetTarget(c100286004.tgtg)
 	e3:SetOperation(c100286004.tgop)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 	if not c100286004.global_check then
 		c100286004.global_check=true
 		local ge1=Effect.GlobalEffect(c)
