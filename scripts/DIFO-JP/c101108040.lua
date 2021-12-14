@@ -3,7 +3,7 @@
 --Script by Trishula9
 function c101108040.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,c101108040.synfilter,aux.NonTuner(c101108040.synfilter),1)
+	aux.AddSynchroProcedure(c,c101108040.synfilter,aux.NonTuner(nil),1)
 	c:EnableReviveLimit()
 	--remove
 	local e1=Effect.CreateEffect(c)
