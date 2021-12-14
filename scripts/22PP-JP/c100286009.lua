@@ -1,4 +1,6 @@
---劫火之枪术士 幽鬼枪兵
+--劫火の槍術士 ゴースト・ランサー
+--
+--Script by REIKAI
 function c100286009.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---劫火之翼龙 幽鬼翼龙
+--劫火の翼竜 ゴースト・ワイバーン
+--
+--Script by REIKAI
 function c100286011.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)

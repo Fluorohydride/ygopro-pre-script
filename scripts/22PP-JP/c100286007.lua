@@ -1,4 +1,6 @@
---拉弥亚
+--ラミア
+--
+--Script by REIKAI
 function c100286007.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)

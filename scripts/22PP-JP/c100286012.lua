@@ -1,4 +1,6 @@
---幽合-幽鬼融合
+--幽合－ゴースト・フュージョン
+--
+--Script by REIKAI
 function c100286012.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

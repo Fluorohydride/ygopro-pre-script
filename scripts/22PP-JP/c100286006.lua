@@ -1,6 +1,8 @@
---咒念的化身 衔尾蛇
+--呪念の化身ウルボヌス
+--
+--Script by REIKAI
 function c100286006.initial_effect(c)
-		--special summon
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100286006,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

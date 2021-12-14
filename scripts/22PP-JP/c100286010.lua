@@ -1,4 +1,6 @@
---劫火之长眠姬 幽鬼睡美人
+--劫火の眠り姫 ゴースト・スリーパー
+--
+--Script by REIKAI
 function c100286010.initial_effect(c)
 	aux.AddCodeList(c,100286012)
 	--search
