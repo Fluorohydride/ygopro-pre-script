@@ -52,12 +52,12 @@ function c100200210.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and
 		((tc:IsType(TYPE_RITUAL) and tc:IsLocation(LOCATION_DECK)) or
 		(tc:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and tc:IsLocation(LOCATION_EXTRA))) then
-		if tc:IsType(TYPE_RITUAL+TYPE_FUSION) and Duel.SelectYesNo(tp,aux.Stringid(100200210,0)) then
+		if tc:IsType(TYPE_RITUAL+TYPE_FUSION) then
 			Duel.BreakEffect()
 			Duel.ShuffleDeck(tp)
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
-		if tc:IsType(TYPE_SYNCHRO+TYPE_XYZ) and Duel.SelectYesNo(tp,aux.Stringid(100200210,1)) then
+		if tc:IsType(TYPE_SYNCHRO+TYPE_XYZ) then
 			Duel.BreakEffect()
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
