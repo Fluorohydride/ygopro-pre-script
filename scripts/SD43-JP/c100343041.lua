@@ -26,7 +26,6 @@ function c100343041.initial_effect(c)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCondition(c100343041.descon)
-	e2:SetTarget(c100343041.destg)
 	e2:SetOperation(c100343041.desop)
 	c:RegisterEffect(e2)
 end
@@ -51,6 +50,7 @@ function c100343041.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg=g:Select(tp,1,1,nil)
+		Duel.HintSelection(sg)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	end
 	e:GetHandler():RegisterFlagEffect(100343041,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
@@ -60,26 +60,17 @@ function c100343041.descon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp
 end
-function c100343041.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,1-tp,LOCATION_MZONE)
-end
 function c100343041.desop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(c100343041.descon2)
 	e1:SetOperation(c100343041.desop2)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c100343041.descon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(aux.TRUE,tp,0,LOCATION_MZONE,nil)>0
-end
 function c100343041.desop2(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,100343041)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()>0 then
 		Duel.Destroy(g,REASON_EFFECT)

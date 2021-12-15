@@ -21,6 +21,7 @@ function c100343032.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCountLimit(1,100343032)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100343032.thtg)
@@ -46,6 +47,13 @@ function c100343032.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
+function c100343032.fselect(sg)
+	if #sg==1 then
+		return sg:GetFirst():IsLocation(LOCATION_MZONE)
+	else
+		return sg:GetFirst():IsLocation(LOCATION_GRAVE) and sg:GetNext():IsLocation(LOCATION_GRAVE)
+	end
+end
 function c100343032.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(c100343032.filter1,tp,LOCATION_MZONE,0,nil)
 	local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100343032.filter2),tp,LOCATION_GRAVE,0,nil)
@@ -58,13 +66,6 @@ function c100343032.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #fg~=#g then return end
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
-	end
-end
-function c100343032.fselect(sg)
-	if #sg==1 then
-		return sg:GetFirst():IsLocation(LOCATION_MZONE)
-	else
-		return sg:GetFirst():IsLocation(LOCATION_GRAVE) and sg:GetNext():IsLocation(LOCATION_GRAVE)
 	end
 end
 function c100343032.thfilter(c)

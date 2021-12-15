@@ -75,11 +75,11 @@ function c101108045.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101108045.rccon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetBattleMonster(1-tp)
-	return tc and tc:IsRelateToBattle()
+	return tc and tc:IsFaceup() and tc:IsRelateToBattle()
 end
 function c101108045.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetBattleMonster(1-tp)
-	if tc and tc:IsRelateToBattle() then
+	if tc and tc:IsFaceup() and tc:IsRelateToBattle() then
 		Duel.Recover(tp,tc:GetAttack()/2,REASON_EFFECT)
 	end
 end
