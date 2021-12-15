@@ -55,7 +55,7 @@ function c100286013.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100286013.nofilter,tp,LOCATION_EXTRA,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local sg=g:SelectSubGroup(tp,c100286013.gselect,false,4,4,e,tp)
-	if sg:GetCount()>0 then
+	if sg then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=g:Filter(c100286013.spfilter2,sg,sg,e,tp):Select(tp,1,1,nil):GetFirst()
 		Duel.SpecialSummon(xyz,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
