@@ -17,7 +17,7 @@ function c100286005.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100286005,1))
 	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetCountLimit(1,100286005+100)
 	e2:SetTarget(c100286005.tgtg)
@@ -61,10 +61,10 @@ end
 function c100286005.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsAttackPos() and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c100286005.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
+		if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 			Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 		end
 	end
