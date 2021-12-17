@@ -27,7 +27,7 @@ function c100287007.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100287007.filter(c)
-	return c:IsCode(10000000) and c:IsFaceup()
+	return c:IsCode(10000000) and c:GetOriginalAttribute()==ATTRIBUTE_DIVINE and c:IsFaceup()
 end
 function c100287007.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100287007.filter,tp,LOCATION_MZONE,0,1,nil)
