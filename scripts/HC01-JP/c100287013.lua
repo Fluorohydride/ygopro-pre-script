@@ -12,6 +12,7 @@ function c100287013.initial_effect(c)
 	e1:SetOperation(c100287013.activate)
 	c:RegisterEffect(e1)
 end
+SUMMON_VALUE_OVERLOAD_FUSION=0x14
 function c100287013.thfilter(c)
 	return c:IsCode(3659803) and c:IsAbleToHand()
 end
