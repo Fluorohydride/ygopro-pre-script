@@ -62,7 +62,7 @@ function c100287035.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(c100287035.eqlimit)
 		c:RegisterEffect(e1)
-		if hg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100287035,0)) then
+		if hg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100287035,2)) then
 			Duel.BreakEffect()
 			Duel.SendtoHand(hg,nil,REASON_EFFECT)
 		end
@@ -75,7 +75,7 @@ function c100287035.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(100287035,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function c100287035.thfilter(c)
-	return (c:IsSetCard(0x46) and c:IsType(TYPE_SPELL) or c:IsCode(6205579))and c:IsAbleToHand()
+	return (c:IsSetCard(0x46) and c:IsType(TYPE_SPELL) or c:IsCode(6205579)) and c:IsAbleToHand()
 end
 function c100287035.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(100287035)>0
