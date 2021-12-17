@@ -34,6 +34,7 @@ function c100287013.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(c100287013.excon)
 	e1:SetOperation(c100287013.exop)
 	Duel.RegisterEffect(e1,tp)
+	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	--sumlimit
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
