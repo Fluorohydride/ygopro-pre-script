@@ -67,12 +67,11 @@ end
 function c100287020.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100287020.atkfilter,tp,LOCATION_MZONE,0,nil)
 	if Duel.NegateEffect(ev) and g:GetCount()>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100287020,0))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100287020,2))
 		local tc=g:Select(tp,1,1,nil):GetFirst()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(2000)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
 		tc:RegisterEffect(e1)
