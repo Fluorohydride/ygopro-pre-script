@@ -1,0 +1,70 @@
+--捕食植物アンブロメリドゥス
+function c101108037.initial_effect(c)
+	--Fusion Material
+	c:EnableReviveLimit()
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x10f3),2,true)
+	--
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101108037,0))
+	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_TYPE_FLAG)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCountLimit(1,101108037)
+	e1:SetCondition(c101108037.thcon)
+	e1:SetTarget(c101108037.thtg)
+	e1:SetOperation(c101108037.thop)
+	c:RegisterEffect(e1)
+	--
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101108037,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_RELEASE)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetRamge(LOCATION_MZONE)
+	e2:SetCountLimit(1,101108037)
+	e2:SetTarget()
+	e2:SetOperation()
+	c:RegisterEffect(e2)
+end
+function c101108037.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+end
+function c101108037.thfilter(c)
+	return (c:IsSetCard(0x10f3) and c:IsType(TYPE_MONSTER)) or (c:IsSetCard(0xf3) and c:IsType(TYPE_SPELL+TYPE_TRAP)) and c:IsAbleToHand()
+end
+function c101108037.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101108037.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_SEARCH+CATEGORY_TOHAND,1,nil,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA)
+end
+function c101108037.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,c101108037.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil)
+	if g:GetCount()>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	end
+end
+function c101108037.relfilter(c)
+	return (c:IsFaceup() and c:GetCounter(0x1041)>0 or c:IsType(TYPE_MONSTER)) and c:IsReleasable()
+end
+function c101108037.spfilter(c,e,tp)
+	return c:IsSetCard(0x10f3) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function c101108037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(c101108037.relfilter,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(c101108037.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectTarget(tp,c101108037.relfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_RELEASE,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+end
+function c101108037.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	local g=Duel.SelectMatchingCard(tp,c101108037.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and Duel.Release(tc,nil,REASON_EFFECT)~=0 and g:GetCount()>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	end
+end
