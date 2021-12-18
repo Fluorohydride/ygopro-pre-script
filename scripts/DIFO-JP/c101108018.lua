@@ -1,5 +1,6 @@
 --捕食植物ブフォリキュラ
 function c101108018.initial_effect(c)
+	aux.EnablePendulumAttribute(c)
 	--Pendulum Effect : Fusion Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101108018,0))
