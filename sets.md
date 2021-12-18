@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **December 4, 2021**: Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
 - **December 18, 2021**: Premium Pack 2022 (22PP-JP) : `100286XXX`
 - **December 25, 2021**: Secret Shiny Box (SSB1-JP) : `100285XXX`
 - **January 15, 2022**: DIMENSION FORCE (DIFO-JP) : `101108XXX`
@@ -133,6 +132,7 @@
 - Structure Deck: Ice Barrier of the Frozen Prison (SD40-JP) : `100340XXX`
 - Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
 - Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
+- Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`

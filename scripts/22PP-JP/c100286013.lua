@@ -69,7 +69,7 @@ function c100286013.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(c100286013.splimitcon)
 		e1:SetTarget(c100286013.splimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		xyz:RegisterEffect(e1)
+		xyz:RegisterEffect(e1,true)
 	end
 end
 function c100286013.splimitcon(e)

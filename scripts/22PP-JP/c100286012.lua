@@ -26,10 +26,10 @@ function c100286012.filter2(c,e,tp,m,f,chkf)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c100286012.fcheck(tp,sg,fc)
-	return sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1 and sg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)<=1 and sg:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)<=1
+	return sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE)<=1
 end
 function c100286012.gcheck(sg)
-	return sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1 and sg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)<=1 and sg:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)<=1
+	return sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE)<=1
 end
 function c100286012.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
