@@ -3,7 +3,7 @@ function c101108037.initial_effect(c)
 	--Fusion Material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x10f3),2,true)
-	--
+	--To Hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101108037,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -15,7 +15,7 @@ function c101108037.initial_effect(c)
 	e1:SetTarget(c101108037.thtg)
 	e1:SetOperation(c101108037.thop)
 	c:RegisterEffect(e1)
-	--
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101108037,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_RELEASE)
@@ -23,8 +23,8 @@ function c101108037.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRamge(LOCATION_MZONE)
 	e2:SetCountLimit(1,101108037)
-	e2:SetTarget()
-	e2:SetOperation()
+	e2:SetTarget(c101108037.sptg)
+	e2:SetOperation(c101108037.spop)
 	c:RegisterEffect(e2)
 end
 function c101108037.thcon(e,tp,eg,ep,ev,re,r,rp)
