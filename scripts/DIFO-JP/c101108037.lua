@@ -31,7 +31,7 @@ function c101108037.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c101108037.thfilter(c)
-	return (c:IsSetCard(0x10f3) and c:IsType(TYPE_MONSTER)) or (c:IsSetCard(0xf3) and c:IsType(TYPE_SPELL+TYPE_TRAP)) and c:IsAbleToHand()
+	return c:IsAbleToHand() and c:IsSetCard(0x10f3) and (not c:IsType(TYPE_MONSTER) or c:IsSetCard(0x10f3)) and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA))
 end
 function c101108037.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101108037.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil) end
@@ -46,25 +46,33 @@ function c101108037.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101108037.relfilter(c)
-	return (c:IsFaceup() and c:GetCounter(0x1041)>0 or c:IsType(TYPE_MONSTER)) and c:IsReleasable()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if c:GetControler()==tp then
+		return c:IsReleasableByEffect() and ((c:GetSequence()>4 and ft>=1) or (c:GetSequence()<=4 and (ft+1)>=1)
+	elseif c:GetControler()==1-tp then
+		return c:IsFaceup() and c:GetCounter(0x1041)>0 and c:IsReleasableByEffect() and ft>=1
+	else
+		return false
+	end
 end
 function c101108037.spfilter(c,e,tp)
-	return c:IsSetCard(0x10f3) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x10f3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c101108037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c101108037.relfilter,tp,0,LOCATION_MZONE,1,nil)
+function c101108037.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101108037.relfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c101108037.relfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp)
 		and Duel.IsExistingMatchingCard(c101108037.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectTarget(tp,c101108037.relfilter,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_RELEASE,g,1,0,0)
+	local g=Duel.SelectTarget(tp,c101108037.relfilter,tp,0,LOCATION_MZONE,1,1,nil,tp,lg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101108037.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local g=Duel.SelectMatchingCard(tp,c101108037.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Release(tc,nil,REASON_EFFECT)~=0 and g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	if tc and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) and Duel.Release(tc,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectMatchingCard(tp,c101108037.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+		if #g>0 then
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		end
 	end
 end
