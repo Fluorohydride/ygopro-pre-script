@@ -1,4 +1,6 @@
 --エクンシスターズ・マニフィカ
+--
+--Script by Trishula9
 function c101108046.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()
@@ -8,7 +10,8 @@ function c101108046.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(aux.xyzlimit)
+	--e1:SetValue(aux.xyzlimit)
+	e1:SetValue(c101108046.xyzlimit)
 	c:RegisterEffect(e1)
 	--extra attack
 	local e2=Effect.CreateEffect(c)
@@ -43,6 +46,9 @@ function c101108046.initial_effect(c)
 end
 function c101108046.mfilter(c)
 	return c:IsSetCard(0x172) and c:IsRank(4)
+end
+function c101108046.xyzlimit(e,se,sp,st)
+	return st&SUMMON_TYPE_XYZ==SUMMON_TYPE_XYZ and not se:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP)
 end
 function c101108046.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
