@@ -30,7 +30,8 @@ function c101108023.spcfilter(c)
 	return not c:IsType(TYPE_MONSTER) or c:IsCode(3285552)
 end
 function c101108023.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101108023.spcfilter,tp,LOCATION_MZONE,0,1,nil)
+	if not (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) then return false end
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 or Duel.IsExistingMatchingCard(c101108023.spcfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101108023.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
