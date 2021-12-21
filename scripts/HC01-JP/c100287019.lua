@@ -2,7 +2,6 @@
 --
 --Script by Trishula9
 function c100287019.initial_effect(c)
-	c:EnableCounterPermit(0x162)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -48,19 +47,19 @@ function c100287019.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function c100287019.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanAddCounter(0x162,1) end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x162)
+	if chk==0 then return e:GetHandler():IsCanAddCounter(0x104d,1) end
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x104d)
 end
 function c100287019.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		c:AddCounter(0x162,1)
+		c:AddCounter(0x104d,1)
 	end
 end
 function c100287019.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x162,2,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x104d,2,REASON_COST)
 		and e:GetHandler():IsAbleToGrave() and Duel.IsPlayerCanDraw(tp,2) end
-	Duel.RemoveCounter(tp,1,0,0x162,2,REASON_COST)
+	Duel.RemoveCounter(tp,1,0,0x104d,2,REASON_COST)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
