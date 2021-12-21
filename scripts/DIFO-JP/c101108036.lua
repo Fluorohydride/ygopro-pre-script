@@ -1,4 +1,6 @@
 --スターヴ・ヴェノム・プレデター・フュージョン・ドラゴン
+--
+--Script by JSY1728
 function c101108036.initial_effect(c)
 	--Fusion Material
 	c:EnableReviveLimit()

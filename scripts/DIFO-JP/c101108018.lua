@@ -1,4 +1,6 @@
 --捕食植物ブフォリキュラ
+--
+--Script by JSY1728
 function c101108018.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--Pendulum Effect : Fusion Summon

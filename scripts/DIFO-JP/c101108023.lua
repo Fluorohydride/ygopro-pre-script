@@ -1,4 +1,6 @@
 --外法の騎士
+--
+--Script by JSY1728
 function c101108023.initial_effect(c)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)

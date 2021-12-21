@@ -1,4 +1,6 @@
 --捕食植物ビブリスプ
+--
+--Script by JSY1728
 function c101108017.initial_effect(c)
 	--Effect 1 : Search
 	local e1=Effect.CreateEffect(c)

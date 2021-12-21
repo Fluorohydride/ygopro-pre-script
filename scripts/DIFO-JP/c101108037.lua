@@ -1,4 +1,6 @@
 --捕食植物アンブロメリドゥス
+--
+--Script by JSY1728
 function c101108037.initial_effect(c)
 	--Fusion Material
 	c:EnableReviveLimit()
@@ -45,10 +47,10 @@ function c101108037.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c101108037.relfilter(c)
+function c101108037.relfilter(c,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if c:GetControler()==tp then
-		return c:IsReleasableByEffect() and ((c:GetSequence()>4 and ft>=1) or (c:GetSequence()<=4 and (ft+1)>=1)
+		return c:IsReleasableByEffect() and ((c:GetSequence()>4 and ft>=1) or (c:GetSequence()<=4 and (ft+1)>=1))
 	elseif c:GetControler()==1-tp then
 		return c:IsFaceup() and c:GetCounter(0x1041)>0 and c:IsReleasableByEffect() and ft>=1
 	else
@@ -63,12 +65,13 @@ function c101108037.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c101108037.relfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp)
 		and Duel.IsExistingMatchingCard(c101108037.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectTarget(tp,c101108037.relfilter,tp,0,LOCATION_MZONE,1,1,nil,tp,lg)
+	local g=Duel.SelectTarget(tp,c101108037.relfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101108037.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) and Duel.Release(tc,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if tc and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e)
+		and Duel.Release(tc,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101108037.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		if #g>0 then
