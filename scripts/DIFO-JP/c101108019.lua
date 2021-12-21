@@ -4,13 +4,13 @@
 function c101108019.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
-	--pzone fusion
+	--pzone fusion material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(101108019)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_EXTRA_FUSION_MATERIAL)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetTargetRange(1,0)
+	e1:SetTargetRange(LOCATION_PZONE,0)
+	e1:SetValue(c101108019.mtval)
 	c:RegisterEffect(e1)
 	--counter
 	local e2=Effect.CreateEffect(c)
@@ -22,6 +22,10 @@ function c101108019.initial_effect(c)
 	e2:SetTarget(c101108019.cttg)
 	e2:SetOperation(c101108019.ctop)
 	c:RegisterEffect(e2)
+end
+function c101108019.mtval(e,c)
+	if not c then return false end
+	return c:IsAttribute(ATTRIBUTE_DARK)
 end
 function c101108019.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
