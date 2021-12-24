@@ -22,7 +22,7 @@ function c101108025.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_BATTLEGUARD)) --idk the setcard
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x279))
 	e3:SetValue(500)
 	c:RegisterEffect(e3)
 	--special summon
@@ -52,12 +52,16 @@ function c101108025.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+function c101108025.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReleasable() and Duel.GetMZoneCount(tp,c)>0 end
+	Duel.Release(c,REASON_COST)
+end
 function c101108025.spfilter(c,e,tp)
 	return c:IsRace(RACE_WARRIOR) and c:IsLevel(8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101108025.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c101108025.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101108025.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c101108025.spop(e,tp,eg,ep,ev,re,r,rp)
