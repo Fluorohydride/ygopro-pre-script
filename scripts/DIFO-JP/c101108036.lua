@@ -4,13 +4,13 @@
 function c101108036.initial_effect(c)
 	--Fusion Material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(c101108036.fusmatfilter),aux.FilterBoolFunction(Card.IsFusionType,TYPE_FUSION),true)
+	aux.AddFusionProcFun2(c,c101108036.fusmatfilter,aux.FilterBoolFunction(Card.IsFusionType,TYPE_FUSION),true)
 	--Negate Activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101108036,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_RELEASE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCode(EVENT_CHAINING)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -22,7 +22,7 @@ function c101108036.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101108036,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_QUICK_O)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,101108036)
@@ -32,16 +32,17 @@ function c101108036.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101108036.fusmatfilter(c)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_FUSION)
+	return c:IsFusionAttribute(ATTRIBUTE_DARK) and c:IsFusionType(TYPE_FUSION)
 end
 function c101108036.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.IsChainNegatable(ev)
+	return ep==1-tp and Duel.IsChainNegatable(ev)
+		and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function c101108036.negcfilter(c)
-	return c:IsFaceup() and c:GetCounter(0x1041)>0 and c:IsReleasable()
+	return c:IsFaceup() and c:GetCounter(0x1041)>0 and c:IsReleasableByEffect()
 end
 function c101108036.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101108036.negcfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(c101108036.negcfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_RELEASE,g,1,0,0)
@@ -58,7 +59,7 @@ function c101108036.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_FUSION) and rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c101108036.spfilter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101108036.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
