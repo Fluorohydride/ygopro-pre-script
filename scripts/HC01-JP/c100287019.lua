@@ -26,6 +26,7 @@ function c100287019.initial_effect(c)
 	e3:SetCategory(CATEGORY_DRAW+CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
+	e3:SetCost(c100287019.drcost)
 	e3:SetTarget(c100287019.drtg)
 	e3:SetOperation(c100287019.drop)
 	c:RegisterEffect(e3)
@@ -56,11 +57,14 @@ function c100287019.ctop(e,tp,eg,ep,ev,re,r,rp)
 		c:AddCounter(0x104d,1)
 	end
 end
-function c100287019.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100287019.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x104d,2,REASON_COST)
-		and e:GetHandler():IsAbleToGrave() and Duel.IsPlayerCanDraw(tp,2) end
+		and e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.RemoveCounter(tp,1,0,0x104d,2,REASON_COST)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+end
+function c100287019.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
