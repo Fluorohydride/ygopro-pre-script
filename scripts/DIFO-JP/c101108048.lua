@@ -31,7 +31,7 @@ function c101108048.initial_effect(c)
 	Duel.AddCustomActivityCounter(101108048,ACTIVITY_SPSUMMON,c101108048.penfilter)
 end
 function c101108048.penfilter(c)
-	return not (c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM))
+	return not c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c101108048.lcheck(g)
 	return g:IsExists(Card.IsLinkType,1,nil,TYPE_PENDULUM)
@@ -63,6 +63,7 @@ function c101108048.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
+	e1:SetCondition(c101108048.discon)
 	e1:SetValue(c101108048.actlimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
@@ -82,7 +83,7 @@ function c101108048.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 function c101108048.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and Duel.GetCustomActivityCount(101108048,tp,ACTIVITY_SPSUMMON)==0
+	return re:IsActiveType(TYPE_MONSTER)
 end
 function c101108048.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(101108048,tp,ACTIVITY_SPSUMMON)==0
