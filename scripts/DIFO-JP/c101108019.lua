@@ -38,7 +38,7 @@ function c101108019.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_MZONE,0,nil)
 	local g=Duel.GetMatchingGroup(Card.IsCanAddCounter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,0x1041,1)
 	if ct>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)
 		local sg=g:Select(tp,1,ct,nil)
 		local sc=sg:GetFirst()
 		while sc do
