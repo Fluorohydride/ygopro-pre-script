@@ -4,6 +4,7 @@
 function c100287043.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100287043,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -13,6 +14,7 @@ function c100287043.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100287043,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DESTROYED)
@@ -116,7 +118,7 @@ function c100287043.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100287043.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
 function c100287043.thfilter(c,race)
-	return c:GetOriginalRace()==race and c:IsAbleToHand()
+	return c:GetOriginalRace()&race>0 and c:IsAbleToHand()
 end
 function c100287043.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
