@@ -15,7 +15,6 @@ function c100287006.initial_effect(c)
 	e2:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1)
-	e2:SetTarget(c100287006.cstg)
 	e2:SetOperation(c100287006.csop)
 	c:RegisterEffect(e2)
 	--destroy
@@ -29,28 +28,21 @@ function c100287006.initial_effect(c)
 	e3:SetOperation(c100287006.dop)
 	c:RegisterEffect(e3)
 end
-function c100287006.cstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,2,0,LOCATION_DECK)
-end
-function c100287006.csfilter1(c,tp)
+function c100287006.csfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:GetTextAttack()>=0 and c:IsAbleToRemove(tp,POS_FACEDOWN)
 end
-function c100287006.csfilter2(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:GetTextAttack()>=0 and c:IsAbleToRemove(1-tp,POS_FACEDOWN)
-end
 function c100287006.csop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local sc1=Duel.SelectMatchingCard(tp,c100287006.csfilter1,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_CONFIRM)
-	local sc2=Duel.SelectMatchingCard(1-tp,c100287006.csfilter2,1-tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-	if sc1 and sc2 then
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local sc1=Duel.SelectMatchingCard(tp,c100287006.csfilter,tp,LOCATION_DECK,0,0,1,nil,tp):GetFirst()
+	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
+	local sc2=Duel.SelectMatchingCard(1-tp,c100287006.csfilter,1-tp,LOCATION_DECK,0,0,1,nil,1-tp):GetFirst()
+	if sc1 or sc2 then
 		local p=0
-		if sc1:GetTextAttack()>sc2:GetTextAttack() then p=tp
-		elseif sc1:GetTextAttack()<sc2:GetTextAttack() then p=1-tp
+		if not sc2 or sc1:GetTextAttack()>sc2:GetTextAttack() then p=tp
+		elseif not sc1 or sc1:GetTextAttack()<sc2:GetTextAttack() then p=1-tp
 		else p=PLAYER_ALL end
-		Duel.ConfirmCards(1-tp,sc1)
-		Duel.ConfirmCards(tp,sc2)
+		if sc1 then Duel.ConfirmCards(1-tp,sc1) end
+		if sc2 then Duel.ConfirmCards(tp,sc2) end
 		Duel.Remove(Group.FromCards(sc1,sc2),POS_FACEDOWN,REASON_EFFECT)
 		if (p==tp or p==PLAYER_ALL) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsExistingMatchingCard(Card.IsCanBeSpecialSummoned,tp,LOCATION_HAND,0,1,nil,e,0,tp,false,false)
@@ -86,27 +78,16 @@ function c100287006.csop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100287006.dop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetTurnPlayer()==tp then
-		c:RegisterFlagEffect(100287006,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,2)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetLabel(Duel.GetTurnCount()+2)
-		e1:SetCountLimit(1)
-		e1:SetCondition(c100287006.descon)
-		e1:SetOperation(c100287006.desop)
-		Duel.RegisterEffect(e1,tp)
-	else
-		c:RegisterFlagEffect(100287006,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PHASE+PHASE_END)
-		e2:SetLabel(Duel.GetTurnCount()+1)
-		e2:SetCountLimit(1)
-		e2:SetCondition(c100287006.descon)
-		e2:SetOperation(c100287006.desop)
-		Duel.RegisterEffect(e2,tp)
-	end
+	local ct=Duel.GetTurnPlayer()==tp and 2 or 1
+	c:RegisterFlagEffect(100287006,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,ct)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetLabel(Duel.GetTurnCount()+ct)
+	e1:SetCountLimit(1)
+	e1:SetCondition(c100287006.descon)
+	e1:SetOperation(c100287006.desop)
+	Duel.RegisterEffect(e1,tp)
 end
 function c100287006.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -115,6 +96,7 @@ function c100287006.descon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100287006.desop(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(0)
+	Duel.Hint(HINT_CARD,0,100287006)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end
