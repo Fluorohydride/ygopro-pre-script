@@ -28,12 +28,11 @@ function c101108022.initial_effect(c)
 end
 function c101108022.costfilter(c,ec,e,tp)
 	if not c:IsSetCard(0x171) or not c:IsType(TYPE_MONSTER) or c:IsPublic() then return false end
-	local b1=ec:IsAbleToGrave()
-	local b2=ec:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	if not b1 and not b2 then return false end
-	if b1 and not b2 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	if not b1 and b2 then return c:IsAbleToGrave() end
-	if b1 and b2 then return c:IsAbleToGrave() or c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	local g=Group.FromCards(c,ec)
+	return g:IsExists(c101108022.tgspfilter,1,nil,g,e,tp)
+end
+function c101108022.tgspfilter(c,g,e,tp)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and g:IsExists(Card.IsAbleToGrave,1,c)
 end
 function c101108022.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -42,6 +41,7 @@ function c101108022.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sc=Duel.SelectMatchingCard(tp,c101108022.costfilter,tp,LOCATION_HAND,0,1,1,c,c,e,tp):GetFirst()
 	Duel.ConfirmCards(1-tp,sc)
 	Duel.ShuffleHand(tp)
+	sc:CreateEffectRelation(e)
 	e:SetLabelObject(sc)
 end
 function c101108022.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -49,22 +49,16 @@ function c101108022.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
-function c101108022.tgfilter(c,g,e,tp)
-	return c:IsAbleToGrave() and g:IsExists(Card.IsCanBeSpecialSummoned,1,c,e,0,tp,false,false)
-end
 function c101108022.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sc=e:GetLabelObject()
 	local g=Group.FromCards(c,sc)
-	local fg=g:Filter(Card.IsLocation,nil,LOCATION_HAND)
-	if fg:GetCount()==0 then return end
-	if fg:GetCount()==1 then Duel.SendtoGrave(fg,REASON_EFFECT) end
-	if fg:GetCount()==2 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local sg=g:Filter(c101108022.tgfilter,nil,g,e,tp):Select(tp,1,1,nil)
-		if sg and Duel.SendtoGrave(sg,REASON_EFFECT) and sg:GetFirst():IsLocation(LOCATION_GRAVE) then
-			Duel.SpecialSummon(g-sg,0,tp,tp,false,false,POS_FACEUP)
-		end
+	local fg=g:Filter(Card.IsRelateToEffect,nil,e)
+	if fg:GetCount()~=2 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sg=fg:FilterSelect(tp,c101108022.tgspfilter,1,1,nil,fg,e,tp)
+	if #sg>0 and Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)>0 then
+		Duel.SendtoGrave(g-sg,REASON_EFFECT)
 	end
 end
 function c101108022.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -92,10 +86,9 @@ function c101108022.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(c101108022.splimit)
-	e1:SetLabel(tc:GetCode())
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function c101108022.splimit(e,c,tp,sumtp,sumpos)
-	return c:GetCode()==e:GetLabel()
+	return c:IsCode(101108022)
 end
