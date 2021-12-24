@@ -85,7 +85,8 @@ end
 function c101108048.actlimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER)
 end
-function c101108048.discon(e,tp,eg,ep,ev,re,r,rp)
+function c101108048.discon(e)
+	local tp=e:GetHandlerPlayer()
 	return Duel.GetCustomActivityCount(101108048,tp,ACTIVITY_SPSUMMON)==0
 end
 function c101108048.disop(e,tp,eg,ep,ev,re,r,rp)
