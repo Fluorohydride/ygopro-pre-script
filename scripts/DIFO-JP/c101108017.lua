@@ -19,7 +19,7 @@ function c101108017.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,101108017)
+	e2:SetCountLimit(1,101108017+100)
 	e2:SetCondition(c101108017.spcon)
 	e2:SetTarget(c101108017.sptg)
 	e2:SetOperation(c101108017.spop)
@@ -29,11 +29,11 @@ function c101108017.thfilter(c)
 	return c:IsSetCard(0x10f3) and c:IsType(TYPE_MONSTER) and not c:IsCode(101108017) and c:IsAbleToHand()
 end
 function c101108017.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchincCard(c101108017.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101108017.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101108017.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101108017.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
