@@ -60,7 +60,7 @@ function c101108063.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveToField(sg:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
 end
-function c101108063.mattg(c,e)
+function c101108063.mattg(e,c)
 	return c:IsSetCard(0x109) and c:GetSequence()<5
 end
 function c101108063.matval(e,lc,mg,c,tp)
