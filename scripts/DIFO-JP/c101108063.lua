@@ -16,7 +16,7 @@ function c101108063.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_SZONE,0)
 	e2:SetCountLimit(1,101108063+100)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x109))
+	e2:SetTarget(c101108063.mattg)
 	e2:SetValue(c101108063.matval)
 	c:RegisterEffect(e2)
 	--summon
@@ -59,6 +59,9 @@ function c101108063.activate(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.MoveToField(sg:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
+end
+function c101108063.mattg(c,e)
+	return c:IsSetCard(0x109) and c:GetSequence()<5
 end
 function c101108063.matval(e,lc,mg,c,tp)
 	if not lc:IsSetCard(0x109) then return false,nil end
