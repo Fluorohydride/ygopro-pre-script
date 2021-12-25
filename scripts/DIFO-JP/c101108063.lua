@@ -48,13 +48,12 @@ function c101108063.initial_effect(c)
 	end
 end
 function c101108063.tffilter(c,tp)
-	return c:IsSetCard(0x109) and not c:IsType(TYPE_FIELD+TYPE_MONSTER) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsType(TYPE_FIELD) and c:IsSetCard(0x109)
+		and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c101108063.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c101108063.tffilter,tp,LOCATION_DECK,0,nil,tp)
 	if g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(101108063,1)) then
-		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.MoveToField(sg:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
@@ -75,7 +74,6 @@ function c101108063.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function c101108063.sumop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101108063.sumfilter,tp,LOCATION_HAND,0,1,1,nil)
 	local tc=g:GetFirst()
