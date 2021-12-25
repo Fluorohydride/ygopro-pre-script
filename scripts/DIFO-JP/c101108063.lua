@@ -63,8 +63,8 @@ function c101108063.mattg(e,c)
 	return c:IsSetCard(0x109) and c:GetSequence()<5
 end
 function c101108063.matval(e,lc,mg,c,tp)
-	if not lc:IsSetCard(0x109) then return false,nil end
-	return true,aux.TRUE()
+	if not (lc:IsSetCard(0x109) and e:GetHandlerPlayer()==tp) then return false,nil end
+	return true,true
 end
 function c101108063.sumfilter(c)
 	return c:IsSetCard(0x109) and c:IsSummonable(true,nil)
