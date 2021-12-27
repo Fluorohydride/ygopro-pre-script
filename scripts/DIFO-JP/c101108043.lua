@@ -32,6 +32,7 @@ function c101108043.initial_effect(c)
 	e3:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
+	e2:SetTarget(c101108043.atktg)
 	e3:SetOperation(c101108043.atkop)
 	c:RegisterEffect(e3)
 end
@@ -64,12 +65,17 @@ function c101108043.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 	end
 end
+function c101108043.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return math.abs(Duel.GetLP(tp)-Duel.GetLP(1-tp))>0 end
+end
 function c101108043.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(math.abs(Duel.GetLP(tp)-Duel.GetLP(1-tp)))
-	e:GetHandler():RegisterEffect(e1)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+	c:RegisterEffect(e1)
 end
