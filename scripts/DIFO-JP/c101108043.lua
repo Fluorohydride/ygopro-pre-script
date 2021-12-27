@@ -32,7 +32,7 @@ function c101108043.initial_effect(c)
 	e3:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e2:SetTarget(c101108043.atktg)
+	e3:SetTarget(c101108043.atktg)
 	e3:SetOperation(c101108043.atkop)
 	c:RegisterEffect(e3)
 end
