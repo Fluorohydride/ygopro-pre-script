@@ -38,8 +38,8 @@ function c100287006.csop(e,tp,eg,ep,ev,re,r,rp)
 	local sc2=Duel.SelectMatchingCard(1-tp,c100287006.csfilter,1-tp,LOCATION_DECK,0,0,1,nil,1-tp):GetFirst()
 	if sc1 or sc2 then
 		local p=0
-		if not sc2 or sc1:GetTextAttack()>sc2:GetTextAttack() then p=tp
-		elseif not sc1 or sc1:GetTextAttack()<sc2:GetTextAttack() then p=1-tp
+		if (not sc2) or sc1 and sc1:GetTextAttack()>sc2:GetTextAttack() then p=tp
+		elseif (not sc1) or sc1:GetTextAttack()<sc2:GetTextAttack() then p=1-tp
 		else p=PLAYER_ALL end
 		if sc1 then Duel.ConfirmCards(1-tp,sc1) end
 		if sc2 then Duel.ConfirmCards(tp,sc2) end
