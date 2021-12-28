@@ -23,6 +23,7 @@ function c100286002.initial_effect(c)
 	c:RegisterEffect(e3)
 	--castling
 	local e4=Effect.CreateEffect(c)
+	e4:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_BE_BATTLE_TARGET)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -62,6 +63,7 @@ function c100286002.cltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(c100286002.clfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100286002.clfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	Duel.GetAttacker():CreateEffectRelation(e)
 end
@@ -73,7 +75,7 @@ function c100286002.clop(e,tp,eg,ep,ev,re,r,rp)
 		local a=Duel.GetAttacker()
 		if a:IsAttackable() and a:IsRelateToEffect(e) and not a:IsImmuneToEffect(e) then
 			Duel.BreakEffect()
-			Duel.CalculateDamage(a,tc)
+			Duel.ChangeAttackTarget(tc)
 		end
 	end
 end

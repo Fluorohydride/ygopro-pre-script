@@ -37,11 +37,10 @@ function c100286004.initial_effect(c)
 	end
 end
 function c100286004.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local a,d=Duel.GetBattleMonster(0)
-	if a and d then Duel.RegisterFlagEffect(tp,100286004,RESET_PHASE+PHASE_END,0,1) end
+	if Duel.GetAttackTarget() then Duel.RegisterFlagEffect(0,100286004,RESET_PHASE+PHASE_END,0,1) end
 end
 function c100286004.sscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,100286004)==0 and Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.GetFlagEffect(0,100286004)==0 and Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c100286004.sscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
@@ -61,7 +60,7 @@ function c100286004.ssop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100286004.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,100286004)>0
+	return Duel.GetFlagEffect(0,100286004)>0
 end
 function c100286004.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
