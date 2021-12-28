@@ -56,6 +56,7 @@ end
 function c101108050.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101108050.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 end
 function c101108050.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -71,18 +72,19 @@ function c101108050.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c101108050.rmfilter(c)
-	return c:IsFaceup() and c:IsAbleToRemove()
+	return c:IsAbleToRemove()
 end
 function c101108050.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c101108050.rmfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101108050.rmfilter,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,c101108050.rmfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c101108050.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 		local ct=Duel.GetCurrentPhase()==PHASE_STANDBY and 2 or 1
 		tc:RegisterFlagEffect(101108050,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,ct)
 		local e2=Effect.CreateEffect(e:GetHandler())
