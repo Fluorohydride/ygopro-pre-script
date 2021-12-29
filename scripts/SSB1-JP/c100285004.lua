@@ -6,6 +6,7 @@ function c100285004.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetCountLimit(1,100285004)
 	e1:SetCost(c100285004.limcost)
 	e1:SetOperation(c100285004.limop)
@@ -17,6 +18,7 @@ function c100285004.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCountLimit(1,100285004)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100285004.tgtg)
@@ -58,6 +60,6 @@ end
 function c100285004.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoGrave(tc,REASON_EFFECT)
+		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_RETURN)
 	end
 end

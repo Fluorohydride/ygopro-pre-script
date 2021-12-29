@@ -61,8 +61,7 @@ end
 function c100286001.thop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100286001.thfilter2,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
 		Duel.ConfirmCards(1-tp,g)
 		local og=Duel.GetMatchingGroup(c100286001.thfilter3,tp,0,LOCATION_DECK,nil,tp)
 		if og:GetCount()>0 and Duel.SelectYesNo(1-tp,aux.Stringid(100286001,2)) then

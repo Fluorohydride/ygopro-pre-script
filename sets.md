@@ -4,12 +4,12 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **December 18, 2021**: Premium Pack 2022 (22PP-JP) : `100286XXX`
 - **December 25, 2021**: Secret Shiny Box (SSB1-JP) : `100285XXX`
+- **January 13, 2022**: The Grand Creators (GRCR-EN) : `100282XXX`
 - **January 15, 2022**: DIMENSION FORCE (DIFO-JP) : `101108XXX`
 - **February 19, 2022**: History Archive Collection (HC01-JP) : `100287XXX`
 - **April 2022**: 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
 
 # Announced
-- **January 13, 2022**: The Grand Creators (GRCR-EN) : `100282XXX`
 
 # Archived
 ## Other packs
