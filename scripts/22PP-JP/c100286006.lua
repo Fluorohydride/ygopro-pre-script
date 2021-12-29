@@ -77,6 +77,7 @@ function c100286006.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100286006.adfilter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function c100286006.thop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local atk=e:GetLabel()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
