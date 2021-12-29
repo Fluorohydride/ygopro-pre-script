@@ -1,6 +1,6 @@
 --Zektrike Kou-Ou
 --
---script by Raye
+--script by Raye & mercury233
 function c100282037.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -20,35 +20,40 @@ function c100282037.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100282037.tgcostfilter(c)
-	return c:IsSetCard(0x56) and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsOnField())
+	return c:IsSetCard(0x56) and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function c100282037.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100282037.tgcostfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,e:GetHandler()) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100282037.tgcostfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function c100282037.opfilter(c,e,tp)
-	if not (c:IsSetCard(0x56) and c:IsType(TYPE_MONSTER)) then return false end
-	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ft2=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	return (ft1>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) or ft2>0
-end
-function c100282037.optg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100282037.opfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+function c100282037.opfilter(c,e,tp,spchk,eqchk)
+	return c:IsSetCard(0x56) and c:IsType(TYPE_MONSTER)
+		and (spchk and c:IsCanBeSpecialSummoned(e,0,tp,false,false) or eqchk and c:CheckUniqueOnField(tp) and not c:IsForbidden())
 end
 function c100282037.cfilter(c)
-	return c:IsSetCard(0x56) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x56)
+end
+function c100282037.optg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		local spchk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		local eqchk=Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+			and Duel.IsExistingMatchingCard(c100282037.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		return Duel.IsExistingMatchingCard(c100282037.opfilter,tp,LOCATION_DECK,0,1,nil,e,tp,spchk,eqchk)
+	end
 end
 function c100282037.opop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local g=Duel.SelectMatchingCard(tp,c100282037.opfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	local chk=Duel.IsExistingMatchingCard(c100282037.cfilter,tp,LOCATION_MZONE,0,1,nil)
-	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ft2=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	local spchk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local eqchk=Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingMatchingCard(c100282037.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100282037.opfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,spchk,eqchk)
 	local tc=g:GetFirst()
 	if tc then
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft1>0 and (not chk and ft2>0 or Duel.SelectOption(tp,1075,1068)==0) then
+		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and spchk
+			and (not eqchk or Duel.SelectOption(tp,1152,aux.Stringid(100282037,2))==0) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
@@ -69,37 +74,27 @@ function c100282037.opop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100282037.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x56)
+function c100282037.eqfilter(c,tp)
+	return c:IsSetCard(0x56) and c:IsType(TYPE_EQUIP) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
+		and Duel.IsExistingMatchingCard(c100282037.tgfilter,tp,LOCATION_MZONE,0,1,nil,c)
 end
-function c100282037.eqfilter(c)
-	return c:IsSetCard(0x56) and c:IsType(TYPE_EQUIP)
+function c100282037.tgfilter(c,eqc)
+	return c:IsFaceup() and c:IsSetCard(0x56) and eqc:CheckEquipTarget(c)
 end
 function c100282037.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c100282037.tgfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(c100282037.eqfilter,tp,LOCATION_DECK,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c100282037.eqfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK)
 end
 function c100282037.eqop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,c100282037.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	local tc=g:GetFirst() 
-	if tc:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g=Duel.SelectMatchingCard(tp,c100282037.eqfilter,tp,LOCATION_DECK,0,1,1,nil)
-		local ec=g:GetFirst()
+		local ec=Duel.SelectMatchingCard(tp,c100282037.eqfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 		if ec then
-			if not Duel.Equip(tp,ec,tc) then return end
-			--equip limit
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_EQUIP_LIMIT)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetLabelObject(tc)
-			e1:SetValue(c100282037.eqlimit)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			ec:RegisterEffect(e1)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+			local tc=Duel.SelectMatchingCard(tp,c100282037.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,ec):GetFirst() 
+			Duel.Equip(tp,ec,tc)
 		end
 	end
 end
