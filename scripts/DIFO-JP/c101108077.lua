@@ -64,6 +64,7 @@ function c101108077.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		aux.GCheckAdditional=nil
 		return res
 	end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,tp,LOCATION_DECK+LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c101108077.operation(e,tp,eg,ep,ev,re,r,rp)
