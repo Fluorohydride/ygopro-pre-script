@@ -41,7 +41,7 @@ function c101108043.imcon(e)
 	return Duel.GetLP(tp)<=Duel.GetLP(1-tp) and e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c101108043.efilter(e,re)
-	return e:GetHandlerPlayer()~=re:GetHandlerPlayer() and re:IsActivated()
+	return e:GetHandlerPlayer()~=re:GetOwnerPlayer() and re:IsActivated()
 end
 function c101108043.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
