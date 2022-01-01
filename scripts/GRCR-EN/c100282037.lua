@@ -23,10 +23,10 @@ function c100282037.tgcostfilter(c)
 	return c:IsSetCard(0x56) and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function c100282037.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100282037.tgcostfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100282037.tgcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100282037.tgcostfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c100282037.tgcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100282037.opfilter(c,e,tp,spchk,eqchk)
