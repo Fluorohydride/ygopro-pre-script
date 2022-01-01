@@ -2,8 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **December 18, 2021**: Premium Pack 2022 (22PP-JP) : `100286XXX`
-- **December 25, 2021**: Secret Shiny Box (SSB1-JP) : `100285XXX`
 - **January 13, 2022**: The Grand Creators (GRCR-EN) : `100282XXX`
 - **January 15, 2022**: DIMENSION FORCE (DIFO-JP) : `101108XXX`
 - **February 19, 2022**: History Archive Collection (HC01-JP) : `100287XXX`
@@ -99,6 +97,8 @@
 - King's Court (KICO-EN) : `100280XXX`
 - WORLD PREMIERE PACK 2021 (WPP2-JP) : `100281XXX`
 - Yu-Gi-Oh! OCG Structures Volume 4 promotional card (YO04-JP) : `100283XXX`
+- Secret Shiny Box (SSB1-JP) : `100285XXX`
+- Premium Pack 2022 (22PP-JP) : `100286XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
