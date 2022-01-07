@@ -38,6 +38,7 @@ function c101108051.spfilter(c,e,tp)
 	return c:IsRace(RACE_PLANT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101108051.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if not Duel.IsPlayerCanDiscardDeck(tp,3) then return end
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	if ct==0 then return end
