@@ -26,7 +26,7 @@ end
 function c101108031.ctfilter(c,tp)
 	return c:IsLocation(LOCATION_HAND) and c:IsControler(tp)
 end
-function c24010609.fselect(g,ft)
+function c101108031.fselect(g,ft)
 	local fc=g:FilterCount(Card.IsType,nil,TYPE_FIELD)
 	return fc<=1 and #g-fc<=ft
 end
