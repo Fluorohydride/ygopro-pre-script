@@ -76,15 +76,12 @@ end
 function c101108024.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101108024.cfilter,1,nil,1-tp)
 end
-function c101108024.rmfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
-end
 function c101108024.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and c101108024.rmfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101108024.rmfilter,tp,0,LOCATION_GRAVE,1,nil)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsAbleToRemove() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil)
 		and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,c101108024.rmfilter,tp,0,LOCATION_GRAVE,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
