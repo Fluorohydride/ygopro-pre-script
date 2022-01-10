@@ -43,10 +43,9 @@ function c101108064.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c101108064.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.Damage(tp,tc:GetLevel()*100,REASON_EFFECT)
 	end
-	Duel.SpecialSummonComplete()
 end
 function c101108064.attcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -59,11 +58,12 @@ function c101108064.atttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101108064.attfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101108064.attfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c101108064.attfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local tc=Duel.SelectTarget(tp,c101108064.attfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
+	e:SetLabel(tc:GetControler())
 end
 function c101108064.attop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 		local catt=tc:GetAttribute()
 		local att=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL-catt)
@@ -74,7 +74,8 @@ function c101108064.attop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(att)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		if tc:IsControlerCanBeChanged() and Duel.SelectYesNo(tp,aux.Stringid(101108064,2)) then
+		if e:GetLabel()==1-tp and tc:IsControler(1-tp) and tc:IsControlerCanBeChanged()
+			and Duel.SelectYesNo(tp,aux.Stringid(101108064,2)) then
 			Duel.GetControl(tc,tp)
 		end
 	end

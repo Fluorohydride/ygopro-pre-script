@@ -38,20 +38,23 @@ function c101108026.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101108026.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and c:IsRelateToEffect(e) and c:IsFaceup() and c:IsControler(tp) then
+	if not (c:IsRelateToEffect(e) and c:IsFaceup() and c:IsControler(tp)) then return end
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tc=tg:GetFirst()
+	while tc do
 		c:CreateRelation(tc,RESET_EVENT+RESETS_STANDARD+RESET_CONTROL)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_MUST_ATTACK)
 		e1:SetCondition(c101108026.atkcon2)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)
 		e2:SetValue(c101108026.atklimit)
 		tc:RegisterEffect(e2)
+		tc=tg:GetNext()
 	end
 end
 function c101108026.atkcon2(e,tp,eg,ep,ev,re,r,rp)

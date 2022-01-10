@@ -32,20 +32,23 @@ function c101108051.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c101108051.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,3) end
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
 end
 function c101108051.spfilter(c,e,tp)
 	return c:IsRace(RACE_PLANT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101108051.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not Duel.IsPlayerCanDiscardDeck(tp,3) then return end
+	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	if ct==0 then return end
 	local ac=1
 	if ct>1 then
+		if ct>3 then ct=3 end
+		local t={}
+		for i=1,ct do t[i]=i end
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101108051,2))
-		ac=Duel.AnnounceNumber(tp,1,math.min(ct,3))
+		ac=Duel.AnnounceNumber(tp,table.unpack(t))
 	end
 	Duel.ConfirmDecktop(tp,ac)
 	local g=Duel.GetDecktopGroup(tp,ac)
@@ -63,35 +66,35 @@ function c101108051.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetValue(1)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				tc:RegisterEffect(e1)
-				og:RemoveCard(tc)
+				g:RemoveCard(tc)
 			end
 		end
 		Duel.SpecialSummonComplete()
 	end
 	Duel.DisableShuffleCheck()
-	Duel.SendtoGrave(og,REASON_EFFECT+REASON_REVEAL)
+	Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 end
-function c101108051.lvfilter1(c)
+function c101108051.lvfilter1(c,tp,lg)
 	return c:IsRace(RACE_PLANT) and c:IsLevelAbove(1)
+		and Duel.IsExistingMatchingCard(c101108051.lvfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lg,c:GetLevel())
 end
-function c101108051.lvfilter2(c,g)
-	return c:IsFaceup() and g:IsContains(c)
+function c101108051.lvfilter2(c,g,lv)
+	return c:IsFaceup() and c:IsLevelAbove(1) and g:IsContains(c) and not c:IsLevel(lv)
 end
 function c101108051.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local lg=c:GetLinkedGroup()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101108051.lvfilter1(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101108051.lvfilter1,tp,LOCATION_GRAVE,0,1,nil)
-		and Duel.IsExistingMatchingCard(c101108051.lvfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,0,1,nil,lg) end
+	local lg=e:GetHandler():GetLinkedGroup()
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101108051.lvfilter1(chkc,tp,lg) end
+	if chk==0 then return Duel.IsExistingTarget(c101108051.lvfilter1,tp,LOCATION_GRAVE,0,1,nil,tp,lg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c101108051.lvfilter1,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.SelectTarget(tp,c101108051.lvfilter1,tp,LOCATION_GRAVE,0,1,1,nil,tp,lg)
 end
 function c101108051.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not c:IsRelateToEffect(e) or not tc:IsRelateToEffect(e) then return end
 	local lg=c:GetLinkedGroup()
-	local g=Duel.GetMatchingGroup(c101108051.lvfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil,lg)
 	local lv=tc:GetLevel()
+	local g=Duel.GetMatchingGroup(c101108051.lvfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil,lg,lv)
 	for lc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
