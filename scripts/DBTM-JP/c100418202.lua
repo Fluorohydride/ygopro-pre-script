@@ -106,7 +106,8 @@ function c100418202.coinop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100418202.coincon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and (c:GetPreviousSequence()~=c:GetSequence() or c:GetPreviousControler()~=tp)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsLocation(LOCATION_MZONE)
+		and (c:GetPreviousSequence()~=c:GetSequence() or c:GetPreviousControler()~=tp)
 end
 function c100418202.cointg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

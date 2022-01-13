@@ -80,7 +80,8 @@ function c100418201.thop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100418201.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and (c:GetPreviousSequence()~=c:GetSequence() or c:GetPreviousControler()~=tp)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsLocation(LOCATION_MZONE)
+		and (c:GetPreviousSequence()~=c:GetSequence() or c:GetPreviousControler()~=tp)
 end
 function c100418201.thfilter2(c)
 	return not c:IsCode(100418201) and c:IsSetCard(0x27c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
