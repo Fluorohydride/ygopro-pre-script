@@ -56,7 +56,7 @@ function c100418203.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end
-function c100418203.filter(c,tp)
+function c100418203.filter(c)
 	local seq=c:GetSequence()
 	local tp=c:GetOwner()
 	if seq>4 then return false end
