@@ -41,7 +41,8 @@ function c100287005.spfilter(c,e,tp)
 	return not c:IsCode(100287005) and c:IsSetCard(0x3b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100287005.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100287005.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
+		and Duel.IsExistingMatchingCard(c100287005.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c100287005.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -60,11 +61,11 @@ function c100287005.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c100287005.damfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c100287005.damfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,nil,1-tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetFirst():GetBaseAttack())
 end
 function c100287005.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.Damage(1-tp,tc:GetBaseAttack(),REASON_EFFECT)
 	end
 end
