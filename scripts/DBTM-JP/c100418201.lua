@@ -83,7 +83,7 @@ function c100418201.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and (c:GetPreviousSequence()~=c:GetSequence() or c:GetPreviousControler()~=tp)
 end
 function c100418201.thfilter2(c)
-	return c:IsSetCard(0x27c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return not c:IsCode(100418201) and c:IsSetCard(0x27c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100418201.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100418201.thfilter2,tp,LOCATION_DECK,0,1,nil) end
