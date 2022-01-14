@@ -42,7 +42,7 @@ function c100418209.ffilter(c,fc,sub,mg,sg)
 end
 function c100418203.pfilter(c)
 	local seq=c:GetSequence()
-	local tp=c:GetOwner()
+	local tp=c:GetControler()
 	if seq>4 then return false end
 	return (seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1))
 		or (seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1))
