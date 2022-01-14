@@ -95,27 +95,25 @@ end
 function c100418209.stcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
-function c100418209.stfilter(c,tp)
+function c100418209.stfilter(c)
 	local seq=c:GetSequence()
-	return seq<4 and c:IsType(TYPE_EFFECT) and c:IsFaceup()
+	return seq<=4 and c:IsType(TYPE_EFFECT) and c:IsFaceup()
 end
 function c100418209.sttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100418209.stfilter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c100418209.stfilter,tp,0,LOCATION_MZONE,1,nil,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100418209.stfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c100418209.stfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100418209,3))
-	Duel.SelectTarget(tp,c100418209.stfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
+	Duel.SelectTarget(tp,c100418209.stfilter,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function c100418209.stop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
+	if not (tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(1-tp) and not tc:IsImmuneToEffect(e)) then return end
 	local zone=1<<tc:GetSequence()
 	local oc=Duel.GetMatchingGroup(c100418209.seqfilter,tp,0,LOCATION_SZONE,nil,tc:GetSequence()):GetFirst()
-	if oc and Duel.Destroy(oc,REASON_EFFECT)>0 then
-		if oc:IsType(TYPE_MONSTER) then
-			Duel.SetLP(1-tp,Duel.GetLP(1-tp)-oc:GetTextAttack())
-		end
+	if oc and Duel.Destroy(oc,REASON_EFFECT)>0 and oc:IsType(TYPE_MONSTER) then
+		Duel.SetLP(1-tp,Duel.GetLP(1-tp)-oc:GetAttack())
 	end
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(1-tp) and not tc:IsImmuneToEffect(e)
-		and Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true,zone) then
+	if Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true,zone) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetCode(EFFECT_CHANGE_TYPE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
