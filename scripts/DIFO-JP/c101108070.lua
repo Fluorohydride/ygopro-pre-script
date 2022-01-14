@@ -1,4 +1,6 @@
---兽带斗神交叉反击
+--セリオンズ・クロス
+--
+--Script by JustFish
 function c101108070.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

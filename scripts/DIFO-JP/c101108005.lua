@@ -1,4 +1,6 @@
---兽带斗神“公爵”竺域星
+--セリオンズ“デューク”ユール
+--
+--Script by JustFish
 function c101108005.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

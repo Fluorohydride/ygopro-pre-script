@@ -1,4 +1,6 @@
---兽带斗神“跃鱼”霹雳一
+--セリオンズ“リーパー”ファム
+--
+--Script by JustFish
 function c101108004.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

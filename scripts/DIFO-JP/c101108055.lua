@@ -1,4 +1,6 @@
---兽带斗神突击
+--セリオンズ・チャージ
+--
+--Script by JustFish
 function c101108055.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

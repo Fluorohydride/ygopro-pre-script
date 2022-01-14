@@ -1,4 +1,6 @@
---圆盘斗技场 兽带斗神环形擂台
+--円盤闘技場セリオンズ・リング
+--
+--Script by JustFish
 function c101108053.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

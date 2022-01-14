@@ -1,4 +1,6 @@
---兽带斗神起身
+--セリオンズ・スタンダップ
+--
+--Script by JustFish
 function c101108071.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

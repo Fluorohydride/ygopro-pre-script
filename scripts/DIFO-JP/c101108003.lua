@@ -1,4 +1,6 @@
---兽带斗神“公牛”毕宿一
+--セリオンズ“ブルズ”アイン
+--
+--Script by JustFish
 function c101108003.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

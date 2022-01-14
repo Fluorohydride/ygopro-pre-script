@@ -1,4 +1,6 @@
---兽带斗神“王者”轩辕十四
+--セリオンズ“キング”レギュラス
+--
+--Script by JustFish
 function c101108007.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

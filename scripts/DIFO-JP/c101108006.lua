@@ -1,4 +1,6 @@
---兽带斗神“百合”胃宿二
+--セリオンズ“リリー”ボレア
+--
+--Script by JustFish
 function c101108006.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

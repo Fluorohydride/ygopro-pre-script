@@ -1,4 +1,6 @@
---无尽机关 银星系统
+--無尽機関アルギロ・システム
+--
+--Script by JustFish
 function c101108054.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
