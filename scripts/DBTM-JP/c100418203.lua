@@ -16,7 +16,6 @@ function c100418203.initial_effect(c)
 	c:RegisterEffect(e1)
 	--move
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100418203,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -58,7 +57,7 @@ function c100418203.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100418203.filter(c)
 	local seq=c:GetSequence()
-	local tp=c:GetOwner()
+	local tp=c:GetControler()
 	if seq>4 then return false end
 	return (seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1))
 		or (seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1))
@@ -66,7 +65,7 @@ end
 function c100418203.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100418203.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100418203.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100418203,1))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100418203,0))
 	Duel.SelectTarget(tp,c100418203.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
 end
 function c100418203.seqop(e,tp,eg,ep,ev,re,r,rp)
