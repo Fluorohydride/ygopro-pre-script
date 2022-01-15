@@ -20,7 +20,7 @@ function c101108071.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCountLimit(1,44644530)
+	e2:SetCountLimit(1,101108071)
 	e2:SetCondition(c101108071.eqcon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c101108071.eqtg)
@@ -79,7 +79,9 @@ function c101108071.filter1(c,e)
 end
 function c101108071.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c101108071.eqfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsExistingTarget(c101108071.filter,tp,LOCATION_MZONE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(c101108071.eqfilter,tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingTarget(c101108071.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,c101108071.eqfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)

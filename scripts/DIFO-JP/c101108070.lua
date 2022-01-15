@@ -17,8 +17,8 @@ function c101108070.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x27a)
 end
 function c101108070.condition(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(c101108070.confilter,tp,LOCATION_MZONE,0,1,nil) then return end
 	return ep==1-tp and re:IsActiveType(TYPE_MONSTER)
+		and Duel.IsExistingMatchingCard(c101108070.confilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101108070.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
@@ -28,14 +28,14 @@ function c101108070.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=0
 	if b1 and b2 then
 		if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,101108054) then
-			op=Duel.SelectOption(tp,aux.Stringid(101108070,0),aux.Stringid(101108070,1),aux.Stringid(101108070,2))
+			op=Duel.SelectOption(tp,aux.Stringid(101108070,1),aux.Stringid(101108070,2),aux.Stringid(101108070,3))
 		else
-			op=Duel.SelectOption(tp,aux.Stringid(101108070,0),aux.Stringid(101108070,1))
+			op=Duel.SelectOption(tp,aux.Stringid(101108070,1),aux.Stringid(101108070,2))
 		end
 	elseif b1 then
-		op=Duel.SelectOption(tp,aux.Stringid(101108070,0))
+		op=Duel.SelectOption(tp,aux.Stringid(101108070,1))
 	else
-		op=Duel.SelectOption(tp,aux.Stringid(101108070,1))+1
+		op=Duel.SelectOption(tp,aux.Stringid(101108070,2))+1
 	end
 	e:SetLabel(op)
 	if op~=0 then

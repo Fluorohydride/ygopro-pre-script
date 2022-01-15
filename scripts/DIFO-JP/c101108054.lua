@@ -14,7 +14,7 @@ function c101108054.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(37192109,1))
+	e2:SetDescription(aux.Stringid(101108054,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
@@ -46,7 +46,7 @@ function c101108054.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1,b2=c:IsAbleToDeck(),c:IsAbleToHand()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101108054.filter(chkc,b1,b2) end
 	if chk==0 then return Duel.IsExistingTarget(c101108054.filter,tp,LOCATION_GRAVE,0,1,nil,b1,b2) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c101108054.filter,tp,LOCATION_GRAVE,0,1,1,nil,b1,b2)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
@@ -55,12 +55,12 @@ function c101108054.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
-		local g=Group.__add(tc,c)
+		local g=Group.FromCards(tc,c)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local tg=g:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
 		g:Sub(tg)
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tg:GetFirst())
-		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end
 end

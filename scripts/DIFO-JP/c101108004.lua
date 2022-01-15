@@ -21,6 +21,7 @@ function c101108004.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e2:SetCountLimit(1,101108004+100)
 	e2:SetCondition(c101108004.thcon)
 	e2:SetTarget(c101108004.thtg)
@@ -41,36 +42,32 @@ function c101108004.initial_effect(c)
 	e4:SetCondition(c101108004.atkcon)
 	c:RegisterEffect(e4)
 end
-function c101108004.eqfilter(c,e,tp)
-	return (c:IsRace(RACE_AQUA) or c:IsSetCard(0x27a)) and c:IsType(TYPE_MONSTER) and c:IsCanBeEffectTarget(e) and c:CheckUniqueOnField(tp)
+function c101108004.eqfilter(c,tp)
+	return (c:IsRace(RACE_AQUA) or c:IsSetCard(0x27a)) and c:IsType(TYPE_MONSTER) and c:CheckUniqueOnField(tp)
 end
 function c101108004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c101108004.eqfilter(chkc,e,tp) and chkc:IsControler(tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(c101108004.eqfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(c101108004.eqfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local sg=Duel.SelectTarget(tp,c101108004.eqfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local sg=Duel.SelectTarget(tp,c101108004.eqfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,sg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101108004.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-		if #g>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
-			Duel.BreakEffect()
-			local tc=g:GetFirst()
-			if tc then
-				Duel.Equip(tp,tc,c,false)
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
-				e1:SetCode(EFFECT_EQUIP_LIMIT)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-				e1:SetValue(c101108004.eqlimit)
-				tc:RegisterEffect(e1)
-			end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		local tc=Duel.GetFirstTarget()
+		if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+			Duel.Equip(tp,tc,c,false)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
+			e1:SetCode(EFFECT_EQUIP_LIMIT)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetValue(c101108004.eqlimit)
+			tc:RegisterEffect(e1)
 		end
 	end
 end
@@ -85,10 +82,11 @@ function c101108004.filter(c)
 end
 function c101108004.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c101108004.filter,tp,LOCATION_SZONE,0,1,e:GetHandler())
+	if chk==0 then return Duel.IsExistingTarget(c101108004.filter,tp,LOCATION_SZONE,0,1,nil)
 		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g1=Duel.SelectTarget(tp,c101108004.filter,tp,LOCATION_SZONE,0,1,1,e:GetHandler())
+	local g1=Duel.SelectTarget(tp,c101108004.filter,tp,LOCATION_SZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)

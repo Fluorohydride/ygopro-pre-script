@@ -17,7 +17,7 @@ function c101108053.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1)
 	e2:SetTarget(c101108053.destg)
-	e2:SetValue(c101108053.value)
+	e2:SetValue(c101108053.desvalue)
 	e2:SetOperation(c101108053.desop)
 	c:RegisterEffect(e2)
 	--tohand
@@ -56,20 +56,21 @@ function c101108053.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(c101108053.repfilter,tp,LOCATION_DECK,0,1,nil) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
-function c101108053.value(e,c)
+function c101108053.desvalue(e,c)
 	return c:IsControler(e:GetHandlerPlayer()) and c:IsReason(REASON_BATTLE)
 end
 function c101108053.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101108053.repfilter,tp,LOCATION_DECK,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_EFFECT)
+	Duel.SendtoGrave(g,REASON_EFFECT+REASON_REPLACE)
 end
 function c101108053.filter(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
 end
 function c101108053.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101108053.thfilter(chkc) end
-	if chk==0 then return eg:IsExists(c101108053.filter,1,nil) and Duel.IsExistingTarget(c101108053.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return eg:IsExists(c101108053.filter,1,nil)
+		and Duel.IsExistingTarget(c101108053.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c101108053.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
