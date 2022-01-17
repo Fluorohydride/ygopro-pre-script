@@ -26,20 +26,25 @@ function c101108041.initial_effect(c)
 	e2:SetOperation(c101108041.spop)
 	c:RegisterEffect(e2)
 end
-function c101108041.tgfilter(c)
-	return c:IsRace(RACE_ZOMBIE) and c:IsAbleToGrave()
+function c101108041.tgfilter(c,lv,olv)
+	local clv=c:GetOriginalLevel()
+	return c:IsRace(RACE_ZOMBIE) and c:IsAbleToGrave() and clv~=olv and math.abs(clv-olv)~=lv
 end
 function c101108041.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101108041.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then
+		local c=e:GetHandler()
+		return c:IsLevelAbove(0)
+			and Duel.IsExistingMatchingCard(c101108041.tgfilter,tp,LOCATION_DECK,0,1,nil,c:GetLevel(),c:GetOriginalLevel())
+	end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c101108041.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not c:IsFaceup() or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c101108041.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101108041.tgfilter,tp,LOCATION_DECK,0,1,1,nil,c:GetLevel(),c:GetOriginalLevel())
 	local tc=g:GetFirst()
-	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) and tc:GetLevel()>0
-		and c:IsFaceup() and c:IsRelateToEffect(e) then
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
@@ -52,7 +57,7 @@ function c101108041.cfilter(c,tp)
 	return c:GetPreviousRaceOnField()&RACE_ZOMBIE~=0 and c:IsPreviousControler(tp)
 end
 function c101108041.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101108041.cfilter,1,nil,tp)
+	return eg:IsExists(c101108041.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
 function c101108041.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
