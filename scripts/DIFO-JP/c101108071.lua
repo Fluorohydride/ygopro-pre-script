@@ -74,9 +74,6 @@ end
 function c101108071.filter(c)
 	return c:IsSetCard(0x27a) and c:IsFaceup()
 end
-function c101108071.filter1(c,e)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsRelateToEffect(e)
-end
 function c101108071.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -89,11 +86,10 @@ function c101108071.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function c101108071.eqop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tc=g:Filter(c101108071.filter1,nil,e):GetFirst()
-	g:RemoveCard(tc)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tc=g:Filter(Card.IsLocation,nil,LOCATION_MZONE):GetFirst()
 	local ec=g:Filter(Card.IsLocation,nil,LOCATION_GRAVE):GetFirst()
-	if tc and ec and ec:IsRelateToEffect(e) then
+	if tc and ec and tc:IsFaceup() and tc:IsControler(tp) then
 		if not Duel.Equip(tp,ec,tc) then return end
 		--equip limit
 		local e1=Effect.CreateEffect(e:GetHandler())
