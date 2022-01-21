@@ -78,7 +78,7 @@ function c100418203.seqop(e,tp,eg,ep,ev,re,r,rp)
 	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(1<<(seq+1)) end
 	if flag==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag)
+	local s=Duel.SelectField(tp,1,LOCATION_MZONE,0,~flag)
 	local nseq=math.log(s,2)
 	Duel.MoveSequence(tc,nseq)
 end
@@ -89,7 +89,7 @@ function c100418203.mvcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100418203.spfilter(c,e,tp)
 	local zone=1<<c:GetSequence()
-	return c:IsSetCard(0x27c) and c:IsFaceup()
+	return c:IsSetCard(0x27c) and c:IsFaceup() and c:GetSequence()<=4 and c:GetOriginalType()&TYPE_MONSTER~=0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c100418203.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -101,7 +101,8 @@ function c100418203.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100418203.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,1<<tc:GetSequence())
+	local zone=1<<tc:GetSequence()
+	if tc:IsRelateToEffect(e) then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end
