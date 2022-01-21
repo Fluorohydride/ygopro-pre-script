@@ -55,15 +55,19 @@ function c100418212.sttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(100418212,0))
 	Duel.SelectTarget(tp,c100418212.stfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
 end
+function c100418212.seqfilter(c,seq)
+	return c:GetSequence()==seq
+end
 function c100418212.stop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(1-tp) and not tc:IsImmuneToEffect(e)) then return end
+	if not (tc:IsRelateToEffect(e) and tc:IsControler(1-tp) and not tc:IsImmuneToEffect(e)) then return end
 	local zone=1<<tc:GetSequence()
 	local oc=Duel.GetMatchingGroup(c100418212.seqfilter,tp,0,LOCATION_SZONE,nil,tc:GetSequence()):GetFirst()
+	local avail=true
 	if oc then
-		Duel.Destroy(oc,REASON_EFFECT)
+		avail=Duel.Destroy(oc,REASON_EFFECT)~=0
 	end
-	if Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true,zone) then
+	if avail and Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true,zone) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetCode(EFFECT_CHANGE_TYPE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
