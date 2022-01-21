@@ -44,7 +44,8 @@ function c100418211.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100418211.spfilter(c,e,tp)
 	local zone=1<<c:GetSequence()
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) and c:IsFaceup()
+	return c:IsFaceup() and c:GetSequence()<=4 and c:GetOriginalType()&TYPE_MONSTER~=0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c100418211.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c100418211.spfilter(chkc,e,tp) end
