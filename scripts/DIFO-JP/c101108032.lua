@@ -28,25 +28,29 @@ end
 function c101108032.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	local reg=false
-	if rc:IsLevelBelow(8) then
+	local lv=rc:GetOriginalLevel()
+	if lv>0 and lv<=8 then
 		--atkup
 		local e1=Effect.CreateEffect(rc)
 		e1:SetDescription(aux.Stringid(101108032,0))
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(800)
 		rc:RegisterEffect(e1,true)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_UPDATE_DEFENSE)
+		rc:RegisterEffect(e2,true)
 		reg=true
-	else
+	elseif lv>=9 then
 		--inflict damage
 		local e2=Effect.CreateEffect(rc)
-		e2:SetDescription(aux.Stringid(101108032,1))
+		e2:SetDescription(aux.Stringid(101108032,0))
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_PIERCE)
-		e2:SetValue(DOUBLE_DAMAGE)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 		reg=true
 	end
