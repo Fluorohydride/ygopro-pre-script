@@ -107,7 +107,7 @@ function c100418209.sttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100418209.stop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(1-tp) and not tc:IsImmuneToEffect(e)) then return end
+	if not (tc:IsRelateToEffect(e) and tc:IsControler(1-tp) and not tc:IsImmuneToEffect(e)) then return end
 	local zone=1<<tc:GetSequence()
 	local oc=Duel.GetMatchingGroup(c100418209.seqfilter,tp,0,LOCATION_SZONE,nil,tc:GetSequence()):GetFirst()
 	if oc and Duel.Destroy(oc,REASON_EFFECT)>0 and oc:IsType(TYPE_MONSTER) then
@@ -128,7 +128,7 @@ function c100418209.seqfilter(c,seq)
 end
 function c100418209.pencon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetSummonType()&SUMMON_TYPE_SPECIAL>0 and rp==1-tp and c:IsReason(REASON_EFFECT)
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and rp==1-tp and c:IsReason(REASON_EFFECT)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()
 end
 function c100418209.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
