@@ -93,26 +93,18 @@ end
 function c100418208.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp)~=0 then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.GetControl(tc,tp)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
+		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CANNOT_TRIGGER)
-		e2:SetCondition(c100418208.limitcon)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
+		local e3=e1:Clone()
 		e3:SetCode(EFFECT_ADD_SETCODE)
 		e3:SetValue(0x27c)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)
 	end
-end
-function c100418208.limitcon(e)
-	return e:GetHandler():IsControler(e:GetOwnerPlayer())
 end
