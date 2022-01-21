@@ -59,7 +59,7 @@ function c100418206.splimit(e,c)
 	return not c:IsSetCard(0x27c) and not c:IsLocation(LOCATION_EXTRA)
 end
 function c100418206.stcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function c100418206.stfilter(c)
 	return c:IsSetCard(0x27c) and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and not c:IsForbidden()
