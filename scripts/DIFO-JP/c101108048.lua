@@ -28,10 +28,19 @@ function c101108048.initial_effect(c)
 	e2:SetTarget(c101108048.destg)
 	e2:SetOperation(c101108048.desop)
 	c:RegisterEffect(e2)
-	Duel.AddCustomActivityCounter(101108048,ACTIVITY_SPSUMMON,c101108048.penfilter)
+	if not c101108048.global_check then
+		c101108048.global_check=true
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
+		ge1:SetOperation(c101108048.checkop)
+		Duel.RegisterEffect(ge1,0)
+	end
 end
-function c101108048.penfilter(c)
-	return not c:IsSummonType(SUMMON_TYPE_PENDULUM)
+function c101108048.checkop(e,tp,eg,ep,ev,re,r,rp)
+	if eg:IsExists(Card.IsSummonType,1,nil,SUMMON_TYPE_PENDULUM) then
+		Duel.RegisterFlagEffect(rp,101108048,RESET_PHASE+PHASE_END,0,1)
+	end
 end
 function c101108048.lcheck(g)
 	return g:IsExists(Card.IsLinkType,1,nil,TYPE_PENDULUM)
@@ -58,6 +67,7 @@ function c101108048.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
+	Duel.ResetFlagEffect(tp,101108048)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
@@ -87,7 +97,7 @@ function c101108048.actlimit(e,re,tp)
 end
 function c101108048.discon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetCustomActivityCount(101108048,tp,ACTIVITY_SPSUMMON)==0
+	return Duel.GetFlagEffect(tp,101108048)==0
 end
 function c101108048.disop(e,tp,eg,ep,ev,re,r,rp)
 	local p,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
