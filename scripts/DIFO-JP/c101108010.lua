@@ -21,55 +21,29 @@ function c101108010.initial_effect(c)
 	e2:SetTarget(c101108010.ptg)
 	c:RegisterEffect(e2)
 end
-function c101108010.cfilter1(c,e)
-	local seq=c:GetSequence()
-	if seq>4 then return false end
-	return ((seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1))
-		  or(seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1))) 
-		and c:IsSetCard(0x27b) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+function c101108010.cfilter(c)
+	return c:IsSetCard(0x27b) and c:IsFaceup()
 end
-function c101108010.cfilter2(c,e)
-	return c:GetColumnZone(LOCATION_MZONE,tp)>0 
-		and c:IsSetCard(0x27b) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+function c101108010.getzone(tp)
+	local zone=0
+	local g=Duel.GetMatchingGroup(c101108010.cfilter,tp,LOCATION_MZONE,0,nil)
+	for tc in aux.Next(g) do
+		local seq=aux.MZoneSequence(tc:GetSequence())
+		zone=zone|(1<<seq)
+		if seq>0 then zone=zone|(1<<(seq-1)) end
+		if seq<4 then zone=zone|(1<<(seq+1)) end
+	end
+	return zone
 end
 function c101108010.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local lg=Duel.GetMatchingGroup(c101108010.cfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-	local zone=0
-	for tc in aux.Next(lg) do
-		local seq=tc:GetSequence()  
-		if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then 
-			zone=bit.bor(zone,(1<<(seq-1)))
-		end
-		if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then 
-			zone=bit.bor(zone,(1<<(seq+1)))
-		end
-	end
-	local lg1=Duel.GetMatchingGroup(c101108010.cfilter2,tp,LOCATION_MZONE,0,nil,e)
-	for tc in aux.Next(lg1) do
-		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,tp))
-	end
+	local zone=c101108010.getzone(tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function c101108010.hspval(e,c)
 	local tp=c:GetControler()
-	local lg=Duel.GetMatchingGroup(c101108010.cfilter1,tp,LOCATION_MZONE,0,nil,e)
-	local zone=0
-	for tc in aux.Next(lg) do
-		local seq=tc:GetSequence()  
-		if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then 
-			zone=bit.bor(zone,(1<<(seq-1)))
-		end
-		if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then 
-			zone=bit.bor(zone,(1<<(seq+1)))
-		end
-	end
-	local lg1=Duel.GetMatchingGroup(c101108010.cfilter2,tp,LOCATION_MZONE,0,nil,e)
-	for tc in aux.Next(lg1) do
-		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,tp))
-	end
-	return 0,zone
+	return 0,c101108010.getzone(tp)
 end
 function c101108010.ptg(e,c)
 	return c:IsSetCard(0x27b) and c:IsType(TYPE_LINK) and c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()>=5

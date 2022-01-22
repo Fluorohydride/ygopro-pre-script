@@ -12,6 +12,7 @@ function c101108049.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.linklimit)
 	c:RegisterEffect(e1)
+	--position
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SET_POSITION)
@@ -20,8 +21,11 @@ function c101108049.initial_effect(c)
 	e2:SetValue(POS_FACEUP_DEFENSE)
 	c:RegisterEffect(e2)
 	--immune
-	local e3=e1:Clone()
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetCode(EFFECT_IMMUNE_EFFECT)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(c101108049.immval)
 	c:RegisterEffect(e3)
 	--SpecialSummon
@@ -37,8 +41,10 @@ function c101108049.initial_effect(c)
 	e4:SetOperation(c101108049.operation)
 	c:RegisterEffect(e4)
 end
-function c101108049.immval(e,te)
-	return te:GetHandler():IsDefensePos()
+function c101108049.immval(e,re)
+	local rc=re:GetHandler()
+	return re:IsActiveType(TYPE_MONSTER) and re:IsActivated() and re:GetActivateLocation()==LOCATION_MZONE
+		and (rc:IsRelateToEffect(re) and rc:IsDefensePos() or not rc:IsRelateToEffect(re) and rc:IsPreviousPosition(POS_DEFENSE))
 end
 function c101108049.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSequence()>4
@@ -52,7 +58,8 @@ end
 function c101108049.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101108049.tgfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c101108049.tgfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(c101108049.thfilter,tp,LOCATION_DECK,0,1,nil) end
+		and Duel.IsExistingTarget(c101108049.tgfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(c101108049.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c101108049.tgfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
