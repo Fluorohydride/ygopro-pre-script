@@ -1,4 +1,4 @@
---肆世坏的恐吓者·高处恐惧兽
+--スケアクロー・アクロア
 --
 --HanamomoHakune
 function c101108011.initial_effect(c)

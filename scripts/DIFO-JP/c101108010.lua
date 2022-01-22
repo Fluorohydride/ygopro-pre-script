@@ -1,4 +1,4 @@
---肆世坏的恐吓者·尖物恐惧兽
+--スケアクロー・ベロネア
 --
 --HanamomoHakune
 function c101108010.initial_effect(c)

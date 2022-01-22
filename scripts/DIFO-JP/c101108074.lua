@@ -1,4 +1,4 @@
---肆世坏的牙掌突
+--肆世壊の牙掌突
 --
 --HanamomoHakune
 function c101108074.initial_effect(c)

@@ -1,4 +1,4 @@
---肆世坏-星命恐惧界
+--肆世壊＝ライフォビア
 --
 --HanamomoHakune
 function c101108058.initial_effect(c)

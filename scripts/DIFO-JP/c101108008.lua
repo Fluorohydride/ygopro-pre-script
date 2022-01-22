@@ -1,4 +1,4 @@
---维萨斯-斯塔弗罗斯特
+--ヴィサス＝スタフロスト
 --
 --HanamomoHakune
 function c101108008.initial_effect(c)

@@ -1,4 +1,4 @@
---肆世坏的恐吓者·雷电恐惧兽
+--スケアクロー・アストラ
 --
 --HanamomoHakune
 function c101108009.initial_effect(c)

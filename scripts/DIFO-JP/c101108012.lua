@@ -1,4 +1,4 @@
---肆世坏的恐吓者·莱希哈特
+--スケアクロー・ライヒハート
 --
 --HanamomoHakune
 function c101108012.initial_effect(c)

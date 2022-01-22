@@ -1,4 +1,4 @@
---肆世坏的新星
+--肆世壊の新星
 --
 --HanamomoHakune
 function c101108059.initial_effect(c)
