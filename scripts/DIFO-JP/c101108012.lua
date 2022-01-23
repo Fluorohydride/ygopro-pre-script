@@ -14,11 +14,11 @@ function c101108012.initial_effect(c)
 	c:RegisterEffect(e1)
 	--tohand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101108012,1))
+	e2:SetDescription(aux.Stringid(101108012,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,101108012+100)
 	e2:SetTarget(c101108012.thtg)
 	e2:SetOperation(c101108012.thop)
@@ -59,6 +59,8 @@ function c101108012.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	if Duel.GetMatchingGroupCount(Card.IsDefensePos,tp,LOCATION_MZONE,LOCATION_MZONE,nil)>=3 then
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DRAW)
+	else
+		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	end
 end
 function c101108012.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -69,7 +71,7 @@ function c101108012.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 		if Duel.IsPlayerCanDraw(tp,1)
 			and Duel.GetMatchingGroupCount(Card.IsDefensePos,tp,LOCATION_MZONE,LOCATION_MZONE,nil)>=3
-			and Duel.SelectYesNo(tp,aux.Stringid(101108012,0)) then
+			and Duel.SelectYesNo(tp,aux.Stringid(101108012,1)) then
 			Duel.BreakEffect()
 			Duel.ShuffleDeck(tp)
 			Duel.Draw(tp,1,REASON_EFFECT)

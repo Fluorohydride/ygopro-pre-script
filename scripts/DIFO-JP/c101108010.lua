@@ -12,7 +12,7 @@ function c101108010.initial_effect(c)
 	e1:SetCondition(c101108010.hspcon)
 	e1:SetValue(c101108010.hspval)
 	c:RegisterEffect(e1)
-	--extra attack
+	--pierce
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_PIERCE)
@@ -46,5 +46,5 @@ function c101108010.hspval(e,c)
 	return 0,c101108010.getzone(tp)
 end
 function c101108010.ptg(e,c)
-	return c:IsSetCard(0x27b) and c:IsType(TYPE_LINK) and c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()>=5
+	return c:IsSetCard(0x27b) and c:GetSequence()>=5
 end

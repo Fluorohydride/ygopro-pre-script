@@ -12,14 +12,14 @@ function c101108011.initial_effect(c)
 	e1:SetCondition(c101108011.hspcon)
 	e1:SetValue(c101108011.hspval)
 	c:RegisterEffect(e1)
-	--extra attack
+	--atk up
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(c101108011.atktg)
-	e2:SetValue(c101108011.atkv)
+	e2:SetValue(c101108011.atkval)
 	c:RegisterEffect(e2)
 end
 function c101108011.cfilter(c)
@@ -46,12 +46,9 @@ function c101108011.hspval(e,c)
 	local tp=c:GetControler()
 	return 0,c101108011.getzone(tp)
 end
-function c101108011.atkfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsDefensePos()
-end
 function c101108011.atktg(e,c)
-	return c:IsSetCard(0x27b) and c:IsType(TYPE_LINK) and c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()>=5
+	return c:IsSetCard(0x27b) and c:GetSequence()>=5
 end
-function c101108011.atkv(e,c)
-	return Duel.GetMatchingGroupCount(c101108011.atkfilter,c:GetControler(),LOCATION_MZONE,0,nil)*300
+function c101108011.atkval(e,c)
+	return Duel.GetMatchingGroupCount(Card.IsDefensePos,c:GetControler(),LOCATION_MZONE,0,nil)*300
 end

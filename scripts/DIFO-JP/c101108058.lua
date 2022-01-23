@@ -25,7 +25,7 @@ function c101108058.initial_effect(c)
 	c:RegisterEffect(e3)
 	--destroy1
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(101108058,0))
+	e4:SetDescription(aux.Stringid(101108058,1))
 	e4:SetCategory(CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -51,7 +51,7 @@ end
 function c101108058.atkval(e)
 	return Duel.GetMatchingGroupCount(Card.IsDefensePos,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil)*-100
 end
-function c101108058.descon(e)
+function c101108058.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(Card.IsDefensePos,tp,LOCATION_MZONE,LOCATION_MZONE,nil)>=3
 end
 function c101108058.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
