@@ -40,7 +40,7 @@ end
 function c100418209.ffilter(c,fc,sub,mg,sg)
 	return c:IsFusionSetCard(0x27c)
 end
-function c100418203.pfilter(c)
+function c100418209.pfilter(c)
 	local seq=c:GetSequence()
 	local tp=c:GetControler()
 	if seq>4 then return false end
@@ -51,7 +51,7 @@ function c100418209.ptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local zone=1<<c:GetSequence()
 	local b1=c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
-	local b2=Duel.IsExistingMatchingCard(c100418203.pfilter,tp,LOCATION_MZONE,0,1,nil)
+	local b2=Duel.IsExistingMatchingCard(c100418209.pfilter,tp,LOCATION_MZONE,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	local s=0
 	if b1 and not b2 then
