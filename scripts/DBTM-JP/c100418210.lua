@@ -51,12 +51,12 @@ function c100418210.splimit(e,se,sp,st)
 end
 function c100418210.hspfilter(c,tp,sc)
 	local seq=c:GetSequence()
-	return (seq==1 or seq==3) and not c:IsFusionType(TYPE_FUSION) and c:IsLevelAbove(5) and c:IsSetCard(0x27c) 
+	return (seq==1 or seq==3) and not c:IsFusionType(TYPE_FUSION) and c:IsLevelAbove(5) and c:IsSetCard(0x27c)
 		and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0 and c:IsCanBeFusionMaterial(sc,SUMMON_TYPE_SPECIAL)
 end
 function c100418210.hspcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),c100418210.hspfilter,1,nil,c:GetControler(),c)
+	return c:IsFacedown() and Duel.CheckReleaseGroup(c:GetControler(),c100418210.hspfilter,1,nil,c:GetControler(),c)
 end
 function c100418210.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectReleaseGroup(tp,c100418210.hspfilter,1,1,nil,tp,c)
