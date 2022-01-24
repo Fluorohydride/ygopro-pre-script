@@ -51,7 +51,7 @@ function c100418210.splimit(e,se,sp,st)
 end
 function c100418210.hspfilter(c,tp,sc)
 	local seq=c:GetSequence()
-	return (seq==1 or seq==3) and not c:IsFusionType(TYPE_FUSION) and c:IsLevelAbove(5) and c:IsSetCard(0x27c) 
+	return (seq==1 or seq==3) and not c:IsFusionType(TYPE_FUSION) and c:IsLevelAbove(5) and c:IsSetCard(0x27c)
 		and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0 and c:IsCanBeFusionMaterial(sc,SUMMON_TYPE_SPECIAL)
 end
 function c100418210.hspcon(e,c)

@@ -58,7 +58,7 @@ function c100282037.opop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 			local sg=Duel.SelectMatchingCard(tp,c100282037.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
-			local sc=sg:GetFirst() 
+			local sc=sg:GetFirst()
 			if sc then
 				if not Duel.Equip(tp,tc,sc) then return end
 				--equip limit
@@ -93,7 +93,7 @@ function c100282037.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local ec=Duel.SelectMatchingCard(tp,c100282037.eqfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 		if ec then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-			local tc=Duel.SelectMatchingCard(tp,c100282037.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,ec):GetFirst() 
+			local tc=Duel.SelectMatchingCard(tp,c100282037.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,ec):GetFirst()
 			Duel.Equip(tp,ec,tc)
 		end
 	end

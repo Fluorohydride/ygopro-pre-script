@@ -54,7 +54,7 @@ function c101108074.adatkop(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e1)
 end
 function c101108074.adaval(e)
-	local c=e:GetHandler() 
+	local c=e:GetHandler()
 	return c:GetAttack()>c:GetDefense() and 0 or 1
 end
 function c101108074.exfilter(c)

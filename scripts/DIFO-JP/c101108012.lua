@@ -52,7 +52,7 @@ function c101108012.hspval(e,c)
 	return 0,c101108012.getzone(tp)
 end
 function c101108012.thfilter(c)
-	return c:IsSetCard(0x27b) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() 
+	return c:IsSetCard(0x27b) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c101108012.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101108012.thfilter,tp,LOCATION_DECK,0,1,nil) end
