@@ -56,7 +56,7 @@ function c100418210.hspfilter(c,tp,sc)
 end
 function c100418210.hspcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),c100418210.hspfilter,1,nil,c:GetControler(),c)
+	return c:IsFacedown() and Duel.CheckReleaseGroup(c:GetControler(),c100418210.hspfilter,1,nil,c:GetControler(),c)
 end
 function c100418210.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectReleaseGroup(tp,c100418210.hspfilter,1,1,nil,tp,c)
