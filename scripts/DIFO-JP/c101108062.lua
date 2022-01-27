@@ -1,4 +1,4 @@
---ゲネラールプローべ
+--ゲネラールプローベ
 --
 --Script by Trishula9
 function c101108062.initial_effect(c)

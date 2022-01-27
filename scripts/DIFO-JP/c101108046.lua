@@ -1,4 +1,4 @@
---エクンシスターズ・マニフィカ
+--エクソシスターズ・マニフィカ
 --
 --Script by Trishula9 & mercury233
 function c101108046.initial_effect(c)
