@@ -51,7 +51,7 @@ function c101108038.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
 function c101108038.atkfilter(c,lp)
-	return c:IsFaceup() and not c:GetAttack()==lp
+	return c:IsFaceup() and c:GetAttack()~=lp
 end
 function c101108038.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101108038.atkfilter,tp,0,LOCATION_MZONE,1,nil,Duel.GetLP(tp)) end
