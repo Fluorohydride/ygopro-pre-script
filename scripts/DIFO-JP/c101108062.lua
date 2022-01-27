@@ -68,8 +68,11 @@ function c101108062.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+function c101108062.cfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(0x1066) and c:IsSummonPlayer(tp)
+end
 function c101108062.thcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and eg:IsExists(Card.IsSetCard,1,nil,0x1066)
+	return eg:IsExists(c101108062.cfilter,1,nil,tp)
 end
 function c101108062.thfilter2(c)
 	return c:IsCode(75304793) and c:IsAbleToHand()

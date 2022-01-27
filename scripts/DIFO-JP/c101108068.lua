@@ -5,7 +5,6 @@ function c101108068.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101108068+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c101108068.condition)
@@ -40,7 +39,7 @@ function c101108068.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if cl>=3 then
 		Duel.BreakEffect()
-		Duel.SendtoGrave(Duel.GetDecktopGroup(tp,1),REASON_EFFECT)
+		Duel.DiscardDeck(tp,1,REASON_EFFECT)
 	end
 	if cl>=4 then
 		Duel.BreakEffect()

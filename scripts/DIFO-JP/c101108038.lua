@@ -50,16 +50,16 @@ function c101108038.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
-function c101108038.atkfilter(c)
-	return c:IsFaceup()
+function c101108038.atkfilter(c,lp)
+	return c:IsFaceup() and not c:GetAttack()==lp
 end
 function c101108038.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101108038.atkfilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101108038.atkfilter,tp,0,LOCATION_MZONE,1,nil,Duel.GetLP(tp)) end
 end
 function c101108038.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local lp=Duel.GetLP(tp)
-	local g=Duel.GetMatchingGroup(c101108038.atkfilter,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(c101108038.atkfilter,tp,0,LOCATION_MZONE,nil,nil)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)

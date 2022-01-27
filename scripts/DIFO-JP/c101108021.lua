@@ -18,7 +18,7 @@ function c101108021.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101108021,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -43,7 +43,7 @@ function c101108021.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101108021.posfilter(c)
-	return c:IsSetCard(0x1066) and c:IsFacedown()
+	return c:IsSetCard(0x1066) and c:IsFacedown() and c:IsCanChangePosition()
 end
 function c101108021.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101108021.posfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -79,8 +79,8 @@ end
 function c101108021.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b=Duel.IsEnvironment(75304793,tp,LOCATION_FZONE)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c101108021.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp)
-		or b and Duel.IsExistingMatchingCard(c101108021.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp) end
+		and (Duel.IsExistingMatchingCard(c101108021.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp)
+			or b and Duel.IsExistingMatchingCard(c101108021.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp)) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101108021.spop(e,tp,eg,ep,ev,re,r,rp)

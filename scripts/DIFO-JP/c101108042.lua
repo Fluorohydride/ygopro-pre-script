@@ -85,7 +85,7 @@ function c101108042.pdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local g=Group.FromCards(c,tc):Filter(Card.IsRelateToEffect,nil,e)
-	if g:GetCount()>0 then
+	if g:GetCount()==2 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

@@ -76,6 +76,7 @@ function c101108064.attop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		if e:GetLabel()==1-tp and tc:IsControler(1-tp) and tc:IsControlerCanBeChanged()
 			and Duel.SelectYesNo(tp,aux.Stringid(101108064,2)) then
+			Duel.BreakEffect()
 			Duel.GetControl(tc,tp)
 		end
 	end

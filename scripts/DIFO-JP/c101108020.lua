@@ -46,7 +46,7 @@ function c101108020.pfilter(c)
 end
 function c101108020.ptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and c101108020.pfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and chkc~=c and c101108020.pfilter(chkc) end
 	if chk==0 then return c:IsAbleToHand()
 		and Duel.IsExistingTarget(c101108020.pfilter,tp,LOCATION_ONFIELD,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
@@ -76,20 +76,16 @@ function c101108020.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c101108020.thfilter(c)
-	return c:IsFaceup() and c:IsAbleToHand()
-end
 function c101108020.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and c101108020.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101108020.thfilter,tp,LOCATION_PZONE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and chkc:IsAbleToHand() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_PZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,c101108020.thfilter,tp,LOCATION_PZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,LOCATION_PZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c101108020.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

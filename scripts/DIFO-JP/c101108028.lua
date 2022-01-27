@@ -28,7 +28,7 @@ function c101108028.initial_effect(c)
 end
 function c101108028.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEDOWN) and c:IsReason(REASON_DESTROY) then
+	if c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN) and c:IsReason(REASON_DESTROY) then
 		c:RegisterFlagEffect(101108028,RESET_EVENT+RESETS_STANDARD,1,0)
 	end
 end
