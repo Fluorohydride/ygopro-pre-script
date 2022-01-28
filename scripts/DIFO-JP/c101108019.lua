@@ -32,10 +32,11 @@ function c101108019.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsLocation(LOCATION_GRAVE+LOCATION_EXTRA) and r==REASON_FUSION
 end
 function c101108019.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanAddCounter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,0x1041,1) end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
+		and Duel.IsExistingMatchingCard(Card.IsCanAddCounter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,0x1041,1) end
 end
 function c101108019.ctop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 	local g=Duel.GetMatchingGroup(Card.IsCanAddCounter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,0x1041,1)
 	if ct>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)

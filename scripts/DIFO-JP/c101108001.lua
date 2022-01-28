@@ -93,6 +93,9 @@ function c101108001.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
+function c101108001.thfilter(c)
+	return c:IsSetCard(0x9f,0x99) and c:IsAbleToHand()
+end
 function c101108001.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
@@ -102,10 +105,8 @@ function c101108001.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 			local sg=g:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		end
 	end
-end
-function c101108001.thfilter(c)
-	return c:IsSetCard(0x9f,0x99) and c:IsAbleToHand()
 end

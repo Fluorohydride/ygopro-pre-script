@@ -29,7 +29,7 @@ function c101108008.tfilter(c,sc,tp)
 end
 function c101108008.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(false) and chkc:IsControler(tp) and c101108008.tfilter(chkc,c,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101108008.tfilter(chkc,c,tp) end
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(c101108008.tfilter,tp,LOCATION_MZONE,0,1,nil,c,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

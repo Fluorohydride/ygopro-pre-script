@@ -53,8 +53,8 @@ function c101108051.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,ac)
 	local g=Duel.GetDecktopGroup(tp,ac)
 	local og=g:Filter(c101108051.spfilter,nil,e,tp)
-	if og:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101108051,3)) then
-		local ft=math.min((Duel.GetLocationCount(tp,LOCATION_MZONE)),2)
+	local ft=math.min((Duel.GetLocationCount(tp,LOCATION_MZONE)),2)
+	if og:GetCount()>0 and ft>0 and Duel.SelectYesNo(tp,aux.Stringid(101108051,3)) then
 		if ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=og:Select(tp,1,ft,nil)

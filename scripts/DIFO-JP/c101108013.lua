@@ -37,17 +37,18 @@ function c101108013.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetValue(-2)
 	tc:RegisterEffect(e1)
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetAbsoluteRange(tp,1,0)
-		e2:SetTarget(c101108013.splimit)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e2,true)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) then
+		if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_FIELD)
+			e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+			e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+			e2:SetRange(LOCATION_MZONE)
+			e2:SetAbsoluteRange(tp,1,0)
+			e2:SetTarget(c101108013.splimit)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			c:RegisterEffect(e2,true)
+		end
 		Duel.SpecialSummonComplete()
 	end
 end

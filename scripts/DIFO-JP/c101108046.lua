@@ -1,4 +1,4 @@
---エクンシスターズ・マニフィカ
+--エクソシスターズ・マニフィカ
 --
 --Script by Trishula9 & mercury233
 function c101108046.initial_effect(c)
@@ -52,6 +52,7 @@ function c101108046.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101108046.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_ONFIELD)
 end
 function c101108046.rmop(e,tp,eg,ep,ev,re,r,rp)
@@ -73,6 +74,7 @@ function c101108046.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=c:GetOverlayGroup()
 	if chk==0 then return g:IsExists(c101108046.toexfilter,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function c101108046.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
