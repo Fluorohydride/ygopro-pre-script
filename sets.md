@@ -2,8 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **January 15, 2022**: DIMENSION FORCE (DIFO-JP) : `101108XXX`
-- **January 27, 2022**: The Grand Creators (GRCR-EN) : `100282XXX`
 - **February 19, 2022**: History Archive Collection (HC01-JP) : `100287XXX`
 - **March 19, 2022**: Deck Build Pack: Tactical Masters (DBTM-JP): `100418XXX`
 - **April 2022**: 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
@@ -100,6 +98,7 @@
 - Yu-Gi-Oh! OCG Structures Volume 4 promotional card (YO04-JP) : `100283XXX`
 - Secret Shiny Box (SSB1-JP) : `100285XXX`
 - Premium Pack 2022 (22PP-JP) : `100286XXX`
+- The Grand Creators (GRCR-EN) : `100282XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -183,3 +182,4 @@
 - DAWN OF MAJESTY (DAMA-JP) : `101105XXX`
 - BURST OF DESTINY (BODE-JP) : `101106XXX`
 - BATTLE OF CHAOS (BACH-JP) : `101107XXX`
+- DIMENSION FORCE (DIFO-JP) : `101108XXX`
