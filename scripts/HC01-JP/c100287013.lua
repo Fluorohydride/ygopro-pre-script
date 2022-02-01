@@ -12,7 +12,6 @@ function c100287013.initial_effect(c)
 	e1:SetOperation(c100287013.activate)
 	c:RegisterEffect(e1)
 end
-SUMMON_VALUE_OVERLOAD_FUSION=0x14
 function c100287013.thfilter(c)
 	return c:IsCode(3659803) and c:IsAbleToHand()
 end
@@ -47,10 +46,10 @@ function c100287013.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function c100287013.cfilter(c)
-	return c:IsType(TYPE_FUSION) and c:IsSummonType(SUMMON_TYPE_FUSION+SUMMON_VALUE_OVERLOAD_FUSION) and c:GetMaterialCount()>=6
+	return c:IsType(TYPE_FUSION) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterialCount()>=6
 end
 function c100287013.excon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100287013.cfilter,1,nil)
+	return re and re:GetHandler():IsCode(3659803) and eg:IsExists(c100287013.cfilter,1,nil)
 end
 function c100287013.exop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:Filter(c100287013.cfilter,nil):GetFirst()
