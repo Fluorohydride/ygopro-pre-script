@@ -1,6 +1,6 @@
 --Libromancer Geek Boy
 --Script by HKunogi
-local s,id=GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--SP sum itself
 	local e1=Effect.CreateEffect(c)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCountLimit(1,{id,1})
+	e2:SetCountLimit(1,id+o)
 	e2:SetTarget(s.d2htg)
 	e2:SetOperation(s.d2hop)
 	c:RegisterEffect(e2)

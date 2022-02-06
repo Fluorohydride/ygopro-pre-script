@@ -1,6 +1,6 @@
 --Libromancer First Appearance
 --Script by HKunogi
-local s,id=GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--add from deck to hand
 	local e1=Effect.CreateEffect(c)

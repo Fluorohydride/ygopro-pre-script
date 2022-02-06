@@ -1,6 +1,6 @@
 --Rock Scales
 --Script by HKunogi
-local s,id=GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--Union equip monster
 	local e1=Effect.CreateEffect(c)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_START)
-	e2:SetCountLimit(1,{id,1})
+	e2:SetCountLimit(1,id+o)
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)

@@ -1,6 +1,6 @@
 --Libromancer Agent
 --Script by HKunogi
-local s,id=GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--SP sum itself
 	local e1=Effect.CreateEffect(c)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,{id,1})
+	e2:SetCountLimit(1,id+o)
 	e2:SetTarget(s.g2htg)
 	e2:SetOperation(s.g2hop)
 	c:RegisterEffect(e2)

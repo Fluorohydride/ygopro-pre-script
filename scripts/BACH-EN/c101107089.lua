@@ -1,6 +1,6 @@
 --Libromancer Doombroker
 --Script by HKunogi
-local s,id=GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Ritual mats
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_BATTLE_DAMAGE)
-	e4:SetCountLimit(1,{id,1})
+	e4:SetCountLimit(1,id+o)
 	e4:SetCondition(function(e,tp,eg,ep) return ep==1-tp end)
 	e4:SetTarget(s.f2dtg)
 	e4:SetOperation(s.f2dop)

@@ -1,6 +1,6 @@
 --Libromancer Firestarter
 --Script by HKunogi
-local s,id=GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Ritual mats
