@@ -36,7 +36,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.activate2)
 	c:RegisterEffect(e4)
 end
-function s.noeff(c) return not c:IsType(TYPE_EFFECT) end
+function s.noeff(c)
+	return not c:IsType(TYPE_EFFECT)
+end
 function s.atkcalc(e,c)
 	local g=c:GetMaterial()
 	local atk=0
@@ -47,7 +49,9 @@ function s.atkcalc(e,c)
 	end
 	e:SetLabel(atk)
 end
-function s.atkfusonly(e,tp,eg,ep,ev,re,r,rp) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) end
+function s.atkfusonly(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+end
 function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local atk=e:GetLabelObject():GetLabel()
@@ -60,8 +64,12 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function s.spdestroyeffbat(e,tp,eg,ep,ev,re,r,rp) return r&(REASON_EFFECT+REASON_BATTLE) end
-function s.filter2(c,e,tp) return s.noeff(c) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+function s.spdestroyeffbat(e,tp,eg,ep,ev,re,r,rp)
+	return r&(REASON_EFFECT+REASON_BATTLE)
+end
+function s.filter2(c,e,tp)
+	return s.noeff(c) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter2(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

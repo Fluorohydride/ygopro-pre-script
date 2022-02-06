@@ -24,7 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
 end
-function s.filter1(c,tp) return c:IsFaceup() and (c:IsControler(tp) or c:IsAbleToChangeControler()) end
+function s.filter1(c,tp)
+	return c:IsFaceup() and (c:IsControler(tp) or c:IsAbleToChangeControler())
+end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter1(chkc,tp) and chkc~=c end
@@ -35,7 +37,9 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c,tp)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
-function s.eqlimit(e,c) return e:GetOwner()==c end
+function s.eqlimit(e,c)
+	return e:GetOwner()==c
+end
 function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
     local c=e:GetHandler()
@@ -52,7 +56,9 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
         tc:RegisterEffect(e1)
 	end
 end
-function s.filter2(c) return c:IsFaceup() and c:GetOriginalType() & TYPE_MONSTER and c:GetFlagEffect(id)>0 end
+function s.filter2(c)
+	return c:IsFaceup() and c:GetOriginalType() & TYPE_MONSTER and c:GetFlagEffect(id)>0
+end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
