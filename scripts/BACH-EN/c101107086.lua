@@ -1,4 +1,5 @@
 --Libromancer Magigirl
+--Script by HKunogi
 local s,id=GetID()
 function s.initial_effect(c)
 	--SP sum itself

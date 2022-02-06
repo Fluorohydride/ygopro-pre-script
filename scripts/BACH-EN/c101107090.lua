@@ -1,4 +1,5 @@
 --Libromancer First Appearance
+--Script by HKunogi
 local s,id=GetID()
 function s.initial_effect(c)
 	--add from deck to hand

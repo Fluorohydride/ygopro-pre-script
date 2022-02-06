@@ -1,4 +1,5 @@
 --Libromancer Intervention
+--Script by HKunogi
 local s,id=GetID()
 function s.initial_effect(c)
 	--return from field to hand
