@@ -33,9 +33,16 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(s.atkcon)
-	e4:SetOperation(s.atkop)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4)
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e5:SetCode(EVENT_CHAIN_SOLVED)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCondition(s.atkcon)
+	e5:SetOperation(s.atkop)
+	c:RegisterEffect(e5)
 end
 function s.matcheck(e,c)
 	if c:GetMaterial():IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then
@@ -43,12 +50,16 @@ function s.matcheck(e,c)
 		c:RegisterFlagEffect(id,reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	end
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetAttack()<3000
-end
 function s.matcon(e)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_RITUAL) and c:GetFlagEffect(id)>0
+end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+end
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return ep~=tp and c:IsAttackBelow(3000) and c:GetFlagEffect(id)~=0
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

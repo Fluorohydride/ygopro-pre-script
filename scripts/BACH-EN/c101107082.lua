@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CHAIN_SOLVED)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.filter1)
+	e2:SetCondition(s.condition1)
 	e2:SetTarget(s.target1)
 	e2:SetOperation(s.activate1)
 	c:RegisterEffect(e2)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.activate2)
 	c:RegisterEffect(e3)
 end
-function s.filter1(e,tp,eg,ep,ev,re,r,rp)
+function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return (rp==1-tp and re:IsActiveType(TYPE_SPELL)) or (rp==tp and re:IsActiveType(TYPE_TRAP))
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -46,8 +46,8 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)>0 then
+		c:CompleteProcedure()
 	end
 end
 function s.filter2(c)
@@ -62,18 +62,23 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
+function s.dfilter(c,tp)
+	return c:IsLocation(LOCATION_DECK) and c:IsControler(tp)
+end
 function s.activate2(e,tp,eg,ep,ev,re,r,rp)
-	local gs=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if #gs>0 and Duel.SendtoDeck(gs,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
-		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_DECK)
-		if #og<=0 then return end
-		local g1=og:Filter(Card.IsControler,nil,tp)
-		local g2=og-g1
-		if #g1>0 then
-			Duel.SendtoDeck(g1,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
-		end
-		if #g2>0 then
-			Duel.SendtoDeck(g2,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	if #tg>0 and Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)>0 then
+		local p=tp
+		for i=1,2 do
+			local dg=tg:Filter(s.dfilter,nil,p)
+			if #dg>1 then
+				Duel.SortDecktop(tp,p,#dg)
+			end
+			for i=1,#dg do
+				local mg=Duel.GetDecktopGroup(p,1)
+				Duel.MoveSequence(mg:GetFirst(),1)
+			end
+			p=1-tp
 		end
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

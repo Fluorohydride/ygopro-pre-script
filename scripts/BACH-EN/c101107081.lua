@@ -45,18 +45,15 @@ function s.targetfilter2(c)
 	return c:IsFaceup() and c:IsLevelAbove(1)
 end
 function s.filter2(c,tp)
-	return c:IsLevelBelow(4) and c:IsRace(RACE_INSECT) and (not c:IsOnField() or c:IsFaceup()) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
+	return c:IsLevelBelow(4) and c:IsRace(RACE_INSECT) and (not c:IsOnField() or c:IsFaceup()) and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingTarget(s.targetfilter2,tp,LOCATION_MZONE,0,1,c)
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
-	if Duel.Remove(g,POS_FACEUP,REASON_COST)>0 then
-		e:SetLabel(g:GetFirst():GetLevel())
-	else
-		e:SetLabel(nil)
-	end
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	e:SetLabel(g:GetFirst():GetLevel())
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.targetfilter2(chkc) end

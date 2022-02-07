@@ -31,14 +31,10 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter1(chkc,tp) and chkc~=c end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,tp)
-	end
+		and Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c,tp)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
-end
-function s.eqlimit(e,c)
-	return e:GetOwner()==c
 end
 function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -56,8 +52,11 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
         tc:RegisterEffect(e1)
 	end
 end
+function s.eqlimit(e,c)
+	return e:GetOwner()==c
+end
 function s.filter2(c)
-	return c:IsFaceup() and c:GetOriginalType() & TYPE_MONSTER and c:GetFlagEffect(id)>0
+	return c:IsFaceup() and c:GetOriginalType()&TYPE_MONSTER>0 and c:GetFlagEffect(id)>0
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

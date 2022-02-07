@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 	--Ritual sum
@@ -22,8 +22,11 @@ end
 function s.d2hmatchfilter(c,cd)
 	return c:IsFaceup() and c:IsCode(cd)
 end
+function s.d2hfilter(c,tp)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x27d) and c:IsAbleToHand()
+		and not Duel.IsExistingMatchingCard(s.d2hmatchfilter,tp,LOCATION_ONFIELD,0,1,nil,c:GetCode())
+end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.d2hfilter,tp,LOCATION_DECK,0,nil,tp)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -33,8 +36,4 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,sg)
 		end
 	end
-end
-function s.d2hfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x27d) and c:IsAbleToHand()
-		and not Duel.IsExistingMatchingCard(s.d2hmatchfilter,tp,LOCATION_ONFIELD,0,1,nil,c:GetCode())
 end
