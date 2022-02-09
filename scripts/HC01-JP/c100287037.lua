@@ -118,6 +118,10 @@ function c100287037.gcheck(g,ft1,ft2,ft3,ect,ft)
 		and g:FilterCount(c100287037.exfilter2,nil)<=ft2
 		and g:FilterCount(c100287037.exfilter3,nil)<=ft3
 		and g:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)<=ect
+		and g:FilterCount(Card.IsSetCard,nil,0x10f2)<=1
+		and g:FilterCount(Card.IsSetCard,nil,0x2073)<=1
+		and g:FilterCount(Card.IsSetCard,nil,0x2017)<=1
+		and g:FilterCount(Card.IsSetCard,nil,0x1046)<=1
 end
 function c100287037.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
