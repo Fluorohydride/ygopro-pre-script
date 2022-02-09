@@ -83,10 +83,11 @@ function c100287037.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and re:IsActiveType(TYPE_SPELL)
 end
 function c100287037.costfilter(c,e,tp)
-	return c:IsFaceup() and c:IsCode(13331639) and c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(c100287037.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil,e,tp,c)
+	return c:IsFaceup() and c:IsCode(13331639) and c:IsAbleToRemoveAsCost()
+		and Duel.IsExistingMatchingCard(c100287037.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function c100287037.spfilter(c,e,tp,tc)
-	if not (c:IsSetCard(0x10f2,0x2073,0x2017,0x1046) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)) then return false end
+	if not (c:IsSetCard(0x10f2,0x2073,0x2017,0x1046) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) then return false end
 	if c:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
 	else
@@ -138,5 +139,5 @@ function c100287037.spop(e,tp,eg,ep,ev,re,r,rp)
 	if sg:GetCount()==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local rg=sg:SelectSubGroup(tp,c100287037.gcheck,false,1,4,ft1,ft2,ft3,ect,ft)
-	Duel.SpecialSummon(rg,0,tp,tp,true,false,POS_FACEUP)
+	Duel.SpecialSummon(rg,0,tp,tp,false,false,POS_FACEUP)
 end
