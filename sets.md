@@ -3,6 +3,7 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **February 19, 2022**: History Archive Collection (HC01-JP) : `100287XXX`
+- **March 18, 2022**: The Valuable Book EX2 (VX02-JP) : `100288XXX`
 - **March 19, 2022**: Deck Build Pack: Tactical Masters (DBTM-JP): `100418XXX`
 - **April 2022**: 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
 
