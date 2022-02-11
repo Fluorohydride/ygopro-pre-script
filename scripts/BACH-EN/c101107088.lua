@@ -59,7 +59,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep~=tp and c:IsAttackBelow(3000) and c:GetFlagEffect(id)~=0
+	return ep~=tp and c:GetAttack()<3000 and c:GetFlagEffect(id)~=0
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
