@@ -17,13 +17,13 @@ end
 function c100288001.filter(c,code)
 	return not c:IsCode(100288001) and (c:IsCode(code) or aux.IsCodeListed(c,code)) and c:IsAbleToGrave()
 end
-function c100288001.chkfunc(g,attr,code)
+function c100288001.chkfunc(g,attr,tp,code)
 	return g:IsExists(Card.IsAttribute,1,nil,attr) and Duel.IsExistingMatchingCard(c100288001.filter,tp,LOCATION_DECK,0,1,nil,code)
 end
 function c100288001.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
-	local b1=c100288001.chkfunc(g,ATTRIBUTE_LIGHT,89631139)
-	local b2=c100288001.chkfunc(g,ATTRIBUTE_DARK,46986414)
+	local b1=c100288001.chkfunc(g,ATTRIBUTE_LIGHT,tp,89631139)
+	local b2=c100288001.chkfunc(g,ATTRIBUTE_DARK,tp,46986414)
 	if chk==0 then return b1 or b2 end
 	local off=1
 	local ops={}
