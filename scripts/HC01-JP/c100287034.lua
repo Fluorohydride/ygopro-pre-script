@@ -112,7 +112,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(s.rmfilter,p,LOCATION_DECK,0,nil)
 		if #g>0 and Duel.SelectYesNo(p,aux.Stringid(id,4)) then
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_REMOVE)
-			local tg=Duel.SelectMatchingCard(p,s.rmfilter,p,LOCATION_DECK,0,1,1,nil)
+			local tg=g:Select(p,1,1,nil)
 			Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 		end
 		p=1-p

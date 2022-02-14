@@ -27,15 +27,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-function s.negfilter(c)
+function s.negfilter(c,ec)
 	local p=c:GetControler()
-	return aux.NegateMonsterFilter(c) and Duel.GetFieldGroupCount(p,0,LOCATION_HAND)>0
+	return aux.NegateMonsterFilter(c) and Duel.GetMatchingGroupCount(aux.TRUE,p,0,LOCATION_HAND,ec)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.negfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	local c=e:GetHandler()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.negfilter(chkc,c) end
+	if chk==0 then return Duel.IsExistingTarget(s.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
-	local g=Duel.SelectTarget(tp,aux.NegateMonsterFilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.NegateMonsterFilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,nil)
 	local p=g:GetFirst():GetControler()
 	local dam=Duel.GetFieldGroupCount(p,0,LOCATION_HAND)*200
 	Duel.SetTargetPlayer(1-p)
@@ -45,12 +46,12 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		local p=tc:GetControler()
 		local dam=Duel.GetFieldGroupCount(p,0,LOCATION_HAND)*200
 		if dam==0 or Duel.Damage(1-p,dam,REASON_EFFECT)==0 then return end
 		Duel.BreakEffect()
-		if not tc:IsDisabled() and not tc:IsImmuneToEffect(e) then
+		if tc:IsFaceup() and not tc:IsDisabled() and not tc:IsImmuneToEffect(e) then
 			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

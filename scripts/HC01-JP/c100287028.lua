@@ -48,7 +48,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local g=c:GetOverlayGroup()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0
-		and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		and c:IsRelateToEffect(e) and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.Overlay(tc,g)
 	end

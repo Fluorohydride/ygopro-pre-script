@@ -46,7 +46,7 @@ function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsType(TYPE_XYZ)
 end
 function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0x95) and eg:IsExists(s.cfilter,1,nil,tp)
+	return re and re:GetHandler():IsSetCard(0x95) and re:IsActiveType(TYPE_SPELL) and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.tgfilter1(c,g,tp)
 	return g:IsContains(c) and Duel.IsExistingTarget(s.tgfilter2,tp,0,LOCATION_MZONE,1,c)
