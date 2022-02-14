@@ -2,6 +2,7 @@
 
 --Scripted by mallu11
 function c100287022.initial_effect(c)
+	aux.AddCodeList(c,44508094)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
 	c:EnableReviveLimit()
