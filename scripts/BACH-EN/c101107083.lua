@@ -38,18 +38,18 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-    local c=e:GetHandler()
+	local c=e:GetHandler()
 	if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and s.filter1(tc,tp) and tc:IsType(TYPE_MONSTER) then
-        if not Duel.Equip(tp,tc,c,false) then return end
+		if not Duel.Equip(tp,tc,c,false) then return end
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_EQUIP_LIMIT)
-        e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-        e1:SetValue(s.eqlimit)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_EQUIP_LIMIT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetValue(s.eqlimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-        tc:RegisterEffect(e1)
+		tc:RegisterEffect(e1)
 	end
 end
 function s.eqlimit(e,c)

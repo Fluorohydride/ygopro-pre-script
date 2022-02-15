@@ -3,8 +3,8 @@
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-    --fusion eff
-    aux.AddFusionProcFunRep(c,s.noeff,2,true)
+	--fusion eff
+	aux.AddFusionProcFunRep(c,s.noeff,2,true)
 	--atk buff
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
