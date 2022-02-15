@@ -39,6 +39,9 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,spcfilter1,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
+function s.splimit(e,c)
+	return c:IsSummonLocation(LOCATION_EXTRA) or c:IsType(TYPE_FUSION)
+end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1f) or (c:IsLevelAbove(5) and c:IsSetCard(0x3008)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
