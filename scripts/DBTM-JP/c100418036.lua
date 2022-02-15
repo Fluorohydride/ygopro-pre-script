@@ -1,4 +1,5 @@
---愤怒风暴的神碑
+--怒れる嵐の神碑
+--Script by JustFish
 function c100418036.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

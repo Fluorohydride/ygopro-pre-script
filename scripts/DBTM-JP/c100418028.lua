@@ -1,4 +1,5 @@
---神碑的欺诳
+--神碑の誑かし
+--Script by JustFish
 function c100418028.initial_effect(c)
 	c:SetUniqueOnField(1,0,100418028)
 	--activate

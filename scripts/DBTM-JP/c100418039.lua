@@ -1,4 +1,5 @@
---神碑之牙 格利
+--神碑の牙ゲーリ
+--Script by JustFish
 function c100418039.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

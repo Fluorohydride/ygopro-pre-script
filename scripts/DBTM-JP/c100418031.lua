@@ -1,4 +1,5 @@
---破坏的神碑
+--破壊の神碑
+--Script by JustFish
 function c100418031.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,5 +1,5 @@
 --神碑の穂先
---Script by mercury233
+--Script by mercury233 & JustFish
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

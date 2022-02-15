@@ -1,4 +1,5 @@
---微睡的神碑
+--まどろみの神碑
+--Script by JustFish
 function c100418034.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

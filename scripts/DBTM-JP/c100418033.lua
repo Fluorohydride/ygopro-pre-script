@@ -1,4 +1,5 @@
---冰冻诅咒的神碑
+--凍てつく呪いの神碑
+--Script by JustFish
 function c100418033.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

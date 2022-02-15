@@ -1,4 +1,5 @@
---辉耀之炎的神碑
+--輝く炎の神碑
+--Script by JustFish
 function c100418030.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

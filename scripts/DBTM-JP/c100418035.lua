@@ -1,4 +1,5 @@
---黄金之雫的神碑
+--黄金の雫の神碑
+--Script by JustFish
 function c100418035.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

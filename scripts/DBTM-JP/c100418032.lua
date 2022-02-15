@@ -1,4 +1,5 @@
---解咒的神碑
+--解呪の神碑
+--Script by JustFish
 function c100418032.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,5 @@
---神碑之翼 穆宁
+--神碑の翼ムニン
+--Script by JustFish
 function c100418038.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
