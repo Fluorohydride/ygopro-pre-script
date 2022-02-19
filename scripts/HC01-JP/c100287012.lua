@@ -3,7 +3,7 @@
 function c100287012.initial_effect(c)
 	c:EnableReviveLimit()
 	--fusion material
-	aux.AddFusionProcFunFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x3008),aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR),1,63,true)
+	aux.AddFusionProcFunFunRep(c,c100287012.mfilter1,aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR),1,63,true)
 	--spsummon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -44,6 +44,9 @@ function c100287012.initial_effect(c)
 	e4:SetTarget(c100287012.sptg)
 	e4:SetOperation(c100287012.spop)
 	c:RegisterEffect(e4)
+end
+function c100287012.mfilter1(c)
+	return c:IsFusionSetCard(0x3008) and c:IsFusionType(TYPE_FUSION)
 end
 function c100287012.valcheck(e,c)
 	local ct1=c:GetMaterialCount()

@@ -74,11 +74,13 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
-	if Duel.Draw(p,d,REASON_EFFECT)==2 and g:GetCount()>0 then
+	if Duel.Draw(p,d,REASON_EFFECT)==2 then
 		Duel.ShuffleHand(p)
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-		local sg=g:Select(p,1,1,nil)
-		Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+		local sg=Duel.SelectMatchingCard(p,Card.IsAbleToDeck,p,LOCATION_HAND,0,1,1,nil)
+		if #sg>0 then
+			Duel.BreakEffect()
+			Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+		end
 	end
 end

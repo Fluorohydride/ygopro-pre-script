@@ -19,7 +19,7 @@ function c100418028.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100418028.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_QUICKPLAY)
+	return re:IsActiveType(TYPE_QUICKPLAY) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function c100418028.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

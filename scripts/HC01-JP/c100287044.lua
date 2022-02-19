@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--disable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e1:SetRange(LOCATION_MONE)
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_CHAIN_SOLVING)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
