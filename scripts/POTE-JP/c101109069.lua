@@ -18,13 +18,14 @@ function s.fsfilter1(c,e)
 	return c:IsAbleToDeck() and not c:IsImmuneToEffect(e)
 end
 function s.fsfilter2(c,e,tp,m,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:CheckFusionMaterial(m,nil,chkf,true)
+	return c:IsType(TYPE_FUSION) and aux.IsMaterialListSetCard(c,0x8)
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:CheckFusionMaterial(m,nil,chkf,true)
 end
 function s.fscheck(tp,sg,fc)
 	return sg:IsExists(Card.IsFusionSetCard,1,nil,0x8)
 end
 function s.fscfilter(c)
-	return c:IsLocation(LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED) or (c:IsLcation(LOCATION_MZONE) and c:IsFacedown())
+	return c:IsLocation(LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED) or (c:IsLocation(LOCATION_MZONE) and c:IsFacedown())
 end
 function s.fstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
