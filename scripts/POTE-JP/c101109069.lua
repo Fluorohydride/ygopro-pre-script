@@ -2,6 +2,8 @@
 --Script by JSY1728
 local s,id,o=GetID()
 function s.initial_effect(c)
+	aux.AddCodeList(c,89943723)
+	aux.AddSetNameMonsterList(c,0x3008)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
@@ -28,10 +30,15 @@ function s.fstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp|0x200
 		local mg=Duel.GetMatchingGroup(s.fsfilter1,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)
-		if mg:GetFirst():IsCode(89943723) then e:SetLabel(1) else e:SetLabel(0) end
 		return Duel.IsExistingMatchingCard(s.fsfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg,chkf) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+end
+function s.dfilter(c,tp)
+	return c:IsLocation(LOCATION_DECK) and c:IsControler(tp)
+end
+function s.exfilter(c,tp)
+	return c:IsLocation(LOCATION_DECK) and c:IsCode(89943723)
 end
 function s.fsop(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp|0x200
@@ -42,16 +49,31 @@ function s.fsop(e,tp,eg,ep,ev,re,r,rp)
 		local tg=sg:Select(tp,1,1,nil)
 		local tc=tg:GetFirst()
 		aux.FCheckAdditional=tc.hero_fusion_check or s.fscheck
-		local mat=Duel.SelectFustionMaterial(tp,tc,mg,nil,chkf,true)
+		local mat=Duel.SelectFusionMaterial(tp,tc,mg,nil,chkf,true)
 		local cf=mat:Filter(s.fscfilter,nil)
 		if cf:GetCount()>0 then
 			Duel.ConfirmCards(1-tp,cf)
 		end
-		Duel.SendtoDeck(cf,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+		if #mat>0 and Duel.SendtoDeck(mat,nil,SEQ_DECKTOP,REASON_EFFECT)>0 then
+			local p=tp
+			for i=1,2 do
+				local dg=mat:Filter(s.dfilter,nil,p)
+				if #dg>1 then
+					Duel.SortDecktop(tp,p,#dg)
+				end
+				for i=1,#dg do
+					local mg=Duel.GetDecktopGroup(p,1)
+					Duel.MoveSequence(mg:GetFirst(),1)
+				end
+				p=1-tp
+			end
+		end
 		Duel.BreakEffect()
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
-		if e:GetLabel()==1 then
+		if mat:IsExists(s.exfilter,1,nil) then
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(aux.Stringid(id,1))
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_TO_DECK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
