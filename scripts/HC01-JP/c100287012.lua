@@ -46,47 +46,46 @@ function c100287012.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100287012.valcheck(e,c)
-	local ct=c:GetMaterial()
-	e:GetLabelObject():SetLabel(ct)
+	local ct1=c:GetMaterialCount()
+	local ct2=c:GetMaterial():FilterCount(Card.IsFusionType,nil,TYPE_FUSION)
+	e:GetLabelObject():SetLabel(ct1,ct2)
 end
 function c100287012.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()>0
 end
 function c100287012.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ct=e:GetLabel()
+	local ct1,ct2=e:GetLabel()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
-	e1:SetValue(ct*300)
+	e1:SetValue(ct1*300)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_EXTRA_ATTACK)
+	e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
-	e2:SetValue(ct-1)
+	e2:SetValue(ct2-1)
 	c:RegisterEffect(e2)
 end
 function c100287012.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc and bc:IsFaceup() and bc:IsRelateToBattle()
+	return bc and bc:IsRelateToBattle()
 end
 function c100287012.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local bc=e:GetHandler():GetBattleTarget()
-	Duel.SetTargetPlayer(1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,bc,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,bc:GetBaseAttack())
 end
 function c100287012.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	if c:IsFaceup() and c:IsRelateToBattle() and bc:IsFaceup() and bc:IsRelateToBattle() and Duel.Destroy(bc,REASON_EFFECT)>0 then
+	if bc:IsRelateToBattle() and Duel.Destroy(bc,REASON_EFFECT)>0 then
 		local dam=bc:GetBaseAttack()
-		if dam>0 then Duel.Damage(p,dam,REASON_EFFECT) end
+		if dam>0 then Duel.Damage(1-tp,dam,REASON_EFFECT) end
 	end
 end
 function c100287012.spcon(e,tp,eg,ep,ev,re,r,rp)
