@@ -115,7 +115,8 @@ function s.valcheck(e,c)
 	end
 end
 function s.rhcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)>0
+	local c=e:GetHandler()
+	return c:GetFlagEffect(id)>0 and Duel.GetAttacker()==c
 end
 function s.rhtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,nil) end
