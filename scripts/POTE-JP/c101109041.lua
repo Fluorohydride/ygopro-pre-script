@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(Duel.GetMatchingGroup(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_MONSTER)*300)
+	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 	--indes
 	local e3=Effect.CreateEffect(c)
@@ -46,6 +46,9 @@ function s.initial_effect(c)
 end
 function s.mfilter(c)
 	return c:IsFusionSetCard(0x27f) and c:IsFustionType(TYPE_FUSION)
+end
+function s.atkval(e,c)
+	return Duel.GetMatchingGroupCount(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_MONSTER)*300
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
