@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	--Deck Search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PREDRAW)
 	e2:SetRange(LOCATION_HAND)
@@ -42,15 +42,24 @@ function s.initial_effect(c)
 	e4:SetTarget(s.rhtg)
 	e4:SetOperation(s.rhop)
 	c:RegisterEffect(e4)
+	--material check
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_MATERIAL_CHECK)
-	e5:SetValue(s.valcheck)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e5:SetCondition(s.matcon)
+	e5:SetOperation(s.matop)
 	c:RegisterEffect(e5)
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(EFFECT_MATERIAL_CHECK)
+	e6:SetValue(s.valcheck)
+	e6:SetLabelObject(e5)
+	c:RegisterEffect(e6)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
-		and Duel.GetDrawCount(tp)>0 and Duel.GetTurnCount()>1
+		and Duel.GetDrawCount(tp)>0 and Duel.GetTurnCount()>1 --not fully implemented
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
@@ -60,19 +69,10 @@ function s.thfilter(c)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-end
-function s.checkcon(e,tp,eg,ep,ev,re,r,rp)
-	local cid,orig_effect=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID,CHAININFO_TRIGGERING_EFFECT)
-	return cid==e:GetLabel() and not e:GetOwner():IsRelateToEffect(orig_effect)
-end
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetLabelObject():Reset()
-	e:Reset()
-end
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local dt=Duel.GetDrawCount(tp)
 	if dt~=0 then
+		aux.DrawReplaceCount=0
+		aux.DrawReplaceMax=dt
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -81,16 +81,36 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_PHASE+PHASE_DRAW)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
-	else return end
+	end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+end
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	aux.DrawReplaceCount=aux.DrawReplaceCount+1
+	if aux.DrawReplaceCount<=aux.DrawReplaceMax then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+		if g:GetCount()>0 then
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g)
+		end
+	end
 end
 function s.actcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return Duel.GetTurnPlayer()==e:GetHandler():GetControler() and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
+function s.matcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) and e:GetLabel()==1
+end
+function s.matop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+end
 function s.valcheck(e,c)
 	local mg=c:GetMaterial()
 	if mg:IsExists(Card.IsType,1,nil,TYPE_NORMAL) then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		e:GetLabelObject():SetLabel(1)
+	else
+		e:GetLabelObject():SetLabel(0)
 	end
 end
 function s.rhcon(e,tp,eg,ep,ev,re,r,rp)
@@ -103,7 +123,7 @@ function s.rhtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 end
 function s.rhop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
