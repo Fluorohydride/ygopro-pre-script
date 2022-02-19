@@ -20,23 +20,23 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(7) and (c:IsSetCard(0x3008) or c:IsSetCard(0x1f)) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
-end
-function s.cfilter(c)
-	return not c:IsCode(89943723)
+	return (c:IsLevelBelow(7) and c:IsSetCard(0x3008) or c:IsSetCard(0x1f))
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
+function s.cfilter(c)
+	return c:IsCode(89943723) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	if not tc then return end
-	if Duel.IsEnvironment(89943723,tp,LOCATION_ONFIELD+LOCATION_GRAVE) then
-		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
-	elseif Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
+	if Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP)
+		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) then
 		local c=e:GetHandler()
 		-- Cannot attack
 		local e1=Effect.CreateEffect(c)
@@ -49,13 +49,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e2)
+		tc:RegisterEffect(e2,true)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_DISABLE_EFFECT)
 		e3:SetValue(RESET_TURN_SET)
-		tc:RegisterEffect(e3)
+		tc:RegisterEffect(e3,true)
 		-- Return it to the Extra Deck during the End Phase
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
