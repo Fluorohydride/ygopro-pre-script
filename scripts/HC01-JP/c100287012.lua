@@ -45,6 +45,7 @@ function c100287012.initial_effect(c)
 	e4:SetOperation(c100287012.spop)
 	c:RegisterEffect(e4)
 end
+c100287012.material_setcode=0x8
 function c100287012.mfilter1(c)
 	return c:IsFusionSetCard(0x3008) and c:IsFusionType(TYPE_FUSION)
 end
