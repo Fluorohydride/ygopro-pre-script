@@ -2,6 +2,8 @@
 --Script by JSY1728
 local s,id,o=GetID()
 function s.initial_effect(c)
+	aux.AddCodeList(c,89943723)
+	aux.AddSetNameMonsterList(c,0x3008)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -18,7 +20,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.spfilter(c,e,tp)
-	(c:IsSetCard(0x3008) or c:IsSetCard(0x1f)) and c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsLevelBelow(7) and (c:IsSetCard(0x3008) or c:IsSetCard(0x1f)) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.cfilter(c)
 	return not c:IsCode(89943723)
@@ -29,48 +31,56 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local 
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local c=e:GetHandler()
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
-	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)~=0 then
-		--Apply Effect
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
+	if not tc then return end
+	if Duel.IsEnvironment(89943723,tp,LOCATION_ONFIELD+LOCATION_GRAVE) then
+		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
+	elseif Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
+		local c=e:GetHandler()
+		-- Cannot attack
 		local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_CANNOT_ATTACK)
-        e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-        e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetCondition(s.apecon)
-        tc:RegisterEffect(e1,true)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1,true)
+		-- Effects are negated
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e2:SetCondition(s.apecon)
 		tc:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
+		local e3=e2:Clone()
 		e3:SetCode(EFFECT_DISABLE_EFFECT)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e3:SetCondition(s.apecon)
+		e3:SetValue(RESET_TURN_SET)
 		tc:RegisterEffect(e3)
+		-- Return it to the Extra Deck during the End Phase
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e4:SetCode(EVENT_PHASE+PHASE_END)
 		e4:SetCountLimit(1)
-		e4:SetRange(LOCATION_MZONE)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e4:SetCondition(s.apecon)
-		e4:SetOperation(s,apeop)
-		tc:RegisterEffect(e4)
+		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e4:SetLabelObject(tc)
+		e4:SetCondition(s.tdcon)
+		e4:SetOperation(s.tdop)
+		Duel.RegisterEffect(e4,tp)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
+	Duel.SpecialSummonComplete()
 end
-function s.apecon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsEnvironment(89943723,tp,LOCATION_MZONE+LOCATION_GRAVE)
+function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if not tc or tc:GetFlagEffect(id)==0 then
+		e:Reset()
+		return false
+	end
+	return true
 end
-function s.apeop(e,tp,eg,ev,re,r,rp)
-	Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKTOP,REASON_EFFECT)
+function s.tdop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc then
+		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	end
 end
