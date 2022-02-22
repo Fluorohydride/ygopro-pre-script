@@ -15,7 +15,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.fsfilter1(c,e)
-	return c:IsAbleToDeck() and not c:IsImmuneToEffect(e)
+	return (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsType(TYPE_MONSTER)
+		and c:IsAbleToDeck() and not c:IsImmuneToEffect(e)
 end
 function s.fsfilter2(c,e,tp,m,chkf)
 	return c:IsType(TYPE_FUSION) and aux.IsMaterialListSetCard(c,0x8)
