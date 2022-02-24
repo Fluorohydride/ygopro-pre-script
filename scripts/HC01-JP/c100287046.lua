@@ -8,7 +8,7 @@ function c100287046.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,100287046)
+	e1:SetCountLimit(1,100287046+EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 	--counter
 	local e2=Effect.CreateEffect(c)
@@ -29,7 +29,7 @@ function c100287046.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100287046.cfilter,1,nil,tp)
 end
 function c100287046.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanAddCounter(0x161,1) end
+	if chk==0 then return Duel.IsCanAddCounter(tp,0x161,1,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x161)
 end
 function c100287046.operation(e,tp,eg,ep,ev,re,r,rp)
