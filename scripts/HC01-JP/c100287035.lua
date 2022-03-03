@@ -51,7 +51,6 @@ function c100287035.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100287035.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	local hg=Duel.GetMatchingGroup(c100287035.drfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		Duel.Equip(tp,c,tc)
 		--Add Equip limit
@@ -62,6 +61,7 @@ function c100287035.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(c100287035.eqlimit)
 		c:RegisterEffect(e1)
+		local hg=Duel.GetMatchingGroup(c100287035.drfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		if hg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100287035,2)) then
 			Duel.BreakEffect()
 			Duel.SendtoHand(hg,nil,REASON_EFFECT)

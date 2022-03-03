@@ -54,7 +54,7 @@ function c100287005.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100287005.damfilter(c)
-	return c:IsFaceup() and c:IsCode(74677422)
+	return c:IsFaceup() and c:IsCode(74677422) and c:GetBaseAttack()>0
 end
 function c100287005.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100287005.damfilter(chkc) end

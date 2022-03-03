@@ -7,7 +7,7 @@ function c100287014.initial_effect(c)
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,100287014+EFFECT_COUNT_CODE_DUEL)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCondition(c100287014.condition)
 	e1:SetTarget(c100287014.target)
 	e1:SetOperation(c100287014.activate)
@@ -18,7 +18,8 @@ function c100287014.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,100287014+100+EFFECT_COUNT_CODE_DUEL)
+	e2:SetHintTiming(0,TIMING_END_PHASE)
+	e2:SetCondition(c100287014.thcon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100287014.thtg)
 	e2:SetOperation(c100287014.thop)
@@ -29,7 +30,7 @@ function c100287014.filter(c)
 end
 function c100287014.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100287014.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	return g:GetClassCount(Card.GetRace)>=2
+	return Duel.GetFlagEffect(tp,100287014)==0 and g:GetClassCount(Card.GetRace)>=2
 end
 function c100287014.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -37,6 +38,8 @@ function c100287014.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0x1e)
 end
 function c100287014.activate(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFlagEffect(tp,100287014)~=0 then return end
+	Duel.RegisterFlagEffect(tp,100287014,0,0,0)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.NOT(Card.IsStatus),tp,0x1e,0x1e,aux.ExceptThisCard(e),STATUS_BATTLE_DESTROYED)
 	if aux.NecroValleyNegateCheck(g) then return end
@@ -47,6 +50,9 @@ function c100287014.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	Duel.Draw(tp,5,REASON_EFFECT)
 	Duel.Draw(1-tp,5,REASON_EFFECT)
+end
+function c100287014.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,100287014+100)==0
 end
 function c100287014.thfilter1(c)
 	return c:IsSetCard(0x1034) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
@@ -60,6 +66,8 @@ function c100287014.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
 end
 function c100287014.thop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFlagEffect(tp,100287014+100)~=0 then return end
+	Duel.RegisterFlagEffect(tp,100287014+100,0,0,0)
 	local g1=Duel.GetMatchingGroup(c100287014.thfilter1,tp,LOCATION_DECK,0,nil)
 	local g2=Duel.GetMatchingGroup(c100287014.thfilter2,tp,LOCATION_DECK,0,nil)
 	if g1:GetCount()>0 and g2:GetCount()>0 then

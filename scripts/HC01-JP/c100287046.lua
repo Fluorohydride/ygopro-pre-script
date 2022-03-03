@@ -38,6 +38,7 @@ function c100287046.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:AddCounter(0x161,1)
 		local ct=c:GetCounter(0x161)
 		if ct==1 and Duel.SelectYesNo(tp,aux.Stringid(100287046,0)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
 			local ac=Duel.AnnounceCard(tp)
 			local e1=Effect.CreateEffect(c)
@@ -67,16 +68,19 @@ function c100287046.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 		local g1=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100287046.spfilter1),tp,LOCATION_GRAVE,0,nil,e,tp)
 		if ct==2 and g1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100287046,1)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg1=g1:Select(tp,1,1,nil)
 			Duel.SpecialSummon(sg1,0,tp,tp,false,false,POS_FACEUP)
 		end
 		local g2=Duel.GetMatchingGroup(c100287046.spfilter2,tp,LOCATION_EXTRA,0,nil,e,tp)
-		if ct==3 and g2:GetCount()>0 and c:IsAbleToGrave() and Duel.SelectYesNo(tp,aux.Stringid(100287046,2))
-			and Duel.SendtoGrave(c,REASON_EFFECT) and c:IsLocation(LOCATION_GRAVE) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg2=g2:Select(tp,1,1,nil)
-			Duel.SpecialSummon(sg2,0,tp,tp,false,false,POS_FACEUP)
+		if ct==3 and g2:GetCount()>0 and c:IsAbleToGrave() and Duel.SelectYesNo(tp,aux.Stringid(100287046,2)) then
+			Duel.BreakEffect()
+			if Duel.SendtoGrave(c,REASON_EFFECT)>0 and c:IsLocation(LOCATION_GRAVE) then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+				local sg2=g2:Select(tp,1,1,nil)
+				Duel.SpecialSummon(sg2,0,tp,tp,false,false,POS_FACEUP)
+			end
 		end
 	end
 end

@@ -52,7 +52,7 @@ function c100287011.filter1(c)
 end
 function c100287011.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100287011.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():GetType()==TYPE_TRAP and re:GetHandlerPlayer()==tp
+		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) and rp==tp
 end
 function c100287011.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
@@ -73,7 +73,7 @@ function c100287011.filter2(c)
 end
 function c100287011.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100287011.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():GetType()==TYPE_SPELL and re:GetHandlerPlayer()==tp
+		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and rp==tp
 end
 function c100287011.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -91,7 +91,7 @@ function c100287011.filter3(c)
 end
 function c100287011.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100287011.filter3,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-		and re:IsActiveType(TYPE_MONSTER) and re:GetHandlerPlayer()==tp
+		and re:IsActiveType(TYPE_MONSTER) and rp==tp
 end
 function c100287011.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end

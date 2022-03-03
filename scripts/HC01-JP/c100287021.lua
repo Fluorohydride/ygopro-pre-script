@@ -45,7 +45,7 @@ function c100287021.cfilter(c,tp,rp)
 		and c:IsPreviousSetCard(0xb) and (c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT)))
 end
 function c100287021.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100287021.cfilter,1,nil,tp,rp)
+	return eg:IsExists(c100287021.cfilter,1,nil,tp,rp) and not eg:IsContains(e:GetHandler())
 end
 function c100287021.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsSSetable() end
