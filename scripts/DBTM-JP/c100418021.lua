@@ -8,7 +8,7 @@ function c100418021.initial_effect(c)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
 	--add effect
-   local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(100418021)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
