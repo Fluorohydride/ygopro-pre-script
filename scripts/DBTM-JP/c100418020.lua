@@ -4,7 +4,8 @@
 function c100418020.initial_effect(c)
 	--Trap activate in set turn
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,100418020)
 	e1:SetCost(c100418020.cost)
