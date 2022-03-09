@@ -45,8 +45,9 @@ function c100418023.activate(e,tp,eg,ep,ev,re,r,rp)
 			res=Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
-	local chk=not c:IsStatus(STATUS_ACT_FROM_HAND) and c:IsSetCard(0x280) and c:GetType()==TYPE_TRAP and e:IsHasType(EFFECT_TYPE_ACTIVATE)
-	if chk and Duel.IsPlayerAffectedByEffect(tp,100418021) and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) and Duel.SelectYesNo(tp,aux.Stringid(100418021,0)) then
+	local chk=not c:IsStatus(STATUS_ACT_FROM_HAND) and c:IsSetCard(0x1280) and c:GetType()==TYPE_TRAP and e:IsHasType(EFFECT_TYPE_ACTIVATE)
+	if chk and Duel.IsPlayerAffectedByEffect(tp,100418021) and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
+		and Duel.SelectYesNo(tp,aux.Stringid(100418021,0)) then
 		if res>0 then Duel.BreakEffect() end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)
@@ -74,7 +75,8 @@ function c100418023.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function c100418023.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100418023.cfilter,1,nil) and not eg:IsContains(e:GetHandler()) and rp==tp and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetType()==TYPE_TRAP and aux.exccon(e)
+	return eg:IsExists(c100418023.cfilter,1,nil) and not eg:IsContains(e:GetHandler()) and rp==tp
+		and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetType()==TYPE_TRAP and aux.exccon(e)
 end
 function c100418023.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsSSetable() end
