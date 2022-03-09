@@ -46,7 +46,8 @@ function c100418019.stop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100418019.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetReasonEffect():GetHandler():GetType()==TYPE_TRAP
+	return c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetReason()&REASON_EFFECT>0
+		and c:GetReasonEffect():GetHandler():GetType()==TYPE_TRAP
 		and c:GetReasonEffect():IsActiveType(TYPE_TRAP) and c:GetReasonEffect():GetHandlerPlayer()==tp
 end
 function c100418019.spcon(e,tp,eg,ep,ev,re,r,rp)
