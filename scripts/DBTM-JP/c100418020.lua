@@ -34,6 +34,9 @@ end
 function c100418020.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100418020.filter,tp,LOCATION_MZONE,0,1,nil)
 end
+function c100418020.acttg(e,c)
+	return c:GetType()==TYPE_TRAP
+end
 function c100418020.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -42,6 +45,7 @@ function c100418020.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_SZONE,0)
 	e1:SetCountLimit(1)
 	e1:SetCondition(c100418020.actcon)
+	e1:SetTarget(c100418020.acttg)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
