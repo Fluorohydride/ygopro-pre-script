@@ -50,7 +50,7 @@ function c100418020.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100418020.cfilter(c,tp)
-	if not c:IsPreviousLocation(LOCATION_HAND) or not c:GetReasonPlayer()==tp then return end
+	if not c:IsPreviousLocation(LOCATION_HAND) or c:GetReason()&REASON_EFFECT==0 or c:GetReasonPlayer()~=tp then return end
 	local re=c:GetReasonEffect()
 	local rc=re:GetHandler()
 	return (rc:IsSetCard(0x280) and rc:IsCode(100418020)) or (re:IsActiveType(TYPE_TRAP) and rc:GetType()==TYPE_TRAP)
