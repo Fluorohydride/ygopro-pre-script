@@ -39,7 +39,7 @@ function c100200216.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and c100200216.tdfilter(chkc) end
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and #g>=3 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local sg=g:SelectSubGroup(tp,c100200216.fselect,true,3,6)
+	local sg=g:SelectSubGroup(tp,c100200216.fselect,false,3,6)
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,sg:GetCount()//3)
@@ -68,7 +68,7 @@ function c100200216.stcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100200216.cfilter1,1,nil) and not eg:IsContains(e:GetHandler())
 end
 function c100200216.cfilter2(c,tp)
-	return c:GetType()==TYPE_TRAP and c:GetControler()==tp and c:GetReasonPlayer()==1-tp
+	return c:GetType()==TYPE_TRAP and c:GetControler()==tp and c:GetReason()&REASON_EFFECT>0 and c:GetReasonPlayer()==1-tp
 end
 function c100200216.stcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100200216.cfilter2,1,nil,tp)
