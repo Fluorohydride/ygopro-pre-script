@@ -25,6 +25,21 @@ function c100418023.initial_effect(c)
 	e2:SetOperation(c100418023.setop)
 	c:RegisterEffect(e2)
 end
+function Auxiliary.LabrynthDestroyOp(e,tp,res)
+	local c=e:GetHandler()
+	local chk=not c:IsStatus(STATUS_ACT_FROM_HAND) and c:IsSetCard(0x1280) and c:GetType()==TYPE_TRAP and e:IsHasType(EFFECT_TYPE_ACTIVATE)
+	if chk and Duel.IsPlayerAffectedByEffect(tp,100418021) and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
+		and Duel.SelectYesNo(tp,aux.Stringid(100418021,0)) then
+		if res>0 then Duel.BreakEffect() end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		local dg=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)
+		Duel.HintSelection(dg)
+		Duel.Destroy(dg,REASON_EFFECT)
+		Duel.Hint(HINT_CARD,0,100418021)
+		local te=Duel.IsPlayerAffectedByEffect(tp,100418021)
+		te:UseCountLimit(tp)
+	end
+end
 function c100418023.spfilter(c,e,tp)
 	return c:IsSetCard(0x280) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -45,18 +60,7 @@ function c100418023.activate(e,tp,eg,ep,ev,re,r,rp)
 			res=Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
-	local chk=not c:IsStatus(STATUS_ACT_FROM_HAND) and c:IsSetCard(0x1280) and c:GetType()==TYPE_TRAP and e:IsHasType(EFFECT_TYPE_ACTIVATE)
-	if chk and Duel.IsPlayerAffectedByEffect(tp,100418021) and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
-		and Duel.SelectYesNo(tp,aux.Stringid(100418021,0)) then
-		if res>0 then Duel.BreakEffect() end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local dg=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)
-		Duel.HintSelection(dg)
-		Duel.Destroy(dg,REASON_EFFECT)
-		Duel.Hint(HINT_CARD,0,100418021)
-		local te=Duel.IsPlayerAffectedByEffect(tp,100418021)
-		te:UseCountLimit(tp)
-	end
+	aux.LabrynthDestroyOp(e,tp,res)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
