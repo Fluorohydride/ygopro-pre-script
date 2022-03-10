@@ -50,10 +50,10 @@ function c100418020.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100418020.cfilter(c,tp)
-	if not c:IsPreviousLocation(LOCATION_HAND) or c:GetReason()&REASON_EFFECT==0 or c:GetReasonPlayer()~=tp then return end
+	if not c:IsPreviousLocation(LOCATION_HAND) or c:GetReasonPlayer()~=tp or not c:GetReasonEffect() then return end
 	local re=c:GetReasonEffect()
 	local rc=re:GetHandler()
-	return (rc:IsSetCard(0x280) and rc:IsCode(100418020)) or (re:IsActiveType(TYPE_TRAP) and rc:GetType()==TYPE_TRAP)
+	return (rc:IsSetCard(0x280) and not rc:IsCode(100418020)) or (re:IsActiveType(TYPE_TRAP) and rc:GetType()==TYPE_TRAP)
 end
 function c100418020.tscon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100418020.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
@@ -71,13 +71,13 @@ function c100418020.tsop(e,tp,eg,ep,ev,re,r,rp)
 	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	local op=0
 	if b1 and not b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(100418020,0))
+		op=Duel.SelectOption(tp,1190)
 	end
 	if not b1 and b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(100418020,1))+1
+		op=Duel.SelectOption(tp,1152)+1
 	end
 	if b1 and b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(100418020,0),aux.Stringid(100418020,1))
+		op=Duel.SelectOption(tp,1190,1152)
 	end
 	if op==0 then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
