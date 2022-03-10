@@ -13,6 +13,7 @@ function c100418037.initial_effect(c)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCondition(c100418037.thcon)
+	e1:SetCost(c100418037.thcost)
 	e1:SetTarget(c100418037.thtg)
 	e1:SetOperation(c100418037.thop)
 	c:RegisterEffect(e1)
@@ -39,6 +40,10 @@ function c100418037.initial_effect(c)
 end
 function c100418037.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_EXTRA)
+end
+function c100418037.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c100418037.thfilter(c)
 	return c:IsSetCard(0x27e) and c:IsType(TYPE_FIELD) and c:IsAbleToHand()
