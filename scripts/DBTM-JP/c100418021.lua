@@ -32,7 +32,7 @@ function c100418021.initial_effect(c)
 end
 function c100418021.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return not rc:IsSetCard(0x280) and rc:GetType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return rp==tp and not rc:IsSetCard(0x280) and rc:GetType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function c100418021.spfilter(c,e,tp)
 	return c:IsRace(RACE_FIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
