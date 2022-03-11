@@ -49,14 +49,13 @@ function c100418020.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c100418020.cfilter(c,tp)
-	if not c:IsPreviousLocation(LOCATION_HAND) or c:GetReasonPlayer()~=tp or not c:GetReasonEffect() then return end
-	local re=c:GetReasonEffect()
+function c100418020.cfilter(c,tp,re,r,rp)
+	if not c:IsPreviousLocation(LOCATION_HAND) or rp~=tp or not re then return end
 	local rc=re:GetHandler()
 	return (rc:IsSetCard(0x280) and not rc:IsCode(100418020)) or (re:IsActiveType(TYPE_TRAP) and rc:GetType()==TYPE_TRAP)
 end
 function c100418020.tscon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100418020.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(c100418020.cfilter,1,nil,tp,re,r,rp) and not eg:IsContains(e:GetHandler())
 end
 function c100418020.tstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand()

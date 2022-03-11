@@ -45,13 +45,12 @@ function c100418018.stop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,g:GetFirst())
 	end
 end
-function c100418018.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetReason()&REASON_EFFECT>0
-		and c:GetReasonEffect():GetHandler():GetType()==TYPE_TRAP
-		and c:GetReasonEffect():IsActiveType(TYPE_TRAP) and c:GetReasonEffect():GetHandlerPlayer()==tp
+function c100418018.cfilter(c,tp,re,r,rp)
+	return bit.band(c:GetPreviousTypeOnField(),TYPE_MONSTER)~=0 and bit.band(r,REASON_EFFECT)~=0 and rp==tp
+		and re:GetHandler():GetType()==TYPE_TRAP and re:IsActiveType(TYPE_TRAP)
 end
 function c100418018.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100418018.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(c100418018.cfilter,1,nil,tp,re,r,rp) and not eg:IsContains(e:GetHandler())
 end
 function c100418018.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end

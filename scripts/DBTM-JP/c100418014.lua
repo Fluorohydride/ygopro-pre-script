@@ -65,13 +65,12 @@ end
 function c100418014.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(c100418014.actfilter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c100418014.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetReason()&REASON_EFFECT>0
-		and c:GetReasonEffect():GetHandler():GetType()==TYPE_TRAP
-		and c:GetReasonEffect():IsActiveType(TYPE_TRAP) and c:GetReasonEffect():GetHandlerPlayer()==tp
+function c100418014.cfilter(c,tp,re,r,rp)
+	return bit.band(c:GetPreviousTypeOnField(),TYPE_MONSTER)~=0 and bit.band(r,REASON_EFFECT)~=0 and rp==tp
+		and re:GetHandler():GetType()==TYPE_TRAP and re:IsActiveType(TYPE_TRAP)
 end
 function c100418014.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100418014.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(c100418014.cfilter,1,nil,tp,re,r,rp) and not eg:IsContains(e:GetHandler())
 end
 function c100418014.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD+LOCATION_HAND)>0 end
