@@ -27,12 +27,19 @@ function c101109018.costfilter(c)
 	return (c:IsType(TYPE_MONSTER) or c:IsSetCard(0x281)) and c:IsDiscardable()
 end
 function c101109018.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local fe=Duel.IsPlayerAffectedByEffect(tp,101109061)
 	if chk==0 then return e:GetHandler():IsDiscardable()
-		and Duel.IsExistingMatchingCard(c101109018.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local g=Duel.SelectMatchingCard(tp,c101109018.costfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
-	g:AddCard(e:GetHandler())
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+		and (fe or Duel.IsExistingMatchingCard(c101109018.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler())) end
+	if fe and Duel.SelectYesNo(tp,aux.Stringid(101109061,0)) then
+		Duel.Hint(HINT_CARD,0,101109061)
+		fe:UseCountLimit(tp)
+		Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+		local g=Duel.SelectMatchingCard(tp,c101109018.costfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
+		g:AddCard(e:GetHandler())
+		Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	end
 end
 function c101109018.thfilter(c)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and not c:IsCode(101109018) and c:IsAbleToHand()
