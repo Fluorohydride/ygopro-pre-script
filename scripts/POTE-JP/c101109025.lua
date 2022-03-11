@@ -40,7 +40,7 @@ function c101109025.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return ct==0 or ct==Duel.GetMatchingGroupCount(c101109025.cfilter,tp,LOCATION_MZONE,0,nil)
 end
 function c101109025.effilter(c,e,tp)
-	return c:IsCode(43863925) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(16474916) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101109025.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(101109025,tp,ACTIVITY_SPSUMMON)==0 end
