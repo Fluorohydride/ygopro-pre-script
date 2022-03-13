@@ -36,6 +36,7 @@ function c100418207.initial_effect(c)
 	e3:SetOperation(c100418207.mvop)
 	c:RegisterEffect(e3)
 end
+c100418207.toss_dice=true
 function c100418207.cfilter(c)
 	return c:IsSetCard(0x27c) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsFaceup()
 end
