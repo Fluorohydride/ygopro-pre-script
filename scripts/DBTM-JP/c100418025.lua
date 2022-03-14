@@ -31,13 +31,17 @@ function c100418025.activate(e,tp,eg,ep,ev,re,r,rp)
 	local fop=re:GetOperation()
 	fop(e,tp,eg,ep,ev,re,r,rp)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		local ct=1
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CHANGE_DAMAGE)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(0,1)
 		e1:SetValue(c100418025.damval)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		if Duel.GetTurnPlayer()==1-tp then
+			ct=2
+		end
+		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,ct)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
