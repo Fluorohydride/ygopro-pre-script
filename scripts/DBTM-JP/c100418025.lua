@@ -14,22 +14,31 @@ end
 function c100418025.condition(e,tp,eg,ep,ev,re,r,rp)
 	local code1,code2=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CODE,CHAININFO_TRIGGERING_CODE2)
 	local rc=re:GetHandler()
-	return rp==tp and not rc:IsStatus(STATUS_ACT_FROM_HAND) and rc:GetType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE) and code1~=100418025 and code2~=100418025
+	return rp==tp and not rc:IsStatus(STATUS_ACT_FROM_HAND) and rc:GetType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+		and code1~=100418025 and code2~=100418025
 end
 function c100418025.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ftg=re:GetTarget()
-	if chkc then return ftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-	if chk==0 then return not ftg or ftg(e,tp,eg,ep,ev,re,r,rp,chk) end
-	if re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	if chkc then
+		local te=e:GetLabelObject()
+		local tg=te:GetTarget()
+		return tg and tg(e,tp,eg,ep,ev,re,r,rp,0,chkc)
 	end
-	if ftg then
-		ftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	end
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():CheckActivateEffect(false,true,false)~=nil end
+	local te,ceg,cep,cev,cre,cr,crp=re:GetHandler():CheckActivateEffect(false,true,true)
+	local tg=te:GetTarget()
+	e:SetProperty(te:GetProperty())
+	if tg then tg(e,tp,ceg,cep,cev,cre,cr,crp,1) end
+	te:SetLabelObject(e:GetLabelObject())
+	e:SetLabelObject(te)
+	Duel.ClearOperationInfo(0)
 end
 function c100418025.activate(e,tp,eg,ep,ev,re,r,rp)
-	local fop=re:GetOperation()
-	fop(e,tp,eg,ep,ev,re,r,rp)
+	local te=e:GetLabelObject()
+	if te then
+		e:SetLabelObject(te:GetLabelObject())
+		local op=te:GetOperation()
+		if op then op(e,tp,eg,ep,ev,re,r,rp) end
+	end
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local ct=1
 		local e1=Effect.CreateEffect(e:GetHandler())
