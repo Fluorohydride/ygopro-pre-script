@@ -115,7 +115,7 @@ function c100418205.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local nseq=0
 	if seq==0 then nseq=1 end
 	if seq==4 then nseq=3 end
-	Duel.MoveSequence(tc,nseq)
+	Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true,1<<nseq)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetCode(EFFECT_CHANGE_TYPE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
