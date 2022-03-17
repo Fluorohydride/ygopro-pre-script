@@ -67,7 +67,6 @@ function c101109076.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 then
 		local b1=Duel.IsExistingMatchingCard(c101109076.xyzfilter,tp,LOCATION_EXTRA,0,1,nil)
 		local b2=Duel.GetFlagEffect(tp,101109076)>0 and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil)
-		if not b1 and not b2 then return end
 		local off=1
 		local ops={}
 		local opval={}
@@ -87,12 +86,9 @@ function c101109076.activate(e,tp,eg,ep,ev,re,r,rp)
 		local op=Duel.SelectOption(tp,table.unpack(ops))
 		if opval[op]==1 then
 			Duel.BreakEffect()
-			local g=Duel.GetMatchingGroup(c101109076.xyzfilter,tp,LOCATION_EXTRA,0,nil)
-			if g:GetCount()>0 then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local tg=g:Select(tp,1,1,nil)
-				Duel.XyzSummon(tp,tg:GetFirst(),nil)
-			end
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local g=Duel.SelectMatchingCard(tp,c101109076.xyzfilter,tp,LOCATION_EXTRA,0,1,1,nil)
+			Duel.XyzSummon(tp,g:GetFirst(),nil)
 		elseif opval[op]==2 then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
