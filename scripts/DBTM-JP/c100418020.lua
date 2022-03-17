@@ -13,6 +13,7 @@ function c100418020.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to hand or spsummon
 	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_GRAVE_ACTION+CATEGORY_GRAVE_SPSUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetRange(LOCATION_GRAVE)
@@ -50,9 +51,9 @@ function c100418020.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100418020.cfilter(c,tp,re,r,rp)
-	if not c:IsPreviousLocation(LOCATION_HAND) or rp~=tp or not re then return end
+	if not c:IsPreviousLocation(LOCATION_HAND) or rp~=tp or r&REASON_COST==0 or not re then return end
 	local rc=re:GetHandler()
-	return (rc:IsSetCard(0x280) and not rc:IsCode(100418020)) or (re:IsActiveType(TYPE_TRAP) and rc:GetType()==TYPE_TRAP)
+	return (rc:IsSetCard(0x280) and not rc:IsCode(100418020)) or (re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:GetType()==TYPE_TRAP)
 end
 function c100418020.tscon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100418020.cfilter,1,nil,tp,re,r,rp) and not eg:IsContains(e:GetHandler())
@@ -60,12 +61,12 @@ end
 function c100418020.tstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand()
 		or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100418020.tsop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
+	if aux.NecroValleyNegateCheck(c) then return end
+	if not aux.NecroValleyFilter()(c) then return end
 	local b1=c:IsAbleToHand()
 	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	local op=0
