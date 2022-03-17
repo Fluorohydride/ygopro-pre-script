@@ -1,4 +1,4 @@
---VV~始まりの地~
+--VV～始まりの地～
 --
 --Script by Trishula9
 function c100418011.initial_effect(c)
@@ -40,12 +40,13 @@ function c100418011.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100418011.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,g)
-		Duel.BreakEffect()
 		local dg=Duel.GetMatchingGroup(c100418011.desfilter,tp,LOCATION_ONFIELD,0,nil)
 		local sg=Duel.GetMatchingGroup(c100418011.sfilter,tp,LOCATION_DECK,0,nil)
 		if dg:GetCount()>0 and sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100418011,0)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local dc=dg:Select(tp,1,1,nil)
+			Duel.HintSelection(dc)
 			if Duel.Destroy(dc,REASON_EFFECT)>0 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 				local sc=sg:Select(tp,1,1,nil)
