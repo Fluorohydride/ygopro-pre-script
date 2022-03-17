@@ -77,7 +77,7 @@ function c100418016.drop(e,tp,eg,ep,ev,re,r,rp)
 		local opval={}
 		local spg=Duel.GetMatchingGroup(c100418016.spfilter2,tp,LOCATION_HAND,0,nil,e,tp)
 		local stg=Duel.GetMatchingGroup(Card.IsSSetable,tp,LOCATION_HAND,0,nil)
-		if #spg>0 then
+		if #spg>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 			ops[off]=aux.Stringid(100418016,2)
 			opval[off-1]=1
 			off=off+1

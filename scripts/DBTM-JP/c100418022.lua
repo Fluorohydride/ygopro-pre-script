@@ -30,10 +30,11 @@ function c100418022.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tg:GetCount()>0 then
 		Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		local ct=tg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)
-		local dem=Duel.GetMatchingGroupCount(c100418022.demfilter,tp,LOCATION_MZONE,0,nil)
 		local sg=Duel.GetMatchingGroup(c100418022.stfilter,tp,LOCATION_DECK,0,nil)
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-		if ct>0 and dem>0 and sg:GetCount()>=ct and ft>=ct and Duel.SelectYesNo(tp,aux.Stringid(100418022,0)) then
+		if ct>0 and Duel.IsExistingMatchingCard(c100418022.demfilter,tp,LOCATION_MZONE,0,1,nil)
+			and sg:GetClassCount(Card.GetCode)>=ct and ft>=ct
+			and Duel.SelectYesNo(tp,aux.Stringid(100418022,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local stg=sg:SelectSubGroup(tp,aux.dncheck,false,ct,ct)
 			Duel.SSet(tp,stg)

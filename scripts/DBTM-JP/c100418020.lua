@@ -32,8 +32,8 @@ end
 function c100418020.filter(c)
 	return c:IsSetCard(0x280) and c:IsFaceup()
 end
-function c100418020.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100418020.filter,tp,LOCATION_MZONE,0,1,nil)
+function c100418020.actcon(e)
+	return Duel.IsExistingMatchingCard(c100418020.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c100418020.acttg(e,c)
 	return c:GetType()==TYPE_TRAP

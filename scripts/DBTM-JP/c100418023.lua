@@ -30,7 +30,8 @@ function Auxiliary.LabrynthDestroyOp(e,tp,res)
 	local chk=not c:IsStatus(STATUS_ACT_FROM_HAND) and c:IsSetCard(0x1280) and c:GetType()==TYPE_TRAP and e:IsHasType(EFFECT_TYPE_ACTIVATE)
 	local exc=nil
 	if c:IsStatus(STATUS_LEAVE_CONFIRMED) then exc=c end
-	if chk and Duel.IsPlayerAffectedByEffect(tp,100418021)
+	local te=Duel.IsPlayerAffectedByEffect(tp,100418021)
+	if chk and te
 		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,exc)
 		and Duel.SelectYesNo(tp,aux.Stringid(100418021,0)) then
 		if res>0 then Duel.BreakEffect() end
@@ -39,7 +40,6 @@ function Auxiliary.LabrynthDestroyOp(e,tp,res)
 		local dg=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,exc)
 		Duel.HintSelection(dg)
 		Duel.Destroy(dg,REASON_EFFECT)
-		local te=Duel.IsPlayerAffectedByEffect(tp,100418021)
 		te:UseCountLimit(tp)
 	end
 end
