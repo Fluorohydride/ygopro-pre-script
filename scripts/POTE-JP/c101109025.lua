@@ -58,7 +58,7 @@ function c101109025.splimit(e,c)
 end
 function c101109025.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(c101109025.effilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
@@ -66,13 +66,17 @@ function c101109025.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101109025.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,c101109025.effilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-		if g:GetCount()>0 then
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	if not Duel.IsPlayerAffectedByEffect(tp,59822133) and c:IsRelateToEffect(e) then
+		if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+				local g=Duel.SelectMatchingCard(tp,c101109025.effilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+				if g:GetCount()>0 then
+					Duel.SpecialSummonStep(g:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
+				end
+			end
 		end
+		Duel.SpecialSummonComplete()
 	end
 end
 function c101109025.spfilter(c,e,tp,mc)
