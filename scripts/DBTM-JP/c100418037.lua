@@ -39,7 +39,7 @@ function c100418037.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100418037.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_EXTRA)
+	return e:GetHandler():IsSummonLocation(LOCATION_EXTRA)
 end
 function c100418037.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
@@ -74,8 +74,8 @@ function c100418037.desrepval(e,c)
 	return c100418037.repfilter(c,e:GetHandlerPlayer())
 end
 function c100418037.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 	Duel.Hint(HINT_CARD,0,100418037)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 end
 function c100418037.tecon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
