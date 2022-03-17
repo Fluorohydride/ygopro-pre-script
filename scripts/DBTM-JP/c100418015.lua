@@ -56,7 +56,8 @@ function c100418015.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100418015.stfilter(c)
-	return c:GetType()==TYPE_TRAP and c:GetActivateEffect():GetCode()==EVENT_ATTACK_ANNOUNCE and c:IsSSetable()
+	local te=c:GetActivateEffect()
+	return c:GetType()==TYPE_TRAP and te and te:GetCode()==EVENT_ATTACK_ANNOUNCE and c:IsSSetable()
 end
 function c100418015.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100418015.stfilter,tp,LOCATION_DECK,0,1,nil) end
