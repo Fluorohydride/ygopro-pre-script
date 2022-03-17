@@ -4,6 +4,7 @@
 function c100418017.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100418017,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -17,6 +18,7 @@ function c100418017.initial_effect(c)
 	c:RegisterEffect(e2)
 	--draw
 	local e3=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100418017,1))
 	e3:SetCategory(CATEGORY_DRAW+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_LEAVE_FIELD)
@@ -48,7 +50,7 @@ function c100418017.cfilter(c,tp,re,r,rp)
 		and re:GetHandler():GetType()==TYPE_TRAP and re:IsActiveType(TYPE_TRAP)
 end
 function c100418017.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100418017.cfilter,1,nil,tp,re,r,rp) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(c100418017.cfilter,1,nil,tp,re,r,rp)
 end
 function c100418017.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -56,36 +58,41 @@ function c100418017.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
-function c100418017.spfilter(c,e,tp)
+function c100418017.spfilter2(c,e,tp)
 	return c:IsRace(RACE_FIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100418017.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)>0 then
-		Duel.BreakEffect()
-		local spg=Duel.GetMatchingGroup(c100418017.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
+		local off=1
+		local ops={}
+		local opval={}
+		local spg=Duel.GetMatchingGroup(c100418017.spfilter2,tp,LOCATION_HAND,0,nil,e,tp)
 		local stg=Duel.GetMatchingGroup(Card.IsSSetable,tp,LOCATION_HAND,0,nil)
-		if (#spg>0 or #stg>0) and Duel.SelectYesNo(tp,aux.Stringid(100418017,0)) then
-			local op=0
-			if #spg>0 and #stg==0 then
-				op=Duel.SelectOption(tp,aux.Stringid(100418017,1))+1
-			end
-			if #spg==0 and #stg>0 then
-				op=Duel.SelectOption(tp,aux.Stringid(100418017,2))+2
-			end
-			if #spg>0 and #stg>0 then
-				op=Duel.SelectOption(tp,aux.Stringid(100418017,1),aux.Stringid(100418017,2))+1
-			end
-			if op==1 then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local sg=spg:Select(tp,1,1,nil)
-				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-			end
-			if op==2 then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-				local sg=stg:Select(tp,1,1,nil)
-				Duel.SSet(tp,sg)
-			end
+		if #spg>0 then
+			ops[off]=aux.Stringid(100418017,2)
+			opval[off-1]=1
+			off=off+1
+		end
+		if #stg>0 then
+			ops[off]=aux.Stringid(100418017,3)
+			opval[off-1]=2
+			off=off+1
+		end
+		ops[off]=aux.Stringid(100418017,4)
+		opval[off-1]=0
+		local op=Duel.SelectOption(tp,table.unpack(ops))
+		if opval[op]==1 then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sg=spg:Select(tp,1,1,nil)
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+		end
+		if opval[op]==2 then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+			local sg=stg:Select(tp,1,1,nil)
+			Duel.SSet(tp,sg,tp,false)
 		end
 	end
 end
