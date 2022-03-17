@@ -61,6 +61,6 @@ function c100418019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100418019.spop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SpecialSummon(e,0,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 	end
 end
