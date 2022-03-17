@@ -13,6 +13,24 @@ function c100418024.initial_effect(c)
 	e1:SetOperation(c100418024.activate)
 	c:RegisterEffect(e1)
 end
+function Auxiliary.LabrynthDestroyOp(e,tp,res)
+	local c=e:GetHandler()
+	local chk=not c:IsStatus(STATUS_ACT_FROM_HAND) and c:IsSetCard(0x1280) and c:GetType()==TYPE_TRAP and e:IsHasType(EFFECT_TYPE_ACTIVATE)
+	local exc=nil
+	if c:IsStatus(STATUS_LEAVE_CONFIRMED) then exc=c end
+	if chk and Duel.IsPlayerAffectedByEffect(tp,100418021)
+		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,exc)
+		and Duel.SelectYesNo(tp,aux.Stringid(100418021,0)) then
+		if res>0 then Duel.BreakEffect() end
+		Duel.Hint(HINT_CARD,0,100418021)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		local dg=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,exc)
+		Duel.HintSelection(dg)
+		Duel.Destroy(dg,REASON_EFFECT)
+		local te=Duel.IsPlayerAffectedByEffect(tp,100418021)
+		te:UseCountLimit(tp)
+	end
+end
 function c100418024.cfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsFaceup()
 end
@@ -31,12 +49,16 @@ function c100418024.stfilter(c)
 end
 function c100418024.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local g=Duel.GetMatchingGroup(c100418024.stfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
-	if Duel.NegateAttack() and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0
-		and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100418024,0)) then
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-		local sg=g:Select(tp,1,1,nil)
-		Duel.SSet(tp,sg)
+	local res=0
+	if Duel.NegateAttack() and tc:IsRelateToEffect(e) then
+		res=Duel.Destroy(tc,REASON_EFFECT)
+		local g=Duel.GetMatchingGroup(c100418024.stfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
+		if res>0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100418024,0)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+			local sg=g:Select(tp,1,1,nil)
+			Duel.SSet(tp,sg)
+		end
 	end
+	aux.LabrynthDestroyOp(e,tp,res)
 end
