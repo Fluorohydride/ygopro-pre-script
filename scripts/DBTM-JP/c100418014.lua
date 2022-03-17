@@ -11,6 +11,7 @@ function c100418014.initial_effect(c)
 	c:RegisterEffect(e1)
 	--set
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100418014,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -20,6 +21,7 @@ function c100418014.initial_effect(c)
 	c:RegisterEffect(e2)
 	--destroy
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100418014,1))
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_LEAVE_FIELD)
@@ -55,7 +57,10 @@ function c100418014.stop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e1:SetDescription(aux.Stringid(100418014,2))
 		e1:SetCondition(c100418014.actcon)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -63,7 +68,9 @@ function c100418014.actfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsFaceup()
 end
 function c100418014.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c100418014.actfilter,tp,LOCATION_MZONE,0,1,nil)
+	local tp=e:GetHandlerPlayer()
+	return not e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)
+		and not Duel.IsExistingMatchingCard(c100418014.actfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100418014.cfilter(c,tp,re,r,rp)
 	return bit.band(c:GetPreviousTypeOnField(),TYPE_MONSTER)~=0 and bit.band(r,REASON_EFFECT)~=0 and rp==tp
@@ -77,9 +84,17 @@ function c100418014.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_ONFIELD+LOCATION_HAND)
 end
 function c100418014.desop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,1,nil)
+	local hg=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
+	local fg=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
+	local g
+	if #hg>0 and (#fg==0 or Duel.SelectOption(tp,aux.Stringid(100418014,3),aux.Stringid(100418014,4))==0) then
+		g=hg:RandomSelect(tp,1)
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
+	end
 	if g:GetCount()~=0 then
+		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
