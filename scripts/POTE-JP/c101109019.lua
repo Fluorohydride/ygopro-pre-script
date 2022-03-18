@@ -2,7 +2,7 @@
 function c101109019.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101109019)
@@ -25,17 +25,18 @@ function c101109019.costfilter(c)
 	return (c:IsType(TYPE_MONSTER) or c:IsSetCard(0x281)) and c:IsDiscardable()
 end
 function c101109019.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	local fe=Duel.IsPlayerAffectedByEffect(tp,101109061)
-	if chk==0 then return e:GetHandler():IsDiscardable()
-		and (fe or Duel.IsExistingMatchingCard(c101109019.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler())) end
-	if fe and Duel.SelectYesNo(tp,aux.Stringid(101109061,0)) then
+	local b2=Duel.IsExistingMatchingCard(c101109019.costfilter,tp,LOCATION_HAND,0,1,c)
+	if chk==0 then return c:IsDiscardable() and (fe or b2) end
+	if fe and (not b2 or Duel.SelectYesNo(tp,aux.Stringid(101109061,0))) then
 		Duel.Hint(HINT_CARD,0,101109061)
 		fe:UseCountLimit(tp)
-		Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+		Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-		local g=Duel.SelectMatchingCard(tp,c101109019.costfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
-		g:AddCard(e:GetHandler())
+		local g=Duel.SelectMatchingCard(tp,c101109019.costfilter,tp,LOCATION_HAND,0,1,1,c)
+		g:AddCard(c)
 		Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 	end
 end
@@ -87,8 +88,9 @@ function c101109019.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(aux.Stringid(101109019,1))
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(1)
