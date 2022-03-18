@@ -8,6 +8,7 @@
 - **April 2022**: 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
 - **April 23, 2022**: POWER OF THE ELEMENTS (POTE-JP): `101109XXX`
 - **May 21, 2022**: Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
+- **June 8, 2022**: Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
 
 # Announced
 
