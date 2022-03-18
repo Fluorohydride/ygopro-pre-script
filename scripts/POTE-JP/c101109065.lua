@@ -54,12 +54,10 @@ function c101109065.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end
 function c101109065.drcon(e,tp,eg,ep,ev,re,r,rp)
-	if tp~=ep then return false end
-	local lp=Duel.GetLP(ep)
-	if lp<ev then return false end
-	if not re or not re:IsActivated() then return false end
+	if not (tp==ep and re and re:IsActivated() and re:GetActivateLocation()==LOCATION_MZONE) then return false end
 	local rc=re:GetHandler()
-	return rc:IsLocation(LOCATION_MZONE) and rc:IsRace(RACE_PSYCHO)
+	return rc:IsRelateToEffect(re) and rc:IsRace(RACE_PSYCHO)
+		or not rc:IsRelateToEffect(re) and rc:GetPreviousRaceOnField()&RACE_PSYCHO~=0
 end
 function c101109065.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
