@@ -37,6 +37,7 @@ function c100418202.initial_effect(c)
 	e3:SetOperation(c100418202.coinop2)
 	c:RegisterEffect(e3)
 end
+c100418202.toss_coin=true
 function c100418202.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local zone=1<<c:GetSequence()
