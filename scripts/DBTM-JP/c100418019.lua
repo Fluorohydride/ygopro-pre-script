@@ -28,11 +28,15 @@ function c100418019.initial_effect(c)
 	e2:SetOperation(c100418019.spop)
 	c:RegisterEffect(e2)
 end
+function c100418019.costfilter(c,tp)
+	return c:IsDiscardable() and Duel.IsExistingMatchingCard(c100418019.stfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c)
+end
 function c100418019.stcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,c) end
+	if chk==0 then return c:IsAbleToGraveAsCost()
+		and Duel.IsExistingMatchingCard(c100418019.costfilter,tp,LOCATION_HAND,0,1,c,tp) end
 	Duel.SendtoGrave(c,REASON_COST)
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,c100418019.costfilter,1,1,REASON_COST+REASON_DISCARD,nil,tp)
 end
 function c100418019.stfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x280) and c:IsSSetable()
