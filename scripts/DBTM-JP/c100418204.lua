@@ -74,8 +74,10 @@ function c100418204.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100418204.mvcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local ph=Duel.GetCurrentPhase()
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsLocation(LOCATION_MZONE)
 		and (c:GetPreviousSequence()~=c:GetSequence() or c:GetPreviousControler()~=tp)
+		and ph~=PHASE_DAMAGE and ph~=PHASE_DAMAGE_CAL
 end
 function c100418204.ffilter0(c,e)
 	return c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
