@@ -30,7 +30,7 @@ function c100418011.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100418011.desfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:GetOriginalType()&TYPE_PENDULUM~=0
 end
 function c100418011.sfilter(c)
 	return c:IsCode(63394872) and c:IsAbleToHand()
