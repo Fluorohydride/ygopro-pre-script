@@ -64,7 +64,7 @@ function c100418212.stop(e,tp,eg,ep,ev,re,r,rp)
 	local zone=1<<tc:GetSequence()
 	local oc=Duel.GetMatchingGroup(c100418212.seqfilter,tp,0,LOCATION_SZONE,nil,tc:GetSequence()):GetFirst()
 	if oc then
-		Duel.Destroy(oc,REASON_EFFECT)
+		Duel.Destroy(oc,REASON_RULE)
 	end
 	if Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true,zone) then
 		local e1=Effect.CreateEffect(e:GetHandler())

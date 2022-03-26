@@ -110,7 +110,7 @@ function c100418209.stop(e,tp,eg,ep,ev,re,r,rp)
 	if not (tc:IsRelateToEffect(e) and tc:IsControler(1-tp) and not tc:IsImmuneToEffect(e)) then return end
 	local zone=1<<tc:GetSequence()
 	local oc=Duel.GetMatchingGroup(c100418209.seqfilter,tp,0,LOCATION_SZONE,nil,tc:GetSequence()):GetFirst()
-	if oc and Duel.Destroy(oc,REASON_EFFECT)>0 and oc:IsType(TYPE_MONSTER) then
+	if oc and Duel.Destroy(oc,REASON_RULE)>0 and oc:IsType(TYPE_MONSTER) then
 		Duel.SetLP(1-tp,Duel.GetLP(1-tp)-oc:GetAttack())
 	end
 	if Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true,zone) then
