@@ -55,7 +55,7 @@ function c101109021.cpop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local tc=e:GetLabelObject()
 	local code=tc:GetOriginalCodeRule()
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
