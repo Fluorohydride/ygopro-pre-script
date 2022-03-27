@@ -33,7 +33,7 @@ function c100200213.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function c100200213.rmfilter(c,g)
-	return (g-c):FilterCount(c100200213.thfilter,nil,c:GetCode())>0 and c:IsAbleToRemove()
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and g:IsExists(c100200213.thfilter,1,c,c:GetCode())
 end
 function c100200213.thfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()
@@ -43,24 +43,16 @@ function c100200213.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,3)
 	local g=Duel.GetDecktopGroup(tp,3)
 	local dg=Duel.GetFieldGroup(tp,LOCATION_DECK,0)
-	if g:GetCount()>0 then
-		Duel.DisableShuffleCheck()
-		local fg=g:Filter(Card.IsType,nil,TYPE_MONSTER)
-		local sg=fg:Filter(c100200213.rmfilter,nil,dg)
-		if sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100200213,0)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local rc=sg:Select(tp,1,1,nil):GetFirst()
-			if rc then
-				Duel.Remove(rc,POS_FACEUP,REASON_EFFECT)
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-				local tc=dg:Filter(c100200213.thfilter,rc,rc:GetCode()):Select(tp,1,1,nil)
-				if tc then
-					Duel.SendtoHand(tc,nil,REASON_EFFECT)
-				end
-			end
-		end
-		Duel.ShuffleDeck(tp)
+	local sg=g:Filter(c100200213.rmfilter,nil,dg)
+	if sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100200213,0)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local rc=sg:Select(tp,1,1,nil):GetFirst()
+		Duel.Remove(rc,POS_FACEUP,REASON_EFFECT)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local tc=dg:FilterSelect(tp,c100200213.thfilter,1,1,rc,rc:GetCode())
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
+	Duel.ShuffleDeck(tp)
 end
 function c100200213.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
