@@ -68,7 +68,7 @@ end
 function c100427031.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
 function c100427031.pencon(e,tp,eg,ep,ev,re,r,rp)
