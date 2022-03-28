@@ -15,6 +15,7 @@ function c100418028.initial_effect(c)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(c100418028.rmcon)
+	e2:SetTarget(c100418028.rmtg)
 	e2:SetOperation(c100418028.rmop)
 	c:RegisterEffect(e2)
 end

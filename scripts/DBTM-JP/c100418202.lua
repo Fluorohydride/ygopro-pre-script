@@ -30,7 +30,7 @@ function c100418202.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_MOVE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetCountLimit(1,100418202+200)
 	e3:SetCondition(c100418202.coincon2)
 	e3:SetTarget(c100418202.cointg2)
@@ -77,10 +77,10 @@ function c100418202.cointg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100418202.coinop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
+	if not (tc:IsFaceup() and tc:IsRelateToEffect(e)) then return end
 	local coin=Duel.TossCoin(tp,1)
 	if coin==1 then
-		if tc:IsFaceup() and not tc:IsDisabled() and not tc:IsImmuneToEffect(e) then
+		if not tc:IsDisabled() and not tc:IsImmuneToEffect(e) then
 			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -94,15 +94,13 @@ function c100418202.coinop1(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e2)
 		end
 	else
-		if tc:IsFaceup() then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetValue(math.ceil(tc:GetAttack()/2))
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
-		end
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetValue(math.ceil(tc:GetAttack()/2))
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1)
 	end
 end
 function c100418202.coincon2(e,tp,eg,ep,ev,re,r,rp)

@@ -4,7 +4,8 @@
 function c100418011.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
+	e1:SetDescription(aux.Stringid(100418011,0))
+	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100418011)
@@ -13,6 +14,7 @@ function c100418011.initial_effect(c)
 	c:RegisterEffect(e1)
 	--pzone set
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100418011,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,100418011+100)
@@ -42,7 +44,7 @@ function c100418011.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 		local dg=Duel.GetMatchingGroup(c100418011.desfilter,tp,LOCATION_ONFIELD,0,nil)
 		local sg=Duel.GetMatchingGroup(c100418011.sfilter,tp,LOCATION_DECK,0,nil)
-		if dg:GetCount()>0 and sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100418011,0)) then
+		if dg:GetCount()>0 and sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100418011,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local dc=dg:Select(tp,1,1,nil)

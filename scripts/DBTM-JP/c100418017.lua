@@ -45,12 +45,11 @@ function c100418017.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c100418017.cfilter(c,tp,re,r,rp)
-	return bit.band(c:GetPreviousTypeOnField(),TYPE_MONSTER)~=0 and bit.band(r,REASON_EFFECT)~=0 and rp==tp
-		and re:GetHandler():GetType()==TYPE_TRAP and re:IsActiveType(TYPE_TRAP)
+function c100418017.cfilter(c)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function c100418017.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100418017.cfilter,1,nil,tp,re,r,rp)
+	return re and rp==tp and re:GetHandler():GetType()==TYPE_TRAP and eg:IsExists(c100418017.cfilter,1,nil)
 end
 function c100418017.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

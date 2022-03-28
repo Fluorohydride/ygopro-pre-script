@@ -4,6 +4,7 @@
 function c100418020.initial_effect(c)
 	--Trap activate in set turn
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100418020,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
@@ -13,6 +14,7 @@ function c100418020.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to hand or spsummon
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100418020,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_GRAVE_ACTION+CATEGORY_GRAVE_SPSUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
@@ -50,13 +52,12 @@ function c100418020.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c100418020.cfilter(c,tp,re,r,rp)
-	if not c:IsPreviousLocation(LOCATION_HAND) or rp~=tp or r&REASON_COST==0 or not re then return end
-	local rc=re:GetHandler()
-	return (rc:IsSetCard(0x280) and not rc:IsCode(100418020)) or (re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:GetType()==TYPE_TRAP)
-end
 function c100418020.tscon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100418020.cfilter,1,nil,tp,re,r,rp) and not eg:IsContains(e:GetHandler())
+	if not re then return false end
+	local rc=re:GetHandler()
+	return rp==tp and r&REASON_COST>0
+		and (rc:IsSetCard(0x280) and not rc:IsCode(100418020) or re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:GetType()==TYPE_TRAP)
+		and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_HAND) and not eg:IsContains(e:GetHandler())
 end
 function c100418020.tstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand()

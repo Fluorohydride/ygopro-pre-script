@@ -28,15 +28,16 @@ function c100200216.initial_effect(c)
 	e3:SetCondition(c100200216.stcon2)
 	c:RegisterEffect(e3)
 end
-function c100200216.tdfilter(c)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:GetType()==TYPE_TRAP and c:IsAbleToDeck()
+function c100200216.tdfilter(c,e)
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:GetType()==TYPE_TRAP
+		and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
 function c100200216.fselect(sg)
 	return sg:GetCount()==3 or sg:GetCount()==6
 end
 function c100200216.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetMatchingGroup(c100200216.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
+	local g=Duel.GetMatchingGroup(c100200216.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and #g>=3 end
 	local max=3
 	if Duel.IsPlayerCanDraw(tp,2) then max=6 end

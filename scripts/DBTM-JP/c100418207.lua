@@ -16,7 +16,7 @@ function c100418207.initial_effect(c)
 	c:RegisterEffect(e1)
 	--dice
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DICE+CATEGORY_TOHAND)
+	e2:SetCategory(CATEGORY_DICE+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100418207+100)

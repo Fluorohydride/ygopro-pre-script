@@ -42,7 +42,7 @@ function c100418014.chainlm(e,rp,tp)
 	return tp==rp or not e:IsActiveType(TYPE_MONSTER)
 end
 function c100418014.stfilter(c)
-	return c:IsLocation(LOCATION_GRAVE) and c:GetType()==TYPE_TRAP and c:IsSSetable()
+	return c:GetType()==TYPE_TRAP and c:IsSSetable()
 end
 function c100418014.sttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100418014.stfilter(chkc) end
@@ -67,17 +67,16 @@ end
 function c100418014.actfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsFaceup()
 end
-function c100418014.actcon(e,tp,eg,ep,ev,re,r,rp)
+function c100418014.actcon(e)
 	local tp=e:GetHandlerPlayer()
 	return not e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)
 		and not Duel.IsExistingMatchingCard(c100418014.actfilter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c100418014.cfilter(c,tp,re,r,rp)
-	return bit.band(c:GetPreviousTypeOnField(),TYPE_MONSTER)~=0 and bit.band(r,REASON_EFFECT)~=0 and rp==tp
-		and re:GetHandler():GetType()==TYPE_TRAP and re:IsActiveType(TYPE_TRAP)
+function c100418014.cfilter(c)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function c100418014.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c100418014.cfilter,1,nil,tp,re,r,rp) and not eg:IsContains(e:GetHandler())
+	return re and rp==tp and re:GetHandler():GetType()==TYPE_TRAP and eg:IsExists(c100418014.cfilter,1,nil)
 end
 function c100418014.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD+LOCATION_HAND)>0 end

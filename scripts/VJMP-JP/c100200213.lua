@@ -4,7 +4,7 @@
 function c100200213.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(c100200213.thtg)
@@ -30,7 +30,6 @@ function c100200213.initial_effect(c)
 end
 function c100200213.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 and Duel.IsPlayerCanRemove(tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function c100200213.rmfilter(c,g)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and g:IsExists(c100200213.thfilter,1,c,c:GetCode())
@@ -51,6 +50,7 @@ function c100200213.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local tc=dg:FilterSelect(tp,c100200213.thfilter,1,1,rc,rc:GetCode())
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tc)
 	end
 	Duel.ShuffleDeck(tp)
 end

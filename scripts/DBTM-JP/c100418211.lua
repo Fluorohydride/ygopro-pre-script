@@ -40,7 +40,7 @@ function c100418211.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100418211.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(Card.IsLocation,tp,LOCATION_FZONE,LOCATION_FZONE,nil,LOCATION_FZONE)==2
+	return Duel.GetFieldGroupCount(tp,LOCATION_FZONE,LOCATION_FZONE)==2
 end
 function c100418211.spfilter(c,e,tp)
 	local zone=1<<c:GetSequence()
