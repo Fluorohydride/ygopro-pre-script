@@ -2,9 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **February 19, 2022**: History Archive Collection (HC01-JP) : `100287XXX`
-- **March 18, 2022**: The Valuable Book EX2 (VX02-JP) : `100288XXX`
-- **March 19, 2022**: Deck Build Pack: Tactical Masters (DBTM-JP): `100418XXX`
 - **April 2022**: 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
 - **April 23, 2022**: POWER OF THE ELEMENTS (POTE-JP): `101109XXX`
 - **May 21, 2022**: Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
@@ -103,6 +100,8 @@
 - Secret Shiny Box (SSB1-JP) : `100285XXX`
 - Premium Pack 2022 (22PP-JP) : `100286XXX`
 - The Grand Creators (GRCR-EN) : `100282XXX`
+- History Archive Collection (HC01-JP) : `100287XXX`
+- The Valuable Book EX2 (VX02-JP) : `100288XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -150,6 +149,7 @@
 - Deck Build Pack: Genesis Impactors (DBGI-JP): `100415XXX`
 - Deck Build Pack: Ancient Guardians (DBAG-JP): `100416XXX`
 - Deck Build Pack: Grand Creators (DBGC-JP) : `100417XXX`
+- Deck Build Pack: Tactical Masters (DBTM-JP): `100418XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
