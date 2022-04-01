@@ -136,6 +136,7 @@
 - Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
 - Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
 - Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
+- Structure Deck: Legend of the Crystals (SD44-JP): `100344XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
