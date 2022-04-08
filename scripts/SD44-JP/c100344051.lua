@@ -5,34 +5,43 @@ function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFunFun(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x2034),aux.FilterBoolFunction(Card.IsFusionSetCard,0x1034),7,true)
-	aux.AddContactFusionProcedure(c,s.cfilter,LOCATION_ONFIELD+LOCATION_GRAVE,0,Duel.Remove,POS_FACEUP,REASON_COST)
 	--cannot special summon
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e0)
-    --atk up
+	--special summon rule
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(7000)
-	e1:SetCondition(s.atkcon)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetRange(LOCATION_EXTRA)
+	e1:SetCondition(s.spcon)
+    e1:SetTarget(s.sptg)
+	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
+   --atk up
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_UPDATE_ATTACK)
+	e2:SetValue(7000)
+	e2:SetCondition(s.atkcon)
+	c:RegisterEffect(e2)
     --to deck
-    local e2=Effect.CreateEffect(c)
-    e2:SetDescription(aux.Stringid(id,0))
-    e2:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
-    e2:SetType(EFFECT_TYPE_QUICK_O)
-    e2:SetCode(EVENT_FREE_CHAIN)
-    e2:SetRange(LOCATION_MZONE)
-    e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
-    e2:SetCost(s.tdcost)
-    e2:SetTarget(s.tdtg)
-    e2:SetOperation(s.tdop)
-    c:RegisterEffect(e2)
+    local e3=Effect.CreateEffect(c)
+    e3:SetDescription(aux.Stringid(id,0))
+    e3:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
+    e3:SetType(EFFECT_TYPE_QUICK_O)
+    e3:SetCode(EVENT_FREE_CHAIN)
+    e3:SetRange(LOCATION_MZONE)
+    e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+    e3:SetCost(s.tdcost)
+    e3:SetTarget(s.tdtg)
+    e3:SetOperation(s.tdop)
+    c:RegisterEffect(e3)
     --
 	if not s.global_flag then
 		s.global_flag=true
@@ -50,9 +59,38 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.cfilter(c,fc)
-	local tp=fc:GetControler()
-	return c:IsFusionSetCard(0x2034,0x1034) and c:IsAbleToRemoveAsCost() and Duel.GetFlagEffect(tp,id)>0
+function s.cfilter1(c,g)
+    return c:IsFusionSetCard(0x2034) and g:FilterCount(Card.IsFusionSetCard,c,0x1034)>=7
+end
+function s.spcon(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+    if Duel.GetFlagEffect(tp,id)==0 then return false end
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	return g:IsExists(s.cfilter1,1,nil,g)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+    local sg=Group.CreateGroup()
+    local cg=g:Filter(s.cfilter1,nil,g)
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+    local tc1=cg:SelectUnselect(sg,tp,false,true,1,1)
+    if not tc1 then return false end
+    cg=g:Filter(Card.IsFusionSetCard,tc1,0x1034)
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+    local sg2=cg:SelectSubGroup(tp,aux.TRUE,true,7,7)
+    if not sg2 then return false end
+    sg:AddCard(tc1)
+    sg:Merge(sg2)
+    sg:KeepAlive()
+	e:SetLabelObject(sg)
+    return true
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	c:SetMaterial(g)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+    g:DeleteGroup()
 end
 function s.atkfilter(c)
     return c:IsFaceup() and c:IsSetCard(0x1034)
