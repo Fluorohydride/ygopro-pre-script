@@ -6,7 +6,7 @@ function c101109026.initial_effect(c)
 	aux.EnableChangeCode(c,24639891,LOCATION_HAND+LOCATION_DECK+LOCATION_MZONE+LOCATION_GRAVE)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101109026)
@@ -29,21 +29,26 @@ function c101109026.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101109026.filter(c,e,tp,oc)
 	return c:IsSetCard(0x166) and not c:IsCode(24639891) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(c101109026.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,oc,c)
+		and Duel.IsExistingMatchingCard(c101109026.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,oc,c)
 end
-function c101109026.xyzfilter(c,oc,mc)
-	return aux.IsCodeListed(c,mc:GetCode()) and c:IsXyzSummonable(Group.FromCards(oc,mc),2,2)
+function c101109026.xyzfilter(c,e,tp,oc,mc)
+	return c:IsType(TYPE_XYZ) and aux.IsCodeListed(c,mc:GetCode())
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+		and oc:IsCanBeXyzMaterial(c) and mc:IsCanBeXyzMaterial(c)
+		and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(oc,mc),c)>0
+		and aux.MustMaterialCheck(Group.FromCards(oc,mc),tp,EFFECT_MUST_BE_XMATERIAL)
 end
 function c101109026.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local mg=Duel.GetMatchingGroup(c101109026.filter,tp,LOCATION_DECK,0,nil,e,tp,c)
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and not Duel.IsPlayerAffectedByEffect(tp,59822133) and Duel.IsPlayerCanSpecialSummonCount(tp,3)
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and not Duel.IsPlayerAffectedByEffect(tp,59822133) and Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and mg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101109026,0)) then
+		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=mg:Select(tp,1,1,nil)
 		local sc=sg:GetFirst()
@@ -59,11 +64,14 @@ function c101109026.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseEvent(e:GetHandler(),EVENT_ADJUST,nil,0,PLAYER_NONE,PLAYER_NONE,0)
 		local g=Group.FromCards(c,sc)
 		if g:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)<2 then return end
-		local xyzg=Duel.GetMatchingGroup(c101109026.xyzfilter,tp,LOCATION_EXTRA,0,nil,c,sc)
+		local xyzg=Duel.GetMatchingGroup(c101109026.xyzfilter,tp,LOCATION_EXTRA,0,nil,e,tp,c,sc)
 		if xyzg:GetCount()>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-			Duel.XyzSummon(tp,xyz,g)
+			xyz:SetMaterial(g)
+			Duel.Overlay(xyz,g)
+			Duel.SpecialSummon(xyz,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
+			xyz:CompleteProcedure()
 		end
 	end
 end

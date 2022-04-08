@@ -28,7 +28,7 @@ function c101109077.initial_effect(c)
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e3:SetHintTiming(0,TIMING_CHAIN_END+TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,101109077)
 	e3:SetCondition(c101109077.rmcon)
@@ -103,7 +103,8 @@ function c101109077.stfilter(c)
 end
 function c101109077.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=e:GetHandler():GetEquipTarget()
-	if chk==0 then return ec and ec:IsCanChangePosition() and Duel.IsExistingMatchingCard(c101109077.stfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return ec and ec:IsCanChangePosition()
+		and Duel.IsExistingMatchingCard(c101109077.stfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,ec,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,LOCATION_GRAVE)
 end
@@ -111,7 +112,9 @@ function c101109077.stop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetEquipTarget()
 	local g=Duel.GetMatchingGroup(c101109077.stfilter,tp,LOCATION_GRAVE,0,nil)
-	if ec and c:IsRelateToEffect(e) and Duel.ChangePosition(ec,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)~=0 and g:GetCount()>0 then
+	if ec and c:IsRelateToEffect(e)
+		and Duel.ChangePosition(ec,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)~=0
+		and g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SET)
 		local sg=g:Select(1-tp,1,1,nil)
 		if sg:GetCount()>0 then

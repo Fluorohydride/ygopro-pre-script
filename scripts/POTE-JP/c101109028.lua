@@ -80,7 +80,7 @@ function c101109028.atktg(e,c)
 	return c:GetFieldID()~=e:GetLabel()
 end
 function c101109028.cfilter(c,tp)
-	return c:IsSetCard(0x132) and c:IsControler(tp)
+	return c:IsSetCard(0x132) and c:IsControler(tp) and c:IsFaceup()
 end
 function c101109028.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101109028.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
