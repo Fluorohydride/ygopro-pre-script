@@ -1,4 +1,4 @@
---雷精γ射线暴
+--スプライト・ガンマ・バースト
 --
 --Script by Trishula9
 function c101109056.initial_effect(c)

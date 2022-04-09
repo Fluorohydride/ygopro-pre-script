@@ -1,4 +1,4 @@
---巨大雷精
+--ギガンティック・スプライト
 --
 --Script by Trishula9
 function c101109047.initial_effect(c)

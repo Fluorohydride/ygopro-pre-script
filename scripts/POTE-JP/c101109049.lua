@@ -1,4 +1,4 @@
---雷精妖精
+--スプライト・エルフ
 --
 --Script by Trishula9
 function c101109049.initial_effect(c)

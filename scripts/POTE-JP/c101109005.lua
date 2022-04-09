@@ -1,4 +1,4 @@
---雷精小精灵
+--スプライト・ピクシーズ
 --
 --Script by Trishula9
 function c101109005.initial_effect(c)

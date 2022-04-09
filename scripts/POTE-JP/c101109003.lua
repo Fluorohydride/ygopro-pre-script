@@ -1,4 +1,4 @@
---雷精蓝
+--スプライト・ブルー
 --
 --Script by Trishula9
 function c101109003.initial_effect(c)

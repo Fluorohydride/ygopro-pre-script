@@ -1,4 +1,4 @@
---雷精重击
+--スプライト・スマッシャーズ
 --
 --Script by Trishula9
 function c101109057.initial_effect(c)

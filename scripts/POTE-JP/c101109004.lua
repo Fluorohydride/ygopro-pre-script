@@ -1,4 +1,4 @@
---雷精喷气机
+--スプライト・ジェット
 --
 --Script by Trishula0
 function c101109004.initial_effect(c)

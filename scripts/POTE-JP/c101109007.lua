@@ -1,4 +1,4 @@
---雷精胡萝卜色
+--スプライト・キャロット
 --
 --Script by Trishula9
 function c101109007.initial_effect(c)

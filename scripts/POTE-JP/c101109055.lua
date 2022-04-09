@@ -1,4 +1,4 @@
---雷精启动装置
+--スプライト・スターター
 --
 --Script by Trishula9
 function c101109055.initial_effect(c)
