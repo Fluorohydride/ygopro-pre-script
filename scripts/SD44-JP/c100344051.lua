@@ -59,24 +59,30 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function s.cfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsFusionSetCard(0x2034,0x1034) and c:IsAbleToRemoveAsCost()
+end
 function s.cfilter1(c,g)
-	return c:IsFusionSetCard(0x2034) and g:FilterCount(Card.IsFusionSetCard,c,0x1034)>=7
+	return c:IsFusionSetCard(0x2034) and g:FilterCount(s.cfilter2,c)>=7
+end
+function s.cfilter2(c)
+	return c:IsFusionSetCard(0x1034)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	if Duel.GetFlagEffect(tp,id)==0 then return false end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	return g:IsExists(s.cfilter1,1,nil,g)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	local sg=Group.CreateGroup()
 	local cg=g:Filter(s.cfilter1,nil,g)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local tc1=cg:SelectUnselect(sg,tp,false,true,1,1)
 	if not tc1 then return false end
-	cg=g:Filter(Card.IsFusionSetCard,tc1,0x1034)
+	cg=g:Filter(s.cfilter2,tc1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sg2=cg:SelectSubGroup(tp,aux.TRUE,true,7,7)
 	if not sg2 then return false end
