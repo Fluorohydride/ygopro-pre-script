@@ -4,6 +4,7 @@
 function c101109006.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101109006,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -13,6 +14,7 @@ function c101109006.initial_effect(c)
 	c:RegisterEffect(e1)
 	--disable
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101109006,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DISABLE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
@@ -48,14 +50,13 @@ end
 function c101109006.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and (e:GetLabelObject():IsRank(2) or e:GetLabelObject():IsLink(2)) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
-	end
 end
 function c101109006.disop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re)
+	local rc=re:GetHandler()
+	if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) and rc:IsDestructable()
 		and (e:GetLabelObject():IsRank(2) or e:GetLabelObject():IsLink(2))
-		and Duel.SelectYesNo(tp,aux.Stringid(101109006,0)) then
-		Duel.Destroy(eg,REASON_EFFECT)
+		and Duel.SelectYesNo(tp,aux.Stringid(101109006,2)) then
+		Duel.BreakEffect()
+		Duel.Destroy(rc,REASON_EFFECT)
 	end
 end

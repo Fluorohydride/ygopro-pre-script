@@ -9,6 +9,7 @@ function c101109057.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101109057+EFFECT_COUNT_CODE_OATH)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCost(c101109057.cost)
 	e1:SetTarget(c101109057.sptg1)
 	e1:SetOperation(c101109057.spop1)
@@ -20,6 +21,7 @@ function c101109057.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1,101109057+EFFECT_COUNT_CODE_OATH)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e2:SetCost(c101109057.cost)
 	e2:SetTarget(c101109057.sptg2)
 	e2:SetOperation(c101109057.spop2)
@@ -31,6 +33,7 @@ function c101109057.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_ACTIVATE)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCountLimit(1,101109057+EFFECT_COUNT_CODE_OATH)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e3:SetCost(c101109057.cost)
 	e3:SetTarget(c101109057.rmtg)
 	e3:SetOperation(c101109057.rmop)
@@ -51,6 +54,7 @@ end
 function c101109057.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101109057.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101109057.spop1(e,tp,eg,ep,ev,re,r,rp)
@@ -67,6 +71,7 @@ end
 function c101109057.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101109057.spfilter2,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c101109057.spop2(e,tp,eg,ep,ev,re,r,rp)
@@ -83,11 +88,13 @@ end
 function c101109057.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101109057.rmfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil,tp) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,2,PLAYER_ALL,LOCATION_ONFIELD)
 end
 function c101109057.rmop(e,tp,eg,ep,ev,re,r,rp)
+	if not c101109057.rmtg(e,tp,eg,ep,ev,re,r,rp,0) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=Duel.SelectMatchingCard(tp,c101109057.rmfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	if #g1==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g2=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,1,nil,tp)
 	g1:Merge(g2)

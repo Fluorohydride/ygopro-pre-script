@@ -49,16 +49,16 @@ end
 function c101109049.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
-function c101109049.spfilter(c,e,tp,ft)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsLevel(2) or (ft>0 and (c:IsRank(2) or c:IsLink(2))))
+function c101109049.spfilter(c,e,tp,check)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsLevel(2) or (check and (c:IsRank(2) or c:IsLink(2))))
 end
 function c101109049.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101109049.spfilter(chkc,e,tp,ft) end
+	local check=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101109049.spfilter(chkc,e,tp,check) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c101109049.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,ft) end
+		and Duel.IsExistingTarget(c101109049.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,check) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c101109049.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,ft)
+	local g=Duel.SelectTarget(tp,c101109049.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,check)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101109049.spop(e,tp,eg,ep,ev,re,r,rp)

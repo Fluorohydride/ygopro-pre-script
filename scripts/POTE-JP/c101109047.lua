@@ -4,17 +4,7 @@
 function c101109047.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()
-	aux.AddXyzProcedure(c,nil,2,2)
-	--lv change
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_XYZ_LEVEL)
-	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-	e1:SetRange(LOCATION_EXTRA)
-	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(c101109047.lvtg)
-	e1:SetValue(c101109047.lvval)
-	c:RegisterEffect(e1)
+	aux.AddXyzProcedureLevelFree(c,c101109047.mfilter,nil,2,2)
 	--atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -34,12 +24,8 @@ function c101109047.initial_effect(c)
 	e3:SetOperation(c101109047.spop)
 	c:RegisterEffect(e3)
 end
-function c101109047.lvtg(e,c)
-	return c:IsLink(2)
-end
-function c101109047.lvval(e,c,rc)
-	if rc==e:GetHandler() then return 2
-	else return 0 end
+function c101109047.mfilter(c)
+	return c:IsLevel(2) or c:IsLink(2)
 end
 function c101109047.adcon(e)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
@@ -57,9 +43,9 @@ function c101109047.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c101109047.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local g=Duel.GetMatchingGroup(c101109047.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	if Duel.RemoveOverlayCard(tp,1,0,1,1,REASON_EFFECT) and g:GetCount()>0 then
+	if Duel.RemoveOverlayCard(tp,1,0,1,1,REASON_EFFECT)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
