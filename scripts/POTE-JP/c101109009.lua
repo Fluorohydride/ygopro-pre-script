@@ -41,12 +41,14 @@ function c101109009.eqfilter(c,tp)
 end
 function c101109009.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c101109009.eqfilter(chkc,e,tp) and chkc:IsControler(tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and ft>0
 		and Duel.IsExistingTarget(c101109009.eqfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if ft>3 then ft=3 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local sg=Duel.SelectTarget(tp,c101109009.eqfilter,tp,LOCATION_GRAVE,0,1,3,nil,tp)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,sg,1,0,0)
+	local sg=Duel.SelectTarget(tp,c101109009.eqfilter,tp,LOCATION_GRAVE,0,1,ft,nil,tp)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,sg,#sg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101109009.spop1(e,tp,eg,ep,ev,re,r,rp)
@@ -57,6 +59,7 @@ function c101109009.spop1(e,tp,eg,ep,ev,re,r,rp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 		if ft<=0 then return end
 		if g:GetCount()>ft then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 			g=g:Select(tp,ft,ft,nil)
 		end
 		if g:GetCount()>0 then
@@ -87,6 +90,7 @@ function c101109009.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101109009.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
@@ -105,7 +109,7 @@ end
 function c101109009.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetEquipTarget()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) and tc then
 		Duel.Equip(tp,tc,c,false)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
