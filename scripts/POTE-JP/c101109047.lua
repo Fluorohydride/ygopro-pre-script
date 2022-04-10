@@ -24,8 +24,8 @@ function c101109047.initial_effect(c)
 	e3:SetOperation(c101109047.spop)
 	c:RegisterEffect(e3)
 end
-function c101109047.mfilter(c)
-	return c:IsLevel(2) or c:IsLink(2)
+function c101109047.mfilter(c,xyzc)
+	return c:IsXyzLevel(xyzc,2) or c:IsLink(2)
 end
 function c101109047.adcon(e)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
@@ -44,7 +44,7 @@ function c101109047.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101109047.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101109047.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	if Duel.RemoveOverlayCard(tp,1,0,1,1,REASON_EFFECT)
+	if Duel.RemoveOverlayCard(tp,1,0,1,1,REASON_EFFECT)~=0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
