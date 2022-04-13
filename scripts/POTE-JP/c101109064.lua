@@ -39,12 +39,26 @@ end
 function c101109064.spfilter(c,e,tp)
 	local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsLocation,nil,LOCATION_MZONE)
 	mg:AddCard(c)
-	return c:IsSetCard(0x106) and not c:IsCode(101109040) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
-		and Duel.IsExistingMatchingCard(c101109064.RitualUltimateFilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,c101109064.filter,e,tp,mg,nil,Card.GetLevel,"Greater",true,c)
+	if c:IsLocation(LOCATION_GRAVE) then
+		local res=false
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_EXTRA_RITUAL_MATERIAL)
+		e1:SetValue(1)
+		c:RegisterEffect(e1)
+		if c:IsSetCard(0x106) and not c:IsCode(101109040) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+		and Duel.IsExistingMatchingCard(c101109064.RitualUltimateFilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,c101109064.filter,e,tp,mg,nil,Card.GetLevel,"Greater",true,c) then res=true end
+		e1:Reset()
+		return res
+	else
+		return c:IsSetCard(0x106) and not c:IsCode(101109040) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+			and Duel.IsExistingMatchingCard(c101109064.RitualUltimateFilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,c101109064.filter,e,tp,mg,nil,Card.GetLevel,"Greater",true,c)
+	end
 end
 function c101109064.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c101109064.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c101109064.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.IsPlayerCanSpecialSummonCount(tp,2) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
 end
 function c101109064.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -55,7 +69,7 @@ function c101109064.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sc)
 		local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsLocation,nil,LOCATION_MZONE)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tg=Duel.SelectMatchingCard(tp,Auxiliary.NecroValleyFilter(c101109064.RitualUltimateFilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,c101109064.filter,e,tp,mg,nil,Card.GetLevel,"Greater",true,sc)
+		local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101109064.RitualUltimateFilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,c101109064.filter,e,tp,mg,nil,Card.GetLevel,"Greater",true,sc)
 		local tc=tg:GetFirst()
 		local mat
 		if tc then
