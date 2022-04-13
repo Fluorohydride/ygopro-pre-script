@@ -47,9 +47,9 @@ function c100427022.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local g=Duel.SelectMatchingCard(tp,c100427022.stfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if g:GetCount()>0 then
-			Duel.MoveToField(g,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		local tc=Duel.SelectMatchingCard(tp,c100427022.stfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+		if tc then
+			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		end
 	end
 end
