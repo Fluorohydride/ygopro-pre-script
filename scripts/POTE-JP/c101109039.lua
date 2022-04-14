@@ -4,7 +4,7 @@
 function c101109039.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetCategory(CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,101109039)
@@ -34,25 +34,21 @@ function c101109039.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c101109039.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER):GetCount()
 	if chk==0 then
+		local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
 		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return false end
 		local g=Duel.GetDecktopGroup(tp,ct)
-		local result=g:FilterCount(Card.IsAbleToHand,nil)>0
-		return result
+		return g:FilterCount(Card.IsAbleToHand,nil)>0
 	end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function c101109039.thop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER):GetCount()
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	Duel.ConfirmDecktop(p,ct)
-	local dg=Duel.GetDecktopGroup(p,ct)
+	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+	Duel.ConfirmDecktop(tp,ct)
+	local dg=Duel.GetDecktopGroup(tp,ct)
 	local g=dg:Filter(Card.IsType,nil,TYPE_MONSTER)
 	if g:GetCount()>=2 and g:GetClassCount(Card.GetCode)==g:GetCount() then
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
-		local sg=g:Select(p,1,1,nil)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local sg=g:Select(tp,1,1,nil)
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)
@@ -65,7 +61,7 @@ function c101109039.tdfilter(c)
 end
 function c101109039.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101109039.tdfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101109039.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101109039.tdfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c101109039.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
