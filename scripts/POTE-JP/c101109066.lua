@@ -44,12 +44,13 @@ function c101109066.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(c101109066.stfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function c101109066.stop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectMatchingCard(tp,c101109066.stfilter,tp,LOCATION_DECK,0,1,1,nil)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.SSet(tp,tc)
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+		local g=Duel.SelectMatchingCard(tp,c101109066.stfilter,tp,LOCATION_DECK,0,1,1,nil)
+		local tc=g:GetFirst()
+		if tc then
+			Duel.SSet(tp,tc)
+		end
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -64,5 +65,5 @@ function c101109066.splimit(e,c)
 	return not c:IsRace(RACE_PLANT)
 end
 function c101109066.relval(e,re,r,rp)
-	return (c101109066.re_activated or re:IsActivated()) and re:GetHandler():IsSetCard(0x141) and bit.band(r,REASON_COST)~=0
+	return re:IsActivated() and re:GetHandler():IsSetCard(0x141) and bit.band(r,REASON_COST)~=0
 end

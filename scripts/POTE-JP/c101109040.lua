@@ -30,9 +30,10 @@ function c101109040.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c101109040.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsRace,1,nil,RACE_ZOMBIE) end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsRace,1,c,RACE_ZOMBIE) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,nil,RACE_ZOMBIE)
+	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,c,RACE_ZOMBIE)
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
 	Duel.Release(g,REASON_COST)

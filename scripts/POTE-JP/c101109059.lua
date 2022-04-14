@@ -44,24 +44,25 @@ function c101109059.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if tg:GetCount()<2 then return end
 	local sc1=tg:Filter(Card.IsControler,nil,tp):GetFirst()
 	local sc2=tg:Filter(Card.IsControler,nil,1-tp):GetFirst()
+	if not sc1 or not sc2 then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(math.max(sc2:GetAttack(),sc2:GetDefense()))
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	sc1:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	sc1:RegisterEffect(e2)
 end
 function c101109059.disfilter(c)
-	return (c:IsSetCard(0x17a) or c:IsCode(56099748)) and c:IsType(TYPE_MONSTER)
+	return (c:IsSetCard(0x17a) or c:IsCode(56099748)) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function c101109059.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g:FilterCount(c101109059.disfilter,nil)>0 and Duel.IsChainDisablable(ev)
+	return g and g:IsExists(c101109059.disfilter,nil) and Duel.IsChainDisablable(ev)
 end
 function c101109059.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

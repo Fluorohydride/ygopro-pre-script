@@ -37,22 +37,21 @@ function c101109064.rcheck(g,tp,c,lv,greater_or_equal,mc)
 	return Auxiliary.RitualCheck(g,tp,c,lv,greater_or_equal) and g:IsContains(mc)
 end
 function c101109064.spfilter(c,e,tp)
+	if not (c:IsSetCard(0x106) and not c:IsCode(101109040)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)) then return false end
 	local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsLocation,nil,LOCATION_MZONE)
 	mg:AddCard(c)
 	if c:IsLocation(LOCATION_GRAVE) then
-		local res=false
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_RITUAL_MATERIAL)
 		e1:SetValue(1)
 		c:RegisterEffect(e1)
-		if c:IsSetCard(0x106) and not c:IsCode(101109040) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
-		and Duel.IsExistingMatchingCard(c101109064.RitualUltimateFilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,c101109064.filter,e,tp,mg,nil,Card.GetLevel,"Greater",true,c) then res=true end
+		local res=Duel.IsExistingMatchingCard(c101109064.RitualUltimateFilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,c101109064.filter,e,tp,mg,nil,Card.GetLevel,"Greater",true,c)
 		e1:Reset()
 		return res
 	else
-		return c:IsSetCard(0x106) and not c:IsCode(101109040) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
-			and Duel.IsExistingMatchingCard(c101109064.RitualUltimateFilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,c101109064.filter,e,tp,mg,nil,Card.GetLevel,"Greater",true,c)
+		return Duel.IsExistingMatchingCard(c101109064.RitualUltimateFilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,c101109064.filter,e,tp,mg,nil,Card.GetLevel,"Greater",true,c)
 	end
 end
 function c101109064.target(e,tp,eg,ep,ev,re,r,rp,chk)
