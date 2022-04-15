@@ -53,11 +53,14 @@ function c101109027.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_MONSTER)
 		and Duel.IsExistingMatchingCard(c101109027.filter,tp,LOCATION_MZONE,0,1,nil)
 end
+function c101109027.costfilter(c,tp)
+	return (c:IsControler(tp) or c:IsFaceup()) and (c:IsRace(RACE_PLANT) or c:IsHasEffect(101109066))
+end
 function c101109027.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() and Duel.CheckReleaseGroup(tp,Card.IsRace,1,nil,RACE_PLANT) end
+	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() and Duel.CheckReleaseGroup(tp,c101109027.costfilter,1,nil,tp) end
 	Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKSHUFFLE,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,nil,RACE_PLANT)
+	local g=Duel.SelectReleaseGroup(tp,c101109027.costfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c101109027.distg(e,tp,eg,ep,ev,re,r,rp,chk)
