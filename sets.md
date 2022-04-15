@@ -6,6 +6,7 @@
 - **April 23, 2022**: POWER OF THE ELEMENTS (POTE-JP): `101109XXX`
 - **May 21, 2022**: Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
 - **June 8, 2022**: Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
+- **June 11, 2022**: ANIMATION CHRONICLE 2022 (AC02-JP) : `100290XXX`
 
 # Announced
 
