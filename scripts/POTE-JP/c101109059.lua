@@ -62,7 +62,7 @@ function c101109059.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(c101109059.disfilter,nil) and Duel.IsChainDisablable(ev)
+	return g and g:IsExists(c101109059.disfilter,1,nil) and Duel.IsChainDisablable(ev)
 end
 function c101109059.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
