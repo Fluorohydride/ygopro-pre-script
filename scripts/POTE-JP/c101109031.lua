@@ -1,4 +1,4 @@
---俱利伽羅天童
+--倶利伽羅天童
 
 --Scripted by mallu11
 function c101109031.initial_effect(c)
