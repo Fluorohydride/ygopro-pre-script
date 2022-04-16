@@ -3,7 +3,7 @@
 --Script by Trishula9
 function c101109050.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,c101109050.mfilter,1,1,c101109050.lcheck)
+	aux.AddLinkProcedure(c,c101109050.mfilter,1,1)
 	c:EnableReviveLimit()
 	--to hand
 	local e1=Effect.CreateEffect(c)
@@ -27,13 +27,8 @@ function c101109050.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101109050.mfilter(c)
-	return c:IsLinkSetCard(0x17a) or c:IsLinkCode(56099748)
-end
-function c101109050.lcheck(g,lc)
-	return g:IsExists(c101109050.lfilter,1,nil)
-end
-function c101109050.lfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5
+	return (c:IsLinkSetCard(0x17a) or c:IsLinkCode(56099748))
+		and (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 or not c:IsLocation(LOCATION_MZONE))
 end
 function c101109050.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
