@@ -16,7 +16,6 @@ function c101109031.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(c101109031.sprcon)
-	e2:SetTarget(c101109031.sprtg)
 	e2:SetOperation(c101109031.sprop)
 	c:RegisterEffect(e2)
 	--special summon
@@ -43,39 +42,30 @@ function c101109031.initial_effect(c)
 end
 function c101109031.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if not rc:IsRelateToEffect(re) or not re:IsActiveType(TYPE_MONSTER) or rc:GetFlagEffect(101109031)>0 then return end
+	if not rc:IsRelateToEffect(re) or not re:IsActiveType(TYPE_MONSTER) then return end
 	local p,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
-	if p==1-tp and loc==LOCATION_MZONE then
-		rc:RegisterFlagEffect(c101109031,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+	if loc==LOCATION_MZONE and rc:GetFlagEffect(101109032-p)==0 then
+		rc:RegisterFlagEffect(101109032-p,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
 	end
 end
-function c101109031.rfilter(c)
-	return c:IsFaceup() and c:GetFlagEffect(101109031)>0 and c:IsReleasable()
+function c101109031.rfilter(c,tp)
+	return c:IsFaceup() and c:GetFlagEffect(101109031+tp)>0 and c:IsReleasable()
 end
 function c101109031.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetMatchingGroup(c101109031.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	return aux.mzctcheckrel(rg,tp)
-end
-function c101109031.sprtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local rg=Duel.GetMatchingGroup(c101109031.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if rg then
-		rg:KeepAlive()
-		e:SetLabelObject(rg)
-		return true
-	else return false end
+	local rg=Duel.GetMatchingGroup(c101109031.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
+	return rg:GetCount()>0 and aux.mzctcheckrel(rg,tp)
 end
 function c101109031.sprop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=e:GetLabelObject()
+	local g=Duel.GetMatchingGroup(c101109031.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
 	Duel.Release(g,REASON_COST)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(g:GetCount()*1500)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE)
 	c:RegisterEffect(e1)
-	g:DeleteGroup()
 end
 function c101109031.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
