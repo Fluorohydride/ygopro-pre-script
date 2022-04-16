@@ -55,7 +55,7 @@ function c101109031.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetMatchingGroup(c101109031.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	return rg:GetCount()>0 and rg:FilterCount(Card.IsReleasable,nil)==rg:GetCount() and aux.mzctcheckrel(rg,tp)
+	return rg:GetCount()>0 and rg:FilterCount(Card.IsReleasable,nil)==rg:GetCount() and aux.mzctcheck(rg,tp)
 end
 function c101109031.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(c101109031.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
@@ -63,7 +63,7 @@ function c101109031.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(g:GetCount()*1500)
+	e1:SetValue(rg:GetCount()*1500)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE)
 	c:RegisterEffect(e1)
 end
