@@ -49,17 +49,17 @@ function c101109031.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101109031.rfilter(c,tp)
-	return c:IsFaceup() and c:GetFlagEffect(101109031+tp)>0 and c:IsReleasable()
+	return c:IsFaceup() and c:GetFlagEffect(101109031+tp)>0
 end
 function c101109031.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetMatchingGroup(c101109031.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	return rg:GetCount()>0 and aux.mzctcheckrel(rg,tp)
+	return rg:GetCount()>0 and rg:FilterCount(Card.IsReleasable,nil)==rg:GetCount() and aux.mzctcheckrel(rg,tp)
 end
 function c101109031.sprop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetMatchingGroup(c101109031.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	Duel.Release(g,REASON_COST)
+	local rg=Duel.GetMatchingGroup(c101109031.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
+	Duel.Release(rg,REASON_COST)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
