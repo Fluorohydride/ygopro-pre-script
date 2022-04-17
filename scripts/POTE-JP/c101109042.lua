@@ -1,53 +1,53 @@
 --狱水机·奇诺卡洛斯
-function c110900042.initial_effect(c)
+function c101109042.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x284),aux.FilterBoolFunction(Card.IsRace,RACE_AQUA),true)
 	--to hand or grave
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(110900042,0))
+	e1:SetDescription(aux.Stringid(101109042,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCountLimit(1,110900042)
-	e1:SetTarget(c110900042.target)
-	e1:SetOperation(c110900042.operation)
+	e1:SetCountLimit(1,101109042)
+	e1:SetTarget(c101109042.target)
+	e1:SetOperation(c101109042.operation)
 	c:RegisterEffect(e1)
 	--tograve and spsummon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(110900042,1))
+	e2:SetDescription(aux.Stringid(101109042,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,110900042+100)
-	e2:SetTarget(c110900042.tgtg)
-	e2:SetOperation(c110900042.tgop)
+	e2:SetCountLimit(1,101109042+100)
+	e2:SetTarget(c101109042.tgtg)
+	e2:SetOperation(c101109042.tgop)
 	c:RegisterEffect(e2)
 	--discard deck
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(110900042,2))
+	e3:SetDescription(aux.Stringid(101109042,2))
 	e3:SetCategory(CATEGORY_DECKDES)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetCountLimit(1,110900042+200)
-	e3:SetCondition(c110900042.discon)
-	e3:SetTarget(c110900042.distg)
-	e3:SetOperation(c110900042.disop)
+	e3:SetCountLimit(1,101109042+200)
+	e3:SetCondition(c101109042.discon)
+	e3:SetTarget(c101109042.distg)
+	e3:SetOperation(c101109042.disop)
 	c:RegisterEffect(e3)
 end
 
-function c110900042.cfilter(c)
+function c101109042.cfilter(c)
 	return c:IsSetCard(0x284) and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
-function c110900042.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c110900042.cfilter,tp,LOCATION_DECK,0,1,nil) end
+function c101109042.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101109042.cfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-function c110900042.operation(e,tp,eg,ep,ev,re,r,rp)
+function c101109042.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local g=Duel.SelectMatchingCard(tp,c110900042.cfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101109042.cfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		local tc=g:GetFirst()
 		if tc and tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectOption(tp,1190,1191)==0) then
@@ -58,38 +58,38 @@ function c110900042.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c110900042.spfilter(c,e,tp)
+function c101109042.spfilter(c,e,tp)
 	return c:IsSetCard(0x284) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
-function c110900042.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c101109042.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc~=c end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(c110900042.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(c101109042.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.GetMZoneCount(tp)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
-function c110900042.tgop(e,tp,eg,ep,ev,re,r,rp)
+function c101109042.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c110900042.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c101109042.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 and tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
 end
-function c110900042.discon(e,tp,eg,ep,ev,re,r,rp)
+function c101109042.discon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
-function c110900042.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101109042.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,5) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(5)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,5)
 end
-function c110900042.disop(e,tp,eg,ep,ev,re,r,rp)
+function c101109042.disop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.DiscardDeck(p,d,REASON_EFFECT)
 end
