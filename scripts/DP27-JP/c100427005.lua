@@ -73,16 +73,17 @@ function c100427005.pntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100427005.pnfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
-function c100427005.filter(c)
-	return c:IsCanChangePosition()
-end
 function c100427005.pnop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsFaceup() and tc:IsRelateToEffect(e)) then return end
+	local b1=tc:IsCanChangePosition()
+	local b2=aux.NegateMonsterFilter(tc)
 	local op=0
-	if tc:IsCanChangePosition() then
+	if b1 and b2 then
 		op=Duel.SelectOption(tp,aux.Stringid(100427005,0),aux.Stringid(100427005,1))
-	else op=1 end
+	end
+	if b1 then op=0 end
+	if b2 then op=1 end
 	if op==0 then
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 	else
