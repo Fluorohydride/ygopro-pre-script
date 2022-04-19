@@ -9,6 +9,7 @@
 - **June 11, 2022**: ANIMATION CHRONICLE 2022 (AC02-JP) : `100290XXX`
 
 # Announced
+- **2022**: Pharaonic Legend Pack (VP22-JP) : `100291XXX`
 
 # Archived
 ## Other packs
