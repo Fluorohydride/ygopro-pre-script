@@ -1,4 +1,6 @@
---狱水机·谢伦
+--ティアラメンツ・シェイレーン
+--
+--Script by JoyJ
 function c101109014.initial_effect(c)
 	--sp summon
 	local e1=Effect.CreateEffect(c)

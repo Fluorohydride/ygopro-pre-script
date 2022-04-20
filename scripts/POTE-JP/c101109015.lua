@@ -1,4 +1,6 @@
---狱水机·雷诺之心
+--ティアラメンツ・レイノハート
+--
+--Script by JoyJ
 function c101109015.initial_effect(c)
 	--send to grave
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---于壹世坏倾轧的爪音
+--壱世壊に軋む爪音
+--
+--Script by JoyJ
 function c101109071.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

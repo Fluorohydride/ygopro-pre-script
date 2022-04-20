@@ -1,4 +1,6 @@
---狱水机·梅露
+--ティアラメンツ・メイルゥ
+--
+--Script by JoyJ
 function c101109012.initial_effect(c)
 	--deckdes
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,6 @@
---于壹世坏奏响的哀唱
+--壱世壊に奏でる哀唱
+--
+--Script by JoyJ
 function c101109072.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

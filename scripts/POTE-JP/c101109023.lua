@@ -1,14 +1,7 @@
---童话动物·小海豹
+--メルフィー・ラッシィ
+--
+--Script by JoyJ
 function c101109023.initial_effect(c)
-	if not c101109023.reg then
-		c101109023.reg = true
-		--condition
-		local e0=Effect.CreateEffect(c)
-		e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e0:SetCode(EVENT_TO_HAND)
-		e0:SetOperation(c101109023.operation)
-		Duel.RegisterEffect(e0,0)
-	end
 	--synchro summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101109023,0))
@@ -33,6 +26,16 @@ function c101109023.initial_effect(c)
 	e2:SetTarget(c101109023.xyztg)
 	e2:SetOperation(c101109023.xyzop)
 	c:RegisterEffect(e2)
+	--
+	if not c101109023.global_check then
+		c101109023.global_check=true
+		--condition
+		local e0=Effect.CreateEffect(c)
+		e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e0:SetCode(EVENT_TO_HAND)
+		e0:SetOperation(c101109023.operation)
+		Duel.RegisterEffect(e0,0)
+	end
 end
 function c101109023.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
@@ -91,7 +94,7 @@ function c101109023.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Debug.Message(tc:IsRelateToEffect(e))
 	Debug.Message(c:IsRelateToEffect(e))
-	if tc:IsRelateToEffect(e) and c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e)  then
+	if tc:IsRelateToEffect(e) and c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then
 		Duel.Overlay(tc,Group.FromCards(c))
 	end
 end

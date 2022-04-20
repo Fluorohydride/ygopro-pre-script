@@ -1,4 +1,6 @@
---狱水机·万花筒之心
+--ティアラメンツ・カレイドハート
+--
+--Script by JoyJ
 function c101109043.initial_effect(c)
 	c:EnableReviveLimit()
 	--fusion material
@@ -59,7 +61,6 @@ function c101109043.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 	end
 end
-
 function c101109043.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end

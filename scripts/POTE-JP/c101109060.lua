@@ -1,4 +1,6 @@
---壹世坏-佩鲁利诺
+--壱世壊＝ペルレイノ
+--
+--Script by JoyJ
 function c101109060.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -31,7 +33,6 @@ function c101109060.initial_effect(c)
 	e3:SetOperation(c101109060.desop)
 	c:RegisterEffect(e3)
 end
-
 function c101109060.filter(c)
 	return ((c:IsSetCard(0x284) and c:IsType(TYPE_MONSTER)) or c:IsCode(56099748)) and c:IsAbleToHand()
 end

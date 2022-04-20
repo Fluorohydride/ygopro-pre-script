@@ -1,4 +1,6 @@
---狱水机·哈弗妮丝
+--ティアラメンツ・ハゥフニス
+--
+--Script by JoyJ
 function c101109013.initial_effect(c)
 	--sp summon
 	local e1=Effect.CreateEffect(c)

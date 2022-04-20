@@ -1,4 +1,6 @@
---雀跃童话动物家族
+--うきうきメルフィーズ
+--
+--Script by JoyJ
 function c101109045.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

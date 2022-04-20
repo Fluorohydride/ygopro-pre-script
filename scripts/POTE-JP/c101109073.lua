@@ -1,4 +1,6 @@
---于壹世坏回荡的残响
+--壱世壊に澄み渡る残響
+--
+--Script by JoyJ
 function c101109073.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -33,7 +35,7 @@ function c101109073.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(c101109073.actcfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c101109073.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101109073.cfilter,tp,LOCATION_HAND,0,1,nil)  end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101109073.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,eg,1,0,0)

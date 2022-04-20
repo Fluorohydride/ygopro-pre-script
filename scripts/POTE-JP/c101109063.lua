@@ -1,4 +1,6 @@
---童话动物的互相瞪视
+--メルフィーとにらめっこ
+--
+--Script by JoyJ
 function c101109063.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

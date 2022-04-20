@@ -1,4 +1,6 @@
---童话动物·小袋鼠
+--メルフィー・ワラビィ
+--
+--Script by JoyJ
 function c101109022.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)

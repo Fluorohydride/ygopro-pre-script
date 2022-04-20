@@ -1,4 +1,6 @@
---狱水机·奇诺卡洛斯
+--ティアラメンツ・キトカロス
+--
+--Script by JoyJ
 function c101109042.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x284),aux.FilterBoolFunction(Card.IsRace,RACE_AQUA),true)
@@ -36,7 +38,6 @@ function c101109042.initial_effect(c)
 	e3:SetOperation(c101109042.disop)
 	c:RegisterEffect(e3)
 end
-
 function c101109042.cfilter(c)
 	return c:IsSetCard(0x284) and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
