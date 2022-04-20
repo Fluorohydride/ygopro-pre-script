@@ -10,6 +10,7 @@ function c101109070.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,101109070+EFFECT_COUNT_CODE_OATH)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCost(c101109070.cost)
 	e1:SetTarget(c101109070.target)
 	e1:SetOperation(c101109070.activate)
@@ -67,49 +68,30 @@ function c101109070.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101109070.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
-	local b=aux.IsMaterialListCode(e:GetLabelObject(),68468459)
 	if ft1<=0 and ft2<=0 then return end
-	if g:GetCount()<=0 then return end
-	if g:GetCount()==1 then
-		if ft1>0 and ft2==0 then
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		elseif ft1==0 and ft2>0 then
-			Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP)
-		else
-			local tc=g:GetFirst()
-			local s1=tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-			local s2=tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
-			local op=0
-			Duel.Hint(HINT_SELECTMSG,tp,0)
-			if s1 and s2 then op=Duel.SelectOption(tp,aux.Stringid(101109070,0),aux.Stringid(101109070,1))
-			elseif s1 then op=Duel.SelectOption(tp,aux.Stringid(101109070,0))
-			elseif s2 then op=Duel.SelectOption(tp,aux.Stringid(101109070,1))+1
-			else return end
-			if op==0 then Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-			else Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP) end
-		end
-	end
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()==2 then
-		if b and ft1>1 and g:FilterCount(Card.IsCanBeSpecialSummoned,nil,e,0,tp,false,false)==2
-			and Duel.SelectYesNo(tp,aux.Stringid(101109070,2)) then
+	    local b=aux.IsMaterialListCode(e:GetLabelObject(),68468459)
+		if b and ft1>1 and g:FilterCount(Card.IsCanBeSpecialSummoned,nil,e,0,tp,false,false,POS_FACEUP_DEFENSE)==2
+			and Duel.SelectYesNo(tp,aux.Stringid(101109070,0)) then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		else
 			if ft1>0 and ft2==0 then
-				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101109070,3))
+				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101109070,1))
 				local sg=g:Select(tp,1,1,nil)
 				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 			elseif ft1==0 and ft2>0 then
-				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101109070,4))
+				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101109070,2))
 				local sg=g:Select(tp,1,1,nil)
 				Duel.SpecialSummon(sg,0,tp,1-tp,false,false,POS_FACEUP)
 			else
-				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101109070,3))
+				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101109070,1))
 				local sg=g:Select(tp,1,1,nil)
-				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-				Duel.SpecialSummon(g-sg,0,tp,1-tp,false,false,POS_FACEUP)
+				Duel.SpecialSummonStep(sg:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
+				Duel.SpecialSummonStep((g-sg):GetFirst(),0,tp,1-tp,false,false,POS_FACEUP)
+                Duel.SpecialSummonComplete()
 			end
 		end
 	end
