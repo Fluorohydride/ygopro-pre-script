@@ -28,17 +28,14 @@ end
 function c100427027.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
-function c100427027.filter(c)
-	return c:IsFaceup() and c:IsAttackAbove(0)
-end
 function c100427027.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(c100427027.filter,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tg=g:GetMaxGroup(Card.GetAttack)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
 end
 function c100427027.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100427027.filter,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()>0 then
 		local tg=g:GetMaxGroup(Card.GetAttack)
 		local dam=0

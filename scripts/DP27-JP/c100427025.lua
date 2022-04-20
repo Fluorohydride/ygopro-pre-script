@@ -52,8 +52,8 @@ function c100427025.initial_effect(c)
 	e4:SetOperation(c100427025.cfop)
 	c:RegisterEffect(e4)
 end
-function c100427025.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,17484499)
+function c100427025.actcon(e)
+	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,17484499)
 end
 function c100427025.aclimit(e,re,tp)
 	return re:GetActivateLocation()==LOCATION_GRAVE
@@ -86,6 +86,7 @@ function c100427025.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100427025.cfcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp and Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)>0
+		and Duel.GetDrawCount(1-tp)>0 and e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)
 end
 function c100427025.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -93,19 +94,18 @@ function c100427025.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(Duel.AnnounceCard(tp))
 end
 function c100427025.cfop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)<=0 then return end
-	Duel.ConfirmDecktop(1-tp,1)
-	local g=Duel.GetDecktopGroup(1-tp,1)
-	local tc=g:GetFirst()
-	local opt=e:GetLabel()
-	if (opt==tc:GetCode()) then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_DRAW)
-		e1:SetOperation(c100427025.disop)
-		tc:RegisterEffect(e1)
-	end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_DRAW)
+	e1:SetLabel(e:GetLabel())
+	e1:SetOperation(c100427025.disop)
+	e1:SetReset(RESET_PHASE+PHASE_DRAW)
+	Duel.RegisterEffect(e1,tp)
 end
 function c100427025.disop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
+	if r~=REASON_RULE then return end
+	Duel.ConfirmCards(tp,eg)
+	local g=eg:Filter(Card.IsCode,nil,e:GetLabel())
+	Duel.SendtoGrave(g,REASON_EFFECT)
+	Duel.ShuffleHand(1-tp)
 end

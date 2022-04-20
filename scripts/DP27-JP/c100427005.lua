@@ -7,6 +7,7 @@ function c100427005.initial_effect(c)
 	c:EnableReviveLimit()
 	--equip
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100427005,0))
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -17,6 +18,7 @@ function c100427005.initial_effect(c)
 	c:RegisterEffect(e1)
 	--pos or neg
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100427005,1))
 	e2:SetCategory(CATEGORY_POSITION+CATEGORY_DISABLE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -47,21 +49,23 @@ function c100427005.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=sg:GetFirst()
 	while tc do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		Duel.Equip(tp,tc,c)
+		Duel.Equip(tp,tc,c,true,true)
 		tc=sg:GetNext()
 	end
+	Duel.EquipComplete()
 end
 function c100427005.pncon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
-function c100427005.cfilter(c,ec)
-	return c:IsType(TYPE_SPELL+TYPE_EQUIP) and c:IsControler(tp) and c:IsAbleToGraveAsCost()
+function c100427005.cfilter(c,tp)
+	return c:IsType(TYPE_EQUIP) and c:IsType(TYPE_SPELL) and c:IsControler(tp) and c:IsAbleToGraveAsCost()
 end
 function c100427005.pncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetEquipGroup():IsExists(c100427005.cfilter,1,nil,e:GetHandlerPlayer()) end
+	local cg=c:GetEquipGroup()
+	if chk==0 then return cg:IsExists(c100427005.cfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=c:GetEquipGroup():FilterSelect(tp,c100427005.cfilter,1,1,nil,e:GetHandlerPlayer())
+	local g=cg:FilterSelect(tp,c100427005.cfilter,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c100427005.pnfilter(c)
@@ -80,7 +84,7 @@ function c100427005.pnop(e,tp,eg,ep,ev,re,r,rp)
 	local b2=aux.NegateMonsterFilter(tc)
 	local op=0
 	if b1 and b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(100427005,0),aux.Stringid(100427005,1))
+		op=Duel.SelectOption(tp,aux.Stringid(100427005,2),aux.Stringid(100427005,3))
 	end
 	if b1 then op=0 end
 	if b2 then op=1 end

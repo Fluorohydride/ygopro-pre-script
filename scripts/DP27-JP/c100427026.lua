@@ -10,6 +10,7 @@ function c100427026.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100427026+EFFECT_COUNT_CODE_OATH)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCondition(c100427026.condition)
 	e1:SetTarget(c100427026.target)
 	e1:SetOperation(c100427026.activate)
@@ -31,13 +32,13 @@ function c100427026.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g1=g:Filter(Card.IsControler,nil,tp)
 	local g2=g:Filter(Card.IsControler,nil,1-tp)
 	if Duel.SendtoGrave(g,REASON_EFFECT)==0 then return end
-	local ct1=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ct1>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ct1=1 end
-	local ft1=g2:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
+	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft1>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft1=1 end
+	local ct1=g:FilterCount(c100427026.ctfilter,nil,1-tp)
 	if ct1>ft1 then ct1=ft1 end
-	local ct2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
-	if ct2>1 and Duel.IsPlayerAffectedByEffect(1-tp,59822133) then ct2=1 end
-	local ft2=g1:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
+	local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	if ft2>1 and Duel.IsPlayerAffectedByEffect(1-tp,59822133) then ft2=1 end
+	local ct2=g1:FilterCount(c100427026.ctfilter,nil,tp)
 	if ct2>ft2 then ct2=ft2 end
 	local sg1=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsCanBeSpecialSummoned),tp,0,LOCATION_GRAVE,nil,e,0,tp,false,false)
 	local sg2=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsCanBeSpecialSummoned),1-tp,0,LOCATION_GRAVE,nil,e,0,1-tp,false,false)
@@ -62,6 +63,7 @@ function c100427026.activate(e,tp,eg,ep,ev,re,r,rp)
 		local stg=Duel.GetMatchingGroup(c100427026.stfilter,tp,LOCATION_DECK,0,nil)
 		if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,17484499) and stg:GetCount()>0
 			and Duel.SelectYesNo(tp,aux.Stringid(100427026,2)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local tc=stg:Select(tp,1,1,nil):GetFirst()
 			if tc and Duel.SSet(tp,tc)~=0 then
@@ -74,6 +76,9 @@ function c100427026.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
+end
+function c100427026.ctfilter(c,p)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(p) and c:IsType(TYPE_MONSTER)
 end
 function c100427026.stfilter(c)
 	return c:IsType(TYPE_TRAP) and c:IsSSetable()

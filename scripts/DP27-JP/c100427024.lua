@@ -5,6 +5,7 @@ function c100427024.initial_effect(c)
 	aux.AddCodeList(c,17484499)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100427024,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
@@ -17,6 +18,7 @@ function c100427024.initial_effect(c)
 	c:RegisterEffect(e1)
 	--discard deck
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100427024,1))
 	e2:SetCategory(CATEGORY_DECKDES)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
@@ -34,7 +36,8 @@ function c100427024.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100427024.cfilter,1,nil,tp)
 end
 function c100427024.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100427024.spfilter(c,e,tp)
@@ -45,7 +48,7 @@ function c100427024.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100427024.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0
-		and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100427024,0)) then
+		and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100427024,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
@@ -60,28 +63,32 @@ function c100427024.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,PLAYER_ALL,5)
 end
 function c100427024.disop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardDeck(tp,5,REASON_EFFECT)>0 and Duel.DiscardDeck(1-tp,5,REASON_EFFECT)>0 then
-		local b1=Duel.IsPlayerCanDiscardDeck(tp,5)
-		local b2=Duel.IsPlayerCanDiscardDeck(1-tp,5)
-		if (b1 or b2) and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,17484499)
-			and Duel.SelectYesNo(tp,aux.Stringid(100427024,1)) then
+	local g1=Duel.GetDecktopGroup(tp,5)
+	local g2=Duel.GetDecktopGroup(1-tp,5)
+	g1:Merge(g2)
+	Duel.DisableShuffleCheck()
+	if Duel.SendtoGrave(g1,REASON_EFFECT)~=0 and g1:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)
+		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,17484499) then
+		local off=1
+		local ops={}
+		local opval={}
+		if Duel.IsPlayerCanDiscardDeck(tp,5) then
+			ops[off]=aux.Stringid(100427024,4)
+			opval[off-1]=tp
+			off=off+1
+		end
+		if Duel.IsPlayerCanDiscardDeck(1-tp,5) then
+			ops[off]=aux.Stringid(100427024,5)
+			opval[off-1]=1-tp
+			off=off+1
+		end
+		ops[off]=aux.Stringid(100427024,6)
+		opval[off-1]=-1
+		local op=Duel.SelectOption(tp,table.unpack(ops))
+		local sel=opval[op]
+		if sel~=-1 then
 			Duel.BreakEffect()
-			local s=0
-			if b1 and not b2 then
-				s=Duel.SelectOption(tp,aux.Stringid(100427024,2))+1
-			end
-			if not b1 and b2 then
-				s=Duel.SelectOption(tp,aux.Stringid(100427024,3))+2
-			end
-			if b1 and b2 then
-				s=Duel.SelectOption(tp,aux.Stringid(100427024,2),aux.Stringid(100427024,3))+1
-			end
-			if s==1 then
-				Duel.DiscardDeck(tp,5,REASON_EFFECT)
-			end
-			if s==2 then
-				Duel.DiscardDeck(1-tp,5,REASON_EFFECT)
-			end
+			Duel.DiscardDeck(sel,5,REASON_EFFECT)
 		end
 	end
 end
