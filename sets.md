@@ -7,9 +7,11 @@
 - **May 21, 2022**: Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
 - **June 8, 2022**: Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
 - **June 11, 2022**: ANIMATION CHRONICLE 2022 (AC02-JP) : `100290XXX`
+- **June 25, 2022**: Structure Deck: Legend of the Crystals (SD44-JP): `100344XXX`
 
 # Announced
-- **2022**: Pharaonic Legend Pack (VP22-JP) : `100291XXX`
+- **May, 2022**: Pharaonic Legend Pack (VP22-JP) : `100291XXX`
+- **August 6, 2022**: Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
 
 # Archived
 ## Other packs
@@ -138,7 +140,6 @@
 - Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
 - Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
 - Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
-- Structure Deck: Legend of the Crystals (SD44-JP): `100344XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
