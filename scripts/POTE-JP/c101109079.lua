@@ -14,8 +14,7 @@ function c101109079.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101109079.condition(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return ep==1-tp and re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return ep==1-tp and re:GetActivateLocation()==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function c101109079.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -48,6 +47,7 @@ function c101109079.activate(e,tp,eg,ep,ev,re,r,rp)
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetCode(EFFECT_DISABLE_EFFECT)
 				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e2:SetValue(RESET_TURN_SET)
 				rc:RegisterEffect(e2)
 				Duel.SpecialSummonComplete()
 			end

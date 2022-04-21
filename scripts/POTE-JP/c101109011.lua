@@ -20,6 +20,7 @@ function c101109011.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetCondition(c101109011.condition)
 	e2:SetTarget(c101109011.tglimit)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
@@ -51,12 +52,9 @@ end
 function c101109011.cfilter(c,tp,rp)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and rp==1-tp and c:IsReason(REASON_EFFECT)
 end
-function c101109011.cfilter2(c,g)
-	return c:IsType(TYPE_FUSION) and not g:IsContains(c)
-end
 function c101109011.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101109011.cfilter,1,nil,tp,rp) and not eg:IsContains(e:GetHandler())
-		and Duel.IsExistingMatchingCard(c101109011.cfilter2,tp,LOCATION_GRAVE,0,1,nil,eg)
+		and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,eg,TYPE_FUSION)
 end
 function c101109011.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

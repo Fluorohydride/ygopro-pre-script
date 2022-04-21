@@ -9,6 +9,7 @@ function c101109058.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to grave
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101109058,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -47,12 +48,12 @@ function c101109058.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 	if (#g1~=0 or #g2~=0) then
 		local g=nil
-		if #g1~=0 and (#g2==0 or Duel.SelectOption(tp,aux.Stringid(101109058,0),aux.Stringid(101109058,1))==0) then
+		if #g1~=0 and (#g2==0 or Duel.SelectOption(tp,aux.Stringid(101109058,1),aux.Stringid(101109058,2))==0) then
 			g=g1
 		else
 			g=g2
+			Duel.ConfirmCards(tp,g)
 		end
-		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local tg=g:FilterSelect(tp,Card.IsAbleToGrave,1,1,nil)
 		Duel.SendtoGrave(tg,REASON_EFFECT)

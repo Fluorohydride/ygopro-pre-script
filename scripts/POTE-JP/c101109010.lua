@@ -74,7 +74,7 @@ function c101109010.atkfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function c101109010.atkval(e,c)
-	return Duel.GetMatchingGroupCount(c101109010.atkfilter,e:GetHandlerPlayer(),LOCATION_REMOVED,LOCATION_REMOVED,nil)*400
+	return Duel.GetMatchingGroupCount(c101109010.atkfilter,0,LOCATION_REMOVED,LOCATION_REMOVED,nil)*400
 end
 function c101109010.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget()

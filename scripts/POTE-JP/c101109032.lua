@@ -26,13 +26,16 @@ function c101109032.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101109032.filter(c,sc,tp)
-	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsDiscardable()
-		and Duel.IsExistingMatchingCard(c101109032.srfilter,tp,LOCATION_DECK,0,1,nil,Group.FromCards(c,sc))
+	if not (c:IsAttribute(ATTRIBUTE_EARTH) and c:IsDiscardable()) then return false end
+	local race=c:GetOriginalRace()|sc:GetOriginalRace()
+	return Duel.IsExistingMatchingCard(c101109032.srfilter,tp,LOCATION_DECK,0,1,nil,race)
 end
-function c101109032.srfilter(c,g)
-	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAttackBelow(1850) and c:IsAbleToHand() and g:IsExists(Card.IsRace,1,nil,c:GetRace())
+function c101109032.srfilter(c,race)
+	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAttackBelow(1850) and c:IsAbleToHand()
+		and c:GetOriginalRace()&race>0
 end
 function c101109032.srcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(100)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c101109032.filter,tp,LOCATION_HAND,0,1,c,c,tp) and c:IsDiscardable() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
@@ -42,16 +45,20 @@ function c101109032.srcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end
 function c101109032.srtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local sc=e:GetLabelObject()
-	if chk==0 then return Duel.IsExistingMatchingCard(c101109032.srfilter,tp,LOCATION_DECK,0,1,nil,Group.FromCards(c,sc)) end
+	if chk==0 then
+		local res=e:GetLabel()==100
+		e:SetLabel(0)
+		return res
+	end
+	e:SetLabel(0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101109032.srop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sc=e:GetLabelObject()
+	local race=c:GetOriginalRace()|sc:GetOriginalRace()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c101109032.srfilter,tp,LOCATION_DECK,0,1,1,nil,Group.FromCards(c,sc))
+	local g=Duel.SelectMatchingCard(tp,c101109032.srfilter,tp,LOCATION_DECK,0,1,1,nil,race)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
