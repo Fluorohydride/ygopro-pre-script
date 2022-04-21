@@ -20,7 +20,7 @@ function c101109014.initial_effect(c)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCountLimit(1,101109014+100)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetTarget(c101109014.condition)
+	e3:SetCondition(c101109014.condition)
 	e3:SetTarget(c101109014.target)
 	e3:SetOperation(c101109014.activate)
 	c:RegisterEffect(e3)
@@ -103,8 +103,8 @@ function c101109014.activate(e,tp,eg,ep,ev,re,r,rp)
 		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
 			local mat1=Duel.SelectFusionMaterial(tp,tc,mg,e:GetHandler(),chkf)
 			tc:SetMaterial(mat1)
-			if mat1:IsExists(Card.IsFacedown,1,nil) then
-				local cg=mat1:Filter(Card.IsFacedown,nil)
+			if mat1:IsExists(c101109014.fdfilter,1,nil) then
+				local cg=mat1:Filter(c101109014.fdfilter,nil)
 				Duel.ConfirmCards(1-tp,cg)
 			end
 			Duel.SendtoDeck(mat1,nil,SEQ_DECKTOP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
@@ -129,6 +129,9 @@ function c101109014.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc:CompleteProcedure()
 	end
+end
+function c101109014.fdfilter(c)
+	return c:IsLocation(LOCATION_MZONE) and c:IsFacedown() or c:IsLocation(LOCATION_HAND)
 end
 function c101109014.seqfilter(c,tp)
 	return c:IsLocation(LOCATION_DECK) and c:IsControler(tp)
