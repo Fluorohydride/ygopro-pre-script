@@ -14,7 +14,7 @@ function c100290042.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(c100290042.sptg)
 	e1:SetOperation(c100290042.spop)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--atk gain
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)

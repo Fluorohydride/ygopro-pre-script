@@ -73,7 +73,7 @@ function c101109070.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ft1<=0 and ft2<=0 then return end
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()==2 then
-	    local b=aux.IsMaterialListCode(e:GetLabelObject(),68468459)
+		local b=aux.IsMaterialListCode(e:GetLabelObject(),68468459)
 		if b and ft1>1 and g:FilterCount(Card.IsCanBeSpecialSummoned,nil,e,0,tp,false,false,POS_FACEUP_DEFENSE)==2
 			and Duel.SelectYesNo(tp,aux.Stringid(101109070,0)) then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
@@ -91,7 +91,7 @@ function c101109070.activate(e,tp,eg,ep,ev,re,r,rp)
 				local sg=g:Select(tp,1,1,nil)
 				Duel.SpecialSummonStep(sg:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
 				Duel.SpecialSummonStep((g-sg):GetFirst(),0,tp,1-tp,false,false,POS_FACEUP)
-                Duel.SpecialSummonComplete()
+				Duel.SpecialSummonComplete()
 			end
 		end
 	end

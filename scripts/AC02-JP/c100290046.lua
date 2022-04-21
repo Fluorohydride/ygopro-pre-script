@@ -45,7 +45,7 @@ function c100290046.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 or g:GetCount()~=2 or Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 	local tc=g:GetFirst()
 	local fid=c:GetFieldID()
-	while tc do 
+	while tc do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		tc:RegisterFlagEffect(100290046,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		local e2=Effect.CreateEffect(c)

@@ -17,35 +17,35 @@ function s.tgfilter(c)
 end
 function s.spfilter(c,e,tp,g)
 	if not (aux.IsCodeListed(c,25652259) and aux.IsCodeListed(c,64788463) and aux.IsCodeListed(c,90876561)) then return false end
-    local proc=c:IsCode(100290001)
-    if not c:IsCanBeSpecialSummoned(e,0,tp,proc,proc) then return false end
-    return (c:IsLocation(LOCATION_DECK) and Duel.GetMZoneCount(tp,g)>0
-        or c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,g,c)>0)
+	local proc=c:IsCode(100290001)
+	if not c:IsCanBeSpecialSummoned(e,0,tp,proc,proc) then return false end
+	return (c:IsLocation(LOCATION_DECK) and Duel.GetMZoneCount(tp,g)>0
+		or c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,g,c)>0)
 end
 function s.fgoal(g,e,tp)
-    return aux.dncheck(g) and Duel.IsExistingMatchingCard(s.spfilter,tp,
-        LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil,e,tp,g)
+	return aux.dncheck(g) and Duel.IsExistingMatchingCard(s.spfilter,tp,
+		LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil,e,tp,g)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 	if chk==0 then return g:CheckSubGroup(s.fgoal,3,3,e,tp) end
 	Duel.SetOperationInfo(0,LOCATION_HAND+LOCATION_MZONE,nil,3,tp,0)
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,
-        LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,
+		LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,3,3)
-    if sg and Duel.SendtoGrave(sg,REASON_EFFECT)>0 then
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-        local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,
-            LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil,e,tp,nil):GetFirst()
-        if tc then
-            Duel.BreakEffect()
-            local proc=tc:IsCode(100290001)
-            Duel.SpecialSummon(tc,0,tp,tp,proc,proc,POS_FACEUP)
-            if proc then tc:CompleteProcedure() end
-        end
-    end
+	if sg and Duel.SendtoGrave(sg,REASON_EFFECT)>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,
+			LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil,e,tp,nil):GetFirst()
+		if tc then
+			Duel.BreakEffect()
+			local proc=tc:IsCode(100290001)
+			Duel.SpecialSummon(tc,0,tp,tp,proc,proc,POS_FACEUP)
+			if proc then tc:CompleteProcedure() end
+		end
+	end
 end
