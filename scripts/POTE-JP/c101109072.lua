@@ -84,9 +84,9 @@ function c101109072.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101109072.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local tc=Duel.SelectMatchingCard(tp,c101109072.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #tc>0 then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
+	local g=Duel.SelectMatchingCard(tp,c101109072.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end

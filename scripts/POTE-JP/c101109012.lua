@@ -19,7 +19,7 @@ function c101109012.initial_effect(c)
 	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101109012,1))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_GRAVE_ACTION)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCountLimit(1,101109012+100)
@@ -67,7 +67,9 @@ function c101109012.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c101109012.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local chkf=tp
+	if not c:IsRelateToEffect(e) or c:IsImmuneToEffect(e) then return end
 	local mg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101109012.filter0),tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil,e)
 	local sg1=Duel.GetMatchingGroup(c101109012.filter1,tp,LOCATION_EXTRA,0,nil,e,tp,mg,nil,chkf)
 	local mg2=nil

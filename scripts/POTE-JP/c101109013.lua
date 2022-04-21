@@ -17,7 +17,7 @@ function c101109013.initial_effect(c)
 	--fusion
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101109013,1))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_GRAVE_ACTION)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCountLimit(1,101109013+100)
@@ -28,10 +28,11 @@ function c101109013.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101109013.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsControler(1-tp) and re:GetActivateLocation()==LOCATION_MZONE
+	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetActivateLocation()==LOCATION_MZONE
 end
 function c101109013.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsPlayerCanDiscardDeck(tp,3) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,3)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
@@ -72,7 +73,9 @@ function c101109013.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c101109013.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local chkf=tp
+	if not c:IsRelateToEffect(e) or c:IsImmuneToEffect(e) then return end
 	local mg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101109013.filter0),tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil,e)
 	local sg1=Duel.GetMatchingGroup(c101109013.filter1,tp,LOCATION_EXTRA,0,nil,e,tp,mg,nil,chkf)
 	local mg2=nil
