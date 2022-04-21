@@ -10,7 +10,7 @@ function c101109072.initial_effect(c)
 	--quick
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101109072,0))
-	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_SEARCH+CATEGORY_TOGRAVE)
+	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
@@ -84,9 +84,9 @@ function c101109072.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101109072.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local tc=Duel.SelectMatchingCard(tp,c101109072.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #tc>0 then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
+	local g=Duel.SelectMatchingCard(tp,c101109072.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
