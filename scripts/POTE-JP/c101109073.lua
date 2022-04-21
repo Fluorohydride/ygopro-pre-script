@@ -29,6 +29,7 @@ function c101109073.actcfilter(c)
 end
 function c101109073.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
+		and re:GetHandler():IsAbleToDeck()
 		and Duel.IsExistingMatchingCard(c101109073.actcfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c101109073.cfilter(c)
@@ -65,7 +66,8 @@ end
 function c101109073.thfilter(c)
 	return c:IsSetCard(0x284) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToHand()
 end
-function c101109073.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101109073.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101109073.thfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101109073.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c101109073.thfilter,tp,LOCATION_REMOVED,0,1,1,nil)
@@ -74,6 +76,6 @@ end
 function c101109073.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,LOCATION_REMOVED)
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
