@@ -10,7 +10,7 @@ function c101109072.initial_effect(c)
 	--quick
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101109072,0))
-	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_SEARCH+CATEGORY_TOGRAVE)
+	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)

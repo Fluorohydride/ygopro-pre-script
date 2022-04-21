@@ -20,7 +20,7 @@ function c101109014.initial_effect(c)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCountLimit(1,101109014+100)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetTarget(c101109014.condition)
+	e3:SetCondition(c101109014.condition)
 	e3:SetTarget(c101109014.target)
 	e3:SetOperation(c101109014.activate)
 	c:RegisterEffect(e3)
@@ -42,7 +42,7 @@ function c101109014.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) and Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c101109014.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
-		if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 then
+		if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 			Duel.BreakEffect()
 			Duel.DiscardDeck(tp,3,REASON_EFFECT)
 		end

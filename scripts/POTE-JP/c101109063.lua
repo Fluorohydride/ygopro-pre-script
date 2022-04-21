@@ -4,7 +4,6 @@
 function c101109063.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
@@ -25,6 +24,7 @@ function c101109063.initial_effect(c)
 	e2:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,101109063+100)
+	e2:SetCondition(c101109063.atkcon)
 	e2:SetTarget(c101109063.atktg)
 	e2:SetOperation(c101109063.atkop)
 	c:RegisterEffect(e2)
@@ -75,6 +75,9 @@ function c101109063.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 		Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
 	end
+end
+function c101109063.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c101109063.atkfilter(c)
 	return not c:IsPublic() and c:IsSetCard(0x146) and c:IsType(TYPE_MONSTER)
