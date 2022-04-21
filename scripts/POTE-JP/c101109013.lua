@@ -96,8 +96,8 @@ function c101109013.activate(e,tp,eg,ep,ev,re,r,rp)
 		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
 			local mat1=Duel.SelectFusionMaterial(tp,tc,mg,e:GetHandler(),chkf)
 			tc:SetMaterial(mat1)
-			if mat1:IsExists(Card.IsFacedown,1,nil) then
-				local cg=mat1:Filter(Card.IsFacedown,nil)
+			if mat1:IsExists(c101109013.fdfilter,1,nil) then
+				local cg=mat1:Filter(c101109013.fdfilter,nil)
 				Duel.ConfirmCards(1-tp,cg)
 			end
 			Duel.SendtoDeck(mat1,nil,SEQ_DECKTOP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
@@ -122,6 +122,9 @@ function c101109013.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc:CompleteProcedure()
 	end
+end
+function c101109013.fdfilter(c)
+	return c:IsLocation(LOCATION_MZONE) and c:IsFacedown() or c:IsLocation(LOCATION_HAND)
 end
 function c101109013.seqfilter(c,tp)
 	return c:IsLocation(LOCATION_DECK) and c:IsControler(tp)
