@@ -23,22 +23,20 @@ function c100290040.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100290040.lvcfilter(c)
-	return c:IsRace(RACE_CYBERSE) and c:IsAbleToGraveAsCost()
+	return c:IsRace(RACE_CYBERSE) and c:IsDiscardable()
 end
 function c100290040.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100290040.lvcfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	local g=Duel.SelectMatchingCard(tp,c100290040.lvcfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
-	Duel.SendtoGrave(g,REASON_COST)
+	Duel.DiscardHand(tp,c100290040.lvcfilter,1,1,REASON_DISCARD+REASON_COST,e:GetHandler())
 end
 function c100290040.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ct=e:GetLabel()
 	if c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(-2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
@@ -48,7 +46,7 @@ function c100290040.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100290040.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>2
+		and Duel.GetMZoneCount(tp,e:GetHandler())>2
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,100290140,0x285,TYPES_TOKEN_MONSTER,0,0,3,RACE_CYBERSE,ATTRIBUTE_EARTH,POS_FACEUP_DEFENSE) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,3,0,0)

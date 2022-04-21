@@ -58,7 +58,8 @@ function c100290044.indtg(e,c)
 	return c:GetMutualLinkedGroupCount()>0
 end
 function c100290044.efilter(e,te,ev)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwnerPlayer()~=e:GetHandlerPlayer() and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE
+	return te:IsActiveType(TYPE_MONSTER) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+		and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE
 end
 function c100290044.atklimit(e,c)
 	return c==e:GetHandler()
@@ -94,6 +95,7 @@ function c100290044.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	local c=e:GetHandler()
 	while tc do
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -103,6 +105,7 @@ function c100290044.disop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetValue(RESET_TURN_SET)
 		tc:RegisterEffect(e2)
 		tc=g:GetNext()
 	end

@@ -1,7 +1,7 @@
 --Gゴーレム・クリスタルハート
 --LUA BY AKAWAKU
 function c100290042.initial_effect(c)
-	c:EnableCounterPermit(0x2855)
+	c:EnableCounterPermit(0x160)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_CYBERSE),2,2)
 	c:EnableReviveLimit()
@@ -37,7 +37,7 @@ function c100290042.filter(c,e,tp,zone)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c100290042.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local zone=e:GetHandler():GetLinkedZone(tp)
+	local zone=e:GetHandler():GetLinkedZone(tp)&0x1f
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100290042.filter(chkc,e,tp,zone) end
 	if chk==0 then return Duel.IsExistingTarget(c100290042.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,zone) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -46,11 +46,11 @@ function c100290042.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100290042.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zone=c:GetLinkedZone(tp)
+	local zone=c:GetLinkedZone(tp)&0x1f
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and zone&0x1f~=0 then
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and zone~=0 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
-		c:AddCounter(0x2855,1)
+		c:AddCounter(0x160,1)
 	end
 end
 function c100290042.atkcon(e)
@@ -58,8 +58,8 @@ function c100290042.atkcon(e)
 end
 function c100290042.atktg(e,c)
 	local g=e:GetHandler():GetMutualLinkedGroup()
-	return (c==e:GetHandler() or g:IsContains(c)) and c:IsAttribute(ATTRIBUTE_EARTH)
+	return g:IsContains(c) and c:IsAttribute(ATTRIBUTE_EARTH)
 end
 function c100290042.atkval(e,c)
-	return e:GetHandler():GetCounter(0x2855)*600
+	return e:GetHandler():GetCounter(0x160)*600
 end

@@ -58,6 +58,7 @@ function c100290045.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	if bc:IsFaceup() and bc:IsRelateToBattle() and bc:IsControler(1-tp) then
+		Duel.NegateRelatedChain(bc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -73,6 +74,7 @@ function c100290045.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_DISABLE_EFFECT)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetValue(RESET_TURN_SET)
 		tc:RegisterEffect(e3)
 	end
 end
