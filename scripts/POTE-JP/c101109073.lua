@@ -43,9 +43,6 @@ function c101109073.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 end
-function c101109073.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9e)
-end
 function c101109073.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ec=re:GetHandler()
 	if Duel.NegateActivation(ev) and ec:IsRelateToEffect(re) then
