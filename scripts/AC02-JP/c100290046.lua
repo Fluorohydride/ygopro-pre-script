@@ -66,7 +66,7 @@ function c100290046.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e4)
 		local e5=e4:Clone()
 		e5:SetCode(EFFECT_SET_DEFENSE)
-		tc:RegisterEffect(e5)  
+		tc:RegisterEffect(e5)
 		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()

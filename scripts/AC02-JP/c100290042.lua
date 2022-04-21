@@ -1,4 +1,4 @@
---G石人·水晶心
+--Gゴーレム・クリスタルハート
 --LUA BY AKAWAKU
 function c100290042.initial_effect(c)
 	c:EnableCounterPermit(0x2855)
@@ -24,7 +24,7 @@ function c100290042.initial_effect(c)
 	e2:SetCondition(c100290042.atkcon)
 	e2:SetTarget(c100290042.atktg)
 	e2:SetValue(c100290042.atkval)
-	c:RegisterEffect(e2)   
+	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_EXTRA_ATTACK)
 	e3:SetValue(1)

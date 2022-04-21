@@ -1,8 +1,8 @@
---G石人·顽固立石
+--Gゴーレム・スタバン・メンヒル
 function c100290043.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkAttribute,ATTRIBUTE_EARTH),2,2)
-	c:EnableReviveLimit()  
+	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100290043,0))
@@ -14,7 +14,7 @@ function c100290043.initial_effect(c)
 	e1:SetCondition(c100290043.spcon)
 	e1:SetTarget(c100290043.sptg)
 	e1:SetOperation(c100290043.spop)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 end
 function c100290043.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_GRAVE)

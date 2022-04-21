@@ -1,9 +1,9 @@
---G石人·威严三巨石
+--Gゴーレム・ディグニファイド・トリリトン
 --LUA BY AKAWAKU
 function c100290045.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkAttribute,ATTRIBUTE_EARTH),2)
-	c:EnableReviveLimit()   
+	c:EnableReviveLimit()
 	--must attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

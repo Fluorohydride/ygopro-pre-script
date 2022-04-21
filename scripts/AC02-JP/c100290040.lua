@@ -1,4 +1,4 @@
---G石人·岩锤手
+--Gゴーレム・ロックハンマー
 --LUA BY AKAWAKU
 function c100290040.initial_effect(c)
 	--level down

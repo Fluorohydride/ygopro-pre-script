@@ -1,4 +1,4 @@
---G石人·无效支石墓
+--Gゴーレム・インヴァリッド・ドルメン
 --LUA BY AKAWAKU
 function c100290044.initial_effect(c)
 	--link summon

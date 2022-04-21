@@ -1,4 +1,4 @@
---G石人·卵石斗牛犬
+--Gゴーレム・ペブルドッグ
 --LUA BY AKAWAKU
 function c100290041.initial_effect(c)
 	--spsummon
