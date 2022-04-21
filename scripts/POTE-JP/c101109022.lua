@@ -50,12 +50,12 @@ function c101109022.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsAbleToHand() end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
 end
-function c101109022.thfilter(c,e,tp)
-	return c:IsRace(RACE_BEAST) and c:IsLevelBelow(2) and not c:IsCode(101109022) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function c101109022.spfilter(c,e,tp)
+	return c:IsSetCard(0x146) and not c:IsCode(101109022) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101109022.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c101109022.thfilter,tp,LOCATION_DECK,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(c101109022.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_HAND)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and not Duel.IsPlayerAffectedByEffect(tp,59822133)
@@ -63,8 +63,8 @@ function c101109022.thop(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.SelectYesNo(tp,aux.Stringid(101109022,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		g=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		local sg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c101109022.spcon(e,tp,eg,ep,ev,re,r,rp)

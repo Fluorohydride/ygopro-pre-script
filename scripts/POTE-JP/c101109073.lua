@@ -27,12 +27,12 @@ end
 function c101109073.actcfilter(c)
 	return ((c:IsSetCard(0x284) and c:IsLocation(LOCATION_MZONE)) or c:IsCode(56099748)) and c:IsFaceup()
 end
-function c101109073.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
-end
 function c101109073.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 		and Duel.IsExistingMatchingCard(c101109073.actcfilter,tp,LOCATION_ONFIELD,0,1,nil)
+end
+function c101109073.cfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function c101109073.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101109073.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -49,7 +49,8 @@ function c101109073.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ec=re:GetHandler()
 	if Duel.NegateActivation(ev) and ec:IsRelateToEffect(re) then
 		ec:CancelToGrave()
-		if Duel.SendtoDeck(ec,nil,2,REASON_EFFECT)~=0 and ec:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+		if Duel.SendtoDeck(ec,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 and ec:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local g=Duel.SelectMatchingCard(tp,c101109073.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 			if #g>0 then
 				Duel.BreakEffect()
@@ -62,7 +63,7 @@ function c101109073.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function c101109073.thfilter(c)
-	return c:IsSetCard(0x284) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x284) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToHand()
 end
 function c101109073.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(c101109073.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
@@ -72,8 +73,7 @@ function c101109073.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101109073.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,LOCATION_REMOVED)
-		Duel.ConfirmCards(1-tp,tc)
 	end
 end

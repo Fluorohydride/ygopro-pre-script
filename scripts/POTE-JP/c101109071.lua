@@ -9,7 +9,7 @@ function c101109071.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,101109071)
-	e1:SetHintTiming(TIMING_BATTLE_PHASE,TIMINGS_CHECK_MONSTER+TIMING_BATTLE_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetTarget(c101109071.condition)
 	e1:SetTarget(c101109071.target)
 	e1:SetOperation(c101109071.activate)
@@ -32,24 +32,25 @@ end
 function c101109071.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101109071.actcfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
-function c101109071.actfilter(c)
+function c101109071.posfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
 end
-function c101109071.actfilter2(c)
+function c101109071.tgfilter(c)
 	return c:IsSetCard(0x284) and c:IsAbleToGrave() and c:IsType(TYPE_MONSTER)
 end
 function c101109071.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c101109071.actfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101109071.actfilter,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingMatchingCard(c101109071.actfilter2,tp,LOCATION_DECK,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c101109071.posfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101109071.posfilter,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(c101109071.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,c101109071.actfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101109071.posfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
 function c101109071.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)>0 then
-		local g=Duel.SelectMatchingCard(tp,c101109071.actfilter2,tp,LOCATION_DECK,0,1,1,nil)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		local g=Duel.SelectMatchingCard(tp,c101109071.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then
 			Duel.BreakEffect()
 			Duel.SendtoGrave(g,REASON_EFFECT)
@@ -70,8 +71,7 @@ function c101109071.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101109071.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
 	end
 end

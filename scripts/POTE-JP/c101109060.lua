@@ -38,7 +38,7 @@ function c101109060.filter(c)
 end
 function c101109060.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101109060.filter,tp,LOCATION_DECK,0,nil)
-	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(56063182,0)) then
+	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101109060,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
@@ -49,9 +49,9 @@ function c101109060.atktg(e,c)
 	return c:IsType(TYPE_FUSION) or c:IsSetCard(0x284)
 end
 function c101109060.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsPreviousControler(tp)
-		and (c:IsPreviousLocation(LOCATION_GRAVE) or (c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)))
-		and c:IsSetCard(0x284)
+	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:IsSetCard(0x284)
+		and (c:IsPreviousLocation(LOCATION_GRAVE)
+			or (c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)))
 end
 function c101109060.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101109060.cfilter,1,nil,tp)
@@ -67,27 +67,5 @@ function c101109060.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
-	end
-end
-function c101109060.mfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsRace(RACE_FAIRY)
-end
-function c101109060.filter(c,e,tp,chk)
-	return c:IsSetCard(0x284) and c:IsType(TYPE_MONSTER)
-		and (c:IsAbleToHand() or chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK))
-end
-function c101109060.operation(e,tp,eg,ep,ev,re,r,rp)
-	local b=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101109060.mfilter,tp,LOCATION_MZONE,0,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c101109060.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,b)
-	local tc=g:GetFirst()
-	if tc then
-		if b and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
-			and (not tc:IsAbleToHand() or Duel.SelectOption(tp,1190,1152)==1) then
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK)
-		else
-			Duel.SendtoHand(tc,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,tc)
-		end
 	end
 end

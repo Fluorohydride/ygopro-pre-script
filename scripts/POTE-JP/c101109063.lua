@@ -38,28 +38,23 @@ function c101109063.initial_effect(c)
 	c:RegisterEffect(e3)
 	e3:SetLabelObject(e2)
 end
-function c101109063.cfilter2(c,oc)
-	return not c:IsCode(oc:GetCode()) and c:IsAbleToHand() and c:IsSetCard(0x146) and c:IsType(TYPE_MONSTER)
-end
 function c101109063.cfilter(c,tp)
 	return not c:IsPublic() and c:IsRace(RACE_BEAST) and c:IsAbleToDeck()
 		and Duel.IsExistingMatchingCard(c101109063.cfilter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c)
 end
+function c101109063.cfilter2(c,oc)
+	return not c:IsCode(oc:GetCode()) and c:IsAbleToHand() and c:IsSetCard(0x146) and c:IsType(TYPE_MONSTER)
+end
 function c101109063.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		e:SetLabel(1)
-		return not Duel.IsExistingMatchingCard(c101109063.cfilter,tp,LOCATION_HAND,0,1,nil,tp)
+		return Duel.IsExistingMatchingCard(c101109063.cfilter,tp,LOCATION_HAND,0,1,nil,tp)
 	end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101109063,2))
-	local tc=Duel.SelectMatchingCard(tp,c101109063.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetDescription(66)
-	e1:SetCode(EFFECT_PUBLIC)
-	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	tc:RegisterEffect(e1)
-	e:SetLabelObject(tc)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectMatchingCard(tp,c101109063.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
+	Duel.ConfirmCards(1-tp,g)
+	Duel.ShuffleHand(tp)
+	e:SetLabelObject(g:GetFirst())
 end
 function c101109063.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -90,6 +85,7 @@ end
 function c101109063.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101109063,2))
 	local g=Duel.SelectMatchingCard(tp,c101109063.atkfilter,tp,LOCATION_HAND,0,1,99,nil)
+	if #g==0 then return end
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
