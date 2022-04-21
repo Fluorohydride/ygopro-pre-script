@@ -49,14 +49,14 @@ function c101109060.atktg(e,c)
 	return c:IsType(TYPE_FUSION) or c:IsSetCard(0x284)
 end
 function c101109060.cfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsSetCard(0x284) and c:IsType(TYPE_MONSTER)
+	return c:IsPreviousControler(tp) and c:IsSetCard(0x284) and c:IsType(TYPE_MONSTER) and c:IsPreviousSetCard(0x284)
 		and (c:IsPreviousLocation(LOCATION_GRAVE)
 			or (c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)))
 end
 function c101109060.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101109060.cfilter,1,nil,tp)
 end
-function c101109060.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101109060.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
 	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
