@@ -19,7 +19,7 @@ function s.spfilter(c,e,tp,g)
 	if not (aux.IsCodeListed(c,25652259) and aux.IsCodeListed(c,64788463) and aux.IsCodeListed(c,90876561)) then return false end
 	local proc=c:IsCode(100290001)
 	if not c:IsCanBeSpecialSummoned(e,0,tp,proc,proc) then return false end
-	return (c:IsLocation(LOCATION_DECK) and Duel.GetMZoneCount(tp,g)>0
+	return (not c:IsLocation(LOCATION_EXTRA) and Duel.GetMZoneCount(tp,g)>0
 		or c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,g,c)>0)
 end
 function s.fgoal(g,e,tp)
@@ -29,7 +29,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 	if chk==0 then return g:CheckSubGroup(s.fgoal,3,3,e,tp) end
-	Duel.SetOperationInfo(0,LOCATION_HAND+LOCATION_MZONE,nil,3,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,3,tp,LOCATION_HAND+LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,
 		LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE)
 end

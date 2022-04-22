@@ -4,7 +4,7 @@
 function c101109079.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCountLimit(1,101109079+EFFECT_COUNT_CODE_OATH)
@@ -31,7 +31,7 @@ function c101109079.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 then
 		local g=Duel.GetMatchingGroup(c101109079.filter,tp,LOCATION_HAND,0,nil)
 		if g:GetCount()>0 and rc:IsType(TYPE_MONSTER) and rc:IsLocation(LOCATION_GRAVE) and aux.NecroValleyFilter()(rc)
-			and rc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and rc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 			and Duel.SelectYesNo(tp,aux.Stringid(101109079,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
