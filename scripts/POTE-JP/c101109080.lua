@@ -19,7 +19,7 @@ function c101109080.filter(c)
 end
 function c101109080.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(1-tp) and c101109080.filter(chkc) and chkc~=c end
+	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c101109080.filter(chkc) and chkc~=c end
 	if chk==0 then return Duel.IsExistingTarget(c101109080.filter,tp,LOCATION_SZONE,0,1,c) and c:IsAbleToHand() end
 	local ct=Duel.GetMatchingGroup(c101109080.filter,tp,LOCATION_SZONE,0,nil):FilterCount(Card.IsCanBeEffectTarget,nil,e)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
