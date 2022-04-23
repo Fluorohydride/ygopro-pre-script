@@ -1,4 +1,4 @@
---ＥＮ ウェーブ
+--ENウェーブ
 --Script by JSY1728
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -37,7 +37,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.dspconfilter(c,tp)
-	return c:IsSetCard(0x3008) and c:IsPreviousControler(tp) and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED)
+	if c:IsPreviousLocation(LOCATION_ONFIELD) then
+		return c:IsPreviousSetCard(0x3008) and c:IsPreviousControler(tp) and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED)
+	else
+		return c:IsSetCard(0x3008) and c:IsPreviousControler(tp) and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED)
+	end
 end
 function s.dspcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_FUSION and eg:IsExists(s.dspconfilter,1,nil,tp)
