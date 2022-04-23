@@ -29,7 +29,6 @@ function c101109073.actcfilter(c)
 end
 function c101109073.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
-		and re:GetHandler():IsAbleToDeck()
 		and Duel.IsExistingMatchingCard(c101109073.actcfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c101109073.cfilter(c)
