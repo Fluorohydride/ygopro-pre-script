@@ -45,10 +45,10 @@ function c100427005.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if ft<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100427005.eqfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,c,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,math.min(ft,3))
 	local tc=sg:GetFirst()
 	while tc do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		Duel.Equip(tp,tc,c,true,true)
 		tc=sg:GetNext()
 	end
@@ -82,15 +82,17 @@ function c100427005.pnop(e,tp,eg,ep,ev,re,r,rp)
 	if not (tc:IsFaceup() and tc:IsRelateToEffect(e)) then return end
 	local b1=tc:IsCanChangePosition()
 	local b2=aux.NegateMonsterFilter(tc)
-	local op=0
+	local op=-1
 	if b1 and b2 then
 		op=Duel.SelectOption(tp,aux.Stringid(100427005,2),aux.Stringid(100427005,3))
+	elseif b1 then
+		op=0
+	elseif b2 then
+		op=1
 	end
-	if b1 then op=0 end
-	if b2 then op=1 end
 	if op==0 then
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
-	else
+	elseif op==1 then
 		if not tc:IsDisabled() and not tc:IsImmuneToEffect(e) then
 			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(e:GetHandler())
