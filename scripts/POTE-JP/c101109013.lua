@@ -52,7 +52,8 @@ function c101109013.filter1(c,e,tp,m,f,chkf)
 	return res
 end
 function c101109013.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_EFFECT)
+	local ph=Duel.GetCurrentPhase()
+	return ph~=PHASE_DAMAGE and ph~=PHASE_DAMAGE_CAL and e:GetHandler():IsReason(REASON_EFFECT)
 end
 function c101109013.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
