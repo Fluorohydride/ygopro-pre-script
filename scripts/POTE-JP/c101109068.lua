@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.atkcon1)
 	e2:SetOperation(s.atkop1)
 	c:RegisterEffect(e2)
-    --atk
+	--atk
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -33,38 +33,38 @@ function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-    for tc in aux.Next(g) do
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-        e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-        e1:SetValue(tc:GetAttack()%1000)
-        tc:RegisterEffect(e1)
-        if tc:IsDefenseAbove(0) then
-            local e2=e1:Clone()
-            e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
-            e2:SetValue(tc:GetDefense()%1000)
-            tc:RegisterEffect(e2)
-        end
+	for tc in aux.Next(g) do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetValue(tc:GetAttack()%1000)
+		tc:RegisterEffect(e1)
+		if tc:IsDefenseAbove(0) then
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
+			e2:SetValue(tc:GetDefense()%1000)
+			tc:RegisterEffect(e2)
+		end
 	end
 end
 function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-    for tc in aux.Next(g) do
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-        e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-        e1:SetValue(tc:GetAttack()%1000)
-        tc:RegisterEffect(e1)
-        if tc:IsDefenseAbove(0) then
-            local e2=e1:Clone()
-            e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
-            e2:SetValue(tc:GetDefense()%1000)
-            tc:RegisterEffect(e2)
-        end
+	for tc in aux.Next(g) do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetValue(tc:GetAttack()%1000)
+		tc:RegisterEffect(e1)
+		if tc:IsDefenseAbove(0) then
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
+			e2:SetValue(tc:GetDefense()%1000)
+			tc:RegisterEffect(e2)
+		end
 	end
 end

@@ -25,7 +25,7 @@ function c101109038.cfilter(c,e,tp)
 end
 function c101109038.spfilter(c,mc,e,tp)
 	return c:IsLevel(mc:GetOriginalLevel()) and not c:IsOriginalCodeRule(mc:GetOriginalCodeRule())
-		and c:IsRace(mc:GetOriginalRace()) and c:IsAttribute(mc:GetOriginalAttribute()) 
+		and c:IsRace(mc:GetOriginalRace()) and c:IsAttribute(mc:GetOriginalAttribute())
 		and c:IsAttack(mc:GetBaseAttack()) and c:IsDefense(mc:GetBaseDefense())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and (not c:IsLocation(LOCATION_EXTRA) and Duel.GetMZoneCount(tp,c)>0
@@ -41,7 +41,7 @@ function c101109038.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectReleaseGroup(tp,c101109038.cfilter,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	local loc=nil
-	if tc:IsSummonLocation(LOCATION_EXTRA) then 
+	if tc:IsSummonLocation(LOCATION_EXTRA) then
 		e:SetLabel(1)
 		loc=LOCATION_DECK+LOCATION_EXTRA
 	else
