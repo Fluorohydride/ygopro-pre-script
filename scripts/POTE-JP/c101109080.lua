@@ -21,9 +21,8 @@ function c101109080.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c101109080.filter(chkc) and chkc~=c end
 	if chk==0 then return Duel.IsExistingTarget(c101109080.filter,tp,LOCATION_SZONE,0,1,c) and c:IsAbleToHand() end
-	local ct=Duel.GetMatchingGroup(c101109080.filter,tp,LOCATION_SZONE,0,nil):FilterCount(Card.IsCanBeEffectTarget,nil,e)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,c101109080.filter,tp,LOCATION_SZONE,0,1,ct,nil)
+	local g=Duel.SelectTarget(tp,c101109080.filter,tp,LOCATION_SZONE,0,1,5,c)
 	g:AddCard(c)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),0,0)
 end
@@ -46,6 +45,7 @@ function c101109080.activate(e,tp,eg,ep,ev,re,r,rp)
 			local g=Duel.GetMatchingGroup(Card.IsSSetable,tp,LOCATION_HAND,0,nil)
 			if #og>0 and g:CheckSubGroup(c101109080.fselect,#og,#og,ft) and Duel.SelectYesNo(tp,aux.Stringid(101109080,0)) then
 				Duel.BreakEffect()
+				Duel.ShuffleHand(tp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 				local sg=g:SelectSubGroup(tp,c101109080.fselect,false,#og,#og,ft)
 				Duel.SSet(tp,sg,tp,false)

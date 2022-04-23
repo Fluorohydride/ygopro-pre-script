@@ -49,7 +49,8 @@ function c101109036.cfilter(c,attr)
 	return c:IsFaceup() and c:IsAttribute(attr)
 end
 function c101109036.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101109036.cfilter,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_EARTH) and Duel.IsExistingMatchingCard(c101109036.cfilter,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_WATER)
+	return Duel.IsExistingMatchingCard(c101109036.cfilter,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_EARTH)
+		and Duel.IsExistingMatchingCard(c101109036.cfilter,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_WATER)
 end
 function c101109036.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
