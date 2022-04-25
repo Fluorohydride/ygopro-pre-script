@@ -1,6 +1,6 @@
 --倶利伽羅天童
 --Scripted by mallu11
-local s,id=GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon condition
@@ -44,21 +44,21 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if not rc:IsRelateToEffect(re) or not re:IsActiveType(TYPE_MONSTER) then return end
 	local p,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
-	if loc==LOCATION_MZONE and rc:GetFlagEffect(id+1-p)==0 then
-		rc:RegisterFlagEffect(id+1-p,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+	if loc==LOCATION_MZONE and rc:GetFlagEffect(id+o+p)==0 then
+		rc:RegisterFlagEffect(id+o+p,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
 	end
 end
-function s.rfilter(c,tp)
-	return c:IsFaceup() and c:GetFlagEffect(id+tp)>0
+function s.rfilter(c,p)
+	return c:IsFaceup() and c:GetFlagEffect(id+o+p)>0
 end
 function s.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
+	local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,1-tp)
 	return rg:GetCount()>0 and rg:FilterCount(Card.IsReleasable,nil)==rg:GetCount() and aux.mzctcheck(rg,tp)
 end
 function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
+	local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,1-tp)
 	Duel.Release(rg,REASON_COST)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
