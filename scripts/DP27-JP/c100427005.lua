@@ -47,6 +47,7 @@ function c100427005.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100427005.eqfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,c,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,math.min(ft,3))
+	if not sg then return end
 	local tc=sg:GetFirst()
 	while tc do
 		Duel.Equip(tp,tc,c,true,true)
