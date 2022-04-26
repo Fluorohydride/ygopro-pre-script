@@ -63,7 +63,7 @@ function s.gcheck(lv)
 				return aux.dncheck(sg) and sg:GetSum(Card.GetLevel)<=lv
 			end
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local c=e:GetHandler()
 		local clv=c:GetLevel()

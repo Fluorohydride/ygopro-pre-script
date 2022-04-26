@@ -19,7 +19,7 @@ function c101109045.initial_effect(c)
 	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101109045,1))
-	e2:SetCategory(CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
+	e2:SetCategory(CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -66,7 +66,7 @@ end
 function c101109045.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToExtra() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,0,0)
 end
 function c101109045.spfilter(c,e,tp)
 	return c:IsSetCard(0x146) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

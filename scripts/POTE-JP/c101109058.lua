@@ -57,6 +57,7 @@ function c101109058.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local tg=g:FilterSelect(tp,Card.IsAbleToGrave,1,1,nil)
 		Duel.SendtoGrave(tg,REASON_EFFECT)
+		if g==g2 then Duel.ShuffleExtra(1-tp) end
 	end
 end
 function c101109058.acfilter(c,tp,re,rp)
@@ -69,7 +70,7 @@ function c101109058.tgfilter(c,eg)
 	return eg:IsContains(c)
 end
 function c101109058.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) end
+	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(c101109058.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,eg) end
 	Duel.SetTargetCard(eg)
 end

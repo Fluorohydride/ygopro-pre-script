@@ -40,7 +40,7 @@ function c101109075.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g2:GetCount()<ct then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local sg=g2:Select(tp,ct,ct,nil)
-	if Duel.SendtoHand(sg,nil,REASON_EFFECT)>0 then
+	if Duel.SendtoHand(sg,nil,REASON_EFFECT)>0 and sg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 	end
 end

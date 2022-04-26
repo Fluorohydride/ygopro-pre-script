@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	--Special Summon (from hand : Elemental HERO)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCountLimit(1,id+o*2)
 	e3:SetRange(LOCATION_MZONE)
@@ -76,8 +76,10 @@ function s.spfilter2(c,e,tp)
 	return c:IsSetCard(0x3008) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToDeck() and Duel.GetMZoneCount(tp,e:GetHandler())>0
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToDeck() and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)

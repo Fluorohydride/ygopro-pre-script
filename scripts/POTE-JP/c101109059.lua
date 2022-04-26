@@ -9,6 +9,7 @@ function c101109059.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,101109059+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(aux.dscon)
 	e1:SetTarget(c101109059.atktg)
@@ -33,6 +34,7 @@ function c101109059.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(c101109059.atkfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g1=Duel.SelectTarget(tp,c101109059.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
@@ -56,17 +58,18 @@ function c101109059.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	sc1:RegisterEffect(e2)
 end
-function c101109059.disfilter(c)
-	return (c:IsSetCard(0x17a) or c:IsCode(56099748)) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+function c101109059.disfilter(c,tp)
+	return (c:IsSetCard(0x17a) or c:IsCode(56099748))
+		and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsControler(tp)
 end
 function c101109059.discon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(c101109059.disfilter,1,nil) and Duel.IsChainDisablable(ev)
+	return g and g:IsExists(c101109059.disfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
 end
 function c101109059.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return not re:GetHandler():IsDisabled() end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function c101109059.disop(e,tp,eg,ep,ev,re,r,rp)

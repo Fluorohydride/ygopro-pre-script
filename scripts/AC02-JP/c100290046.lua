@@ -10,7 +10,7 @@ function c100290046.initial_effect(c)
 	e1:SetCountLimit(1,100290046+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100290046.target)
 	e1:SetOperation(c100290046.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--destroy replace
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

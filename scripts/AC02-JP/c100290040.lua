@@ -9,7 +9,7 @@ function c100290040.initial_effect(c)
 	e1:SetCountLimit(1,100290040)
 	e1:SetCost(c100290040.lvcost)
 	e1:SetOperation(c100290040.lvop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100290040,1))

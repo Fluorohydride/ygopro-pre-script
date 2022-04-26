@@ -40,7 +40,7 @@ function c101109027.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetAbsoluteRange(tp,1,0)
 		e1:SetTarget(c101109027.splimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e1,true)	
+		c:RegisterEffect(e1,true)
 	end
 end
 function c101109027.splimit(e,c)
@@ -64,7 +64,7 @@ function c101109027.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c101109027.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return not re:GetHandler():IsDisabled() end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function c101109027.disop(e,tp,eg,ep,ev,re,r,rp)

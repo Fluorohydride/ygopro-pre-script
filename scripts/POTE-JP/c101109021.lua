@@ -52,7 +52,7 @@ function c101109021.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101109021.cpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
+	if not (c:IsFaceup() and c:IsRelateToEffect(e)) then return end
 	local tc=e:GetLabelObject()
 	local code=tc:GetOriginalCodeRule()
 	local e1=Effect.CreateEffect(c)

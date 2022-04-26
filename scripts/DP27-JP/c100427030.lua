@@ -37,7 +37,7 @@ function c100427030.initial_effect(c)
 	c:RegisterEffect(e3)
 	--pendulem
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_LEAVE_GRAVE)	
+	e4:SetCategory(CATEGORY_LEAVE_GRAVE)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetRange(LOCATION_GRAVE)

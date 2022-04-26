@@ -50,9 +50,13 @@ function c101109039.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.DisableShuffleCheck()
-		Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg)
-		Duel.ShuffleHand(tp)
+		if sg:GetFirst():IsAbleToHand() then
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
+			Duel.ShuffleHand(tp)
+		else
+			Duel.SendtoGrave(sg,REASON_RULE)
+		end
 		Duel.SortDecktop(tp,tp,dg:GetCount()-1)
 	else Duel.SortDecktop(tp,tp,dg:GetCount()) end
 end

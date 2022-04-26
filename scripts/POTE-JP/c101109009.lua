@@ -65,7 +65,7 @@ function c101109009.spop1(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetCount()>0 then
 			local tc=g:GetFirst()
 			while tc do
-				Duel.Equip(tp,tc,c,false)
+				Duel.Equip(tp,tc,c,true,true)
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
@@ -75,6 +75,7 @@ function c101109009.spop1(e,tp,eg,ep,ev,re,r,rp)
 				tc:RegisterEffect(e1)
 				tc=g:GetNext()
 			end
+			Duel.EquipComplete()
 		end
 	end
 end
@@ -110,6 +111,7 @@ function c101109009.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetEquipTarget()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) and tc then
+		Duel.BreakEffect()
 		Duel.Equip(tp,tc,c,false)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

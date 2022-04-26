@@ -3,10 +3,10 @@
 --Script by JoyJ
 function c101109063.initial_effect(c)
 	--Activate
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e1)
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e0)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SEARCH)
@@ -70,10 +70,11 @@ function c101109063.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if not tc:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c101109063.cfilter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tc)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101109063.cfilter2),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tc)
 	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
 		Duel.ConfirmCards(1-tp,g)
-		Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
+		Duel.ShuffleDeck(tp)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end
 end
 function c101109063.atkcon(e,tp,eg,ep,ev,re,r,rp)
