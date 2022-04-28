@@ -1,4 +1,4 @@
---Ｅ・ＨＥＲＯ シャイニング・ネオス・ウィングマン
+--E・HERO シャイニング・ネオス・ウィングマン
 --Script by JSY1728
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -52,7 +52,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.material_setcode=0x8
-s.neos_fusion=true
 function s.mfilter(c)
 	return c:IsFusionSetCard(0x27f) and c:IsFusionType(TYPE_FUSION)
 end
