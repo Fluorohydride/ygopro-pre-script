@@ -23,13 +23,13 @@ function c100290046.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100290046.spfilter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c100290046.fselect(g)
 	return g:GetClassCount(Card.GetCode)==1
 end
 function c100290046.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(c100290046.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)
+	local g=Duel.GetMatchingGroup(c100290046.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
 	if chkc then return false end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and g:CheckSubGroup(c100290046.fselect,2,2) and not Duel.IsPlayerAffectedByEffect(tp,59822133) end
@@ -46,7 +46,7 @@ function c100290046.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	local fid=c:GetFieldID()
 	while tc do
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		tc:RegisterFlagEffect(100290046,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
