@@ -26,7 +26,7 @@ end
 function c101109038.spfilter(c,mc,e,tp)
 	return c:IsLevel(mc:GetOriginalLevel()) and not c:IsOriginalCodeRule(mc:GetOriginalCodeRule())
 		and c:IsRace(mc:GetOriginalRace()) and c:IsAttribute(mc:GetOriginalAttribute())
-		and c:IsAttack(mc:GetBaseAttack()) and c:IsDefense(mc:GetBaseDefense())
+		and c:IsAttack(mc:GetTextAttack()) and c:IsDefense(mc:GetTextDefense())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and (not c:IsLocation(LOCATION_EXTRA) and Duel.GetMZoneCount(tp,c)>0
 			or c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0)
