@@ -45,7 +45,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not rc:IsRelateToEffect(re) or not re:IsActiveType(TYPE_MONSTER) then return end
 	local p,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
 	if loc==LOCATION_MZONE and rc:GetFlagEffect(id+o+p)==0 then
-		rc:RegisterFlagEffect(id+o+p,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+		rc:RegisterFlagEffect(id+o+p,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.rfilter(c,p)
