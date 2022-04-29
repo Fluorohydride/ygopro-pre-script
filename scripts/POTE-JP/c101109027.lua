@@ -64,7 +64,7 @@ function c101109027.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c101109027.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not re:GetHandler():IsDisabled() end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function c101109027.disop(e,tp,eg,ep,ev,re,r,rp)

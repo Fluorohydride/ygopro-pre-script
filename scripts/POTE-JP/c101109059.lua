@@ -68,7 +68,7 @@ function c101109059.discon(e,tp,eg,ep,ev,re,r,rp)
 	return g and g:IsExists(c101109059.disfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
 end
 function c101109059.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not re:GetHandler():IsDisabled() end
+	if chk==0 then return true end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
