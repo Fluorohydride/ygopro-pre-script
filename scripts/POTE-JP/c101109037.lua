@@ -28,7 +28,6 @@ function s.initial_effect(c)
 		aux.rit_mat_hack_check=true
 		function aux.rit_mat_hack_exmat_filter(c)
 			return c:IsHasEffect(EFFECT_EXTRA_RITUAL_MATERIAL,c:GetControler()) and c:IsLocation(LOCATION_EXTRA)
-				and (c:IsLevelAbove(0) or c22398665~=nil)
 		end
 		function aux.RitualCheckGreater(g,c,lv)
 			if g:FilterCount(aux.rit_mat_hack_exmat_filter,nil)>1 then return false end
@@ -39,28 +38,13 @@ function s.initial_effect(c)
 			if g:FilterCount(aux.rit_mat_hack_exmat_filter,nil)>1 then return false end
 			return g:CheckWithSumEqual(Card.GetRitualLevel,lv,#g,#g,c)
 		end
-		_GetRitualMaterial=Duel.GetRitualMaterial
-		function Duel.GetRitualMaterial(tp)
-			local g=_GetRitualMaterial(tp)
-			local exg=Duel.GetMatchingGroup(aux.rit_mat_hack_exmat_filter,tp,LOCATION_EXTRA,0,nil)
-			return g+exg
-		end
-		_GetRitualMaterialEx=Duel.GetRitualMaterialEx
-		function Duel.GetRitualMaterialEx(tp)
-			local g=_GetRitualMaterialEx(tp)
-			local exg=Duel.GetMatchingGroup(aux.rit_mat_hack_exmat_filter,tp,LOCATION_EXTRA,0,nil)
-			return g+exg
-		end
 		_ReleaseRitualMaterial=Duel.ReleaseRitualMaterial
 		function Duel.ReleaseRitualMaterial(mat)
-			local rg=mat:Filter(Card.IsLocation,nil,LOCATION_EXTRA)
-			mat:Sub(rg)
-			local tc=rg:Filter(aux.rit_mat_hack_exmat_filter,nil):GetFirst()
+			local tc=mat:Filter(aux.rit_mat_hack_exmat_filter,nil):GetFirst()
 			if tc then
 				local te=tc:IsHasEffect(EFFECT_EXTRA_RITUAL_MATERIAL,tc:GetControler())
 				te:UseCountLimit(tc:GetControler())
 			end
-			Duel.SendtoGrave(rg,REASON_EFFECT+REASON_MATERIAL+REASON_RITUAL)
 			return _ReleaseRitualMaterial(mat)
 		end
 	end
