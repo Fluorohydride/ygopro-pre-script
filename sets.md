@@ -2,8 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **April 2022**: 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
-- **April 23, 2022**: POWER OF THE ELEMENTS (POTE-JP): `101109XXX`
 - **May 21, 2022**: Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
 - **June 8, 2022**: Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
 - **June 11, 2022**: ANIMATION CHRONICLE 2022 (AC02-JP) : `100290XXX`
@@ -106,6 +104,7 @@
 - The Grand Creators (GRCR-EN) : `100282XXX`
 - History Archive Collection (HC01-JP) : `100287XXX`
 - The Valuable Book EX2 (VX02-JP) : `100288XXX`
+- 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -191,3 +190,4 @@
 - BURST OF DESTINY (BODE-JP) : `101106XXX`
 - BATTLE OF CHAOS (BACH-JP) : `101107XXX`
 - DIMENSION FORCE (DIFO-JP) : `101108XXX`
+- POWER OF THE ELEMENTS (POTE-JP): `101109XXX`
