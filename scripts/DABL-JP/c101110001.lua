@@ -1,4 +1,5 @@
 --BF－無頼のヴァータ
+--Script by Dr.Chaos
 function c101110001.initial_effect(c)
 	aux.AddCodeList(c,9012916)
 	--special summon
