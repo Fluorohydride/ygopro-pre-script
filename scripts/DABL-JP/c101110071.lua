@@ -1,4 +1,5 @@
 --BF-ツインシャドウ
+--Script by Corvus1998
 function c101110071.initial_effect(c)
 	--- has dragon in content
 	aux.AddCodeList(c, 9012916)

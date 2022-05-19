@@ -1,4 +1,5 @@
 -- 黒羽の旋風 
+--Script by Corvus1998
 function c101110052.initial_effect(c)
 	--- has dragon in content
 	aux.AddCodeList(c, 9012916)

@@ -1,4 +1,5 @@
 --ブラックフェザー·アサルト·ドラゴン
+--Script by Corvus1998
 function c101110042.initial_effect(c)
 	c:EnableCounterPermit(0x10)
 	--synchro summon

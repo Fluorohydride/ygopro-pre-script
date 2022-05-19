@@ -1,4 +1,5 @@
 --ブラック·ノーブル
+--Script by Corvus1998
 function c101110072.initial_effect(c)
 	--- has dragon in content
 	aux.AddCodeList(c, 9012916)
