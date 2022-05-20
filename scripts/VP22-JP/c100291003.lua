@@ -36,7 +36,7 @@ function c100291003.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
 			local sg=g:Select(tp,1,ct,nil)
-			Duel.HintSelection(g)
+			Duel.HintSelection(sg)
 			for tc in aux.Next(sg) do
 				Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 				local e1=Effect.CreateEffect(c)
