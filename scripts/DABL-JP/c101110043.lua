@@ -4,7 +4,6 @@ function c101110043.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,c101110043.tunerfilter,aux.NonTuner(nil),1)
 	c:EnableReviveLimit()
-
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101110043,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -16,7 +15,6 @@ function c101110043.initial_effect(c)
 	e1:SetTarget(c101110043.lvtg)
 	e1:SetOperation(c101110043.lvop)
 	c:RegisterEffect(e1)
-
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101110043,1))
@@ -30,35 +28,27 @@ function c101110043.initial_effect(c)
 	e2:SetOperation(c101110043.spop)
 	c:RegisterEffect(e2)
 end
-
 function c101110043.tunerfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK)
 end
-
 function c101110043.tgfilter(c,lv)
 	return c:IsSetCard(0x33) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
-
 function c101110043.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
-
 function c101110043.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then 
-		return e:GetHandler():IsRelateToEffect(e)
-			and Duel.IsExistingMatchingCard(c101110043.tgfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetLevel()) 
-	end
+	if chk==0 then return e:GetHandler():IsRelateToEffect(e)
+		and Duel.IsExistingMatchingCard(c101110043.tgfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetLevel()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-
 function c101110043.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() or c:IsImmuneToEffect(e) then return end
-
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101110043.tgfilter,tp,LOCATION_DECK,0,1,1,nil,c:GetLevel())
 	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
-		local ec = g:GetFirst()
+		local ec=g:GetFirst()
 		if ec:IsLocation(LOCATION_GRAVE) and c:IsFaceup() then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -66,23 +56,18 @@ function c101110043.lvop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(ec:GetLevel())
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 			c:RegisterEffect(e1)
-		end   
+		end
 	end
 end
-
 function c101110043.spcfilter(c)
 	return c:IsSetCard(0x33) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToRemoveAsCost()
 end
-
 function c101110043.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
-		return Duel.IsExistingMatchingCard(c101110043.spcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) 
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101110043.spcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c101110043.spcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-
 function c101110043.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetHandler():GetBattleTarget()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
