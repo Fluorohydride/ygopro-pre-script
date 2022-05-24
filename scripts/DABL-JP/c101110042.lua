@@ -1,5 +1,5 @@
 --ブラックフェザー·アサルト·ドラゴン
---Script by Corvus1998
+--Script by Corvus1998 & mercury233
 function c101110042.initial_effect(c)
 	c:EnableCounterPermit(0x10)
 	--synchro summon
@@ -20,6 +20,7 @@ function c101110042.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetRange(LOCATION_EXTRA)
 	e2:SetCondition(c101110042.spcon)
+	e2:SetTarget(c101110042.sptg)
 	e2:SetOperation(c101110042.spop)
 	c:RegisterEffect(e2)
 	--add counter and damage
@@ -51,31 +52,35 @@ function c101110042.initial_effect(c)
 	e5:SetOperation(c101110042.desop)
 	c:RegisterEffect(e5)
 end
--- todo:hero may has bug,dragon is alse the Tuner
-function c101110042.spTunerfilter(c)
-	return c:IsType(TYPE_TUNER) and c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemoveAsCost()
+function c101110042.mfilter1(c)
+	return c:IsType(TYPE_TUNER) and c:IsType(TYPE_SYNCHRO) and c:IsType(TYPE_MONSTER)
 end
-function c101110042.dragonFilter(c)
-	return c:IsCode(9012916) and c:IsAbleToRemoveAsCost()
+function c101110042.mfilter2(c)
+	return c:IsCode(9012916)
 end
-function c101110042.spTunerAndDragonFilter(c,tp,sc)
-	return c:IsCode(9012916) and c:IsType(TYPE_TUNER) and c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemoveAsCost()
+function c101110042.fselect(g,c,tp)
+	return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 and aux.gffcheck(g,c101110042.mfilter1,nil,c101110042.mfilter2,nil)
 end
 function c101110042.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local dragonCount=Duel.GetMatchingGroupCount(c101110042.dragonFilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	local dragonTunerCount=Duel.GetMatchingGroupCount(c101110042.spTunerAndDragonFilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	local notDragonTunerCount=Duel.GetMatchingGroupCount(c101110042.spTunerfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,dragonGroup)
-	return dragonCount>0 and (notDragonTunerCount>0 or (dragonTunerCount>0 and dragonCount>1))
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	return g:CheckSubGroup(c101110042.fselect,2,2,c,tp)
+end
+function c101110042.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local sg=g:SelectSubGroup(tp,c101110042.fselect,true,2,2,c,tp)
+	if sg then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
+	else return false end
 end
 function c101110042.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectMatchingCard(tp,c101110042.spTunerfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,c101110042.dragonFilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,g1,c)
-	g1:Merge(g2)
-	Duel.Remove(g1,POS_FACEUP,REASON_COST)
+	local g=e:GetLabelObject()
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function c101110042.regop(e,tp,eg,ep,ev,re,r,rp)
 	if rp==1-tp and re:IsActiveType(TYPE_MONSTER) then
@@ -87,22 +92,21 @@ function c101110042.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and c:GetFlagEffect(101110042)~=0
 end
 function c101110042.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,101110042)
 	e:GetHandler():AddCounter(0x10,1)
 	Duel.Damage(1-tp,700,REASON_EFFECT)
 end
 function c101110042.descon(e,tp,eg,ep,ev,re,r,rp) 
-	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return Duel.GetTurnPlayer()==1-tp and e:GetHandler():GetCounter(0x10)>=4 
-		and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())
+	return Duel.GetTurnPlayer()==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function c101110042.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReleasable() and c:GetCounter(0x10)>=4 end
+	Duel.Release(c,REASON_COST)
 end
 function c101110042.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c101110042.desop(e,tp,eg,ep,ev,re,r,rp)

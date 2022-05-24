@@ -1,7 +1,6 @@
 --黒羽の旋風 
 --Script by Corvus1998
 function c101110052.initial_effect(c)
-	--- has dragon in content
 	aux.AddCodeList(c,9012916)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -32,28 +31,26 @@ function c101110052.initial_effect(c)
 	e3:SetOperation(c101110052.repop)
 	c:RegisterEffect(e3)
 end
-function c101110052.spConFilter(c,tp)
+function c101110052.cfilter(c,tp)
 	return c:IsSummonPlayer(tp) and c:IsType(TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_DARK)
-			and c:IsPreviousLocation(LOCATION_EXTRA)
-end
-function c101110052.spTgFilter(c,e,tp,limitAtk)
-	return (c:IsSetCard(0x33) or c:IsCode(9012916)) and (c:GetAttack() < limitAtk)
-				and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsPreviousLocation(LOCATION_EXTRA)
 end
 function c101110052.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:FilterCount(c101110052.spConFilter,nil,tp)>0
+	return eg:FilterCount(c101110052.cfilter,nil,tp)>0
+end
+function c101110052.spfilter(c,e,tp,atk)
+	return (c:IsSetCard(0x33) and c:GetAttack()<atk or c:IsCode(9012916))
+		and (not c:IsLocation(LOCATION_REMOVED) or c:IsFaceup())
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101110052.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local limitAtk=0
-	local conGroup=eg:Filter(c101110052.spConFilter,nil,tp):GetMaxGroup(Card.GetAttack)
-	local conCard=conGroup:GetFirst()
-	if conCard then limitAtk=conCard:GetAttack() end
+	local _,atk=eg:Filter(c101110052.cfilter,nil,tp):GetMaxGroup(Card.GetAttack)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED)
-		and c101110052.spTgFilter(c,e,tp,limitAtk) end
+		and c101110052.spfilter(c,e,tp,atk) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c101110052.spTgFilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp,limitAtk) end
+		and Duel.IsExistingTarget(c101110052.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp,atk) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c101110052.spTgFilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp,limitAtk)
+	local g=Duel.SelectTarget(tp,c101110052.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp,atk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101110052.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -62,20 +59,17 @@ function c101110052.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c101110052.rpFilter(c,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_ONFIELD)
-		and c:IsAttribute(ATTRIBUTE_DARK) and c:IsControler(tp) and not c:IsReason(REASON_REPLACE)
+function c101110052.repfilter(c,tp)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsControler(tp)
+		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function c101110052.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local count=eg:FilterCount(c101110052.rpFilter,nil,tp)
-		return count>0 and Duel.IsCanRemoveCounter(tp,1,0,0x10,1,REASON_EFFECT)
-	end
+	if chk==0 then return eg:IsExists(c101110052.repfilter,1,nil,tp)
+		and Duel.IsCanRemoveCounter(tp,1,0,0x10,1,REASON_EFFECT) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function c101110052.repval(e,c)
-	return c:IsFaceup() and c:IsLocation(LOCATION_ONFIELD)
-		and c:IsAttribute(ATTRIBUTE_DARK) and c:IsControler(e:GetHandlerPlayer()) and not c:IsReason(REASON_REPLACE)
+	return c101110052.repfilter(c,e:GetHandlerPlayer())
 end
 function c101110052.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RemoveCounter(tp,1,0,0x10,1,REASON_EFFECT)
