@@ -95,7 +95,7 @@ function c101110042.damop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x10,1)
 	Duel.Damage(1-tp,700,REASON_EFFECT)
 end
-function c101110042.descon(e,tp,eg,ep,ev,re,r,rp) 
+function c101110042.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function c101110042.descost(e,tp,eg,ep,ev,re,r,rp,chk)

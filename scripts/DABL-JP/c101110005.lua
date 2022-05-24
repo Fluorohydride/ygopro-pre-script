@@ -34,7 +34,7 @@ function c101110005.initial_effect(c)
 	e4:SetCost(aux.bfgcost)
 	e4:SetTarget(c101110005.sptg)
 	e4:SetOperation(c101110005.spop)
-	c:RegisterEffect(e4)	
+	c:RegisterEffect(e4)
 end
 function c101110005.splimit(e,c)
 	return not c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_EXTRA)

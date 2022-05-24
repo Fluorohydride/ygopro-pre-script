@@ -43,7 +43,7 @@ end
 function c101110071.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	local g=Duel.GetMatchingGroup(c101110071.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
-	if chk==0 then 
+	if chk==0 then
 		return g:CheckSubGroup(c101110071.fselect,2,2,e,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

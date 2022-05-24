@@ -13,7 +13,7 @@ function c101110002.initial_effect(c)
 	e1:SetCost(c101110002.tfcost)
 	e1:SetTarget(c101110002.tftg)
 	e1:SetOperation(c101110002.tfop)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 	--set
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101110002,1))
@@ -28,7 +28,7 @@ function c101110002.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c101110002.thtg)
 	e2:SetOperation(c101110002.thop)
-	c:RegisterEffect(e2)	 
+	c:RegisterEffect(e2)
 end
 function c101110002.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

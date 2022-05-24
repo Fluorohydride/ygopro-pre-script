@@ -1,4 +1,4 @@
---黒羽の旋風 
+--黒羽の旋風
 --Script by Corvus1998
 function c101110052.initial_effect(c)
 	aux.AddCodeList(c,9012916)
