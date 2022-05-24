@@ -2,6 +2,8 @@
 --Script by Dr.Chaos
 function c101110002.initial_effect(c)
 	aux.AddCodeList(c,9012916)
+	--same effect send this card to grave and spsummon another card check
+	local e0=aux.AddThisCardInGraveAlreadyCheck(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101110002,0))
@@ -21,6 +23,7 @@ function c101110002.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,101110002+100)
+	e2:SetLabelObject(e0)
 	e2:SetCondition(c101110002.thcon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c101110002.thtg)
@@ -38,7 +41,6 @@ end
 function c101110002.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c101110002.tffilter,tp,LOCATION_DECK,0,1,nil,tp) end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function c101110002.tfop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
@@ -48,18 +50,20 @@ function c101110002.tfop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
 end
-function c101110002.cfilter(c,tp)
-	return c:IsFaceup() and ((c:IsSetCard(0x33) and c:IsType(TYPE_SYNCHRO)) or c:IsCode(9012916)) and c:IsControler(tp)
+function c101110002.cfilter(c,tp,se)
+	return c:IsFaceup() and ((c:IsSetCard(0x33) and c:IsType(TYPE_SYNCHRO)) or c:IsCode(9012916))
+		and c:IsControler(tp) and (se==nil or c:GetReasonEffect()~=se)
 end
 function c101110002.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101110002.cfilter,1,nil,tp)
+	local se=e:GetLabelObject():GetLabelObject()
+	return eg:IsExists(c101110002.cfilter,1,nil,tp,se)
 end
 function c101110002.thfilter(c)
 	return c:IsSetCard(0x33) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101110002.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c101110002.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101110002.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101110002.thfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c101110002.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
@@ -68,6 +72,7 @@ end
 function c101110002.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
+		Duel.BreakEffect()
 		Duel.Damage(tp,700,REASON_EFFECT)
 	end
 end

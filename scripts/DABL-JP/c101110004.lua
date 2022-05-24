@@ -46,7 +46,8 @@ function c101110004.rfilter(c,tp)
 	return Duel.GetMZoneCount(tp,c)>0
 end
 function c101110004.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c101110004.rfilter,1,nil,tp) and Duel.GetCustomActivityCount(5325155,tp,ACTIVITY_SPSUMMON)==0 end
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c101110004.rfilter,1,nil,tp)
+		and Duel.GetCustomActivityCount(5325155,tp,ACTIVITY_SPSUMMON)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectReleaseGroup(tp,c101110004.rfilter,1,1,nil,tp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -63,14 +64,17 @@ function c101110004.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_SYNCHRO)
 end
 function c101110004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,101110104,0,TYPES_TOKEN_MONSTER,700,700,2,RACE_WINDBEAST,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c101110004.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if Duel.IsPlayerCanSpecialSummonMonster(tp,101110007,0,TYPES_TOKEN_MONSTER,700,700,2,RACE_WINDBEAST,ATTRIBUTE_DARK) then
-		local token=Duel.CreateToken(tp,101110007)
-		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
+	if Duel.IsPlayerCanSpecialSummonMonster(tp,101110104,0,TYPES_TOKEN_MONSTER,700,700,2,RACE_WINDBEAST,ATTRIBUTE_DARK) then
+		local token=Duel.CreateToken(tp,101110104)
+		if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)>0 then
+			Duel.BreakEffect()
+			Duel.Damage(tp,700,REASON_EFFECT)
+		end
 	end
 end
