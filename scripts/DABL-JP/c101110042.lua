@@ -1,6 +1,7 @@
 --ブラックフェザー·アサルト·ドラゴン
 --Script by Corvus1998 & mercury233
 function c101110042.initial_effect(c)
+	aux.AddCodeList(c,9012916)
 	c:EnableCounterPermit(0x10)
 	--synchro summon
 	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_SYNCHRO),aux.NonTuner(nil),1)
