@@ -1,4 +1,5 @@
 --No.2 蚊学忍者 影蚊
+--QQ：974559682 githubid:106670859
 function c100290029.initial_effect(c)
 	aux.AddXyzProcedure(c,nil,2,2,nil,nil,99)
 	c:EnableReviveLimit()
