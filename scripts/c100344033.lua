@@ -46,7 +46,7 @@ end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsLocation(LOCATION_SZONE) and c:GetSequence()<5
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
+function s.pcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
 end
 function s.filter(c)
