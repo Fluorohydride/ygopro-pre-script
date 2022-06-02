@@ -23,16 +23,22 @@ function c100290006.rfilter(c,tp)
 	return Duel.GetMZoneCount(tp,c)>0
 end
 function c100290006.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c100290006.rfilter,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,c100290006.rfilter,1,1,nil,tp)
-	Duel.Release(g,REASON_COST)
+	e:SetLabel(100)
+	if chk==0 then return true end
 end
 function c100290006.spfilter(c,e,tp)
 	return c.toss_dice and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100290006.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100290006.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then
+		if e:GetLabel()~=100 then return false end
+		e:SetLabel(0)
+		return Duel.CheckReleaseGroup(tp,c100290006.rfilter,1,nil,tp)
+	end
+	e:SetLabel(0)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g=Duel.SelectReleaseGroup(tp,c100290006.rfilter,1,1,nil,tp)
+	Duel.Release(g,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c100290006.activate(e,tp,eg,ep,ev,re,r,rp)
