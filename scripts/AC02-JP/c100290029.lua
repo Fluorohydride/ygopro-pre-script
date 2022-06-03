@@ -27,6 +27,7 @@ function c100290029.initial_effect(c)
 	e4:SetOperation(c100290029.ctop)
 	c:RegisterEffect(e4)
 end
+c100290029.xyz_number=2
 function c100290029.filer(c)
 	return c:GetCounter(0x1062)>0 and c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
