@@ -1,32 +1,34 @@
 --Backup Team
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
-	--You can only use 1 "Backup Team" effect per turn, and only once that turn.
-	--Draw cards equal to the number of cards your opponent controls, then place cards from your hand on the bottom of the Deck in any order, equal to the number of cards you drew.
+	--draw
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DRAW+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCategory(CATEGORY_DRAW+CATEGORY_TODECK)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.act)
 	c:RegisterEffect(e1)
-	--During the End Phase, if your opponent controls more cards than you do while this card is in your GY: You can Set this card, but banish it when it leaves the field.
+	--set
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_PHASE+PHASE_END)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
+	e2:SetHintTiming(TIMING_END_PHASE)
 	e2:SetCondition(s.setcon)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-	Duel.SetTargetPlayer(tp)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,ct) end
+	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,ct,tp,LOCATION_HAND)
 end
@@ -37,15 +39,20 @@ function s.act(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	Duel.ShuffleHand(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	Duel.SendtoDeck(Duel.GetFieldGroup(p,LOCATION_HAND,0):Select(p,d,d,nil),nil,SEQ_DECKTOP,REASON_EFFECT)
-	Duel.SortDecktop(p,p,3)
-	for i=1,3 do
-		local mg=Duel.GetDecktopGroup(p,1)
-		Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
+	local g=Duel.GetFieldGroup(p,LOCATION_HAND,0):Select(p,d,d,nil)
+	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK)
+	if ct>0 then
+		Duel.SortDecktop(p,p,ct)
+		for i=1,ct do
+			local mg=Duel.GetDecktopGroup(p,1)
+			Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
+		end
 	end
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>Duel.GetFieldGroup(tp,LOCATION_ONFIELD,0)
+	return Duel.GetCurrentPhase()==PHASE_END
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsSSetable() end

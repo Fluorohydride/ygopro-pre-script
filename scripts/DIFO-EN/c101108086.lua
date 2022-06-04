@@ -1,28 +1,31 @@
 --Libromancer Mystigirl
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--If this card was Ritual Summoned by using a monster(s) on the field, your opponent cannot target Ritual Monsters you control with monster effects.
+	--cannot target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
 	e1:SetValue(s.matcheck)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCondition(s.matcon)
-	e2:SetValue(s.efilter1)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_RITUAL))
+	e2:SetValue(s.tgval)
 	c:RegisterEffect(e2)
-	--If this card is Special Summoned: You can target 1 face-up monster your opponent controls; until the end of this turn, change its ATK to 0, also negate its effects. You can only use this effect of "Libromancer Mystigirl" once per turn.
+	--negate
 	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCountLimit(1,id)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -36,11 +39,11 @@ function s.matcon(e)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_RITUAL) and c:GetFlagEffect(id)>0
 end
-function s.efilter1(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and rp~=e:GetHandlerPlayer()
+function s.tgval(e,re,rp)
+	return re:IsActiveType(TYPE_MONSTER) and rp==1-e:GetHandlerPlayer()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetAttack()>0 or aux.NegateMonsterFilter(c)
+	return c:IsFaceup() and (c:GetAttack()>0 or aux.NegateMonsterFilter(c))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end

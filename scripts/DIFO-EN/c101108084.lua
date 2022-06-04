@@ -1,12 +1,13 @@
 --Omega Judgment
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
-	--Target 1 face-up Monster Card in your Spell & Trap Zone and 2 cards your opponent controls; destroy them.
+	--destroy
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
@@ -27,5 +28,6 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,#g1,0,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e),REASON_EFFECT)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	Duel.Destroy(tg,REASON_EFFECT)
 end

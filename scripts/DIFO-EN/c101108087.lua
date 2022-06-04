@@ -1,8 +1,9 @@
 --Libromancer Fireburst
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--If this card was Ritual Summoned by using a monster(s) on the field, it cannot be destroyed by battle, also any battle damage it inflicts to your opponent is doubled.
+	--get effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
@@ -16,27 +17,27 @@ function s.initial_effect(c)
 	e2:SetCondition(s.matcon)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
-	e4:SetCondition(s.matcon)
-	e4:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
-	c:RegisterEffect(e4)
-	--This card can make up to 2 attacks on monsters during each Battle Phase.
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
-	e3:SetValue(1)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e3:SetCondition(s.matcon)
+	e3:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e3)
-	--When a monster declares an attack: You can banish 1 "Libromancer" Ritual Monster from your GY; this card gains 200 ATK.
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCategory(CATEGORY_ATKCHANGE)
-	e2:SetCost(s.cost)
-	e2:SetOperation(s.atkop)
-	c:RegisterEffect(e2)
+	--twice attack
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
+	e4:SetValue(1)
+	c:RegisterEffect(e4)
+	--atk up
+	local e5=Effect.CreateEffect(c)
+	e5:SetCategory(CATEGORY_ATKCHANGE)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e5:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCost(s.atkcost)
+	e5:SetOperation(s.atkop)
+	c:RegisterEffect(e5)
 end
 function s.matcheck(e,c)
 	if c:GetMaterial():IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then
@@ -50,10 +51,11 @@ end
 function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL) and c:IsSetCard(0x17c) and c:IsAbleToRemoveAsCost()
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	Duel.Remove(Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil),POS_FACEUP,REASON_COST)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
