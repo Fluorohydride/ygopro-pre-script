@@ -56,7 +56,7 @@ function c100290016.filter(c)
 		and (not c:IsLocation(LOCATION_REMOVED) or c:IsFaceup())
 end
 function c100290016.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	if chk==0 then return e:GetHandler():IsLocation(LOCATION_MZONE) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c100290016.filter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_HAND+LOCATION_REMOVED,0,1,nil) end
 end
 function c100290016.operation(e,tp,eg,ep,ev,re,r,rp)
