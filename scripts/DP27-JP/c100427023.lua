@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	aux.AddCodeList(c,17484499)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
-    e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
@@ -43,7 +43,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-    local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsPreviousLocation(LOCATION_DECK+LOCATION_HAND)
+	return e:GetHandler():IsPreviousLocation(LOCATION_DECK+LOCATION_HAND)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,5) and Duel.IsPlayerCanDiscardDeck(1-tp,5) end
@@ -78,7 +78,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-            local sg=g:Select(tp,1,1,nil)
+			local sg=g:Select(tp,1,1,nil)
 			Duel.SSet(tp,sg)
 		end
 	end

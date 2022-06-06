@@ -29,7 +29,7 @@ function s.cfilter(c)
 	return c:IsFacedown() or not c:IsSetCard(0x4)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-    return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
