@@ -1,4 +1,4 @@
---骰子迷宫
+--ダイス・ダンジョン
 --id:Ruby QQ:917770701
 function c100290005.initial_effect(c)
 	--Activate

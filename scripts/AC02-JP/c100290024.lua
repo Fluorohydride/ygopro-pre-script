@@ -1,4 +1,5 @@
---巨石阵
+--ストーンヘンジ
+--id:Ruby QQ:917770701
 function c100290024.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

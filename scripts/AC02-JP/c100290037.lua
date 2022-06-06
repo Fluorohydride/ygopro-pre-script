@@ -1,4 +1,4 @@
---霸雷星 雷神
+--覇雷星ライジン
 --id:Ruby QQ:917770701
 function c100290037.initial_effect(c)
 	--fusion material

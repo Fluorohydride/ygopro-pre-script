@@ -1,4 +1,4 @@
---天雷星 闪光
+--天雷星センコウ
 --id:Ruby QQ:917770701
 function c100290036.initial_effect(c)
 	--spsummon

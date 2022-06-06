@@ -1,4 +1,4 @@
---地雷星 轰
+--地雷星トドロキ
 --id:Ruby QQ:917770701
 function c100290035.initial_effect(c)
 	--special summon (hand)

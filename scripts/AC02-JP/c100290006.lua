@@ -1,4 +1,4 @@
---次元骰子
+--ディメンジョン・ダイス
 --id:Ruby QQ:917770701
 function c100290006.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
---反弹诅咒的纸人
+--呪詛返しのヒトガタ
+--id:Ruby QQ:917770701
 function c100290023.initial_effect(c)
 	--reflect
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,5 @@
---梦鲨
+--ドリーム・シャーク
+--id:Ruby QQ:917770701
 function c100290025.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
