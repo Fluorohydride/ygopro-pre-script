@@ -1,0 +1,2 @@
+!setname 0x3286 Doodle Beast		らくがきじゅう
+!setname 0x5286 Doodlebook 		らくがきちょう
