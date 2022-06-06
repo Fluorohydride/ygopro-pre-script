@@ -58,9 +58,12 @@ end
 function c100291001.atkval(e,c)
 	return Duel.GetMatchingGroupCount(c100291001.atkfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)*300
 end
+function c100291001.thcfilter(c,tp)
+	return c:IsRace(RACE_FAIRY+RACE_FIEND+RACE_REPTILE) and (c:IsFaceup() or c:IsControler(tp))
+end
 function c100291001.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsRace,1,nil,RACE_FAIRY+RACE_FIEND+RACE_REPTILE) end
-	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,nil,RACE_FAIRY+RACE_FIEND+RACE_REPTILE)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c100291001.thcfilter,1,nil,tp) end
+	local g=Duel.SelectReleaseGroup(tp,c100291001.thcfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c100291001.thfilter(c)
