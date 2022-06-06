@@ -1,5 +1,5 @@
 --ダイス・ダンジョン
---id:Ruby QQ:917770701
+--Script by id:Ruby QQ:917770701 & mercury233
 function c100290005.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -8,7 +8,7 @@ function c100290005.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetOperation(c100290005.activate)
 	c:RegisterEffect(e1)
-    --dice roll
+	--dice roll
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100290005,1))
 	e2:SetCategory(CATEGORY_DICE+CATEGORY_ATKCHANGE)
@@ -34,190 +34,26 @@ function c100290005.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100290005.dicetg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk == 0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-    Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,PLAYER_ALL,1)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,PLAYER_ALL,1)
 end
 function c100290005.diceop(e,tp,eg,ep,ev,re,r,rp)
-	local d1=Duel.TossDice(tp,1)
-	local d2=Duel.TossDice(1-tp,1)
---first dice
-    if d1  ==  1 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_UPDATE_ATTACK)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(-1000)
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    elseif d1 == 2 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_UPDATE_ATTACK)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(1000)
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    elseif d1 == 3 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_UPDATE_ATTACK)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(-500)
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    elseif d1 == 4 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_UPDATE_ATTACK)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(500)
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    elseif d1 == 5 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local atk=sc:GetAttack()
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(math.ceil(atk/2))
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    elseif d1 == 6 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local atk=sc:GetAttack()
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(atk*2)
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    else
-        return
-    end
---second dice
-    if d2  ==  1 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_UPDATE_ATTACK)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(-1000)
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    elseif d2 == 2 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_UPDATE_ATTACK)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(1000)
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    elseif d2 == 3 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_UPDATE_ATTACK)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(-500)
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    elseif d2 == 4 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_UPDATE_ATTACK)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(500)
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    elseif d2 == 5 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local atk=sc:GetAttack()
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(math.ceil(atk/2))
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    elseif d2 == 6 then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-        if g:GetCount()>0 then
-            local sc=g:GetFirst()
-            while sc do
-                local atk=sc:GetAttack()
-                local e1=Effect.CreateEffect(e:GetHandler())
-                e1:SetType(EFFECT_TYPE_SINGLE)
-                e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-                e1:SetValue(atk*2)
-                sc:RegisterEffect(e1)
-                sc=g:GetNext()
-            end
-        end
-    else
-        return
-    end
+	local turnp=Duel.GetTurnPlayer()
+	for p=turnp,1-turnp,1-turnp-turnp do
+		local dice=Duel.TossDice(p,1)
+		if dice>=1 and dice<=6 then
+			local g=Duel.GetMatchingGroup(Card.IsFaceup,p,LOCATION_MZONE,0,nil)
+			local sc=g:GetFirst()
+			while sc do
+				local atk=sc:GetAttack()
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(dice<5 and EFFECT_UPDATE_ATTACK or EFFECT_SET_ATTACK_FINAL)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e1:SetValue(({-1000,1000,-500,500,math.ceil(atk/2),atk*2})[dice])
+				sc:RegisterEffect(e1)
+				sc=g:GetNext()
+			end
+		end
+	end
 end
