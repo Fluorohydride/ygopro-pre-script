@@ -51,6 +51,9 @@ function c100290025.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function c100290025.valcon(e,re,r,rp)
+	return bit.band(r,REASON_BATTLE)~=0
+end
 function c100290025.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -82,8 +85,7 @@ function c100290025.spop2(e,tp,eg,ep,ev,re,r,rp)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_UPDATE_DEFENSE)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		e3:SetValue(-1000)
 		c:RegisterEffect(e3)
 	end

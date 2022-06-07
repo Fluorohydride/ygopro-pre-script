@@ -7,8 +7,8 @@ function c100290024.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCountLimit(1,100290024+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100290024.target)
-	e1:SetCountLimit(1,100290024)
 	e1:SetOperation(c100290024.operation)
 	c:RegisterEffect(e1)
 	--Destroy
@@ -19,7 +19,7 @@ function c100290024.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100290024.filter(c,e,tp)
-	return c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) and c:IsAttack(0)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) and c:IsAttack(0)
 end
 function c100290024.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100290024.filter(chkc,e,tp) end
