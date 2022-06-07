@@ -44,11 +44,11 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(g) do atk=atk+tc:GetBaseAttack() end
 	Duel.Recover(tp,atk,REASON_EFFECT)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsLocation(LOCATION_SZONE) and c:GetSequence()<5
+function s.cfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsControler(tp) and c:IsLocation(LOCATION_SZONE) and c:GetSequence()<5
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil)
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.stg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0

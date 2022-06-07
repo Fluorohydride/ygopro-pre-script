@@ -64,11 +64,11 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	tk:RegisterEffect(e5)
 	Duel.SpecialSummon(tk,0,tp,tp,false,false,POS_FACEUP)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsLocation(LOCATION_SZONE) and c:GetSequence()<5
+function s.cfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsControler(tp) and c:IsLocation(LOCATION_SZONE) and c:GetSequence()<5
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil)
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.sfilter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x1034) and c:GetOriginalType()&TYPE_MONSTER>0
