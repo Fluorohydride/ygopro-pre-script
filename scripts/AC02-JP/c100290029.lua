@@ -76,12 +76,14 @@ function c100290029.ctop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
+		e1:SetCondition(c100290029.ctcon)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
+		e2:SetCondition(c100290029.ctcon)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	elseif sel==1 then
@@ -91,4 +93,7 @@ function c100290029.ctop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g2)
 		Duel.Damage(1-tp,g2:GetFirst():GetAttack(),REASON_EFFECT)
 	end
+end
+function c100290029.ctcon(e)
+	return e:GetHandler():GetCounter(0x1161)>0
 end

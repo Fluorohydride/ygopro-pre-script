@@ -1,6 +1,6 @@
 --蚊学忍法・軍蚊マーチ
 --Ninjitsu Art of Mosquito Marching
---Scripted by Yuzurisa
+--Scripted by Naim
 function c100290030.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
