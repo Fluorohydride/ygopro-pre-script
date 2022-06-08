@@ -25,15 +25,15 @@ function c100290037.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100290037.ffilter1(c)
-	return c:IsLevelAbove(5) and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_LIGHT)
+	return c:IsLevelAbove(5) and c:IsRace(RACE_WARRIOR) and c:IsFusionAttribute(ATTRIBUTE_LIGHT)
 end
 function c100290037.ffilter2(c)
-	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH)
+	return c:IsRace(RACE_WARRIOR) and c:IsFusionAttribute(ATTRIBUTE_EARTH)
 end
 function c100290037.damcon(e)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc:IsLevel(0)
+	return not bc:IsLevelAbove(0)
 end
 function c100290037.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -20,10 +20,10 @@ function c100290036.initial_effect(c)
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100290036,1))
+	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
 	e3:SetCountLimit(1,100290136)
 	e3:SetCost(aux.bfgcost)
 	e3:SetTarget(c100290036.target)
@@ -46,7 +46,6 @@ function c100290036.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
---Destroy
 function c100290036.filter1(c,tp)
 	return c:IsFaceup() and c:IsLevelAbove(5) and c:IsRace(RACE_WARRIOR) and c:IsAttackAbove(1500)
 end
@@ -74,10 +73,10 @@ function c100290036.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1500)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		if not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) and lc:IsRelateToEffect(e) and lc:IsControler(1-tp) then
 			Duel.Destroy(lc,REASON_EFFECT)
 		end
 	end
 end
-

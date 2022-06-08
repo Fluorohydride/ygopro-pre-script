@@ -3,6 +3,7 @@
 function c100290035.initial_effect(c)
 	--special summon (hand)
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100290035,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -19,14 +20,13 @@ function c100290035.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,100290135)
-	e2:SetHintTiming(0,TIMING_BATTLE_START)
+	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
 	e2:SetCondition(c100290035.spcon)
 	e2:SetCost(c100290035.spcost)
 	e2:SetTarget(c100290035.sptg)
 	e2:SetOperation(c100290035.spop)
 	c:RegisterEffect(e2)
 end
---special summon (hand)
 function c100290035.hspcfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
@@ -44,10 +44,9 @@ function c100290035.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(-500)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE)
 	c:RegisterEffect(e1)
 end
---fusion summon
 function c100290035.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
 end
