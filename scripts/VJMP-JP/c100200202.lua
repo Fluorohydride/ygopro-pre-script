@@ -1,12 +1,12 @@
 --Wish Dragon
 local s,id,o=GetID()
 function s.initial_effect(c)
-	--You can Tribute this card; Special Summon 2 "Dragon Tokens" (Dragon/EARTH/Level 1/ATK 0/DEF 0), also you cannot Special Summon monsters from the Extra Deck for the rest of this turn, except Level 5 or higher Dragon monsters. You can only use this effect of "Wish Dragon" once per turn.
+	--token
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
@@ -39,7 +39,10 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+o,0,TYPES_TOKEN_MONSTER,0,0,1,RACE_DRAGON,ATTRIBUTE_EARTH) then
-		for i=1,2 do Duel.SpecialSummonStep(Duel.CreateToken(tp,id+o),0,tp,tp,false,false,POS_FACEUP) end
+		for i=1,2 do
+			local token=Duel.CreateToken(tp,id+o)
+			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+		end
 		Duel.SpecialSummonComplete()
 	end
 end
