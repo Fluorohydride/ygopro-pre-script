@@ -61,7 +61,8 @@ function c100290014.repop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function c100290014.tfilter(c,tp)
-	return c:IsLocation(LOCATION_ONFIELD) and (c:IsSetCard(0x5034) or c:IsCode(12644061)) and c:IsControler(tp) and c:IsFaceup()
+	return c:IsLocation(LOCATION_ONFIELD) and (c:IsSetCard(0x5034) or c:IsCode(12644061))
+		and c:IsControler(tp) and c:IsFaceup()
 end
 function c100290014.discon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end

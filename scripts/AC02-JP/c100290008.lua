@@ -1,6 +1,6 @@
 --ENシャッフル
 --
---Script by Trishula9
+--Script by Trishula9 & mercury233
 function c100290008.initial_effect(c)
 	aux.AddCodeList(c,89943723)
 	aux.AddSetNameMonsterList(c,0x3008)
@@ -25,7 +25,8 @@ function c100290008.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100290008.tdfilter(c,e,tp)
-	return c:IsSetCard(0x3008,0x1f) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsSetCard(0x3008,0x1f) and c:IsType(TYPE_MONSTER)
+		and c:IsAbleToDeck() and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(c100290008.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function c100290008.spfilter(c,e,tp,code)
@@ -48,47 +49,29 @@ function c100290008.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c100290008.filter1(c,tp)
-	return (c:IsCode(89943723) or (c:IsSetCard(0x3008) and c:IsType(TYPE_MONSTER)
-		and Duel.IsExistingMatchingCard(c100290008.filter2,tp,LOCATION_GRAVE,0,1,nil))) and c:IsAbleToDeck()
+function c100290008.filter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() and (c:IsSetCard(0x3008,0x1f) or c:IsCode(89943723))
 end
-function c100290008.filter2(c)
-	return c:IsSetCard(0x1f) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+function c100290008.gcheck(g)
+	return #g==1 and g:GetFirst():IsCode(89943723) or aux.gfcheck(g,Card.IsSetCard,0x3008,0x1f)
 end
 function c100290008.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingMatchingCard(c100290008.filter1,tp,LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then
+		if not Duel.IsPlayerCanDraw(tp,1) then return false end
+		local g=Duel.GetMatchingGroup(c100290008.filter,tp,LOCATION_GRAVE,0,nil)
+		return g:CheckSubGroup(c100290008.gcheck,1,2)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end
 function c100290008.drop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100290008.filter),tp,LOCATION_GRAVE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local sc1=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100290008.filter1),tp,LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
-	if not sc1 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	if sc1:IsCode(89943723) then
-		local sc2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100290008.filter2),tp,LOCATION_GRAVE,0,0,1,nil):GetFirst()
-		if not sc2 then
-			if Duel.SendtoDeck(sc1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and sc1:IsLocation(LOCATION_DECK) then
-				Duel.BreakEffect()
-				Duel.Draw(tp,1,REASON_EFFECT)
-			end
-		else
-			local sg=Group.FromCards(sc1,sc2)
-			if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
-				and sc1:IsLocation(LOCATION_DECK) and sc2:IsLocation(LOCATION_DECK) then
-				Duel.BreakEffect()
-				Duel.Draw(tp,1,REASON_EFFECT)
-			end
-		end
-	else
-		local sc2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100290008.filter2),tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
-		if sc2 then
-			local sg=Group.FromCards(sc1,sc2)
-			if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
-				and sc1:IsLocation(LOCATION_DECK) and sc2:IsLocation(LOCATION_DECK) then
-				Duel.BreakEffect()
-				Duel.Draw(tp,1,REASON_EFFECT)
-			end
-		end
+	local sg=g:SelectSubGroup(tp,c100290008.gcheck,false,1,2)
+	if sg and Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
+		local og=Duel.GetOperatedGroup()
+		if not og:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then return end
+		Duel.ShuffleDeck(tp)
+		Duel.BreakEffect()
+		Duel.Draw(tp,1,REASON_EFFECT)	
 	end
 end

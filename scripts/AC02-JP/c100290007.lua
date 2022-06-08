@@ -22,6 +22,7 @@ function c100290007.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_MACHINE))
 	e3:SetValue(c100290007.val)
 	c:RegisterEffect(e3)
 	--def
@@ -40,10 +41,7 @@ function c100290007.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c100290007.val(e,c)
-	local r=c:GetRace()
-	if bit.band(r,RACE_MACHINE)>0 and c:IsControler(e:GetHandlerPlayer()) then return 500
-	elseif bit.band(r,RACE_MACHINE)>0 and not c:IsControler(e:GetHandlerPlayer()) then return -500
-	else return 0 end
+	if c:IsControler(e:GetHandlerPlayer()) then return 500 else return -500 end
 end
 function c100290007.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()

@@ -20,26 +20,26 @@ function c100290015.initial_effect(c)
 	e2:SetOperation(c100290015.repop)
 	c:RegisterEffect(e2)
 	--to hand
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(100290015,0))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
-	e1:SetCost(c100290015.thcost)
-	e1:SetTarget(c100290015.thtg)
-	e1:SetOperation(c100290015.thop)
-	c:RegisterEffect(e1)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100290015,0))
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e3:SetCost(c100290015.thcost)
+	e3:SetTarget(c100290015.thtg)
+	e3:SetOperation(c100290015.thop)
+	c:RegisterEffect(e3)
 	--return deck
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100290015,1))
-	e2:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1)
-	e2:SetTarget(c100290015.target)
-	e2:SetOperation(c100290015.operation)
-	c:RegisterEffect(e2)
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(100290015,1))
+	e4:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetCountLimit(1)
+	e4:SetTarget(c100290015.target)
+	e4:SetOperation(c100290015.operation)
+	c:RegisterEffect(e4)
 end
 function c100290015.tgcon(e)
 	return not Duel.IsEnvironment(12644061)
@@ -92,10 +92,12 @@ function c100290015.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100290015.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsAbleToHand()
-		and (not tc:IsAbleToDeck() or Duel.SelectYesNo(tp,aux.Stringid(100290015,2))) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-	else
-		Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then 
+		if tc:IsAbleToHand() and (not tc:IsAbleToDeck()
+			or Duel.SelectOption(tp,aux.Stringid(100290015,2),aux.Stringid(100290015,3))==0) then
+			Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		else
+			Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
+		end
 	end
 end

@@ -25,6 +25,7 @@ function c100290010.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,100290010)
+	e3:SetCondition(c100290010.spcon)
 	e3:SetTarget(c100290010.sptg)
 	e3:SetOperation(c100290010.spop)
 	c:RegisterEffect(e3)
@@ -45,6 +46,9 @@ function c100290010.repop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 	e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 	c:RegisterEffect(e1)
+end
+function c100290010.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetType()==TYPE_SPELL+TYPE_CONTINUOUS
 end
 function c100290010.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
