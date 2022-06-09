@@ -16,7 +16,6 @@ function c101110045.initial_effect(c)
 	--lock zones
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101110045,1))
-	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_MZONE)
@@ -52,7 +51,7 @@ function c101110045.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101110045.cfilter(c,tp)
-	return c:IsFacedown() and c:IsControler(p)
+	return c:IsFacedown() and c:IsControler(1-tp)
 end
 function c101110045.lzcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101110045.cfilter,1,nil,tp)
