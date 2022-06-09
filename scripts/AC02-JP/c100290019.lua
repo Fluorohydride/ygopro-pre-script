@@ -2,7 +2,7 @@
 --
 --Script by Trishula9
 function c100290019.initial_effect(c)
-	c:EnableCounterPermit(0x164)
+	c:EnableCounterPermit(0x8)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -23,23 +23,23 @@ function c100290019.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100290019.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanAddCounter(tp,0x164,3,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,3,0,0x164)
+	if chk==0 then return Duel.IsCanAddCounter(tp,0x8,3,e:GetHandler()) end
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,3,0,0x8)
 end
 function c100290019.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		c:AddCounter(0x164,3)
+		c:AddCounter(0x8,3)
 	end
 end
 function c100290019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x164,1,REASON_EFFECT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x8,1,REASON_EFFECT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,100290119,0x51,TYPES_TOKEN_MONSTER,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c100290019.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.RemoveCounter(tp,1,0,0x164,1,REASON_EFFECT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if Duel.RemoveCounter(tp,1,0,0x8,1,REASON_EFFECT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,100290119,0x51,TYPES_TOKEN_MONSTER,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH) then
 		local token=Duel.CreateToken(tp,100290119)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
