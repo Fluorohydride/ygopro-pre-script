@@ -26,11 +26,11 @@ function s.sfilter(c,e,tp)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(s.hfilter,tp,LOCATION_DECK,0,1,nil)
-	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE) and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE+LOCATION_SZONE,0,1,nil,e,tp)
+	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE+LOCATION_SZONE,0,1,nil,e,tp)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-	return l and s.con(e,tp,eg,ep,ev,re,r,rp) and (b1 or b2) end
+	return s.con(e,tp,eg,ep,ev,re,r,rp) and (b1 or b2) end
 	local rg=Duel.GetMatchingGroup(aux.AND(Card.IsSetCard,aux.NOT(Card.IsPublic)),tp,LOCATION_HAND,0,nil,0x2034)
 	local con=Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_MZONE,0,1,nil,0x2034)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
