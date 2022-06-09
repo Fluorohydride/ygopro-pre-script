@@ -3,13 +3,13 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **May 21, 2022**: Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
-- **June 8, 2022**: Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
+- **May 27, 2022**: Pharaonic Legend Pack (VP22-JP) : `100291XXX`
+- **June 3, 2022**: Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
 - **June 11, 2022**: ANIMATION CHRONICLE 2022 (AC02-JP) : `100290XXX`
 - **June 25, 2022**: Structure Deck: Legend of the Crystals (SD44-JP): `100344XXX`
 - **July 16, 2022**: DARKWING BLAST (DABL-JP): `101110XXX`
 
 # Announced
-- **May, 2022**: Pharaonic Legend Pack (VP22-JP) : `100291XXX`
 - **August 6, 2022**: Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
 
 # Archived
