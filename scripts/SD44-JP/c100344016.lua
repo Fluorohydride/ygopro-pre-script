@@ -40,7 +40,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=0
 	if b1 and b2 then
 		if res then op=Duel.SelectOption(tp,1190,1152)
-		else op=Duel.SelectOption(tp,1190,1152,aux.Stringid(id,0))) end
+		else op=Duel.SelectOption(tp,1190,1152,aux.Stringid(id,0)) end
 	elseif b1 then op=Duel.SelectOption(tp,1190)
 	else op=Duel.SelectOption(tp,1152)+1 end
 	e:SetLabel(op)
