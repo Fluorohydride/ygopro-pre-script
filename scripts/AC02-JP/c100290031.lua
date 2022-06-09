@@ -57,16 +57,16 @@ function c100290031.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM) and e:GetHandler():IsAttackPos()
 end
 function c100290031.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0 end
+	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
 function c100290031.spfilter(c,e,tp)
 	return c:IsSetCard(0x9f,0x99) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100290031.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100290031.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c100290031.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c100290031.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100290031.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
@@ -82,6 +82,7 @@ function c100290031.tgcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100290031.tgfilter(c)
 	return c:IsSetCard(0x9f,0x99) and c:IsType(TYPE_PENDULUM)
+		and (c:IsAbleToExtra() or c:IsAbleToGrave())
 end
 function c100290031.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100290031.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -92,8 +93,7 @@ function c100290031.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100290031.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()<=0 then return end
 	local tc=g:GetFirst()
-	local res=false
-	if tc:IsAbleToGrave() and Duel.SelectOption(tp,aux.Stringid(100290031,0),1191)==1 then
+	if tc:IsAbleToGrave() and (not tc:IsAbleToExtra() or Duel.SelectOption(tp,aux.Stringid(100290031,0),1191)==1) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	else
 		Duel.SendtoExtraP(tc,tp,REASON_EFFECT)

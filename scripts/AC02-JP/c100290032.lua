@@ -1,4 +1,4 @@
---らくがさちょう一すてご
+--らくがきじゅう－すてご
 --
 --Script by Trishula9
 function c100290032.initial_effect(c)
@@ -46,7 +46,7 @@ function c100290032.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c100290032.thfilter(c)
-	return c:IsSetCard(0x287) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x2286) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100290032.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100290032.thfilter,tp,LOCATION_DECK,0,1,nil) end

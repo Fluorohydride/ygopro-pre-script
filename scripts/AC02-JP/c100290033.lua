@@ -1,4 +1,4 @@
---らくがきじゅうーてらの
+--らくがきじゅう－てらの
 --
 --Script by Trishula9
 function c100290033.initial_effect(c)
@@ -109,7 +109,7 @@ function c100290033.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100290033.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x286) then
+	if g:IsExists(Card.IsSetCard,1,nil,0x1286) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
