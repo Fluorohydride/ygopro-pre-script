@@ -11,29 +11,31 @@ function c100290038.initial_effect(c)
 	c:RegisterEffect(e1)
 	--recover
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100290038,3))
 	e2:SetCategory(CATEGORY_RECOVER)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,100290038)
+	e2:SetCondition(c100290038.rccon)
 	e2:SetTarget(c100290038.rctg)
 	e2:SetOperation(c100290038.rcop)
 	c:RegisterEffect(e2)
 end
-function c100290038.filter(c,tp)
+function c100290038.filter(c,tp,pcon)
 	return ((c:IsFaceup() and c:IsLocation(LOCATION_EXTRA) and c:IsType(TYPE_PENDULUM)) or c:IsLocation(LOCATION_GRAVE))
-		and c:IsSetCard(0x4) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or (c:IsType(TYPE_PENDULUM)
-		and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))))
+		and c:IsSetCard(0x4) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or c:IsType(TYPE_PENDULUM) and pcon)
 end
 function c100290038.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100290038.filter),tp,LOCATION_GRAVE+LOCATION_EXTRA,0,nil,tp)
+	local pcon=Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100290038.filter),tp,LOCATION_GRAVE+LOCATION_EXTRA,0,nil,tp,pcon)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100290038,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 		local sc=g:Select(tp,1,1,nil):GetFirst()
 		if sc then
 			local b1=sc:IsAbleToHand()
-			local b2=sc:IsType(TYPE_PENDULUM) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+			local b2=sc:IsType(TYPE_PENDULUM) and pcon
 			local s=0
 			if b1 and not b2 then
 				s=Duel.SelectOption(tp,aux.Stringid(100290038,1))
@@ -56,15 +58,17 @@ end
 function c100290038.rcfilter(c)
 	return c:IsSetCard(0x4) and c:IsFaceup()
 end
-function c100290038.rcfilter1(c,e,tp)
+function c100290038.rccon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c100290038.rcfilter,tp,LOCATION_MZONE,0,1,nil)
+end
+function c100290038.tgfilter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and c:IsControler(1-tp)
-		and Duel.IsExistingMatchingCard(c100290038.rcfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100290038.rctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return eg:IsContains(chkc) and c100290038.rcfilter1(chkc,e,tp) end
-	if chk==0 then return eg:IsExists(c100290038.rcfilter1,1,nil,e,tp) end
+	if chkc then return eg:IsContains(chkc) and c100290038.tgfilter(chkc,e,tp) end
+	if chk==0 then return eg:IsExists(c100290038.tgfilter,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tc=eg:FilterSelect(tp,c100290038.rcfilter1,1,1,nil,e,tp):GetFirst()
+	local tc=eg:FilterSelect(tp,c100290038.tgfilter,1,1,nil,e,tp):GetFirst()
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,0,0)
 end

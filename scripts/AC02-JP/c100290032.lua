@@ -28,12 +28,12 @@ function c100290032.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-function c100290032.cfilter(c,g)
+function c100290032.cfilter(c)
 	return c:IsFacedown() or not c:IsRace(RACE_DINOSAUR)
 end
 function c100290032.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return g:GetCount()==0 and not g:IsExists(c100290032.cfilter,1,nil,g)
+	return not g:IsExists(c100290032.cfilter,1,nil)
 end
 function c100290032.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

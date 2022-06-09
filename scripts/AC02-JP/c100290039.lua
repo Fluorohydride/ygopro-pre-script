@@ -21,18 +21,18 @@ function c100290039.initial_effect(c)
 	e2:SetOperation(c100290039.rcop)
 	c:RegisterEffect(e2)
 end
-function c100290039.filter(c,tp)
-	return c:IsSetCard(0x4) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or (c:IsType(TYPE_PENDULUM)
-		and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))))
+function c100290039.filter(c,tp,pcon)
+	return c:IsSetCard(0x4) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or c:IsType(TYPE_PENDULUM) and pcon)
 end
 function c100290039.activate(e,tp,eg,ep,ev,re,r,rp)
+	local pcon=Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
 	local g=Duel.GetMatchingGroup(c100290039.filter,tp,LOCATION_DECK,0,nil,tp)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100290039,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 		local sc=g:Select(tp,1,1,nil):GetFirst()
 		if sc then
 			local b1=sc:IsAbleToHand()
-			local b2=sc:IsType(TYPE_PENDULUM) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+			local b2=sc:IsType(TYPE_PENDULUM) and pcon
 			local s=0
 			if b1 and not b2 then
 				s=Duel.SelectOption(tp,aux.Stringid(100290039,1))
