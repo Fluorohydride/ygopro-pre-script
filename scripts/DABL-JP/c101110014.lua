@@ -49,7 +49,7 @@ function c101110014.spcon(e,c)
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c101110014.thfilter(c)
-	return c:IsSetCard(0x190) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x288) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
 end
 function c101110014.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101110014.thfilter,tp,LOCATION_DECK,0,1,nil) end

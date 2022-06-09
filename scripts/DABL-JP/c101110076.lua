@@ -35,7 +35,7 @@ function c101110076.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101110076.spfilter(c,e,tp)
-	return c:IsSetCard(0x190) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
+	return c:IsSetCard(0x288) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function c101110076.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -51,7 +51,7 @@ function c101110076.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101110076.rmcfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x190)
+	return c:IsFaceup() and c:IsSetCard(0x288)
 end
 function c101110076.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_TRAP)

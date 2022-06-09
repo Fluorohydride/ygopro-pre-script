@@ -48,7 +48,7 @@ function c101110060.nttg(e,c)
 	return c:IsLevel(7)
 end
 function c101110060.spfilter(c,e,tp)
-	return c:IsSetCard(0x190) and not c:IsType(TYPE_XYZ) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return c:IsSetCard(0x288) and not c:IsType(TYPE_XYZ) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101110060.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -66,7 +66,7 @@ function c101110060.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101110060.rmcfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x190)
+	return c:IsFaceup() and c:IsSetCard(0x288)
 end
 function c101110060.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_SPELL)
