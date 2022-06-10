@@ -1,4 +1,5 @@
---刹帝利拉族基地
+--クシャトリラ・バース
+--Script by JoyJ
 function c101110060.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

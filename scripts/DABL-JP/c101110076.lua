@@ -1,4 +1,5 @@
---刹帝利拉族准备
+--クシャトリラ・プリペア
+--Script by JoyJ
 function c101110076.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

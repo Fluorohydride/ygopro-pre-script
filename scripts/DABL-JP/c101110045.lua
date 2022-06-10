@@ -1,4 +1,5 @@
---刹帝利拉族·香格里拉卫星炮
+--クシャトリラ・シャングリラ
+--Script by JoyJ
 function c101110045.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,nil,7,2,nil,nil,99)

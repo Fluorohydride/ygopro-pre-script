@@ -1,4 +1,5 @@
---刹帝利拉族·食人魔
+--クシャトリラ・オーガ
+--Script by JoyJ
 function c101110014.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

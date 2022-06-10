@@ -1,4 +1,5 @@
---刹帝利拉族·芬里尔
+--クシャトリラ・フェンリル
+--Script by JoyJ
 function c101110012.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,5 @@
---刹帝利拉族·独角兽
+--クシャトリラ・ユニコーン
+--Script by JoyJ
 function c101110013.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,5 @@
---肆世坏的械贬
+--械貶する肆世壊
+--Script by JoyJ
 function c101110059.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,5 @@
---肆世坏的双牙
+--肆世壊の双牙
+--Script by JoyJ
 function c101110075.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
