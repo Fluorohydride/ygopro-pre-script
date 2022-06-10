@@ -1,3 +1,4 @@
+--宝玉神覚醒
 --Awakening of the Crystal Lord
 --Script by Lyris12 & mercury233
 local s,id,o=GetID()

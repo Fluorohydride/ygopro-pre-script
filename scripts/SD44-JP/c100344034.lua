@@ -1,3 +1,4 @@
+--宝玉の玲瓏
 --Crystal Brilliance
 --Script by Lyris12
 local s,id,o=GetID()

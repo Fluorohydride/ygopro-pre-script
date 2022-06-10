@@ -1,3 +1,4 @@
+--宝玉の奇跡
 --Crystal Miracle
 --Script by Lyris12
 local s,id,o=GetID()

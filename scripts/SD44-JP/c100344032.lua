@@ -1,3 +1,4 @@
+--宝玉の祝福
 --Crystal Grace
 --Script by Lyris12
 local s,id,o=GetID()

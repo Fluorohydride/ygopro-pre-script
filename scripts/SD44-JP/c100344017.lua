@@ -1,3 +1,4 @@
+--宝玉の加護
 --Crystal Protection
 --Script by Lyris12
 local s,id,o=GetID()

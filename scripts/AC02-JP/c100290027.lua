@@ -1,4 +1,6 @@
+--オイリーゼミ
 --Oily Cicada
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--lv down
