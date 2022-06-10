@@ -92,7 +92,7 @@ function c100290015.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100290015.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then 
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		if tc:IsAbleToHand() and (not tc:IsAbleToDeck()
 			or Duel.SelectOption(tp,aux.Stringid(100290015,2),aux.Stringid(100290015,3))==0) then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)

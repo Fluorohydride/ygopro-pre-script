@@ -72,6 +72,6 @@ function c100290008.drop(e,tp,eg,ep,ev,re,r,rp)
 		if not og:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then return end
 		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
-		Duel.Draw(tp,1,REASON_EFFECT)	
+		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
