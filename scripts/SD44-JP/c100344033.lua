@@ -1,16 +1,17 @@
 --Crystal Miracle
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
-	--When a Spell/Trap Card, or monster effect, is activated: Destroy 1 "Crystal Beast" card you control, and if you do, negate the activation, and if you do that, destroy that card.
-	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
-	e4:SetType(EFFECT_TYPE_ACTIVATE)
-	e4:SetCode(EVENT_CHAINING)
-	e4:SetCondition(s.con)
-	e4:SetTarget(s.tg)
-	e4:SetOperation(s.act)
-	c:RegisterEffect(e4)
-	--If a "Crystal Beast" card(s) is placed in your Spell & Trap Zone while this card is in your GY (even during the Damage Step): You can banish this card; place 1 "Crystal Beast" monster from your hand, Deck, or GY face-up in your Spell & Trap Zone as a Continuous Spell. You can only use this effect of "Crystal Miracle" once per turn.
+	--negate
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_CHAINING)
+	e1:SetCondition(s.con)
+	e1:SetTarget(s.tg)
+	e1:SetOperation(s.act)
+	c:RegisterEffect(e1)
+	--place
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_MOVE)
@@ -26,19 +27,23 @@ end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsActiveType(TYPE_MONSTER)) and Duel.IsChainNegatable(ev)
 end
+function s.desfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x1034)
+end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_ONFIELD,0,nil,0x1034)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,0,nil)
 	if chk==0 then return #g>0 end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g+eg,2,0,0)
 	end
 end
 function s.act(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_ONFIELD,0,1,1,nil,0x1034)
-	if Duel.Destroy(g,REASON_EFFECT)>0 and Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+	local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	if Duel.Destroy(g,REASON_EFFECT)>0
+		and Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
