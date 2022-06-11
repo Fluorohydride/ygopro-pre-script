@@ -60,13 +60,18 @@ function c100290010.filter(c,e,sp)
 end
 function c100290010.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
 		local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if ct<=0 then return end
+		if ct<=0 then
+			Duel.SpecialSummonComplete()
+			return
+		end
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 		local g=Duel.GetMatchingGroup(c100290010.filter,tp,LOCATION_SZONE,0,nil,e,tp)
 		local gc=g:GetCount()
 		if gc>0 and Duel.SelectYesNo(tp,aux.Stringid(100290010,0)) then
+			Duel.DisableSelfDestroyCheck()
+			Duel.SpecialSummonComplete()
 			Duel.BreakEffect()
 			if gc<=ct then
 				Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
@@ -75,6 +80,9 @@ function c100290010.spop(e,tp,eg,ep,ev,re,r,rp)
 				local sg=g:Select(tp,ct,ct,nil)
 				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 			end
+			Duel.DisableSelfDestroyCheck(false)
+		else
+			Duel.SpecialSummonComplete()
 		end
 	end
 end
