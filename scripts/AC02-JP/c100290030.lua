@@ -84,13 +84,6 @@ function c100290030.counterop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCondition(c100290030.ctcon)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetValue(RESET_TURN_SET)
-			e2:SetCondition(c100290030.ctcon)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e2)
 		end
 	end
 end
