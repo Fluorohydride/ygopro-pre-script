@@ -33,7 +33,7 @@ end
 function c100290037.damcon(e)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return not bc:IsLevelAbove(0)
+	return bc and not bc:IsLevelAbove(0)
 end
 function c100290037.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

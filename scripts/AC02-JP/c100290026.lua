@@ -1,4 +1,6 @@
+--ヒロイック・コール
 --Heroic Call
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon
