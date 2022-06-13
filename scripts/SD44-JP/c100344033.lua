@@ -48,11 +48,11 @@ function s.act(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsControler(tp) and c:IsLocation(LOCATION_SZONE) and c:GetSequence()<5
+function s.cfilter(c,tp,tc)
+	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsControler(tp) and c:IsLocation(LOCATION_SZONE) and c:GetSequence()<5 and c:GetReasonEffect():GetHandler()~=tc
 end
 function s.pcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(s.cfilter,1,nil,tp,e:GetHandler())
 end
 function s.filter(c)
 	return c:IsSetCard(0x1034) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
