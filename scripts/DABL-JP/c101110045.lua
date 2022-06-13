@@ -62,11 +62,11 @@ function c101110045.lztg(e,tp,eg,ep,ev,re,r,rp,chk)
 		+Duel.GetLocationCount(tp,LOCATION_SZONE,PLAYER_NONE,0)
 		+Duel.GetLocationCount(1-tp,LOCATION_SZONE,PLAYER_NONE,0)>0 end
 	local dis=Duel.SelectDisableField(tp,1,LOCATION_ONFIELD,LOCATION_ONFIELD,0xe000e0)
-	e:SetLabel(dis)
+	Duel.SetTargetParam(dis)
 	Duel.Hint(HINT_ZONE,tp,dis)
 end
 function c101110045.lzop(e,tp,eg,ep,ev,re,r,rp)
-	local zone=e:GetLabel()
+	local zone=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if tp==1 then
 		zone=((zone&0xffff)<<16)|((zone>>16)&0xffff)
 	end
