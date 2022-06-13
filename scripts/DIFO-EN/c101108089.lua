@@ -2,14 +2,15 @@
 --Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
+	aux.AddCodeList(c,45001322,101108087)
 	--ritual summon
-	aux.AddRitualProcGreater(c,aux.FilterBoolFunction(Card.IsSetCard,0x17c),LOCATION_HAND,nil,nil,false,s.op)
+	aux.AddRitualProcGreater(c,aux.FilterBoolFunction(Card.IsSetCard,0x17c),LOCATION_HAND,nil,nil,false,s.extraop)
 end
 function s.filter(c)
 	return c:IsCode(45001322) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
-function s.op(e,tp,eg,ep,ev,re,r,rp,tc,g)
-	if not (g:IsExists(s.filter,1,nil) and tc:IsCode(88106656)) then return end
+function s.extraop(e,tp,eg,ep,ev,re,r,rp,tc,mat)
+	if not (tc and tc:IsCode(101108087) and mat:IsExists(s.filter,1,nil)) then return end
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

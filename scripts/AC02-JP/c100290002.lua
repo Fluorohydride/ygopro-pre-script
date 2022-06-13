@@ -17,7 +17,7 @@ function s.tgfilter(c)
 end
 function s.spfilter(c,e,tp,g)
 	if not (aux.IsCodeListed(c,25652259) and aux.IsCodeListed(c,64788463) and aux.IsCodeListed(c,90876561)) then return false end
-	local proc=c:IsCode(100290001)
+	local proc=c:IsCode(100290001) and e:GetHandler():IsCode(id)
 	if not c:IsCanBeSpecialSummoned(e,0,tp,proc,proc) then return false end
 	return (not c:IsLocation(LOCATION_EXTRA) and Duel.GetMZoneCount(tp,g)>0
 		or c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,g,c)>0)

@@ -1,4 +1,6 @@
+--水晶ドクロ
 --Crystal Skull
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--damage

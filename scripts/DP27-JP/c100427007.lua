@@ -1,4 +1,6 @@
+--命の奇跡
 --Life Exstream
+--Script by Lyris12
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
