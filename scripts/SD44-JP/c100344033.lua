@@ -49,7 +49,8 @@ function s.act(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp,tc)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsControler(tp) and c:IsLocation(LOCATION_SZONE) and c:GetSequence()<5 and c:GetReasonEffect():GetHandler()~=tc
+	local re=c:GetReasonEffect()
+	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsControler(tp) and c:IsLocation(LOCATION_SZONE) and c:GetSequence()<5 and (not re or re:GetHandler()~=tc)
 end
 function s.pcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,e:GetHandler())
