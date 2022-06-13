@@ -36,6 +36,7 @@ end
 function c101110064.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101110064.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c101110064.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -60,6 +61,7 @@ function c101110064.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local mg=Duel.GetMatchingGroup(c101110064.mfilter,tp,LOCATION_MZONE,0,nil)
 		return Duel.IsExistingMatchingCard(c101110064.scfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
 	end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c101110064.scop(e,tp,eg,ep,ev,re,r,rp)
@@ -101,6 +103,7 @@ function c101110064.fstg(e,tp,eg,ep,ev,re,r,rp,chk)
 		end
 		return res
 	end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c101110064.fsop(e,tp,eg,ep,ev,re,r,rp)

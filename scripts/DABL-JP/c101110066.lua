@@ -76,7 +76,7 @@ function c101110066.cfilter(c,tp)
 	return c:IsSetCard(0x182) and c:IsPreviousLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp)
 end
 function c101110066.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101110066.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(c101110066.cfilter,1,nil,tp)
 end
 function c101110066.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
