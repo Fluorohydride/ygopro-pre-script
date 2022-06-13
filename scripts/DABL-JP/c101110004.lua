@@ -47,7 +47,7 @@ function c101110004.rfilter(c,tp)
 end
 function c101110004.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c101110004.rfilter,1,nil,tp)
-		and Duel.GetCustomActivityCount(5325155,tp,ACTIVITY_SPSUMMON)==0 end
+		and Duel.GetCustomActivityCount(101110004,tp,ACTIVITY_SPSUMMON)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectReleaseGroup(tp,c101110004.rfilter,1,1,nil,tp)
 	local e1=Effect.CreateEffect(e:GetHandler())
