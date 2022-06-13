@@ -65,14 +65,14 @@ function c101110012.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c101110012.rmfilter(c)
+function c101110012.rmfilter(c,tp)
 	return c:IsFaceup() and c:IsAbleToRemove(tp,POS_FACEDOWN)
 end
 function c101110012.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c101110012.rmfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101110012.rmfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c101110012.rmfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c101110012.rmfilter,tp,0,LOCATION_ONFIELD,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,c101110012.rmfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,c101110012.rmfilter,tp,0,LOCATION_ONFIELD,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c101110012.rmop(e,tp,eg,ep,ev,re,r,rp)

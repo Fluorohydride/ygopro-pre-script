@@ -64,19 +64,21 @@ function c101110013.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c101110013.rmfilter(c)
-	return c:IsFaceup() and c:IsAbleToRemove(tp,POS_FACEDOWN)
+function c101110013.rmfilter(c,tp)
+	return c:IsAbleToRemove(tp,POS_FACEDOWN)
 end
 function c101110013.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,nil,tp,POS_FACEDOWN) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101110013.rmfilter,tp,0,LOCATION_EXTRA,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_EXTRA)
 end
 function c101110013.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 	Duel.ConfirmCards(tp,g)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local sg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil,tp,POS_FACEDOWN)
-	Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
+	local sg=g:FilterSelect(tp,c101110013.rmfilter,1,1,nil,tp)
+	if #sg>0 then
+		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
+	end
 	Duel.ShuffleExtra(1-tp)
 end
 function c101110013.rmcon(e,tp,eg,ep,ev,re,r,rp)

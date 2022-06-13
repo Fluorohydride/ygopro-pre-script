@@ -35,8 +35,7 @@ function c101110045.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101110045.spfilter(c,e,tp)
-	return c:IsSetCard(0x288)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x288) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101110045.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -56,9 +55,6 @@ function c101110045.cfilter(c,tp)
 end
 function c101110045.lzcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101110045.cfilter,1,nil,tp)
-end
-function c101110045.lzfilter(c)
-	return c:IsDefenseBelow(200) and c:IsAttribute(ATTRIBUTE_FIRE) and not c:IsCode(101110045) and c:IsAbleToGrave()
 end
 function c101110045.lztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)

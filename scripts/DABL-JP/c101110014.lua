@@ -23,7 +23,7 @@ function c101110014.initial_effect(c)
 	--remove when attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101110014,2))
-	e3:SetCategory(CATEGORY_REMOVE+CATEGORY_SEARCH)
+	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetCountLimit(1,101110014+100)
@@ -64,8 +64,8 @@ function c101110014.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c101110014.rmfilter(c)
-	return c:IsFaceup() and c:IsAbleToRemove(tp,POS_FACEDOWN)
+function c101110014.rmfilter(c,tp)
+	return c:IsAbleToRemove(tp,POS_FACEDOWN)
 end
 function c101110014.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetDecktopGroup(1-tp,1)
@@ -83,12 +83,14 @@ function c101110014.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101110014,3))
 		ct=Duel.AnnounceNumber(tp,table.unpack(tbl))
 	end
+	Duel.ConfirmDecktop(1-tp,ct)
 	local g=Duel.GetDecktopGroup(1-tp,ct)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	Duel.ConfirmCards(tp,g)
-	g=g:Select(tp,1,1,nil)
-	Duel.DisableShuffleCheck(true)
-	Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
+	local sg=g:FilterSelect(tp,c101110014.rmfilter,1,1,nil,tp)
+	if #sg>0 then
+		Duel.DisableShuffleCheck(true)
+		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
+	end
 end
 function c101110014.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)
