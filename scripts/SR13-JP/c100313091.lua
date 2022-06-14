@@ -1,4 +1,5 @@
---暗黑界的魔神王 雷恩
+--暗黒界の魔神王 レイン
+--scripted by JoyJ
 function c100313091.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

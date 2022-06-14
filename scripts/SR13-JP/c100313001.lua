@@ -1,4 +1,5 @@
---暗黑界的龙神王 格拉法
+--暗黒界の龍神王 グラファ
+--scripted by JoyJ
 function c100313001.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
@@ -46,6 +47,7 @@ function c100313001.spfilter(c,e,tp)
 	return c:IsCode(34230233) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100313001.spcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp
 end
