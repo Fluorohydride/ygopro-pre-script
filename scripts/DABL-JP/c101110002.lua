@@ -4,7 +4,7 @@ function c101110002.initial_effect(c)
 	aux.AddCodeList(c,9012916)
 	--same effect send this card to grave and spsummon another card check
 	local e0=aux.AddThisCardInGraveAlreadyCheck(c)
-	--to hand
+	--set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101110002,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -14,12 +14,12 @@ function c101110002.initial_effect(c)
 	e1:SetTarget(c101110002.tftg)
 	e1:SetOperation(c101110002.tfop)
 	c:RegisterEffect(e1)
-	--set
+	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101110002,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,101110002+100)
