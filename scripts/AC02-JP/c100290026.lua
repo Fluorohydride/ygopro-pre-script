@@ -63,24 +63,27 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=500
 end
 function s.afilter(c)
-	return c:IsSetCard(0x6f) and (c:IsFaceup() or c:IsLocation(LOCATION_OVERLAY))
+	return c:IsSetCard(0x6f) and c:IsFaceup()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
+	local ct1=Duel.GetMatchingGroupCount(s.afilter,tp,LOCATION_ONFIELD,0,nil)
+	local ct2=Duel.GetOverlayGroup(tp,1,0):FilterCount(Card.IsSetCard,nil,0x6f)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_ONFIELD+LOCATION_OVERLAY,0,1,nil) end
+		and ct1+ct2>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local ct=Duel.GetMatchingGroupCount(s.afilter,tp,LOCATION_ONFIELD+LOCATION_OVERLAY,0,nil)
+		local ct1=Duel.GetMatchingGroupCount(s.afilter,tp,LOCATION_ONFIELD,0,nil)
+		local ct2=Duel.GetOverlayGroup(tp,1,0):FilterCount(Card.IsSetCard,nil,0x6f)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(ct*500)
+		e1:SetValue((ct1+ct2)*500)
 		tc:RegisterEffect(e1)
 	end
 end
