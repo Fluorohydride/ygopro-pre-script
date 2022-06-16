@@ -1,67 +1,96 @@
---暗黒界の龍神王 グラファ
+--暗黒界の魔神王 レイン
 --scripted by JoyJ
 function c100313001.initial_effect(c)
-	--fusion material
-	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,34230233,aux.FilterBoolFunction(Card.IsFusionAttribute,ATTRIBUTE_DARK),1,true,true)
-	--change effect
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100313001,0))
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_CHAINING)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,100313001)
-	e1:SetCondition(c100313001.chcon)
-	e1:SetTarget(c100313001.chtg)
-	e1:SetOperation(c100313001.chop)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetRange(LOCATION_GRAVE)
+	e1:SetCondition(c100313001.spcon)
+	e1:SetOperation(c100313001.spop)
 	c:RegisterEffect(e1)
-	--special summon
+	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100313001,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_HANDES)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_LEAVE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCondition(c100313001.spcon)
-	e2:SetTarget(c100313001.sptg)
-	e2:SetOperation(c100313001.spop)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCondition(c100313001.condition)
+	e2:SetTarget(c100313001.target)
+	e2:SetOperation(c100313001.operation)
 	c:RegisterEffect(e2)
+	e3=e2:Clone()
+	e3:SetCode(EVENT_REMOVE)
+	c:RegisterEffect(e3)
 end
-function c100313001.chcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and (re:IsActiveType(TYPE_MONSTER))
-		or ((re:GetActiveType()==TYPE_SPELL or re:GetActiveType()==TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE))
+function c100313001.spfilter(c,ft)
+	return c:IsFaceup() and c:IsSetCard(0x6) and c:IsLevelBelow(7) and c:IsAbleToHandAsCost()
+		and (ft>0 or c:GetSequence()<5)
 end
-function c100313001.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,rp,0,LOCATION_HAND,1,nil,REASON_EFFECT+REASON_DISCARD) end
+function c100313001.spcon(e,c)
+	if c==nil then return true end
+	if c:IsHasEffect(EFFECT_NECRO_VALLEY) then return false end
+	local tp=c:GetControler()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	return ft>-1 and Duel.IsExistingMatchingCard(c100313001.spfilter,tp,LOCATION_MZONE,0,1,nil,ft)
 end
-function c100313001.chop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Group.CreateGroup()
-	Duel.ChangeTargetCard(ev,g)
-	Duel.ChangeChainOperation(ev,c100313001.repop)
+function c100313001.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local g=Duel.SelectMatchingCard(tp,c100313001.spfilter,tp,LOCATION_MZONE,0,1,1,nil,ft)
+	Duel.SendtoHand(g,nil,REASON_COST)
 end
-function c100313001.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
-	Duel.DiscardHand(1-tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD)
-end
-function c100313001.spfilter(c,e,tp)
-	return c:IsCode(34230233) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function c100313001.spcon(e,tp,eg,ep,ev,re,r,rp)
+
+function c100313001.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp
+	e:SetLabel(c:GetPreviousControler())
+	return c:IsPreviousLocation(LOCATION_HAND) and (r&(REASON_EFFECT+REASON_DISCARD))==REASON_EFFECT+REASON_DISCARD
 end
-function c100313001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100313001.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,tp,LOCATION_HAND)
+function c100313001.filter1(c)
+	return c:IsSetCard(0x6) and c:IsAbleToHand() and c:IsLevelAbove(5) and not c:IsCode(100313001)
 end
-function c100313001.spop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100313001.spfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
-	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
-		Duel.BreakEffect()
-		Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD,nil)
-		Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD,nil)
+function c100313001.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100313001.filter1,tp,LOCATION_DECK,0,1,nil) end
+	if rp==1-tp and tp==e:GetLabel() then
+		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
+	else
+		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+end
+function c100313001.filter2(c,e,tp,ft,ft2)
+	return ((ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP))
+		or (ft2>0 and c:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEUP)))
+		and c:IsSetCard(0x6) and c:IsLevelBelow(4)
+		
+end
+function c100313001.operation(e,tp,eg,ep,ev,re,r,rp)
+	local ft=Duel.GetMZoneCount(tp)
+	local ft2=Duel.GetMZoneCount(1-tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,c100313001.filter1,tp,LOCATION_DECK,0,1,1,nil)
+	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
+		Duel.ConfirmCards(1-tp,g)
+		if rp==1-tp and tp==e:GetLabel() and Duel.IsExistingMatchingCard(c100313001.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,ft,ft2) and Duel.SelectYesNo(tp,aux.Stringid(100313001,2)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local tg=Duel.SelectMatchingCard(tp,c100313001.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp,ft,ft2)
+			if #tg>0 then
+				Duel.BreakEffect()
+				local tc=tg:GetFirst()
+				local o1=ft>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+				local o2=ft2>0 and tc:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEUP)
+				local opt=0
+				if o1 and o2 then
+					opt=Duel.SelectOption(tp,aux.Stringid(100313001,3),aux.Stringid(100313001,4))
+				elseif o1 then
+					opt=0
+				else
+					opt=1
+				end
+				if opt==1 then tp=1-tp end
+				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+			end
+		end
 	end
 end
