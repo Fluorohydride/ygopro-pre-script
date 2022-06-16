@@ -30,12 +30,13 @@ end
 function c100313052.filter1(c,e)
 	return c:IsAbleToRemove() and not c:IsImmuneToEffect(e) and c:IsLocation(LOCATION_ONFIELD)
 end
-function c100313052.filter2(c,e,tp,m,dm,f,chkf)
+function c100313052.filter2(c,e,tp,mg1,dm,f,chkf)
+	local mg=mg1:Clone()
 	if c:IsSetCard(0x6) then
-		m:Merge(dm)
+		mg:Merge(dm)
 	end
 	return c:IsType(TYPE_FUSION) and c:IsRace(RACE_FIEND) and (not f or f(c))
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(mg,nil,chkf)
 end
 function c100313052.filter3(c,e)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
@@ -47,7 +48,7 @@ function c100313052.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(c100313052.filter1,nil,e)
-		local mg2=Duel.GetMatchingGroup(c100313052.filter3,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,e)
+		local mg2=Duel.GetMatchingGroup(c100313052.filter3,tp,LOCATION_GRAVE,0,nil,e)
 		local dg=Duel.GetMatchingGroup(c100313052.filter4,tp,LOCATION_HAND,0,nil,e)
 		mg1:Merge(mg2)
 		local res=Duel.IsExistingMatchingCard(c100313052.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,dg,nil,chkf)
@@ -68,9 +69,8 @@ end
 function c100313052.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c100313052.filter1,nil,e)
-	local mg2=Duel.GetMatchingGroup(c100313052.filter3,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,e)
+	local mg2=Duel.GetMatchingGroup(c100313052.filter3,tp,LOCATION_GRAVE,0,nil,e)
 	local dg=Duel.GetMatchingGroup(c100313052.filter4,tp,LOCATION_HAND,0,nil,e)
-	mg1=mg1 or Group.CreateGroup()
 	mg1:Merge(mg2)
 	local sg1=Duel.GetMatchingGroup(c100313052.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,dg,nil,chkf)
 	local mg3=nil
@@ -80,7 +80,7 @@ function c100313052.activate(e,tp,eg,ep,ev,re,r,rp)
 		local fgroup=ce:GetTarget()
 		mg3=fgroup(ce,e,tp)
 		local mf=ce:GetValue()
-		sg2=Duel.GetMatchingGroup(c100313052.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg3,Group.CreateGroup(),mf,chkf)
+		sg2=Duel.GetMatchingGroup(c100313052.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg3,dg,mf,chkf)
 	end
 	if #sg1>0 or (sg2~=nil and #sg2>0) then
 		local sg=sg1:Clone()
@@ -114,7 +114,8 @@ function c100313052.thfilter(c)
 end
 function c100313052.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToHand() and Duel.IsExistingMatchingCard(c100313052.thfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return c:IsAbleToHand()
+		and Duel.IsExistingMatchingCard(c100313052.thfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end

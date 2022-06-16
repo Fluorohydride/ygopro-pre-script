@@ -28,11 +28,11 @@ function c100313051.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100313051.chcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and (re:IsActiveType(TYPE_MONSTER))
-		or ((re:GetActiveType()==TYPE_SPELL or re:GetActiveType()==TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return rp==1-tp and (re:IsActiveType(TYPE_MONSTER)
+		or (re:GetActiveType()==TYPE_SPELL or re:GetActiveType()==TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function c100313051.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,rp,0,LOCATION_HAND,1,nil,REASON_EFFECT+REASON_DISCARD) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,rp,0,LOCATION_HAND,1,nil,REASON_EFFECT) end
 end
 function c100313051.chop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
@@ -45,6 +45,7 @@ function c100313051.repop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100313051.spfilter(c,e,tp)
 	return c:IsCode(34230233) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function c100313051.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -54,7 +55,7 @@ end
 function c100313051.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100313051.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,PLAYER_ALL,1)
 end
 function c100313051.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
