@@ -22,6 +22,7 @@ function c101110023.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCost(c101110023.cost)
+	e2:SetTarget(c101110023.target)
 	e2:SetOperation(c101110023.operation)
 	c:RegisterEffect(e2)
 	--to hand
@@ -47,12 +48,16 @@ function c101110023.srfilter(c,oc)
 	return not c:IsOriginalCodeRule(oc:GetOriginalCodeRule()) and c:IsSetCard(0xc7) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c101110023.srtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101110023.srfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler()) end
+	if chk==0 then
+		local oc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())
+		return Duel.IsExistingMatchingCard(c101110023.srfilter,tp,LOCATION_DECK,0,1,nil,oc)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101110023.srop(e,tp,eg,ep,ev,re,r,rp)
+	local oc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local tc=Duel.SelectMatchingCard(tp,c101110023.srfilter,tp,LOCATION_DECK,0,1,1,nil,e:GetHandler()):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,c101110023.srfilter,tp,LOCATION_DECK,0,1,1,nil,oc):GetFirst()
 	if tc and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND)
 		and Duel.SelectYesNo(tp,aux.Stringid(101110023,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -68,6 +73,9 @@ function c101110023.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsDiscardable() end
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
+function c101110023.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFlagEffect(tp,101110023)==0 end
+end
 function c101110023.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -82,6 +90,7 @@ function c101110023.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetValue(aux.indoval)
 	Duel.RegisterEffect(e2,tp)
+	Duel.RegisterFlagEffect(tp,101110023,RESET_PHASE+PHASE_END,0,1)
 end
 function c101110023.efftg(e,c)
 	return c:IsSetCard(0xc7)
