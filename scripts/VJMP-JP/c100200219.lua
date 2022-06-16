@@ -33,11 +33,14 @@ function c100200219.initial_effect(c)
 	e4:SetOperation(c100200219.tgop)
 	c:RegisterEffect(e4)
 end
+function c100200219.spcfilter(c)
+	return c:IsFaceup() and c:GetSequence()<5
+end
 function c100200219.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_SZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c100200219.spcfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c100200219.atkfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsFaceup()
@@ -46,7 +49,7 @@ function c100200219.atkval(e,c)
 	return Duel.GetMatchingGroupCount(c100200219.atkfilter,c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*600
 end
 function c100200219.cfilter(c)
-	return c:IsFaceup() and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:GetSequence()<5
 end
 function c100200219.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100200219.cfilter,tp,LOCATION_SZONE,0,2,nil) end
