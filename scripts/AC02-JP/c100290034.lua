@@ -40,6 +40,7 @@ function c100290034.negop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local tc=g:Select(tp,1,1,nil):GetFirst()
 			if tc then
+				Duel.BreakEffect()
 				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 				local fid=e:GetHandler():GetFieldID()
 				tc:RegisterFlagEffect(100290034,RESET_EVENT+RESETS_STANDARD,0,1,fid)

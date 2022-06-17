@@ -30,7 +30,7 @@ function c100427033.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and c100427033.filter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(c100427033.filter,tp,LOCATION_ONFIELD,0,1,nil,tp)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,c100427033.filter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)

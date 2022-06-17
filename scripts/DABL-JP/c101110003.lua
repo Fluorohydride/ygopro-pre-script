@@ -5,7 +5,7 @@ function c101110003.initial_effect(c)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101110003,0))
-	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE+LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -49,13 +49,14 @@ function c101110003.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingMatchingCard(c101110003.tgfilter,tp,LOCATION_EXTRA,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c101110003.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
 end
 function c101110003.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101110003.tgfilter,tp,LOCATION_EXTRA,0,1,1,nil)
-	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0
+	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_GRAVE)
 		and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)

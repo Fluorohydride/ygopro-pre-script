@@ -80,7 +80,7 @@ function c100427005.pntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100427005.pnop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc:IsFaceup() and tc:IsRelateToEffect(e)) then return end
+	if not tc:IsRelateToEffect(e) then return end
 	local b1=tc:IsCanChangePosition()
 	local b2=aux.NegateMonsterFilter(tc)
 	local op=-1

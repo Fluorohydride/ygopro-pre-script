@@ -18,7 +18,7 @@ function c100290041.initial_effect(c)
 	-- search
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100290041,1))
-	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_DECKDES)
+	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_GRAVE)

@@ -8,6 +8,7 @@ function c100290040.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,100290040)
 	e1:SetCost(c100290040.lvcost)
+	e1:SetTarget(c100290040.lvtg)
 	e1:SetOperation(c100290040.lvop)
 	c:RegisterEffect(e1)
 	--special summon
@@ -28,6 +29,9 @@ end
 function c100290040.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100290040.lvcfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,c100290040.lvcfilter,1,1,REASON_DISCARD+REASON_COST,e:GetHandler())
+end
+function c100290040.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsLevelAbove(3) end
 end
 function c100290040.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

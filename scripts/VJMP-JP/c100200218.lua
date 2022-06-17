@@ -16,6 +16,7 @@ function c100200218.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetTarget(c100200218.indtg)
 	e2:SetOperation(c100200218.indop)
 	c:RegisterEffect(e2)
 end
@@ -38,6 +39,9 @@ function c100200218.setop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
+function c100200218.indtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFlagEffect(tp,100200218)==0 end
+end
 function c100200218.indop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -47,4 +51,5 @@ function c100200218.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(aux.indoval)
 	e1:SetReset(RESET_PHASE+PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
+	Duel.RegisterFlagEffect(tp,100200218,RESET_PHASE+PHASE_END,0,2)
 end

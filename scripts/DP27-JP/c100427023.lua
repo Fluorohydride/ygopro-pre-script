@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--deckdes
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DECKDES)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
@@ -76,7 +77,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(g1,REASON_EFFECT)~=0 and g1:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,17484499) then
 		local g=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
-		if #g>0 and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
+		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local sg=g:Select(tp,1,1,nil)

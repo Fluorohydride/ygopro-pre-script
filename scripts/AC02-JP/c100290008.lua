@@ -40,10 +40,12 @@ end
 function c100290008.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local tc=Duel.SelectMatchingCard(tp,c100290008.tdfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp):GetFirst()
-	if tc and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA)
+	if not tc then return end
+	local code=tc:GetCode()
+	if Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,c100290008.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode())
+		local g=Duel.SelectMatchingCard(tp,c100290008.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,code)
 		if g:GetCount()>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
@@ -62,6 +64,7 @@ function c100290008.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		return g:CheckSubGroup(c100290008.gcheck,1,2)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c100290008.drop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100290008.filter),tp,LOCATION_GRAVE,0,nil)

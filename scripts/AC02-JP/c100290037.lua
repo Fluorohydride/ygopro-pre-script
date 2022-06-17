@@ -43,6 +43,7 @@ function c100290037.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		e1:SetCountLimit(1,100290037)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetTarget(c100290037.sptg)
@@ -56,7 +57,7 @@ function c100290037.filter(c,e,tp)
 end
 function c100290037.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c100290037.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>=2
 		and not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.IsExistingTarget(c100290037.filter,tp,LOCATION_GRAVE,0,2,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

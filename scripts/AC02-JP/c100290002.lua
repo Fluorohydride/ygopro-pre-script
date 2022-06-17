@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -43,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil,e,tp,nil):GetFirst()
 		if tc then
 			Duel.BreakEffect()
-			local proc=tc:IsCode(100290001)
+			local proc=tc:IsCode(100290001) and e:GetHandler():IsCode(id)
 			Duel.SpecialSummon(tc,0,tp,tp,proc,proc,POS_FACEUP)
 			if proc then tc:CompleteProcedure() end
 		end

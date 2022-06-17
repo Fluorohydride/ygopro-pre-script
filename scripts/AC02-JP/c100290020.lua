@@ -30,7 +30,7 @@ function c100290020.dfilter(c)
 	return c:IsSetCard(0x26) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function c100290020.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck()
 end
 function c100290020.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c100290020.filter(chkc) end
@@ -38,13 +38,14 @@ function c100290020.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingMatchingCard(c100290020.dfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c100290020.filter,tp,0,LOCATION_ONFIELD,1,2,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g+1,tp,LOCATION_ONFIELD+LOCATION_HAND)
 end
 function c100290020.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sc=Duel.SelectMatchingCard(tp,c100290020.dfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
-	if sc and Duel.SendtoDeck(sc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and sc:IsLocation(LOCATION_DECK) then
+	if not sc then return end
+	Duel.ConfirmCards(1-tp,sc)
+	if Duel.SendtoDeck(sc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and sc:IsLocation(LOCATION_DECK) then
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
@@ -53,7 +54,8 @@ function c100290020.spfilter(c,e,tp)
 	return c:IsSetCard(0x26) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
-function c100290020.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100290020.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c100290020.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c100290020.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

@@ -27,7 +27,7 @@ function c100290031.initial_effect(c)
 	c:RegisterEffect(e2)
 	--to extra or grave
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_TOEXTRA+CATEGORY_TOGRAVE)
+	e3:SetCategory(CATEGORY_TOEXTRA+CATEGORY_TOGRAVE+CATEGORY_DECKDES)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,100290031+100)
@@ -45,6 +45,7 @@ function c100290031.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c100290031.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
 function c100290031.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -86,7 +87,6 @@ function c100290031.tgfilter(c)
 end
 function c100290031.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100290031.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_DECK)
 end
 function c100290031.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)

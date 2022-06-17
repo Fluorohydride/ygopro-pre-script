@@ -7,7 +7,7 @@ function c101110023.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101110023,0))
-	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
+	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1,101110023)
@@ -63,6 +63,7 @@ function c101110023.srop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0):Select(tp,1,1,nil)
 		if g:GetCount()>0 then
+			Duel.BreakEffect()
 			Duel.HintSelection(g)
 			Duel.Destroy(g,REASON_EFFECT)
 		end
@@ -111,6 +112,7 @@ function c101110023.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,c101110023.thfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,tc)
+		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
 		Duel.DiscardHand(tp,nil,1,1,REASON_DISCARD+REASON_EFFECT,nil)
 	end

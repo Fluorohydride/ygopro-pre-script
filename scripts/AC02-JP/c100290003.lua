@@ -68,16 +68,20 @@ function c100290003.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_LOST_TARGET) and ec:IsReason(REASON_BATTLE) and ec:IsPreviousControler(tp)
 end
 function c100290003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ec=e:GetHandler():GetPreviousEquipTarget()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and ec and ec:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	local c=e:GetHandler()
+	local ec=c:GetPreviousEquipTarget()
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and ec and ec:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetTargetCard(ec)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,ec,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,0,0)
 end
 function c100290003.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetHandler():GetPreviousEquipTarget()
-	if tc:IsRelateToEffect(e) and c:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) and c:IsRelateToEffect(e) then
 		Duel.Equip(tp,c,tc)
 		--Add Equip limit
 		local e1=Effect.CreateEffect(tc)

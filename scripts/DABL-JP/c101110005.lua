@@ -27,7 +27,7 @@ function c101110005.initial_effect(c)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101110005,1))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DAMAGE)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,101110005)
@@ -59,6 +59,7 @@ function c101110005.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101110005.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,0)
 end
 function c101110005.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end

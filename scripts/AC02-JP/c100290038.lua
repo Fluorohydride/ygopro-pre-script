@@ -56,10 +56,10 @@ function c100290038.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100290038.rcfilter(c)
-	return c:IsSetCard(0x4) and c:IsFaceup()
+	return c:IsSetCard(0x4) and c:IsFaceup() and c:GetOriginalType()&TYPE_MONSTER~=0
 end
 function c100290038.rccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c100290038.rcfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(c100290038.rcfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c100290038.tgfilter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and c:IsControler(1-tp)

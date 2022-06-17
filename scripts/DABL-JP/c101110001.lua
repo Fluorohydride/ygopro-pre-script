@@ -46,6 +46,7 @@ function c101110001.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return clv>0 and lv>0 and g:CheckWithSumEqual(Card.GetLevel,lv,1,99)
 		and Duel.IsExistingMatchingCard(c101110001.sfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c101110001.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

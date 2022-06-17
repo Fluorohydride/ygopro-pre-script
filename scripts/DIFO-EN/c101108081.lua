@@ -16,9 +16,10 @@ function s.filter(c,e,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and g:CheckSubGroup(aux.dncheck,2,2)
-		and not Duel.IsPlayerAffectedByEffect(tp,59822133) end
+	if chk==0 then
+		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
+			and g:CheckSubGroup(aux.dncheck,2,2) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)

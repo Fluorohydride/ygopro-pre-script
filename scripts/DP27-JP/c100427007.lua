@@ -91,7 +91,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then Duel.Destroy(tc,REASON_EFFECT) end
 end
-function s.spcon(e)
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_SZONE) and c:GetPreviousSequence()<5
 end

@@ -28,7 +28,7 @@ function c101110071.handcon(e)
 end
 function c101110071.tdfilter(c)
 	return c:IsSetCard(0x33) and c:IsType(TYPE_MONSTER) and c:GetLevel()>0
-		and (c:IsAbleToDeckAsCost() or c:IsAbleToExtraAsCost())
+		and c:IsAbleToDeckOrExtraAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function c101110071.fselect(g,e,tp)

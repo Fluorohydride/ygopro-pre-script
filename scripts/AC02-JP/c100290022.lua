@@ -58,7 +58,7 @@ end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Damage(tp,1000,REASON_EFFECT)<=0 then return end
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
+	if c:IsRelateToEffect(e) and c:IsAttackPos() then
 		Duel.BreakEffect()
 		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end

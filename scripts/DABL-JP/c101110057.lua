@@ -25,7 +25,7 @@ function c101110057.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101110057.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck()
 end
 function c101110057.cfilter(c)
 	return c:IsCode(56099748) and c:IsFaceup()

@@ -14,7 +14,8 @@ function c100313001.initial_effect(c)
 	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100313001,1))
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCondition(c100313001.condition)
 	e2:SetTarget(c100313001.target)
@@ -47,7 +48,7 @@ end
 function c100313001.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100313001.filter1,tp,LOCATION_DECK,0,1,nil) end
 	if rp==1-tp and tp==e:GetLabel() then
-		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
+		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON)
 	else
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	end

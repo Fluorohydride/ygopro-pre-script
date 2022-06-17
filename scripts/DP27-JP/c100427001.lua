@@ -31,6 +31,7 @@ end
 function c100427001.tga(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,0)
 end
 function c100427001.spfilter(c,e,tp,dc)
 	return c:IsSetCard(0x26) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelBelow(dc)
@@ -68,7 +69,7 @@ function c100427001.opd(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(sg,REASON_EFFECT)
+		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REVEAL)
 		ct=ct-1
 	end
 	local op=Duel.SelectOption(tp,aux.Stringid(100427001,4),aux.Stringid(100427001,5))

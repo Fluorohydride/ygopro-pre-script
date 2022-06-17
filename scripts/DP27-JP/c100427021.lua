@@ -63,7 +63,7 @@ function c100427021.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=5
 	if not Duel.IsExistingMatchingCard(c100427021.filter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) then ct=3 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,ct,e:GetHandler())
+	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 end
 function c100427021.tdop(e,tp,eg,ep,ev,re,r,rp)
