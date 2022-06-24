@@ -2,15 +2,13 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **May 21, 2022**: Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
-- **May 27, 2022**: Pharaonic Legend Pack (VP22-JP) : `100291XXX`
-- **June 3, 2022**: Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
-- **June 11, 2022**: ANIMATION CHRONICLE 2022 (AC02-JP) : `100290XXX`
 - **June 25, 2022**: Structure Deck: Legend of the Crystals (SD44-JP): `100344XXX`
 - **July 16, 2022**: DARKWING BLAST (DABL-JP): `101110XXX`
+- **August 6, 2022**: Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
+- **August 20, 2022**: Deck Build Pack: Amazing Defenders (DBAD?-JP) : `100419XXX`
 
 # Announced
-- **August 6, 2022**: Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
+- **October 15, 2022**: Photon Hypernova (????-JP) : `101111XXX`
 
 # Archived
 ## Other packs
@@ -106,6 +104,9 @@
 - History Archive Collection (HC01-JP) : `100287XXX`
 - The Valuable Book EX2 (VX02-JP) : `100288XXX`
 - 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
+- Pharaonic Legend Pack (VP22-JP) : `100291XXX`
+- Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
+- ANIMATION CHRONICLE 2022 (AC02-JP) : `100290XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -165,6 +166,7 @@
 - Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
 - Duelist Pack: Duelists of Whirlwind (DP25-JP) : `100425XXX`
 - Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
+- Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
 
 ## Booster packs
 - THE DARK ILLUSION (TDIL-JP) : `100909XXX`
