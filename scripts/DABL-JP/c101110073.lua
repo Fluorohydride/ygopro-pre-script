@@ -47,13 +47,13 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local l=e:GetLabel()==1
 	if chk==0 then e:SetLabel(0) return l and Duel.CheckReleaseGroup(tp,s.cfilter,1,nil,tp)
 		or Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Release(Duel.SelectReleaseGroup(tp,s.cfilter,1,1,nil,tp),REASON_COST)
+	if l then Duel.Release(Duel.SelectReleaseGroup(tp,s.cfilter,1,1,nil,tp),REASON_COST) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,Duel.SelectTarget(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil),1,0,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToChain(0) then Duel.Destroy(tc,REASON_EFFECT) end
+	if tc and tc:IsRelateToChain(0) then Duel.Destroy(tc,REASON_EFFECT) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END
