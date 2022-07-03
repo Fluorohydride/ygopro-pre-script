@@ -50,7 +50,7 @@ function s.spcon(e,c)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	Duel.Release(Duel.SelectReleaseGroup(tp,s.cfilter,2,2,nil,tp),REASON_COST)
+	Duel.Release(Duel.SelectReleaseGroup(tp,s.cfilter,1,1,nil,tp),REASON_COST)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

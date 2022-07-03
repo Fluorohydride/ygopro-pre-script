@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCondition(function(e,tp) return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 end)
 	c:RegisterEffect(e2)
 	--If this card is Special Summoned: You can activate this effect; add 1 Dragon monster from your Deck or GY to your hand during the End Phase of this turn, except "Byssted Magnumut". 
