@@ -46,7 +46,8 @@ function c101110065.initial_effect(c)
 end
 function c101110065.descon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rp==tp and rc:IsSetCard(0xc7) and rc:IsRace(RACE_DRAGON) and rc:IsLocation(LOCATION_MZONE) 
+	return re:IsActiveType(TYPE_MONSTER) and rp==tp and rc:IsSetCard(0xc7) and rc:IsRace(RACE_DRAGON)
+		and rc:IsLocation(LOCATION_MZONE) and re:GetActivateLocation()==LOCATION_MZONE
 end
 function c101110065.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
