@@ -1,13 +1,16 @@
+--深淵の獣アルバ・ロス
 --The Byssted Alba Los
+--Script by Lyris12
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Must be Special Summoned (from your hand or GY) by Tributing 2 "Byssted" monsters.
+	--splimit
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	c:RegisterEffect(e0)
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -17,51 +20,58 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	e1:SetValue(SUMMON_VALUE_SELF)
 	c:RegisterEffect(e1)
-	--While you control this card Summoned this way, negate the effects of all Ritual, Fusion, Synchro, Xyz, and Link Monsters on the field.
+	--disable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_DISABLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK))
-	e2:SetCondition(function() return c:IsSummonType(SUMMON_VALUE_SELF) end)
+	e2:SetCondition(s.negcon)
 	c:RegisterEffect(e2)
-	--If this face-up card in its owner's control leaves the field because of an opponent's card effect: You can banish all face-down cards from each player's Extra Deck, face-up, until your opponent's End Phase.
+	--banish
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCategory(CATEGORY_REMOVE)
-	e3:SetCondition(s.con)
-	e3:SetTarget(s.tg)
-	e3:SetOperation(s.op)
+	e3:SetCondition(s.rmcon)
+	e3:SetTarget(s.rmtg)
+	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
-end
-function s.chk(g,tp)
-	return Duel.GetMZoneCount(tp,g)>0
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetReleaseGroup(tp):Filter(Card.IsSetCard,nil,0x289):CheckSubGroup(s.chk,2,2,tp)
+	local g=Duel.GetReleaseGroup(tp):Filter(Card.IsSetCard,nil,0x289)
+	return g:CheckSubGroup(aux.mzctcheckrel,2,2,tp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=Duel.GetReleaseGroup(tp):Filter(Card.IsSetCard,nil,0x289)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	Duel.Release(Duel.GetReleaseGroup(tp):Filter(Card.IsSetCard,nil,0x289):SelectSubGroup(tp,s.chk,true,2,2,tp),REASON_COST)
+	local sg=g:SelectSubGroup(tp,aux.mzctcheckrel,false,2,2,tp)
+	Duel.Release(sg,REASON_COST)
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
+function s.negcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_VALUE_SELF)
+end
+function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(c:GetOwner())
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)
 		and rp==1-tp
 end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFacedown,Card.IsAbleToRemove),tp,LOCATION_EXTRA,LOCATION_EXTRA,nil)
+function s.rmfilter(c)
+	return c:IsAbleToRemove() and c:IsFacedown()
+end
+function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,nil)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(aux.AND(Card.IsFacedown,Card.IsAbleToRemove),tp,LOCATION_EXTRA,LOCATION_EXTRA,nil)
-	if Duel.Remove(sg,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0 and sg:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then
+function s.rmop(e,tp,eg,ep,ev,re,r,rp)
+	local sg=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,nil)
+	if Duel.Remove(sg,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)>0
+		and sg:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then
 		local c=e:GetHandler()
 		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_REMOVED)
 		local tc=og:GetFirst()
