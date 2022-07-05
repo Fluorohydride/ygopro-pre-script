@@ -47,7 +47,7 @@ function c101110050.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local p=tp
 		for i=1,2 do
 			local sg=og:Filter(c101110050.spfilter,nil,tp,e,p)
-			local ft=Duel.GetLocationCount(p,LOCATION_MZONE)
+			local ft=Duel.GetLocationCount(p,LOCATION_MZONE,tp)
 			if #sg>ft then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				sg=sg:Select(tp,ft,ft,nil)
