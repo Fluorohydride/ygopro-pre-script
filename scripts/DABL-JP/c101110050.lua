@@ -23,6 +23,7 @@ function c101110050.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetHintTiming(TIMING_BATTLE_START+TIMING_ATTACK+TIMING_BATTLE_END)
 	e2:SetCountLimit(1,101110050+100)
 	e2:SetCondition(c101110050.descon)
 	e2:SetTarget(c101110050.destg)
@@ -35,14 +36,16 @@ function c101110050.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,PLAYER_ALL,LOCATION_REMOVED)
 end
+function c101110050.rfilter(c)
+	return c:IsLocation(LOCATION_REMOVED) and not c:IsReason(REASON_REDIRECT)
+end
 function c101110050.spfilter(c,tp,e,p)
 	return c:IsControler(p) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP+POS_FACEDOWN_DEFENSE,p)
 end
 function c101110050.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if #g>0 then
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_REMOVED)
+	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
+		local og=Duel.GetOperatedGroup():Filter(c101110050.rfilter,nil)
 		local spg=Group.CreateGroup()
 		local p=tp
 		for i=1,2 do
