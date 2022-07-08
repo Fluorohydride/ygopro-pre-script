@@ -36,27 +36,44 @@ function c101110050.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,PLAYER_ALL,LOCATION_REMOVED)
 end
-function c101110050.rfilter(c)
-	return c:IsLocation(LOCATION_REMOVED) and not c:IsReason(REASON_REDIRECT)
-end
-function c101110050.spfilter(c,tp,e,p)
-	return c:IsControler(p) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP+POS_FACEDOWN_DEFENSE,p)
+function c101110050.spfilter(c,e,tp)
+	return c:IsFaceup() and c:IsLocation(LOCATION_REMOVED) and not c:IsReason(REASON_REDIRECT)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP+POS_FACEDOWN_DEFENSE,c:GetControler())
 end
 function c101110050.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
-		local og=Duel.GetOperatedGroup():Filter(c101110050.rfilter,nil)
+		local og=Duel.GetOperatedGroup():Filter(c101110050.spfilter,nil,e,tp)
+		if #og<=0 then return end
+		local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)
+		if ft1<=0 and ft2<=0 then return end
 		local spg=Group.CreateGroup()
-		local p=tp
-		for i=1,2 do
-			local sg=og:Filter(c101110050.spfilter,nil,tp,e,p)
-			local ft=Duel.GetLocationCount(p,LOCATION_MZONE,tp)
-			if #sg>ft then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				sg=sg:Select(tp,ft,ft,nil)
+		if Duel.IsPlayerAffectedByEffect(tp,59822133) then
+			if ft1>0 and ft2>0 then
+				spg=og:Select(tp,1,1,nil)
+			else
+				local p
+				if ft1>0 and ft2<=0 then
+					p=tp
+				end
+				if ft1<=0 and ft2>0 then
+					p=1-tp
+				end
+				spg=og:FilterSelect(tp,Card.IsControler,1,1,nil,p)
 			end
-			spg:Merge(sg)
-			p=1-tp
+		else
+			local p=tp
+			for i=1,2 do
+				local sg=og:Filter(Card.IsControler,nil,p)
+				local ft=Duel.GetLocationCount(p,LOCATION_MZONE,tp)
+				if #sg>ft then
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+					sg=sg:Select(tp,ft,ft,nil)
+				end
+				spg:Merge(sg)
+				p=1-tp
+			end
 		end
 		if #spg>0 then
 			Duel.BreakEffect()
@@ -66,6 +83,10 @@ function c101110050.rmop(e,tp,eg,ep,ev,re,r,rp)
 				tc=spg:GetNext()
 			end
 			Duel.SpecialSummonComplete()
+			local cg=spg:Filter(Card.IsFacedown,nil)
+			if #cg>0 then
+				Duel.ConfirmCards(1-tp,g)
+			end
 		end
 	end
 end
