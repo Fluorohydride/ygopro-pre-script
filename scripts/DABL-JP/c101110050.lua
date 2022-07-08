@@ -51,6 +51,7 @@ function c101110050.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local spg=Group.CreateGroup()
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then
 			if ft1>0 and ft2>0 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				spg=og:Select(tp,1,1,nil)
 			else
 				local p
@@ -60,6 +61,7 @@ function c101110050.rmop(e,tp,eg,ep,ev,re,r,rp)
 				if ft1<=0 and ft2>0 then
 					p=1-tp
 				end
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				spg=og:FilterSelect(tp,Card.IsControler,1,1,nil,p)
 			end
 		else
