@@ -1,4 +1,5 @@
---忒塞亚圣灵器
+--テセア聖霊器
+--Script by JoyJ
 function c101110028.initial_effect(c)
 	aux.AddCodeList(c,3285552)
 	--Special Summon
@@ -28,11 +29,11 @@ end
 function c101110028.counterfilter(c)
 	return aux.IsCodeListed(c,3285552) or c:IsCode(3285552)
 end
-function c101110028.sscfilter(c)
+function c101110028.cfilter(c)
 	return c:IsFaceup() and c:IsCode(3285552)
 end
 function c101110028.sscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101110028.sscfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(c101110028.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c101110028.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -44,22 +45,33 @@ function c101110028.ssop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-function c101110028.cfilter(c)
+function c101110028.thcfilter(c)
 	return aux.IsCodeListed(c,3285552) and not c:IsPublic()
 end
 function c101110028.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101110028.cfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.GetCustomActivityCount(101110028,tp,ACTIVITY_SPSUMMON)==0
+		and Duel.IsExistingMatchingCard(c101110028.thcfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g=Duel.SelectMatchingCard(tp,c101110028.cfilter,tp,LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c101110028.thcfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c101110028.splimit)
+	Duel.RegisterEffect(e1,tp)
+end
+function c101110028.splimit(e,c)
+	return not c101110028.counterfilter(c)
 end
 function c101110028.thfilter(c)
 	return c:IsType(TYPE_SPELL) and c:GetType()~=TYPE_SPELL and aux.IsCodeListed(c,3285552) and c:IsAbleToHand()
 end
 function c101110028.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetCustomActivityCount(101110028,tp,ACTIVITY_SPSUMMON)==0
-		and Duel.IsExistingMatchingCard(c101110028.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101110028.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101110028.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -69,15 +81,4 @@ function c101110028.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(c101110028.splimit)
-	Duel.RegisterEffect(e1,tp)
-end
-function c101110028.splimit(e,c)
-	return not c101110028.sscfilter(c)
 end
