@@ -5,7 +5,7 @@
 - **June 25, 2022**: Structure Deck: Legend of the Crystals (SD44-JP): `100344XXX`
 - **July 16, 2022**: DARKWING BLAST (DABL-JP): `101110XXX`
 - **August 6, 2022**: Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
-- **August 20, 2022**: Deck Build Pack: Amazing Defenders (DBAD?-JP) : `100419XXX`
+- **August 20, 2022**: Deck Build Pack: Amazing Defenders (DBAD-JP) : `100419XXX`
 
 # Announced
 - **October 15, 2022**: Photon Hypernova (????-JP) : `101111XXX`
