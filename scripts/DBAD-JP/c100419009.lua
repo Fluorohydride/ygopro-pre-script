@@ -19,10 +19,10 @@ function s.spfilter(c,e,tp,check)
 		and ((check and c:IsControler(1-tp)) or c:IsSetCard(0x190))
 end
 function s.checkfilter(c)
-	return c:IsCode(101120010) and c:IsFaceup()
+	return c:IsCode(100419004) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local check=Duel.IsExistingMatchingCard(s.checkfilter,tp,LOCATION_MZONE,0,1,nil)
+	local check=Duel.IsExistingMatchingCard(s.checkfilter,tp,LOCATION_ONFIELD,0,1,nil)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE)  
 		and s.spfilter(chkc,e,tp,check) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
