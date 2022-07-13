@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e3:SetValue(aux.indoval)
-	c:RegisterEffect(e3) 
+	c:RegisterEffect(e3)
 	--Trap Set
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
@@ -44,11 +44,12 @@ function s.initial_effect(c)
 end
 function s.chainfilter(re,tp,cid)
 	local rc=re:GetHandler()	
-	return not ((rc:GetType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE)) 
+	return rc:IsCode(id) or not ((rc:GetType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE))
 		or (rc:IsSetCard(0x17e)))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)>0
+		or Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -61,11 +62,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
-
 function s.dcon(e,tp,eg,ep,ev,re,r,rp)
 	return  Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_ONFIELD,0,1,nil)
 end
-
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	return rc:GetType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE)
@@ -88,4 +87,3 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
- 
