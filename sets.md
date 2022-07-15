@@ -2,11 +2,13 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **October 31, 2020**: Blazing Vortex (BLVO-JP): `101103XXX`
-- **November 21, 2020**: Structure Deck: Ice Barrier of the Frozen Prison (SD40-JP) : `100340XXX`
-- **December 5, 2020**: SELECTION 10 (SLT1-JP) : `100270XXX`
+- **June 25, 2022**: Structure Deck: Legend of the Crystals (SD44-JP): `100344XXX`
+- **July 16, 2022**: DARKWING BLAST (DABL-JP): `101110XXX`
+- **August 6, 2022**: Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
+- **August 20, 2022**: Deck Build Pack: Amazing Defenders (DBAD-JP) : `100419XXX`
 
 # Announced
+- **October 15, 2022**: Photon Hypernova (????-JP) : `101111XXX`
 
 # Archived
 ## Other packs
@@ -84,6 +86,27 @@
 - PRISMATIC SPECIAL PACK (VP20-JP) : `100267XXX`
 - 2020 Tin of Lost Memories (MP20-EN) : `100271XXX`
 - Yu-Gi-Oh! OCG Structures Volume 2 promotional card (YO02-JP): `100269XXX`
+- SELECTION 10 (SLT1-JP) : `100270XXX`
+- PRISMATIC GOD BOX (PGB1-JP) : `100272XXX`
+- Premium Pack 2021 (21PP-JP): `100273XXX`
+- "Amabie-San" Present Campaign (21CC-JP): `100275XXX`
+- Yu-Gi-Oh! OCG Structures Volume 3 promotional card (YO03-JP): `100276XXX`
+- The Valuable Book EX (VX01-JP) : `100277XXX`
+- Number Complete File -Piece of Memories- (NCF1-JP): `100274XXX`
+- LEGENDARY MONSTERS PACK (VP21-JP) : `100279XXX`
+- ANIMATION CHRONICLE 2021 (AC01-JP) : `100278XXX`
+- King's Court (KICO-EN) : `100280XXX`
+- WORLD PREMIERE PACK 2021 (WPP2-JP) : `100281XXX`
+- Yu-Gi-Oh! OCG Structures Volume 4 promotional card (YO04-JP) : `100283XXX`
+- Secret Shiny Box (SSB1-JP) : `100285XXX`
+- Premium Pack 2022 (22PP-JP) : `100286XXX`
+- The Grand Creators (GRCR-EN) : `100282XXX`
+- History Archive Collection (HC01-JP) : `100287XXX`
+- The Valuable Book EX2 (VX02-JP) : `100288XXX`
+- 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
+- Pharaonic Legend Pack (VP22-JP) : `100291XXX`
+- Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
+- ANIMATION CHRONICLE 2022 (AC02-JP) : `100290XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -98,6 +121,7 @@
 - Structure Deck R: Warrior's Strike (SR09-JP) : `100309XXX`
 - Structure Deck R: Machiners Command (SR10-JP) : `100310XXX`
 - Structure Deck R: Dragunity Drive (SR11-JP) : `100311XXX`
+- Structure Deck R: Lost Sanctuary (SR12-JP) : `100312XXX`
 -----
 - Starter Deck 2016 (ST16-JP) : `100316XXX`
 - Starter Deck 2017 (ST17-JP) : `100317XXX`
@@ -113,6 +137,10 @@
 - Structure Deck: Rebirth of Shaddoll (SD37-JP) : `100337XXX`
 - Structure Deck: Sacred Beasts of Chaos (SD38-JP) : `100338XXX`
 - Structure Deck: Masters of the Spiritual Arts (SD39-JP) : `100339XXX`
+- Structure Deck: Ice Barrier of the Frozen Prison (SD40-JP) : `100340XXX`
+- Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
+- Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
+- Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
@@ -124,6 +152,9 @@
 - Deck Build Pack: Mystic Fighters (DBMF-JP) : `100413XXX`
 - Deck Build Pack: Secret Slayers (DBSS-JP) : `100414XXX`
 - Deck Build Pack: Genesis Impactors (DBGI-JP): `100415XXX`
+- Deck Build Pack: Ancient Guardians (DBAG-JP): `100416XXX`
+- Deck Build Pack: Grand Creators (DBGC-JP) : `100417XXX`
+- Deck Build Pack: Tactical Masters (DBTM-JP): `100418XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
@@ -133,6 +164,9 @@
 - Duelist Pack: Legend Duelist 5 (DP22-JP) : `100422XXX`
 - Duelist Pack: Legend Duelist 6 (DP23-JP) : `100423XXX`
 - Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
+- Duelist Pack: Duelists of Whirlwind (DP25-JP) : `100425XXX`
+- Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
+- Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
 
 ## Booster packs
 - THE DARK ILLUSION (TDIL-JP) : `100909XXX`
@@ -153,3 +187,10 @@
 - ETERNITY CODE (ETCO-JP) : `101012XXX`
 - RISE OF THE DUELIST (ROTD-JP) : `101101XXX`
 - PHANTOM RAGE (PHRA-JP) : `101102XXX`
+- Blazing Vortex (BLVO-JP): `101103XXX`
+- LIGHTNING OVERDRIVE (LIOV-JP): `101104XXX`
+- DAWN OF MAJESTY (DAMA-JP) : `101105XXX`
+- BURST OF DESTINY (BODE-JP) : `101106XXX`
+- BATTLE OF CHAOS (BACH-JP) : `101107XXX`
+- DIMENSION FORCE (DIFO-JP) : `101108XXX`
+- POWER OF THE ELEMENTS (POTE-JP): `101109XXX`
