@@ -43,9 +43,10 @@ function s.repfilter(c,tp)
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT) 
 		and not c:IsReason(REASON_REPLACE)
 end
-function s.rfilter(c,sc)
-	return c:IsReleasableByEffect() 
-	and c:IsRace(RACE_FIEND) and c:IsFaceup()
+function s.rfilter(c)
+	return c:IsReleasableByEffect() and c:IsRace(RACE_FIEND) 
+		and c:IsFaceup()
+		and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
