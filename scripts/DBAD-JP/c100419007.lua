@@ -56,17 +56,15 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x28a)
-		and (c:IsType(TYPE_QUICKPLAY)
-		or c:GetType()==TYPE_TRAP)
-		and c:IsSSetable()
+	return c:IsSetCard(0x28a) and c:IsSSetable()
+		and (c:IsType(TYPE_QUICKPLAY) or c:GetType()==TYPE_TRAP)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if ft<0 then return end
+	if ft<=0 then return end
 	local g=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_DECK,0,nil)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
@@ -79,8 +77,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp)
-		and c:GetReasonPlayer()==1-tp
-		and c:IsReason(REASON_EFFECT)
+		and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())

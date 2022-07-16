@@ -45,10 +45,9 @@ function s.condition(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
-function s.tdfilter(c,e,tp)
-	return c:IsSetCard(0x28a)
+function s.tdfilter(c)
+	return c:IsSetCard(0x28a) and c:IsAbleToDeck()
 		and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
-		and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.tdfilter(chkc) end

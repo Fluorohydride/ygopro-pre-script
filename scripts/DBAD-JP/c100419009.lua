@@ -16,15 +16,14 @@ function s.initial_effect(c)
 end
 function s.spfilter(c,e,tp,check)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and ((check and c:IsControler(1-tp)) or c:IsSetCard(0x28a))
+		and (check and c:IsControler(1-tp) or c:IsSetCard(0x28a) and c:IsControler(tp))
 end
 function s.checkfilter(c)
 	return c:IsCode(100419004) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local check=Duel.IsExistingMatchingCard(s.checkfilter,tp,LOCATION_ONFIELD,0,1,nil)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE)
-		and s.spfilter(chkc,e,tp,check) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp,check) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp,check) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
