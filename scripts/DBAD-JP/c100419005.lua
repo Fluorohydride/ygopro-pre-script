@@ -1,4 +1,4 @@
---R-ACEファイア・アタッカー  Level 6
+--R-ACEファイア・アタッカー
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -33,8 +33,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) 
-		and c:IsSetCard(0x190) 
+	return c:IsFaceup() and c:IsControler(tp)
+		and c:IsSetCard(0x28a)
 		and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -52,7 +52,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function s.drfilter(c,tp)
 	return c:IsControler(1-tp) and not c:IsReason(REASON_DRAW)
 end
@@ -73,4 +72,4 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 	end
-end   
+end

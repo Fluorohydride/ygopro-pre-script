@@ -15,11 +15,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x190)
+	return c:IsFaceup() and c:IsSetCard(0x28a)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return  Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-end 
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+end
 function s.mfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local check=Duel.IsExistingMatchingCard(s.checkfilter,tp,LOCATION_ONFIELD,0,1,nil)
 	if tc:IsRelateToEffect(e) then
-		if Duel.Destroy(tc,REASON_EFFECT)~=0 and check then   
+		if Duel.Destroy(tc,REASON_EFFECT)~=0 and check then
 			Duel.Hint(HINT_CARD,0,id)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
@@ -55,5 +55,5 @@ end
 function s.aclimit(e,re,tp)
 	local c=re:GetHandler()
 	local tc=e:GetLabelObject()
-	return re:IsActiveType(TYPE_MONSTER) and c:IsOriginalCodeRule(tc:GetOriginalCodeRule()) 
+	return re:IsActiveType(TYPE_MONSTER) and c:IsOriginalCodeRule(tc:GetOriginalCodeRule())
 end

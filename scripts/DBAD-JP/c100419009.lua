@@ -9,21 +9,21 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH) 
+	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,e,tp,check)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and ((check and c:IsControler(1-tp)) or c:IsSetCard(0x190))
+		and ((check and c:IsControler(1-tp)) or c:IsSetCard(0x28a))
 end
 function s.checkfilter(c)
 	return c:IsCode(100419004) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local check=Duel.IsExistingMatchingCard(s.checkfilter,tp,LOCATION_ONFIELD,0,1,nil)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE)  
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE)
 		and s.spfilter(chkc,e,tp,check) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp,check) end

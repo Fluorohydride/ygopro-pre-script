@@ -1,4 +1,4 @@
---R-ACEファイア・エンジン Level 7
+--R-ACEファイア・エンジン
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -33,8 +33,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) 
-		and c:IsSetCard(0x190) 
+	return c:IsFaceup() and c:IsControler(tp)
+		and c:IsSetCard(0x28a)
 		and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -52,12 +52,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x190) and c:IsLevelBelow(4) 
+	return c:IsSetCard(0x28a) and c:IsLevelBelow(4)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)

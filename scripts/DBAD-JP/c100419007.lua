@@ -1,4 +1,4 @@
---R-ACEタービュランス Level 9
+--R-ACEタービュランス
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sstg)
 	e1:SetOperation(s.ssop)
 	c:RegisterEffect(e1)
-	--Set Quick or Trap 
+	--Set Quick or Trap
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x190) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x28a) and c:IsAbleToRemoveAsCost()
 end
 function s.sscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE,0,2,nil) end
@@ -55,9 +55,8 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function s.setfilter(c)
-	return c:IsSetCard(0x190)
+	return c:IsSetCard(0x28a)
 		and (c:IsType(TYPE_QUICKPLAY)
 		or c:GetType()==TYPE_TRAP)
 		and c:IsSSetable()
@@ -78,10 +77,9 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function s.cfilter(c,tp)
-	return  c:IsPreviousControler(tp) 
-		and c:GetReasonPlayer()==1-tp 
+	return c:IsPreviousControler(tp)
+		and c:GetReasonPlayer()==1-tp
 		and c:IsReason(REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

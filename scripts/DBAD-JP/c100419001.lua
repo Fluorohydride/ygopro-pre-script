@@ -1,4 +1,4 @@
---R-ACEインパルス  Level 3
+--R-ACEインパルス
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -55,7 +55,6 @@ function s.nop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetActivateLocation()==LOCATION_MZONE
 end
@@ -65,16 +64,16 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x190) and c:IsRace(RACE_MACHINE) 
+	return c:IsSetCard(0x28a) and c:IsRace(RACE_MACHINE)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0 
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp,e:GetHandler())>0  then
+	if Duel.GetMZoneCount(tp,e:GetHandler())>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		if g:GetCount()>0 then

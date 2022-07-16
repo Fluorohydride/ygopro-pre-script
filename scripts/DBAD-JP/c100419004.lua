@@ -1,4 +1,4 @@
---R-ACEハイドラント  Level 1
+--R-ACEハイドラント
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
-	c:RegisterEffect(e4) 
+	c:RegisterEffect(e4)
 	--search
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
@@ -48,29 +48,26 @@ function s.initial_effect(c)
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if not re or not re:GetHandler():IsSetCard(0x190) then return end
+	if not re or not re:GetHandler():IsSetCard(0x28a) then return end
 	local tc=eg:GetFirst()
 	while tc do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		tc=eg:GetNext()
 	end
 end
-
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x190) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(0x28a) and not c:IsCode(id)
 end
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
-
 function s.qfilter(e,c)
-	return c:IsSetCard(0x190) and c:GetFlagEffect(id)>0
+	return c:IsSetCard(0x28a) and c:GetFlagEffect(id)>0
 end
-
 function s.filter(c)
-	return c:IsSetCard(0x190) and c:IsType(TYPE_MONSTER) 
+	return c:IsSetCard(0x28a) and c:IsType(TYPE_MONSTER)
 		and c:IsAbleToHand()
-		and not c:IsCode(id) 
+		and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

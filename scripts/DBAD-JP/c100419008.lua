@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_FZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetCondition(s.condition)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x190))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x28a))
 	e1:SetValue(500)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 	e3:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x190))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x28a))
 	c:RegisterEffect(e3)
 	--todeck and draw
 	local e4=Effect.CreateEffect(c)
@@ -45,9 +45,8 @@ function s.condition(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
-
 function s.tdfilter(c,e,tp)
-	return c:IsSetCard(0x190)
+	return c:IsSetCard(0x28a)
 		and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 		and c:IsAbleToDeck()
 end
@@ -72,4 +71,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
- 
