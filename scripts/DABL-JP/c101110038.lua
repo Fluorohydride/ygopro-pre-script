@@ -33,9 +33,10 @@ function s.initial_effect(c)
 end
 
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_FLIP) 
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) 
-		or (c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEDOWN_DEFENSE)) 
+	local proc=c:IsCode(id) and e:GetHandler():IsCode(id)
+	return c:IsType(TYPE_FLIP)
+		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) 
+		or c:IsCanBeSpecialSummoned(e,0,tp,proc,proc,POS_FACEDOWN_DEFENSE))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -48,16 +49,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc then
-		if  tc:GetCode()==id then
-			if Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEDOWN_DEFENSE)~=0  then
-				Duel.ConfirmCards(1-tp,tc)
-				tc:CompleteProcedure()
-			end
-		else
-			if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)~=0  then
-				Duel.ConfirmCards(1-tp,tc)
-			end 
-		end
+		local proc=tc:IsCode(id) and e:GetHandler():IsCode(id)
+		Duel.SpecialSummon(tc,0,tp,tp,proc,proc,POS_FACEDOWN_DEFENSE)
+		Duel.ConfirmCards(1-tp,tc)
+		if proc then tc:CompleteProcedure() end
 	end
 end
 
