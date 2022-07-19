@@ -41,7 +41,8 @@ function c101110074.filter1(c)
 	return c:IsRank(2) and c:IsFaceup()
 end
 function c101110074.cfilter1(c,tp)
-	return c:IsCanOverlay() and Duel.IsExistingMatchingCard(c101110074.filter1,tp,LOCATION_MZONE,0,1,c)
+	return c:IsType(TYPE_MONSTER) and c:IsCanOverlay()
+		and Duel.IsExistingMatchingCard(c101110074.filter1,tp,LOCATION_MZONE,0,1,c)
 end
 function c101110074.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and c101110074.cfilter1(chkc,tp) end
