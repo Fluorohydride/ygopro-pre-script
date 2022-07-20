@@ -2,7 +2,7 @@
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
-	--Special Summon 
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -21,14 +21,8 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)
 	return not c:IsCode(id)
-		and c:IsSetCard(0x6) and c:IsType(TYPE_MONSTER) 
+		and c:IsSetCard(0x6) and c:IsType(TYPE_MONSTER)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and ((Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
-		or (Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)))
-end
-function s.filter(c,e,tp)
-	return c:IsRace(RACE_FIEND)
-		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND+LOCATION_GRAVE))
 		and ((Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 		or (Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)))
 end
@@ -38,9 +32,15 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
-	if  rp==1-tp and tp==e:GetLabel() then
+	if rp==1-tp and tp==e:GetLabel() then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED)
 	end
+end
+function s.spfilter2(c,e,tp)
+	return c:IsRace(RACE_FIEND)
+		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND+LOCATION_GRAVE))
+		and ((Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+		or (Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)))
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -60,14 +60,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		res=Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP)
 	end
-	if  res~=0 and rp==1-tp and tp==e:GetLabel()
-		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp)
-		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		or Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0)
+	if res~=0 and rp==1-tp and tp==e:GetLabel()
+		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
 		local tc1=g:GetFirst()
 		if tc1 then
 			local b3=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc1:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -88,4 +86,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
