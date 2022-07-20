@@ -42,7 +42,7 @@ function c101110026.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c101110026.thfilter(c)
-	return c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToHand()
+	return c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToHand() and not c:IsCode(101110026)
 end
 function c101110026.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101110026.thfilter,tp,LOCATION_DECK,0,1,nil) end
