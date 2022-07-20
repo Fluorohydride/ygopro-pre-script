@@ -1,4 +1,4 @@
---铁兽的死线
+--鉄獣の死線
 --Script by VHisc
 function c101110055.initial_effect(c)
 	--activate
@@ -26,20 +26,20 @@ function c101110055.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLED)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,102110055)   --count limit code+=1000000 here
+	e2:SetCountLimit(1,101110055+100)
 	e2:SetCondition(c101110055.bacon)
 	e2:SetTarget(c101110055.batg)
 	e2:SetOperation(c101110055.baop)
 	c:RegisterEffect(e2)
 end
 function c101110055.spfilter(c,tp)
-	return c:IsFaceup() and (c:IsRace(RACE_BEAST) or c:IsRace(RACE_BEASTWARRIOR) or c:IsRace(RACE_WINDBEAST)) and c:IsControler(tp)
-end
-function c101110055.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x14d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST) and c:IsControler(tp)
 end
 function c101110055.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101110055.spfilter,1,nil,tp)
+end
+function c101110055.thfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x14d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c101110055.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c101110055.thfilter(chkc) end
@@ -52,7 +52,6 @@ function c101110055.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
 	end
 end
 function c101110055.bacon(e,tp,eg,ep,ev,re,r,rp)

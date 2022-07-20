@@ -1,6 +1,7 @@
---决战的戈尔工达
+--決戦のゴルゴンダ
 --Script by VHisc
 function c101110054.initial_effect(c)
+	aux.AddCodeList(c,68468459)
 	aux.EnableChangeCode(c,60884672,LOCATION_SZONE+LOCATION_GRAVE)
 	--activate
 	local e0=Effect.CreateEffect(c)
@@ -12,7 +13,7 @@ function c101110054.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EFFECT_DESTROY_REPLACE)
 	e1:SetRange(LOCATION_SZONE)
-	e1;SetCountLimit(1)
+	e1:SetCountLimit(1)
 	e1:SetTarget(c101110054.reptg)
 	e1:SetValue(c101110054.repval)
 	e1:SetOperation(c101110054.repop)
@@ -51,14 +52,14 @@ function c101110054.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,101110054)
 	Duel.SendtoGrave(g,REASON_EFFECT+REASON_REPLACE)
 end
-function c101110054.spfilter(c,e,tp)
-	return c:IsSetCard(0x155) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function c101110054.cfilter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsCode(68468459)
 end
 function c101110054.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101110054.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
+end
+function c101110054.spfilter(c,e,tp)
+	return c:IsSetCard(0x155) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101110054.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
