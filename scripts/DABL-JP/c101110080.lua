@@ -23,7 +23,7 @@ function c101110080.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoHand(tc,tp,REASON_EFFECT)>0 then
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.ShuffleHand(tp)
-		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=1 then return end 
+		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=1 then return end
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101110080,1))
 		local seg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_DECK,0,1,1,nil)
