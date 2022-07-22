@@ -71,4 +71,3 @@ function s.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local nseq=math.log(zone,2)
 	Duel.MoveSequence(tc,nseq)
 end
-

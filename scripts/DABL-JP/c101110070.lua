@@ -1,5 +1,5 @@
 --真刀竹光
---True Bamboo Sword 
+--True Bamboo Sword
 --Ejeffers1239
 function c101110070.initial_effect(c)
 	--Activate
@@ -39,7 +39,7 @@ function c101110070.initial_effect(c)
 	e4:SetTarget(c101110070.eqtg)
 	e4:SetOperation(c101110070.eqop)
 	c:RegisterEffect(e4)
-end	
+end
 function c101110070.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
