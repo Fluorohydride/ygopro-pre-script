@@ -90,7 +90,7 @@ function c101110042.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101110042.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep~=tp and c:GetFlagEffect(101110042)~=0 and re:IsActiveType(TYPE_MONSTER)
+	return ep~=tp and Duel.GetLP(1-tp)>0 and c:GetFlagEffect(101110042)~=0 and re:IsActiveType(TYPE_MONSTER)
 end
 function c101110042.damop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x10,1)
