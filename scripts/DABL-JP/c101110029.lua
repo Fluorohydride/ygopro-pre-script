@@ -31,11 +31,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-
 function s.cfilter(c,se)
-	return c:IsReason(REASON_DESTROY) 
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) 
-		and c:IsPreviousLocation(LOCATION_MZONE) 
+	return c:IsReason(REASON_DESTROY)
+		and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and c:IsPreviousLocation(LOCATION_MZONE)
 		and (se==nil or c:GetReasonEffect()~=se)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -59,7 +58,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1,true)
 	end
 end
-
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_GRAVE)
 end

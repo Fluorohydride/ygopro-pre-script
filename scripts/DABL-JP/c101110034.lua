@@ -8,8 +8,8 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id)
-	e1:SetTarget(s.tg)
-	e1:SetOperation(s.op)
+	e1:SetTarget(s.lvtg)
+	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
 	--flip flag
 	local e2=Effect.CreateEffect(c)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetOperation(s.flipop)
 	c:RegisterEffect(e2)
-	--Synchro Summon 
+	--Synchro Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -33,13 +33,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.synop)
 	c:RegisterEffect(e3)
 end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local lv=e:GetHandler():GetLevel()
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_LVRANK)
 	e:SetLabel(Duel.AnnounceLevel(tp,1,9,lv))
 end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
+function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
@@ -50,32 +50,28 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id+o,RESET_EVENT+RESETS_STANDARD,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 end
-
-function s.syncon(e,tp,eg,ep,ev,re,r,rp) 
+function s.syncon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ph=Duel.GetCurrentPhase()
-	return c:GetFlagEffect(id+o)>0 
+	return c:GetFlagEffect(id)>0
 		and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function s.filter(tc,c,tp)
 	if not tc:IsFaceup() or not tc:IsCanBeSynchroMaterial() then return false end
-	c:RegisterFlagEffect(id,0,0,1)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SYNCHRO_MATERIAL)
 	tc:RegisterEffect(e1,true)
 	local mg=Group.FromCards(c,tc)
 	local res=Duel.IsExistingMatchingCard(s.synfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
-	c:ResetFlagEffect(id)
 	e1:Reset()
 	return res
 end
 function s.synfilter(c,mg)
-	return  c:IsSynchroSummonable(nil,mg)
+	return c:IsSynchroSummonable(nil,mg)
 end
 function s.syntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -90,7 +86,6 @@ function s.synop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsFaceup() and c:IsRelateToEffect(e)
 		and tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SYNCHRO_MATERIAL)
@@ -103,9 +98,7 @@ function s.synop(e,tp,eg,ep,ev,re,r,rp)
 		if sc then
 			Duel.SynchroSummon(tp,sc,nil,mg)
 		else
-			c:ResetFlagEffect(id)
 			e1:Reset()
 		end
 	end
 end
-

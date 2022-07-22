@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	--material 
+	--material
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,id+o*2)
 	e3:SetTarget(s.negtg)
 	e3:SetOperation(s.negop)
-	c:RegisterEffect(e3) 
+	c:RegisterEffect(e3)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
@@ -52,7 +52,6 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-
 function s.matfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsCanOverlay()
 end
@@ -60,25 +59,25 @@ function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	local mat=c:GetOverlayCount()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.matfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.matfilter,tp,LOCATION_GRAVE,0,1,nil) and c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
+	if chk==0 then return mat>0 and Duel.IsExistingTarget(s.matfilter,tp,LOCATION_GRAVE,0,1,nil)
+		and c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local g=Duel.SelectTarget(tp,s.matfilter,tp,LOCATION_GRAVE,0,1,mat,nil)
 	Duel.SetTargetParam(g:GetCount())
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,#g,0,0)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		local mat=c:GetOverlayCount()
-		local num=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-		if num>0 and mat>0 and #g>0 and mat>=num
+		local num=g:GetCount()
+		if num>0 and mat>=num
 			and c:RemoveOverlayCard(tp,num,num,REASON_EFFECT)~=0 then
 			Duel.Overlay(c,g)
 		end
 	end
 end
-  
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and aux.NegateAnyFilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(aux.NegateAnyFilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end

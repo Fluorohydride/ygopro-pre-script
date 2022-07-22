@@ -24,7 +24,7 @@ end
 s.toss_dice=true
 function s.dictg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)   
+	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.dicop(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.TossDice(tp,1)
@@ -32,21 +32,21 @@ function s.dicop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,2,nil)
 		if g:GetCount()>0 then
+			Duel.HintSelection(g)
 			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end
 end
-
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)   
+	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=Duel.TossDice(tp,1)
-	if d>1 and d<6 and c:IsRelateToEffect(e) 
+	if d>1 and d<6 and c:IsRelateToEffect(e)
 		and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -62,5 +62,3 @@ end
 function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA)
 end
- 
-

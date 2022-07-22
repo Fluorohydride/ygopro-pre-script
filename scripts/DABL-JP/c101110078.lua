@@ -12,21 +12,21 @@ function s.initial_effect(c)
 end
 function s.cfilter(c)
 	local sumtype=bit.band(c:GetType(),TYPE_RITUAL|TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK)
-	return c:IsFaceup() and c:GetType()&sumtype>0 
+	return c:IsFaceup() and c:GetType()&sumtype>0
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g>0 then
 		local tc=g:GetFirst()
-		while tc do 
+		while tc do
 			local p1ayer=tc:GetControler()
 			local rtype=tc:GetType()&(TYPE_RITUAL|TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 			e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-			e1:SetTargetRange(1,0) 
+			e1:SetTargetRange(1,0)
 			e1:SetLabel(rtype)
 			e1:SetTarget(s.sumlimit)
 			e1:SetReset(RESET_PHASE+PHASE_END)
@@ -49,7 +49,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				tc1:RegisterEffect(e1)
 				tc1=g1:GetNext()
-			end  
+			end
 		end
 	end
 end

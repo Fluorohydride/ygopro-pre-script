@@ -1,5 +1,6 @@
 --地中界の厄災
 --Script by 奥克斯
+--not fully implemented
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--activate
@@ -14,10 +15,10 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(s.downtg)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsFacedown))
 	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
-	--atk/def up 
+	--atk/def up
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -48,11 +49,6 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-
-function s.downtg(e,c)
-	return c:IsFacedown()
-end
-
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
@@ -61,16 +57,15 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.fliptg(e,c)
-	return  c:GetFlagEffect(id)~=0
+	return c:GetFlagEffect(id)~=0
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp==1-tp and c:IsReason(REASON_EFFECT)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_SZONE)
 end
 function s.spfilter(c,e,tp)
-	return  c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -86,4 +81,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 	end
 end
-  

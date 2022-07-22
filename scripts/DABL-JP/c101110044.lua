@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sctarg)
 	e1:SetOperation(s.scop)
 	c:RegisterEffect(e1)
-	--Special Summon  
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -49,7 +49,6 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SynchroSummon(tp,sg:GetFirst(),c)
 	end
 end
-
 function s.toefilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsAbleToExtra()
 end
@@ -57,7 +56,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.toefilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(s.toefilter,tp,LOCATION_GRAVE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.toefilter,tp,LOCATION_GRAVE,0,1,1,c)
@@ -68,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	if Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 
+	if Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0
 		and tc:IsLocation(LOCATION_EXTRA)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

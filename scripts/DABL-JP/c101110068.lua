@@ -4,6 +4,7 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate MoveToPzone
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Move
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
@@ -20,13 +22,10 @@ function s.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.seqtg)
 	e2:SetOperation(s.seqop)
-	c:RegisterEffect(e2)  
-end
-function s.filter(c)
-	return c:IsType(TYPE_PENDULUM)
+	c:RegisterEffect(e2)
 end
 function s.penfilter(c)
-	return c:IsSetCard(0x17d) and c:IsType(TYPE_PENDULUM)  
+	return c:IsSetCard(0x17d) and c:IsType(TYPE_PENDULUM)
 		and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -42,7 +41,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end
-
 function s.seqcon(e)
 	return Duel.IsExistingMatchingCard(aux.TRUE,e:GetHandlerPlayer(),LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end

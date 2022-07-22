@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e0)
 	--Special Summon Flip
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -19,9 +20,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--select position 
+	--select position
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
@@ -31,12 +33,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-
 function s.spfilter(c,e,tp)
-	local proc=c:IsCode(id) and e:GetHandler():IsCode(id)
-	return c:IsType(TYPE_FLIP)
-		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) 
-		or c:IsCanBeSpecialSummoned(e,0,tp,proc,proc,POS_FACEDOWN_DEFENSE))
+	return c:IsType(TYPE_FLIP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -49,13 +47,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc then
-		local proc=tc:IsCode(id) and e:GetHandler():IsCode(id)
-		Duel.SpecialSummon(tc,0,tp,tp,proc,proc,POS_FACEDOWN_DEFENSE)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 		Duel.ConfirmCards(1-tp,tc)
-		if proc then tc:CompleteProcedure() end
 	end
 end
-
 function s.posfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
 end
@@ -65,20 +60,14 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #g>0 or #mg>0 end
 	local op=0
 	if #g>0 and #mg>0 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
+		op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
 	elseif #g>0 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))
+		op=Duel.SelectOption(tp,aux.Stringid(id,2))
 	else
-		op=Duel.SelectOption(tp,aux.Stringid(id,2))+1
-	end
-	if op==0 then
-		e:SetCategory(CATEGORY_POSITION)
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
-	else
-		e:SetCategory(CATEGORY_POSITION)
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
+		op=Duel.SelectOption(tp,aux.Stringid(id,3))+1
 	end
 	e:SetLabel(op)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_MZONE,0,nil)

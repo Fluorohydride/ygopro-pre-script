@@ -69,9 +69,7 @@ function c94997874.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c94997874.spfilter(c,e,tp)
 	local proc=c:IsCode(101110038) and e:GetHandler():IsCode(94997874)
-	return c:IsType(TYPE_FLIP) 
-		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) 
-		or c:IsCanBeSpecialSummoned(e,0,tp,proc,proc,POS_FACEDOWN_DEFENSE))
+	return c:IsType(TYPE_FLIP) and c:IsCanBeSpecialSummoned(e,0,tp,proc,proc,POS_FACEDOWN_DEFENSE)
 end
 function c94997874.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

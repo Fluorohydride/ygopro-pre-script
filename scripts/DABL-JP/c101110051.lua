@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.desrepval)
 	e1:SetOperation(s.desrepop)
 	c:RegisterEffect(e1)
-	--Special Summon  
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -37,22 +37,19 @@ function s.lmlimit(e)
 	local c=e:GetHandler()
 	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
 end
-
 function s.repfilter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) 
+		and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and not c:IsReason(REASON_REPLACE)
 end
 function s.rfilter(c)
-	return c:IsReleasableByEffect() and c:IsRace(RACE_FIEND) 
-		and c:IsFaceup()
+	return c:IsReleasableByEffect() and c:IsRace(RACE_FIEND)
 		and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp)
-		and Duel.CheckReleaseGroupEx(tp,s.rfilter,1,nil)  end
+		and Duel.CheckReleaseGroup(tp,s.rfilter,1,nil) end
 	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.desrepval(e,c)
@@ -60,11 +57,10 @@ function s.desrepval(e,c)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-	local g=Duel.SelectReleaseGroupEx(tp,s.rfilter,1,1,nil)
+	local g=Duel.SelectReleaseGroup(tp,s.rfilter,1,1,nil)
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.Release(g,REASON_EFFECT+REASON_REPLACE)
 end
-
 function s.spfilter(c,e,tp)
 	return not c:IsCode(id) and c:IsRace(RACE_FIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -79,7 +75,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.DiscardHand(tp,nil,1,1,REASON_DISCARD+REASON_EFFECT,nil)>0 
+	if Duel.DiscardHand(tp,nil,1,1,REASON_DISCARD+REASON_EFFECT,nil)>0
 		and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end

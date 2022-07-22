@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id+o)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 	--cannot be target
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -38,7 +38,6 @@ function s.initial_effect(c)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_RELEASE)
@@ -51,14 +50,14 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if  c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)~=0 then
+	if c:IsRelateToEffect(e)
+		and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)~=0 then
 		Duel.ConfirmCards(1-tp,c)
 	end
 end
-
 function s.thfilter(c,tp)
-	return not c:IsCode(id) 
-		and c:IsSetCard(0xcc) and c:IsType(TYPE_MONSTER) 
+	return not c:IsCode(id)
+		and c:IsSetCard(0xcc) and c:IsType(TYPE_MONSTER)
 		and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,c)
 end
@@ -80,8 +79,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g1)
 	end
 end
-
 function s.imetg(e,c)
 	return c:IsType(TYPE_RITUAL)
 end
- 

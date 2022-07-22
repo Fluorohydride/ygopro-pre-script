@@ -24,7 +24,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rsop)
 	c:RegisterEffect(e2)
 end
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	return true
@@ -34,8 +33,8 @@ function s.cfilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.thfilter(c,rc)
-	return not c:IsCode(rc:GetCode()) and c:IsLevel(rc:GetLevel()) 
-		and bit.band(c:GetType(),0x81)==0x81 
+	return not c:IsCode(rc:GetCode()) and c:IsLevel(rc:GetLevel())
+		and bit.band(c:GetType(),0x81)==0x81
 		and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -59,7 +58,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end
-
 function s.rtfilter(c)
 	return c:GetType()==TYPE_SPELL+TYPE_RITUAL and c:IsAbleToGraveAsCost() and c:CheckActivateEffect(true,true,false)~=nil
 end
@@ -77,7 +75,7 @@ function s.rstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		if e:GetLabel()==0 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(s.rtfilter,tp,LOCATION_HAND,0,1,nil) 
+		return Duel.IsExistingMatchingCard(s.rtfilter,tp,LOCATION_HAND,0,1,nil)
 			and c:IsAbleToRemoveAsCost()
 	end
 	e:SetLabel(0)
@@ -98,5 +96,3 @@ function s.rsop(e,tp,eg,ep,ev,re,r,rp)
 	local op=te:GetOperation()
 	if op then op(e,tp,eg,ep,ev,re,r,rp) end
 end
-
-  

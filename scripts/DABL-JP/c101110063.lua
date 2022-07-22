@@ -23,7 +23,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-
 function s.filter(c,e,tp)
 	return c:IsSetCard(0xcc)
 end
@@ -71,14 +70,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:SetMaterial(mat)
 		Duel.ReleaseRitualMaterial(mat)
 		Duel.BreakEffect()
-		if Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)~=0 
-			and tc:IsFacedown() then	  
+		if Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)~=0
+			and tc:IsFacedown() then
 			Duel.ConfirmCards(1-tp,tc)
 		end
 		tc:CompleteProcedure()
 	end
 end
-
 function s.rtfilter(c)
 	return c:IsSetCard(0xcc) and c:IsType(TYPE_RITUAL) and c:IsFaceup()
 end
@@ -86,7 +84,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.rtfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.spfilter(c,e,tp)
-	return not c:IsType(TYPE_RITUAL) 
+	return not c:IsType(TYPE_RITUAL)
 		and c:IsSetCard(0xcc) and c:IsType(TYPE_MONSTER)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
@@ -99,8 +97,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)~=0  then
-		Duel.ConfirmCards(1-tp,g)  
+	if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)~=0 then
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
- 
