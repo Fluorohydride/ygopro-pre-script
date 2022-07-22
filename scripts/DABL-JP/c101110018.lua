@@ -1,4 +1,6 @@
+--銃の忍者－火光
 --Musket Ninja Kagero
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--You can only use each effect of "Musket Ninja Kagero" once per turn.

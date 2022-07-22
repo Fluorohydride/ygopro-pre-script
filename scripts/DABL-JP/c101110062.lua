@@ -1,4 +1,6 @@
+--忍法装具 鉄土竜
 --Ninjitsu Art Equipment Kanamugura
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

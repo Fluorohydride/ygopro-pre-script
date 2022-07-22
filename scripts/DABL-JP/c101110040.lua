@@ -1,4 +1,6 @@
+--戎の忍者－冥禪
 --War Ninja Meisen
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

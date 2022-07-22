@@ -1,4 +1,6 @@
+--宙の忍者－鳥帷
 --Sky Ninja Tobari
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Cannot be destroyed by battle or card effects the turn it is Special Summoned or flipped face-up.

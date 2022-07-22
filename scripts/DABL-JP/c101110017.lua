@@ -1,4 +1,6 @@
+--獣の忍者－獏
 --Beast Ninja Baku
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--You can only use each effect of "Beast Ninja Baku" once per turn.

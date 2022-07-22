@@ -1,4 +1,6 @@
+--異譚の忍法帖
 --Novel Ninjitsu Art Book
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--You can only use each effect of "Novel Ninjitsu Art Book" once per turn.

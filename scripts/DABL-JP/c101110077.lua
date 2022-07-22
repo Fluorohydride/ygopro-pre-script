@@ -1,4 +1,6 @@
+--忍法 落葉舞
 --Ninjitsu Art of Fallen Leaves' Dance
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--You can only use 1 "Ninjitsu Art of Fallen Leaves' Dance" effect per turn, and only once that turn.

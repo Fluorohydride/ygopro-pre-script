@@ -1,4 +1,6 @@
+--蟲の忍者－蜜
 --Insect Ninja Mitsu
+--Script by Lyris12
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--You can only use each effect of "Insect Ninja Mitsu" once per turn.
