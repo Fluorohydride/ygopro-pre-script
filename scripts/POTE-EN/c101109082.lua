@@ -1,6 +1,5 @@
 --Garura, Wings of Resonant Life
 --Scripted by: XGlitchy30
-
 function c101109082.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcFunRep(c,c101109082.ffilter,2,true)
@@ -15,7 +14,7 @@ function c101109082.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101109082,0))
 	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,101109082)
 	e2:SetTarget(c101109082.target)
@@ -26,9 +25,10 @@ function c101109082.matchfilter(c,attr,race)
 	return c:IsFusionAttribute(attr) and c:IsRace(race)
 end
 function c101109082.ffilter(c,fc,sub,mg,sg)
-	return not sg or sg:FilterCount(aux.TRUE,c)==0 or (sg:IsExists(c101109082.matchfilter,#sg-1,c,c:GetFusionAttribute(),c:GetRace()) and not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode()))
+	return not sg or sg:FilterCount(aux.TRUE,c)==0
+		or (sg:IsExists(c101109082.matchfilter,#sg-1,c,c:GetFusionAttribute(),c:GetRace())
+			and not sg:IsExists(Card.IsFusionCode,1,c,c:GetFusionCode()))
 end
-
 function c101109082.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
