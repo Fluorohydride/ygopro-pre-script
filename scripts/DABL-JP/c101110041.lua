@@ -1,4 +1,5 @@
---神碑之牙 弗利基
+--神碑の牙フレーキ
+--Script by VHisc
 function c101110041.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
@@ -39,7 +40,9 @@ function c101110041.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101110041.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return ((e:GetHandler()==Duel.GetAttacker() and Duel.GetAttackTarget()~=nil) or e:GetHandler()==Duel.GetAttackTarget()) and e:GetHandler():GetSequence()>4
+	local c=e:GetHandler()
+	return (c==Duel.GetAttacker() or c==Duel.GetAttackTarget())
+		and c:GetSequence()>4
 end
 function c101110041.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetDecktopGroup(1-tp,2):FilterCount(Card.IsAbleToRemove,nil)==2 end
@@ -52,13 +55,6 @@ function c101110041.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end
-function c101110041.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=e:GetOwner():GetBattleTarget()
-	if tg then
-		Duel.Destroy(tg,REASON_EFFECT)
-	end
-end
-
 function c101110041.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
@@ -78,4 +74,3 @@ function c101110041.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-
