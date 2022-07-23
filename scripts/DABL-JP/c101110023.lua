@@ -56,6 +56,7 @@ function c101110023.srtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101110023.srop(e,tp,eg,ep,ev,re,r,rp)
 	local oc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())
+	if not oc then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tc=Duel.SelectMatchingCard(tp,c101110023.srfilter,tp,LOCATION_DECK,0,1,1,nil,oc):GetFirst()
 	if tc and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND)
