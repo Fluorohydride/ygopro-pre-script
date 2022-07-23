@@ -48,8 +48,8 @@ end
 function s.ffilter(c,fc,sub,mg,sg)
 	return c:IsFusionSetCard(0x2b) and (not sg or not sg:IsExists(Card.IsRace,1,c,c:GetRace()))
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsPosition,tp,LOCATION_MZONE,0,1,nil,POS_FACEDOWN_DEFENSE)
+function s.atkcon(e)
+	return Duel.IsExistingMatchingCard(Card.IsPosition,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,POS_FACEDOWN_DEFENSE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp
