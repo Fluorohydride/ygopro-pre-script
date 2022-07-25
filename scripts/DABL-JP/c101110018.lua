@@ -50,18 +50,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 	end
 end
+function s.tfilter(c,tp)
+	return c:IsControler(tp) and (c:IsLocation(LOCATION_ONFIELD) and c:IsFaceup() and c:IsSetCard(0x2b) or c:IsLocation(LOCATION_MZONE) and c:IsPosition(POS_FACEDOWN_DEFENSE))
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if rp~=1-tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not g or g:GetCount()~=1 then return false end
-	local tc=g:GetFirst()
-	e:SetLabelObject(tc)
-	return tc:IsOnField() and tc:IsControler(tp)
-		and (tc:IsFaceup() and tc:IsSetCard(0x2b) or tc:IsPosition(POS_FACEDOWN_DEFENSE))
+	return g and g:GetCount()==1 and g:IsExists(s.tfilter,1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local tc=e:GetLabelObject()
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	local tc=g:GetFirst()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and tc and tc:IsAbleToHand() end
 	Duel.SetTargetCard(tc)
