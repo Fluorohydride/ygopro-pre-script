@@ -129,6 +129,8 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_REMOVED,0,1,ft,nil,e,tp)
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+		if #sg>0 then
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+		end
 	end
 end
