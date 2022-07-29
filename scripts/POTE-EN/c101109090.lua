@@ -105,5 +105,5 @@ function s.rop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0) then return end
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then Duel.SendtoHand(c,nil,REASON_EFFECT)
+	if c:IsRelateToEffect(e) then Duel.SendtoHand(c,nil,REASON_EFFECT) end
 end
