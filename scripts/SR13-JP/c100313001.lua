@@ -57,7 +57,7 @@ end
 function c100313001.filter2(c,e,tp,ft,ft2)
 	return c:IsSetCard(0x6) and c:IsLevelBelow(4)
 		and ((ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP))
-			or (ft2>0 and c:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEUP)))
+			or (ft2>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)))
 end
 function c100313001.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetMZoneCount(tp)
@@ -74,7 +74,7 @@ function c100313001.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			local tc=tg:GetFirst()
 			local o1=ft>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
-			local o2=ft2>0 and tc:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEUP)
+			local o2=ft2>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
 			local opt=0
 			if o1 and o2 then
 				opt=Duel.SelectOption(tp,aux.Stringid(100313001,3),aux.Stringid(100313001,4))
@@ -83,8 +83,9 @@ function c100313001.operation(e,tp,eg,ep,ev,re,r,rp)
 			else
 				opt=1
 			end
-			if opt==1 then tp=1-tp end
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+			local p=tp
+			if opt==1 then p=1-tp end
+			Duel.SpecialSummon(tc,0,tp,p,false,false,POS_FACEUP)
 		end
 	end
 end
