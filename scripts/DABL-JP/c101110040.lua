@@ -12,8 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetRange(LOCATION_EXTRA)
-	e1:SetValue(aux.fuslimit)
+	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
 	--direct attack
 	local e2=Effect.CreateEffect(c)
@@ -47,6 +46,9 @@ function s.initial_effect(c)
 end
 function s.ffilter(c,fc,sub,mg,sg)
 	return c:IsFusionSetCard(0x2b) and (not sg or not sg:IsExists(Card.IsRace,1,c,c:GetRace()))
+end
+function s.splimit(e,se,sp,st)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or aux.fuslimit(e,se,sp,st)
 end
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsPosition,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,POS_FACEDOWN_DEFENSE)
