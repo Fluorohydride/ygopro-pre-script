@@ -30,6 +30,7 @@ function s.hfilter(c)
 end
 function s.sfilter(c,e,tp)
 	return c:GetOriginalType()&TYPE_MONSTER>0 and c:IsSetCard(0x1034)
+		and (c:IsFaceup() or not c:IsLocation(LOCATION_SZONE))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
