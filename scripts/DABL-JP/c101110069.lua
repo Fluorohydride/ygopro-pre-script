@@ -1,6 +1,5 @@
 --地中界の厄災
---Script by 奥克斯
---not fully implemented
+--Script by 奥克斯 & mercury233
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--activate
@@ -38,6 +37,11 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetOperation(s.flipop)
 	c:RegisterEffect(e4)
+	local ng=Group.CreateGroup()
+	ng:KeepAlive()
+	e2:SetLabelObject(ng)
+	e3:SetLabelObject(ng)
+	e4:SetLabelObject(ng)
 	--Special Summon
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -49,15 +53,27 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+function s.reset(e)
+	local c=e:GetHandler()
+	local fid=c:GetFieldID()
+	if c:GetFlagEffectLabel(id)~=fid then
+		e:GetLabelObject():Clear()
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+	end
+end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
+	s.reset(e)
+	local ng=e:GetLabelObject()
 	local tc=eg:GetFirst()
 	while tc do
+		ng:AddCard(tc)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		tc=eg:GetNext()
 	end
 end
 function s.fliptg(e,c)
-	return c:GetFlagEffect(id)~=0
+	s.reset(e)
+	return c:GetFlagEffect(id)>0 and e:GetLabelObject():IsContains(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
