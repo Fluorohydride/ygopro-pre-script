@@ -78,12 +78,9 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	local g=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_DECK,0,nil,rc)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil,rc)
 	if g:GetCount()>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-		local sg=g:Select(tp,1,1,nil)
-		if sg:GetCount()>0 then
-			Duel.SSet(tp,sg:GetFirst())
-		end
+		Duel.SSet(tp,g:GetFirst())
 	end
 end

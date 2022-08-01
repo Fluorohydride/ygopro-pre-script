@@ -71,7 +71,7 @@ function c101110004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101110004.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if Duel.IsPlayerCanSpecialSummonMonster(tp,101110104,0,TYPES_TOKEN_MONSTER,700,700,2,RACE_WINDBEAST,ATTRIBUTE_DARK) then
+	if Duel.IsPlayerCanSpecialSummonMonster(tp,101110104,0,TYPES_TOKEN_MONSTER+TYPE_TUNER,700,700,2,RACE_WINDBEAST,ATTRIBUTE_DARK) then
 		local token=Duel.CreateToken(tp,101110104)
 		if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)>0 then
 			Duel.BreakEffect()

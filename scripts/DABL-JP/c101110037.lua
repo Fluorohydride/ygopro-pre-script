@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.guessop)
 	c:RegisterEffect(e3)
 end
-function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK)
 end

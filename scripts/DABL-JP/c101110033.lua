@@ -53,7 +53,7 @@ function s.confilter(c)
 end
 function s.tohcon1(e,tp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g>0 and g:FilterCount(s.confilter,nil)>0
+	return g:FilterCount(s.confilter,nil)>0
 end
 function s.tohcon2(e,tp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
@@ -85,15 +85,15 @@ function s.tohop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup()
 		and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
 		and tc:IsLocation(LOCATION_HAND) then
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e2:SetCode(EFFECT_CANNOT_ACTIVATE)
-		e2:SetTargetRange(1,0)
-		e2:SetValue(s.aclimit)
-		e2:SetLabel(tc:GetCode())
-		e2:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e2,tp)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetCode(EFFECT_CANNOT_ACTIVATE)
+		e1:SetTargetRange(1,0)
+		e1:SetValue(s.aclimit)
+		e1:SetLabel(tc:GetCode())
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.aclimit(e,re,tp)

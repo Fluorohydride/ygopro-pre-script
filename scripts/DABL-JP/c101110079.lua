@@ -66,13 +66,8 @@ function s.rscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
 end
-function s.rstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.rstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chkc then
-		local te=e:GetLabelObject()
-		local tg=te:GetTarget()
-		return tg(e,tp,eg,ep,ev,re,r,rp,0,chkc)
-	end
 	if chk==0 then
 		if e:GetLabel()==0 then return false end
 		e:SetLabel(0)

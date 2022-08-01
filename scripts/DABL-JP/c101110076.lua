@@ -24,7 +24,7 @@ function c101110076.initial_effect(c)
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_CHAINING)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,101110076+100)
 	e3:SetCondition(c101110076.rmcon)
@@ -68,6 +68,8 @@ function c101110076.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(tp,g)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil,tp,POS_FACEDOWN)
-	Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
+	if #sg>0 then
+		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
+	end
 	Duel.ShuffleHand(1-tp)
 end
