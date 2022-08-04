@@ -9,29 +9,20 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
-	e1:SetCost(s.cost)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
-end
-function s.cost(e)
-	e:SetLabel(1)
-	return true
 end
 function s.cfilter(c,e,tp)
 	return c:IsFaceup() and c:IsRace(RACE_FISH) and c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,0x33,0,1,nil,e,tp,c:GetOriginalCode())
 end
 function s.filter(c,e,tp,code)
-	return (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsSetCard(0x28b)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsOriginalCodeRule(code)
+	return c:IsFaceupEx() and c:IsSetCard(0x28b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and not c:IsOriginalCodeRule(code)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local l=e:GetLabel()==1
-	if chk==0 then
-		e:SetLabel(0)
-		return l and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp)
-	end
+	if chk==0 then return e:IsCostChecked() and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp):GetFirst()
 	Duel.Remove(tc,POS_FACEUP,REASON_COST)

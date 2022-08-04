@@ -4,7 +4,7 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
-	aux.AddSynchroMixProcedure(c,aux.Tuner(Card.IsRace,RACE_FISH),aux.NonTuner(nil),nil,nil,0,99)
+	aux.AddSynchroMixProcedure(c,aux.Tuner(Card.IsRace,RACE_FISH),nil,nil,s.mfilter,1,99)
 	--atk
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -42,6 +42,9 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
+function s.mfilter(c)
+	return not c:IsType(TYPE_TUNER) or c:IsRace(RACE_FISH)
+end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
@@ -67,7 +70,8 @@ function s.spreg(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject():GetLabel()~=Duel.GetTurnCount() and e:GetHandler():GetFlagEffect(id)>0
+	local c=e:GetHandler()
+	return e:GetLabelObject():GetLabel()~=Duel.GetTurnCount() and c:GetFlagEffect(id)>0
 		and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
