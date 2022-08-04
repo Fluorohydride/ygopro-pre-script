@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_DESTROY+CATEGORY_HANDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SUMMON)
+	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.descon)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
@@ -19,6 +20,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
 	e3:SetRange(LOCATION_GRAVE)
+	e3:SetCountLimit(1,id+100)
 	e3:SetTarget(s.reptg)
 	e3:SetValue(s.repval)
 	e3:SetOperation(s.repop)
@@ -27,17 +29,24 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0
 end
+function s.tgfilter(c)
+	return c:IsRace(RACE_FIEND) and c:IsDiscardable(REASON_EFFECT)
+end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,eg,eg:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,eg:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,tp,1)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateSummon(eg)
-	Duel.Destroy(eg,REASON_EFFECT)
-	Duel.BreakEffect()
-	Duel.DiscardHand(tp,Card.IsRace,1,1,REASON_EFFECT+REASON_DISCARD,nil,RACE_FIEND)
+	if Duel.Destroy(eg,REASON_EFFECT)==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
+	if g:GetCount()>0 then
+		Duel.BreakEffect()
+		Duel.DiscardHand(tp,Card.IsRace,1,1,REASON_EFFECT+REASON_DISCARD,nil,RACE_FIEND)
+	end
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x6)) and c:IsLocation(LOCATION_MZONE)
