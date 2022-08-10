@@ -1,4 +1,4 @@
---御巫的约定
+--御巫の契り
 --
 --Script by Trishula9
 function c100419035.initial_effect(c)

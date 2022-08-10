@@ -1,4 +1,4 @@
---御巫的祓舞
+--御巫の祓舞
 --
 --Script by Trishula9
 function c100419031.initial_effect(c)

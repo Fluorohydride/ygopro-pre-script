@@ -1,4 +1,4 @@
---剑之御巫 哈蕾
+--剣の御巫ハレ
 --
 --Script by Trishula9
 function c100419025.initial_effect(c)

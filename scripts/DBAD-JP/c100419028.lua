@@ -1,4 +1,4 @@
---天御巫之闔
+--天御巫の闔
 --
 --Script by Trishula9
 function c100419028.initial_effect(c)
@@ -30,15 +30,14 @@ function c100419028.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 	--extra attack
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100419028,1))
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetCode(EVENT_DAMAGE_STEP_END)
-	e3:SetCondition(c100419028.excon)
-	e3:SetCost(c100419028.excost)
-	e3:SetOperation(c100419028.exop)
-	c:RegisterEffect(e3)
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e5:SetRange(LOCATION_FZONE)
+	e5:SetCode(EVENT_DAMAGE_STEP_END)
+	e5:SetCondition(c100419028.excon)
+	e5:SetCost(c100419028.excost)
+	e5:SetOperation(c100419028.exop)
+	c:RegisterEffect(e5)
 end
 function c100419028.atkfilter(c)
 	return c:GetEquipCount()>0

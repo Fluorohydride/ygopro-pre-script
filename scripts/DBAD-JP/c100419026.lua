@@ -1,4 +1,4 @@
---镜之御巫 妮妮
+--鏡の御巫ニニ
 --
 --Script by Trishula9
 function c100419026.initial_effect(c)

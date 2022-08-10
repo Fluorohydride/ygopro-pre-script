@@ -1,4 +1,4 @@
---大姬之御巫
+--オオヒメの御巫
 --
 --Script by Trishula9
 function c100419027.initial_effect(c)
@@ -64,14 +64,14 @@ function c100419027.filter(c,tp)
 	return c:IsType(TYPE_EQUIP) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 		and Duel.GetMatchingGroupCount(c100419027.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)>0
 end
-function c100419027.eqfilter(c,tc)
-	return c:IsFaceup() and tc:CheckEquipTarget(c)
+function c100419027.eqfilter(c,ec)
+	return c:IsFaceup() and ec:CheckEquipTarget(c)
 end
 function c100419027.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100419027.filter(chkc,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(c100419027.filter,tp,LOCATION_GRAVE,0,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,c100419027.filter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end

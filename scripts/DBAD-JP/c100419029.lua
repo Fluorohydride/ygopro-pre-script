@@ -1,8 +1,8 @@
---传承的大御巫
+--伝承の大御巫
 --
 --Script by Trishula9
 function c100419029.initial_effect(c)
-	--spsummon
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100419029,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -18,7 +18,7 @@ function c100419029.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,63821878)
+	e2:SetCountLimit(1,100419029+100)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100419029.tgtg)
 	e2:SetOperation(c100419029.tgop)

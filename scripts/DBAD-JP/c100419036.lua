@@ -1,4 +1,4 @@
---御巫的比较
+--御巫かみくらべ
 --
 --Script by Trishula9
 function c100419036.initial_effect(c)

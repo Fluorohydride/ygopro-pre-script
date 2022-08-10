@@ -1,4 +1,4 @@
---御巫的火丛舞
+--御巫の火叢舞
 --
 --Script by Trishula9
 function c100419030.initial_effect(c)
@@ -7,7 +7,7 @@ function c100419030.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,100419030)
+	e1:SetCountLimit(1,100419030+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100419030.target)
 	e1:SetOperation(c100419030.activate)
 	c:RegisterEffect(e1)

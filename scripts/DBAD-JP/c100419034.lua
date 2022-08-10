@@ -1,4 +1,4 @@
---御巫神乐
+--御巫神楽
 --
 --Script by Trishula9
 function c100419034.initial_effect(c)
