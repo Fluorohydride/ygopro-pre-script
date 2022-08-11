@@ -4,7 +4,7 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
-	aux.AddSynchroMixProcedure(c,aux.Tuner(Card.IsRace,RACE_FISH),nil,nil,s.mfilter,1,99)
+	aux.AddSynchroMixProcedure(c,aux.Tuner(Card.IsRace,RACE_FISH),aux.NonTuner(nil),nil,s.mfilter,0,99)
 	--atk
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -42,14 +42,32 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-function s.mfilter(c)
-	return not c:IsType(TYPE_TUNER) or c:IsRace(RACE_FISH)
+function Auxiliary.SynMixFilter2(c,f2,f3,f4,minc,maxc,syncard,mg,smat,c1,gc,mgchk)
+	if f2 then
+		return f2(c,syncard,c1)
+			and (mg:IsExists(Auxiliary.SynMixFilter3,1,Group.FromCards(c1,c),f3,f4,minc,maxc,syncard,mg,smat,c1,c,gc,mgchk)
+				or minc==0 and Auxiliary.SynMixFilter4(c,nil,minc+1,maxc+1,syncard,mg,smat,c1,nil,nil,gc,mgchk))
+	else
+		return mg:IsExists(Auxiliary.SynMixFilter4,1,c1,f4,minc,maxc,syncard,mg,smat,c1,nil,nil,gc,mgchk)
+	end
+end
+function Auxiliary.SynMixFilter3(c,f3,f4,minc,maxc,syncard,mg,smat,c1,c2,gc,mgchk)
+	if f3 then
+		return f3(c,syncard,c1,c2)
+			and (mg:IsExists(Auxiliary.SynMixFilter4,1,Group.FromCards(c1,c2,c),f4,minc,maxc,syncard,mg,smat,c1,c2,c,gc,mgchk)
+				or minc==0 and Auxiliary.SynMixFilter4(c,nil,minc+1,maxc+1,syncard,mg,smat,c1,c2,nil,gc,mgchk))
+	else
+		return mg:IsExists(Auxiliary.SynMixFilter4,1,Group.FromCards(c1,c2),f4,minc,maxc,syncard,mg,smat,c1,c2,nil,gc,mgchk)
+	end
+end
+function s.mfilter(c,sc)
+	return c:IsRace(RACE_FISH) and c:IsType(TYPE_TUNER) or c:IsNotTuner(sc)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,LOCATION_REMOVED,LOCATION_REMOVED,nil)*500
+	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_REMOVED,LOCATION_REMOVED,nil)*500
 end
 function s.rmcon(e)
 	local c=e:GetHandler()
