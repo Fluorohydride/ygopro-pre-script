@@ -44,17 +44,17 @@ function this.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function this.immtg(e,c)
-	return c:IsSetCard(0x28b) and c:IsStatus(STATUS_SPSUMMON_TURN)
+	return c:IsSetCard(0x28c) and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function this.spcfilter(c,tp)
-	return c:IsSetCard(0x28b) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsSetCard(0x28c) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP) and c:GetReasonPlayer()==1-tp and c:IsType(TYPE_XYZ)
 end
 function this.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(this.spcfilter,1,nil,tp)
 end
 function this.spfilter(c,e,tp)
-	return c:IsSetCard(0x28b) and c:IsLevel(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x28c) and c:IsLevel(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function this.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(this.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp)
@@ -73,10 +73,10 @@ function this.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function this.matfilter2(c,sc)
-	return c:IsCanOverlay() and c:IsType(TYPE_QUICKPLAY) and c:IsType(TYPE_SPELL) and c:IsSetCard(0x28b)
+	return c:IsCanOverlay() and c:IsType(TYPE_QUICKPLAY) and c:IsType(TYPE_SPELL) and c:IsSetCard(0x28c)
 end
 function this.matfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x28b) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(0x28c) and c:IsType(TYPE_XYZ)
 		and Duel.IsExistingMatchingCard(this.matfilter2,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil,c)
 end
 function this.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -39,7 +39,7 @@ function this.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,500)
 end
 function this.thfilter(c)
-	return c:IsSetCard(0x28b) and c:IsAbleToHand()
+	return c:IsSetCard(0x28c) and c:IsAbleToHand()
 end
 function this.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(this.thfilter,tp,LOCATION_DECK,0,3,nil) end
@@ -58,14 +58,14 @@ function this.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function this.thcfilter(c,tp)
-	return c:IsSetCard(0x28b) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsSetCard(0x28c) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP) and c:GetReasonPlayer()==1-tp and c:IsType(TYPE_XYZ)
 end
 function this.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(this.thcfilter,1,nil,tp)
 end
 function this.thfilter2(c)
-	return c:IsSetCard(0x28b) and c:IsType(TYPE_SPELL+TYPE_QUICKPLAY) and c:IsAbleToHand()
+	return c:IsSetCard(0x28c) and c:IsType(TYPE_SPELL+TYPE_QUICKPLAY) and c:IsAbleToHand()
 end
 function this.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(this.thfilter2,tp,LOCATION_GRAVE,0,1,nil) end

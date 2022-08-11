@@ -37,7 +37,7 @@ function this.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function this.tdfilter(c)
-	return c:IsAbleToHand() and c:IsSetCard(0x28b) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsAbleToHand() and c:IsSetCard(0x28c) and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function this.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)

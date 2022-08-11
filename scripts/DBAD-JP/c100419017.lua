@@ -40,7 +40,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.check(c)
-	return c:IsSetCard(0x28b) and c:IsLevel(1)
+	return c:IsSetCard(0x28c) and c:IsLevel(1)
 end
 function s.chainlm(e,rp,tp)
 	return tp==rp

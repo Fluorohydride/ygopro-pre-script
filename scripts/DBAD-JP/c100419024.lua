@@ -26,12 +26,12 @@ function s.initial_effect(c)
 end
 --Effect 1
 function s.filter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x28b) and c:IsType(TYPE_XYZ) 
+	return c:IsFaceup() and c:IsSetCard(0x28c) and c:IsType(TYPE_XYZ) 
 		and aux.MustMaterialCheck(c,tp,EFFECT_MUST_BE_XMATERIAL)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetRank())
 end
 function s.filter2(c,e,tp,mc,rk)
-	return not c:IsRank(rk) and c:IsSetCard(0x28b) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
+	return not c:IsRank(rk) and c:IsSetCard(0x28c) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -84,7 +84,7 @@ function s.tdop3(e,tp,eg,ep,ev,re,r,rp)
 end
 --Effect 2
 function s.drfilter(c)
-	return c:IsSetCard(0x28b) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsSetCard(0x28c) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.drfilter(chkc) end

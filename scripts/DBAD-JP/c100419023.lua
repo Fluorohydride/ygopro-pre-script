@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 
 function s.filter(c,e,tp)
-	return c:IsLevel(1) and c:IsSetCard(0x28b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevel(1) and c:IsSetCard(0x28c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -56,7 +56,7 @@ end
 
 function s.xcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSetCard(0x28b) and c:IsType(TYPE_XYZ)
+	return c:IsSetCard(0x28c) and c:IsType(TYPE_XYZ)
 end
 function s.xcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 
 function s.filter(c,e,tp)
-	return c:IsLevel(1) and c:IsSetCard(0x28b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevel(1) and c:IsSetCard(0x28c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -71,7 +71,7 @@ end
 
 function s.xcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSetCard(0x28b) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()>0
+	return c:IsSetCard(0x28c) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()>0
 end
 function s.xval(e,c)
 	return e:GetHandler():GetOverlayCount()*300

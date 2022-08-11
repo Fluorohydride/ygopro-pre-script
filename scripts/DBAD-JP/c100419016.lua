@@ -63,7 +63,7 @@ end
 function this.matcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return (loc & LOCATION_ONFIELD)>0 and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and re:IsActiveType(TYPE_QUICKPLAY) and re:GetHandler():IsSetCard(0x28b)
+		and re:IsActiveType(TYPE_QUICKPLAY) and re:GetHandler():IsSetCard(0x28c)
 end
 function this.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsCanOverlay() end
