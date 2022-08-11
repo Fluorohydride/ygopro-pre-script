@@ -43,7 +43,7 @@ function c100419027.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function c100419027.thfilter(c)
-	return c:IsSetCard(0x28c) and not c:IsCode(100419027) and c:IsAbleToHand()
+	return c:IsSetCard(0x28d) and not c:IsCode(100419027) and c:IsAbleToHand()
 end
 function c100419027.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100419027.thfilter,tp,LOCATION_DECK,0,1,nil) end

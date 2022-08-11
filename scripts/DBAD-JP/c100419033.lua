@@ -53,7 +53,7 @@ function c100419033.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100419033.filter(c)
-	return c:IsSetCard(0x28c) and c:IsFaceup()
+	return c:IsSetCard(0x28d) and c:IsFaceup()
 end
 function c100419033.ctcon(e)
 	return Duel.IsExistingMatchingCard(c100419033.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

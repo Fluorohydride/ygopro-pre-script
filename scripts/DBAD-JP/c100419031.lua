@@ -38,7 +38,7 @@ function c100419031.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100419031.filter(c)
-	return c:IsSetCard(0x28c) and c:IsFaceup()
+	return c:IsSetCard(0x28d) and c:IsFaceup()
 end
 function c100419031.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100419031.filter(chkc) end
@@ -53,7 +53,7 @@ function c100419031.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100419031.eqlimit(e,c)
-	return c:IsSetCard(0x28c)
+	return c:IsSetCard(0x28d)
 end
 function c100419031.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsControler,1,nil,1-tp)

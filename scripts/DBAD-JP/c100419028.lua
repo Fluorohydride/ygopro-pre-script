@@ -49,7 +49,7 @@ function c100419028.atklimit(e,c)
 	return c:GetEquipCount()>0
 end
 function c100419028.actfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x28c) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x28d) and c:IsControler(tp)
 end
 function c100419028.actcon(e)
 	local tp=e:GetHandlerPlayer()
@@ -59,7 +59,7 @@ end
 function c100419028.excon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=Duel.GetAttacker()
 	e:SetLabelObject(ec)
-	return ec:IsControler(tp) and ec:IsSetCard(0x28c) and ec:IsChainAttackable(0,true)
+	return ec:IsControler(tp) and ec:IsSetCard(0x28d) and ec:IsChainAttackable(0,true)
 end
 function c100419028.exfilter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToGraveAsCost()

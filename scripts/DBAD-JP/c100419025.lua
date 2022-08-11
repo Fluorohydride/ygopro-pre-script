@@ -41,7 +41,7 @@ function c100419025.indcon(e)
 	return e:GetHandler():GetEquipCount()>0
 end
 function c100419025.thfilter(c)
-	return c:IsSetCard(0x28c) and c:IsType(TYPE_EQUIP) and c:IsAbleToHand()
+	return c:IsSetCard(0x28d) and c:IsType(TYPE_EQUIP) and c:IsAbleToHand()
 end
 function c100419025.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100419025.thfilter,tp,LOCATION_DECK,0,1,nil) end

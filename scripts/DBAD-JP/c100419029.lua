@@ -25,7 +25,7 @@ function c100419029.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100419029.filter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x28c) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x28d) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100419029.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -68,7 +68,7 @@ function c100419029.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(tc,nil,REASON_EFFECT)
 end
 function c100419029.tgfilter(c)
-	return c:IsSetCard(0x28c) and not c:IsCode(100419029) and c:IsAbleToGrave()
+	return c:IsSetCard(0x28d) and not c:IsCode(100419029) and c:IsAbleToGrave()
 end
 function c100419029.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100419029.tgfilter,tp,LOCATION_DECK,0,1,nil) end

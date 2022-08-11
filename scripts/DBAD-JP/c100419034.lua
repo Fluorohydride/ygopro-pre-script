@@ -7,7 +7,7 @@ function c100419034.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100419034.filter(c,e,tp)
-	return c:IsSetCard(0x28c)
+	return c:IsSetCard(0x28d)
 end
 function c100419034.extraop(e,tp,eg,ep,ev,re,r,rp,tc,mat)
 	if not tc then return end
