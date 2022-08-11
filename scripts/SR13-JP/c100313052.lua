@@ -122,6 +122,7 @@ end
 function c100313052.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)>0 then
+		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		Duel.DiscardHand(tp,c100313052.thfilter,1,1,REASON_EFFECT+REASON_DISCARD)
