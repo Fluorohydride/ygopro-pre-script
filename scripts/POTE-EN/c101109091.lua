@@ -19,7 +19,7 @@ function s.cfilter(c,e,tp)
 end
 function s.filter(c,e,tp,code)
 	return c:IsFaceupEx() and c:IsSetCard(0x28b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and not c:IsOriginalCodeRule(code)
+		and not c:IsCode(code)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:IsCostChecked() and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end

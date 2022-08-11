@@ -4,7 +4,7 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(1152)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_CUSTOM+id)
@@ -29,7 +29,7 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_HAND)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,id)
+	local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE,LOCATION_GRAVE,eg,id)
 	Duel.RaiseEvent(g,EVENT_CUSTOM+id,re,r,rp,ep,0)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
