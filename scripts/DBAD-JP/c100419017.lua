@@ -28,7 +28,6 @@ end
 function s.ovfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsRank(2) and c:GetOverlayCount()>=5
 end
---Effect 1
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) 
@@ -65,7 +64,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
---Effect 2
 function s.damcon(e)
 	return e:GetHandler():GetOverlayCount()>=5
 end

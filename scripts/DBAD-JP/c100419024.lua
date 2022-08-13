@@ -24,7 +24,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
---Effect 1
 function s.filter1(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x28c) and c:IsType(TYPE_XYZ) 
 		and aux.MustMaterialCheck(c,tp,EFFECT_MUST_BE_XMATERIAL)
@@ -82,7 +81,6 @@ function s.tdop3(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end
---Effect 2
 function s.drfilter(c)
 	return c:IsSetCard(0x28c) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end

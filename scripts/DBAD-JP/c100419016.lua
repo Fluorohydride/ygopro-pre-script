@@ -36,7 +36,6 @@ function s.initial_effect(c)
 	e3:SetOperation(s.matop)
 	c:RegisterEffect(e3)
 end
-
 function s.gmatcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,100419023)
 end

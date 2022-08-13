@@ -22,7 +22,6 @@ function s.initial_effect(c)
 	e2:SetValue(s.xval)
 	c:RegisterEffect(e2)
 end
-
 function s.filter(c,e,tp)
 	return c:IsLevel(1) and c:IsSetCard(0x28c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
