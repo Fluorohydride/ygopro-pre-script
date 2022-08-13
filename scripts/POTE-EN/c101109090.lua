@@ -89,7 +89,7 @@ end
 function s.vfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_FISH) and c:IsControler(tp)
 end
-function s.rcon(e,tp,eg)
+function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.vfilter,1,nil,tp)
 end
 function s.rfilter(c)

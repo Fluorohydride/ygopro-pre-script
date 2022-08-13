@@ -1,4 +1,4 @@
---暗黒界の门番 ゼンタ
+--暗黒界の門番 ゼンタ
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -33,7 +33,7 @@ end
 function s.filter(c)
 	return c:IsCode(33017655) and c:IsAbleToHand()
 end
-function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
