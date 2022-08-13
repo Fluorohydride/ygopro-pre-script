@@ -1,7 +1,7 @@
 --エピュアリィ・ビューティ
 --Scripted by JoyJ
-local this,id,ofs=GetID()
-function this.initial_effect(c)
+local s,id,o=GetID()
+function s.initial_effect(c)
 	aux.AddCodeList(c,100419022)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,2,2)
@@ -15,13 +15,13 @@ function this.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
-	e1:SetCondition(this.discon)
-	e1:SetTarget(this.distg)
-	e1:SetOperation(this.disop)
+	e1:SetCondition(s.discon)
+	e1:SetTarget(s.distg)
+	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetCondition(this.discon2)
+	e2:SetCondition(s.discon2)
 	c:RegisterEffect(e2)
 	--be material
 	local e3=Effect.CreateEffect(c)
@@ -31,25 +31,25 @@ function this.initial_effect(c)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(3)
-	e3:SetCondition(this.matcon)
-	e3:SetTarget(this.mattg)
-	e3:SetOperation(this.matop)
+	e3:SetCondition(s.matcon)
+	e3:SetTarget(s.mattg)
+	e3:SetOperation(s.matop)
 	c:RegisterEffect(e3)
 end
-function this.discon(e,tp,eg,ep,ev,re,r,rp)
+function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,100419022)
 end
-function this.discon2(e,tp,eg,ep,ev,re,r,rp)
+function s.discon2(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,100419022)
 end
-function this.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp)
 		and aux.NegateEffectMonsterFilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(aux.NegateEffectMonsterFilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
 	Duel.SelectTarget(tp,aux.NegateEffectMonsterFilter,tp,0,LOCATION_MZONE,1,1,nil)
 end
-function this.disop(e,tp,eg,ep,ev,re,r,rp)
+function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
@@ -68,16 +68,16 @@ function this.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.AdjustInstantly()
 	end
 end
-function this.matcon(e,tp,eg,ep,ev,re,r,rp)
+function s.matcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return (loc & LOCATION_ONFIELD)>0 and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:IsActiveType(TYPE_QUICKPLAY) and re:GetHandler():IsSetCard(0x28c)
 end
-function this.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsCanOverlay() end
 	re:GetHandler():CreateEffectRelation(e)
 end
-function this.matop(e,tp,eg,ep,ev,re,r,rp)
+function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=re:GetHandler()
 	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then

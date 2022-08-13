@@ -1,7 +1,7 @@
 --エピュアリィ・プランプ
 --Scripted by JoyJ
-local this,id,ofs=GetID()
-function this.initial_effect(c)
+local s,id,o=GetID()
+function s.initial_effect(c)
 	aux.AddCodeList(c,100419023)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,2,2)
@@ -15,13 +15,13 @@ function this.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
-	e1:SetCondition(this.gmatcon)
-	e1:SetTarget(this.gmattg)
-	e1:SetOperation(this.gmatop)
+	e1:SetCondition(s.gmatcon)
+	e1:SetTarget(s.gmattg)
+	e1:SetOperation(s.gmatop)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetCondition(this.gmatcon2)
+	e2:SetCondition(s.gmatcon2)
 	c:RegisterEffect(e2)
 	--be material from szone
 	local e3=Effect.CreateEffect(c)
@@ -31,45 +31,45 @@ function this.initial_effect(c)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(3)
-	e3:SetCondition(this.matcon)
-	e3:SetTarget(this.mattg)
-	e3:SetOperation(this.matop)
+	e3:SetCondition(s.matcon)
+	e3:SetTarget(s.mattg)
+	e3:SetOperation(s.matop)
 	c:RegisterEffect(e3)
 end
 
-function this.gmatcon(e,tp,eg,ep,ev,re,r,rp)
+function s.gmatcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,100419023)
 end
-function this.gmatcon2(e,tp,eg,ep,ev,re,r,rp)
+function s.gmatcon2(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,100419023)
 end
-function this.gmattgfilter(c,sc)
+function s.gmattgfilter(c,sc)
 	return c:IsCanOverlay() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
-function this.gmattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.gmattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(this.gmattgfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,c) end
+	if chk==0 then return Duel.IsExistingTarget(s.gmattgfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	Duel.SelectTarget(tp,this.gmattgfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,2,nil,c)
+	Duel.SelectTarget(tp,s.gmattgfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,2,nil,c)
 end
-function this.gmatop(e,tp,eg,ep,ev,re,r,rp)
+function s.gmatop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(aux.NecroValleyFilter(Card.IsRelateToChain),nil,0)
 	g=g:Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
 	if #g>0 then
 		Duel.Overlay(e:GetHandler(),g)
 	end
 end
-function this.matcon(e,tp,eg,ep,ev,re,r,rp)
+function s.matcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return (loc & LOCATION_ONFIELD)>0 and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:IsActiveType(TYPE_QUICKPLAY) and re:GetHandler():IsSetCard(0x28c)
 end
-function this.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsCanOverlay() end
 	re:GetHandler():CreateEffectRelation(e)
 end
-function this.matop(e,tp,eg,ep,ev,re,r,rp)
+function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=re:GetHandler()
 	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
@@ -89,8 +89,8 @@ function this.matop(e,tp,eg,ep,ev,re,r,rp)
 					e1:SetReset(RESET_PHASE+PHASE_END)
 					e1:SetLabelObject(rc)
 					e1:SetCountLimit(1)
-					e1:SetCondition(this.retcon)
-					e1:SetOperation(this.retop)
+					e1:SetCondition(s.retcon)
+					e1:SetOperation(s.retop)
 					Duel.RegisterEffect(e1,tp)
 				end
 			end
@@ -99,9 +99,9 @@ function this.matop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function this.retcon(e,tp,eg,ep,ev,re,r,rp)
+function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetFlagEffect(id)~=0
 end
-function this.retop(e,tp,eg,ep,ev,re,r,rp)
+function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())
 end
