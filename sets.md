@@ -4,9 +4,9 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **August 6, 2022**: Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
 - **August 20, 2022**: Deck Build Pack: Amazing Defenders (DBAD-JP) : `100419XXX`
+- **October 15, 2022**: Photon Hypernova (PHHY-JP) : `101111XXX`
 
 # Announced
-- **October 15, 2022**: Photon Hypernova (????-JP) : `101111XXX`
 
 # Archived
 ## Other packs
