@@ -49,13 +49,13 @@ function c101111003.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,c101111003.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 and tc:IsLocation(LOCATION_MZONE) then
 		local a=Duel.GetAttacker()
-		if a:IsAttackable() and a:IsRelateToEffect(e) and not a:IsImmuneToEffect(e) then
+		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
 			Duel.BreakEffect()
 			local mg=Duel.GetMatchingGroup(c101111003.mfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-			if Duel.ChangeAttackTarget(tc) and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101111003,2))
-				and c:IsLocation(LOCATION_GRAVE) and c:IsRelateToEffect(e) and c:IsCanOverlay() and aux.NecroValleyFilter()(c) then
+			if Duel.ChangeAttackTarget(tc) and mg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101111003,2))
+				and c:IsLocation(LOCATION_GRAVE) and aux.NecroValleyFilter()(c) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-				local sc=g:Select(tp,1,1,nil):GetFirst()
+				local sc=mg:Select(tp,1,1,nil):GetFirst()
 				if not sc:IsImmuneToEffect(e) then
 					Duel.Overlay(sc,Group.FromCards(c))
 				end
