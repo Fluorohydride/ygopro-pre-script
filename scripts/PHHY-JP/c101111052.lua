@@ -35,6 +35,7 @@ function c101111052.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 and tc:IsLocation(LOCATION_MZONE)
 		and c:IsLocation(LOCATION_ONFIELD) and c:IsRelateToEffect(e) and c:IsCanOverlay() then
 		Duel.BreakEffect()
+		c:CancelToGrave()
 		Duel.Overlay(tc,Group.FromCards(c))
 	end
 end
