@@ -8,12 +8,12 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--be material from grave
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
 	e1:SetCondition(s.gmatcon)
 	e1:SetTarget(s.gmattg)
@@ -49,52 +49,49 @@ function s.gmattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.gmattgfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,c) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	Duel.SelectTarget(tp,s.gmattgfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,2,nil,c)
 end
 function s.gmatop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(aux.NecroValleyFilter(Card.IsRelateToChain),nil,0)
-	g=g:Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
+	local g=Duel.GetTargetsRelateToChain():Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
 	if #g>0 then
 		Duel.Overlay(e:GetHandler(),g)
 	end
 end
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)
-	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return (loc & LOCATION_ONFIELD)>0 and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:IsActiveType(TYPE_QUICKPLAY) and re:GetHandler():IsSetCard(0x28c)
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsCanOverlay() end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	re:GetHandler():CreateEffectRelation(e)
 end
 function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=re:GetHandler()
-	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+	if c:IsRelateToChain() and tc:IsRelateToChain() and not tc:IsImmuneToEffect(e) then
 		tc:CancelToGrave()
 		Duel.Overlay(c,tc)
-		if c:GetOverlayGroup():IsContains(tc) then
-			if Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp)
-				and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-				local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
-				local rc=tg:GetFirst()
-				if Duel.Remove(rc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
-					tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-					local e1=Effect.CreateEffect(c)
-					e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-					e1:SetCode(EVENT_PHASE+PHASE_END)
-					e1:SetReset(RESET_PHASE+PHASE_END)
-					e1:SetLabelObject(rc)
-					e1:SetCountLimit(1)
-					e1:SetCondition(s.retcon)
-					e1:SetOperation(s.retop)
-					Duel.RegisterEffect(e1,tp)
-				end
+		if Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp)
+			and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+			local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
+			local rc=tg:GetFirst()
+			if Duel.Remove(rc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+				rc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+				e1:SetCode(EVENT_PHASE+PHASE_END)
+				e1:SetReset(RESET_PHASE+PHASE_END)
+				e1:SetLabelObject(rc)
+				e1:SetCountLimit(1)
+				e1:SetCondition(s.retcon)
+				e1:SetOperation(s.retop)
+				Duel.RegisterEffect(e1,tp)
 			end
-		else
-			tc:CancelToGrave(false)
 		end
 	end
 end
