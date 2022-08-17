@@ -37,6 +37,7 @@ end
 function c101111003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101111003.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetTargetCard(e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c101111003.mfilter(c)
@@ -52,8 +53,10 @@ function c101111003.spop(e,tp,eg,ep,ev,re,r,rp)
 		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
 			Duel.BreakEffect()
 			local mg=Duel.GetMatchingGroup(c101111003.mfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-			if Duel.ChangeAttackTarget(tc) and mg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101111003,2))
-				and c:IsLocation(LOCATION_GRAVE) and aux.NecroValleyFilter()(c) then
+			if Duel.ChangeAttackTarget(tc) and mg:GetCount()>0
+				and c:IsRelateToChain() and c:IsLocation(LOCATION_GRAVE) and aux.NecroValleyFilter()(c)
+				and Duel.SelectYesNo(tp,aux.Stringid(101111003,2)) then
+				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 				local sc=mg:Select(tp,1,1,nil):GetFirst()
 				if not sc:IsImmuneToEffect(e) then
