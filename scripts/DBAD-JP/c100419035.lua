@@ -46,5 +46,4 @@ function c100419035.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Equip(tp,eqc,tc)
 		end
 	end
-	
 end

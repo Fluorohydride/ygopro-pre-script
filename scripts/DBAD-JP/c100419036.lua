@@ -4,6 +4,7 @@
 function c100419036.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100419036,0))
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -15,6 +16,7 @@ function c100419036.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100419036,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
@@ -34,7 +36,8 @@ function c100419036.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c100419036.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100419036.filter(c,tp)
-	return Duel.GetMatchingGroupCount(c100419036.eqfilter,tp,LOCATION_DECK,0,nil,tp,c)>0
+	return c:IsFaceup()
+		and Duel.GetMatchingGroupCount(c100419036.eqfilter,tp,LOCATION_DECK,0,nil,tp,c)>0
 end
 function c100419036.eqfilter(c,tp,ec)
 	return c:IsType(TYPE_EQUIP) and c:CheckUniqueOnField(tp) and not c:IsForbidden() and c:CheckEquipTarget(ec)

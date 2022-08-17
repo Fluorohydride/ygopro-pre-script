@@ -29,6 +29,7 @@ function c100419026.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e4:SetCountLimit(1,100419026)
 	e4:SetCondition(c100419026.ctcon)
 	e4:SetTarget(c100419026.cttg)
@@ -41,8 +42,8 @@ end
 function c100419026.indcon(e)
 	return e:GetHandler():GetEquipCount()>0
 end
-function c100419026.ctcon(e)
-	return e:GetHandler():GetEquipCount()>0 and Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
+function c100419026.ctcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetEquipCount()>0 and Duel.GetTurnPlayer()==1-tp
 end
 function c100419026.filter(c)
 	return c:IsFaceup() and c:IsControlerCanBeChanged()

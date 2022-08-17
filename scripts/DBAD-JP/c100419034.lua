@@ -13,10 +13,12 @@ function c100419034.extraop(e,tp,eg,ep,ev,re,r,rp,tc,mat)
 	if not tc then return end
 	local ct=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_EQUIP):GetClassCount(Card.GetCode)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(100419034,0)) then
+	if ct>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(100419034,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=g:Select(tp,1,ct,nil)
-		Duel.Damage(1-tp,Duel.Destroy(sg,REASON_EFFECT)*1000,REASON_EFFECT)
+		Duel.HintSelection(sg)
+		local res=Duel.Destroy(sg,REASON_EFFECT)
+		Duel.Damage(1-tp,res*1000,REASON_EFFECT)
 	end
 end

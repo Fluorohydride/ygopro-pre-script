@@ -48,13 +48,9 @@ end
 function c100419028.atklimit(e,c)
 	return c:GetEquipCount()>0
 end
-function c100419028.actfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x28d) and c:IsControler(tp)
-end
 function c100419028.actcon(e)
-	local tp=e:GetHandlerPlayer()
-	local a,d=Duel.GetBattleMonster()
-	return (a and c100419028.actfilter(a,tp)) or (d and c100419028.actfilter(d,tp))
+	local a=Duel.GetBattleMonster(e:GetHandlerPlayer())
+	return a and a:IsFaceup() and a:IsSetCard(0x28d)
 end
 function c100419028.excon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=Duel.GetAttacker()

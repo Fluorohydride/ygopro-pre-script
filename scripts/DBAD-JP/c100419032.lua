@@ -60,6 +60,7 @@ end
 function c100419032.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=e:GetHandler():GetEquipTarget()
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100419032.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,ec:GetOriginalCodeRule())
 	local tc=g:GetFirst()
@@ -72,7 +73,10 @@ function c100419032.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(c100419032.eqlimit)
 		c:RegisterEffect(e1)
-		Duel.SendtoHand(ec,nil,REASON_EFFECT)
+		if ec then
+			Duel.BreakEffect()
+			Duel.SendtoHand(ec,nil,REASON_EFFECT)
+		end
 	end
 end
 function c100419032.eqlimit(e,c)
