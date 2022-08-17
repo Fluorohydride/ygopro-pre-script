@@ -38,7 +38,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		Duel.BreakEffect() 
+		Duel.BreakEffect()
 		if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
@@ -59,7 +59,7 @@ function s.xcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.xtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) 
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp)
 		and chkc:IsCanOverlay() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsCanOverlay,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())

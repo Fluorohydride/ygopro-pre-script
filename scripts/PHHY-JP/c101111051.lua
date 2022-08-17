@@ -86,5 +86,5 @@ function c101111051.cfop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		end
 		Duel.ShuffleExtra(1-tp)
-	end 
+	end
 end

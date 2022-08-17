@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Effect 2 
+	--Effect 2
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x28c) and c:IsType(TYPE_XYZ) 
+	return c:IsFaceup() and c:IsSetCard(0x28c) and c:IsType(TYPE_XYZ)
 		and aux.MustMaterialCheck(c,tp,EFFECT_MUST_BE_XMATERIAL)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetRank())
 end
@@ -43,7 +43,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not aux.MustMaterialCheck(tc,tp,EFFECT_MUST_BE_XMATERIAL)
-		or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) 
+		or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp)
 		or tc:IsImmuneToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank())
@@ -57,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(sc,Group.FromCards(tc))
 		if Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)>0 then
 			sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
-			sc:CompleteProcedure()  
+			sc:CompleteProcedure()
 		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -69,7 +69,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.tdcon3)
 		e1:SetOperation(s.tdop3)
 		e1:SetReset(RESET_PHASE+PHASE_END,2)
-		Duel.RegisterEffect(e1,tp)	
+		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.tdcon3(e,tp,eg,ep,ev,re,r,rp)

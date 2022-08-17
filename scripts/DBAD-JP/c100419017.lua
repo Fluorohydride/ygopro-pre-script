@@ -7,14 +7,14 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Effect 1
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))   
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	--Effect 2 
+	--Effect 2
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -31,7 +31,7 @@ function s.ovfilter(c)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) 
+	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT)
 		and Duel.IsExistingMatchingCard(aux.NegateMonsterFilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	local g=Duel.GetMatchingGroup(aux.NegateMonsterFilter,tp,0,LOCATION_MZONE,nil)

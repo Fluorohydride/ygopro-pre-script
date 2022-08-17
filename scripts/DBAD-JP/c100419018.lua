@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.imecon)
 	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
-	--card to deck 
+	--card to deck
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))   
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
