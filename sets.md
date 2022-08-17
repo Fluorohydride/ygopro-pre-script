@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **August 6, 2022**: Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
 - **August 20, 2022**: Deck Build Pack: Amazing Defenders (DBAD-JP) : `100419XXX`
 - **October 15, 2022**: Photon Hypernova (PHHY-JP) : `101111XXX`
 
@@ -120,6 +119,7 @@
 - Structure Deck R: Machiners Command (SR10-JP) : `100310XXX`
 - Structure Deck R: Dragunity Drive (SR11-JP) : `100311XXX`
 - Structure Deck R: Lost Sanctuary (SR12-JP) : `100312XXX`
+- Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
 -----
 - Starter Deck 2016 (ST16-JP) : `100316XXX`
 - Starter Deck 2017 (ST17-JP) : `100317XXX`
