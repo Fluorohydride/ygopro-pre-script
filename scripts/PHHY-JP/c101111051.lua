@@ -34,11 +34,11 @@ function c101111051.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 	end
 end
-function c101111051.cfilter(c)
+function c101111051.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsCode(93717133)
 end
 function c101111051.cfcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101111051.cfilter,1,nil)
+	return eg:IsExists(c101111051.cfilter,1,nil,tp)
 end
 function c101111051.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,1-tp,LOCATION_EXTRA,0,1,nil) end
