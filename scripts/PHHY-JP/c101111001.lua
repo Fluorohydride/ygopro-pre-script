@@ -29,12 +29,13 @@ function c101111001.spfilter(c)
 end
 function c101111001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
-		and Duel.IsExistingMatchingCard(c101111001.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler())
 end
 function c101111001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+		and Duel.IsExistingMatchingCard(c101111001.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c101111001.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
