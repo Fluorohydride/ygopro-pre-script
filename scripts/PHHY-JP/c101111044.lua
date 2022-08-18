@@ -1,4 +1,4 @@
---銀河光子龍
+--銀河光子竜
 --
 --Script by Trishula9
 function c101111044.initial_effect(c)

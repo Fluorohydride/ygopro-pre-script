@@ -10,6 +10,7 @@ function c100419036.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,100419036)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCondition(c100419036.condition)
 	e1:SetTarget(c100419036.target)
 	e1:SetOperation(c100419036.activate)
@@ -37,21 +38,24 @@ function c100419036.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100419036.filter(c,tp)
 	return c:IsFaceup()
-		and Duel.GetMatchingGroupCount(c100419036.eqfilter,tp,LOCATION_DECK,0,nil,tp,c)>0
+		and Duel.IsExistingMatchingCard(c100419036.eqfilter,tp,LOCATION_DECK,0,1,nil,tp,c)
 end
 function c100419036.eqfilter(c,tp,ec)
 	return c:IsType(TYPE_EQUIP) and c:CheckUniqueOnField(tp) and not c:IsForbidden() and c:CheckEquipTarget(ec)
 end
 function c100419036.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c100419036.filter(chkc,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(c100419036.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
+	if chk==0 then
+		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+		if e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE) then ft=ft-1 end
+		return ft>0 and Duel.IsExistingTarget(c100419036.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp)
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100419036.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
 end
 function c100419036.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsImmuneToEffect(e) then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		local sc=Duel.SelectMatchingCard(tp,c100419036.eqfilter,tp,LOCATION_DECK,0,1,1,nil,tp,tc):GetFirst()
 		if sc then

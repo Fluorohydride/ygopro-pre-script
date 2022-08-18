@@ -4,7 +4,7 @@
 function c101111051.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOGRAVE)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101111051+EFFECT_COUNT_CODE_OATH)
@@ -35,7 +35,7 @@ function c101111051.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101111051.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsCode(93717133)
+	return c:IsControler(tp) and c:IsFaceup() and c:IsCode(93717133)
 end
 function c101111051.cfcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101111051.cfilter,1,nil,tp)
