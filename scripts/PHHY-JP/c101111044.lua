@@ -63,14 +63,14 @@ function c101111044.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
 end
-function c101111044.cfilter(c)
+function c101111044.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevelAbove(1)
 end
 function c101111044.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101111044.cfilter,1,nil)
+	return eg:IsExists(c101111044.cfilter,1,nil,tp)
 end
 function c101111044.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=eg:Filter(c101111044.cfilter,nil):Filter(Card.IsLocation,nil,LOCATION_MZONE)
+	local g=eg:Filter(c101111044.cfilter,nil,tp):Filter(Card.IsLocation,nil,LOCATION_MZONE)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and aux.IsInGroup(chkc,g) end
 	if chk==0 then return Duel.IsExistingTarget(aux.IsInGroup,tp,LOCATION_MZONE,0,1,nil,g) end
 	local sg
