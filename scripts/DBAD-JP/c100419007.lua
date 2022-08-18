@@ -65,10 +65,10 @@ end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if ft<=0 then return end
+	if ft>=4 then ft=4 end
 	local g=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_DECK,0,nil)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-		if ft>=4 then ft=4 end
 		local sg=g:SelectSubGroup(tp,aux.dncheck,false,1,ft)
 		if sg:GetCount()>0 then
 			Duel.SSet(tp,sg)

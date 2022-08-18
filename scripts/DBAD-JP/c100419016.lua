@@ -54,9 +54,10 @@ function s.gmattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.gmattgfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,2,nil,c)
 end
 function s.gmatop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local g=Duel.GetTargetsRelateToChain():Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
-	if #g>0 then
-		Duel.Overlay(e:GetHandler(),g)
+	if c:IsRelateToChain() and #g>0 then
+		Duel.Overlay(c,g)
 	end
 end
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)

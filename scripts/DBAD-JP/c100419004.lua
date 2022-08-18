@@ -62,7 +62,7 @@ function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.qfilter(e,c)
-	return c:IsSetCard(0x28a) and c:GetFlagEffect(id)>0
+	return c:GetFlagEffect(id)>0
 end
 function s.filter(c)
 	return c:IsSetCard(0x28a) and c:IsType(TYPE_MONSTER)

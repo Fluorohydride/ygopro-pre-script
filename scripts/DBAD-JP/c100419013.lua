@@ -18,8 +18,8 @@ function s.initial_effect(c)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetTarget(s.sptg)
@@ -34,7 +34,6 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		return result
 	end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function s.tdfilter(c)
 	return c:IsAbleToHand() and c:IsSetCard(0x28c) and c:IsType(TYPE_SPELL+TYPE_TRAP)
@@ -45,24 +44,20 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(p,3)
 	if not g or #g<3 then return end
 	g=g:Filter(s.tdfilter,nil)
+	local ct=3
 	if #g>0 and Duel.SelectYesNo(p,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
 		local sg=g:Select(p,1,1,nil)
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-p,sg)
-		Duel.SortDecktop(p,p,3-#sg)
-		for i=1,3-#sg do
-			local mg=Duel.GetDecktopGroup(p,1)
-			Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
-		end
 		Duel.ShuffleHand(p)
-	else
-		Duel.SortDecktop(p,p,3)
-		for i=1,3 do
-			local mg=Duel.GetDecktopGroup(p,1)
-			Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
-		end
+		ct=ct-1
+	end
+	Duel.SortDecktop(p,p,ct)
+	for i=1,ct do
+		local mg=Duel.GetDecktopGroup(p,1)
+		Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
 	end
 end
 function s.sptgexfilter(c,e,tp,code)
