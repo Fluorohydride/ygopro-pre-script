@@ -25,7 +25,7 @@ function c101111001.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101111001.spfilter(c)
-	return c:IsSetCard(0x55,0x7b) and c:IsFaceupEx()
+	return c:IsSetCard(0x55,0x7b) and c:IsType(TYPE_MONSTER) and c:IsFaceupEx()
 end
 function c101111001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
