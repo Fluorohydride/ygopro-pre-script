@@ -77,7 +77,7 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToChain() and tc:IsRelateToChain() and not tc:IsImmuneToEffect(e) then
 		tc:CancelToGrave()
 		Duel.Overlay(c,tc)
-		if Duel.IsExistingMatchingCard(s.matfilter,tp,0,LOCATION_ONFIELD,1,nil)
+		if Duel.IsExistingMatchingCard(s.rthfilter,tp,0,LOCATION_ONFIELD,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
