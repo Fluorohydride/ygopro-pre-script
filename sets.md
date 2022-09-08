@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **August 20, 2022**: Deck Build Pack: Amazing Defenders (DBAD-JP) : `100419XXX`
 - **September 10, 2022**: World Premiere Pack 2022 (WPP3-JP) : `100292XXX`
 - **September 15, 2022**: 2022 Tin of the Pharaoh's Gods (MP22-EN) : `100292XXX`
 - **October 15, 2022**: Photon Hypernova (PHHY-JP) : `101111XXX`
@@ -156,6 +155,7 @@
 - Deck Build Pack: Ancient Guardians (DBAG-JP): `100416XXX`
 - Deck Build Pack: Grand Creators (DBGC-JP) : `100417XXX`
 - Deck Build Pack: Tactical Masters (DBTM-JP): `100418XXX`
+- Deck Build Pack: Amazing Defenders (DBAD-JP) : `100419XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
