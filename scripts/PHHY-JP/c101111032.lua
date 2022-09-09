@@ -1,4 +1,4 @@
---邪遗式内里玛纳斯
+--イビリチュア・ネーレイマナス
 --
 --Script by Trishula9
 function c101111032.initial_effect(c)

@@ -1,4 +1,4 @@
---仪水镜的集光
+--儀水鏡の集光
 --
 --Script by Trishula9
 function c101111067.initial_effect(c)

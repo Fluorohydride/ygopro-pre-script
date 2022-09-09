@@ -1,4 +1,4 @@
---遗式精怪
+--グリム・リチュア
 --
 --Script by Trishula9
 function c101111018.initial_effect(c)

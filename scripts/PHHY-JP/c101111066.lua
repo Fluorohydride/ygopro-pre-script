@@ -1,4 +1,4 @@
---遗式的冰魔镜
+--リチュアの氷魔鏡
 --
 --Script by Trishula9
 function c101111066.initial_effect(c)
@@ -29,7 +29,7 @@ end
 function c101111066.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg1=Duel.GetRitualMaterial(tp)
-		local mg2=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+		local mg2=Duel.GetReleaseGroup(1-tp):Filter(Card.IsFaceup,nil)
 		return Duel.IsExistingMatchingCard(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,1,nil,c101111066.filter,e,tp,mg1,nil,Card.GetLevel,"Equal") or mg2:GetCount()>0
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
@@ -38,7 +38,7 @@ function c101111066.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	local mg1=Duel.GetRitualMaterial(tp)
-	local mg2=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	local mg2=Duel.GetReleaseGroup(1-tp):Filter(Card.IsFaceup,nil)
 	local g1=Duel.GetMatchingGroup(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,nil,c101111066.filter,e,tp,mg1,nil,Card.GetLevel,"Equal")
 	local g2=nil
 	local g=g1
