@@ -14,13 +14,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter1(c,e,tp)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT)
-		and c:IsType(TYPE_TUNER)
-		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_REMOVED,0,1,nil,e,tp,c:GetLevel())
+	local clv=c:GetLevel()
+	return c:IsType(TYPE_TUNER) and clv>0 and c:IsAbleToGrave()
+		and c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT)
+		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_REMOVED,0,1,c,e,tp,clv)
 end
 function s.filter2(c,e,tp,lv)
 	local clv=c:GetLevel()
-	return not c:IsType(TYPE_TUNER) and clv>0 and clv<=8
+	return not c:IsType(TYPE_TUNER) and clv>0 and clv<=8 and c:IsAbleToGrave()
 		and c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv+clv)
 end
@@ -36,15 +37,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_REMOVED,0,1,1,nil,e,tp,g1:GetFirst():GetLevel())
+	local g2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_REMOVED,0,1,1,g1:GetFirst(),e,tp,g1:GetFirst():GetLevel())
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g1,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=2 then return end
-	if Duel.SendtoGrave(tg,REASON_EFFECT+REASON_RETURN)==2 then
+	local tg=Duel.GetTargetsRelateToChain()
+	if #tg==2 and Duel.SendtoGrave(tg,REASON_EFFECT+REASON_RETURN)==2 then
 		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 		local lv=og:GetSum(Card.GetLevel)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

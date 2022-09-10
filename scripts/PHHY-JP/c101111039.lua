@@ -1,4 +1,4 @@
---カオス·デ一をン-混沌の魔神-
+--カオス・デーモン－混沌の魔神－
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -54,12 +54,10 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.checkfilter,1,nil) then
 		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
-		Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.rmcon(e)
-	local tp=e:GetHandlerPlayer()
-	return Duel.GetFlagEffect(tp,id)>0
+	return Duel.GetFlagEffect(0,id)>0
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -67,8 +65,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp
 end
 function s.spfilter(c,e,tp)
-	return not c:IsCode(id) and c:IsSetCard(0xcf)
-		and c:IsType(TYPE_SYNCHRO)
+	return not c:IsCode(id) and c:IsSetCard(0xcf) and c:IsType(TYPE_SYNCHRO)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end

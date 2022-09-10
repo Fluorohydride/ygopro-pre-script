@@ -1,4 +1,4 @@
---カオス·ピ一スト-混沌の魔獸-
+--カオス・ビースト－混沌の魔獣－
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -51,12 +51,10 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.checkfilter,1,nil) then
 		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
-		Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.rmcon(e)
-	local tp=e:GetHandlerPlayer()
-	return Duel.GetFlagEffect(tp,id)>0
+	return Duel.GetFlagEffect(0,id)>0
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsAbleToHand()
@@ -72,7 +70,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
 	end
 end
 function s.costfilter(c)
@@ -87,7 +84,8 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

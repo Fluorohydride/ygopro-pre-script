@@ -1,4 +1,4 @@
---カオス·ウィッチ-混沌の魔女-
+--カオス・ウィッチ－混沌の魔女－
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.spcon)
+	e2:SetCondition(s.spcon2)
 	e2:SetCost(s.spcost2)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
@@ -30,14 +30,14 @@ function s.initial_effect(c)
 end
 function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA)
-		or (c:IsType(TYPE_SYNCHRO)
-		and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK))
+		or (c:IsType(TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK))
 end
 function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() and Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
+	if chk==0 then return c:IsReleasable() and Duel.GetMZoneCount(tp,c)>1
+		and Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	Duel.Release(c,REASON_COST)
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -48,12 +48,10 @@ function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA)
-		and not (c:IsType(TYPE_SYNCHRO)
-		and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK))
+		and not (c:IsType(TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK))
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+o,0,TYPES_TOKEN_MONSTER,1000,500,2,RACE_FIEND,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
@@ -69,7 +67,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_HAND+LOCATION_GRAVE)
 end
