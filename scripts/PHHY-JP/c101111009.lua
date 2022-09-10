@@ -29,8 +29,8 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 function s.counterfilter(c)
-	return not c:IsSummonLocation(LOCATION_EXTRA) 
-		or (c:IsType(TYPE_SYNCHRO) 
+	return not c:IsSummonLocation(LOCATION_EXTRA)
+		or (c:IsType(TYPE_SYNCHRO)
 		and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK))
 end
 function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -47,32 +47,31 @@ function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return c:IsLocation(LOCATION_EXTRA) 
-		and not (c:IsType(TYPE_SYNCHRO) 
+	return c:IsLocation(LOCATION_EXTRA)
+		and not (c:IsType(TYPE_SYNCHRO)
 		and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK))
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id-1,0,TYPES_TOKEN_MONSTER,1000,500,2,RACE_FIEND,ATTRIBUTE_DARK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+o,0,TYPES_TOKEN_MONSTER,1000,500,2,RACE_FIEND,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function s.spop1(e,tp,eg,ep,ev,re,r,rp)
-	if  not Duel.IsPlayerAffectedByEffect(tp,59822133)
+	if not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id-1,0,TYPES_TOKEN_MONSTER,1000,500,2,RACE_FIEND,ATTRIBUTE_DARK) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+o,0,TYPES_TOKEN_MONSTER,1000,500,2,RACE_FIEND,ATTRIBUTE_DARK) then
 		for i=1,2 do
-			local token=Duel.CreateToken(tp,id-1)
+			local token=Duel.CreateToken(tp,id+o)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		end
 		Duel.SpecialSummonComplete()
 	end
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_HAND+LOCATION_GRAVE) 
+	return c:IsPreviousLocation(LOCATION_HAND+LOCATION_GRAVE)
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -88,16 +87,16 @@ end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id-2,0,TYPES_TOKEN_MONSTER+TYPE_TUNER,500,1000,2,RACE_FAIRY,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+o*2,0,TYPES_TOKEN_MONSTER+TYPE_TUNER,500,1000,2,RACE_FAIRY,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if  not Duel.IsPlayerAffectedByEffect(tp,59822133)
+	if not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id-2,0,TYPES_TOKEN_MONSTER+TYPE_TUNER,500,1000,2,RACE_FAIRY,ATTRIBUTE_LIGHT) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+o*2,0,TYPES_TOKEN_MONSTER+TYPE_TUNER,500,1000,2,RACE_FAIRY,ATTRIBUTE_LIGHT) then
 		for i=1,2 do
-			local token=Duel.CreateToken(tp,id-2)
+			local token=Duel.CreateToken(tp,id+o*2)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		end
 		Duel.SpecialSummonComplete()

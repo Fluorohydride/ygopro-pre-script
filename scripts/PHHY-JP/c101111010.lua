@@ -1,7 +1,7 @@
 --混沌殻
 --Script by 奥克斯
 local s,id,o=GetID()
-function s.initial_effect(c)  
+function s.initial_effect(c)
 	--splimit
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -42,7 +42,6 @@ end
 function s.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS)
 end
-
 function s.costfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToRemoveAsCost()
 end
@@ -72,13 +71,12 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.spelimit(e,c)
-	return c:IsLocation(LOCATION_EXTRA) 
-		and not (c:IsType(TYPE_SYNCHRO) 
+	return c:IsLocation(LOCATION_EXTRA)
+		and not (c:IsType(TYPE_SYNCHRO)
 		and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK))
 end
-
 function s.spfilter(c,e,tp)
-	return c:IsCode(101120102) and c:IsFaceup() 
+	return c:IsCode(101120102) and c:IsFaceup()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -95,7 +93,6 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function s.recon(e)
 	return e:GetHandler():IsFaceup()
 end

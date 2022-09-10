@@ -14,20 +14,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter1(c,e,tp)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) 
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT)
 		and c:IsType(TYPE_TUNER)
 		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_REMOVED,0,1,nil,e,tp,c:GetLevel())
 end
 function s.filter2(c,e,tp,lv)
 	local clv=c:GetLevel()
-	return not c:IsType(TYPE_TUNER) and clv>0 and clv<=8 
-		and c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) 
+	return not c:IsType(TYPE_TUNER) and clv>0 and clv<=8
+		and c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv+clv)
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) 
+	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
 		and c:IsType(TYPE_SYNCHRO) and c:IsLevel(lv)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

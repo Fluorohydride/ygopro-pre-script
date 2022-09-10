@@ -48,13 +48,12 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
-
 function s.checkfilter(c)
-	return not c:IsType(TYPE_TOKEN) 
+	return not c:IsType(TYPE_TOKEN)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(s.checkfilter,1,nil) then 
-		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1) 
+	if eg:IsExists(s.checkfilter,1,nil) then
+		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
 		Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
@@ -62,7 +61,6 @@ function s.rmcon(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetFlagEffect(tp,id)>0
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD)
@@ -71,7 +69,7 @@ end
 function s.spfilter(c,e,tp)
 	return not c:IsCode(id) and c:IsSetCard(0xcf)
 		and c:IsType(TYPE_SYNCHRO)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

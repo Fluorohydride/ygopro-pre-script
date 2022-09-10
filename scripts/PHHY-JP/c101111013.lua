@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)   and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sprmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and s.spfilter(chkc,e,tp) end
@@ -64,11 +64,10 @@ function s.sprmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return c:IsLocation(LOCATION_EXTRA) 
-		and not (c:IsType(TYPE_SYNCHRO) 
+	return c:IsLocation(LOCATION_EXTRA)
+		and not (c:IsType(TYPE_SYNCHRO)
 		and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK))
 end
-
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO
 end
@@ -76,11 +75,11 @@ function s.check(c,e)
 	return c~=e:GetHandler()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local mg=e:GetHandler():GetReasonCard():GetMaterial():FilterCount(s.check,nil,e)
+	local mgc=e:GetHandler():GetReasonCard():GetMaterial():FilterCount(s.check,nil,e)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToRemove() and chkc:IsControler(1-tp) end
-	if chk==0 then return mg and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return mgc>0 and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,mg,nil)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,mgc,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
@@ -89,4 +88,3 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 	end
 end
-
