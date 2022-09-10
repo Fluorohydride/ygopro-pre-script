@@ -61,7 +61,8 @@ function c101111032.indes(e,c)
 	return c:IsSummonLocation(LOCATION_EXTRA)
 end
 function c101111032.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and Duel.IsChainNegatable(ev) and re:IsActiveType(TYPE_MONSTER)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+		and rp==1-tp and Duel.IsChainNegatable(ev) and re:IsActiveType(TYPE_MONSTER)
 end
 function c101111032.filter(c)
 	return c:IsSetCard(0x3a) and c:IsType(TYPE_RITUAL) and c:IsAbleToHand() and c:IsFaceup()

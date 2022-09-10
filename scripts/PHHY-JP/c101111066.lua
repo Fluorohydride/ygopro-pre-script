@@ -35,14 +35,13 @@ function c101111066.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c101111066.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	local mg1=Duel.GetRitualMaterial(tp)
 	local mg2=Duel.GetReleaseGroup(1-tp):Filter(Card.IsFaceup,nil)
 	local g1=Duel.GetMatchingGroup(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,nil,c101111066.filter,e,tp,mg1,nil,Card.GetLevel,"Equal")
 	local g2=nil
 	local g=g1
-	if mg2:GetCount()>0 then
+	if mg2:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		g2=Duel.GetMatchingGroup(c101111066.rfilter2,tp,LOCATION_HAND,0,nil,e,tp)
 		g=g1+g2
 	end
