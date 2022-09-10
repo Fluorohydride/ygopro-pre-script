@@ -17,7 +17,7 @@ function c101111066.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetTarget(c101111066.tdtg)
-	e2:SetOperation(c101111066.tdop)	
+	e2:SetOperation(c101111066.tdop)
 	c:RegisterEffect(e2)
 end
 function c101111066.filter(c,e,tp)
