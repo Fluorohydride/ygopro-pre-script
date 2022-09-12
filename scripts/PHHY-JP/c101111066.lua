@@ -23,14 +23,15 @@ end
 function c101111066.filter(c,e,tp)
 	return c:IsSetCard(0x3a)
 end
-function c101111066.rfilter2(c,e,tp,m1)
+function c101111066.rfilter2(c,e,tp)
 	return bit.band(c:GetType(),0x81)==0x81 and c:IsSetCard(0x3a) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 end
 function c101111066.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg1=Duel.GetRitualMaterial(tp)
 		local mg2=Duel.GetReleaseGroup(1-tp):Filter(Card.IsFaceup,nil)
-		return Duel.IsExistingMatchingCard(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,1,nil,c101111066.filter,e,tp,mg1,nil,Card.GetLevel,"Equal") or mg2:GetCount()>0
+		return Duel.IsExistingMatchingCard(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,1,nil,c101111066.filter,e,tp,mg1,nil,Card.GetLevel,"Equal")
+			or mg2:GetCount()>0 and Duel.IsExistingMatchingCard(c101111066.rfilter2,tp,LOCATION_HAND,0,1,nil,e,tp)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
