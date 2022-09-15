@@ -5,6 +5,7 @@
 - **September 10, 2022**: World Premiere Pack 2022 (WPP3-JP) : `100292XXX`
 - **September 15, 2022**: 2022 Tin of the Pharaoh's Gods (MP22-EN) : `100292XXX`
 - **October 15, 2022**: Photon Hypernova (PHHY-JP) : `101111XXX`
+- **November 5, 2022**: Selection 5 (SLF1-JP) : `100293XXX`
 
 # Announced
 
