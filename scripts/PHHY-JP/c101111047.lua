@@ -72,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 					tc1=xg:GetNext()
 				end
 				if #mtg>0 then
-					Duel.Overlay(tc,Group.FromCards(mtg))
+					Duel.Overlay(tc,mtg)
 				end
 			end
 		end
