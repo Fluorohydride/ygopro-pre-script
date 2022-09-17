@@ -1,5 +1,5 @@
 --クシャトリラ・アライズハート
---Script by 奥克斯
+--Script by 奥克斯 & mercury233
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,73542331)
@@ -47,11 +47,12 @@ function s.chainfilter(re,tp,cid)
 	return not re:GetHandler():IsCode(73542331)
 end
 function s.ovfilter(c)
-	if (Duel.GetCustomActivityCount(id,c:GetControler(),ACTIVITY_CHAIN)==0 and Duel.GetCustomActivityCount(id,c:GetControler(),ACTIVITY_CHAIN)==0) then return false end
 	return c:IsFaceup() and c:IsSetCard(0x189)
 end
 function s.xyzop(e,tp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0
+		and (Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)>0
+			or Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)>0) end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.remfilter(c)
@@ -59,28 +60,48 @@ function s.remfilter(c)
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return eg:IsExists(s.remfilter,1,nil) 
+	return eg:IsExists(s.remfilter,1,nil)
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
+	local c=e:GetHandler()
+	if chk==0 then
+		--workaround check of only 1 activation
+		local g=e:GetLabelObject()
+		local res=c:GetFlagEffect(id)==0 and (g==nil or g:Equal(eg))
+		if res then e:SetLabelObject(eg) end
+		return res
+	end
+	e:SetLabelObject(nil)
+	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+end
+function s.mtfilter1(c,tp)
+	return c:IsCanOverlay() and (c:IsFaceup() or c:IsControler(tp))
+end
+function s.mtfilter2(c)
+	return c:IsCanOverlay() and c:IsFacedown()
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local mg=Duel.GetMatchingGroup(Card.IsCanOverlay,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
-	if #mg>0 and c:IsFaceup() and c:IsType(TYPE_XYZ) then
+	if not (c:IsRelateToChain() and c:IsType(TYPE_XYZ)) then return end
+	local mg1=Duel.GetMatchingGroup(s.mtfilter1,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil,tp)
+	local mg2=Duel.GetMatchingGroup(s.mtfilter2,tp,0,LOCATION_REMOVED,nil)
+	if #mg1==0 and #mg2==0 then return end
+	local g
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPTION)
+	if #mg1==0 or #mg2>0 and Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))==1 then
+		g=mg2:RandomSelect(tp,1)
+	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local g=mg:Select(tp,1,1,nil)
-		Duel.Overlay(c,g)
+		g=mg1:Select(tp,1,1,nil)
 	end
+	Duel.Overlay(c,g)
 end
-
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,3,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,3,3,REASON_COST)
 end
 function s.rmfilter(c,tp)
-	return  c:IsAbleToRemove(tp,POS_FACEDOWN)
+	return c:IsAbleToRemove(tp,POS_FACEDOWN)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.rmfilter(chkc,tp) end

@@ -4,6 +4,7 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -13,9 +14,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--remove and lvchange
-	--tograve
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -40,9 +40,8 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
-
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x189) 
+	return c:IsFaceup() and c:IsSetCard(0x189)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -54,9 +53,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-	local e1=Effect.CreateEffect(e:GetHandler())
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -68,12 +68,11 @@ end
 function s.splimit(e,c)
 	return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA)
 end
-
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.costfilter(c)
-	return not c:IsCode(id) and c:IsSetCard(0x189) and c:IsAbleToRemoveAsCost() 
+	return not c:IsCode(id) and c:IsSetCard(0x189) and c:IsAbleToRemoveAsCost()
 end
 function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -84,7 +83,8 @@ end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tg=Duel.GetDecktopGroup(1-tp,3)
-	if chk==0 then return not c:IsLevel(7) and #tg<=3 and tg:FilterCount(Card.IsAbleToRemove,nil,tp,POS_FACEDOWN)==#tg  end
+	if chk==0 then return c:IsLevelAbove(0) and not c:IsLevel(7)
+		and tg:FilterCount(Card.IsAbleToRemove,nil,tp,POS_FACEDOWN)==3 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,3,1-tp,LOCATION_DECK)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
@@ -92,8 +92,8 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetDecktopGroup(1-tp,3)
 	if #tg<3 then return end
 	Duel.DisableShuffleCheck()
-	if not c:IsLevel(7) and c:IsFaceup() 
-		and Duel.Remove(tg,POS_FACEDOWN,REASON_EFFECT)>0  then
+	if Duel.Remove(tg,POS_FACEDOWN,REASON_EFFECT)>0
+		and c:IsFaceup() and c:IsRelateToChain() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)

@@ -32,7 +32,7 @@ function s.filter(c,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,1,c)
 end
 function s.rmfilter(c)
-	return c:IsAttack(1500) and c:IsDefense(2100) 
+	return c:IsAttack(1500) and c:IsDefense(2100)
 		and c:IsAbleToRemove() and (c:IsLocation(LOCATION_HAND+LOCATION_GRAVE) or c:IsFaceup())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -50,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg=g:Select(tp,1,1,nil)
-		if Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)~=0 
+		if Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)~=0
 			and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e1)
 		end
 	end
-end  
+end
 
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x189)
@@ -93,4 +93,3 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
- 

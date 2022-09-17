@@ -48,32 +48,35 @@ function s.rmfilter(c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,e:GetHandler())
-	if chk==0 then return #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,c)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and #g>0 end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e)
 		and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
-		local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil)
+		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.rmfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil)
 		if #g>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local sg=g:Select(tp,1,1,nil)
-			if #sg>0 then
-				Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
-			end
+			Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 		end
 	end
 end
-
 function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1=Duel.IsPlayerCanDiscardDeck(tp,3)
 	local b2=Duel.IsPlayerCanDiscardDeck(1-tp,3)
 	if chk==0 then return b1 or b2 end
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,PLAYER_ALL,3)
+end
+function s.ddop(e,tp,eg,ep,ev,re,r,rp)
+	local b1=Duel.IsPlayerCanDiscardDeck(tp,3)
+	local b2=Duel.IsPlayerCanDiscardDeck(1-tp,3)
+	if not b1 and not b2 then return end
 	local opt=0
-	local g=nil
 	if b1 and not b2 then
 		opt=Duel.SelectOption(tp,aux.Stringid(id,1))
 	end
@@ -83,22 +86,12 @@ function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if b1 and b2 then
 		opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 	end
-	e:SetLabel(opt)
-	if opt==0 then
-		Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,3)
-	else
-		Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,3)
-	end
-end
-function s.ddop(e,tp,eg,ep,ev,re,r,rp)
-	local opt=e:GetLabel()
 	if opt==0 then
 		Duel.DiscardDeck(tp,3,REASON_EFFECT)
 	else
 		Duel.DiscardDeck(1-tp,3,REASON_EFFECT)
 	end
 end
-
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end

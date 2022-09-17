@@ -60,13 +60,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x189) 
-		and c:IsAbleToHand() 
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x189)
+		and c:IsAbleToHand()
 end
 function s.xfilter(c)
 	local mg=c:GetOverlayGroup():Filter(s.thfilter,nil)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x189)
-		and #mg>0 
+		and #mg>0
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.xfilter(chkc) end
@@ -82,7 +82,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		Duel.ShuffleHand(tp)
 		local bc=mg:Select(tp,1,1,nil):GetFirst()
-		if Duel.SendtoHand(bc,nil,REASON_EFFECT)>0 
+		if Duel.SendtoHand(bc,nil,REASON_EFFECT)>0
 			and bc:IsLocation(LOCATION_HAND) then
 			Duel.ConfirmCards(1-tp,bc)
 			Duel.ShuffleHand(tp)

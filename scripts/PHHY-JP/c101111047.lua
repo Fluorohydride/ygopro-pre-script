@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e3:SetCost(s.spcost)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
@@ -31,19 +32,19 @@ function s.initial_effect(c)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local ct=c:GetOverlayCount()
 	if chk==0 then return c:IsReleasable() and c:IsSummonType(SUMMON_TYPE_XYZ) end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	local ct=c:GetOverlayCount()
+	Duel.Release(c,REASON_COST)
 	e:SetLabel(ct)
 end
 function s.filter(c,e,tp,rc)
-	return not c:IsRace(RACE_FAIRY) 
-		and c:IsSetCard(0x134) and c:IsType(TYPE_XYZ) 
+	return not c:IsRace(RACE_FAIRY)
+		and c:IsSetCard(0x134) and c:IsType(TYPE_XYZ)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,rc,c)>0
 end
 function s.mtfilter(c,e)
-	return  c:IsCanOverlay() and not (e and c:IsImmuneToEffect(e))
+	return c:IsCanOverlay() and not c:IsImmuneToEffect(e)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,e:GetHandler()) end
@@ -55,26 +56,21 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,e:GetHandler())
 	if #g>0 then
 		local tc=g:GetFirst()
-		if ct>0 and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
-			and Duel.IsExistingMatchingCard(s.mtfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,tc,e) 
-			and tc:IsType(TYPE_XYZ) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		local mg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.mtfilter),tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,tc,e)
+		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 and ct>0
+			and #mg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-			local xg=Duel.SelectMatchingCard(tp,s.mtfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,ct,tc,e)
-			if #xg>0 then
-				local mtg=Group.CreateGroup()
-				local tc1=xg:GetFirst()
-				while tc1 do
-					local og=tc1:GetOverlayGroup()
-					if #og>0 then
-						Duel.SendtoGrave(og,REASON_RULE)
-					end
-					mtg:AddCard(tc1)  
-					tc1=xg:GetNext()
+			local xg=mg:Select(tp,1,ct,nil)
+			local tc1=xg:GetFirst()
+			while tc1 do
+				local og=tc1:GetOverlayGroup()
+				if #og>0 then
+					Duel.SendtoGrave(og,REASON_RULE)
 				end
-				if #mtg>0 then
-					Duel.Overlay(tc,mtg)
-				end
+				tc1=xg:GetNext()
 			end
+			Duel.Overlay(tc,xg)
 		end
 	end
 end

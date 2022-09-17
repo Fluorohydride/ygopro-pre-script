@@ -32,7 +32,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsCode(56099748)
 end
 function s.negfilter(c)
-	return  aux.NegateEffectMonsterFilter(c) and (c:GetBaseAttack()>0 or c:GetBaseDefense()>0)
+	return aux.NegateEffectMonsterFilter(c) and (c:GetBaseAttack()>0 or c:GetBaseDefense()>0)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -41,7 +41,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
 	local g2=Duel.SelectTarget(tp,s.negfilter,tp,0,LOCATION_MZONE,1,1,nil)
-	e:SetLabelObject(g2:GetFirst()) 
+	e:SetLabelObject(g2:GetFirst())
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g2,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -54,8 +54,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsControler(1-tp)
 		and not tc:IsDisabled() and not tc:IsImmuneToEffect(e) then
 		local upatk=tc:GetBaseAttack()
-		if tc:GetBaseAttack()<tc:GetBaseDefense() then 
-			upatk=tc:GetBaseDefense() 
+		if tc:GetBaseAttack()<tc:GetBaseDefense() then
+			upatk=tc:GetBaseDefense()
 		end
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
@@ -71,7 +71,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		if lc:IsRelateToEffect(e) and lc:IsControler(tp) 
+		if lc:IsRelateToEffect(e) and lc:IsControler(tp)
 			and lc:IsFaceup() then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
