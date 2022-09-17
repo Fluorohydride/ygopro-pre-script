@@ -2,7 +2,6 @@
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
-	aux.AddCodeList(c,73542331)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -23,18 +22,18 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 	--destroy
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_DESTROY)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_CHAINING)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetCountLimit(1,id+o)
-	e3:SetCondition(s.descon)
-	e3:SetTarget(s.destg)
-	e3:SetOperation(s.desop)
-	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_DESTROY)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_CHAINING)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e4:SetRange(LOCATION_FZONE)
+	e4:SetCountLimit(1,id+o)
+	e4:SetCondition(s.descon)
+	e4:SetTarget(s.destg)
+	e4:SetOperation(s.desop)
+	c:RegisterEffect(e4)
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x189)
@@ -49,15 +48,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-
 function s.atkfilter(c)
 	return c:IsFaceup() and c:GetAttribute()~=0
 end
 function s.val(e,c)
-	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(s.atkfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
 	return aux.GetAttributeCount(g)*100
 end
-
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	local rc=re:GetHandler()

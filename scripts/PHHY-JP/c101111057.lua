@@ -21,19 +21,16 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,id+o)
-	e2:SetCondition(s.discon)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-
---Effect 1
 function s.filter(c,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,1,c)
 end
 function s.rmfilter(c)
 	return c:IsAttack(1500) and c:IsDefense(2100)
-		and c:IsAbleToRemove() and (c:IsLocation(LOCATION_HAND+LOCATION_GRAVE) or c:IsFaceup())
+		and c:IsAbleToRemove() and c:IsFaceupEx()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,tp) end
@@ -46,31 +43,27 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,tc)
-	if #g>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local sg=g:Select(tp,1,1,nil)
-		if Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)~=0
-			and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(1500)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
-		end
+	local exc
+	if tc:IsRelateToEffect(e) then exc=tc end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.rmfilter),tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,1,1,exc)
+	if #sg>0 and Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)>0
+		and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(1500)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1)
 	end
 end
-
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x189)
 end
-function s.discon(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
-end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and aux.NegateEffectMonsterFilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(aux.NegateEffectMonsterFilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.NegateEffectMonsterFilter,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
 	local g=Duel.SelectTarget(tp,aux.NegateEffectMonsterFilter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)

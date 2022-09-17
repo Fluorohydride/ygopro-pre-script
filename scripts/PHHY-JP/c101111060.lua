@@ -35,26 +35,23 @@ function s.initial_effect(c)
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 	--destroy
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCost(s.descost)
-	e2:SetTarget(s.destg)
-	e2:SetOperation(s.desop)
-	c:RegisterEffect(e2)
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetCategory(CATEGORY_DESTROY)
+	e5:SetType(EFFECT_TYPE_IGNITION)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e5:SetCost(s.descost)
+	e5:SetTarget(s.destg)
+	e5:SetOperation(s.desop)
+	c:RegisterEffect(e5)
 end
-
 function s.immtg(e,c)
 	return c:IsFaceup() and (c:IsCode(56099748) or (c:IsType(TYPE_LINK) and c:IsSetCard(0x17a)))
 end
-
 function s.cfilter(c)
 	return c:IsType(TYPE_LINK) and c:IsSetCard(0x17a)
 		and c:IsAbleToRemoveAsCost()
-		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end

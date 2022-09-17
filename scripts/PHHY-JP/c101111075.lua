@@ -4,10 +4,11 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_BATTLE_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
@@ -15,6 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--xyzmat to hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_REMOVE)
@@ -28,13 +30,13 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x189) and c:IsType(TYPE_XYZ)
 end
 function s.condition(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
 	local b1=#g1>1 and g1:IsExists(Card.IsAbleToRemove,1,nil,tp,POS_FACEDOWN,REASON_RULE)
-	local b2=#g2>1 and g2:IsExists(Card.IsAbleToRemove,1,nil,tp,POS_FACEDOWN,REASON_RULE)
+	local b2=#g2>1 and g2:IsExists(Card.IsAbleToRemove,1,nil,1-tp,POS_FACEDOWN,REASON_RULE)
 	if chk==0 then return Duel.IsPlayerCanRemove(tp) and (b1 or b2) end
 	local g3=g1+g2
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g3,1,0,0)
@@ -44,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
 	local b1=#g1>1 and g1:IsExists(Card.IsAbleToRemove,1,nil,tp,POS_FACEDOWN,REASON_RULE)
-	local b2=#g2>1 and g2:IsExists(Card.IsAbleToRemove,1,nil,tp,POS_FACEDOWN,REASON_RULE)
+	local b2=#g2>1 and g2:IsExists(Card.IsAbleToRemove,1,nil,1-tp,POS_FACEDOWN,REASON_RULE)
 	if b1 then
 		local ct=#g1-1
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -54,7 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if b2 then
 		local ct=#g2-1
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
-		local sg=g2:FilterSelect(1-tp,Card.IsAbleToRemove,ct,ct,nil,tp,POS_FACEDOWN,REASON_RULE)
+		local sg=g2:FilterSelect(1-tp,Card.IsAbleToRemove,ct,ct,nil,1-tp,POS_FACEDOWN,REASON_RULE)
 		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE)
 	end
 end
@@ -64,9 +66,8 @@ function s.thfilter(c)
 		and c:IsAbleToHand()
 end
 function s.xfilter(c)
-	local mg=c:GetOverlayGroup():Filter(s.thfilter,nil)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x189)
-		and #mg>0
+		and c:GetOverlayGroup():IsExists(s.thfilter,1,nil)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.xfilter(chkc) end
@@ -80,14 +81,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local mg=tc:GetOverlayGroup():Filter(s.thfilter,nil)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and #mg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		Duel.ShuffleHand(tp)
 		local bc=mg:Select(tp,1,1,nil):GetFirst()
 		if Duel.SendtoHand(bc,nil,REASON_EFFECT)>0
 			and bc:IsLocation(LOCATION_HAND) then
 			Duel.ConfirmCards(1-tp,bc)
 			Duel.ShuffleHand(tp)
 			if bc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-				and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 				Duel.SpecialSummon(bc,0,tp,tp,false,false,POS_FACEUP)
 			end
 		end
