@@ -74,27 +74,14 @@ function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(nil)
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
-function s.mtfilter1(c,tp)
-	return c:IsCanOverlay() and (c:IsFaceup() or c:IsControler(tp))
-end
-function s.mtfilter2(c)
-	return c:IsCanOverlay() and c:IsFacedown()
-end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not (c:IsRelateToChain() and c:IsType(TYPE_XYZ)) then return end
-	local mg1=Duel.GetMatchingGroup(s.mtfilter1,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil,tp)
-	local mg2=Duel.GetMatchingGroup(s.mtfilter2,tp,0,LOCATION_REMOVED,nil)
-	if #mg1==0 and #mg2==0 then return end
-	local g
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPTION)
-	if #mg1==0 or #mg2>0 and Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))==1 then
-		g=mg2:RandomSelect(tp,1)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		g=mg1:Select(tp,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+	local mg=Duel.SelectMatchingCard(tp,Card.IsCanOverlay,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil)
+	if #mg>0 then
+		Duel.Overlay(c,mg)
 	end
-	Duel.Overlay(c,g)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,3,REASON_COST) end
