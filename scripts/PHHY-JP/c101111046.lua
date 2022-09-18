@@ -65,8 +65,13 @@ end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		return c:GetFlagEffect(id)==0
+		--workaround check of only 1 activation
+		local g=e:GetLabelObject()
+		local res=c:GetFlagEffect(id)==0 and (g==nil or g:Equal(eg))
+		if res then e:SetLabelObject(eg) end
+		return res
 	end
+	e:SetLabelObject(nil)
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
