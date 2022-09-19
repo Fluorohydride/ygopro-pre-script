@@ -86,7 +86,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			and bc:IsLocation(LOCATION_HAND) then
 			Duel.ConfirmCards(1-tp,bc)
 			Duel.ShuffleHand(tp)
-			if bc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+				and bc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 				and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 				Duel.SpecialSummon(bc,0,tp,tp,false,false,POS_FACEUP)
 			end
