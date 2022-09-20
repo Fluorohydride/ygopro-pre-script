@@ -60,26 +60,25 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE)
 	end
 end
-
-function s.thfilter(c)
+function s.thfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x189)
-		and c:IsAbleToHand()
+		and c:IsAbleToHand() and c:GetOwner()==tp
 end
-function s.xfilter(c)
+function s.xfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x189)
-		and c:GetOverlayGroup():IsExists(s.thfilter,1,nil)
+		and c:GetOverlayGroup():IsExists(s.thfilter,1,nil,tp)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.xfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.xfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.xfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.xfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.xfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,s.xfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_OVERLAY)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local mg=tc:GetOverlayGroup():Filter(s.thfilter,nil)
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and #mg>0 then
+	local mg=tc:GetOverlayGroup():Filter(s.thfilter,nil,tp)
+	if tc:IsRelateToEffect(e) and #mg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local bc=mg:Select(tp,1,1,nil):GetFirst()
 		if Duel.SendtoHand(bc,nil,REASON_EFFECT)>0
