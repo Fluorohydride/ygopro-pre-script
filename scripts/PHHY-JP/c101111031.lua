@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.splimit(e,se,sp,st)
-	return st&SUMMON_TYPE_RITUAL==0 or (se and se:GetHandler():IsSetCard(0x145))
+	return st&SUMMON_TYPE_RITUAL~=SUMMON_TYPE_RITUAL or (se and se:GetHandler():IsSetCard(0x145))
 end
 
 function s.efilter(e,re)
