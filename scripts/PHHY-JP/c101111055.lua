@@ -57,7 +57,7 @@ function s.tgfilter0(c,tp)
 	if c:IsControler(tp) then
 		return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 	else
-		return Duel.IsPlayerCanSendToGrave(tp,c)
+		return Duel.IsPlayerCanSendtoGrave(tp,c)
 	end
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
