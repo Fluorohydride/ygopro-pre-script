@@ -39,7 +39,7 @@ end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local rc=tc:GetReasonCard()
-	return eg:GetCount()==1 and rc:IsControler(tp) and tc:IsType(TYPE_MONSTER) and tc:IsReason(REASON_BATTLE)
+	return #eg==1 and rc:IsControler(tp) and tc:IsType(TYPE_MONSTER) and tc:IsReason(REASON_BATTLE)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -72,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,g1:GetFirst(),e,tp)
 	g1:Merge(g2)
-	if g1:GetCount()==2 then
+	if #g1==2 then
 		Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
