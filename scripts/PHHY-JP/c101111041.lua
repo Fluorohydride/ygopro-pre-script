@@ -1,4 +1,6 @@
+--海造賊－荘重のヨルズ号
 --Plunder Patrollship Jord
+--Scripted by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.EnablePendulumAttribute(c,false)

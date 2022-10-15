@@ -1,4 +1,6 @@
+--氷水啼エジル・ギュミル
 --Icejade Aegirine Gymir
+--Scripted by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

@@ -1,4 +1,6 @@
+--氷水大剣現
 --Great Icejade Manifestation
+--Scripted by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--to grave or spsummon

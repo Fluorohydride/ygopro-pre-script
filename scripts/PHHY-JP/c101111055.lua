@@ -1,4 +1,6 @@
+--凶導の聖告
 --Dogmatikatrix
+--Scripted by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--activate

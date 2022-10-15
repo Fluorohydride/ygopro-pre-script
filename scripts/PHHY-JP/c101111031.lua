@@ -1,4 +1,6 @@
+--凶導の白き天底
 --White Zoa of Dogmatika
+--Scripted by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

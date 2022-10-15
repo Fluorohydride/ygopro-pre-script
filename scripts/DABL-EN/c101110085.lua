@@ -1,4 +1,5 @@
 --Zep, Ruby of the Ghoti
+--Scripted by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--banish
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetCountLimit(1,id+o)
 	e2:SetCondition(s.spcon)
@@ -53,7 +54,6 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
 end
@@ -67,7 +67,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-
 function s.synfilter(c,mc)
 	return c:IsRace(RACE_FISH) and c:IsSynchroSummonable(mc)
 end

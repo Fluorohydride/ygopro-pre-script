@@ -1,4 +1,5 @@
 --Ixeep, Omen of the Ghoti
+--Scripted by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon itself

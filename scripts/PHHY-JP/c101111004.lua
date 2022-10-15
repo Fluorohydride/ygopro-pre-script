@@ -1,4 +1,6 @@
+--深淵の獣バルドレイク
 --Bystial Baldrake
+--Scripted by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon itself

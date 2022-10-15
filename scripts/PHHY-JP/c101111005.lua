@@ -1,4 +1,6 @@
+--深淵の相剣龍
 --Swordsoul Dragon of the Abyss
+--Scripted by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	local e0=aux.AddThisCardInGraveAlreadyCheck(c)
