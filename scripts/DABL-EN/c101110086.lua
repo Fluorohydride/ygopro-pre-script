@@ -44,13 +44,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetTurnCount()-c:GetTurnID()==1
 end
 function s.setfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TRAP) and c:IsSetCard(0x18a) and c:IsSSetable()
+	return c:IsFaceupEx() and c:IsType(TYPE_TRAP) and c:IsSetCard(0x18a) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and s.setfilter(chkc) end
@@ -63,7 +62,7 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and s.setfilter(tc) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SSet(tp,tc)
 	end
 end
