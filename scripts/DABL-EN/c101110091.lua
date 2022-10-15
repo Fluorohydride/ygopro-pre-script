@@ -101,7 +101,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_REMOVED,LOCATION_REMOVED)
 	for tc in aux.Next(Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,tp)) do
-		local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVNET+RESETS_STANDARD+RESET_PHASE+PHASE_END)
