@@ -33,6 +33,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+function s.mfilter(c)
+	return c:IsLevelAbove(7) and c:IsRace(RACE_DRAGON+RACE_WARRIOR)
+end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local rc=tc:GetReasonCard()
