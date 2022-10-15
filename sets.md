@@ -2,10 +2,10 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **September 10, 2022**: World Premiere Pack 2022 (WPP3-JP) : `100292XXX`
-- **September 15, 2022**: 2022 Tin of the Pharaoh's Gods (MP22-EN) : `100292XXX`
 - **October 15, 2022**: Photon Hypernova (PHHY-JP) : `101111XXX`
 - **November 5, 2022**: Selection 5 (SLF1-JP) : `100293XXX`
+- **December 3, 2022**: Structure Deck: Forest of the Traptrix (SD45-JP) : `100345XXX`
+- **December 24, 2022**: Secret Utility Box (SUB1-JP) : `100294XXX`
 
 # Announced
 
@@ -106,6 +106,8 @@
 - Pharaonic Legend Pack (VP22-JP) : `100291XXX`
 - Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
 - ANIMATION CHRONICLE 2022 (AC02-JP) : `100290XXX`
+- World Premiere Pack 2022 (WPP3-JP) : `100292XXX`
+- 2022 Tin of the Pharaoh's Gods (MP22-EN) : `100292XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
