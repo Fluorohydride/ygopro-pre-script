@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--to grave or spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
@@ -41,11 +41,7 @@ function s.filter(c,e,tp)
 		and (c:IsAbleToGrave() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
-	end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
@@ -58,18 +54,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ops={}
 		local opval={}
 		if b1 then
-			ops[off]=aux.Stringid(id,1)
+			ops[off]=1191
 			opval[off]=0
 			off=off+1
 		end
 		if b2 then
-			ops[off]=aux.Stringid(id,2)
+			ops[off]=1152
 			opval[off]=1
 			off=off+1
 		end
 		local op=Duel.SelectOption(tp,table.unpack(ops))+1
 		local sel=opval[op]
-		Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,sel+1))
 		if sel==0 then
 			Duel.SendtoGrave(tc,REASON_EFFECT)
 		elseif sel==1 then
@@ -77,13 +72,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function s.egfilter(c,tp)
 	return not c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsPreviousControler(tp) and c:IsPreviousSetCard(0x16c) and c:GetReasonPlayer()==1-tp
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.egfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(s.egfilter,1,nil,tp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsAbleToRemove() end

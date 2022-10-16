@@ -55,7 +55,6 @@ function s.splimit(e,se,sp,st)
 	local c=e:GetHandler()
 	return not c:IsLocation(LOCATION_EXTRA) or c:IsFaceup()
 end
-
 function s.pfilter(c)
 	local seq=c:GetSequence()
 	local tp=c:GetControler()
@@ -86,7 +85,6 @@ function s.petg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local op=Duel.SelectOption(tp,table.unpack(ops))+1
 	local sel=opval[op]
-	Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,sel+1))
 	if sel==0 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,LOCATION_PZONE)
@@ -118,7 +116,6 @@ function s.peop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function s.chfilter(c)
 	return c:GetSequence()<5
 end
@@ -134,14 +131,13 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.chfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 	local sg=g:SelectSubGroup(tp,s.gcheck,false,2,2)
-	if sg and #sg==2 then
+	if sg then
 		Duel.HintSelection(sg)
 		local tc1=sg:GetFirst()
 		local tc2=sg:GetNext()
 		Duel.SwapSequence(tc1,tc2)
 	end
 end
-
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsPreviousLocation(LOCATION_MZONE)
 		and (c:GetPreviousSequence()~=c:GetSequence() or c:GetPreviousControler()~=tp)

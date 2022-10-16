@@ -74,9 +74,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function s.rmfilter(c,tp,e)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSummonPlayer(1-tp) and c:IsType(TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSummonPlayer(1-tp)
+		and c:IsType(TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
 		and c:IsAbleToRemove() and (not e or c:IsCanBeEffectTarget(e))
 end
 function s.rmgroupfilter(c)
@@ -98,7 +98,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 	end
 end
-
 function s.costfilter(c,g)
 	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and g:FilterCount(aux.TRUE,c)>0
 end
@@ -132,8 +131,11 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	e:SetLabel(0)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local tg=g:Select(tp,1,1,nil)
+	local tg=g:Clone()
+	if #g>1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		tg=g:Select(tp,1,1,nil)
+	end
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tg,#tg,1-tp,LOCATION_MZONE)
 end

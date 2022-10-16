@@ -5,7 +5,6 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -33,22 +32,19 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,1,1,nil)
-		if #sg>0 and Duel.SendtoHand(sg,nil,REASON_EFFECT)>0 and sg:GetFirst():IsLocation(LOCATION_HAND) then
+		if Duel.SendtoHand(sg,nil,REASON_EFFECT)>0 and sg:GetFirst():IsLocation(LOCATION_HAND) then
 			Duel.ConfirmCards(1-tp,sg)
 			local g2=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 			if #g2>0 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 				local sg2=g2:Select(tp,1,1,nil)
-				if #sg2>0 then
-					Duel.BreakEffect()
-					Duel.SendtoHand(sg2,nil,REASON_EFFECT)
-					Duel.ConfirmCards(1-tp,sg2)
-				end
+				Duel.BreakEffect()
+				Duel.SendtoHand(sg2,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,sg2)
 			end
 		end
 	end
 end
-
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x145) and c:IsType(TYPE_RITUAL)
 end
@@ -90,14 +86,12 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local op=Duel.SelectOption(tp,table.unpack(ops))+1
 	local sel=opval[op]
-	Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,sel+3))
 	if sel==0 then
 		g=g1
 	elseif sel==1 then
 		g=g2
 		Duel.ConfirmCards(tp,g)
 	end
-	if not g then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg=g:FilterSelect(tp,s.tgfilter,1,1,nil)
 	if #sg>0 then
