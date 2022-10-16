@@ -1,4 +1,5 @@
---炎魔催化师
+--Zalamander Catalyzer
+--Script by starvevenom
 local s,id,o=GetID()
 function c101110082.initial_effect(c)
 	--special summon
