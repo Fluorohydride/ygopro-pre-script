@@ -1,6 +1,7 @@
---地磅计量
+--台貫計量
+--Script by 神数不神
 function c101111078.initial_effect(c)
-	  --activate
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

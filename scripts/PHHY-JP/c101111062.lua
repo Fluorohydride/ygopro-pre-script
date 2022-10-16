@@ -1,4 +1,5 @@
---巨强投球
+--G・ボール・シュート
+--Script by 神数不神
 function c101111062.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -6,7 +7,7 @@ function c101111062.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(c101111062.reg)
 	c:RegisterEffect(e1)
-  --summon
+	--summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101111062,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -45,7 +46,7 @@ end
 function c101111062.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetMatchingGroup(c101111062.cfilter,tp,LOCATION_HAND,0,nil,e,tp)
 	local emg=Duel.GetMatchingGroup(c101111062.cfilter3,tp,0,LOCATION_MZONE,nil,e,tp)
-	if chk==0 then return #mg>0 and #emg>0  end
+	if chk==0 then return #mg>0 and #emg>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,c101111062.cfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	Duel.ConfirmCards(1-tp,g)
@@ -53,7 +54,7 @@ function c101111062.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c101111062.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chekc then return true end 
+	if chekc then return true end
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g1=Duel.SelectTarget(tp,c101111062.cfilter3,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
@@ -72,19 +73,19 @@ function c101111062.activate(e,tp,eg,ep,ev,re,r,rp)
 	for c in aux.Next(g) do
 		if key==0 then
 			tc=c
-		else 
+		else
 			tc2=c
 		end
 		key=key+1
 	end
 	if tc and tc2 then
 		if Duel.SwapControl(tc,tc2,0,0)~=0 then
-		   local e3=Effect.CreateEffect(e:GetHandler())
-		   e3:SetType(EFFECT_TYPE_SINGLE)
-		   e3:SetCode(EFFECT_CHANGE_RACE)
-		   e3:SetValue(RACE_INSECT)
-		   e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-		   tc2:RegisterEffect(e3) 
+			local e3=Effect.CreateEffect(e:GetHandler())
+			e3:SetType(EFFECT_TYPE_SINGLE)
+			e3:SetCode(EFFECT_CHANGE_RACE)
+			e3:SetValue(RACE_INSECT)
+			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc2:RegisterEffect(e3)
 		end
 	end
 end

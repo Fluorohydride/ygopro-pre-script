@@ -1,6 +1,7 @@
---炒土地
+--土地ころがし
+--Script by 神数不神
 function c101111070.initial_effect(c)
-	 --Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -32,7 +33,7 @@ function c101111070.activate(e,tp,eg,ep,ev,re,r,rp)
 			local g=Duel.GetOperatedGroup()
 			local tc2=g:GetFirst()
 			local code=tc2:GetOriginalCode()
-			if Duel.MoveToField(tc2,1-ttp,1-ttp,LOCATION_FZONE,POS_FACEUP,true)~=0 and 
+			if Duel.MoveToField(tc2,1-ttp,1-ttp,LOCATION_FZONE,POS_FACEUP,true)~=0 and
 				Duel.IsExistingMatchingCard(c101111070.filter2,1-ttp,LOCATION_GRAVE,0,1,nil,code) then
 				Duel.BreakEffect()
 				local rg=Duel.SelectMatchingCard(tp,c101111070.filter2,1-ttp,LOCATION_GRAVE,0,1,1,nil,code)

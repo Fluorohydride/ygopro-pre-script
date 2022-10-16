@@ -1,6 +1,7 @@
---魔界台本「戏剧性故事」
+--魔界台本「ドラマチック・ストーリー」
+--Script by 神数不神
 function c101111064.initial_effect(c)
-	 --
+	--
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -70,12 +71,12 @@ function c101111064.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:IsForbidden() and Duel.SelectYesNo(tp,aux.Stringid(101111064,1)) then
 			Duel.BreakEffect()
 			Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
-		else 
+		else
 			Duel.BreakEffect()
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	end
-end 
+end
 
 
 

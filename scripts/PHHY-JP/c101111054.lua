@@ -1,4 +1,5 @@
---发现目标！护宝炮妖！
+--タリホー！スプリガンズ！
+--Script by 神数不神
 function c101111054.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -11,11 +12,11 @@ function c101111054.initial_effect(c)
 	e1:SetOperation(c101111054.activate)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
-	e2:SetDescription(aux.Stringid(101111054,1)) 
+	e2:SetDescription(aux.Stringid(101111054,1))
 	e2:SetCost(c101111054.cost)
 	e2:SetOperation(c101111054.activate2)
 	c:RegisterEffect(e2)
-	 --material
+	--material
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101111054,3))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -42,7 +43,7 @@ function c101111054.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101111054.filter2(c,e,tp)
-	return c:IsSetCard(0x155) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+	return c:IsSetCard(0x155) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101111054.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -83,8 +84,8 @@ function c101111054.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function c101111054.matop(e,tp,eg,ep,ev,re,r,rp)
-  local c=e:GetHandler()
-  local tc=Duel.GetFirstTarget()
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) then
 		tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 		Duel.SendtoHand(c,nil,REASON_EFFECT)

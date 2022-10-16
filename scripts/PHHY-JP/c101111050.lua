@@ -1,6 +1,7 @@
---大傩主水
+--大儺主水
+--Script by 神数不神
 function c101111050.initial_effect(c)
-	  --link summon
+	--link summon
 	aux.AddLinkProcedure(c,nil,2,2,c101111050.lcheck)
 	c:EnableReviveLimit()
 	--todeck
@@ -14,7 +15,7 @@ function c101111050.initial_effect(c)
 	e1:SetTarget(c101111050.tdtg)
 	e1:SetOperation(c101111050.tdop)
 	c:RegisterEffect(e1)
---spsummon
+	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101111051,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
@@ -54,16 +55,16 @@ function c101111050.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function c101111050.tdop(e,tp,eg,ep,ev,re,r,rp)
-   local ex,g1=Duel.GetOperationInfo(0,CATEGORY_TODECK)
-   if #g1>0 then
-	Duel.SendtoDeck(g1,nil,2,REASON_EFFECT)
+	local ex,g1=Duel.GetOperationInfo(0,CATEGORY_TODECK)
+	if #g1>0 then
+		Duel.SendtoDeck(g1,nil,2,REASON_EFFECT)
 	end
 end
 function c101111050.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
 end
 function c101111050.spfilter(c,e,tp)
-	return c:IsType(TYPE_RITUAL)  and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function c101111050.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end

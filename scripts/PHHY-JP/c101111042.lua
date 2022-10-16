@@ -1,4 +1,5 @@
---仙女圆环
+--サークル・オブ・フェアリー
+--Script by 神数不神
 function c101111042.initial_effect(c)
  --Synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
@@ -51,8 +52,8 @@ function c101111042.damop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		local value=tc:GetAttack()/2
 		if Duel.Damage(1-tp,value,REASON_EFFECT)~=0 then
-		   Duel.BreakEffect()
-		   Duel.Recover(tp,value,REASON_EFFECT)
+			Duel.BreakEffect()
+			Duel.Recover(tp,value,REASON_EFFECT)
 		end
 	end
 end

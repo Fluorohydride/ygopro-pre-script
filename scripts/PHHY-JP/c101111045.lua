@@ -1,9 +1,10 @@
---巨大喷流“冠军”尾宿五
+--ギガンティック“チャンピオン”サルガス
+--Script by 神数不神
 function c101111045.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,8,2,c101111045.ovfilter,aux.Stringid(101111045,0),99,c101111045.xyzop)
 	c:EnableReviveLimit()
---search
+	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101111045,1))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -14,7 +15,7 @@ function c101111045.initial_effect(c)
 	e1:SetTarget(c101111045.srtg)
 	e1:SetOperation(c101111045.srop)
 	c:RegisterEffect(e1)
---
+	--
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101111045,2))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
@@ -68,6 +69,6 @@ function c101111045.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 	else
-		 Duel.Destroy(tc,REASON_EFFECT)
+		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

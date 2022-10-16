@@ -1,4 +1,5 @@
---威迫矿石-召唤石
+--威迫鉱石－サモナイト
+--Script by 神数不神
 function c101111080.initial_effect(c)
 		--Activate
 	local e1=Effect.CreateEffect(c)
@@ -32,26 +33,22 @@ function c101111080.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function c101111080.activate(e,tp,eg,ep,ev,re,r,rp)
-	  local ex,g=Duel.GetOperationInfo(0,CATEGORY_SPECIAL_SUMMON)
-	  if e:GetLabel()==0 then 
-		 if g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-				Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		 end
-	  else 
-		 local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		  if g:GetCount()>0 and ct>0 then
-			   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			   g:Select(tp,ct,ct,nil)
-			   local tc=g:GetFirst()
-			   while tc do
-					Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-					tc=g:GetNext()
-			   end
-			  Duel.SpecialSummonComplete()
-		  end
-	  end
+	local ex,g=Duel.GetOperationInfo(0,CATEGORY_SPECIAL_SUMMON)
+	if e:GetLabel()==0 then
+		if g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		end
+	else
+		local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		if g:GetCount()>0 and ct>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			g:Select(tp,ct,ct,nil)
+			local tc=g:GetFirst()
+			while tc do
+				Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+				tc=g:GetNext()
+			end
+			Duel.SpecialSummonComplete()
+		end
+	end
 end
-
-
-
-

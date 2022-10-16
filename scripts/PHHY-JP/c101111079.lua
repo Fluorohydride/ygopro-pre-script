@@ -1,4 +1,5 @@
---赤醋的道口
+--赤酢の踏切
+--Script by 神数不神
 function c101111079.initial_effect(c)
 	c:SetUniqueOnField(1,0,101111079)
 		--Activate
@@ -39,7 +40,7 @@ function c101111079.disval(e,tp)
 	return zone
 end
 function c101111079.condtion(e,tp,eg,ep,ev,re,r,rp)
-	 return e:GetHandler():GetColumnGroup():Filter(Card.IsControler,nil,1-tp)~=nil and e:GetHandler():IsFacedown()
+	return e:GetHandler():GetColumnGroup():Filter(Card.IsControler,nil,1-tp)~=nil and e:GetHandler():IsFacedown()
 end
 function c101111079.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
