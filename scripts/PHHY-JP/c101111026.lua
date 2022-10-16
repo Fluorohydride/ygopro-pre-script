@@ -1,13 +1,14 @@
---银翼之斧式配饰-莎莉
+--銀翼のAXE－サリー
+--Script by 千鸢彩花
 function c101111026.initial_effect(c)
 	--equip
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,101111026)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetCountLimit(1,101111026)
 	e1:SetTarget(c101111026.eqtg)
 	e1:SetOperation(c101111026.eqop)
 	c:RegisterEffect(e1)
@@ -16,11 +17,12 @@ function c101111026.filter(c)
 	return c:IsFaceup()
 end
 function c101111026.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101111026.filter(chkc) end
+	local c=e:GetHandler()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c101111026.filter(chkc) and chkc~=c end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(c101111026.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+		and Duel.IsExistingTarget(c101111026.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,c101111026.filter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
+	Duel.SelectTarget(tp,c101111026.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 function c101111026.eqop(e,tp,eg,ep,ev,re,r,rp)
@@ -28,7 +30,7 @@ function c101111026.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return end
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:IsControler(1-tp) or tc:IsFacedown() or not tc:IsRelateToEffect(e) then
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:IsFacedown() or not tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(c,REASON_EFFECT)
 		return
 	end

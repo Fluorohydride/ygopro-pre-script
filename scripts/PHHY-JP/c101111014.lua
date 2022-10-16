@@ -1,4 +1,5 @@
---昆虫机甲铠
+--昆虫機甲鎧
+--Script by 千鸢彩花
 function c101111014.initial_effect(c)
 	--equip
 	local e1=Effect.CreateEffect(c)
@@ -23,14 +24,12 @@ function c101111014.initial_effect(c)
 	e3:SetValue(2000)
 	c:RegisterEffect(e4)
 end
-
 function c101111014.sfilter(c)
-	return c:IsCode(101111014)
+	return c:IsCode(101111014) and c:IsFaceup()
 end
 function c101111014.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(c101111014.sfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
-
 function c101111014.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT)
 end
@@ -46,9 +45,9 @@ end
 function c101111014.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return end
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:IsControler(1-tp) or tc:IsFacedown() or not tc:IsRelateToEffect(e) or not c:CheckUniqueOnField(tp) then
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:IsFacedown()
+		or not tc:IsRelateToEffect(e) or not c:CheckUniqueOnField(tp) then
 		Duel.SendtoGrave(c,REASON_EFFECT)
 		return
 	end
@@ -79,8 +78,7 @@ end
 function c101111014.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-
 function c101111014.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph =Duel.GetCurrentPhase()
+	local ph=Duel.GetCurrentPhase()
 	return ph==PHASE_MAIN2 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
 end

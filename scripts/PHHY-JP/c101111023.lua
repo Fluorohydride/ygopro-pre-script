@@ -1,4 +1,5 @@
---兆手神
+--チョウジュ・ゴッド
+--Script by 千鸢彩花
 function c101111023.initial_effect(c)
 	--effect
 	local e1=Effect.CreateEffect(c)
@@ -24,17 +25,18 @@ function c101111023.filter2(c)
 	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
 function c101111023.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101111023.filter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(c101111023.filter2,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101111023.filter,tp,LOCATION_DECK,0,1,nil)
+		and Duel.IsExistingMatchingCard(c101111023.filter2,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
 end
 function c101111023.op(e,tp,eg,ep,ev,re,r,rp)
+	if not (Duel.IsExistingMatchingCard(c101111023.filter,tp,LOCATION_DECK,0,1,nil)
+		and Duel.IsExistingMatchingCard(c101111023.filter2,tp,LOCATION_DECK,0,1,nil)) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101111023.filter,tp,LOCATION_DECK,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g2=Duel.SelectMatchingCard(tp,c101111023.filter2,tp,LOCATION_DECK,0,1,1,nil)
 	g:Merge(g2)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-	end
+	Duel.SendtoHand(g,nil,REASON_EFFECT)
+	Duel.ConfirmCards(1-tp,g)
 end

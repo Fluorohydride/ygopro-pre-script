@@ -1,11 +1,11 @@
---震天之蝎尾狮
+--震天のマンティコア
+--Script by 千鸢彩花
 function c101111022.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,101111022)
 	e1:SetTarget(c101111022.target)
 	e1:SetOperation(c101111022.shop)
@@ -23,7 +23,7 @@ function c101111022.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101111022.filter(c)
-	return c:IsCode(97169186) or c:IsCode(66788016)
+	return c:IsCode(97169186,66788016)
 end
 function c101111022.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101111022.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -37,9 +37,8 @@ function c101111022.shop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
 function c101111022.costfilter(c)
-	return (c:IsCode(97169186) or c:IsCode(66788016)) and c:IsAbleToRemoveAsCost()
+	return c:IsCode(97169186,66788016) and c:IsAbleToRemoveAsCost()
 end
 function c101111022.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101111022.costfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end

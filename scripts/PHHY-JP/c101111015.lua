@@ -1,4 +1,5 @@
---巨蚁地狱救世主
+--ジャイアント・メサイア
+--Script by 千鸢彩花
 function c101111015.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -14,7 +15,7 @@ function c101111015.initial_effect(c)
 	c:RegisterEffect(e1)
 	--equip
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101111015,0))
+	e2:SetDescription(aux.Stringid(101111015,1))
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCountLimit(1,101111115)
@@ -23,15 +24,14 @@ function c101111015.initial_effect(c)
 	e2:SetTarget(c101111015.eqtg)
 	e2:SetOperation(c101111015.eqop)
 	c:RegisterEffect(e2)
-
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101111015,1))
+	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_START)
 	e3:SetRange(LOCATION_MZONE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCategory(CATEGORY_DESTROY)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1)
 	e3:SetCondition(c101111015.descon)
 	e3:SetTarget(c101111015.destg)
@@ -52,7 +52,6 @@ function c101111015.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function c101111015.eqfilter(c,tp)
 	return c:IsRace(RACE_INSECT) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
@@ -60,7 +59,6 @@ function c101111015.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c101111015.eqfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_GRAVE+LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 end
 function c101111015.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -90,12 +88,9 @@ end
 function c101111015.eqlimit(e,c)
 	return e:GetOwner()==c
 end
-
 function c101111015.descon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttacker()
-	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-	e:SetLabelObject(tc)
-	return tc and tc:IsFaceup() and tc:IsRace(RACE_INSECT)
+	local a,d=Duel.GetBattleMonster(tp)
+	return a and a:IsFaceup() and a:IsRace(RACE_INSECT) or d and d:IsFaceup() and d:IsRace(RACE_INSECT)
 end
 function c101111015.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
