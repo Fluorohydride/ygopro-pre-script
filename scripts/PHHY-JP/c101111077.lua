@@ -52,7 +52,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	aux.LabrynthDestroyOp(e,tp,res)
 end
-
 function s.checkfilter(c)
 	return c:IsFaceup() and c:IsLevelAbove(8) and c:IsRace(RACE_FIEND)
 end

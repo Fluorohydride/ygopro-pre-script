@@ -35,13 +35,11 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		tc=eg:GetNext()
 	end
 end
-
-function s.condition(e)
-	local tp=e:GetHandlerPlayer()
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(1-tp,id)>0
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetAttack()>=2000
+	return c:IsFaceup() and c:IsAttackAbove(2000)
 end
 function s.cfilter(c)
 	return c:GetType()==TYPE_TRAP and c:IsSetCard(0x4c,0x89)
@@ -58,7 +56,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if  tc:IsRelateToEffect(e) 
+	if tc:IsRelateToEffect(e)
 		and Duel.Destroy(tc,REASON_EFFECT)>0 then
 		local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
 		local rg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.rmfilter),tp,0,LOCATION_GRAVE,nil)

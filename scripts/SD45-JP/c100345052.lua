@@ -45,35 +45,30 @@ end
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP)
 end
-
 function s.cfilter(c)
-	return c:GetType()==TYPE_TRAP 
+	return c:GetType()==TYPE_TRAP
 end
 function s.atkcon(e)
 	local g=Duel.GetMatchingGroup(s.cfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
 	return #g>0
 end
-
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT+RACE_PLANT)
-end
-function s.disfilter(c,e)
-	return c:IsRelateToEffect(e) and c:IsFaceup()
 end
 function s.rmfilter(c)
 	return c:GetType()==TYPE_TRAP and c:IsAbleToRemove()
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local mg=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,nil)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and aux.NegateAnyFilter(chkc) end
-	if chk==0 then return mg>0 and Duel.IsExistingTarget(aux.NegateAnyFilter,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return ct>0 and Duel.IsExistingTarget(aux.NegateAnyFilter,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
-	local g=Duel.SelectTarget(tp,aux.NegateAnyFilter,tp,0,LOCATION_ONFIELD,1,mg,nil)
+	local g=Duel.SelectTarget(tp,aux.NegateAnyFilter,tp,0,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.disfilter,nil,e)
+	local g=Duel.GetTargetsRelateToChain()
 	if #g==0 then return end
 	local tc=g:GetFirst()
 	while tc do
@@ -103,11 +98,12 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local rg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.rmfilter),tp,LOCATION_GRAVE,0,1,1,nil)
-		if #rg>0 and Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)>0 then
+		local tg=g:Filter(Card.IsFaceup,nil)
+		if #rg>0 and #tg>0 and Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local tg=g:Select(tp,1,1,nil)
-			Duel.HintSelection(tg)
-			Duel.Destroy(tg,REASON_EFFECT)
-		end  
+			local sg=tg:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
+			Duel.Destroy(sg,REASON_EFFECT)
+		end
 	end
 end
