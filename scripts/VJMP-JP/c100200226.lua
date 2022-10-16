@@ -1,4 +1,5 @@
---甲虫合体 六虫锹甲斗士
+--甲虫合体ゼクスタッガー
+--Script by VHisc
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -24,8 +25,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsm2
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_MZONE)
@@ -59,17 +60,20 @@ function s.spfilter2(c,e,tp)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,0,LOCATION_HAND+LOCATION_GRAVE)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		g1=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	end
-	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter2,1-tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,1-tp) and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
+	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.spfilter2,1-tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,1-tp)
+		and Duel.SelectYesNo(1-tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 		g2=Duel.SelectMatchingCard(1-tp,s.spfilter2,1-tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,1-tp)
 	end
