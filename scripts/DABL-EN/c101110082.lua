@@ -26,12 +26,12 @@ function c101110082.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101110082.cfilter(c,e,tp,b1,b2)
-	return c:IsRace(RACE_FIEND) and not c:IsPublic() 
+	return c:IsRace(RACE_FIEND) and not c:IsPublic()
 		and (b1 and c:IsDiscardable() or b2 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP))
 end
 function c101110082.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local b1=c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) 
+	local b1=c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 	local b2=c:IsDiscardable()
 	if chk==0 then
 		if c:IsPublic() then return false end
@@ -65,7 +65,7 @@ end
 function c101110082.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
 	return rc:IsRelateToBattle() and rc:IsStatus(STATUS_OPPO_BATTLE) and rc:IsControler(tp)
-		and rc:IsFaceup() and rc:IsRace(RACE_FIEND) 
+		and rc:IsFaceup() and rc:IsRace(RACE_FIEND)
 end
 function c101110082.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

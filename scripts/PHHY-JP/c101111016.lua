@@ -82,7 +82,7 @@ function c101111016.thop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetOperation(c101111016.tgop)
 			e1:SetReset(RESET_PHASE+PHASE_END)
 			Duel.RegisterEffect(e1,tp)
-		end 
+		end
 	end
 end
 function c101111016.tgcon(e,tp,eg,ep,ev,re,r,rp)

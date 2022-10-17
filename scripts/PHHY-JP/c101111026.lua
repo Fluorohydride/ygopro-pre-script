@@ -53,4 +53,3 @@ end
 function c101111026.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-

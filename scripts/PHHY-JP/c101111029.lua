@@ -31,7 +31,7 @@ function c101111029.initial_effect(c)
 		ge1:SetCode(EVENT_ATTACK_ANNOUNCE)
 		ge1:SetOperation(c101111029.checkop)
 		Duel.RegisterEffect(ge1,0)
-	end  
+	end
 end
 function c101111029.checkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(Duel.GetAttacker():GetControler(),101111029,RESET_PHASE+PHASE_END,0,1)
