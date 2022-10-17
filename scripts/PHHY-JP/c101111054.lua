@@ -42,7 +42,7 @@ end
 function c101111054.spfilter(c,e,tp)
 	return c:IsSetCard(0x155) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c101111054.activate2(e,tp,eg,ep,ev,re,r,rp)
+function c101111054.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101111054.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
