@@ -15,14 +15,14 @@ function c101111045.initial_effect(c)
 	e1:SetTarget(c101111045.srtg)
 	e1:SetOperation(c101111045.srop)
 	c:RegisterEffect(e1)
-	--
+	--destroy or to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101111045,2))
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND)
-	e2:SetRange(LOCATION_MZONE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DETACH_MATERIAL)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,101111046)
 	e2:SetTarget(c101111045.destg)
 	e2:SetOperation(c101111045.desop)
@@ -38,9 +38,8 @@ end
 function c101111045.srcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayCount()>0
 end
-
 function c101111045.srfilter(c)
-	return (c:IsSetCard(0x155) or c:IsSetCard(0x179)) and c:IsAbleToHand()
+	return c:IsSetCard(0x155,0x179) and c:IsAbleToHand()
 end
 function c101111045.srtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101111045.srfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -57,7 +56,7 @@ end
 function c101111045.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101111045,3))
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if not g:GetFirst():IsAbleToHand() then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
@@ -65,9 +64,10 @@ function c101111045.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101111045.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsAbleToHand() and Duel.SelectYesNo(tp,aux.Stringid(101111045,4)) then
+	if not tc:IsRelateToEffect(e) then return end
+	if tc:IsAbleToHand()
+		and Duel.SelectOption(tp,aux.Stringid(101111045,4),aux.Stringid(101111045,5))==1 then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
 	else
 		Duel.Destroy(tc,REASON_EFFECT)
 	end

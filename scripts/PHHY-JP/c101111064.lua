@@ -1,8 +1,9 @@
 --魔界台本「ドラマチック・ストーリー」
 --Script by 神数不神
 function c101111064.initial_effect(c)
-	--
+	--spsummon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101111064,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -13,36 +14,15 @@ function c101111064.initial_effect(c)
 	c:RegisterEffect(e1)
 	--tohand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101111064,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DESTROYED)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DELAY)
-	e2:SetCondition(c101111064.drcon)
-	e2:SetTarget(c101111064.drtg)
-	e2:SetOperation(c101111064.drop)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCondition(c101111064.thcon)
+	e2:SetTarget(c101111064.thtg)
+	e2:SetOperation(c101111064.thop)
 	c:RegisterEffect(e2)
-end
-function c101111064.filter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec)
-end
-function c101111064.drcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT) and rp==1-tp and c:IsPreviousControler(tp)
-		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
-		and Duel.IsExistingMatchingCard(c101111064.filter2,tp,LOCATION_EXTRA,0,1,nil)
-end
-function c101111064.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-end
-function c101111064.drop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,2,nil)
-	if g:GetCount()>0 then
-		Duel.HintSelection(g)
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-	end
 end
 function c101111064.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM)
@@ -67,8 +47,8 @@ function c101111064.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c101111064.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode())
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		if (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) and not
-		tc:IsForbidden() and Duel.SelectYesNo(tp,aux.Stringid(101111064,1)) then
+		if (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) and not tc:IsForbidden() 
+			and Duel.SelectOption(tp,aux.Stringid(101111064,2),aux.Stringid(101111064,3))==0 then
 			Duel.BreakEffect()
 			Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 		else
@@ -77,13 +57,25 @@ function c101111064.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
-
-
-
-
-
-
-
-
-
+function c101111064.cfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec)
+end
+function c101111064.thcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsReason(REASON_EFFECT) and rp==1-tp and c:IsPreviousControler(tp)
+		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
+		and Duel.IsExistingMatchingCard(c101111064.cfilter,tp,LOCATION_EXTRA,0,1,nil)
+end
+function c101111064.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+end
+function c101111064.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,2,nil)
+	if g:GetCount()>0 then
+		Duel.HintSelection(g)
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	end
+end

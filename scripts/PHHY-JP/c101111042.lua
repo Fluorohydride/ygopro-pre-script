@@ -1,7 +1,7 @@
 --サークル・オブ・フェアリー
 --Script by 神数不神
 function c101111042.initial_effect(c)
- --Synchro summon
+	--Synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
 	c:EnableReviveLimit()
 	--extra summon
@@ -15,6 +15,7 @@ function c101111042.initial_effect(c)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101111042,1))
 	e2:SetCategory(CATEGORY_DAMAGE+CATEGORY_RECOVER)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYED)
@@ -28,8 +29,7 @@ function c101111042.initial_effect(c)
 end
 function c101111042.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetBattleMonster(tp)
-	return a and a:IsRace(RACE_INSECT+RACE_PLANT) and
-	eg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)
+	return a and a:IsRace(RACE_INSECT+RACE_PLANT) and eg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)
 end
 function c101111042.damfilter(c,e)
 	return c:GetAttack()>0 and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_GRAVE)

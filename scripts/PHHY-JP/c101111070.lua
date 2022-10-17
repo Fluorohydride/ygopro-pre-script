@@ -19,10 +19,10 @@ function c101111070.filter2(c,code)
 	return c:IsType(TYPE_FIELD) and not c:IsCode(code)
 end
 function c101111070.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_FZONE) and c101111070.filter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.IsExistingTarget(c101111070.filter,tp,LOCATION_FZONE,LOCATION_FZONE,1,e:GetHandler()) end
+	if chkc then return chkc:IsLocation(LOCATION_FZONE) and c101111070.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c101111070.filter,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,c101111070.filter,tp,LOCATION_FZONE,LOCATION_FZONE,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,c101111070.filter,tp,LOCATION_FZONE,LOCATION_FZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c101111070.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -33,10 +33,11 @@ function c101111070.activate(e,tp,eg,ep,ev,re,r,rp)
 			local g=Duel.GetOperatedGroup()
 			local tc2=g:GetFirst()
 			local code=tc2:GetOriginalCode()
-			if Duel.MoveToField(tc2,1-ttp,1-ttp,LOCATION_FZONE,POS_FACEUP,true)~=0 and
-				Duel.IsExistingMatchingCard(c101111070.filter2,1-ttp,LOCATION_GRAVE,0,1,nil,code) then
+			if Duel.MoveToField(tc2,1-ttp,1-ttp,LOCATION_FZONE,POS_FACEUP,true)~=0
+				and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c101111070.filter2),1-ttp,LOCATION_GRAVE,0,1,nil,code)
+				and Duel.SelectYesNo(tp,aux.Stringid(101111070,0)) then
 				Duel.BreakEffect()
-				local rg=Duel.SelectMatchingCard(tp,c101111070.filter2,1-ttp,LOCATION_GRAVE,0,1,1,nil,code)
+				local rg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101111070.filter2),1-ttp,LOCATION_GRAVE,0,1,1,nil,code)
 				if #rg>0 then
 					Duel.MoveToField(rg:GetFirst(),tp,ttp,LOCATION_FZONE,POS_FACEUP,true)
 				end
@@ -44,9 +45,3 @@ function c101111070.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
-
-
-
-
-
