@@ -53,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(s.spfilter,tp,LOCATION_MZONE,LOCATION_MZONE,c)*300
+	return Duel.GetMatchingGroupCount(s.spfilter,0,LOCATION_MZONE,LOCATION_MZONE,c)*300
 end
 function s.spfilter2(c,e,tp)
 	return c:IsRace(RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
