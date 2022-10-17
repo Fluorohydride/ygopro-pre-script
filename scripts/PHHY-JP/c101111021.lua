@@ -1,4 +1,5 @@
---树冠之甲帝 比亚格拉姆
+--樹冠の甲帝ベアグラム
+--Script by Dr.Chaos
 function c101111021.initial_effect(c)
 	c:SetSPSummonOnce(101111021)
 	c:EnableReviveLimit()
