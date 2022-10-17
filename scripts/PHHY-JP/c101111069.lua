@@ -5,7 +5,6 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(1109)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -31,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if not tc then return end
 	local b1,b2=tc:IsSSetable(),Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and tc:IsAbleToHand()
-	if b1 and (not b2 or Duel.SelectOption(tp,1159,1190)==0) then
+	if b1 and (not b2 or Duel.SelectOption(tp,1153,1190)==0) then
 		Duel.SSet(tp,tc)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
