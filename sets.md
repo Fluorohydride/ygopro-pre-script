@@ -4,7 +4,7 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **October 15, 2022**: Photon Hypernova (PHHY-JP) : `101111XXX`
 - **November 5, 2022**: Selection 5 (SLF1-JP) : `100293XXX`
-- **December 3, 2022** Structure Deck: Forest of the Traptrix (SD45-JP): `100345XXX`
+- **December 3, 2022**: Structure Deck: Forest of the Traptrix (SD45-JP) : `100345XXX`
 - **December 24, 2022**: Secret Utility Box (SUB1-JP) : `100294XXX`
 
 # Announced
