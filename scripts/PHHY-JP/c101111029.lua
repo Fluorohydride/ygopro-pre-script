@@ -1,4 +1,5 @@
---流星连打-白黑机人
+--流星連打－シロクロイド
+--Script by Dr.Chaos
 function c101111029.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -12,6 +13,16 @@ function c101111029.initial_effect(c)
 	e1:SetTarget(c101111029.sptg)
 	e1:SetOperation(c101111029.spop)
 	c:RegisterEffect(e1)
+	--atkup
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_UPDATE_ATTACK)
+	e2:SetCondition(c101111029.atkcon)
+	e2:SetValue(c101111029.atkval)
+	c:RegisterEffect(e2)
+	--
 	if not c101111029.global_check then
 		c101111029.global_check=true
 		local ge1=Effect.CreateEffect(c)
@@ -25,18 +36,9 @@ function c101111029.initial_effect(c)
 		ge2:SetOperation(c101111029.checkop)
 		Duel.RegisterEffect(ge2,1)
 	end  
-	--atkup
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetCondition(c101111029.atkcon)
-	e2:SetValue(c101111029.atkval)
-	c:RegisterEffect(e2)  
 end
 function c101111029.checkop(e,tp,eg,ep,ev,re,r,rp)
-   Duel.RegisterFlagEffect(tp,101111029,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,101111029,RESET_PHASE+PHASE_END,0,1)
 end
 function c101111029.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
