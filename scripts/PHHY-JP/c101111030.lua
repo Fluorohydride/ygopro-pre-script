@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-function s.flipup(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.flipup(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetLabelObject()
 	if c:GetFlagEffect(id)>0 then Duel.ChangePosition(c,POS_FACEUP_DEFENSE) end
 	e:Reset()
@@ -55,7 +55,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END
 end
-function s.destg(e,tp,eg,ep,ev,re,r,r,p,chk)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(Card.IsSummonType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,SUMMON_TYPE_SPECIAL)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
