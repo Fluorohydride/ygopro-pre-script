@@ -4,12 +4,11 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST),3)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST),3,99,s.chk(c))
 	--splimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetRange(LOCATION_EXTRA)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
@@ -49,12 +48,14 @@ function s.initial_effect(c)
 	e5:SetOperation(s.tgop)
 	c:RegisterEffect(e5)
 end
-function s.cfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x144)
+function s.chk(c)
+	return  function(g) return s.splimit(nil,nil,c:GetControler()) end
 end
-function s.splimit(e,se,sp,st)
-	local tp=e:GetHandler():GetControler()
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,3,nil)
+function s.cfilter(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x14d)
+end
+function s.splimit(e,se,sp,st,pos,tp)
+	return Duel.IsExistingMatchingCard(s.cfilter,sp,LOCATION_GRAVE,0,3,nil)
 end
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonPlayer,1,e:GetHandler(),tp)
