@@ -20,17 +20,20 @@ function c101111066.initial_effect(c)
 	e2:SetOperation(c101111066.tdop)
 	c:RegisterEffect(e2)
 end
-function c101111066.filter(c,e,tp)
+function c101111066.rfilter1(c,e,tp)
 	return c:IsSetCard(0x3a)
 end
 function c101111066.rfilter2(c,e,tp)
 	return bit.band(c:GetType(),0x81)==0x81 and c:IsSetCard(0x3a) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 end
+function c101111066.cfilter(c,e,tp)
+	return c:IsFaceup() and not c:IsImmuneToEffect(e) and c:IsControler(tp)
+end
 function c101111066.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg1=Duel.GetRitualMaterial(tp)
-		local mg2=Duel.GetReleaseGroup(1-tp):Filter(Card.IsFaceup,nil)
-		return Duel.IsExistingMatchingCard(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,1,nil,c101111066.filter,e,tp,mg1,nil,Card.GetLevel,"Equal")
+		local mg2=Duel.GetReleaseGroup(1-tp):Filter(c101111066.cfilter,nil,e,1-tp)
+		return Duel.IsExistingMatchingCard(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,1,nil,c101111066.rfilter1,e,tp,mg1,nil,Card.GetLevel,"Equal")
 			or (mg2:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 				and Duel.IsExistingMatchingCard(c101111066.rfilter2,tp,LOCATION_HAND,0,1,nil,e,tp))
 	end
@@ -39,8 +42,8 @@ end
 function c101111066.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local mg1=Duel.GetRitualMaterial(tp)
-	local mg2=Duel.GetReleaseGroup(1-tp):Filter(Card.IsFaceup,nil)
-	local g1=Duel.GetMatchingGroup(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,nil,c101111066.filter,e,tp,mg1,nil,Card.GetLevel,"Equal")
+	local mg2=Duel.GetReleaseGroup(1-tp):Filter(c101111066.cfilter,nil,e,1-tp)
+	local g1=Duel.GetMatchingGroup(aux.RitualUltimateFilter,tp,LOCATION_HAND,0,nil,c101111066.rfilter1,e,tp,mg1,nil,Card.GetLevel,"Equal")
 	local g2=nil
 	local g=g1
 	if mg2:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
