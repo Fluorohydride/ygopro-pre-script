@@ -1,4 +1,5 @@
---圆唤师 仙女
+--円喚師フェアリ
+--Script by Dr.Chaos
 function c101111025.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
