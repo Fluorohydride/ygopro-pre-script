@@ -18,16 +18,16 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)~=0
 end
-function s.filter(c)
+function s.filter(c,tp)
 	return (c:GetType()==TYPE_SPELL or c:GetType()==TYPE_TRAP) and not c:IsCode(id)
 		and (Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and c:IsAbleToHand() or c:IsSSetable())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	if not tc then return end
 	local b1,b2=tc:IsSSetable(),Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and tc:IsAbleToHand()
 	if b1 and (not b2 or Duel.SelectOption(tp,1153,1190)==0) then
