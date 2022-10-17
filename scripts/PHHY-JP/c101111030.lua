@@ -48,6 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.flipup(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetLabelObject()
 	if c:GetFlagEffect(id)>0 then Duel.ChangePosition(c,POS_FACEUP_DEFENSE) end
 	e:Reset()
 end
