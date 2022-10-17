@@ -54,7 +54,7 @@ function c101111021.chainop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SetChainLimit(c101111021.chainlm)
 	end
 end
-function c101111021.chainlm(e,rp,tp)
+function c101111021.chainlm(re,rp,tp)
 	return tp==rp or not re:GetHandler():IsType(TYPE_MONSTER)
 end
 function c101111021.desfilter(c)
