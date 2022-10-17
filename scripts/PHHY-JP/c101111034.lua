@@ -1,5 +1,6 @@
---coded by Lyris
+--撃鉄竜リンドブルム
 --Lindwurm the Gunhammer Dragon
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

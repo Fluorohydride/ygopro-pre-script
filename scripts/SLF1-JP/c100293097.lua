@@ -1,5 +1,6 @@
---coded by Lyris
+--魔法名－「解体し統合せよ」
 --Alpha Summon
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

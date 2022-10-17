@@ -1,5 +1,6 @@
---coded by Lyris
+--レッドアローズ
 --Red Arrows
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

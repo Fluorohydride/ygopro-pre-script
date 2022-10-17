@@ -1,5 +1,6 @@
---coded by Lyris
+--魔界劇団－スーパー・プロデューサー
 --Abyss Actor - Super Producer
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

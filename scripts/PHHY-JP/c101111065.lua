@@ -1,5 +1,6 @@
---coded by Lyris
+--天地晦冥
 --A World Shrouded in Darkness
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

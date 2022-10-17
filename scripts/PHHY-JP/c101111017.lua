@@ -1,5 +1,6 @@
---coded by Lyris
+--重の忍者－磁翁
 --Jio the Weighted Ninja
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--change position

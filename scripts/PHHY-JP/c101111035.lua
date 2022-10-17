@@ -1,5 +1,6 @@
---coded by Lyris
+--完全態・グレート・インセクト
 --Perfect Great Insect
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

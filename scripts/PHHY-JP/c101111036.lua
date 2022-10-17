@@ -1,5 +1,6 @@
---coded by Lyris
+--冑の忍者－櫓丸
 --Yaguramaru the Armored Ninja
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

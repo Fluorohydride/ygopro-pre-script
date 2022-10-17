@@ -1,5 +1,6 @@
---coded by Lyris
+--魔界劇団のゲネプロ
 --Abyss Actors' Dress Rehearsal
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

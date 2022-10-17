@@ -1,5 +1,6 @@
---coded by Lyris
+--三戦の号
 --Triple Tactic Tasking
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

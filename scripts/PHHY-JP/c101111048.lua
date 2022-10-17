@@ -1,5 +1,6 @@
---coded by Lyris
+--鉄獣式強襲機動兵装改“BucephalusII”
 --Tri-Brigade Arms "Bucephalus II"
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

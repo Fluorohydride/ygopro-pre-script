@@ -1,5 +1,6 @@
---coded by Lyris
+--リィラップ
 --Lil-la-Rap
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
