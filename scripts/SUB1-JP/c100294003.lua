@@ -50,7 +50,7 @@ function c100294003.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100294003.splimit(e,c)
-	return not c:IsType(TYPE_SYNCHRO)
+	return not c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_EXTRA)
 end
 function c100294003.spfilter(c,e,tp)
 	return c:IsControler(tp) and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO)
