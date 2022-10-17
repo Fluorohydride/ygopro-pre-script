@@ -1,6 +1,7 @@
 --ギガンティック“チャンピオン”サルガス
 --Script by 神数不神
 function c101111045.initial_effect(c)
+	Duel.EnableGlobalFlag(GLOBALFLAG_DETACH_EVENT)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,8,2,c101111045.ovfilter,aux.Stringid(101111045,0),99,c101111045.xyzop)
 	c:EnableReviveLimit()
@@ -66,7 +67,7 @@ function c101111045.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	if tc:IsAbleToHand()
-		and Duel.SelectOption(tp,aux.Stringid(101111045,4),aux.Stringid(101111045,5))==1 then
+		and Duel.SelectOption(tp,aux.Stringid(101111045,3),aux.Stringid(101111045,4))==1 then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	else
 		Duel.Destroy(tc,REASON_EFFECT)
