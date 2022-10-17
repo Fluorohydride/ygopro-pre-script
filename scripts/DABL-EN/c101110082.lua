@@ -14,7 +14,6 @@ function c101110082.initial_effect(c)
 	c:RegisterEffect(e1)
 	--tohand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(1104)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
@@ -26,26 +25,22 @@ function c101110082.initial_effect(c)
 	e2:SetOperation(c101110082.thop)
 	c:RegisterEffect(e2)
 end
-function c101110082.spfilter(c,e,tp)
-	return c:IsRace(RACE_FIEND) and not c:IsPublic() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
-end
-function c101110082.disfilter(c)
-	return c:IsRace(RACE_FIEND) and not c:IsPublic() and c:IsDiscardable()
-end
-function c101110082.cfilter(c,e,tp)
+function c101110082.cfilter(c,e,tp,b1,b2)
 	return c:IsRace(RACE_FIEND) and not c:IsPublic() 
-		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) or c:IsDiscardable())
+		and (b1 and c:IsDiscardable() or b2 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP))
 end
 function c101110082.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if c:IsPublic() then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local b1=c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) 
-		and Duel.IsExistingMatchingCard(c101110082.disfilter,tp,LOCATION_HAND,0,1,c)
-	local b2=c:IsDiscardable() and Duel.IsExistingMatchingCard(c101110082.spfilter,tp,LOCATION_HAND,0,1,c,e,tp)
-	if chk==0 then return b1 or b2 end
+	local b2=c:IsDiscardable()
+	if chk==0 then
+		if c:IsPublic() then return false end
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
+		if not b1 and not b2 then return false end
+		return Duel.IsExistingMatchingCard(c101110082.cfilter,tp,LOCATION_HAND,0,1,c,e,tp,b1,b2)
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g=Duel.SelectMatchingCard(tp,c101110082.cfilter,tp,LOCATION_HAND,0,1,1,c,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c101110082.cfilter,tp,LOCATION_HAND,0,1,1,c,e,tp,b1,b2)
 	local tc=g:GetFirst()
 	Duel.SetTargetCard(tc)
 	Duel.ConfirmCards(1-tp,tc)
@@ -59,7 +54,7 @@ function c101110082.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local mg=Group.FromCards(c,tc)
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 then
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=mg:FilterSelect(tp,c101110082.checkfilter,1,1,nil,e,tp)
 		mg:RemoveCard(sg:GetFirst())
