@@ -5,7 +5,6 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	--change position
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(1153)
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -22,7 +21,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--destroy
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(1124)
 	e4:SetCategory(CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_FLIP)
@@ -43,19 +41,21 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	for tc in aux.Next(g) do if tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() then
-		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
-		if tc:IsPosition(POS_FACEDOWN_DEFENSE) and tc:IsControler(1-tp) then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
+	for tc in aux.Next(g) do
+		if tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() then
+			Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+			if tc:IsPosition(POS_FACEDOWN_DEFENSE) and tc:IsControler(1-tp) then
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				tc:RegisterEffect(e1)
+			end
 		end
-	end end
+	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return #eg>1 or eg:GetFirst()~=e:GetHandler()
+	return eg:IsExists(aux.TRUE,1,e:GetHandler())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end

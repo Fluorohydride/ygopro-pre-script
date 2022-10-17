@@ -17,7 +17,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--remove
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(1192)
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -39,6 +38,7 @@ function s.splimit(e,se,sp,st)
 end
 function s.cfilter(c)
 	return c:IsFaceupEx() and c:IsSetCard(0x2b,0x61) and c:IsAbleToRemoveAsCost()
+		and Duel.IsExistingTarget(Card.IsAbleToRemove,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -16,7 +16,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	for tc in aux.Next(Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)) do
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	for tc in aux.Next(g) do
 		if tc:IsType(TYPE_MONSTER) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

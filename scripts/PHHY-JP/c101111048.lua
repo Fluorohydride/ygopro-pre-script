@@ -5,7 +5,7 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST),3,99,s.chk(c))
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINDBEAST),3,99,s.spchk(c))
 	--splimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -29,7 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	--remove
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(1192)
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -39,7 +38,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--send to GY
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(1191)
 	e5:SetCategory(CATEGORY_TOGRAVE)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_TO_GRAVE)
@@ -49,14 +47,17 @@ function s.initial_effect(c)
 	e5:SetOperation(s.tgop)
 	c:RegisterEffect(e5)
 end
-function s.chk(c)
-	return  function(g) return s.splimit(nil,nil,c:GetControler()) end
-end
 function s.cfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x14d)
 end
+function s.spchk(c)
+	return	function(g)
+		return Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_GRAVE,0,3,nil)
+	end
+end
 function s.splimit(e,se,sp,st,pos,tp)
-	return Duel.IsExistingMatchingCard(s.cfilter,sp,LOCATION_GRAVE,0,3,nil)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
+		or Duel.IsExistingMatchingCard(s.cfilter,sp,LOCATION_GRAVE,0,3,nil)
 end
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonPlayer,1,e:GetHandler(),tp)
@@ -92,12 +93,15 @@ function s.chainlm(e,rp,tp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToRemove() and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return c:IsAbleToRemove()
+		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)+c
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)+e:GetHandler()
+	local c=e:GetHandler()
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
+	if c:IsRelateToEffect(e) then g:AddCard(c) end
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end
 function s.filter(c)

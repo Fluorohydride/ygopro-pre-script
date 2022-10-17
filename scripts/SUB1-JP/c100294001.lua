@@ -15,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(1122)
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYED)
@@ -44,11 +43,13 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,eg:GetFirst():GetBaseAttack())
+	local bc=eg:GetFirst()
+	Duel.SetTargetCard(bc)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,bc:GetBaseAttack())
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local bc=eg:GetFirst()
-	if bc and bc:IsRelateToBattle() and bc:IsFaceup() then
+	local bc=Duel.GetFirstTarget()
+	if bc:IsRelateToEffect(e) then
 		Duel.Damage(1-tp,bc:GetBaseAttack(),REASON_EFFECT)
 	end
 end

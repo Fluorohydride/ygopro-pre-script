@@ -21,6 +21,7 @@ end
 function s.filter(c,e,tp)
 	return c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_FISH)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.activate(e,tp,eg,ep,ev,re,rp)
 	local c=e:GetHandler()
@@ -48,14 +49,13 @@ function s.activate(e,tp,eg,ep,ev,re,rp)
 		Duel.RegisterEffect(e3,tp)
 		Duel.BreakEffect()
 	end
-	if ct>7 and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_SYNCHRO)>0
-		and aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_SMATERIAL) then
+	if ct>7 and aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_SMATERIAL)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=Duel.SelectMatchingCard(tp,s.filter,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
-		if tc then tc:SetMaterial(nil)
-			if Duel.SpecialSummon(tc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)>0 then
-				tc:CompleteProcedure()
-			end
+		tc:SetMaterial(nil)
+		if Duel.SpecialSummon(tc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)>0 then
+			tc:CompleteProcedure()
 		end
 	end
 end

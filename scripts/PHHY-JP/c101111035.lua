@@ -4,6 +4,7 @@
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	c:SetSPSummonOnce(id)
 	--material
 	aux.AddFusionProcFun2(c,s.mfilter1,s.mfilter2,true)
 	--splimit
@@ -23,8 +24,6 @@ function s.initial_effect(c)
 	e2:SetCondition(s.hspcon)
 	e2:SetOperation(s.hspop)
 	c:RegisterEffect(e2)
-	--spsum once
-	c:SetSPSummonOnce(id)
 	--indes
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -39,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
+	e4:SetHintTiming(0,TIMING_BATTLE_START)
 	e4:SetCondition(s.descon)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
@@ -56,7 +56,8 @@ function s.hspfilter(c,tp,sc)
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),s.hspfilter,1,nil,c:GetControler(),c)
+	local tp=c:GetControler()
+	return Duel.CheckReleaseGroup(tp,s.hspfilter,1,nil,tp,c)
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectReleaseGroup(tp,s.hspfilter,1,1,nil,tp,c)
@@ -64,7 +65,8 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_COST)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.bpcon() and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
+	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)

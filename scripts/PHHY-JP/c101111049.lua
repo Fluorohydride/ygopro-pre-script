@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	aux.AddLinkProcedure(c,nil,2,2,s.lchk)
 	--place from deck to field
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(1124)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -40,16 +39,18 @@ function s.dtftg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.dtfop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or Duel.Destroy(tc,REASON_EFFECT)<1 or Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
-	Duel.BreakEffect()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local sc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-	if sc then
+	if not tc:IsRelateToEffect(e) or Duel.Destroy(tc,REASON_EFFECT)==0 then return end
+	if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+		local sc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 		if sc:IsType(TYPE_FIELD) and fc then
 			Duel.SendtoGrave(fc,REASON_RULE)
 			Duel.BreakEffect()
 		end
-		Duel.MoveToField(sc,tp,tp,sc:IsType(TYPE_FIELD) and LOCATION_FZONE or LOCATION_PZONE,POS_FACEUP,true)
+		local loc=sc:IsType(TYPE_FIELD) and LOCATION_FZONE or LOCATION_PZONE
+		Duel.MoveToField(sc,tp,tp,loc,POS_FACEUP,true)
 	end
 end
