@@ -25,7 +25,7 @@ end
 function c101111025.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c101111025.filter,c:GetControler(),LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
+		and Duel.IsExistingMatchingCard(c101111025.filter,0,LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
 end
 function c101111025.tnval(e,c)
 	return e:GetHandler():IsControler(c:GetControler()) and c:IsRace(RACE_PLANT+RACE_INSECT)
