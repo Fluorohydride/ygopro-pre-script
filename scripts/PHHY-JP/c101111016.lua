@@ -66,7 +66,7 @@ function c101111016.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,1-ts,HINTMSG_SET)
 		local tg=sg:RandomSelect(1-ts,1)
 		local tc=tg:GetFirst()
-		if tc and Duel.SSet(tp,tc,tp,false)~=0 then
+		if tc and Duel.SSet(tp,tc,ts,false)~=0 then
 			Duel.ShuffleDeck(ts)
 			local c=e:GetHandler()
 			local fid=c:GetFieldID()
