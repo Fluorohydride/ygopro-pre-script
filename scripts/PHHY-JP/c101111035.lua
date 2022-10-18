@@ -11,9 +11,8 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetRange(LOCATION_EXTRA)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetValue(aux.fuslimit)
+	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
 	--spsum condition
 	local e2=Effect.CreateEffect(c)
@@ -49,6 +48,9 @@ function s.mfilter1(c)
 end
 function s.mfilter2(c)
 	return c:IsLevel(7) and c:IsRace(RACE_INSECT)
+end
+function s.splimit(e,se,sp,st)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or aux.fuslimit(e,se,sp,st)
 end
 function s.hspfilter(c,tp,sc)
 	return c:IsRace(RACE_INSECT) and c:IsDefenseAbove(2000) and c:GetEquipCount()>0 and c:IsControler(tp)
