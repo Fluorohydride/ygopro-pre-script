@@ -35,7 +35,7 @@ function c101111050.lcheck(g)
 	return g:IsExists(Card.IsType,1,nil,TYPE_RITUAL)
 end
 function c101111050.tdfilter(c)
-	return c:IsAbleToDeck() and c:IsType(TYPE_RITUAL)
+	return c:IsAbleToDeck() and c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER)
 end
 function c101111050.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
