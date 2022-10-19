@@ -20,7 +20,7 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(0x14) and s.filter(chkc) end
-	local ct=math.abs(Duel.GetFieldGroupCount(tp,LOCATION_REMOVED,0),Duel.GetFieldGroupCount(tp,0,LOCATION_REMOVED))
+	local ct=math.abs(Duel.GetFieldGroupCount(tp,LOCATION_REMOVED,0)-Duel.GetFieldGroupCount(tp,0,LOCATION_REMOVED))
 	if chk==0 then return ct>0 and Duel.IsExistingTarget(s.filter,tp,0x14,0x14,ct,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0x14,0x14,ct,ct,nil)

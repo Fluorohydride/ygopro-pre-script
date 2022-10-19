@@ -39,7 +39,6 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,id+o)
 	e4:SetLabelObject(g)
-	e4:SetCost(s.rmcost)
 	e4:SetTarget(s.rmtg)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
@@ -60,8 +59,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.cfilter(chkc) end
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingTarget(s.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	end
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,s.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,tp,LOCATION_GRAVE)
@@ -70,7 +68,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_REMOVED) and c:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_REMOVED) and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
@@ -98,38 +96,18 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 	end
 end
-function s.costfilter(c,g)
+function s.costfilter(c,g,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and g:FilterCount(aux.TRUE,c)>0
-end
-function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	if chk==0 then return true end
+		and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then
-		local g=e:GetLabelObject():Filter(s.rmfilter,nil,tp,nil)
-		return #g>0 and g:IsContains(chkc) and s.rmfilter(chkc,tp,nil)
-	end
+	local c=e:GetHandler()
 	local g=e:GetLabelObject():Filter(s.rmfilter,nil,tp,e)
-	if chk==0 then
-		if not g or #g==0 then
-			e:SetLabel(0)
-			return false
-		end
-		local costchk = e:GetLabel()==0 or Duel.CheckReleaseGroup(tp,s.costfilter,1,e:GetHandler(),g)
-		if not costchk then
-			e:SetLabel(0)
-			return false
-		end
-		return true
-	end
-	if e:GetLabel()==1 then
-		local rg=Duel.SelectReleaseGroup(tp,s.costfilter,1,1,e:GetHandler(),g)
-		if #rg>0 then
-			Duel.Release(rg,REASON_COST)
-		end
-	end
-	e:SetLabel(0)
+	if chkc then return g:IsContains(chkc) end
+	if chk==0 then return e:IsCostChecked() and #g>0
+		and Duel.CheckReleaseGroup(tp,s.costfilter,1,c,g,tp) end
+	local rg=Duel.SelectReleaseGroup(tp,s.costfilter,1,1,c,g,tp)
+	Duel.Release(rg,REASON_COST)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	local tg=g:Clone()
 	if #g>1 then
@@ -141,7 +119,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
