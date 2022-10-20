@@ -33,7 +33,6 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,id+o)
-	e4:SetCondition(s.mtcon)
 	e4:SetTarget(s.mttg)
 	e4:SetOperation(s.mtop)
 	c:RegisterEffect(e4)
@@ -78,21 +77,17 @@ end
 function s.cfilter(c,tp)
 	return not c:IsType(TYPE_TOKEN) and c:IsType(TYPE_MONSTER)
 		and c:GetOwner()==1-tp and c:IsReason(REASON_EFFECT)
-		and c:IsFaceupEx()
-end
-function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+		and c:IsFaceupEx() and c:IsCanOverlay()
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	local g=eg:Filter(s.cfilter,nil,tp)
-	local mg=g:Filter(Card.IsCanOverlay,nil)
-	if chk==0 then return #mg>0 end
+	if chk==0 then return #g>0 end
+	Duel.SetTargetCard(g)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=eg:Filter(s.cfilter,nil,tp)
-	local mg=g:Filter(aux.NecroValleyFilter(Card.IsCanOverlay),nil)
+	local mg=g:Filter(aux.NecroValleyFilter(Card.IsRelateToChain),nil)
 	if #mg>0 and c:IsRelateToChain() and c:IsType(TYPE_XYZ) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 		local og=mg:Select(tp,1,1,nil)
