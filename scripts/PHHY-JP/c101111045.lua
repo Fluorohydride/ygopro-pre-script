@@ -25,6 +25,7 @@ function c101111045.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,101111046)
+	e2:SetCondition(c101111045.descon)
 	e2:SetTarget(c101111045.destg)
 	e2:SetOperation(c101111045.desop)
 	c:RegisterEffect(e2)
@@ -53,6 +54,9 @@ function c101111045.srop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
+end
+function c101111045.descon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(Card.IsLocation,1,nil,LOCATION_ONFIELD+LOCATION_OVERLAY)
 end
 function c101111045.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) end
