@@ -3,6 +3,7 @@
 function c101111022.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101111022,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -12,18 +13,18 @@ function c101111022.initial_effect(c)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101111022,0))
+	e2:SetDescription(aux.Stringid(101111022,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(c101111022.cost)
 	e2:SetCountLimit(1,101110122)
+	e2:SetCost(c101111022.cost)
 	e2:SetTarget(c101111022.sptg)
 	e2:SetOperation(c101111022.spop)
 	c:RegisterEffect(e2)
 end
 function c101111022.filter(c)
-	return c:IsCode(97169186,66788016)
+	return c:IsCode(97169186,66788016) and c:IsAbleToHand()
 end
 function c101111022.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101111022.filter,tp,LOCATION_DECK,0,1,nil) end

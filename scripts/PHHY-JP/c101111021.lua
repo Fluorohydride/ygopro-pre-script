@@ -55,7 +55,7 @@ function c101111021.chainop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101111021.chainlm(re,rp,tp)
-	return tp==rp or not re:GetHandler():IsType(TYPE_MONSTER)
+	return tp==rp or not re:IsActiveType(TYPE_MONSTER)
 end
 function c101111021.desfilter(c)
 	return c:IsFaceup() and not c:IsRace(RACE_INSECT+RACE_PLANT)

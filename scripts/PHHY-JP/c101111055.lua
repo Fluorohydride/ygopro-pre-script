@@ -27,7 +27,6 @@ function s.thfilter(c,specify)
 	return c:IsSetCard(0x145) and (not specify or (c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER+TYPE_SPELL))) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil,true)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -66,7 +65,6 @@ function s.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g1=Duel.GetFieldGroup(tp,LOCATION_EXTRA,0)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 	if #g1==0 and #g2==0 then return end

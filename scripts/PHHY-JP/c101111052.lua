@@ -30,7 +30,6 @@ end
 function c101111052.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,101111052)~=0 then return end
 	Duel.RegisterFlagEffect(tp,101111052,RESET_PHASE+PHASE_END,0,1)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c101111052.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()

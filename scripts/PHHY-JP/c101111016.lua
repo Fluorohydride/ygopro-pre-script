@@ -27,6 +27,7 @@ function c101111016.initial_effect(c)
 	--to deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101111016,2))
+	e3:SetCategory(CATEGORY_TODECK)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DESTROYED)
 	e3:SetProperty(EFFECT_FLAG_DELAY)

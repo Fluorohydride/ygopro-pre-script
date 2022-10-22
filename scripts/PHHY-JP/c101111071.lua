@@ -17,6 +17,7 @@ function c101111071.initial_effect(c)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCondition(c101111071.etcon)
+	e2:SetTarget(c101111071.ettg)
 	e2:SetOperation(c101111071.etop)
 	c:RegisterEffect(e2)
 end
@@ -39,14 +40,16 @@ function c101111071.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c101111071.cfilter(c)
-	return (c:IsCode(93717133) or (c:IsType(TYPE_XYZ) and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,93717133))) and c:IsFaceup()
-end
 function c101111071.etcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetTurnPlayer()~=tp and c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT)
 		and c:GetReasonPlayer()==1-tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
-		and Duel.IsExistingMatchingCard(c101111071.cfilter,tp,LOCATION_MZONE,0,1,nil)
+end
+function c101111071.cfilter(c)
+	return c:IsFaceup() and (c:IsCode(93717133) or (c:IsType(TYPE_XYZ) and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,93717133)))
+end
+function c101111071.ettg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c101111071.cfilter,tp,LOCATION_ONFIELD,0,1,nil) end
 end
 function c101111071.etop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(1-tp,PHASE_DRAW,RESET_PHASE+PHASE_END,1)

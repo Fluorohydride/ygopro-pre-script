@@ -44,16 +44,16 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)
 	local g=Duel.GetMatchingGroup(s.tefilter,tp,0,LOCATION_MZONE,nil)
-	local b1 = ct>=2 and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_HAND+LOCATION_EXTRA,math.floor(ct/2),nil)
-	local b2 = #g>0 and not g:IsExists(aux.NOT(Card.IsAbleToExtra),1,nil)
+	local b1=ct>=2 and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_HAND+LOCATION_EXTRA,math.floor(ct/2),nil)
+	local b2=#g>0 and not g:IsExists(aux.NOT(Card.IsAbleToExtra),1,nil)
 	if chk==0 then return b1 or b2 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)
 	local halfct=math.floor(ct/2)
 	local g=Duel.GetMatchingGroup(s.tefilter,tp,0,LOCATION_MZONE,nil)
-	local b1 = ct>=2 and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_HAND+LOCATION_EXTRA,halfct,nil)
-	local b2 = #g>0 and not g:IsExists(aux.NOT(Card.IsAbleToExtra),1,nil)
+	local b1=ct>=2 and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_HAND+LOCATION_EXTRA,halfct,nil)
+	local b2=#g>0 and not g:IsExists(aux.NOT(Card.IsAbleToExtra),1,nil)
 	if not b1 and not b2 then return end
 	local off=1
 	local ops={}

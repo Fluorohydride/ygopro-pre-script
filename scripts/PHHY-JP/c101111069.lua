@@ -18,18 +18,24 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)~=0
 end
-function s.filter(c,tp)
+function s.filter(c,b1,b2)
 	return (c:GetType()==TYPE_SPELL or c:GetType()==TYPE_TRAP) and not c:IsCode(id)
-		and (Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and c:IsAbleToHand() or c:IsSSetable())
+		and (b1 and c:IsSSetable() or b2 and c:IsAbleToHand())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end
+	local ct=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE) then ct=ct-1 end
+	local b1=ct>0
+	local b2=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,b1,b2) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local th=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,true,th):GetFirst()
 	if not tc then return end
-	local b1,b2=tc:IsSSetable(),Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and tc:IsAbleToHand()
+	local b1=tc:IsSSetable()
+	local b2=th and tc:IsAbleToHand()
 	if b1 and (not b2 or Duel.SelectOption(tp,1153,1190)==0) then
 		Duel.SSet(tp,tc)
 		local e1=Effect.CreateEffect(e:GetHandler())

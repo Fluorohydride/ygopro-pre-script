@@ -64,6 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local xg=mg:Select(tp,1,ct,nil)
 			local tc1=xg:GetFirst()
 			while tc1 do
+				tc1:CancelToGrave()
 				local og=tc1:GetOverlayGroup()
 				if #og>0 then
 					Duel.SendtoGrave(og,REASON_RULE)

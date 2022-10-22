@@ -53,8 +53,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp,re)
-	local rc=re:GetHandler()
-	return re and re:IsActivated() and rc:IsType(TYPE_MONSTER) and c:IsSummonPlayer(1-tp)
+	return re and re:IsActivated() and re:IsActiveType(TYPE_MONSTER) and c:IsSummonPlayer(1-tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,re)

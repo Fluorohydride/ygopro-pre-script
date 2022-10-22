@@ -65,11 +65,10 @@ end
 function s.petg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local zone=1<<c:GetSequence()
-	local b1 = zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
-	local b2 = Duel.IsExistingMatchingCard(s.pfilter,tp,LOCATION_MZONE,0,1,nil)
+	local b1=zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	local b2=Duel.IsExistingMatchingCard(s.pfilter,tp,LOCATION_MZONE,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	e:SetCategory(0)
-	if not b1 and not b2 then return end
 	local off=1
 	local ops={}
 	local opval={}

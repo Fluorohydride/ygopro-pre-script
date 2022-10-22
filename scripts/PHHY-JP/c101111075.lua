@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	--xyzmat to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
@@ -29,24 +29,27 @@ end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x189) and c:IsType(TYPE_XYZ)
 end
-function s.condition(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
-	local b1=#g1>1 and g1:IsExists(Card.IsAbleToRemove,1,nil,tp,POS_FACEDOWN,REASON_RULE)
-	local b2=#g2>1 and g2:IsExists(Card.IsAbleToRemove,1,nil,1-tp,POS_FACEDOWN,REASON_RULE)
-	if chk==0 then return Duel.IsPlayerCanRemove(tp) and (b1 or b2) end
+	local b1=#g1>1 and Duel.IsPlayerCanRemove(tp)
+		and g1:IsExists(Card.IsAbleToRemove,1,nil,tp,POS_FACEDOWN,REASON_RULE)
+	local b2=#g2>1 and Duel.IsPlayerCanRemove(1-tp)
+		and g2:IsExists(Card.IsAbleToRemove,1,nil,1-tp,POS_FACEDOWN,REASON_RULE)
+	if chk==0 then return b1 or b2 end
 	local g3=g1+g2
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g3,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerCanRemove(tp) then return end
 	local g1=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
-	local b1=#g1>1 and g1:IsExists(Card.IsAbleToRemove,1,nil,tp,POS_FACEDOWN,REASON_RULE)
-	local b2=#g2>1 and g2:IsExists(Card.IsAbleToRemove,1,nil,1-tp,POS_FACEDOWN,REASON_RULE)
+	local b1=#g1>1 and Duel.IsPlayerCanRemove(tp)
+		and g1:IsExists(Card.IsAbleToRemove,1,nil,tp,POS_FACEDOWN,REASON_RULE)
+	local b2=#g2>1 and Duel.IsPlayerCanRemove(1-tp)
+		and g2:IsExists(Card.IsAbleToRemove,1,nil,1-tp,POS_FACEDOWN,REASON_RULE)
 	if b1 then
 		local ct=#g1-1
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -88,6 +91,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 				and bc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 				and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+				Duel.BreakEffect()
 				Duel.SpecialSummon(bc,0,tp,tp,false,false,POS_FACEUP)
 			end
 		end

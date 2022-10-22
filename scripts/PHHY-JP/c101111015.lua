@@ -88,7 +88,6 @@ function c101111015.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffect(e3)
-		tc:RegisterFlagEffect(101111015,RESET_EVENT+RESETS_STANDARD,0,0)
 	end
 end
 function c101111015.eqlimit(e,c)

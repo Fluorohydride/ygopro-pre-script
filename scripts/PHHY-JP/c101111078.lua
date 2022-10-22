@@ -6,7 +6,7 @@ function c101111078.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_BATTLE_START)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCondition(c101111078.condition)
 	e1:SetTarget(c101111078.target)
 	e1:SetOperation(c101111078.operation)
@@ -14,9 +14,6 @@ function c101111078.initial_effect(c)
 end
 function c101111078.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)-Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>=2
-end
-function c101111078.tgfilter(c)
-	return c:IsType(TYPE_MONSTER)
 end
 function c101111078.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mc=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)

@@ -18,6 +18,7 @@ function c101111062.initial_effect(c)
 	e2:SetTarget(c101111062.sptg)
 	e2:SetOperation(c101111062.spop)
 	c:RegisterEffect(e2)
+	--control
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101111062,1))
 	e3:SetCategory(CATEGORY_CONTROL)
