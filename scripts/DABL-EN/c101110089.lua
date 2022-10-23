@@ -30,7 +30,7 @@ end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetBattleTarget()
 	if chk==0 then return tc and tc:IsControler(1-tp) and tc:IsAbleToRemove() end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,1-tp,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
@@ -44,7 +44,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToRemove() end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,c,1,tp,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,c,1,0,0)
 end
 function s.mgfilter(c,e,tp,sync)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
@@ -67,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 				e1:SetValue(LOCATION_REMOVED)
-				e1:SetReset(RESET_EVENT+RESETS_REDIRECT-RESET_MSCHANGE)
+				e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 				tc:RegisterEffect(e1,true)
 			end
 		end

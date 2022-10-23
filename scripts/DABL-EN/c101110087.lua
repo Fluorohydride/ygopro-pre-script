@@ -55,11 +55,11 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) then return end
+	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.flagtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -77,7 +77,7 @@ function s.flagop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetValue(LOCATION_REMOVED)
-	e1:SetReset(RESET_EVENT+RESETS_REDIRECT+RESET_TOFIELD-RESET_MSCHANGE)
+	e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 	tc:RegisterEffect(e1)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -89,7 +89,7 @@ end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHand() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,tp,LOCATION_REMOVED)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

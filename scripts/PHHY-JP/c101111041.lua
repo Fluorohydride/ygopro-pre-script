@@ -70,7 +70,7 @@ function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 	local attr=Duel.AnnounceAttribute(tp,1,s.GetLegalAttributesOnly(tp))
 	Duel.SetTargetParam(attr)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,tp,LOCATION_PZONE)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,PLAYER_ALL,0)
 end
@@ -135,7 +135,7 @@ function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

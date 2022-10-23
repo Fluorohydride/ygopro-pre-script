@@ -21,7 +21,7 @@ function c101110083.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101110083,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCountLimit(1,101110183)
+	e2:SetCountLimit(1,101110183)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
 	e2:SetCondition(c101110083.descon)
 	e2:SetTarget(c101110083.destg)
@@ -57,17 +57,14 @@ function c101110083.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	e:SetLabelObject(bc)
-	return c==Duel.GetAttacker() and aux.dsercon(e)
-		and bc and c:IsStatus(STATUS_OPPO_BATTLE) and bc:IsOnField() and bc:IsRelateToBattle()
+	return aux.dsercon(e) and bc and bc:IsRelateToBattle() and bc:IsOnField()
+		and c:IsStatus(STATUS_OPPO_BATTLE)
 end
 function c101110083.descon2(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttacker()
-	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-	local c=e:GetHandler()
-	local bc=tc:GetBattleTarget()
+	local tc,bc=Duel.GetBattleMonster(tp)
 	e:SetLabelObject(bc)
-	return bc and tc:IsStatus(STATUS_OPPO_BATTLE) and bc:IsOnField() and bc:IsRelateToBattle()
-		and tc and tc:IsFaceup() and tc:IsType(TYPE_PENDULUM)
+	return tc and bc and tc:IsStatus(STATUS_OPPO_BATTLE) and bc:IsOnField() and bc:IsRelateToBattle()
+		and tc:IsFaceup() and tc:IsType(TYPE_PENDULUM)
 end
 function c101110083.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -75,7 +72,7 @@ function c101110083.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101110083.desop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetLabelObject()
-	if bc:IsRelateToBattle() then
+	if bc:IsRelateToBattle() and bc:IsControler(1-tp) then
 		Duel.Destroy(bc,REASON_EFFECT)
 	end
 end

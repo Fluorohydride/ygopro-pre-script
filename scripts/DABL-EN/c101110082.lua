@@ -4,7 +4,7 @@ local s,id,o=GetID()
 function c101110082.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_HANDES)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,101110082)
@@ -26,11 +26,11 @@ function c101110082.initial_effect(c)
 end
 function c101110082.cfilter(c,e,tp,b1,b2)
 	return c:IsRace(RACE_FIEND) and not c:IsPublic()
-		and (b1 and c:IsDiscardable() or b2 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP))
+		and (b1 and c:IsDiscardable() or b2 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c101110082.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local b1=c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	local b1=c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	local b2=c:IsDiscardable()
 	if chk==0 then
 		if c:IsPublic() then return false end
@@ -43,11 +43,12 @@ function c101110082.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=g:GetFirst()
 	Duel.SetTargetCard(tc)
 	Duel.ConfirmCards(1-tp,tc)
+	Duel.ShuffleHand(tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function c101110082.checkfilter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101110082.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -56,6 +57,7 @@ function c101110082.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=mg:FilterSelect(tp,c101110082.checkfilter,1,1,nil,e,tp)
+		if #sg==0 return return end
 		mg:RemoveCard(sg:GetFirst())
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		Duel.SendtoGrave(mg,REASON_EFFECT+REASON_DISCARD)
@@ -63,16 +65,17 @@ function c101110082.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101110082.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
-	return rc:IsRelateToBattle() and rc:IsStatus(STATUS_OPPO_BATTLE) and rc:IsControler(tp)
+	return rc:IsRelateToBattle() and rc:IsControler(tp)
 		and rc:IsFaceup() and rc:IsRace(RACE_FIEND)
 end
 function c101110082.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToHand() end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
 end
 function c101110082.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
+	if c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end
 end
