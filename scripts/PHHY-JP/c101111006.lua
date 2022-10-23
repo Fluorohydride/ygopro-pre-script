@@ -89,7 +89,7 @@ end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetDecktopGroup(1-tp,3)
-	if #tg<3 then return end
+	if #tg==0 then return end
 	Duel.DisableShuffleCheck()
 	if Duel.Remove(tg,POS_FACEDOWN,REASON_EFFECT)>0
 		and c:IsFaceup() and c:IsRelateToChain() then
