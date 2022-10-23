@@ -57,7 +57,7 @@ function c101110082.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=mg:FilterSelect(tp,c101110082.checkfilter,1,1,nil,e,tp)
-		if #sg==0 return return end
+		if #sg==0 then return end
 		mg:RemoveCard(sg:GetFirst())
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		Duel.SendtoGrave(mg,REASON_EFFECT+REASON_DISCARD)
