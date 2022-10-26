@@ -2,7 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **October 15, 2022**: Photon Hypernova (PHHY-JP) : `101111XXX`
 - **November 5, 2022**: Selection 5 (SLF1-JP) : `100293XXX`
 - **December 3, 2022**: Structure Deck: Forest of the Traptrix (SD45-JP) : `100345XXX`
 - **December 24, 2022**: Secret Utility Box (SUB1-JP) : `100294XXX`
@@ -200,3 +199,4 @@
 - DIMENSION FORCE (DIFO-JP) : `101108XXX`
 - POWER OF THE ELEMENTS (POTE-JP): `101109XXX`
 - DARKWING BLAST (DABL-JP): `101110XXX`
+- Photon Hypernova (PHHY-JP) : `101111XXX`
