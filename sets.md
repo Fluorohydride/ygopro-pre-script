@@ -3,12 +3,14 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **November 5, 2022**: Selection 5 (SLF1-JP) : `100293XXX`
+- **December 2, 2022**: Yu-Gi-Oh! OCG Stories Volume 1 promotional card (YOS1-JP) : `100296XXX`
 - **December 3, 2022**: Structure Deck: Forest of the Traptrix (SD45-JP) : `100345XXX`
 - **December 24, 2022**: Secret Utility Box (SUB1-JP) : `100294XXX`
 - **January 4, 2023**: Yu-Gi-Oh! OCG Structures Volume 6 promotional card (YO06-JP) : `100295XXX`
 - **January 14, 2023**: CYBERSTORM ACCESS (CYAC-JP) : `101112XXX`
 
 # Announced
+- **December 17, 2022**: Premium Pack 2023 (23PP-JP) : `100297XXX`
 
 # Archived
 ## Other packs
