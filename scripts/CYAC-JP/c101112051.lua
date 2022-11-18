@@ -59,7 +59,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if g then
 		local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-		Duel.SendtoHand(sg,nil,REASON_EFFECT)>0 then
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
