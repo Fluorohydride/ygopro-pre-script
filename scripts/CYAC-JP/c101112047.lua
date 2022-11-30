@@ -37,13 +37,13 @@ function c101112047.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_CUSTOM+101112047)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1,101112048)
+	e4:SetCountLimit(1,101112047+100)
 	e4:SetTarget(c101112047.sptg)
 	e4:SetOperation(c101112047.spop)
 	c:RegisterEffect(e4)
 end
 function c101112047.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and c:IsFaceupEx()
 end
 function c101112047.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(c101112047.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
@@ -55,18 +55,9 @@ function c101112047.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			ct=ct+1
 		end
 	end
-	Debug.Message(ct)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,ct,nil)
-	if g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
-		local loc=LOCATION_GRAVE
-		if g:IsExists(Card.IsLocation,1,nil,LOCATION_ONFIELD) then
-			loc=LOCATION_ONFIELD+LOCATION_GRAVE
-		end
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,1-tp,loc)
-	else
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
-	end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function c101112047.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

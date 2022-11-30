@@ -18,14 +18,11 @@ function c101112033.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BE_MATERIAL)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,101112034)
+	e2:SetCountLimit(1,101112033+100)
 	e2:SetCondition(c101112033.thcon)
 	e2:SetTarget(c101112033.thtg)
 	e2:SetOperation(c101112033.thop)
 	c:RegisterEffect(e2)
-end
-function c101112033.filter0(c)
-	return c:IsOnField() and c:IsAbleToRemove()
 end
 function c101112033.filter1(c,e)
 	return c:IsOnField() and c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
@@ -43,7 +40,7 @@ end
 function c101112033.fsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp
-		local mg1=Duel.GetFusionMaterial(tp):Filter(c101112033.filter0,nil)
+		local mg1=Duel.GetFusionMaterial(tp):Filter(c101112033.filter1,nil)
 		local mg2=Duel.GetMatchingGroup(c101112033.filter3,tp,LOCATION_GRAVE,0,nil)
 		mg1:Merge(mg2)
 		aux.FCheckAdditional=c101112033.fcheck

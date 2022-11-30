@@ -46,8 +46,7 @@ function c101112048.filter(c)
 end
 function c101112048.spcon(e)
 	local tp=e:GetHandlerPlayer()
-	local g=Duel.GetMatchingGroup(c101112048.filter,tp,LOCATION_MZONE,0,nil)
-	return #g>0
+	return Duel.IsExistingMatchingCard(c101112048.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101112048.rmfilter(c)
 	return c:IsType(TYPE_LINK) and c:IsLinkBelow(3) and c:IsAbleToRemoveAsCost()
