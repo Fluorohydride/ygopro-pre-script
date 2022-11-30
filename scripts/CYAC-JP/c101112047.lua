@@ -1,10 +1,10 @@
---防火龙·奇点
+--ファイアウォール・ドラゴン・シンギュラリティ
 --Script by 奥克斯
 function c101112047.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),3)
 	c:EnableReviveLimit()
-	--return tohand 
+	--return tohand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101112047,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_ATKCHANGE)
@@ -16,8 +16,8 @@ function c101112047.initial_effect(c)
 	e1:SetCountLimit(1,101112047)
 	e1:SetTarget(c101112047.thtg)
 	e1:SetOperation(c101112047.thop)
-	c:RegisterEffect(e1)	
-	--Special Summon 
+	c:RegisterEffect(e1)
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -42,8 +42,7 @@ function c101112047.initial_effect(c)
 	e4:SetOperation(c101112047.spop)
 	c:RegisterEffect(e4)
 end
-
-function c101112047.filter(c)   
+function c101112047.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function c101112047.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -60,9 +59,9 @@ function c101112047.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,ct,nil)
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
-		local loc=LOCATION_GRAVE 
+		local loc=LOCATION_GRAVE
 		if g:IsExists(Card.IsLocation,1,nil,LOCATION_ONFIELD) then
-			loc=LOCATION_ONFIELD+LOCATION_GRAVE 
+			loc=LOCATION_ONFIELD+LOCATION_GRAVE
 		end
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,1-tp,loc)
 	else
@@ -73,7 +72,7 @@ function c101112047.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if #g==0 then return end
-	local ct=Duel.SendtoHand(g,nil,REASON_EFFECT)   
+	local ct=Duel.SendtoHand(g,nil,REASON_EFFECT)
 	if ct>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -83,7 +82,6 @@ function c101112047.thop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-
 function c101112047.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()
 	if c:IsPreviousControler(1-tp) then seq=seq+16 end
@@ -116,4 +114,4 @@ function c101112047.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
-end  
+end

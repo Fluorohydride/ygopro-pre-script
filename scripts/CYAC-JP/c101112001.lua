@@ -1,4 +1,4 @@
---防火防守者
+--ファイアウォール・ディフェンサー
 --Script by 奥克斯
 function c101112001.initial_effect(c)
 	--Special Summon
@@ -25,14 +25,13 @@ function c101112001.initial_effect(c)
 	e2:SetOperation(c101112001.repop)
 	c:RegisterEffect(e2)
 end
-
 function c101112001.counterfilter(c)
 	return c:IsRace(RACE_CYBERSE)
 end
 function c101112001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and rc:IsRace(RACE_CYBERSE) 
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and rc:IsRace(RACE_CYBERSE)
 end
 function c101112001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(101112001,tp,ACTIVITY_SPSUMMON)==0 end
@@ -64,7 +63,6 @@ function c101112001.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function c101112001.repfilter(c,tp)
 	return not c:IsReason(REASON_REPLACE) and c:IsFaceup() and c:IsSetCard(0x28f) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_EFFECT)
 end

@@ -1,4 +1,4 @@
---防火幻影
+--ファイアウォール・ファントム
 --Script by 奥克斯
 function c101112002.initial_effect(c)
 	--Search
@@ -12,21 +12,20 @@ function c101112002.initial_effect(c)
 	e1:SetTarget(c101112002.thtg)
 	e1:SetOperation(c101112002.thop)
 	c:RegisterEffect(e1)
-	--to deck 
-	local e2=Effect.CreateEffect(c)  
+	--to deck
+	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_GRAVE_ACTION)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,101112003)
 	e2:SetCost(aux.bfgcost)
 	e2:SetOperation(c101112002.op)
-	c:RegisterEffect(e2)		
+	c:RegisterEffect(e2)
 end
-
 function c101112002.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and rc:IsRace(RACE_CYBERSE) 
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and rc:IsRace(RACE_CYBERSE)
 end
 function c101112002.thfilter(c)
 	return c:IsSetCard(0x118) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
@@ -48,7 +47,6 @@ function c101112002.thop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function c101112002.op(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

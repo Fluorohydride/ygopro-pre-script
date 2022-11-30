@@ -1,4 +1,4 @@
---保护码语者
+--プロテクトコード・トーカー
 --Script by 奥克斯
 function c101112048.initial_effect(c)
 	--link summon
@@ -36,12 +36,11 @@ function c101112048.initial_effect(c)
 	e3:SetCost(c101112048.spcost)
 	e3:SetTarget(c101112048.sptg)
 	e3:SetOperation(c101112048.spop)
-	c:RegisterEffect(e3)  
+	c:RegisterEffect(e3)
 end
 function c101112048.imetg(e,c)
 	return c:IsType(TYPE_LINK) and c:IsLinkAbove(4)
 end
-
 function c101112048.filter(c)
 	return c:IsType(TYPE_LINK) and c:IsSetCard(0x28f)
 end

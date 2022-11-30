@@ -1,4 +1,4 @@
---电子界贤者
+--サイバース・セイジ
 --Script by 奥克斯
 function c101112033.initial_effect(c)
 	c:EnableReviveLimit()
@@ -24,7 +24,6 @@ function c101112033.initial_effect(c)
 	e2:SetOperation(c101112033.thop)
 	c:RegisterEffect(e2)
 end
-
 function c101112033.filter0(c)
 	return c:IsOnField() and c:IsAbleToRemove()
 end
@@ -101,13 +100,12 @@ function c101112033.fspop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	aux.FCheckAdditional=nil
 end
-
 function c101112033.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO
 end
 function c101112033.thfilter(c)
 	local b1=c:IsRace(RACE_CYBERSE)
-	local b2=c:GetType()==TYPE_SPELL+TYPE_RITUAL 
+	local b2=c:GetType()==TYPE_SPELL+TYPE_RITUAL
 	return (b1 or b2) and c:IsAbleToHand()
 end
 function c101112033.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -122,4 +120,4 @@ function c101112033.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
-end 
+end

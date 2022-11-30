@@ -1,11 +1,11 @@
---电子界无效亚龙
+--サイバース・ディセーブルム
 --Script by 奥克斯
 function c101112034.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,c101112034.matfilter,aux.FilterBoolFunction(Card.IsRace,RACE_CYBERSE),true)
 	--Special Summon
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101112034,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,7 +13,7 @@ function c101112034.initial_effect(c)
 	e1:SetCountLimit(1,101112034)
 	e1:SetTarget(c101112034.sptg)
 	e1:SetOperation(c101112034.spop)
-	c:RegisterEffect(e1)	  
+	c:RegisterEffect(e1)
 	--negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101112034,1))
@@ -32,7 +32,6 @@ end
 function c101112034.matfilter(c)
 	return c:IsFusionType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and c:IsRace(RACE_CYBERSE)
 end
-
 function c101112034.spfilter(c,e,tp)
 	return c:IsRace(RACE_CYBERSE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -49,8 +48,8 @@ function c101112034.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		local tc=g:GetFirst()
 		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
-			and c:IsFaceup() and c:IsRelateToChain() 
-			and tc:GetLevel()>0 and c:GetLevel()~=tc:GetLevel() 
+			and c:IsFaceup() and c:IsRelateToChain()
+			and tc:GetLevel()>0 and c:GetLevel()~=tc:GetLevel()
 			and Duel.SelectYesNo(tp,aux.Stringid(101112034,2)) then
 			Duel.BreakEffect()
 			local e1=Effect.CreateEffect(c)
@@ -62,7 +61,6 @@ function c101112034.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function c101112034.cfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK) and c:IsLinkAbove(4)
 end
@@ -77,4 +75,4 @@ function c101112034.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101112034.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
-end  
+end
