@@ -3,6 +3,7 @@
 function c100297018.initial_effect(c)
 	--SpecialSummon Hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100297018,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -16,17 +17,18 @@ function c100297018.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,100297019)
+	e2:SetCountLimit(1,100297018+100)
 	e2:SetTarget(c100297018.reptg)
 	e2:SetValue(c100297018.repval)
 	c:RegisterEffect(e2)
 	--to hand
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100297018,1))
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
-	e3:SetCountLimit(1,100297020)
+	e3:SetCountLimit(1,100297018+200)
 	e3:SetCondition(c100297018.thcon)
 	e3:SetTarget(c100297018.thtg)
 	e3:SetOperation(c100297018.thop)
@@ -58,7 +60,8 @@ function c100297018.rmfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
 end
 function c100297018.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(c100297018.repfilter,1,nil,tp) and Duel.GetMatchingGroupCount(c100297018.rmfilter,tp,LOCATION_GRAVE,0,nil,e,tp)>0 end
+	if chk==0 then return eg:IsExists(c100297018.repfilter,1,nil,tp)
+		and Duel.IsExistingMatchingCard(c100297018.rmfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g=Duel.SelectMatchingCard(tp,c100297018.rmfilter,tp,LOCATION_GRAVE,0,1,1,nil)

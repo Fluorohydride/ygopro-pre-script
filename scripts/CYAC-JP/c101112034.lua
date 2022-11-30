@@ -66,7 +66,7 @@ function c101112034.cfilter(c)
 end
 function c101112034.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetMatchingGroupCount(c101112034.cfilter,tp,LOCATION_MZONE,0,nil)==0 then return end
+	if not Duel.IsExistingMatchingCard(c101112034.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
 end
 function c101112034.negtg(e,tp,eg,ep,ev,re,r,rp,chk)

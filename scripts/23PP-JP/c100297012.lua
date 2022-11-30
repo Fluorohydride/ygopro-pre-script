@@ -19,7 +19,7 @@ function c100297012.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetCountLimit(1,100297013)
+	e2:SetCountLimit(1,100297012+100)
 	e2:SetTarget(c100297012.thtg)
 	e2:SetOperation(c100297012.thop)
 	c:RegisterEffect(e2)
@@ -38,14 +38,10 @@ function c100297012.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
-	c100297012.skipop(e,tp)
-end
-function c100297012.skipop(e,tp)
-	local ph=Duel.GetCurrentPhase()
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SKIP_BP)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetLabel(Duel.GetTurnCount())
 	e1:SetCondition(c100297012.skipcon)
@@ -55,7 +51,6 @@ end
 function c100297012.skipcon(e)
 	return Duel.GetTurnCount()~=e:GetLabel()
 end
-
 function c100297012.thfilter(c)
 	return c:IsSetCard(0x55,0x7b) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end

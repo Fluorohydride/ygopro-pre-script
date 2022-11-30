@@ -1,11 +1,11 @@
 --武装再生
 --Script by 奥克斯
 function c100297001.initial_effect(c)
-	----Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetHintTiming(TIMING_BATTLED,TIMINGS_CHECK_MONSTER+TIMING_BATTLED)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMINGS_CHECK_MONSTER+TIMING_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100297001+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100297001.target)
@@ -13,10 +13,9 @@ function c100297001.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100297001.filter(c,tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	local b1=c:IsSSetable(true) and ft>0
-	local b2=Duel.GetMatchingGroupCount(c100297001.eqfilter,tp,LOCATION_MZONE,0,nil,c,tp)>0
-	return c:IsType(TYPE_EQUIP) and (b1 or b2)
+	if not c:IsType(TYPE_EQUIP) then return false end
+	return c:IsSSetable(true)
+		or Duel.IsExistingMatchingCard(c100297001.eqfilter,tp,LOCATION_MZONE,0,1,nil,c,tp)
 end
 function c100297001.eqfilter(c,ec,tp)
 	if c:IsFacedown() then return false end
@@ -30,8 +29,12 @@ function c100297001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			return chkc:IsLocation(LOCATION_GRAVE) and c100297001.filter(chkc,tp)
 		end
 	end
-	local b1=Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)
-	local b2=Duel.GetCurrentPhase()~=PHASE_DAMAGE and Duel.IsExistingTarget(c100297001.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE) then ft=ft-1 end
+	local b1=aux.dscon()
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)
+	local b2=Duel.GetCurrentPhase()~=PHASE_DAMAGE and ft>0
+		and Duel.IsExistingTarget(c100297001.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,tp)
 	if chk==0 then return b1 or b2 end
 	local op=0
 	if b1 and b2 then
@@ -68,7 +71,7 @@ function c100297001.activate(e,tp,eg,ep,ev,re,r,rp)
 		if not tc:IsRelateToEffect(e) then return end
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 		local b1=tc:IsSSetable(true) and ft>0
-		local b2=Duel.GetMatchingGroupCount(c100297001.eqfilter,tp,LOCATION_MZONE,0,nil,tc,tp)>0
+		local b2=Duel.IsExistingMatchingCard(c100297001.eqfilter,tp,LOCATION_MZONE,0,1,nil,tc,tp)
 		if b1 and b2 then
 			op=Duel.SelectOption(tp,aux.Stringid(100297001,2),aux.Stringid(100297001,3))
 		elseif b1 then
@@ -79,11 +82,10 @@ function c100297001.activate(e,tp,eg,ep,ev,re,r,rp)
 		if op==0 then
 			Duel.SSet(tp,tc)
 		else
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 			local tgc=Duel.SelectMatchingCard(tp,c100297001.eqfilter,tp,LOCATION_MZONE,0,1,1,nil,tc,tp):GetFirst()
 			if not tgc then return end
 			Duel.Equip(tp,tc,tgc)
 		end
 	end
 end
-
