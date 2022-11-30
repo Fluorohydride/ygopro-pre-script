@@ -1,4 +1,4 @@
---光子跳跃者
+--フォトン・ジャンパー
 --Script by 奥克斯
 function c100297012.initial_effect(c)
 	--attack announce specialsummon
@@ -13,7 +13,7 @@ function c100297012.initial_effect(c)
 	e1:SetTarget(c100297012.sptg)
 	e1:SetOperation(c100297012.spop)
 	c:RegisterEffect(e1)
-	--search 
+	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

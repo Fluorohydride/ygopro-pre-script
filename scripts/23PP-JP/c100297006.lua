@@ -1,4 +1,4 @@
---阴之光
+--陰の光
 --Script by 奥克斯
 function c100297006.initial_effect(c)
 	--Activate
@@ -13,7 +13,7 @@ function c100297006.initial_effect(c)
 	e1:SetOperation(c100297006.activate)
 	c:RegisterEffect(e1)
 	--extra summon
-	local e2=Effect.CreateEffect(c)  
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,100297007)
@@ -21,7 +21,7 @@ function c100297006.initial_effect(c)
 	e2:SetCost(c100297006.cost2)
 	e2:SetTarget(c100297006.sumtg)
 	e2:SetOperation(c100297006.sumop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
 function c100297006.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_BATTLE_PHASE)==0 end
@@ -65,7 +65,6 @@ function c100297006.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function c100297006.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,100297006)==0
 end
@@ -95,4 +94,4 @@ function c100297006.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	Duel.RegisterFlagEffect(tp,100297006,RESET_PHASE+PHASE_END,0,1)
-end 
+end

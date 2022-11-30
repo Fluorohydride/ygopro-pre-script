@@ -1,4 +1,4 @@
---表里一体
+--表裏一体
 --Script by 奥克斯
 function c100297005.initial_effect(c)
 	--Activate
@@ -13,7 +13,7 @@ function c100297005.initial_effect(c)
 	e1:SetLabel(0)
 	c:RegisterEffect(e1)
 	--to deck
-	local e2=Effect.CreateEffect(c)  
+	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -22,16 +22,15 @@ function c100297005.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100297005.tg)
 	e2:SetOperation(c100297005.op)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
-
 function c100297005.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	if chk==0 then return true end
 end
 function c100297005.costfilter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) 
-		and c:GetOriginalLevel()>0 
+	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
+		and c:GetOriginalLevel()>0
 		and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(c100297005.spfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,nil,c,e,tp)
 end
@@ -39,7 +38,7 @@ function c100297005.spfilter(c,tc,e,tp)
 	if c:GetOriginalAttribute()==tc:GetOriginalAttribute() then return end
 	local b1=c:IsLocation(LOCATION_HAND)
 	local b2=c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
-	return  c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) 
+	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
 		and c:GetOriginalRace()==tc:GetOriginalRace()
 		and c:GetOriginalLevel()==tc:GetOriginalLevel()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (b1 or b2)
@@ -66,7 +65,6 @@ function c100297005.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function c100297005.tdfilter(c,e)
 	return c:IsCanBeEffectTarget(e) and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsAbleToDeck()
 end

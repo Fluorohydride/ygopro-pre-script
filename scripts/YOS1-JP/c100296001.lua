@@ -1,8 +1,8 @@
---慈爱之贤者-西埃拉
+--慈愛の賢者－シエラ
 --Script by 奥克斯
 function c100296001.initial_effect(c)
-	--specialSummon 
-	local e1=Effect.CreateEffect(c)  
+	--specialSummon
+	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -10,9 +10,9 @@ function c100296001.initial_effect(c)
 	e1:SetCost(c100296001.spcost)
 	e1:SetTarget(c100296001.sptg)
 	e1:SetOperation(c100296001.spop)
-	c:RegisterEffect(e1)	   
+	c:RegisterEffect(e1)
 	--control
-	local e2=Effect.CreateEffect(c)  
+	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100296001,0))
 	e2:SetCategory(CATEGORY_CONTROL+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -21,7 +21,7 @@ function c100296001.initial_effect(c)
 	e2:SetCost(c100296001.ctcost)
 	e2:SetTarget(c100296001.cttg)
 	e2:SetOperation(c100296001.ctop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -34,7 +34,6 @@ function c100296001.initial_effect(c)
 	e3:SetOperation(c100296001.thop)
 	c:RegisterEffect(e3)
 end
-
 function c100296001.costfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
 end
@@ -52,7 +51,6 @@ function c100296001.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-
 function c100296001.rmfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
 end
@@ -67,7 +65,7 @@ function c100296001.spfilter(c,e,tp)
 end
 function c100296001.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsControlerCanBeChanged() 
+	if chk==0 then return c:IsControlerCanBeChanged()
 		and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(c100296001.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,c,1,0,0)
@@ -82,7 +80,6 @@ function c100296001.ctop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function c100296001.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
@@ -103,4 +100,3 @@ function c100296001.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

@@ -1,4 +1,4 @@
---同调区域
+--シンクロ・ゾーン
 --Script by 奥克斯
 function c100297017.initial_effect(c)
 	--Activate
@@ -27,7 +27,7 @@ function c100297017.initial_effect(c)
 	e2:SetCondition(c100297017.spcon)
 	e2:SetTarget(c100297017.sptg)
 	e2:SetOperation(c100297017.spop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 	--synchro summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -40,13 +40,11 @@ function c100297017.initial_effect(c)
 	e3:SetCost(c100297017.sccost)
 	e3:SetTarget(c100297017.sctg)
 	e3:SetOperation(c100297017.scop)
-	c:RegisterEffect(e3)	 
+	c:RegisterEffect(e3)
 end
-
 function c100297017.tglimit(e,c)
 	return not c:IsType(TYPE_SYNCHRO)
 end
-
 function c100297017.cfilter(c,tp)
 	return not c:IsType(TYPE_TUNER) and c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
 end
@@ -77,7 +75,6 @@ function c100297017.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-
 function c100297017.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end

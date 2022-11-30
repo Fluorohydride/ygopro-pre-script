@@ -1,8 +1,8 @@
---武之贤者-阿卡丝
+--武の賢者－アーカス
 --Script by 奥克斯
 function c100297018.initial_effect(c)
 	--SpecialSummon Hand
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -10,7 +10,7 @@ function c100297018.initial_effect(c)
 	e1:SetCost(c100297018.spcost)
 	e1:SetTarget(c100297018.sptg)
 	e1:SetOperation(c100297018.spop)
-	c:RegisterEffect(e1)	   
+	c:RegisterEffect(e1)
 	--destroy replace
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -19,7 +19,7 @@ function c100297018.initial_effect(c)
 	e2:SetCountLimit(1,100297019)
 	e2:SetTarget(c100297018.reptg)
 	e2:SetValue(c100297018.repval)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -32,7 +32,6 @@ function c100297018.initial_effect(c)
 	e3:SetOperation(c100297018.thop)
 	c:RegisterEffect(e3)
 end
-
 function c100297018.costfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
 end
@@ -50,11 +49,10 @@ function c100297018.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-
 function c100297018.repfilter(c,tp)
-	return not c:IsReason(REASON_REPLACE) and c:IsType(TYPE_LINK) 
-		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) 
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) 
+	return not c:IsReason(REASON_REPLACE) and c:IsType(TYPE_LINK)
+		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
+		and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function c100297018.rmfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
@@ -71,7 +69,6 @@ end
 function c100297018.repval(e,c)
 	return c100297018.repfilter(c,e:GetHandlerPlayer())
 end
-
 function c100297018.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
@@ -92,4 +89,3 @@ function c100297018.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

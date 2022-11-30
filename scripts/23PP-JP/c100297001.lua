@@ -20,7 +20,7 @@ function c100297001.filter(c,tp)
 end
 function c100297001.eqfilter(c,ec,tp)
 	if c:IsFacedown() then return false end
-	return not ec:IsForbidden() and ec:CheckUniqueOnField(tp) and ec:CheckEquipTarget(c) 
+	return not ec:IsForbidden() and ec:CheckUniqueOnField(tp) and ec:CheckEquipTarget(c)
 end
 function c100297001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
@@ -87,4 +87,3 @@ function c100297001.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-  

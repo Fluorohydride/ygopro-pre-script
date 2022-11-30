@@ -1,4 +1,4 @@
---猫玉米
+--ネコーン
 --Script by 奥克斯
 function c100297011.initial_effect(c)
 	--Search
@@ -11,7 +11,7 @@ function c100297011.initial_effect(c)
 	e1:SetTarget(c100297011.thtg1)
 	e1:SetOperation(c100297011.thop1)
 	c:RegisterEffect(e1)
-	--deck to hand 
+	--deck to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -39,7 +39,6 @@ function c100297011.thop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tg)
 	end
 end
-
 function c100297011.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
@@ -66,4 +65,4 @@ function c100297011.thop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tg)
 	end
-end 
+end

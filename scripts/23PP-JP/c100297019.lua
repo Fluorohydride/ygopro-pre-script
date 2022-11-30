@@ -1,8 +1,8 @@
---智之贤者-希默尔
+--智の賢者－ヒンメル
 --Script by 奥克斯
 function c100297019.initial_effect(c)
 	--SpecialSummon Hand
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -10,7 +10,7 @@ function c100297019.initial_effect(c)
 	e1:SetCost(c100297019.spcost)
 	e1:SetTarget(c100297019.sptg)
 	e1:SetOperation(c100297019.spop)
-	c:RegisterEffect(e1)	   
+	c:RegisterEffect(e1)
 	--Disable
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100297019,0))
@@ -36,7 +36,6 @@ function c100297019.initial_effect(c)
 	e3:SetOperation(c100297019.thop)
 	c:RegisterEffect(e3)
 end
-
 function c100297019.costfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
 end
@@ -54,7 +53,6 @@ function c100297019.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-
 function c100297019.tfilter(c,tp)
 	return c:IsType(TYPE_LINK) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
@@ -63,7 +61,7 @@ function c100297019.discon(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return Duel.IsChainDisablable(ev) and rp==1-tp and tg and tg:IsExists(c100297019.tfilter,1,nil,tp) 
+	return Duel.IsChainDisablable(ev) and rp==1-tp and tg and tg:IsExists(c100297019.tfilter,1,nil,tp)
 end
 function c100297019.rmfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
@@ -81,7 +79,6 @@ end
 function c100297019.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
-
 function c100297019.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
@@ -102,4 +99,3 @@ function c100297019.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

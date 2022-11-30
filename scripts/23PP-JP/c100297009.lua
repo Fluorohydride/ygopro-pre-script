@@ -1,4 +1,4 @@
---蔷薇占术师
+--薔薇占術師
 --Script by 奥克斯
 function c100297009.initial_effect(c)
 	--draw
@@ -13,7 +13,7 @@ function c100297009.initial_effect(c)
 	e1:SetOperation(c100297009.drop)
 	c:RegisterEffect(e1)
 	--to hand
-	local e2=Effect.CreateEffect(c)  
+	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_DECKDES)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -22,7 +22,7 @@ function c100297009.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100297009.thtg)
 	e2:SetOperation(c100297009.thop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
 function c100297009.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
@@ -38,7 +38,6 @@ function c100297009.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-
 function c100297009.thfilter(c)
 	return c:IsRace(RACE_PLANT) and c:IsAbleToHand()
 end
@@ -65,6 +64,4 @@ function c100297009.thop(e,tp,eg,ep,ev,re,r,rp)
 		if #tg==0 then return end
 		Duel.SendtoGrave(tg,REASON_EFFECT)
 	end
-end   
-
-
+end
