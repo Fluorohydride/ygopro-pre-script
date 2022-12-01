@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -26,33 +27,24 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,id)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e3:SetCost(aux.bfgcost)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	return true
-end
 function s.cfilter(c)
 	return c:GetType()==TYPE_TRAP and c:IsDiscardable()
 end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if not e:GetHandler():IsStatus(STATUS_SET_TURN) then return true end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_DISCARD+REASON_COST)
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local b1=c:IsStatus(STATUS_SET_TURN) and Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_HAND,0,nil)>0
-	local b2=not c:IsStatus(STATUS_SET_TURN)
-	if chk==0 then
-		if e:GetLabel()==0 then return false end
-		e:SetLabel(0)
-		return (b1 or b2) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,m,0x108a,TYPES_NORMAL_TRAP_MONSTER,400,2400,4,RACE_PLANT,ATTRIBUTE_EARTH,POS_FACEUP_DEFENSE,tp) end
-	e:SetLabel(0)
-	if b1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-		local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-		Duel.SendtoGrave(g,REASON_DISCARD+REASON_COST)
-	end
+	if chk==0 then return e:IsCostChecked()
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,m,0x108a,TYPES_NORMAL_TRAP_MONSTER,400,2400,4,RACE_PLANT,ATTRIBUTE_EARTH,POS_FACEUP_DEFENSE,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
