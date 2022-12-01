@@ -40,7 +40,7 @@ end
 function c101112033.fsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp
-		local mg1=Duel.GetFusionMaterial(tp):Filter(c101112033.filter1,nil)
+		local mg1=Duel.GetFusionMaterial(tp):Filter(c101112033.filter1,nil,e)
 		local mg2=Duel.GetMatchingGroup(c101112033.filter3,tp,LOCATION_GRAVE,0,nil)
 		mg1:Merge(mg2)
 		aux.FCheckAdditional=c101112033.fcheck
