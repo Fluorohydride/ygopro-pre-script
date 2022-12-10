@@ -55,7 +55,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():GetType()==TYPE_TRAP
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetActiveType()==TYPE_TRAP
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

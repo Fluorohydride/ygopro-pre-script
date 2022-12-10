@@ -1,4 +1,4 @@
---アティフスの蟲惑魔
+--アティプスの蟲惑魔
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -49,14 +49,10 @@ function s.cfilter(c)
 	return c:GetType()==TYPE_TRAP
 end
 function s.atkcon(e)
-	local g=Duel.GetMatchingGroup(s.cfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
-	return #g>0
+	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT+RACE_PLANT)
-end
-function s.rmfilter(c)
-	return c:GetType()==TYPE_TRAP and c:IsAbleToRemove()
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,nil)
@@ -65,6 +61,9 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
 	local g=Duel.SelectTarget(tp,aux.NegateAnyFilter,tp,0,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
+end
+function s.rmfilter(c)
+	return c:GetType()==TYPE_TRAP and c:IsAbleToRemove()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
