@@ -70,12 +70,13 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetCountLimit(1)
-	e1:SetLabel(Duel.GetTurnCount())
 	e1:SetCondition(s.spcon)
 	e1:SetOperation(s.spop)
 	if Duel.GetCurrentPhase()==PHASE_STANDBY then
+		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetReset(RESET_PHASE+PHASE_STANDBY,2)
 	else
+		e1:SetLabel(0)
 		e1:SetReset(RESET_PHASE+PHASE_STANDBY)
 	end
 	Duel.RegisterEffect(e1,1-tp)
