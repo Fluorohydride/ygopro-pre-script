@@ -1,4 +1,5 @@
--- ピュアリィ・リリィ
+--ピュアリィ・リリィ
+--Script by blue1874
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--search
@@ -26,8 +27,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_DECK,0,1,nil) end
-    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function s.tdfilter(c)
 	return c:IsSetCard(0x18c) and c:IsAbleToHand() and not c:IsCode(id) and not c:IsType(TYPE_QUICKPLAY)
@@ -70,4 +71,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	tc:CompleteProcedure()
 	if not sc:IsImmuneToEffect(e) then Duel.Overlay(tc,g) end
 end
-
