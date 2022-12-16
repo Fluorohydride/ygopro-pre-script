@@ -30,7 +30,8 @@ function c101112004.setcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101112004.spcon(e,c)
 	if c==nil then return true end
-	return c101112004.setcon(e) and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	local tp=c:GetControler()
+	return c101112004.setcon(e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function c101112004.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
