@@ -38,16 +38,12 @@ function c100297010.checkop(e,tp,eg,ep,ev,re,r,rp)
 		tc=g:GetNext()
 	end
 end
-function c100297010.atkcon(e)
-	local tp=e:GetHandlerPlayer()
+function c100297010.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetFlagEffect(tp,100297010)
 	return Duel.GetTurnPlayer()==tp and ct>0
 end
 function c100297010.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK)
-end
-function c100297010.atkfilter(c)
-	return c:IsType(TYPE_SYNCHRO) and c:GetAttack()>0
 end
 function c100297010.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100297010.filter(chkc) end
@@ -59,28 +55,31 @@ function c100297010.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetTargetParam(1)
 	end
 end
+function c100297010.atkfilter(c)
+	return c:IsType(TYPE_SYNCHRO) and c:GetAttack()>0
+end
 function c100297010.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local num=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		if num>0 and Duel.IsExistingTarget(aux.NecroValleyFilter(c100297010.atkfilter),tp,LOCATION_GRAVE,0,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(100297010,1)) then
+		if num>0 and Duel.IsExistingMatchingCard(c100297010.atkfilter,tp,LOCATION_GRAVE,0,1,nil)
+			and Duel.SelectYesNo(tp,aux.Stringid(100297010,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-			local ag=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100297010.atkfilter),tp,LOCATION_GRAVE,0,1,1,nil)
-			if #ag==0 then return end
+			local ag=Duel.SelectMatchingCard(tp,c100297010.atkfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 			Duel.HintSelection(ag)
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(ag:GetFirst():GetAttack())
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_UPDATE_ATTACK)
+			e2:SetValue(ag:GetFirst():GetAttack())
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e2)
 		end
 	end
 end

@@ -35,47 +35,49 @@ function c100297004.gcheck(g,e,tp)
 	if #g~=2 then return false end
 	local a=g:GetFirst()
 	local d=g:GetNext()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c100297004.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,a:GetCode(),d:GetCode())
+	return Duel.IsExistingMatchingCard(c100297004.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,a:GetCode(),d:GetCode())
 end
 function c100297004.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local g=Duel.GetMatchingGroup(c100297004.filter,tp,LOCATION_DECK,0,nil)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE) then ft=ft-1 end
-	if chk==0 then return ft>1 and g:CheckSubGroup(c100297004.gcheck,2,2,e,tp) end
+	if chk==0 then return ft>1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and g:CheckSubGroup(c100297004.gcheck,2,2,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c100297004.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local g=Duel.GetMatchingGroup(c100297004.filter,tp,LOCATION_DECK,0,nil)
-	if e:IsHasType(EFFECT_TYPE_ACTIVATE) and not c:IsLocation(LOCATION_SZONE) then ft=ft-1 end
 	if ft>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local sg=g:SelectSubGroup(tp,c100297004.gcheck,false,2,2,e,tp)
-		if #sg~=2 then return false end
+		if not sg then return end
 		local ac=sg:GetFirst()
 		local bc=sg:GetNext()
-		if ac and Duel.MoveToField(ac,tp,tp,LOCATION_SZONE,POS_FACEUP,true) and bc and Duel.MoveToField(bc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
-			local e1=Effect.CreateEffect(e:GetHandler())
+		if Duel.MoveToField(ac,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			and Duel.MoveToField(bc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
+			local e1=Effect.CreateEffect(c)
 			e1:SetCode(EFFECT_CHANGE_TYPE)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 			e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 			ac:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(e:GetHandler())
+			local e2=Effect.CreateEffect(c)
 			e2:SetCode(EFFECT_CHANGE_TYPE)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 			e2:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 			bc:RegisterEffect(e2)
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 			local rg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100297004.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp,ac:GetCode(),bc:GetCode())
 			if #rg==0 then return end
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local tc=rg:Select(tp,1,1,nil):GetFirst()
-			if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 				Duel.Equip(tp,c,tc)
 				--Add Equip limit
 				local e1=Effect.CreateEffect(tc)

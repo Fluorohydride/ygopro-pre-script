@@ -30,7 +30,7 @@ function c100297015.initial_effect(c)
 	e2:SetTarget(c100297015.sptg)
 	e2:SetOperation(c100297015.spop)
 	c:RegisterEffect(e2)
-	--atk 60000
+	--atk 6000
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100297015,2))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -46,7 +46,8 @@ end
 function c100297015.pltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToChangeControler() end
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToChangeControler,tp,0,LOCATION_PZONE,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,true) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToChangeControler,tp,0,LOCATION_PZONE,1,nil)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,true) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToChangeControler,tp,0,LOCATION_PZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
@@ -55,8 +56,9 @@ end
 function c100297015.plop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)>0 and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)>0 then
 		c:CompleteProcedure()
+		if not tc:IsRelateToEffect(e) then return end
 		if not Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true) then return end
 		local fid=c:GetFieldID()
 		tc:RegisterFlagEffect(100297015,RESET_EVENT+RESETS_STANDARD,0,1,fid)
@@ -103,18 +105,18 @@ function c100297015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100297015.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
-	if not c:IsRelateToEffect(e) or #g==0 then return end
+	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)==0 then return end
 	c:CompleteProcedure()
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
 	if Duel.Destroy(g,REASON_EFFECT)>0 and Duel.SelectYesNo(tp,aux.Stringid(100297015,1)) then
 		Duel.BreakEffect()
 		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end
-
 function c100297015.lefilter(c,tp,re)
-	return re and re:IsActiveType(TYPE_SPELL) and c:IsReason(REASON_EFFECT)and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0x10af)
+	return re and re:IsActiveType(TYPE_SPELL) and c:IsReason(REASON_EFFECT)
+		and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0x10af)
 end
 function c100297015.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100297015.lefilter,1,nil,tp,re) and not eg:IsContains(e:GetHandler())

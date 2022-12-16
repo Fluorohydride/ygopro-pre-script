@@ -18,7 +18,7 @@ function c100297008.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
-	e2:SetCountLimit(1,100297009+EFFECT_COUNT_CODE_DUEL)
+	e2:SetCountLimit(1,100297008+100+EFFECT_COUNT_CODE_DUEL)
 	e2:SetCondition(c100297008.descon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100297008.destg)
@@ -36,8 +36,7 @@ end
 function c100297008.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x33) and c:IsType(TYPE_SYNCHRO)
 end
-function c100297008.descon(e)
-	local tp=e:GetHandlerPlayer()
+function c100297008.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100297008.cfilter,tp,LOCATION_MZONE,0,nil)
 	return #g>0
 end

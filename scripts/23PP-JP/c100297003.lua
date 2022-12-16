@@ -53,7 +53,6 @@ end
 function c100297003.splimit(e,c)
 	return not c:IsRace(RACE_INSECT)
 end
-
 function c100297003.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
 end

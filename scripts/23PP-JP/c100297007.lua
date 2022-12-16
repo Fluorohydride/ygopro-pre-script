@@ -65,14 +65,13 @@ function c100297007.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-
-function c100297007.spcon(e)
-	local tp=e:GetHandlerPlayer()
+function c100297007.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_ONFIELD,0,nil,74711057)
 	return #g>0
 end
 function c100297007.spfilter(c,e,tp)
-	return c:IsFaceupEx() and c:IsSetCard(0x3008) and c:IsType(TYPE_MONSTER)and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsFaceupEx() and c:IsSetCard(0x3008) and c:IsType(TYPE_MONSTER)
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100297007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

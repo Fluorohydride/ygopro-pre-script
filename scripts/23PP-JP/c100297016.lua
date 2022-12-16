@@ -18,7 +18,8 @@ function c100297016.filter1(c,tp)
 	return c:IsFaceup() and c:IsLevel(7) and c:IsControler(tp)
 end
 function c100297016.filter2(c,e,tp)
-	return c:IsCanBeEffectTarget(e) and Duel.IsExistingMatchingCard(c100297016.spfilter,tp,LOCATION_DECK,0,2,nil,e,tp,c:GetCode())
+	return c:IsCanBeEffectTarget(e)
+		and Duel.IsExistingMatchingCard(c100297016.spfilter,tp,LOCATION_DECK,0,2,nil,e,tp,c:GetCode())
 end
 function c100297016.spfilter(c,e,tp,code)
 	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -48,7 +49,7 @@ function c100297016.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
 function c100297016.activate(e,tp,eg,ep,ev,re,r,rp)
-	if  e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

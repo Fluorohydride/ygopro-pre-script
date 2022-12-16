@@ -13,6 +13,7 @@ function c100297014.initial_effect(c)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100297014,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,7 +26,8 @@ function c100297014.initial_effect(c)
 end
 function c100297014.cfilter(c,tp)
 	local g=Duel.GetMatchingGroup(c100297014.lvfilter,tp,LOCATION_MZONE,0,c)
-	return c:IsLevelAbove(1) and c:IsAttribute(ATTRIBUTE_DARK) and #g>0
+	return c:IsLevelAbove(1) and c:IsAttribute(ATTRIBUTE_DARK) and (c:IsControler(tp) or c:IsFaceup())
+		and #g>0
 end
 function c100297014.lvfilter(c)
 	return c:IsLevelAbove(1) and c:IsFaceup() and c:IsCode(100297014)
@@ -50,19 +52,20 @@ function c100297014.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(val)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
 function c100297014.ovfilter(c,tp)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_XYZ) and c:CheckRemoveOverlayCard(tp,1,REASON_COST)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_XYZ)
+		and c:CheckRemoveOverlayCard(tp,1,REASON_COST)
 end
 function c100297014.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local check=Duel.IsExistingMatchingCard(c100297014.ovfilter,tp,LOCATION_MZONE,0,1,nil,tp)
-	if chk==0 then return check and c:IsAbleToRemove() end
+	if chk==0 then return c:IsAbleToRemoveAsCost()
+		and Duel.IsExistingMatchingCard(c100297014.ovfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
-	if Duel.Remove(c,POS_FACEUP,REASON_COST)==0 then return end
+	Duel.Remove(c,POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DEATTACHFROM)
 	local tc=Duel.SelectMatchingCard(tp,c100297014.ovfilter,tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
 	tc:RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -75,7 +78,7 @@ function c100297014.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c100297014.spfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c100297014.spfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler(),e,tp)
+	local g=Duel.SelectTarget(tp,c100297014.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c100297014.spop(e,tp,eg,ep,ev,re,r,rp)
