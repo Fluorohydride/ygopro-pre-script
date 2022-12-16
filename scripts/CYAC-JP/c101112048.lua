@@ -44,8 +44,7 @@ end
 function c101112048.filter(c)
 	return c:IsType(TYPE_LINK) and c:IsSetCard(0x28f)
 end
-function c101112048.spcon(e)
-	local tp=e:GetHandlerPlayer()
+function c101112048.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101112048.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101112048.rmfilter(c)
