@@ -2,7 +2,7 @@
 --Script by 奥克斯
 function c100297014.initial_effect(c)
 	--level up
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100297014,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -10,9 +10,9 @@ function c100297014.initial_effect(c)
 	e1:SetCost(c100297014.lvcost)
 	e1:SetTarget(c100297014.lvtg)
 	e1:SetOperation(c100297014.lvop)
-	c:RegisterEffect(e1)   
+	c:RegisterEffect(e1)
 	--special summon
-	local e2=Effect.CreateEffect(c)  
+	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -21,7 +21,7 @@ function c100297014.initial_effect(c)
 	e2:SetCost(c100297014.spcost)
 	e2:SetTarget(c100297014.sptg)
 	e2:SetOperation(c100297014.spop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function c100297014.cfilter(c,tp)
 	local g=Duel.GetMatchingGroup(c100297014.lvfilter,tp,LOCATION_MZONE,0,c)
@@ -45,14 +45,14 @@ function c100297014.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local val=e:GetLabel()
 	local g=Duel.GetMatchingGroup(c100297014.lvfilter,tp,LOCATION_MZONE,0,nil)
 	if val==0 or #g==0 then return end
-	for tc in aux.Next(g) do  
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(val)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-	end  
+	end
 end
 function c100297014.ovfilter(c,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_XYZ) and c:CheckRemoveOverlayCard(tp,1,REASON_COST)
@@ -84,4 +84,4 @@ function c100297014.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
-end	 
+end

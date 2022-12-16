@@ -2,7 +2,8 @@
 --Script by 奥克斯
 function c100297003.initial_effect(c)
 	--spsummon
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100297003,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -10,10 +11,10 @@ function c100297003.initial_effect(c)
 	e1:SetCost(c100297003.spcost)
 	e1:SetTarget(c100297003.sptg)
 	e1:SetOperation(c100297003.spop)
-	c:RegisterEffect(e1)   
-	--position 
+	c:RegisterEffect(e1)
+	--position
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100297003,0))
+	e2:SetDescription(aux.Stringid(100297003,1))
 	e2:SetCategory(CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -57,7 +58,7 @@ function c100297003.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
 end
 function c100297003.pfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_INSECT) 
+	return c:IsFaceup() and c:IsRace(RACE_INSECT)
 		and c:IsCanChangePosition()
 end
 function c100297003.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

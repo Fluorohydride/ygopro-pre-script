@@ -1,7 +1,4 @@
 --超重神将シャナ－O
-function c101112040.initial_effect(c)
-	
-end
 --Script by 奥克斯
 function c101112040.initial_effect(c)
 	--synchro summon
@@ -26,7 +23,7 @@ function c101112040.initial_effect(c)
 	e2:SetCode(EFFECT_DEFENSE_ATTACK)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--spsummon 
+	--spsummon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101112040,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -62,8 +59,8 @@ function c101112040.spdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
 	if not c:IsRelateToEffect(e) or Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 then return end
-	if #g==0 and tc and tc:IsRelateToBattle() 
-		and tc:IsControler(1-tp) and tc:IsFaceup() 
+	if #g==0 and tc and tc:IsRelateToBattle()
+		and tc:IsControler(1-tp) and tc:IsFaceup()
 		and (tc:GetAttack()>0 or aux.NegateMonsterFilter(tc)) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
@@ -112,7 +109,7 @@ function c101112040.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,1,1,nil)
 	if #sg==0 then return end
 	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)>0
-		and c:IsRelateToEffect(e) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) 
+		and c:IsRelateToEffect(e) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
 		and Duel.SelectYesNo(tp,aux.Stringid(101112040,1)) then
 		Duel.BreakEffect()
 		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)

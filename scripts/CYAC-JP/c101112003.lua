@@ -12,8 +12,8 @@ function c101112003.initial_effect(c)
 	e1:SetTarget(c101112003.target)
 	e1:SetOperation(c101112003.operation)
 	c:RegisterEffect(e1)
-	--level up  
-	local e2=Effect.CreateEffect(c)  
+	--level up
+	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101112003,0))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -21,7 +21,7 @@ function c101112003.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetTarget(c101112003.lvtg)
 	e2:SetOperation(c101112003.lvop)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 end
 function c101112003.condition(e)
 	local tp=e:GetHandlerPlayer()
@@ -47,7 +47,7 @@ function c101112003.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tg)
 	end
-end 
+end
 
 function c101112003.lvfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:GetLevel()>0

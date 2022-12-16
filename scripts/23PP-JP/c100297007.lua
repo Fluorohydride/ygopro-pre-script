@@ -11,7 +11,7 @@ function c100297007.initial_effect(c)
 	e1:SetCost(c100297007.cost)
 	e1:SetTarget(c100297007.target)
 	e1:SetOperation(c100297007.activate)
-	c:RegisterEffect(e1)	 
+	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,7 +24,7 @@ function c100297007.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100297007.sptg)
 	e2:SetOperation(c100297007.spop)
-	c:RegisterEffect(e2)	 
+	c:RegisterEffect(e2)
 end
 function c100297007.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
@@ -69,7 +69,7 @@ end
 function c100297007.spcon(e)
 	local tp=e:GetHandlerPlayer()
 	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_ONFIELD,0,nil,74711057)
-	return #g>0 
+	return #g>0
 end
 function c100297007.spfilter(c,e,tp)
 	return c:IsFaceupEx() and c:IsSetCard(0x3008) and c:IsType(TYPE_MONSTER)and c:IsCanBeSpecialSummoned(e,0,tp,true,false)

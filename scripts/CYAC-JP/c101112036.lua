@@ -40,8 +40,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0	and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local upval=tc:GetBaseAttack()
-		if tc:GetBaseAttack()<tc:GetBaseDefense() then 
-			upval=tc:GetBaseDefense() 
+		if tc:GetBaseAttack()<tc:GetBaseDefense() then
+			upval=tc:GetBaseDefense()
 		end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -33,7 +33,6 @@ function c100200228.initial_effect(c)
 	e2:SetOperation(c100200228.desop2)
 	c:RegisterEffect(e2)
 end
---e1
 function c100200228.destg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
@@ -45,7 +44,8 @@ function c100200228.desop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0
-		and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL)<=3 and c:IsRelateToEffect(e) then
+		and c:IsRelateToEffect(e)
+		and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL)<=3 then
 		Duel.BreakEffect()
 		Duel.SendtoGrave(c,REASON_EFFECT)
 	end

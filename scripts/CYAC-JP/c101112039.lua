@@ -34,7 +34,7 @@ function c101112039.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101112039.filter1(c,tp)
-	return not c:IsReason(REASON_REPLACE) and  c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x9a) and c:IsReason(REASON_EFFECT+REASON_BATTLE) 
+	return not c:IsReason(REASON_REPLACE) and  c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x9a) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function c101112039.filter2(c,e)
 	if c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED+STATUS_BATTLE_RESULT) then return false end

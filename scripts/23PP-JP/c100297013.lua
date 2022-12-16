@@ -10,7 +10,7 @@ function c100297013.initial_effect(c)
 	e1:SetCondition(c100297013.sprcon)
 	c:RegisterEffect(e1)
 	--special summon
-	local e2=Effect.CreateEffect(c)  
+	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100297013,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -19,8 +19,8 @@ function c100297013.initial_effect(c)
 	e2:SetCost(c100297013.spcost)
 	e2:SetTarget(c100297013.sptg)
 	e2:SetOperation(c100297013.spop)
-	c:RegisterEffect(e2)	
-end   
+	c:RegisterEffect(e2)
+end
 function c100297013.sprcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
@@ -30,7 +30,7 @@ function c100297013.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReleasable() and Duel.GetMZoneCount(tp,c)>0 end
 	Duel.Release(c,REASON_COST)
-end 
+end
 function c100297013.spfilter(c,e,tp)
 	return c:GetLevel()~=5 and c:IsCode(100297014) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -55,7 +55,7 @@ function c100297013.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:Select(tp,1,ft,nil)
-	for tc in aux.Next(sg) do  
+	for tc in aux.Next(sg) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -75,7 +75,7 @@ function c100297013.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100297013.splimit(e,c)
 	return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA)
-end 
+end
 function c100297013.xyzlimit(e,c)
 	if not c then return false end
 	return not c:IsAttribute(ATTRIBUTE_DARK)

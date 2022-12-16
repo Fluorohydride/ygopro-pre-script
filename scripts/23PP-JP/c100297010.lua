@@ -11,7 +11,7 @@ function c100297010.initial_effect(c)
 	e1:SetCondition(c100297010.atkcon)
 	e1:SetTarget(c100297010.atktg)
 	e1:SetOperation(c100297010.atkop)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	if not c100297010.global_check then
 		c100297010.global_check=true
 		local ge1=Effect.GlobalEffect(c)

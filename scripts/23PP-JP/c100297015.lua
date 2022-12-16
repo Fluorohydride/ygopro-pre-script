@@ -11,7 +11,7 @@ function c100297015.initial_effect(c)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e0)
 	--pendulum taking
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_CONTROL)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -19,7 +19,7 @@ function c100297015.initial_effect(c)
 	e1:SetCountLimit(1,100297015)
 	e1:SetTarget(c100297015.pltg)
 	e1:SetOperation(c100297015.plop)
-	c:RegisterEffect(e1)   
+	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
@@ -29,7 +29,7 @@ function c100297015.initial_effect(c)
 	e2:SetCondition(c100297015.spcon)
 	e2:SetTarget(c100297015.sptg)
 	e2:SetOperation(c100297015.spop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 	--atk 60000
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100297015,2))
@@ -72,7 +72,7 @@ function c100297015.plop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(c100297015.desop)
 		Duel.RegisterEffect(e1,tp)
 	end
-end  
+end
 function c100297015.descon(e,tp,eg,ep,ev,re,r,rp)
 	local fid,ct=e:GetLabel()
 	local tc=e:GetLabelObject()
@@ -85,7 +85,7 @@ end
 function c100297015.cfilter(c,tp)
 	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsFaceup()
 end
-function c100297015.spcon(e,tp,eg,ep,ev,re,r,rp)   
+function c100297015.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local pg=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
 	if #pg==0 then return false end
 	local pval=pg:GetSum(Card.GetLeftScale)

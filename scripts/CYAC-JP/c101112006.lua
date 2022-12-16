@@ -4,7 +4,7 @@ function c101112006.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--move pendulum
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101112006,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,9 +13,9 @@ function c101112006.initial_effect(c)
 	e1:SetCondition(c101112006.spcon)
 	e1:SetTarget(c101112006.pctg)
 	e1:SetOperation(c101112006.pcop)
-	c:RegisterEffect(e1) 
-	--special summon 
-	local e2=Effect.CreateEffect(c)  
+	c:RegisterEffect(e1)
+	--special summon
+	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101112006,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,8 +25,8 @@ function c101112006.initial_effect(c)
 	e2:SetCost(c101112006.spcost)
 	e2:SetTarget(c101112006.sptg)
 	e2:SetOperation(c101112006.spop)
-	c:RegisterEffect(e2)  
-	--move 
+	c:RegisterEffect(e2)
+	--move
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
@@ -96,10 +96,10 @@ function c101112006.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101112006.splimit(e,c)
 	return not c:IsSetCard(0x9a)
-end   
+end
 function c101112006.pencon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() and r==REASON_SYNCHRO 
+	return c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() and r==REASON_SYNCHRO
 end
 function c101112006.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end

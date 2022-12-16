@@ -23,7 +23,7 @@ function c100297008.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100297008.destg)
 	e2:SetOperation(c100297008.desop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
 function c100297008.filter(c)
 	return c:IsAttackAbove(2000) and c:IsFaceup()
@@ -39,7 +39,7 @@ end
 function c100297008.descon(e)
 	local tp=e:GetHandlerPlayer()
 	local g=Duel.GetMatchingGroup(c100297008.cfilter,tp,LOCATION_MZONE,0,nil)
-	return #g>0 
+	return #g>0
 end
 function c100297008.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsFaceup() end

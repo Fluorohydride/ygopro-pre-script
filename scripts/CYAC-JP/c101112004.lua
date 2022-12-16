@@ -31,13 +31,13 @@ function c101112004.setcon(e)
 end
 function c101112004.spcon(e,c)
 	if c==nil then return true end
-	return c101112004.setcon(e) and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 
+	return c101112004.setcon(e) and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c101112004.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReleasable() end
 	Duel.Release(c,REASON_COST)
-end 
+end
 function c101112004.setfilter(c,tp)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable(true) and (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
 end

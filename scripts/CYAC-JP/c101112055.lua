@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--to hand 
+	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -26,12 +26,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) 
-		and c:IsPreviousLocation(LOCATION_MZONE) 
-		and c:IsPreviousControler(tp) 
-		and c:IsPreviousPosition(POS_FACEUP) 
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:IsPreviousControler(tp)
+		and c:IsPreviousPosition(POS_FACEUP)
 		and c:GetPreviousTypeOnField()&TYPE_XYZ~=0
-		and c:IsPreviousSetCard(0x189) 
+		and c:IsPreviousSetCard(0x189)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -77,4 +77,4 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
-end  
+end

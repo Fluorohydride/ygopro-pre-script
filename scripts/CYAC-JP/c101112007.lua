@@ -4,7 +4,7 @@ function c101112007.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--search
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101112007,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,9 +13,9 @@ function c101112007.initial_effect(c)
 	e1:SetCondition(c101112007.thcon)
 	e1:SetTarget(c101112007.thtg)
 	e1:SetOperation(c101112007.thop)
-	c:RegisterEffect(e1) 
-	--special summon 
-	local e2=Effect.CreateEffect(c)  
+	c:RegisterEffect(e1)
+	--special summon
+	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101112007,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -24,8 +24,8 @@ function c101112007.initial_effect(c)
 	e2:SetCondition(c101112007.spcon)
 	e2:SetTarget(c101112007.sptg)
 	e2:SetOperation(c101112007.spop)
-	c:RegisterEffect(e2)  
-	--move 
+	c:RegisterEffect(e2)
+	--move
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
@@ -39,7 +39,7 @@ end
 function c101112007.thcon(e)
 	local tp=e:GetHandlerPlayer()
 	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_MZONE,0,nil,0x9a)
-	return #g>0 
+	return #g>0
 end
 function c101112007.thfilter(c)
 	return c:IsSetCard(0x109a) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
@@ -83,7 +83,7 @@ function c101112007.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101112007.pencon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() and r==REASON_SYNCHRO 
+	return c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() and r==REASON_SYNCHRO
 end
 function c101112007.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end

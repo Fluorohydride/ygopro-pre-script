@@ -27,7 +27,7 @@ function c100297002.initial_effect(c)
 	e2:SetOperation(c100297002.thop)
 	c:RegisterEffect(e2)
 	--token 2
-	local e3=Effect.CreateEffect(c)  
+	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
@@ -35,7 +35,7 @@ function c100297002.initial_effect(c)
 	e3:SetCost(aux.bfgcost)
 	e3:SetTarget(c100297002.tktg)
 	e3:SetOperation(c100297002.tkop)
-	c:RegisterEffect(e3)   
+	c:RegisterEffect(e3)
 end
 function c100297002.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
@@ -75,4 +75,4 @@ function c100297002.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToBattle() and tc:IsControler(1-tp) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
-end 
+end
