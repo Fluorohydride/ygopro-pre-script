@@ -17,7 +17,7 @@ function c101112040.initial_effect(c)
 	e1:SetTarget(c101112040.spdtg)
 	e1:SetOperation(c101112040.spdop)
 	c:RegisterEffect(e1)
-	--destroy replace
+	--defence attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DEFENSE_ATTACK)
@@ -90,9 +90,7 @@ function c101112040.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
 end
 function c101112040.spfilter(c,e,tp)
-	local b1=c:IsLocation(LOCATION_GRAVE)
-	local b2=c:IsLocation(LOCATION_SZONE) and c:IsFaceup()
-	return c:IsSetCard(0x9a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (b1 or b2)
+	return c:IsSetCard(0x9a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceupEx()
 end
 function c101112040.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

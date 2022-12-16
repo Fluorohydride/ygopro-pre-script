@@ -3,6 +3,7 @@
 function c101112003.initial_effect(c)
 	--search S/T
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101112003,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -14,7 +15,7 @@ function c101112003.initial_effect(c)
 	c:RegisterEffect(e1)
 	--level up
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101112003,0))
+	e2:SetDescription(aux.Stringid(101112003,1))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -23,8 +24,7 @@ function c101112003.initial_effect(c)
 	e2:SetOperation(c101112003.lvop)
 	c:RegisterEffect(e2)
 end
-function c101112003.condition(e)
-	local tp=e:GetHandlerPlayer()
+function c101112003.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
 	return #g==0
 end
@@ -48,7 +48,6 @@ function c101112003.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tg)
 	end
 end
-
 function c101112003.lvfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:GetLevel()>0
 end

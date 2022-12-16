@@ -36,8 +36,7 @@ function c101112007.initial_effect(c)
 	e3:SetOperation(c101112007.penop)
 	c:RegisterEffect(e3)
 end
-function c101112007.thcon(e)
-	local tp=e:GetHandlerPlayer()
+function c101112007.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_MZONE,0,nil,0x9a)
 	return #g>0
 end
@@ -56,8 +55,7 @@ function c101112007.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c101112007.spcon(e)
-	local tp=e:GetHandlerPlayer()
+function c101112007.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
 	return #g==0
 end
@@ -74,10 +72,11 @@ end
 function c101112007.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c101112007.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
-	if #g==0 or not c:IsRelateToEffect(e) then return end
+	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=g:Select(tp,1,1,nil):GetFirst()
-	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) then
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE)
+		and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

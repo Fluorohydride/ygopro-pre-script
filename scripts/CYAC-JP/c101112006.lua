@@ -37,17 +37,19 @@ function c101112006.initial_effect(c)
 	e3:SetOperation(c101112006.penop)
 	c:RegisterEffect(e3)
 end
-function c101112006.spcon(e)
-	local tp=e:GetHandlerPlayer()
+function c101112006.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
 	return #g==0
 end
 function c101112006.pcfilter(c,tp)
-	return not c:IsForbidden() and c:GetCode()~=101112006 and c:IsSetCard(0x9a) and c:IsType(TYPE_PENDULUM) and c:CheckUniqueOnField(tp,LOCATION_SZONE)
+	return not c:IsCode(101112006) and c:IsSetCard(0x9a) and c:IsType(TYPE_PENDULUM)
+		and not c:IsForbidden() and c:CheckUniqueOnField(tp,LOCATION_SZONE)
 end
 function c101112006.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) and Duel.IsExistingMatchingCard(c101112006.pcfilter,tp,LOCATION_DECK,0,1,nil,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+		and Duel.IsExistingMatchingCard(c101112006.pcfilter,tp,LOCATION_DECK,0,1,nil,tp)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c101112006.pcop(e,tp,eg,ep,ev,re,r,rp)
@@ -60,9 +62,9 @@ function c101112006.pcop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-
 function c101112006.costfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and Duel.GetMatchingGroupCount(c101112006.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,c,e,tp)>0
+	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+		and Duel.GetMatchingGroupCount(c101112006.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,c,e,tp)>0
 end
 function c101112006.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101112006.costfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end

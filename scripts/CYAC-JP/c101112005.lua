@@ -62,9 +62,8 @@ end
 function c101112005.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-function c101112005.spcon(e)
+function c101112005.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	local tp=e:GetHandlerPlayer()
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
 	return #g==0 and ec
 end

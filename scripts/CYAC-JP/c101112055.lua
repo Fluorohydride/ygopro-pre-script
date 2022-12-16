@@ -40,7 +40,7 @@ function s.rmfilter(c)
 	return c:IsCode(56099748) and c:IsAbleToRemove()
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(102112040) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsCode(101112036) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,nil)
@@ -61,7 +61,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sg1,0,tp,tp,true,false,POS_FACEUP)
 	end
 end
-
 function s.thfilter(c)
 	return c:IsCode(56099748) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToHand()
 end

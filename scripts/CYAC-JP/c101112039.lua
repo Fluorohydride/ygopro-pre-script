@@ -59,7 +59,6 @@ function c101112039.repop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
 end
-
 function c101112039.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
