@@ -25,14 +25,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter1(c)
-	return c:IsFaceup() and c:IsCode(101113006)
+	return c:IsFaceup() and c:IsCode(101112058)
 end
 function s.filter2(c,tp,check)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,check)
 end
 function s.thfilter(c,check)
-	local b1=c:IsCode(101113006)
-	local b2=check and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x92f)
+	local b1=c:IsCode(101112058)
+	local b2=check and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x291)
 	return not c:IsCode(m) and (b1 or b2) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

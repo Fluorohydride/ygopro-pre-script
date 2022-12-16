@@ -36,8 +36,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local check=0
 	if g:IsExists(s.filter,1,nil) then
 		check=1
-		c:RegisterFlagEffect(m,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
-		--提示用flag,显示是否用本家调整同调召唤
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	end
 	--multi attack
 	local e1=Effect.CreateEffect(c)
@@ -60,7 +59,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsType(TYPE_TUNER) and c:IsSetCard(0x92f)
+	return c:IsType(TYPE_TUNER) and c:IsSetCard(0x291)
 end
 function s.atkval(e,c)
 	return e:GetLabel()-1
@@ -75,7 +74,7 @@ end
 function s.spfilter(c,e,tp)
 	local b1=c:IsCode(56099748)
 	local b2=c:IsAttack(1500) and c:IsDefense(2100)
-	return c:IsFaceupEx() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)  and (b1 or b2)
+	return c:IsFaceupEx() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (b1 or b2)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

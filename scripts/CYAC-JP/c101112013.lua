@@ -34,7 +34,6 @@ function s.sprcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
@@ -47,7 +46,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,m)==0 then
+	if Duel.GetFlagEffect(tp,id)==0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -57,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(s.atktg)
 		e1:SetValue(500)
 		Duel.RegisterEffect(e1,tp)
-		Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -68,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetFlagEffect(e:GetHandlerPlayer(),m)>0 and (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
+	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)>0 and (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
 end
 function s.atktg(e,c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsFaceup()

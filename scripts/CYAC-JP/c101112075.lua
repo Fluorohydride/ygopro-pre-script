@@ -1,4 +1,4 @@
---R增强！
+--REINFORCE！
 --Script by 奥克斯
 function c101112075.initial_effect(c)
 	--Activate

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	local b1=c:IsSetCard(0x92f)
+	local b1=c:IsSetCard(0x291)
 	local b2=c:IsCode(56099748)
 	return (b1 or b2) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
@@ -59,7 +59,8 @@ function s.atkval(e,c)
 	return ct*100
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)	 and bit.band(c:GetPreviousTypeOnField(),TYPE_TUNER)~=0
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
+		and bit.band(c:GetPreviousTypeOnField(),TYPE_TUNER)~=0
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function s.tgfilter(c,e,tp)

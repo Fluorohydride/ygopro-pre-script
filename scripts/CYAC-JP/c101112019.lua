@@ -1,4 +1,4 @@
---珠之御巫 狐理
+--珠の御巫フゥリ
 --Script by 奥克斯
 function c101112019.initial_effect(c)
 	--no damage
@@ -34,6 +34,7 @@ function c101112019.initial_effect(c)
 	c:RegisterEffect(e4)
 	--to hand
 	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(101112019,0))
 	e5:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_EQUIP)

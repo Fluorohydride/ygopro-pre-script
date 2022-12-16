@@ -1,4 +1,4 @@
---御巫舞踊-迷惑鸟
+--御巫舞踊－迷わし鳥
 --Script by 奥克斯
 function c101112062.initial_effect(c)
 	--activate
