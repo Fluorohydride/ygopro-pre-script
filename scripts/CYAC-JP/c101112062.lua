@@ -36,7 +36,7 @@ function c101112062.initial_effect(c)
 	e4:SetOperation(c101112062.thop)
 	c:RegisterEffect(e4)
 	--special summon
-	local e5=Effect.CreateEffect(c)  
+	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e5:SetType(EFFECT_TYPE_IGNITION)
@@ -44,7 +44,7 @@ function c101112062.initial_effect(c)
 	e5:SetCountLimit(1,101112062+100)
 	e5:SetTarget(c101112062.sptg)
 	e5:SetOperation(c101112062.spop)
-	c:RegisterEffect(e5)	 
+	c:RegisterEffect(e5)
 end
 function c101112062.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
@@ -113,9 +113,9 @@ function c101112062.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(c101112062.eqlimit)
-		c:RegisterEffect(e1) 
+		c:RegisterEffect(e1)
 	end
-end 
+end
 function c101112062.eqlimit(e,c)
 	return e:GetOwner()==c
 end

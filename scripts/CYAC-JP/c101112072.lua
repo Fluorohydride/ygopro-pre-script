@@ -56,8 +56,8 @@ end
 function s.repfilter(c,tp)
 	local b1=c:IsCode(56099748)
 	local b2=c:IsAttack(1500) and c:IsDefense(2100)
-	return not c:IsReason(REASON_REPLACE) and c:IsFaceup() 
-		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) 
+	return not c:IsReason(REASON_REPLACE) and c:IsFaceup()
+		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 		and c:IsReason(REASON_EFFECT+REASON_BATTLE) and (b1 or b2)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

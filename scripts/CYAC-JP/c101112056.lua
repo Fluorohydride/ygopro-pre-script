@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--tuner
-	local e2=Effect.CreateEffect(c)  
+	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
@@ -22,11 +22,11 @@ function s.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.tuntg)
 	e2:SetOperation(s.tunop)
-	c:RegisterEffect(e2)   
+	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
 	local b1=c:IsCode(56099748)
-	local b2=c:IsSetCard(0x92f) 
+	local b2=c:IsSetCard(0x92f)
 	return not c:IsPublic() and c:IsType(TYPE_MONSTER) and (b1 or b2)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -75,4 +75,4 @@ function s.tunop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
-end 
+end

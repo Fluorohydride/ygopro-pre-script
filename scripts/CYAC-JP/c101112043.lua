@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e0:SetCondition(s.regcon)
 	e0:SetOperation(s.regop)
 	c:RegisterEffect(e0)
-	--special summon  
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -34,8 +34,8 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local ct=g:FilterCount(Card.IsType,nil,TYPE_TUNER)
 	local check=0
-	if g:IsExists(s.filter,1,nil) then  
-		check=1 
+	if g:IsExists(s.filter,1,nil) then
+		check=1
 		c:RegisterFlagEffect(m,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 		--提示用flag,显示是否用本家调整同调召唤
 	end
@@ -43,7 +43,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD) 
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetLabel(ct)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)

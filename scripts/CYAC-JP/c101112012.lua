@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2 
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function s.tfilter(c,tp)
 	local b1=c:IsSetCard(0x92f)
 	local b2=c:IsAttack(1500) and c:IsDefense(2100)
-	return c:IsFaceup() and Duel.GetMZoneCount(tp,c)>0 and (b1 or b2)  
+	return c:IsFaceup() and Duel.GetMZoneCount(tp,c)>0 and (b1 or b2)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

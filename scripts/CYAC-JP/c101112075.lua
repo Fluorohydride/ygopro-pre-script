@@ -12,7 +12,7 @@ function c101112075.initial_effect(c)
 	e1:SetTarget(c101112075.target)
 	e1:SetOperation(c101112075.activate)
 	c:RegisterEffect(e1)
-	--set 
+	--set
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -23,7 +23,7 @@ function c101112075.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c101112075.settg)
 	e2:SetOperation(c101112075.setop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function c101112075.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x18b)
@@ -36,7 +36,7 @@ function c101112075.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101112075.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() 
+	if tc:IsRelateToEffect(e) and tc:IsFaceup()
 		and tc:IsControler(tp) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
