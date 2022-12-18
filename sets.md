@@ -3,6 +3,7 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **December 17, 2022**: Premium Pack 2023 (23PP-JP) : `100297XXX`
+- **December 17, 2022**: Promotion Pack 2023 (23PR-JP) : `100298XXX`
 - **December 24, 2022**: Secret Utility Box (SUB1-JP) : `100294XXX`
 - **January 4, 2023**: Yu-Gi-Oh! OCG Structures Volume 6 promotional card (YO06-JP) : `100295XXX`
 - **January 14, 2023**: CYBERSTORM ACCESS (CYAC-JP) : `101112XXX`
