@@ -28,7 +28,7 @@ function c101112019.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e4:SetTargetRange(LOCATION_ONFIELD,0)
-	e4:SetCondition(c101112019.indcon)
+	e4:SetCondition(c101112019.tgcon)
 	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x18d))
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
@@ -53,7 +53,7 @@ end
 function c101112019.indcfilter(c)
 	return c:GetEquipTarget() or (c:IsFaceup() and c:IsType(TYPE_EQUIP))
 end
-function c101112019.indcon(e)
+function c101112019.tgcon(e)
 	return Duel.IsExistingMatchingCard(c101112019.indcfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function c101112019.thfilter(c)
