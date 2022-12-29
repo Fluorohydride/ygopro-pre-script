@@ -2,15 +2,13 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **May 21, 2022**: Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
-- **June 8, 2022**: Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
-- **June 11, 2022**: ANIMATION CHRONICLE 2022 (AC02-JP) : `100290XXX`
-- **June 25, 2022**: Structure Deck: Legend of the Crystals (SD44-JP): `100344XXX`
-- **July 16, 2022**: DARKWING BLAST (DABL-JP): `101110XXX`
+- **December 17, 2022**: Premium Pack 2023 (23PP-JP) : `100297XXX`
+- **December 17, 2022**: Promotion Pack 2023 (23PR-JP) : `100298XXX`
+- **December 24, 2022**: Secret Utility Box (SUB1-JP) : `100294XXX`
+- **January 4, 2023**: Yu-Gi-Oh! OCG Structures Volume 6 promotional card (YO06-JP) : `100295XXX`
+- **January 14, 2023**: CYBERSTORM ACCESS (CYAC-JP) : `101112XXX`
 
 # Announced
-- **May, 2022**: Pharaonic Legend Pack (VP22-JP) : `100291XXX`
-- **August 6, 2022**: Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
 
 # Archived
 ## Other packs
@@ -106,6 +104,13 @@
 - History Archive Collection (HC01-JP) : `100287XXX`
 - The Valuable Book EX2 (VX02-JP) : `100288XXX`
 - 25th Anniversary Ultimate Kaiba Set (KC01-JP): `100284XXX`
+- Pharaonic Legend Pack (VP22-JP) : `100291XXX`
+- Yu-Gi-Oh! OCG Structures Volume 5 promotional card (YO05-JP) : `100289XXX`
+- ANIMATION CHRONICLE 2022 (AC02-JP) : `100290XXX`
+- World Premiere Pack 2022 (WPP3-JP) : `100292XXX`
+- 2022 Tin of the Pharaoh's Gods (MP22-EN) : `100292XXX`
+- Selection 5 (SLF1-JP) : `100293XXX`
+- Yu-Gi-Oh! OCG Stories Volume 1 promotional card (YOS1-JP) : `100296XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -121,6 +126,7 @@
 - Structure Deck R: Machiners Command (SR10-JP) : `100310XXX`
 - Structure Deck R: Dragunity Drive (SR11-JP) : `100311XXX`
 - Structure Deck R: Lost Sanctuary (SR12-JP) : `100312XXX`
+- Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
 -----
 - Starter Deck 2016 (ST16-JP) : `100316XXX`
 - Starter Deck 2017 (ST17-JP) : `100317XXX`
@@ -140,6 +146,8 @@
 - Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
 - Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
 - Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
+- Structure Deck: Legend of the Crystals (SD44-JP) : `100344XXX`
+- Structure Deck: Forest of the Traptrix (SD45-JP) : `100345XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
@@ -154,6 +162,7 @@
 - Deck Build Pack: Ancient Guardians (DBAG-JP): `100416XXX`
 - Deck Build Pack: Grand Creators (DBGC-JP) : `100417XXX`
 - Deck Build Pack: Tactical Masters (DBTM-JP): `100418XXX`
+- Deck Build Pack: Amazing Defenders (DBAD-JP) : `100419XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
@@ -165,6 +174,7 @@
 - Duelist Pack: Duelists of Gloom (DP24-JP) : `100424XXX`
 - Duelist Pack: Duelists of Whirlwind (DP25-JP) : `100425XXX`
 - Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
+- Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
 
 ## Booster packs
 - THE DARK ILLUSION (TDIL-JP) : `100909XXX`
@@ -192,3 +202,5 @@
 - BATTLE OF CHAOS (BACH-JP) : `101107XXX`
 - DIMENSION FORCE (DIFO-JP) : `101108XXX`
 - POWER OF THE ELEMENTS (POTE-JP): `101109XXX`
+- DARKWING BLAST (DABL-JP): `101110XXX`
+- Photon Hypernova (PHHY-JP) : `101111XXX`
