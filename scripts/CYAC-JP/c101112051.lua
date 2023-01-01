@@ -1,3 +1,4 @@
+--サイバネット・ロールバック
 --Cynet Rollback
 --coded by Lyris
 local s,id,o=GetID()
