@@ -25,9 +25,8 @@ function c100297014.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100297014.cfilter(c,tp)
-	local g=Duel.GetMatchingGroup(c100297014.lvfilter,tp,LOCATION_MZONE,0,c)
 	return c:IsLevelAbove(1) and c:IsAttribute(ATTRIBUTE_DARK) and (c:IsControler(tp) or c:IsFaceup())
-		and #g>0
+		and Duel.IsExistingMatchingCard(c100297014.lvfilter,tp,LOCATION_MZONE,0,1,c)
 end
 function c100297014.lvfilter(c)
 	return c:IsLevelAbove(1) and c:IsFaceup() and c:IsCode(100297014)
@@ -39,8 +38,7 @@ function c100297014.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(g:GetFirst():GetPreviousLevelOnField())
 end
 function c100297014.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c100297014.lvfilter,tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return #g>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100297014.lvfilter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function c100297014.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

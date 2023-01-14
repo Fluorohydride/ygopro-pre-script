@@ -37,8 +37,7 @@ function c100297008.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x33) and c:IsType(TYPE_SYNCHRO)
 end
 function c100297008.descon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c100297008.cfilter,tp,LOCATION_MZONE,0,nil)
-	return #g>0
+	return Duel.IsExistingMatchingCard(c100297008.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c100297008.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsFaceup() end

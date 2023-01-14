@@ -35,8 +35,7 @@ function c100297013.spfilter(c,e,tp)
 	return c:IsCode(100297014) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100297013.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c100297013.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
-	if chk==0 then return #g>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100297013.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c100297013.spop(e,tp,eg,ep,ev,re,r,rp)
