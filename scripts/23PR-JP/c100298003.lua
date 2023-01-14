@@ -69,7 +69,7 @@ function c100298003.penop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or not Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true) then return end
 	if Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100298003.pmfilter),tp,LOCATION_GRAVE,0,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(100298003,1)) then
+		and Duel.SelectYesNo(tp,aux.Stringid(100298003,3)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100298003.pmfilter),tp,LOCATION_GRAVE,0,1,1,nil)
 		Duel.BreakEffect()
