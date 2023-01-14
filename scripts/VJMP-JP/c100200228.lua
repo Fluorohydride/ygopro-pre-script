@@ -14,7 +14,7 @@ function c100200228.initial_effect(c)
 	c:RegisterEffect(e0)
 	--destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
@@ -28,7 +28,7 @@ function c100200228.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_START)
 	e2:SetCountLimit(1)
-	e2:SetCost(c100200228.descost)
+	e2:SetCost(c100200228.descost2)
 	e2:SetTarget(c100200228.destg2)
 	e2:SetOperation(c100200228.desop2)
 	c:RegisterEffect(e2)
@@ -53,7 +53,7 @@ end
 function c100200228.cfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
 end
-function c100200228.descost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100200228.descost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100200228.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c100200228.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
@@ -66,7 +66,7 @@ function c100200228.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100200228.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
-	if tc:IsRelateToBattle() then
+	if tc:IsRelateToBattle() and tc:IsControler(1-tp) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

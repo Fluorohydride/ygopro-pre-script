@@ -86,7 +86,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+	if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local bc=Duel.GetFirstTarget()
 		if bc:IsRelateToEffect(e) and bc:IsRelateToBattle() and bc:IsControler(1-tp)
 			and Duel.Equip(tp,bc,c,false) then

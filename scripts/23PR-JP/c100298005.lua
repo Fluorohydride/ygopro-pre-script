@@ -39,12 +39,6 @@ end
 function c100298005.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	local ct=0
-	local attr=1
-	for i=1,7 do
-		if tc:IsAttribute(attr) then ct=ct+1 end
-		attr=attr<<1
-	end
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
