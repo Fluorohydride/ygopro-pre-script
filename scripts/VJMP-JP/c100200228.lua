@@ -61,7 +61,7 @@ function c100200228.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100200228.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return tc and tc:IsControler(1-tp)  end
+	if chk==0 then return tc and tc:IsControler(1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
 function c100200228.desop2(e,tp,eg,ep,ev,re,r,rp)

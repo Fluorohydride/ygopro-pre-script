@@ -1,9 +1,9 @@
---外毒多头蛇
+--エクストクス・ハイドラ
 --Script by 奥克斯
 function c100298001.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep2(c,c100298001.fsilter,2,63,true)
+	aux.AddFusionProcFunRep2(c,c100298001.mfilter,2,63,true)
 	--atk down
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -33,8 +33,8 @@ function c100298001.initial_effect(c)
 	e3:SetOperation(c100298001.drop)
 	c:RegisterEffect(e3)
 end
-function c100298001.fsilter(c,fc)
-	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsOnField() and c:IsControler(fc:GetControler())
+function c100298001.mfilter(c,fc)
+	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsOnField() and c:IsControler(fc:GetControler())
 end
 function c100298001.checkfilter(c,rtype)
 	return c:IsType(rtype)
@@ -45,36 +45,32 @@ end
 function c100298001.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=c:GetMaterial()
-	if #g==0 or c:IsFacedown() or not c:IsLocation(LOCATION_MZONE) then return end
-	if g:IsExists(c100298001.checkfilter,1,nil,TYPE_FUSION) and c:GetFlagEffect(100298001)==0 then
+	if #g==0 then return end
+	if g:IsExists(c100298001.checkfilter,1,nil,TYPE_FUSION) then
 		c:RegisterFlagEffect(100298001,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100298001,0))
-		--提示用flag
 	end
-	if g:IsExists(c100298001.checkfilter,1,nil,TYPE_SYNCHRO) and c:GetFlagEffect(100298001+100)==0 then
+	if g:IsExists(c100298001.checkfilter,1,nil,TYPE_SYNCHRO) then
 		c:RegisterFlagEffect(100298001+100,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100298001,1))
-		--提示用flag
 	end
-	if g:IsExists(c100298001.checkfilter,1,nil,TYPE_XYZ) and c:GetFlagEffect(100298001+200)==0 then
+	if g:IsExists(c100298001.checkfilter,1,nil,TYPE_XYZ) then
 		c:RegisterFlagEffect(100298001+200,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100298001,2))
-		--提示用flag
 	end
-	if g:IsExists(c100298001.checkfilter,1,nil,TYPE_PENDULUM) and c:GetFlagEffect(100298001+300)==0 then
+	if g:IsExists(c100298001.checkfilter,1,nil,TYPE_PENDULUM) then
 		c:RegisterFlagEffect(100298001+300,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100298001,3))
-		--提示用flag
 	end
-	if g:IsExists(c100298001.checkfilter,1,nil,TYPE_LINK) and c:GetFlagEffect(100298001+400)==0 then
+	if g:IsExists(c100298001.checkfilter,1,nil,TYPE_LINK) then
 		c:RegisterFlagEffect(100298001+400,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100298001,4))
-		--提示用flag
-	end   
+	end
 end
 function c100298001.atktg(e,c)
+	if not c:IsFaceup() then return false end
 	local ec=e:GetHandler()
 	local b1=ec:GetFlagEffect(100298001)>0 and c:IsType(TYPE_FUSION)
 	local b2=ec:GetFlagEffect(100298001+100)>0 and c:IsType(TYPE_SYNCHRO)
 	local b3=ec:GetFlagEffect(100298001+200)>0 and c:IsType(TYPE_XYZ)
 	local b4=ec:GetFlagEffect(100298001+300)>0 and c:IsType(TYPE_PENDULUM)
 	local b5=ec:GetFlagEffect(100298001+400)>0 and c:IsType(TYPE_LINK)
-	return c:IsFaceup() and (b1 or b2 or b3 or b4 or b5)
+	return b1 or b2 or b3 or b4 or b5
 end
 function c100298001.atkval(e,c)
 	return -c:GetBaseAttack()

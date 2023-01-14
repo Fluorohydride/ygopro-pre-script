@@ -6,7 +6,7 @@ function c100298005.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--change 
+	--change
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100298005,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -17,16 +17,18 @@ function c100298005.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetTarget(c100298005.tg)
 	e1:SetOperation(c100298005.op)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 end
 function c100298005.filter(c)
+	if not c:IsFaceup() then return false end
+	if not c:IsRace(RACE_MACHINE) then return true end
 	local ct=0
 	local attr=1
 	for i=1,7 do
 		if c:IsAttribute(attr) then ct=ct+1 end
 		attr=attr<<1
 	end
-	return c:IsFaceup() and ct<6 and not c:IsRace(RACE_MACHINE) 
+	return ct<6
 end
 function c100298005.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c100298005.filter(chkc) end
@@ -43,18 +45,16 @@ function c100298005.op(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsAttribute(attr) then ct=ct+1 end
 		attr=attr<<1
 	end
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and ct<6 and not c:IsRace(RACE_MACHINE) and not tc:IsImmuneToEffect(e) then
-		local e1=Effect.CreateEffect(e:GetHandler())
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ADD_ATTRIBUTE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetValue(ATTRIBUTE_ALL-ATTRIBUTE_DIVINE-tc:GetAttribute())
+		e1:SetValue(ATTRIBUTE_ALL-ATTRIBUTE_DIVINE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
+		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CHANGE_RACE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetValue(RACE_MACHINE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
