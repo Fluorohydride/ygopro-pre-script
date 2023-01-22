@@ -28,10 +28,10 @@ function c101112044.initial_effect(c)
 	e3:SetLabelObject(e2)
 end
 function c101112044.matfilter1(c)
-	return c:IsSynchroType(TYPE_TUNER) or (c:IsAttribute(ATTRIBUTE_DARK) or c:IsAttribute(ATTRIBUTE_LIGHT))
+	return c:IsSynchroType(TYPE_TUNER) or c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
 end
-function c101112044.matfilter2(c)
-	return not c:IsSynchroType(TYPE_TUNER) and (c:IsAttribute(ATTRIBUTE_DARK) or c:IsAttribute(ATTRIBUTE_LIGHT))
+function c101112044.matfilter2(c,syncard)
+	return c:IsNotTuner(syncard) and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
 end
 function c101112044.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
@@ -71,6 +71,7 @@ function c101112044.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_SYNCHRO))
 		e1:SetValue(c101112044.efilter)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112044,0))
 	end
@@ -81,6 +82,7 @@ function c101112044.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112044,1))
 	end

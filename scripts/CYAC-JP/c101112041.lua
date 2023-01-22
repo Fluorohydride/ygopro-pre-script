@@ -94,8 +94,3 @@ function c101112041.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(rc,REASON_EFFECT)
 	end
 end
-
-
-
-
-
