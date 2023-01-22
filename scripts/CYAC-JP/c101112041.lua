@@ -1,4 +1,5 @@
 --深淵の神獣 ディス・パテル
+--Script by Ruby
 function c101112041.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsRace,RACE_DRAGON),1)

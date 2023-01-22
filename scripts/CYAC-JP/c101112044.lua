@@ -1,4 +1,5 @@
 --カオス・アンヘル-混沌の双翼-
+--Script by Ruby
 function c101112044.initial_effect(c)
 	--synchro summon
 	c:EnableReviveLimit()
