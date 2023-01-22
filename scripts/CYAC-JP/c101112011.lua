@@ -1,5 +1,5 @@
 --導きの聖女クエム
-
+--Guiding Quem, the Virtuous
 --Script by Chrono-Genex
 function c101112011.initial_effect(c)
 	aux.AddCodeList(c,68468459)

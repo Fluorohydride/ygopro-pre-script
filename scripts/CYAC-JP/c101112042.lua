@@ -1,5 +1,5 @@
 --赫聖の妖騎士
-
+--Despian Luluwalilith
 --Script by Chrono-Genex
 function c101112042.initial_effect(c)
 	--synchro summon
