@@ -1,5 +1,6 @@
---coded by Lyris
+--融合複製
 --Fusion Reproduction
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--copy

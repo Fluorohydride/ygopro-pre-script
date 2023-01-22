@@ -1,5 +1,6 @@
---coded by Lyris
+--愉怪な燐のきつねびゆらら
 --Yukai na Rin no Kitsunebi Yurara
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--attribute

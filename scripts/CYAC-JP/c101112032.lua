@@ -1,5 +1,6 @@
---coded by Lyris
+--ウサミミ導師
 --Bunny Instruct-ear
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--counter

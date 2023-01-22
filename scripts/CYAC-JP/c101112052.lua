@@ -1,5 +1,6 @@
---coded by Lyris
+--赫聖の相剣
 --Swordsoul of Blazing Awakening
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--remove

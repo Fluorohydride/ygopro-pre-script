@@ -1,5 +1,6 @@
---coded by Lyris
+--フルアクティブ・デュプレックス
 --Full-Active Duprex
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--multi-attack

@@ -1,3 +1,4 @@
+--赫ける王の烙印
 --coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
