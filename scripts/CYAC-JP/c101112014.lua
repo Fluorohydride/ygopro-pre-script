@@ -1,4 +1,4 @@
---アナドゥム・ミーク
+--マナドゥム・ミーク
 --Script by 奥克斯
 local s,id,o=GetID()
 function s.initial_effect(c)
