@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsFaceup))
 	e1:SetValue(ATTRIBUTE_FIRE)
 	c:RegisterEffect(e1)
-	--If this card is in your GY and your opponent has a FIRE monster on their field or in their GY: You can Special Summon this card. You can only use this effect of "Yukai na Rin no Kitsunebi Yurara" once per turn.--spsummon
+	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
