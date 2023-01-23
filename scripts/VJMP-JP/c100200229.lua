@@ -1,4 +1,4 @@
---超重武者 同心C-N
+--超重武者ドウC－N
 --Script by 奥克斯
 function c100200229.initial_effect(c)
 	--to hand

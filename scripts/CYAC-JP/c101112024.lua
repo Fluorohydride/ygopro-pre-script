@@ -1,4 +1,4 @@
---刀皇-都牟羽沓薙
+--刀皇－都牟羽沓薙
 --Script by 奥克斯
 function c101112024.initial_effect(c)
 	--cannot special summon

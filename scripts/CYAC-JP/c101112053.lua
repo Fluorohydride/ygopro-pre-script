@@ -1,4 +1,4 @@
---铁兽的咆哮
+--鉄獣の咆哮
 --Script by 奥克斯
 function c101112053.initial_effect(c)
 	--Activate

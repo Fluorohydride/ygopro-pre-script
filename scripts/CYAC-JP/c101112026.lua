@@ -1,4 +1,4 @@
---死天使 哈维斯特
+--死天使ハーヴェスト
 --Script by 奥克斯
 function c101112026.initial_effect(c)
 	--pendulum summon

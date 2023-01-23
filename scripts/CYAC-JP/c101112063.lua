@@ -1,4 +1,4 @@
---漫读使灵本源
+--リブロマンサー・オリジン
 --Script by 奥克斯
 function c101112063.initial_effect(c)
 	--Activate

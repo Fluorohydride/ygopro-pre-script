@@ -1,4 +1,4 @@
---骑甲虫 残酷撒旦独角仙
+--騎甲虫クルーエル・サターン
 --Script by 奥克斯
 function c101112037.initial_effect(c)
 	--fusion material

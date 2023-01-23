@@ -1,4 +1,4 @@
---星骑士 牛郎星
+--星騎士 アルテア
 --Script by 奥克斯
 function c101112020.initial_effect(c)
 	--same effect send this card to grave and spsummon another card check

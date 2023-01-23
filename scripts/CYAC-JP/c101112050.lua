@@ -1,4 +1,4 @@
---治安战警队 黑夜追缉者
+--S－Force ナイトチェイサー
 --Script by 奥克斯
 function c101112050.initial_effect(c)
 	--link summon

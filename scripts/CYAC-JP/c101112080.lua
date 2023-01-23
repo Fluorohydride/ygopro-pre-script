@@ -1,4 +1,4 @@
---初买
+--初買い
 --Script by 奥克斯
 function c101112080.initial_effect(c)
 	--Activate

@@ -1,4 +1,4 @@
---恐啡肽狂龙无伤
+--ダイノルフィア・インタクト
 --Script by 奥克斯
 function c101112076.initial_effect(c)
 	--activate

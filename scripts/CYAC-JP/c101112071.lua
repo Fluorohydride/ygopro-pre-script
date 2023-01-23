@@ -1,4 +1,4 @@
---烙印的即凶剧
+--烙印の即凶劇
 --Script by 奥克斯
 function c101112071.initial_effect(c)
 	--activate

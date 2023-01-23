@@ -1,4 +1,4 @@
---星守之骑士团
+--星守の騎士団
 --Script by 奥克斯
 function c101112064.initial_effect(c)
 	--Activate

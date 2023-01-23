@@ -1,4 +1,4 @@
---冰水帝 霓石精·海女神
+--氷水帝エジル・ラーン
 --Script by 奥克斯
 function c101112010.initial_effect(c)
 	--special summon (self)

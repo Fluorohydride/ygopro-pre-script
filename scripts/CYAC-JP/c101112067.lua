@@ -1,4 +1,4 @@
---撕裂时间的魔瞳
+--時を裂く魔瞳
 --Script by 奥克斯
 function c101112067.initial_effect(c)
 	--Activate

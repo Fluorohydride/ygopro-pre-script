@@ -1,4 +1,4 @@
---灵摆月之魔法师
+--ペンデュラムーン
 --Script by 奥克斯
 function c101112030.initial_effect(c)
 	--pendulum summon

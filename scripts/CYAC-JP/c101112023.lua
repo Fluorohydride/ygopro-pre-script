@@ -1,4 +1,4 @@
---恐乐园的死配人 ＜A丑角＞
+--恐楽園の死配人 ＜Arlechino＞
 --Script by 奥克斯
 function c101112023.initial_effect(c)
 	--special summon

@@ -1,4 +1,4 @@
---深渊之兽 阿鲁伯
+--深淵の獣アルベル
 --Script by 奥克斯
 function c101112008.initial_effect(c)
 	--change name

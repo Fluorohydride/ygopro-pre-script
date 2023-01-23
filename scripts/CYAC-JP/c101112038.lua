@@ -1,4 +1,4 @@
---双天之狮使-阿吽
+--双天の獅使－阿吽
 --Script by 奥克斯
 function c101112038.initial_effect(c)
 	--fusion summon

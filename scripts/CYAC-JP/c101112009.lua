@@ -1,4 +1,4 @@
---阿吉罗斯的落胤
+--アルギロスの落胤
 --Script by 奥克斯
 function c101112009.initial_effect(c)
 	--spsummon rule or self

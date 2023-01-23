@@ -1,4 +1,4 @@
---七音服的交响曲
+--ドレミコード・シンフォニア
 --Script by 奥克斯
 function c101112065.initial_effect(c)
 	--Activate

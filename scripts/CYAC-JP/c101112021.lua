@@ -1,4 +1,4 @@
---星骑士 织女星
+--星騎士 リュラ
 --Script by 奥克斯
 function c101112021.initial_effect(c)
 	--special summon

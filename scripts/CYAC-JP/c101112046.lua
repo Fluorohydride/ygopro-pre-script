@@ -1,4 +1,4 @@
---电脑堺虎-虎虎
+--電脳堺虎－虎々
 --Script by 奥克斯
 function c101112046.initial_effect(c)
 	--xyz summon

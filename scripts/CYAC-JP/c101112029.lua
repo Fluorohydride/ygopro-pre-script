@@ -1,4 +1,4 @@
---百檎龙-苹果鳞虫
+--百檎龍－リンゴブルム
 --Script by 奥克斯
 function c101112029.initial_effect(c)
 	--special summon

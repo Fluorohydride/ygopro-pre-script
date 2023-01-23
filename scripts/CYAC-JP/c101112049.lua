@@ -1,4 +1,4 @@
---大钢琴之七音服·库莉娅
+--グランドレミコード・クーリア
 --Script by 奥克斯
 function c101112049.initial_effect(c)
 	--link summon
