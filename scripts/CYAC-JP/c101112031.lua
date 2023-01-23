@@ -23,7 +23,7 @@ function s.xfilter(c)
 	return c:GetSequence()<5
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4-Duel.GetMatchingGroupCount(s.xfilter,tp,0,LOCATION_SZONE,nil) end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5-Duel.GetMatchingGroupCount(s.xfilter,tp,0,LOCATION_SZONE,nil) end
 end
 function s.filter(c)
 	return c:IsType(TYPE_TRAP) and c:IsSSetable()
@@ -31,13 +31,29 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=5-Duel.GetMatchingGroupCount(s.xfilter,tp,0,LOCATION_SZONE,nil)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return end
-	Duel.ConfirmDecktop(tp,5)
-	local g=Duel.GetDecktopGroup(tp,5)
+	Duel.ConfirmDecktop(tp,ct)
+	local g=Duel.GetDecktopGroup(tp,ct)
 	if #g>0 and g:FilterCount(s.filter,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.DisableShuffleCheck()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-		local sg=g:FilterSelect(tp,s.spfilter,1,1,nil)
-		Duel.SSet(tp,sg:GetFirst())
+		local sg=g:FilterSelect(tp,s.filter,1,1,nil)
+		local tc=sg:GetFirst()
+		Duel.SSet(tp,tc)
+		local c=e:GetHandler()
+		local fid=c:GetFieldID()
+		local turn=Duel.GetTurnCount()
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetCountLimit(1)
+		e1:SetLabel(fid,turn)
+		e1:SetLabelObject(tc)
+		e1:SetCondition(s.tgcon)
+		e1:SetOperation(s.tgop)
+		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		Duel.RegisterEffect(e1,tp)
 		g:Sub(sg)
 	end
 	if #g>0 then
@@ -47,4 +63,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
 		end
 	end
+end
+function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	local fid,turn=e:GetLabel()
+	local tc=e:GetLabelObject()
+	return tc:GetFlagEffectLabel(id)==fid and turn~=Duel.GetTurnCount()
+end
+function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	Duel.SendtoGrave(tc,REASON_EFFECT)
 end

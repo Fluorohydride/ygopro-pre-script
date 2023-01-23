@@ -80,11 +80,11 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 		e1:SetCountLimit(1)
+		e1:SetLabel(fid,Duel.GetTurnCount()+1)
 		e1:SetLabelObject(og)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
 		e1:SetReset(RESET_PHASE+PHASE_STANDBY,ct)
-		e1:SetValue(Duel.GetTurnCount()+1)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
@@ -92,17 +92,19 @@ function s.retfilter(c,fid)
 	return c:GetFlagEffectLabel(id)==fid
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnCount()<e:GetValue() then return false end
+	local fid,ct=e:GetLabel()
+	if Duel.GetTurnCount()<ct then return false end
 	local g=e:GetLabelObject()
-	if not g:IsExists(s.retfilter,1,nil,e:GetLabel()) then
+	if not g:IsExists(s.retfilter,1,nil,fid) then
 		g:DeleteGroup()
 		e:Reset()
 		return false
 	else return true end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
+	local fid,ct=e:GetLabel()
 	local g=e:GetLabelObject()
-	local sg=g:Filter(s.retfilter,nil,e:GetLabel())
+	local sg=g:Filter(s.retfilter,nil,fid)
 	g:DeleteGroup()
 	for tc in aux.Next(sg) do Duel.ReturnToField(tc) end
 end

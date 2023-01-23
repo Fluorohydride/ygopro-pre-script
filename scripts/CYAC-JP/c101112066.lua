@@ -63,7 +63,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-tp,g)
 	local nt={}
 	for i,n in ipairs(aux.SushipMentionsTable) do
-		table.insert(nt,n) table.insert(nt,OPCODE_ISCODE)
+		table.insert(nt,n)
+		table.insert(nt,OPCODE_ISCODE)
 		if i>0 then table.insert(nt,OPCODE_OR) end
 	end
 	local code=Duel.AnnounceCard(tp,table.unpack(nt))

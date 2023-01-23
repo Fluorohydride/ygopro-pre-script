@@ -2,6 +2,7 @@
 --coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
+	aux.AddCodeList(c,68468459)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -42,7 +43,8 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,68468459) and Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,68468459)
+		and Duel.IsExistingMatchingCard(s.dfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.dfilter(c)
 	return c:IsFaceup() and aux.NegateAnyFilter(c)

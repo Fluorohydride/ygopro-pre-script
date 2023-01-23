@@ -57,9 +57,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if c:IsRelateToEffect(e) and tg then
-		for tc in aux.Next(tg) do if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-			c:SetCardTarget(tc)
-		end end
+		for tc in aux.Next(tg) do
+			if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+				c:SetCardTarget(tc)
+			end
+		end
 		Duel.SpecialSummonComplete()
 	end
 end
