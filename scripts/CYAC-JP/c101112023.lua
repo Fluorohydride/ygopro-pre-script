@@ -26,9 +26,8 @@ function c101112023.initial_effect(c)
 	e2:SetOperation(c101112023.dhop)
 	c:RegisterEffect(e2)  
 end
-
-function c101112023.spcon(e)
-	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil,0x15b)
+function c101112023.spcon(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_MZONE,0,nil,0x15b)
 	return #g>0 
 end
 function c101112023.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -81,7 +80,7 @@ function c101112023.dhop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:Select(tp,1,1,nil)
 	if #sg==0 then return false end
-	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 or not tc:IsRelateToEffect(e) or tc:IsAttack(0) or tc:IsFacedown() then return false end
+	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 or not tc:IsRelateToEffect(e) or tc:IsFacedown() then return false end
 	Duel.BreakEffect()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -89,4 +88,4 @@ function c101112023.dhop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(0)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc:RegisterEffect(e1)
-end  
+end

@@ -62,7 +62,7 @@ function c101112009.sprcon2(e,c)
 end
 function c101112009.actfilter(e,c)
 	local g=c:GetLinkedGroup()
-	return c:IsType(TYPE_LINK) and #g>0 and g:IsContains(e:GetHandler())
+	return c:IsType(TYPE_LINK) and g:IsContains(e:GetHandler())
 end
 function c101112009.dhcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp

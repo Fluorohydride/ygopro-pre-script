@@ -1,5 +1,6 @@
 --百檎龍－リンゴブルム
 --Script by 奥克斯
+--not fully implemented
 function c101112029.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)  
@@ -27,16 +28,12 @@ function c101112029.initial_effect(c)
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
-		ge1:SetCondition(c101112029.checkcon)
 		ge1:SetOperation(c101112029.checkop)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
 function c101112029.checkfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
-end
-function c101112029.checkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101112029.checkfilter,1,nil)
 end
 function c101112029.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(c101112029.checkfilter,nil)
@@ -89,6 +86,7 @@ function c101112029.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_NONTUNER)
 		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetRange(LOCATION_MZONE)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetValue(c101112029.tnval)
 		token:RegisterEffect(e2,true)
 		Duel.SpecialSummonComplete()

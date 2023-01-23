@@ -51,7 +51,8 @@ function c101112020.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(g,REASON_EFFECT)
 end
 function c101112020.cfilter(c,tp,se)
-	return not c:IsCode(101112020) and c:IsFaceup() and c:IsControler(tp)and c:IsSetCard(0x9c,0x53) and (se==nil or c:GetReasonEffect()~=se)
+	return not c:IsCode(101112020) and c:IsFaceup() and c:IsControler(tp)
+		and c:IsSetCard(0x9c,0x53) and (se==nil or c:GetReasonEffect()~=se)
 end
 function c101112020.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local se=e:GetLabelObject():GetLabelObject()
@@ -64,7 +65,7 @@ function c101112020.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101112020.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e)  then
+	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())

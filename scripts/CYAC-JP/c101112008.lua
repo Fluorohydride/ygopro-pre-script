@@ -60,15 +60,12 @@ function c101112008.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101112008.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if not c:IsRelateToEffect(e) or Duel.SendtoGrave(c,REASON_EFFECT)==0 then return false end
+	if c:GetLocation()~=LOCATION_GRAVE or not tc:IsRelateToEffect(e) then return false end
 	if e:GetLabel()==0 then
-		local tc=Duel.GetFirstTarget()
-		if not c:IsRelateToEffect(e) or Duel.SendtoGrave(c,REASON_EFFECT)==0 then return false end
-		if c:GetLocation()~=LOCATION_GRAVE or not tc:IsRelateToEffect(e) then return false end
 		Duel.GetControl(tc,tp)
 	else
-		local tc=Duel.GetFirstTarget()
-		if not c:IsRelateToEffect(e) or Duel.SendtoGrave(c,REASON_EFFECT)==0 then return false end
-		if c:GetLocation()~=LOCATION_GRAVE or not tc:IsRelateToEffect(e) then return false end
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
