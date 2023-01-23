@@ -1,3 +1,4 @@
+--おすすめ軍貫握り
 --coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
