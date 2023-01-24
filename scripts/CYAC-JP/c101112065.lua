@@ -16,7 +16,7 @@ function c101112065.cfilter(c)
 end
 function c101112065.slfilter(c)
 	local scal=c:GetCurrentScale()
-	return scal>0 and (scal+1)%2==0
+	return scal>0 and scal%2==1
 end
 function c101112065.spfilter(c,e,tp)
 	return c:IsSetCard(0x1162) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0

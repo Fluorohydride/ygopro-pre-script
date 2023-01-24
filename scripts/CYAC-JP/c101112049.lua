@@ -49,14 +49,14 @@ end
 function c101112049.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and rp==1-tp
 end
-function c101112049.spfilter(c,e,tp)
-	return c:IsSetCard(0x162) and (c:GetCurrentScale()+3)%2==0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,tp,zone)
+function c101112049.spfilter(c,e,tp,zone)
+	return c:IsSetCard(0x162) and c:GetCurrentScale()%2==1
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c101112049.tefilter(c)
 	return c:IsSetCard(0x162) and c:IsType(TYPE_PENDULUM) and c:GetCurrentScale()%2==0
 end
 function c101112049.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local zone=e:GetHandler():GetLinkedZone(tp)
 	local g=Duel.GetMatchingGroup(c101112049.spfilter,tp,LOCATION_PZONE,0,nil,e,tp,zone)
 	if chk==0 then return #g>0 end
