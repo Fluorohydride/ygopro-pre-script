@@ -64,7 +64,6 @@ end
 function c101112060.mvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToDeckAsCost() end
-	Duel.DisableShuffleCheck()
 	Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_COST)
 end
 function c101112060.mvfilter(c)
@@ -72,9 +71,9 @@ function c101112060.mvfilter(c)
 end
 function c101112060.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101112060.mvfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101112060.mvfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c101112060.mvfilter,tp,LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c101112060.mvfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c101112060.mvfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 end
 function c101112060.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
