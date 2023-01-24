@@ -69,7 +69,7 @@ function c101112049.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)==0 or #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:Select(tp,1,1,nil)
-	if #sg==0 or Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,zone)==0 then return end
+	if #sg==0 or Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP,zone)==0 then return end
 	if Duel.NegateActivation(ev) and Duel.IsExistingMatchingCard(c101112049.tefilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(101112049,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101112049,1))
