@@ -77,7 +77,8 @@ function c101112071.rmcon(e)
 	return #g>0 
 end
 function c101112071.rmtg(e,c)
+	local tp=e:GetHandlerPlayer()
 	local b1=c:IsReason(REASON_RITUAL) and c:IsReason(REASON_RELEASE)
 	local b2=c:IsReason(REASON_FUSION+REASON_SYNCHRO+REASON_LINK)
-	return b1 or b2
+	return c:GetOwner()==1-tp and c:GetReasonPlayer()==1-tp and (b1 or b2)
 end

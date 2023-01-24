@@ -53,19 +53,20 @@ function c101112035.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end 
 function c101112035.spfilter(c,e,tp)
-	return c:IsCanBeEffectTarget(e) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,tp) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp))
+	return c:IsCanBeEffectTarget(e) and c:IsType(TYPE_MONSTER)
 end
 function c101112035.spsumfilter1(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp)
 end
 function c101112035.spsumfilter2(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
 end
 function c101112035.gcheck(g,e,tp)
 	if #g~=2 then return false end
 	local ac=g:GetFirst()
 	local bc=g:GetNext()
-	return ac:IsCanBeSpecialSummoned(e,0,tp,false,false) and bc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
+	return c101112035.spsumfilter1(ac,e,tp) and c101112035.spsumfilter2(bc,e,tp)
+		or c101112035.spsumfilter1(bc,e,tp) and c101112035.spsumfilter2(ac,e,tp)
 end
 function c101112035.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -73,7 +74,8 @@ function c101112035.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)
-		return not Duel.IsPlayerAffectedByEffect(tp,59822133) and ft1>0 and ft2>0 and g:CheckSubGroup(c101112035.gcheck,2,2,e,tp)
+		return not Duel.IsPlayerAffectedByEffect(tp,59822133) and ft1>0 and ft2>0
+			and g:CheckSubGroup(c101112035.gcheck,2,2,e,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:SelectSubGroup(tp,c101112035.gcheck,false,2,2,e,tp)
@@ -83,35 +85,14 @@ end
 function c101112035.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if #g==0 or (#g>1 and Duel.IsPlayerAffectedByEffect(tp,59822133)) or (#g==2 and not g:CheckSubGroup(c101112035.gcheck,2,2,e,tp)) then return end
-	if ft1<=0 and ft2<=0 then return end
-	if #g==2 and ft1>0 and ft2>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101112035,1))
-		local sg=g:FilterSelect(tp,c101112035.spsumfilter1,1,1,nil,e,tp)
-		Duel.SpecialSummonStep(sg:GetFirst(),0,tp,1-tp,false,false,POS_FACEUP)
-		Duel.SpecialSummonStep((g-sg):GetFirst(),0,tp,tp,false,false,POS_FACEUP)
-		Duel.SpecialSummonComplete()
-	elseif #g==2 and ft1>0 and ft2==0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:FilterSelect(tp,c101112035.spsumfilter2,1,1,nil,e,tp)
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-	elseif #g==2 and ft1==0 and ft2>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101112035,1))
-		local sg=g:FilterSelect(tp,c101112035.spsumfilter1,1,1,nil,e,tp)
-		Duel.SpecialSummon(sg,0,tp,1-tp,false,false,POS_FACEUP)
-	elseif #g==1 then
-		local sc=g:GetFirst()
-		local sp1=0
-		local sp2=0
-		if sc:IsCanBeSpecialSummoned(e,0,tp,false,false,tp) then sp1=1 end
-		if sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp) then sp2=1 end
-		if ft2>0 and sp2>0 and Duel.SelectYesNo(tp,aux.Stringid(101112035,2)) then
-			Duel.SpecialSummon(sc,0,tp,1-tp,false,false,POS_FACEUP)
-		elseif ft1>0 and sp1>0 then
-			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
-		end
-	end
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) or ft1<=0 or ft2<=0 then return end
+	local g=Duel.GetTargetsRelateToChain()
+	if not g:CheckSubGroup(c101112035.gcheck,2,2,e,tp) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101112035,1))
+	local sg=g:FilterSelect(tp,c101112035.spsumfilter1,1,1,nil,e,tp)
+	Duel.SpecialSummonStep(sg:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
+	Duel.SpecialSummonStep((g-sg):GetFirst(),0,tp,1-tp,false,false,POS_FACEUP)
+	Duel.SpecialSummonComplete()
 end
 function c101112035.rfilter(c)
 	return c:IsReleasableByEffect() and (c:GetSequence()>4 or c:GetSequence()==2)
