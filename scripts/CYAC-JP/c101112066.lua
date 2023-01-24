@@ -67,8 +67,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		table.insert(nt,OPCODE_ISCODE)
 		if i>1 then table.insert(nt,OPCODE_OR) end
 	end
-	local code=Duel.AnnounceCard(tp,table.unpack(nt))
-	Duel.Hint(HINT_CARD,1-tp,code)
+	local code=Duel.AnnounceCard(1-tp,table.unpack(nt))
+	Duel.Hint(HINT_CARD,tp,code)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,code):GetFirst()
 	if tc then
