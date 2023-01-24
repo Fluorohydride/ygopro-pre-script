@@ -53,7 +53,7 @@ function c101112010.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101112010.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_WATER) and c:IsLocation(LOCATION_EXTRA)
-end  
+end
 function c101112010.codecon(e)
 	return e:GetHandler():GetEquipCount()>0
 end

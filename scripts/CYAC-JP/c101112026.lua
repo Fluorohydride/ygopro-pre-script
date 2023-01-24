@@ -4,7 +4,7 @@ function c101112026.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--black horn of heaven search
-	local e0=Effect.CreateEffect(c)  
+	local e0=Effect.CreateEffect(c)
 	e0:SetDescription(aux.Stringid(101112026,0))
 	e0:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e0:SetType(EFFECT_TYPE_IGNITION)
@@ -12,7 +12,7 @@ function c101112026.initial_effect(c)
 	e0:SetCountLimit(1,101112026)
 	e0:SetTarget(c101112026.thtg1)
 	e0:SetOperation(c101112026.thop1)
-	c:RegisterEffect(e0)  
+	c:RegisterEffect(e0)
 	--horn of heaven search
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

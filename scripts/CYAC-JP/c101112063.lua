@@ -17,7 +17,7 @@ function c101112063.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetTarget(c101112063.atktg)
 	e2:SetValue(c101112063.atkval)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101112063,1))

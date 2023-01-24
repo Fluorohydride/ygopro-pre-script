@@ -11,18 +11,18 @@ function c101112067.initial_effect(c)
 	e1:SetLabel(101112067)
 	c:RegisterEffect(e1)
 	--act limit
-	local e2=Effect.CreateEffect(c)  
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(c101112067.condition)
 	e2:SetCost(c101112067.cost)
 	e2:SetOperation(c101112067.operation)
 	e2:SetLabel(101112067+100)
-	c:RegisterEffect(e2)   
+	c:RegisterEffect(e2)
 end
 function c101112067.condition(e)
 	local ct=e:GetLabel()
-	return ct>0 and Duel.GetFlagEffect(e:GetHandlerPlayer(),ct)==0 
+	return ct>0 and Duel.GetFlagEffect(e:GetHandlerPlayer(),ct)==0
 end
 function c101112067.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e0=Effect.CreateEffect(e:GetHandler())

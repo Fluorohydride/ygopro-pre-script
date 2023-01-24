@@ -43,7 +43,7 @@ function c101112009.initial_effect(c)
 	e4:SetCondition(c101112009.dhcon)
 	e4:SetTarget(c101112009.dhtg)
 	e4:SetOperation(c101112009.dhop)
-	c:RegisterEffect(e4)	
+	c:RegisterEffect(e4)
 end
 function c101112009.twofilter(c)
 	return c:IsFaceup() and (c:IsLevel(2) or c:IsLink(2) or c:IsRank(2))
@@ -66,7 +66,7 @@ function c101112009.actfilter(e,c)
 end
 function c101112009.dhcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
-end  
+end
 function c101112009.xfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetOverlayCount()>0
 end
@@ -81,4 +81,4 @@ function c101112009.dhop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:GetOverlayCount()>0 then
 		tc:RemoveOverlayCard(tp,1,2,REASON_EFFECT)
 	end
-end  
+end

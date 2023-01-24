@@ -13,7 +13,7 @@ function c101112050.initial_effect(c)
 	e1:SetTarget(c101112050.attg)
 	e1:SetValue(c101112050.atlimit)
 	c:RegisterEffect(e1)
-	--special summon 
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101112050,0))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
@@ -26,7 +26,7 @@ function c101112050.initial_effect(c)
 	e2:SetCondition(c101112050.tdcon)
 	e2:SetTarget(c101112050.tdtg)
 	e2:SetOperation(c101112050.tdop)
-	c:RegisterEffect(e2)	 
+	c:RegisterEffect(e2)
 end
 function c101112050.mat(c)
 	return c:IsLinkSetCard(0x156) and not c:IsLinkType(TYPE_LINK)
@@ -63,8 +63,8 @@ function c101112050.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
 		local ft=Duel.GetMZoneCount(tp,tc)
-		local g=Duel.GetMatchingGroup(c101112050.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp)	 
-		if ft>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101112050,1)) then 
+		local g=Duel.GetMatchingGroup(c101112050.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp)
+		if ft>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101112050,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)

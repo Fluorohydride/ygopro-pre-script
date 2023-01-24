@@ -16,7 +16,7 @@ function c100200229.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	--special summon
-	local e3=Effect.CreateEffect(c)  
+	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100200229,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -26,7 +26,7 @@ function c100200229.initial_effect(c)
 	e3:SetCost(c100200229.spcost)
 	e3:SetTarget(c100200229.sptg)
 	e3:SetOperation(c100200229.spop)
-	c:RegisterEffect(e3)  
+	c:RegisterEffect(e3)
 end
 function c100200229.thfilter(c)
 	if c:IsFacedown() or not c:IsType(TYPE_PENDULUM) then return false end
@@ -68,4 +68,3 @@ function c100200229.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

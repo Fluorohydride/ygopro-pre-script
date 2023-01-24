@@ -9,7 +9,7 @@ function c101112027.initial_effect(c)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
 	--summon
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -17,10 +17,10 @@ function c101112027.initial_effect(c)
 	e1:SetCost(c101112027.sumcost)
 	e1:SetTarget(c101112027.sumtg)
 	e1:SetOperation(c101112027.sumop)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--spirit return
 	aux.EnableSpiritReturn(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
-	--to hand 
+	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -31,7 +31,7 @@ function c101112027.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101112027.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsPublic() end 
+	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function c101112027.sumfilter(c)
 	return c:IsType(TYPE_SPIRIT) and c:IsSummonable(true,nil)

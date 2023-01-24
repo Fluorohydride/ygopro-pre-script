@@ -12,7 +12,7 @@ function c101112038.initial_effect(c)
 	e0:SetCondition(c101112038.regcon)
 	e0:SetOperation(c101112038.regop)
 	c:RegisterEffect(e0)
-	--special summon 
+	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -35,7 +35,7 @@ function c101112038.regop(e,tp,eg,ep,ev,re,r,rp)
 	if g:IsExists(Card.IsOriginalCodeRule,1,nil,33026283) then
 		chk1=1
 		c:RegisterFlagEffect(101112038,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112038,0))
-	end 
+	end
 	if g:IsExists(Card.IsOriginalCodeRule,1,nil,284224) then
 		chk2=1
 		c:RegisterFlagEffect(101112038,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112038,1))
@@ -67,7 +67,7 @@ function c101112038.regop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTarget(c101112038.rmtg)
 	e2:SetOperation(c101112038.rmop)
 	e2:SetLabel(chk2)
-	c:RegisterEffect(e2)	 
+	c:RegisterEffect(e2)
 end
 function c101112038.atkcon(e)
 	if e:GetLabel()~=1 then return false end
@@ -122,7 +122,7 @@ function c101112038.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
 	if #sg~=2 then return false end
 	local tc=sg:GetFirst()
-	for tc in aux.Next(sg) do 
+	for tc in aux.Next(sg) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

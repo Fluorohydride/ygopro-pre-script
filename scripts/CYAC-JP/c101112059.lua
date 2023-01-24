@@ -7,7 +7,7 @@ function c101112059.initial_effect(c)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
 	--search
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_SZONE)
@@ -77,17 +77,17 @@ function c101112059.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101112059.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_PENDULUM)
-end 
+end
 function c101112059.rmfilter(c)
 	return c:IsFacedown() and c:IsAbleToRemove(tp,POS_FACEDOWN,REASON_EFFECT)
 end
 function c101112059.repcon(e)
 	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsCode),e:GetHandlerPlayer(),LOCATION_EXTRA,0,nil,101112015)
-	return #g>0 
+	return #g>0
 end
 function c101112059.repfilter(c,tp)
 	return not c:IsReason(REASON_REPLACE) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0x292)
-		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)) 
+		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 function c101112059.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c101112059.rmfilter,tp,LOCATION_EXTRA,0,nil)

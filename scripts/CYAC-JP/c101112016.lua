@@ -10,7 +10,7 @@ function c101112016.initial_effect(c)
 	e1:SetCountLimit(1,101112016+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c101112016.sprcon)
 	c:RegisterEffect(e1)
-	--atk up  
+	--atk up
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101112016,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -23,7 +23,7 @@ function c101112016.initial_effect(c)
 	e2:SetCondition(c101112016.atkcon)
 	e2:SetCost(c101112016.atkcost)
 	e2:SetOperation(c101112016.atkop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
 function c101112016.sprcon(e,c)
 	if c==nil then return true end

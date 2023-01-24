@@ -19,7 +19,7 @@ function c101112049.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(c101112049.effectfilter)
 	c:RegisterEffect(e2)
-	--Effect 3 
+	--Effect 3
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(101112049,0))
 	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_SPECIAL_SUMMON)

@@ -2,7 +2,7 @@
 --Script by 奥克斯
 function c101112023.initial_effect(c)
 	--special summon
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_ACTION+CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -10,7 +10,7 @@ function c101112023.initial_effect(c)
 	e1:SetCondition(c101112023.spcon)
 	e1:SetTarget(c101112023.sptg)
 	e1:SetOperation(c101112023.spop)
-	c:RegisterEffect(e1)   
+	c:RegisterEffect(e1)
 	--special summon and atk change 0
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101112023,1))
@@ -24,11 +24,11 @@ function c101112023.initial_effect(c)
 	e2:SetCondition(c101112023.dhcon)
 	e2:SetTarget(c101112023.dhtg)
 	e2:SetOperation(c101112023.dhop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
 function c101112023.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_MZONE,0,nil,0x15b)
-	return #g>0 
+	return #g>0
 end
 function c101112023.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -47,7 +47,7 @@ function c101112023.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tag=g:Select(tp,1,1,nil)
 		if #tag==0 then return false end
 		Duel.SendtoHand(tag,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tag) 
+		Duel.ConfirmCards(1-tp,tag)
 	end
 end
 function c101112023.thfilter(c)
@@ -55,7 +55,7 @@ function c101112023.thfilter(c)
 end
 function c101112023.dhcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
-end  
+end
 function c101112023.xfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:GetAttack()>0
 end

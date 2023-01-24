@@ -18,7 +18,7 @@ function c101112035.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(aux.tgoval)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--special summon grave 2
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101112035,0))
@@ -32,16 +32,16 @@ function c101112035.initial_effect(c)
 	e3:SetCondition(c101112035.spcon)
 	e3:SetTarget(c101112035.sptg)
 	e3:SetOperation(c101112035.spop)
-	c:RegisterEffect(e3) 
+	c:RegisterEffect(e3)
 	--Special Summon itself
-	local e4=Effect.CreateEffect(c)  
+	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,101112035+100)
 	e4:SetTarget(c101112035.spittg)
 	e4:SetOperation(c101112035.spitop)
-	c:RegisterEffect(e4) 
+	c:RegisterEffect(e4)
 end
 function c101112035.branded_fusion_check(tp,sg,fc)
 	return aux.gffcheck(sg,Card.IsFusionCode,68468459,c101112035.matfilter)
@@ -51,7 +51,7 @@ function c101112035.matfilter(c)
 end
 function c101112035.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
-end 
+end
 function c101112035.spfilter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and c:IsType(TYPE_MONSTER)
 end

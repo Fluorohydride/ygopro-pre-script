@@ -30,7 +30,7 @@ function c101112065.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101112065.cfilter,tp,LOCATION_EXTRA,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	local draw=Duel.IsExistingMatchingCard(c101112065.slfilter,tp,LOCATION_PZONE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1)
-	local b1=ct>=3 
+	local b1=ct>=3
 	local b2=ct>=5 and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil)
 	local b3=ct>=7 and Duel.IsExistingMatchingCard(c101112065.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 	if b1 then
@@ -47,7 +47,7 @@ function c101112065.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
 		Duel.HintSelection(dg)
-		if #dg>0 and Duel.Destroy(dg,REASON_EFFECT)>0 and draw then 
+		if #dg>0 and Duel.Destroy(dg,REASON_EFFECT)>0 and draw then
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end

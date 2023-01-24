@@ -18,7 +18,7 @@ function c101112020.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e3) 
+	c:RegisterEffect(e3)
 	c101112020.star_knight_summon_effect=e1
 	--special summon
 	local e4=Effect.CreateEffect(c)

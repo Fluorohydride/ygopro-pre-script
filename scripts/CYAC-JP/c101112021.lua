@@ -28,7 +28,7 @@ function c101112021.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e4=e2:Clone()
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e4) 
+	c:RegisterEffect(e4)
 	c101112021.star_knight_summon_effect=e2
 end
 function c101112021.spcon(e,tp,eg,ep,ev,re,r,rp)

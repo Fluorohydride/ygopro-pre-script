@@ -54,7 +54,7 @@ function c101112076.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101112076.val(e,re,val,r,rp,rc)
 	local lp=Duel.GetLP(e:GetHandlerPlayer())
-	return math.ceil(lp/2) 
+	return math.ceil(lp/2)
 end
 function c101112076.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=2000 and Duel.GetBattleDamage(tp)>0

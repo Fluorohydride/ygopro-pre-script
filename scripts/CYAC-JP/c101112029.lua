@@ -3,7 +3,7 @@
 --not fully implemented
 function c101112029.initial_effect(c)
 	--special summon
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -11,9 +11,9 @@ function c101112029.initial_effect(c)
 	e1:SetCondition(c101112029.spcon)
 	e1:SetTarget(c101112029.sptg)
 	e1:SetOperation(c101112029.spop)
-	c:RegisterEffect(e1)   
+	c:RegisterEffect(e1)
 	--token
-	local e2=Effect.CreateEffect(c)  
+	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)

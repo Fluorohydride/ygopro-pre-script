@@ -18,17 +18,17 @@ function c101112015.initial_effect(c)
 	e1:SetRange(LOCATION_EXTRA)
 	e1:SetCondition(c101112015.sprcon)
 	c:RegisterEffect(e1)
-	--deck move 
-	local e2=Effect.CreateEffect(c)  
+	--deck move
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCountLimit(1)
 	e2:SetCost(c101112015.mvcost)
 	e2:SetTarget(c101112015.mvtg)
 	e2:SetOperation(c101112015.mvop)
-	c:RegisterEffect(e2)   
+	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(101112015,ACTIVITY_SPSUMMON,c101112015.counterfilter)
-	--fadown remove 
+	--fadown remove
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -61,7 +61,7 @@ function c101112015.mvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function c101112015.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return  c:IsCode(101112015)
+	return c:IsCode(101112015)
 end
 function c101112015.mvfilter(c)
 	return not c:IsForbidden() and c:IsSetCard(0x292) and c:GetType()==TYPE_CONTINUOUS+TYPE_SPELL and c:CheckUniqueOnField(tp)
@@ -109,7 +109,7 @@ function c101112015.drmop(e,tp,eg,ep,ev,re,r,rp)
 	local mg=rg:SelectSubGroup(tp,c101112015.fselect,false,1,ct1)
 	if #mg==0 then return end
 	Duel.HintSelection(mg)
-	Duel.Remove(mg,POS_FACEDOWN,REASON_EFFECT) 
+	Duel.Remove(mg,POS_FACEDOWN,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup():Filter(c101112015.rmfilter,nil)
 	if #og==0 or #tg<#og then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -117,5 +117,5 @@ function c101112015.drmop(e,tp,eg,ep,ev,re,r,rp)
 	if #tg1==0 then return end
 	Duel.BreakEffect()
 	Duel.HintSelection(tg1)
-	Duel.SendtoDeck(tg1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) 
-end 
+	Duel.SendtoDeck(tg1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+end

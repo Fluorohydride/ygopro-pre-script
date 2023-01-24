@@ -30,11 +30,11 @@ function c101112080.cfop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local val=Duel.AnnounceNumber(tp,table.unpack(t))
 	if Duel.SelectYesNo(1-p,aux.Stringid(101112080,0)) then
-		if Duel.Recover(1-p,val,REASON_EFFECT)>0 then 
+		if Duel.Recover(1-p,val,REASON_EFFECT)>0 then
 			Duel.SetLP(tp,Duel.GetLP(tp)-val)
 			Duel.DisableShuffleCheck(true)
 			Duel.SendtoHand(tc,p,REASON_EFFECT)
-			Duel.ConfirmCards(1-p,tc) 
-		end  
+			Duel.ConfirmCards(1-p,tc)
+		end
 	end
 end

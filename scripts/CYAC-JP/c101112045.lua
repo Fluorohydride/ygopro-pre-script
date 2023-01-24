@@ -16,20 +16,20 @@ function c101112045.initial_effect(c)
 	e1:SetTarget(c101112045.thtg)
 	e1:SetOperation(c101112045.thop)
 	c:RegisterEffect(e1)
-	--star_knight_summon_effect_copy  
-	local e2=Effect.CreateEffect(c)  
+	--star_knight_summon_effect_copy
+	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101112045,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101112045+100)
 	e2:SetTarget(c101112045.copytg)
 	e2:SetOperation(c101112045.copyop)
-	c:RegisterEffect(e2)   
+	c:RegisterEffect(e2)
 end
 function c101112045.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_XYZ)
-end 
+end
 function c101112045.thfilter(c,e)
 	return c:IsSetCard(0x9c,0x53) and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
@@ -51,7 +51,7 @@ function c101112045.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if #tg==0 then return end
 	Duel.SendtoHand(tg,nil,REASON_EFFECT)
-end  
+end
 function c101112045.efffilter(c,e,tp,eg,ep,ev,re,r,rp)
 	if not (c:IsSetCard(0x9c,0x53) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()) then return false end
 	local te=c.star_knight_summon_effect

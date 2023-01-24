@@ -22,8 +22,8 @@ function c101112024.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_PROC)
-	c:RegisterEffect(e2) 
-	--return to deck 
+	c:RegisterEffect(e2)
+	--return to deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101112024,1))
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_TODECK+CATEGORY_GRAVE_ACTION)

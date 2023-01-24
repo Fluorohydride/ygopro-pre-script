@@ -4,16 +4,16 @@ function c101112030.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--extra to hand
-	local e0=Effect.CreateEffect(c)  
+	local e0=Effect.CreateEffect(c)
 	e0:SetCategory(CATEGORY_TOHAND+CATEGORY_DESTROY)
 	e0:SetType(EFFECT_TYPE_IGNITION)
 	e0:SetRange(LOCATION_PZONE)
 	e0:SetCountLimit(1,101112030)
 	e0:SetTarget(c101112030.thtg1)
 	e0:SetOperation(c101112030.thop1)
-	c:RegisterEffect(e0)  
+	c:RegisterEffect(e0)
 	--to hand 2
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101112030,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -21,7 +21,7 @@ function c101112030.initial_effect(c)
 	e1:SetCountLimit(1,101112030+100)
 	e1:SetTarget(c101112030.thtg2)
 	e1:SetOperation(c101112030.thop2)
-	c:RegisterEffect(e1)   
+	c:RegisterEffect(e1)
 	if not c101112030.global_check then
 		c101112030.global_check=true
 		local ge1=Effect.CreateEffect(c)

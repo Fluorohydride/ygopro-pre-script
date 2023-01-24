@@ -11,7 +11,7 @@ function c101112060.initial_effect(c)
 	e1:SetTarget(c101112060.target)
 	e1:SetOperation(c101112060.activate)
 	c:RegisterEffect(e1)
-	--Effect 2  
+	--Effect 2
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101112060,1))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -20,7 +20,7 @@ function c101112060.initial_effect(c)
 	e2:SetCost(c101112060.mvcost)
 	e2:SetTarget(c101112060.mvtg)
 	e2:SetOperation(c101112060.mvop)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 end
 function c101112060.filter(c)
 	return c:IsSetCard(0x292) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

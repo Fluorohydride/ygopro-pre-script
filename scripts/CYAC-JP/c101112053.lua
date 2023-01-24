@@ -26,9 +26,9 @@ function c101112053.tagfilter(c,type)
 	if type&TYPE_MONSTER~=0 then
 		chk=c:GetAttack()>0
 	elseif type&TYPE_SPELL~=0 then
-		chk=aux.NegateMonsterFilter(c) and Duel.GetCurrentPhase()~=PHASE_DAMAGE 
-	elseif type&TYPE_TRAP~=0 then 
-		chk=c:IsAbleToHand() and Duel.GetCurrentPhase()~=PHASE_DAMAGE 
+		chk=aux.NegateMonsterFilter(c) and Duel.GetCurrentPhase()~=PHASE_DAMAGE
+	elseif type&TYPE_TRAP~=0 then
+		chk=c:IsAbleToHand() and Duel.GetCurrentPhase()~=PHASE_DAMAGE
 	end
 	if chk==nil then return false end
 	return c101112053.filter(c) and chk
@@ -47,9 +47,9 @@ function c101112053.tgfilter(c,tp)
 	if c:IsType(TYPE_MONSTER) then
 		chk=Duel.IsExistingTarget(c101112053.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 	elseif c:IsType(TYPE_SPELL) then
-		chk=Duel.IsExistingTarget(c101112053.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.GetCurrentPhase()~=PHASE_DAMAGE 
-	elseif c:IsType(TYPE_TRAP) then 
-		chk=Duel.IsExistingTarget(c101112053.tfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.GetCurrentPhase()~=PHASE_DAMAGE 
+		chk=Duel.IsExistingTarget(c101112053.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.GetCurrentPhase()~=PHASE_DAMAGE
+	elseif c:IsType(TYPE_TRAP) then
+		chk=Duel.IsExistingTarget(c101112053.tfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.GetCurrentPhase()~=PHASE_DAMAGE
 	end
 	if chk==nil then return false end
 	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x14d) and chk
@@ -73,7 +73,7 @@ function c101112053.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	elseif type&TYPE_SPELL~=0 then
 		e:SetCategory(CATEGORY_DISABLE)
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,tag,1,0,0)
-	elseif type&TYPE_TRAP~=0 then 
+	elseif type&TYPE_TRAP~=0 then
 		e:SetCategory(CATEGORY_TOHAND)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,tag,1,0,0)
 	end
@@ -92,7 +92,7 @@ function c101112053.activate(e,tp,eg,ep,ev,re,r,rp)
 	elseif type&TYPE_SPELL~=0 then
 		chk=tc:IsFaceup() and tc:IsCanBeDisabledByEffect(e)
 		b2=true
-	elseif type&TYPE_TRAP~=0 then 
+	elseif type&TYPE_TRAP~=0 then
 		chk=true
 		b3=true
 	end
