@@ -71,7 +71,7 @@ function c101112059.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetClassCount(Card.GetCode)<2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
-	if #sg~=2 then return end
+	if not sg then return end
 	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,sg)
 end
@@ -103,6 +103,5 @@ function c101112059.repop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rg=g:Select(tp,1,1,nil)
-	if #rg==0 then return end
 	Duel.Remove(rg,POS_FACEDOWN,REASON_EFFECT+REASON_REPLACE)
 end

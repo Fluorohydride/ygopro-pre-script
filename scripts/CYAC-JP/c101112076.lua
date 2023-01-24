@@ -48,13 +48,13 @@ function c101112076.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetValue(c101112076.va1)
+	e1:SetValue(c101112076.val)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c101112076.va1(e,re,val,r,rp,rc)
+function c101112076.val(e,re,val,r,rp,rc)
 	local lp=Duel.GetLP(e:GetHandlerPlayer())
-	return math.floor(lp/2) 
+	return math.ceil(lp/2) 
 end
 function c101112076.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=2000 and Duel.GetBattleDamage(tp)>0

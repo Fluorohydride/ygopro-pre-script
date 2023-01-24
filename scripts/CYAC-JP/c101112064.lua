@@ -28,12 +28,11 @@ function c101112064.spfilter(c,e,sp)
 end
 function c101112064.activate(e,tp,eg,ep,ev,re,r,rp)
 	local cg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101112064.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
-	if #cg>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-		if Duel.SelectYesNo(tp,aux.Stringid(101112064,0)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=cg:Select(tp,1,1,nil)
-			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-		end
+	if #cg>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.SelectYesNo(tp,aux.Stringid(101112064,0)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sg=cg:Select(tp,1,1,nil)
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c101112064.filter1(c,e,tp)

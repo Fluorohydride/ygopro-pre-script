@@ -68,7 +68,6 @@ function c101112050.tdop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)
-			if #sg==0 then return false end
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end

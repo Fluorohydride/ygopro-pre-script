@@ -6,7 +6,6 @@ function c101112053.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMING_END_PHASE)
 	e1:SetCountLimit(1,101112053+EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(c101112053.cost)
@@ -98,7 +97,7 @@ function c101112053.activate(e,tp,eg,ep,ev,re,r,rp)
 		b3=true
 	end
 	if tc:IsRelateToEffect(e) and chk then
-		if b1==true then
+		if b1 then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -106,7 +105,7 @@ function c101112053.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
 		end
-		if b2==true then
+		if b2 then
 			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -120,7 +119,7 @@ function c101112053.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e2)
 		end
-		if b3==true then
+		if b3 then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		end
 	end

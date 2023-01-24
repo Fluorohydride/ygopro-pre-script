@@ -3,6 +3,7 @@
 function c101112060.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101112060,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -11,14 +12,15 @@ function c101112060.initial_effect(c)
 	e1:SetOperation(c101112060.activate)
 	c:RegisterEffect(e1)
 	--Effect 2  
-	local e02=Effect.CreateEffect(c)  
-	e02:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e02:SetType(EFFECT_TYPE_IGNITION)
-	e02:SetRange(LOCATION_GRAVE)
-	e02:SetCost(c101112060.mvcost)
-	e02:SetTarget(c101112060.mvtg)
-	e02:SetOperation(c101112060.mvop)
-	c:RegisterEffect(e02) 
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101112060,1))
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCost(c101112060.mvcost)
+	e2:SetTarget(c101112060.mvtg)
+	e2:SetOperation(c101112060.mvop)
+	c:RegisterEffect(e2) 
 end
 function c101112060.filter(c)
 	return c:IsSetCard(0x292) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
@@ -79,4 +81,4 @@ function c101112060.mvop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoExtraP(tc,nil,REASON_EFFECT)
 	end
-end 
+end

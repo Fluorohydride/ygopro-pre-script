@@ -30,12 +30,14 @@ function c101112074.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local sg=Duel.GetMatchingGroup(c101112074.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp)
 		local ag=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_MZONE,0,nil,101112036)
-		if tc:IsOriginalCodeRule(101112036) and ft>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(101112074,0)) then
+		if tc:IsOriginalCodeRule(101112036) and ft>0 and #sg>0
+			and Duel.SelectYesNo(tp,aux.Stringid(101112074,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg1=sg:Select(tp,1,1,nil)
 			if #sg1==0 then return false end
 			Duel.SpecialSummon(sg1,0,tp,tp,false,false,POS_FACEUP)
-		elseif not tc:IsOriginalCodeRule(101112036) and #ag>0 then
+		elseif not tc:IsOriginalCodeRule(101112036) and #ag>0
+			and Duel.SelectYesNo(tp,aux.Stringid(101112074,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local ag1=ag:Select(tp,1,1,nil)
 			if #ag1==0 then return false end
@@ -43,7 +45,6 @@ function c101112074.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetValue(1500)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			ag1:GetFirst():RegisterEffect(e1)
