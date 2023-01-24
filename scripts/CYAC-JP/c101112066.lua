@@ -74,7 +74,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
-	elseif c:IsRelateToEffect(e) then Duel.SendtoHand(c,nil,SEQ_DECKTOP,REASON_EFFECT) end
+	elseif c:IsRelateToEffect(e) then
+		Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetHandler():GetCounter(0x163)
