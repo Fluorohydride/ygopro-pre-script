@@ -79,9 +79,6 @@ function c101112015.mvop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or not Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then return end
 	Duel.SendtoExtraP(c,nil,REASON_EFFECT)
 end
-function c101112015.fselect(g)
-	return g:GetClassCount(Card.GetLocation)==#g
-end
 function c101112015.rmfilter(c)
 	return c:IsLocation(LOCATION_REMOVED) and not c:IsReason(REASON_REDIRECT)
 end
@@ -90,11 +87,9 @@ function c101112015.drmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=g:Filter(Card.IsAbleToDeck,nil)
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,nil,tp,POS_FACEDOWN)
 	local ct=math.floor(#g/3)
-	local ct1=ct
-	if ct>2 then ct1=2 end
-	if chk==0 then return ct1>0 and rg:CheckSubGroup(c101112015.fselect,1,ct1) and #tg>=ct1 end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,rg,ct1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,ct1,0,0)
+	if chk==0 then return ct>0 and #tg>0 and #rg>0 end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,rg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,1,0,0)
 end
 function c101112015.drmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -102,19 +97,16 @@ function c101112015.drmop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=g:Filter(Card.IsAbleToDeck,nil)
 	local rg=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToRemove),tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,nil,tp,POS_FACEDOWN)
 	local ct=math.floor(#g/3)
-	local ct1=ct
-	if ct>2 then ct1=2 end
-	if ct1==0 or #tg==0 or #rg==0 then return end
+	if ct==0 or #tg==0 or #rg==0 then return end
+	if ct>#tg then ct=#tg end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local mg=rg:SelectSubGroup(tp,c101112015.fselect,false,1,ct1)
-	if #mg==0 then return end
+	local mg=rg:Select(tp,1,ct,nil)
 	Duel.HintSelection(mg)
 	Duel.Remove(mg,POS_FACEDOWN,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup():Filter(c101112015.rmfilter,nil)
-	if #og==0 or #tg<#og then return end
+	if #og==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local tg1=tg:Select(tp,1,#og,nil)
-	if #tg1==0 then return end
+	local tg1=tg:Select(tp,#og,#og,nil)
 	Duel.BreakEffect()
 	Duel.HintSelection(tg1)
 	Duel.SendtoDeck(tg1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
