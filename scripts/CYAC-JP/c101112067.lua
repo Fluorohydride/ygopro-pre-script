@@ -78,5 +78,5 @@ function c101112067.nsumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(c101112067.efun)
 end
 function c101112067.efun(e,ep,tp)
-	return ep==tp and not e:GetHandler():IsType(TYPE_MONSTER)
+	return ep==tp or not e:GetHandler():IsType(TYPE_MONSTER)
 end
