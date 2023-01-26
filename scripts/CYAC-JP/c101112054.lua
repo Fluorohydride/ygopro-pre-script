@@ -31,10 +31,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=(not l or l&1==0) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
 	local b2=(not l or l&2==0) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
-	if chk==0 then return (not l or l<3) and (b1 or b2) end
+	if chk==0 then return b1 or b2 end
 	local op=0
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
+	if b1 and b2 then
+		op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
+	elseif b1 then
+		op=Duel.SelectOption(tp,aux.Stringid(id,1))
+	else
+		op=Duel.SelectOption(tp,aux.Stringid(id,2))+1
+	end
 	if op==0 then
 		e:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 		e:SetOperation(s.thop)
