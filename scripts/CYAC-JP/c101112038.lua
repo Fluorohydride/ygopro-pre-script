@@ -30,6 +30,9 @@ function c101112038.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=c:GetMaterial()
 	if #g==0 then return end
+	if g:IsExists(Card.IsType,1,nil,TYPE_EFFECT) then
+		c:RegisterFlagEffect(85360035,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
+	end
 	local chk1=0
 	local chk2=0
 	if g:IsExists(Card.IsOriginalCodeRule,1,nil,33026283) then
