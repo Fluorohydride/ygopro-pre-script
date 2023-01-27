@@ -22,8 +22,8 @@ end
 function c1050186.filter(c)
 	return c:IsSetCard(0x9c) and not c:IsCode(1050186) and c:IsAbleToGrave()
 end
-function c1050186.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c1050186.filter,tp,LOCATION_DECK,0,1,nil) end
+function c1050186.target(e,tp,eg,ep,ev,re,r,rp,chk,_,exc)
+	if chk==0 then return Duel.IsExistingMatchingCard(c1050186.filter,tp,LOCATION_DECK,0,1,exc) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c1050186.operation(e,tp,eg,ep,ev,re,r,rp)

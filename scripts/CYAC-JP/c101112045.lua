@@ -56,7 +56,7 @@ function c101112045.efffilter(c,e,tp,eg,ep,ev,re,r,rp)
 	local te=c.star_knight_summon_effect
 	if not te then return false end
 	local tg=te:GetTarget()
-	return not tg or (tg and tg(e,tp,eg,ep,ev,re,r,rp,0))
+	return not tg or tg(e,tp,eg,ep,ev,re,r,rp,0,nil,c)
 end
 function c101112045.copytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

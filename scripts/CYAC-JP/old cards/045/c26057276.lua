@@ -22,9 +22,9 @@ end
 function c26057276.filter(c)
 	return c:IsSetCard(0x9c) and not c:IsCode(26057276) and c:IsAbleToHand()
 end
-function c26057276.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c26057276.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc,exc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c26057276.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c26057276.filter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c26057276.filter,tp,LOCATION_GRAVE,0,1,exc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c26057276.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)

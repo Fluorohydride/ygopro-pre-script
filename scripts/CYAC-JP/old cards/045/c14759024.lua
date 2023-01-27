@@ -18,13 +18,13 @@ end
 function c14759024.filter(c)
 	return c:IsSetCard(0x53) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
-function c14759024.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c14759024.filter,tp,LOCATION_DECK,0,1,e:GetHandler()) end
+function c14759024.tg(e,tp,eg,ep,ev,re,r,rp,chk,_,exc)
+	if chk==0 then return Duel.IsExistingMatchingCard(c14759024.filter,tp,LOCATION_DECK,0,1,exc) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c14759024.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c14759024.filter,tp,LOCATION_DECK,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c14759024.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
