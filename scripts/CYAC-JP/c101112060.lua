@@ -35,7 +35,8 @@ function c101112060.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,g)
-	if g:GetFirst():IsLocation(LOCATION_HAND) and Duel.GetMatchingGroupCount(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_EXTRA,0,nil,101112015)>0 then
+	if g:GetFirst():IsLocation(LOCATION_HAND)
+		and Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_EXTRA,0,1,nil,101112015) then
 		Duel.Hint(HINT_CARD,0,101112015)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

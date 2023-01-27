@@ -46,8 +46,8 @@ function c101112047.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and c:IsFaceupEx()
 end
 function c101112047.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(c101112047.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end
+	local g=Duel.GetMatchingGroup(c101112047.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	if chk==0 then return #g>0 and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil) end
 	local ct=0
 	for i,type in ipairs({TYPE_RITUAL,TYPE_FUSION,TYPE_SYNCHRO,TYPE_XYZ}) do
@@ -61,7 +61,7 @@ function c101112047.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101112047.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetsRelateToChain()
 	if #g==0 then return end
 	local ct=Duel.SendtoHand(g,nil,REASON_EFFECT)
 	if ct>0 and c:IsFaceup() and c:IsRelateToEffect(e) then

@@ -34,13 +34,11 @@ function c101112074.activate(e,tp,eg,ep,ev,re,r,rp)
 			and Duel.SelectYesNo(tp,aux.Stringid(101112074,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg1=sg:Select(tp,1,1,nil)
-			if #sg1==0 then return false end
 			Duel.SpecialSummon(sg1,0,tp,tp,false,false,POS_FACEUP)
 		elseif not tc:IsOriginalCodeRule(101112036) and #ag>0
 			and Duel.SelectYesNo(tp,aux.Stringid(101112074,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local ag1=ag:Select(tp,1,1,nil)
-			if #ag1==0 then return false end
 			Duel.HintSelection(ag1)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

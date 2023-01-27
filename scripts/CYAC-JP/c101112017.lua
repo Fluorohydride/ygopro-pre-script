@@ -28,19 +28,24 @@ end
 function c101112017.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsType),tp,LOCATION_EXTRA,0,1,nil,TYPE_PENDULUM)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsType),tp,LOCATION_EXTRA,0,1,nil,TYPE_PENDULUM)
 end
 function c101112017.tfilter(c,tp)
 	return c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(0x292) and c:IsControler(tp) and c:IsFaceup()
 end
 function c101112017.discon(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or Duel.GetMatchingGroupCount(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_EXTRA,0,nil,101112015)==0 then return false end
+	if rp==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	if not Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_EXTRA,0,1,nil,101112015) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return tg and tg:IsExists(c101112017.tfilter,1,nil,tp) and Duel.IsChainNegatable(ev)
 end
+function c101112017.rmfilter(c)
+	return c:IsFacedown() and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
+end
 function c101112017.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_EXTRA,0,nil):Filter(Card.IsAbleToRemoveAsCost,nil,POS_FACEDOWN)
+	local g=Duel.GetMatchingGroup(c101112017.rmfilter,tp,LOCATION_EXTRA,0,nil)
 	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rg=g:Select(tp,1,1,nil)

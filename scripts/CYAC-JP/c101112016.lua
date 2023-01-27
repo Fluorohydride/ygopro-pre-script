@@ -28,15 +28,18 @@ end
 function c101112016.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsType),tp,LOCATION_EXTRA,0,1,nil,TYPE_PENDULUM)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsType),tp,LOCATION_EXTRA,0,1,nil,TYPE_PENDULUM)
 end
 function c101112016.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_EXTRA,0,nil,101112015)
-	local ag=Duel.GetFieldGroup(tp,0,LOCATION_MZONE,nil)
-	return #g>0 and #ag>0 and aux.dscon(e,tp,eg,ep,ev,re,r,rp)
+	return aux.dscon(e,tp,eg,ep,ev,re,r,rp) and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_EXTRA,0,1,nil,101112015)
+end
+function c101112016.rmfilter(c)
+	return c:IsFacedown() and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
 end
 function c101112016.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_EXTRA,0,nil):Filter(Card.IsAbleToRemoveAsCost,nil,POS_FACEDOWN)
+	local g=Duel.GetMatchingGroup(c101112016.rmfilter,tp,LOCATION_EXTRA,0,nil)
 	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rg=g:Select(tp,1,1,nil)
@@ -44,12 +47,12 @@ function c101112016.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101112016.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ag=Duel.GetFieldGroup(tp,0,LOCATION_MZONE,nil)
-	if c:IsRelateToEffect(e) and #ag>0 then
+	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
+	if c:IsRelateToEffect(e) and ct>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(#ag*500)
+		e1:SetValue(ct*500)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end

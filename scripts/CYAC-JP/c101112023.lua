@@ -27,8 +27,7 @@ function c101112023.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101112023.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_MZONE,0,nil,0x15b)
-	return #g>0
+	return Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_MZONE,0,1,nil,0x15b)
 end
 function c101112023.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -39,13 +38,12 @@ end
 function c101112023.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 then return false end
+	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101112023.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101112023,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local tag=g:Select(tp,1,1,nil)
-		if #tag==0 then return false end
 		Duel.SendtoHand(tag,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tag)
 	end
@@ -65,7 +63,9 @@ end
 function c101112023.dhtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc~=c and c101112023.xfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101112023.xfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) and c:IsAbleToDeck() and Duel.GetMZoneCount(tp,c)>0 and Duel.IsExistingMatchingCard(c101112023.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c101112023.xfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
+		and c:IsAbleToDeck() and Duel.GetMZoneCount(tp,c)>0
+		and Duel.IsExistingMatchingCard(c101112023.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c101112023.xfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
@@ -76,11 +76,11 @@ function c101112023.dhop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not c:IsRelateToEffect(e) or Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==0 or c:GetLocation()~=LOCATION_DECK then return end
 	local g=Duel.GetMatchingGroup(c101112023.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	if #g==0 then return false end
+	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:Select(tp,1,1,nil)
-	if #sg==0 then return false end
-	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 or not tc:IsRelateToEffect(e) or tc:IsFacedown() then return false end
+	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0
+		or not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	Duel.BreakEffect()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -43,11 +43,10 @@ end
 function c101112040.spdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttacker()
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	if tc and #g==0 then
+	if not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP) then
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,1,0,0)
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON+EFFECT_DISABLE+CATEGORY_ATKCHANGE)
 	else
@@ -57,9 +56,9 @@ end
 function c101112040.spdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttacker()
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
 	if not c:IsRelateToEffect(e) or Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 then return end
-	if #g==0 and tc and tc:IsRelateToBattle()
+	if tc and tc:IsRelateToBattle()
+		and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 		and tc:IsControler(1-tp) and tc:IsFaceup()
 		and (tc:GetAttack()>0 or aux.NegateMonsterFilter(tc)) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
@@ -102,10 +101,9 @@ function c101112040.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101112040.spfilter),tp,LOCATION_SZONE+LOCATION_GRAVE,0,nil,e,tp)
-	if ft==0 or #g==0 then return end
+	if ft<=0 or #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:Select(tp,1,1,nil)
-	if #sg==0 then return end
 	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)>0
 		and c:IsRelateToEffect(e) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
 		and Duel.SelectYesNo(tp,aux.Stringid(101112040,1)) then

@@ -56,8 +56,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.HintSelection(g)
 	if #g==0 then return end
+	Duel.HintSelection(g)
 	local ng=Duel.GetMatchingGroup(s.dfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,g)
 	for nc in aux.Next(ng) do
 		local e1=Effect.CreateEffect(c)

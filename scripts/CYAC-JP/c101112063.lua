@@ -31,17 +31,14 @@ function c101112063.initial_effect(c)
 	e3:SetOperation(c101112063.desop)
 	c:RegisterEffect(e3)
 end
-function c101112063.setfilter(c,tp)
-	local seachc=not c:IsCode(101112063) and c:IsSetCard(0x17c) and c:IsType(TYPE_SPELL+TYPE_TRAP)
-	local locheck=Duel.GetLocationCount(tp,LOCATION_SZONE)>0 or c:IsType(TYPE_FIELD)
-	return seachc and locheck
+function c101112063.setfilter(c)
+	return not c:IsCode(101112063) and c:IsSetCard(0x17c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function c101112063.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c101112063.setfilter,tp,LOCATION_DECK,0,nil,tp)
+	local g=Duel.GetMatchingGroup(c101112063.setfilter,tp,LOCATION_DECK,0,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101112063,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sc=g:Select(tp,1,1,nil):GetFirst()
-		if not sc then return end
 		Duel.SSet(tp,sc)
 	end
 end

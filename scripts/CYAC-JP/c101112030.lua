@@ -53,7 +53,7 @@ function c101112030.thop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,tc)
-		if not c:IsRelateToEffect(e) then return false end
+		if not c:IsRelateToEffect(e) then return end
 		Duel.BreakEffect()
 		Duel.Destroy(c,REASON_EFFECT)
 	end
@@ -64,26 +64,27 @@ function c101112030.thfilter2(c,lsc,rsc)
 	return lv>lsc and lv<rsc and c:IsAbleToHand()
 end
 function c101112030.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local lc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
-	local sc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	if not lc or not sc then return false end
-	local lsc=lc:GetLeftScale()
-	local rsc=sc:GetRightScale()
-	if lsc>rsc then lsc,rsc=rsc,lsc end
-	if chk==0 then return Duel.IsExistingMatchingCard(c101112030.thfilter2,tp,LOCATION_EXTRA,0,1,nil,lsc,rsc) end
+	if chk==0 then
+		local lc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
+		local sc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
+		if not lc or not sc then return false end
+		local lsc=lc:GetLeftScale()
+		local rsc=sc:GetRightScale()
+		if lsc>rsc then lsc,rsc=rsc,lsc end
+		return Duel.IsExistingMatchingCard(c101112030.thfilter2,tp,LOCATION_EXTRA,0,1,nil,lsc,rsc)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_EXTRA)
 end
 function c101112030.thop2(e,tp,eg,ep,ev,re,r,rp)
 	local lc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local sc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	if not lc or not sc then return false end
+	if not lc or not sc then return end
 	local lsc=lc:GetLeftScale()
 	local rsc=sc:GetRightScale()
 	if lsc>rsc then lsc,rsc=rsc,lsc end
 	if lc and sc and Duel.IsExistingMatchingCard(c101112030.thfilter2,tp,LOCATION_EXTRA,0,1,nil,lsc,rsc) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c101112030.thfilter2,tp,LOCATION_EXTRA,0,1,2,nil,lsc,rsc)
-		if #g==0 then return false end
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end

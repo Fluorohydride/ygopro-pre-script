@@ -67,8 +67,8 @@ function c101112015.mvfilter(c)
 	return not c:IsForbidden() and c:IsSetCard(0x292) and c:GetType()==TYPE_CONTINUOUS+TYPE_SPELL and c:CheckUniqueOnField(tp)
 end
 function c101112015.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c101112015.mvfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
-	if chk==0 then return not e:GetHandler():IsForbidden() and #g>0 end
+	if chk==0 then return not e:GetHandler():IsForbidden()
+		and Duel.IsExistingMatchingCard(c101112015.mvfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
 end
 function c101112015.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -76,7 +76,7 @@ function c101112015.mvop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=g:Select(tp,1,1,nil):GetFirst()
-	if not tc or not Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then return end
+	if not Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then return end
 	Duel.SendtoExtraP(c,nil,REASON_EFFECT)
 end
 function c101112015.rmfilter(c)

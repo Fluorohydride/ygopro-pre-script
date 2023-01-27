@@ -64,8 +64,8 @@ end
 function c101112008.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not c:IsRelateToEffect(e) or Duel.SendtoGrave(c,REASON_EFFECT)==0 then return false end
-	if c:GetLocation()~=LOCATION_GRAVE or not tc:IsRelateToEffect(e) then return false end
+	if not c:IsRelateToEffect(e) or Duel.SendtoGrave(c,REASON_EFFECT)==0 then return end
+	if c:GetLocation()~=LOCATION_GRAVE or not tc:IsRelateToEffect(e) then return end
 	if e:GetLabel()==0 then
 		Duel.GetControl(tc,tp)
 	else

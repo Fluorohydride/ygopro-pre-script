@@ -73,8 +73,8 @@ function c101112071.scop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101112071.rmcon(e)
-	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil,0x188)
-	return #g>0
+	local tp=e:GetHandlerPlayer()
+	return Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_MZONE,0,1,nil,0x188)
 end
 function c101112071.rmtg(e,c)
 	local tp=e:GetHandlerPlayer()

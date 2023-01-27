@@ -57,16 +57,17 @@ function c101112049.tefilter(c)
 	return c:IsSetCard(0x162) and c:IsType(TYPE_PENDULUM) and c:GetCurrentScale()%2==0
 end
 function c101112049.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local zone=e:GetHandler():GetLinkedZone(tp)
-	local g=Duel.GetMatchingGroup(c101112049.spfilter,tp,LOCATION_PZONE,0,nil,e,tp,zone)
-	if chk==0 then return #g>0 end
+	if chk==0 then
+		local zone=e:GetHandler():GetLinkedZone(tp)
+		return Duel.IsExistingMatchingCard(c101112049.spfilter,tp,LOCATION_PZONE,0,1,nil,e,tp,zone)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_PZONE)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function c101112049.spop(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone(tp)
 	local g=Duel.GetMatchingGroup(c101112049.spfilter,tp,LOCATION_PZONE,0,nil,e,tp,zone)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)==0 or #g==0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)<=0 or #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:Select(tp,1,1,nil)
 	if #sg==0 or Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP,zone)==0 then return end

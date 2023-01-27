@@ -24,9 +24,8 @@ function c101112076.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101112076.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMatchingGroupCount(aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_ONFIELD,0,nil,0x173)==0 then return false end
-	if not Duel.IsChainNegatable(ev) then return false end
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsSetCard),tp,LOCATION_ONFIELD,0,1,nil,0x173)
 end
 function c101112076.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

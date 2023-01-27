@@ -108,22 +108,21 @@ function c101112038.spfilter(c,e,tp)
 	return c:IsCode(85360035,11759079) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101112038.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.GetMatchingGroup(c101112038.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	local spchk=Duel.IsPlayerAffectedByEffect(tp,59822133)
-	if spchk then return false end
-	if chk==0 then return ft>1 and g:CheckSubGroup(aux.dncheck,2,2) end
+	if chk==0 then
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		if ft<2 or Duel.IsPlayerAffectedByEffect(tp,59822133) then return false end
+		local g=Duel.GetMatchingGroup(c101112038.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
+		return g:CheckSubGroup(aux.dncheck,2,2)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
 function c101112038.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft<2 or Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 	local g=Duel.GetMatchingGroup(c101112038.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	local spchk=Duel.IsPlayerAffectedByEffect(tp,59822133)
-	if spchk then return false end
-	if ft<1 or not g:CheckSubGroup(aux.dncheck,2,2) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
-	if #sg~=2 then return false end
+	if not sg then return end
 	local tc=sg:GetFirst()
 	for tc in aux.Next(sg) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then

@@ -31,9 +31,12 @@ end
 function c101112059.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsType(TYPE_PENDULUM)
 end
+function c101112059.rmfilter(c)
+	return c:IsFacedown() and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
+end
 function c101112059.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local check=Duel.GetCustomActivityCount(101112059,tp,ACTIVITY_SPSUMMON)==0
-	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_EXTRA,0,nil):Filter(Card.IsAbleToRemoveAsCost,nil,POS_FACEDOWN)
+	local g=Duel.GetMatchingGroup(c101112059.rmfilter,tp,LOCATION_EXTRA,0,nil)
 	if chk==0 then return #g>=2 and check end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -82,16 +85,17 @@ function c101112059.rmfilter(c)
 	return c:IsFacedown() and c:IsAbleToRemove(tp,POS_FACEDOWN,REASON_EFFECT)
 end
 function c101112059.repcon(e)
-	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsCode),e:GetHandlerPlayer(),LOCATION_EXTRA,0,nil,101112015)
-	return #g>0
+	local tp=e:GetHandlerPlayer()
+	return Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_EXTRA,0,1,nil,101112015)
 end
 function c101112059.repfilter(c,tp)
-	return not c:IsReason(REASON_REPLACE) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0x292)
+	return not c:IsReason(REASON_REPLACE) and c:IsFaceup()
+		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0x292)
 		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 function c101112059.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c101112059.rmfilter,tp,LOCATION_EXTRA,0,nil)
-	if chk==0 then return eg:IsExists(c101112059.repfilter,1,nil,tp) and #g>0 end
+	if chk==0 then return eg:IsExists(c101112059.repfilter,1,nil,tp)
+		and Duel.IsExistingMatchingCard(c101112059.rmfilter,tp,LOCATION_EXTRA,0,1,nil) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function c101112059.repval(e,c)
@@ -100,7 +104,6 @@ end
 function c101112059.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,101112059)
 	local g=Duel.GetMatchingGroup(c101112059.rmfilter,tp,LOCATION_EXTRA,0,nil)
-	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rg=g:Select(tp,1,1,nil)
 	Duel.Remove(rg,POS_FACEDOWN,REASON_EFFECT+REASON_REPLACE)

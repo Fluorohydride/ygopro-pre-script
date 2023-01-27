@@ -64,8 +64,7 @@ function c101112005.eqlimit(e,c)
 end
 function c101112005.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
-	return #g==0 and ec
+	return ec and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end
 function c101112005.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

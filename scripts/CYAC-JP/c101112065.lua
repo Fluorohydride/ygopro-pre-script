@@ -22,9 +22,11 @@ function c101112065.spfilter(c,e,tp)
 	return c:IsSetCard(0x1162) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function c101112065.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c101112065.cfilter,tp,LOCATION_EXTRA,0,nil)
-	local ct=g:GetClassCount(Card.GetCode)
-	if chk==0 then return ct>=3 end
+	if chk==0 then
+		local g=Duel.GetMatchingGroup(c101112065.cfilter,tp,LOCATION_EXTRA,0,nil)
+		local ct=g:GetClassCount(Card.GetCode)
+		return ct>=3
+	end
 end
 function c101112065.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c101112065.cfilter,tp,LOCATION_EXTRA,0,nil)

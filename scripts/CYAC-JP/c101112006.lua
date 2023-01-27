@@ -38,8 +38,7 @@ function c101112006.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101112006.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
-	return #g==0
+	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end
 function c101112006.pcfilter(c,tp)
 	return not c:IsCode(101112006) and c:IsSetCard(0x9a) and c:IsType(TYPE_PENDULUM)
@@ -64,7 +63,7 @@ function c101112006.pcop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101112006.costfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
-		and Duel.GetMatchingGroupCount(c101112006.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,c,e,tp)>0
+		and Duel.IsExistingMatchingCard(c101112006.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c,e,tp)
 end
 function c101112006.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101112006.costfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
@@ -74,9 +73,8 @@ function c101112006.spfilter(c,e,tp)
 	return c:IsSetCard(0x9a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101112006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.GetMatchingGroup(c101112006.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
-	if chk==0 then return ft>0 and #g>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101112006.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c101112006.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -90,10 +88,9 @@ function c101112006.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(c101112006.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
-	if ft==0 or #g==0 then return end
+	if ft<=0 or #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:Select(tp,1,1,nil)
-	if #sg==0 then return end
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101112006.splimit(e,c)

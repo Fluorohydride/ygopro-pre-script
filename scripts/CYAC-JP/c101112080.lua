@@ -22,7 +22,6 @@ function c101112080.cfop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(1-p,5)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tc=g:FilterSelect(tp,Card.IsAbleToHand,1,1,nil,tp):GetFirst()
-	if not tc then return end
 	local num=math.floor(3000/100)
 	local t={}
 	for i=1,num do

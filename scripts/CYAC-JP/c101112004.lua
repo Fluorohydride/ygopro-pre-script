@@ -25,8 +25,7 @@ function c101112004.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101112004.setcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
-	return #g==0
+	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end
 function c101112004.spcon(e,c)
 	if c==nil then return true end

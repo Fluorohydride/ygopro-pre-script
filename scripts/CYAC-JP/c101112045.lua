@@ -38,17 +38,16 @@ function c101112045.fselect(g)
 	return aux.gfcheck(g,Card.IsSetCard,0x9c,0x53)
 end
 function c101112045.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(c101112045.thfilter,tp,LOCATION_GRAVE,0,nil,e)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101112045.thfilter(chkc,e) end
-	if chk==0 then return g:CheckSubGroup(c101112045.fselect,1,2) end
+	local g=Duel.GetMatchingGroup(c101112045.thfilter,tp,LOCATION_GRAVE,0,nil,e)
+	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local sg=g:SelectSubGroup(tp,c101112045.fselect,false,1,2)
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c101112045.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetsRelateToChain()
 	if #tg==0 then return end
 	Duel.SendtoHand(tg,nil,REASON_EFFECT)
 end

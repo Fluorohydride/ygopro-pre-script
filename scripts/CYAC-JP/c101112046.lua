@@ -35,12 +35,12 @@ function c101112046.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101112046.efcon1(e)
-	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil,0x114e)
-	return #g>=2
+	local ct=Duel.GetMatchingGroupCount(aux.AND(Card.IsFaceup,Card.IsSetCard),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil,0x114e)
+	return ct>=2
 end
 function c101112046.efcon2(e)
-	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil,0x114e)
-	return #g==4
+	local ct=Duel.GetMatchingGroupCount(aux.AND(Card.IsFaceup,Card.IsSetCard),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil,0x114e)
+	return ct==4
 end
 function c101112046.immval(e,re)
 	local rc=re:GetHandler()
