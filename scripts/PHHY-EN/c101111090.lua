@@ -41,29 +41,13 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
 end
-function s.desfilter(c,seq)
-	local cseq=c:GetSequence()
-	--mzone or szone check
-	if seq==0 then return cseq==0
-	elseif seq==1 then return cseq==1
-	elseif seq==2 then return cseq==2
-	elseif seq==3 then return cseq==3
-	elseif seq==4 then return cseq==4 end
-	--exzone check
-	if seq==5 then
-		return seq==1
-	elseif seq==6 then
-		return seq==2
-	end
-	return (c:GetLocation()==LOCATION_SZONE or c:GetLocation()==LOCATION_MZONE)
-end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
-		local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_ONFIELD,nil,tc:GetPreviousSequence())
-		if #dg>0 and Duel.GetLP(tp)<Duel.GetLP(1-tp) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then 
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local cg=tc:GetColumnGroup()
+		if Duel.Destroy(tc,REASON_EFFECT) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) and #cg>0 then
 			Duel.BreakEffect()
-			Duel.Destroy(dg,REASON_EFFECT)
+			Duel.Destroy(cg,REASON_EFFECT)
 		end
 	end
 end
