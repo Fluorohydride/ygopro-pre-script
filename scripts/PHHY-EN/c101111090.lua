@@ -45,7 +45,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local cg=tc:GetColumnGroup()
-		if Duel.Destroy(tc,REASON_EFFECT) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) and #cg>0 then
+		if Duel.Destroy(tc,REASON_EFFECT)~=0 and Duel.GetLP(tp)<Duel.GetLP(1-tp)
+			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) and #cg>0 then
 			Duel.BreakEffect()
 			Duel.Destroy(cg,REASON_EFFECT)
 		end
