@@ -34,7 +34,7 @@ function c101112022.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101112022.cfilter(c,tp)
-	return c:IsFaceupEx() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)
+	return c:IsFaceupEx() and c:GetPreviousAttributeOnField()&ATTRIBUTE_EARTH>0 and c:GetPreviousRaceOnField()&RACE_MACHINE>0
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c101112022.spcon(e,tp,eg,ep,ev,re,r,rp)
