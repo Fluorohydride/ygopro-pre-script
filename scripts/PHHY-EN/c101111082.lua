@@ -62,8 +62,8 @@ end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+SUMMON_VALUE_SELF
 end
---check of the location of cards
---after the banish effect
+--check the previous location of cards
+--after banishing cards to summon this card
 function s.checkloc(c,...)
 	local args={...}
 	local loc=c:GetPreviousLocation()
