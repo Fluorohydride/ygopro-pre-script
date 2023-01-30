@@ -50,6 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 		if Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
