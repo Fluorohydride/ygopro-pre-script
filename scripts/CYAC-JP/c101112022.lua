@@ -8,7 +8,7 @@ function c101112022.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_RELEASE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
-	e1:SetRange(LOCATION_HAND)
+	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
 	e1:SetCountLimit(1,101112022)
 	e1:SetCondition(c101112022.spcon)
 	e1:SetTarget(c101112022.sptg)
@@ -34,7 +34,7 @@ function c101112022.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101112022.cfilter(c,tp)
-	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)
+	return c:IsFaceupEx() and c:GetPreviousAttributeOnField()&ATTRIBUTE_EARTH>0 and c:GetPreviousRaceOnField()&RACE_MACHINE>0
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c101112022.spcon(e,tp,eg,ep,ev,re,r,rp)
