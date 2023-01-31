@@ -34,11 +34,12 @@ function c101112022.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101112022.cfilter(c,tp)
-	return c:IsFaceupEx() and c:GetPreviousAttributeOnField()&ATTRIBUTE_EARTH>0 and c:GetPreviousRaceOnField()&RACE_MACHINE>0
+	return c:GetPreviousAttributeOnField()&ATTRIBUTE_EARTH>0 and c:GetPreviousRaceOnField()&RACE_MACHINE>0
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+		and (c:IsReason(REASON_RELEASE) or c:IsFaceup())
 end
 function c101112022.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101112022.cfilter,1,nil,tp)
+	return eg:IsExists(c101112022.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
 function c101112022.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

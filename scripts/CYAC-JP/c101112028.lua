@@ -9,7 +9,6 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsFaceup))
 	e1:SetValue(ATTRIBUTE_FIRE)
 	c:RegisterEffect(e1)
 	--spsummon

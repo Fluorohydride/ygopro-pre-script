@@ -25,14 +25,14 @@ function s.initial_effect(c)
 end
 function s.filter(c)
 	local b1=c:IsCode(56099748)
-	local b2=c:IsAttack(1500) and c:IsDefense(2100)
+	local b2=c:IsAttack(1500) and c:IsDefense(2100) and c:IsType(TYPE_MONSTER)
 	return c:IsFaceup() and (b1 or b2)
 end
 function s.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
@@ -46,18 +46,15 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,id)==0 then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetCondition(s.atkcon)
-		e1:SetTarget(s.atktg)
-		e1:SetValue(500)
-		Duel.RegisterEffect(e1,tp)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-	end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetCondition(s.atkcon)
+	e1:SetTarget(s.atktg)
+	e1:SetValue(500)
+	Duel.RegisterEffect(e1,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
@@ -67,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)>0 and (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
+	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function s.atktg(e,c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsFaceup()

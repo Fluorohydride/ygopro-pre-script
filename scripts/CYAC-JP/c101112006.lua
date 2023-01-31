@@ -57,7 +57,7 @@ function c101112006.pcop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,c101112006.pcfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
 	if #g==0 or not Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true) then return end
-	if not c:IsRelateToEffect(e) then return end
+	if not c:IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.BreakEffect()
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
@@ -65,12 +65,12 @@ function c101112006.costfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 		and Duel.IsExistingMatchingCard(c101112006.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c,e,tp)
 end
+function c101112006.spfilter(c,e,tp)
+	return c:IsSetCard(0x9a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+end
 function c101112006.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101112006.costfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.DiscardHand(tp,c101112006.costfilter,1,1,REASON_COST+REASON_DISCARD,nil,e,tp)
-end
-function c101112006.spfilter(c,e,tp)
-	return c:IsSetCard(0x9a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c101112006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

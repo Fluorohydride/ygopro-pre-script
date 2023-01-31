@@ -1,14 +1,12 @@
 --星騎士 アルテア
 --Script by 奥克斯
 function c101112020.initial_effect(c)
-	--same effect send this card to grave and spsummon another card check
-	local e0=aux.AddThisCardInGraveAlreadyCheck(c)
 	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,101112020)
 	e1:SetTarget(c101112020.destg)
 	e1:SetOperation(c101112020.desop)
@@ -28,7 +26,6 @@ function c101112020.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,101112020+100)
-	e4:SetLabelObject(e0)
 	e4:SetCondition(c101112020.spcon)
 	e4:SetTarget(c101112020.sptg)
 	e4:SetOperation(c101112020.spop)
@@ -50,13 +47,12 @@ function c101112020.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	Duel.Destroy(g,REASON_EFFECT)
 end
-function c101112020.cfilter(c,tp,se)
+function c101112020.cfilter(c,tp)
 	return not c:IsCode(101112020) and c:IsFaceup() and c:IsControler(tp)
-		and c:IsSetCard(0x9c,0x53) and (se==nil or c:GetReasonEffect()~=se)
+		and c:IsSetCard(0x9c,0x53)
 end
 function c101112020.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local se=e:GetLabelObject():GetLabelObject()
-	return eg:IsExists(c101112020.cfilter,1,nil,tp,se)
+	return eg:IsExists(c101112020.cfilter,1,nil,tp)
 end
 function c101112020.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -68,7 +64,7 @@ function c101112020.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

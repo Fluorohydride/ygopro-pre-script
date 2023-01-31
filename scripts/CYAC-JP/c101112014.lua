@@ -27,14 +27,14 @@ function s.initial_effect(c)
 end
 function s.filter(c)
 	local b1=c:IsCode(56099748)
-	local b2=c:IsAttack(1500) and c:IsDefense(2100)
+	local b2=c:IsAttack(1500) and c:IsDefense(2100) and c:IsType(TYPE_MONSTER)
 	return c:IsFaceup() and (b1 or b2)
 end
 function s.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
@@ -51,13 +51,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if #g==0 then return end
 	local tc=g:GetFirst()
-	if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 and tc:IsLevelAbove(1)
+	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 and tc:IsLevelAbove(1)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)

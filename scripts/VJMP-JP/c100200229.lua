@@ -29,8 +29,7 @@ function c100200229.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100200229.thfilter(c)
-	if c:IsFacedown() or not c:IsType(TYPE_PENDULUM) then return false end
-	return c:IsRace(RACE_MACHINE) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c100200229.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100200229.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -52,8 +51,8 @@ function c100200229.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(c,REASON_COST)
 end
 function c100200229.spfilter(c,e,tp)
-	if c:IsCode(100200229) then return false end
-	return c:IsAttackBelow(1500) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsAttackBelow(1500) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)
+		and not c:IsCode(100200229) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100200229.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100200229.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end

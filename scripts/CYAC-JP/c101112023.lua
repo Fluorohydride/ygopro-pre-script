@@ -35,6 +35,9 @@ function c101112023.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
+function c101112023.thfilter(c)
+	return c:IsCode(20989253) and c:IsAbleToHand()
+end
 function c101112023.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
@@ -48,11 +51,8 @@ function c101112023.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tag)
 	end
 end
-function c101112023.thfilter(c)
-	return c:IsCode(20989253) and c:IsAbleToHand()
-end
 function c101112023.dhcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.GetTurnPlayer()==1-tp and aux.dscon()
 end
 function c101112023.xfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:GetAttack()>0
@@ -63,8 +63,8 @@ end
 function c101112023.dhtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc~=c and c101112023.xfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c101112023.xfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
-		and c:IsAbleToDeck() and Duel.GetMZoneCount(tp,c)>0
+	if chk==0 then return c:IsAbleToDeck() and Duel.GetMZoneCount(tp,c)>0
+		and Duel.IsExistingTarget(c101112023.xfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 		and Duel.IsExistingMatchingCard(c101112023.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c101112023.xfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
@@ -82,7 +82,7 @@ function c101112023.dhop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0
 		or not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	Duel.BreakEffect()
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e1:SetValue(0)

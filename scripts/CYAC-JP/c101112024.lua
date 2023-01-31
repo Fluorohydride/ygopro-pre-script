@@ -56,7 +56,8 @@ end
 function c101112024.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,1-tp,LOCATION_ONFIELD,0,nil)
-	if #g>0 and Duel.IsPlayerCanDraw(tp) and Duel.IsPlayerCanDraw(1-tp) and Duel.SelectYesNo(1-tp,aux.Stringid(101112024,2)) then
+	if #g>0 and Duel.IsPlayerCanDraw(tp) and Duel.IsPlayerCanDraw(1-tp)
+		and Duel.SelectYesNo(1-tp,aux.Stringid(101112024,2)) then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 		local tg=g:Select(1-tp,1,#g,nil)
 		if #tg>0 and Duel.SendtoGrave(tg,REASON_EFFECT) and tg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then

@@ -38,13 +38,11 @@ end
 function c101112002.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c101112002.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
+	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,g)
-		if g:GetFirst():IsLocation(LOCATION_HAND) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 then
-			Duel.BreakEffect()
-			Duel.ShuffleHand(tp)
-			Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD,nil)
-		end
+		Duel.BreakEffect()
+		Duel.ShuffleHand(tp)
+		Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD,nil)
 	end
 end
 function c101112002.op(e,tp,eg,ep,ev,re,r,rp)

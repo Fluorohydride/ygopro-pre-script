@@ -1,6 +1,7 @@
 --夢見るネムレリア
 --Script by 奥克斯
 function c101112015.initial_effect(c)
+	c:EnableReviveLimit()
 	c:SetSPSummonOnce(101112015)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
@@ -63,21 +64,22 @@ end
 function c101112015.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsCode(101112015)
 end
-function c101112015.mvfilter(c)
+function c101112015.mvfilter(c,tp)
 	return not c:IsForbidden() and c:IsSetCard(0x292) and c:GetType()==TYPE_CONTINUOUS+TYPE_SPELL and c:CheckUniqueOnField(tp)
 end
 function c101112015.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsForbidden()
-		and Duel.IsExistingMatchingCard(c101112015.mvfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
+		and Duel.IsExistingMatchingCard(c101112015.mvfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp) end
 end
 function c101112015.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101112015.mvfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
-	if #g==0 or not c:IsRelateToEffect(e) then return end
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101112015.mvfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,tp)
+	if #g==0 or Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=g:Select(tp,1,1,nil):GetFirst()
-	if not Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then return end
-	Duel.SendtoExtraP(c,nil,REASON_EFFECT)
+	if Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) and c:IsRelateToEffect(e) then
+		Duel.SendtoExtraP(c,nil,REASON_EFFECT)
+	end
 end
 function c101112015.rmfilter(c)
 	return c:IsLocation(LOCATION_REMOVED) and not c:IsReason(REASON_REDIRECT)

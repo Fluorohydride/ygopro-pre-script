@@ -18,7 +18,7 @@ function c101112016.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE+TIMING_DAMAGE_STEP)
+	e2:SetHintTiming(TIMING_DAMAGE_STEP,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE+TIMING_DAMAGE_STEP)
 	e2:SetCountLimit(1,101112016+100)
 	e2:SetCondition(c101112016.atkcon)
 	e2:SetCost(c101112016.atkcost)
@@ -48,7 +48,7 @@ end
 function c101112016.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
-	if c:IsRelateToEffect(e) and ct>0 then
+	if c:IsFaceup() and c:IsRelateToEffect(e) and ct>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

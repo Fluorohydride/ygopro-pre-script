@@ -61,6 +61,7 @@ function c101112003.lvop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
