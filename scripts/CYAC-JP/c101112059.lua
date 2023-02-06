@@ -81,7 +81,7 @@ end
 function c101112059.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_PENDULUM)
 end
-function c101112059.rmfilter(c)
+function c101112059.reprmfilter(c,tp)
 	return c:IsFacedown() and c:IsAbleToRemove(tp,POS_FACEDOWN,REASON_EFFECT)
 end
 function c101112059.repcon(e)
@@ -95,7 +95,7 @@ function c101112059.repfilter(c,tp)
 end
 function c101112059.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c101112059.repfilter,1,nil,tp)
-		and Duel.IsExistingMatchingCard(c101112059.rmfilter,tp,LOCATION_EXTRA,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c101112059.reprmfilter,tp,LOCATION_EXTRA,0,1,nil,tp) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function c101112059.repval(e,c)
@@ -103,7 +103,7 @@ function c101112059.repval(e,c)
 end
 function c101112059.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,101112059)
-	local g=Duel.GetMatchingGroup(c101112059.rmfilter,tp,LOCATION_EXTRA,0,nil)
+	local g=Duel.GetMatchingGroup(c101112059.reprmfilter,tp,LOCATION_EXTRA,0,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rg=g:Select(tp,1,1,nil)
 	Duel.Remove(rg,POS_FACEDOWN,REASON_EFFECT+REASON_REPLACE)
