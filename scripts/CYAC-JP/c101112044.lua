@@ -38,7 +38,7 @@ end
 function c101112044.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
 end
@@ -75,17 +75,19 @@ function c101112044.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(c101112044.efilter)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
+		Duel.AdjustInstantly(c)
 		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112044,0))
 	end
 	if bit.band(att,ATTRIBUTE_DARK)~=0 then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e2:SetRange(LOCATION_MZONE)
+		e2:SetTargetRange(LOCATION_MZONE,0)
+		e2:SetValue(1)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		c:RegisterEffect(e2)
+		Duel.AdjustInstantly(c)
 		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112044,1))
 	end
 end
