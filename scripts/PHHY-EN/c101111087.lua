@@ -1,3 +1,4 @@
+--coded by Lyris
 --Gold Pride - Nytro Head
 local s,id,o=GetID()
 function s.initial_effect(c)
