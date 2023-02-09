@@ -27,27 +27,25 @@ end
 function s.filter1(c)
 	return c:IsFaceup() and c:IsCode(101112058)
 end
-function s.filter2(c,tp,check)
-	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,check)
-end
 function s.thfilter(c,check)
 	local b1=c:IsCode(101112058)
 	local b2=check and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x291)
-	return not c:IsCode(m) and (b1 or b2) and c:IsAbleToHand()
+	return not c:IsCode(id) and (b1 or b2) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
 	local check=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_ONFIELD,0,1,nil)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter2(chkc,tp,check) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,nil,tp,check) end
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,check) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,nil,tp,check)
+	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local check=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_ONFIELD,0,1,nil)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or Duel.Destroy(tc,REASON_EFFECT)==0 then return end
+	local check=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_ONFIELD,0,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,check)
 	if #g==0 then return end
@@ -65,10 +63,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
-	if ft<=0 or #g==0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=g:Select(tp,1,1,nil)
-	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	end
 end

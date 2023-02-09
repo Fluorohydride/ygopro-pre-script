@@ -31,49 +31,42 @@ function c101112038.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g=c:GetMaterial()
 	if #g==0 then return end
 	if g:IsExists(Card.IsType,1,nil,TYPE_EFFECT) then
-		c:RegisterFlagEffect(85360035,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
+		c:RegisterFlagEffect(85360035,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
-	local chk1=0
-	local chk2=0
 	if g:IsExists(Card.IsOriginalCodeRule,1,nil,33026283) then
-		chk1=1
-		c:RegisterFlagEffect(101112038,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112038,0))
+		--atk down
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetTargetRange(LOCATION_MZONE,0)
+		e1:SetCondition(c101112038.atkcon)
+		e1:SetTarget(c101112038.atktg)
+		e1:SetValue(3000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		c:RegisterEffect(e1)
+		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112038,0))
 	end
 	if g:IsExists(Card.IsOriginalCodeRule,1,nil,284224) then
-		chk2=1
-		c:RegisterFlagEffect(101112038,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112038,1))
+		--remove
+		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(aux.Stringid(101112038,2))
+		e2:SetCategory(CATEGORY_REMOVE)
+		e2:SetType(EFFECT_TYPE_QUICK_O)
+		e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+		e2:SetCode(EVENT_FREE_CHAIN)
+		e2:SetRange(LOCATION_MZONE)
+		e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+		e2:SetCountLimit(1)
+		e2:SetCondition(c101112038.rmcon)
+		e2:SetTarget(c101112038.rmtg)
+		e2:SetOperation(c101112038.rmop)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		c:RegisterEffect(e2)
+		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112038,1))
 	end
-	--atk down
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e1:SetCondition(c101112038.atkcon)
-	e1:SetTarget(c101112038.atktg)
-	e1:SetValue(3000)
-	e1:SetLabel(chk1)
-	c:RegisterEffect(e1)
-	--remove
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101112038,2))
-	e2:SetCategory(CATEGORY_REMOVE)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e2:SetCountLimit(1)
-	e2:SetCondition(c101112038.rmcon)
-	e2:SetTarget(c101112038.rmtg)
-	e2:SetOperation(c101112038.rmop)
-	e2:SetLabel(chk2)
-	c:RegisterEffect(e2)
 end
 function c101112038.atkcon(e)
-	if e:GetLabel()~=1 then return false end
 	local tp=e:GetHandlerPlayer()
 	local a=Duel.GetBattleMonster(tp)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and a and a:IsSetCard(0x14f)
@@ -84,7 +77,6 @@ function c101112038.atktg(e,c)
 	return c==a
 end
 function c101112038.rmcon(e)
-	if e:GetLabel()~=1 then return false end
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
 end
 function c101112038.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -138,7 +130,7 @@ function c101112038.spop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetValue(1)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e2)
-			tc:RegisterFlagEffect(101112038,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112038,3))
+			tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(101112038,3))
 		end
 	end
 	Duel.SpecialSummonComplete()

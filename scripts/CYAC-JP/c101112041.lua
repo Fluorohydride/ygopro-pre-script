@@ -30,7 +30,7 @@ function c101112041.initial_effect(c)
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101112041,1))
-	e3:SetCategory(CATEGORY_REMOVE)
+	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -42,7 +42,7 @@ function c101112041.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101112041.spfilter(c,e,tp)
-	return (c:IsAttribute(ATTRIBUTE_DARK) or c:IsAttribute(ATTRIBUTE_LIGHT)) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function c101112041.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and c101112041.spfilter(chkc,e,tp) end
@@ -53,7 +53,6 @@ function c101112041.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c101112041.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)

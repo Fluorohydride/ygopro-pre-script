@@ -4,24 +4,25 @@ function c101112030.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--extra to hand
-	local e0=Effect.CreateEffect(c)
-	e0:SetCategory(CATEGORY_TOHAND+CATEGORY_DESTROY)
-	e0:SetType(EFFECT_TYPE_IGNITION)
-	e0:SetRange(LOCATION_PZONE)
-	e0:SetCountLimit(1,101112030)
-	e0:SetTarget(c101112030.thtg1)
-	e0:SetOperation(c101112030.thop1)
-	c:RegisterEffect(e0)
-	--to hand 2
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101112030,0))
-	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,101112030+100)
-	e1:SetTarget(c101112030.thtg2)
-	e1:SetOperation(c101112030.thop2)
+	e1:SetRange(LOCATION_PZONE)
+	e1:SetCountLimit(1,101112030)
+	e1:SetTarget(c101112030.thtg1)
+	e1:SetOperation(c101112030.thop1)
 	c:RegisterEffect(e1)
+	--to hand 2
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101112030,1))
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,101112030+100)
+	e2:SetTarget(c101112030.thtg2)
+	e2:SetOperation(c101112030.thop2)
+	c:RegisterEffect(e2)
 	if not c101112030.global_check then
 		c101112030.global_check=true
 		local ge1=Effect.CreateEffect(c)
@@ -37,8 +38,7 @@ function c101112030.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101112030.thfilter1(c)
-	if c:IsFacedown() or not c:IsType(TYPE_PENDULUM) then return false end
-	return c:IsSetCard(0xf2) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xf2) and c:IsAbleToHand()
 end
 function c101112030.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101112030.thfilter1,tp,LOCATION_EXTRA,0,1,nil) end
@@ -66,30 +66,32 @@ end
 function c101112030.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local lc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
-		local sc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-		if not lc or not sc then return false end
+		local rc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
+		if not lc or not rc then return false end
 		local lsc=lc:GetLeftScale()
-		local rsc=sc:GetRightScale()
+		local rsc=rc:GetRightScale()
 		if lsc>rsc then lsc,rsc=rsc,lsc end
 		return Duel.IsExistingMatchingCard(c101112030.thfilter2,tp,LOCATION_EXTRA,0,1,nil,lsc,rsc)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_EXTRA)
 end
 function c101112030.thop2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local lc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
-	local sc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	if not lc or not sc then return end
-	local lsc=lc:GetLeftScale()
-	local rsc=sc:GetRightScale()
-	if lsc>rsc then lsc,rsc=rsc,lsc end
-	if lc and sc and Duel.IsExistingMatchingCard(c101112030.thfilter2,tp,LOCATION_EXTRA,0,1,nil,lsc,rsc) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,c101112030.thfilter2,tp,LOCATION_EXTRA,0,1,2,nil,lsc,rsc)
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+	local rc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
+	if lc and rc then
+		local lsc=lc:GetLeftScale()
+		local rsc=rc:GetRightScale()
+		if lsc>rsc then lsc,rsc=rsc,lsc end
+		if Duel.IsExistingMatchingCard(c101112030.thfilter2,tp,LOCATION_EXTRA,0,1,nil,lsc,rsc) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local g=Duel.SelectMatchingCard(tp,c101112030.thfilter2,tp,LOCATION_EXTRA,0,1,2,nil,lsc,rsc)
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g)
+		end
 	end
 	Duel.ResetFlagEffect(tp,101112030)
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -98,14 +100,14 @@ function c101112030.thop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(c101112030.actlimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	local e2=Effect.CreateEffect(e:GetHandler())
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_DISABLE)
 	e2:SetTargetRange(LOCATION_PZONE,0)
 	e2:SetCondition(c101112030.discon)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
-	local e3=Effect.CreateEffect(e:GetHandler())
+	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_CHAIN_SOLVING)
 	e3:SetCondition(c101112030.discon)

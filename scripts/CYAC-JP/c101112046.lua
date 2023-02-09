@@ -44,20 +44,19 @@ function c101112046.efcon2(e)
 end
 function c101112046.immval(e,re)
 	local rc=re:GetHandler()
-	if rc:IsSetCard(0x14e) then return false end
-	return re:IsActivated()
+	return re:IsActivated() and not rc:IsSetCard(0x14e)
 end
 function c101112046.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c101112046.filter1(c,tp)
-	local dischk=c:IsType(TYPE_EFFECT) and aux.NegateEffectMonsterFilter(c)
-	return dischk and Duel.IsExistingTarget(c101112046.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c)
+	return c:IsType(TYPE_EFFECT) and aux.NegateEffectMonsterFilter(c)
+		and Duel.IsExistingTarget(c101112046.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c)
 end
 function c101112046.filter2(c,tc)
-	if c:IsRace(tc:GetRace()) or c:IsAttribute(tc:GetAttribute()) then return false end
 	return c:IsType(TYPE_EFFECT) and aux.NegateEffectMonsterFilter(c)
+		and not c:IsRace(tc:GetRace()) and not c:IsAttribute(tc:GetAttribute())
 end
 function c101112046.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

@@ -21,7 +21,7 @@ function c101112050.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e2:SetCountLimit(1,101112050)
 	e2:SetCondition(c101112050.tdcon)
 	e2:SetTarget(c101112050.tdtg)
@@ -49,9 +49,6 @@ end
 function c101112050.tdfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x156) and c:IsAbleToDeck()
 end
-function c101112050.spfilter(c,e,tp)
-	return c:IsSetCard(0x156) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function c101112050.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101112050.tdfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101112050.tdfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -59,10 +56,13 @@ function c101112050.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c101112050.tdfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end
+function c101112050.spfilter(c,e,tp)
+	return c:IsSetCard(0x156) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function c101112050.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
-		local ft=Duel.GetMZoneCount(tp,tc)
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local g=Duel.GetMatchingGroup(c101112050.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp)
 		if ft>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(101112050,1)) then
 			Duel.BreakEffect()

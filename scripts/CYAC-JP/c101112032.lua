@@ -19,10 +19,11 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e2:SetCountLimit(1)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
@@ -32,21 +33,23 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rc:IsOnField() and rc:IsRelateToEffect(re) and re:IsActiveType(TYPE_MONSTER) and not rc:IsCode(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return re:GetHandler():IsCanAddCounter(0x1162,1)
-		and not e:GetHandler():IsStatus(STATUS_CHAINING) end
+		and c:GetFlagEffect(id)==0 end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x1162)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if rc:IsFaceup() and rc:IsRelateToEffect(re) then
-		rc:AddCounter(0x1162,1)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e2:SetCondition(s.indes)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e2:SetValue(1)
-		rc:RegisterEffect(e2)
+	if rc:IsFaceup() and rc:IsRelateToEffect(re) and rc:AddCounter(0x1162,1) then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e1:SetCondition(s.indes)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetValue(1)
+		rc:RegisterEffect(e1)
 	end
 end
 function s.indes(e)
@@ -56,16 +59,19 @@ function s.filter(c)
 	return c:GetCounter(0x1162)>0 and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	local c=e:GetHandler()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) and chkc~=c end
+	if chk==0 then return c:IsAbleToRemove()
+		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g+e:GetHandler(),2,0,0)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g+c,2,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not tc or not tc:IsRelateToEffect(e) or not c:IsRelateToEffect(e) or c:IsFacedown() then return end
+	if not tc:IsRelateToEffect(e) or not c:IsRelateToEffect(e) then return end
 	local g=Group.FromCards(c,tc)
 	if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 		local fid=c:GetFieldID()

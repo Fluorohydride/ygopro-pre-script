@@ -53,9 +53,6 @@ function c101112049.spfilter(c,e,tp,zone)
 	return c:IsSetCard(0x162) and c:GetCurrentScale()%2==1
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
-function c101112049.tefilter(c)
-	return c:IsSetCard(0x162) and c:IsType(TYPE_PENDULUM) and c:GetCurrentScale()%2==0
-end
 function c101112049.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local zone=e:GetHandler():GetLinkedZone(tp)
@@ -63,6 +60,9 @@ function c101112049.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_PZONE)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+end
+function c101112049.tefilter(c)
+	return c:IsSetCard(0x162) and c:IsType(TYPE_PENDULUM) and c:GetCurrentScale()%2==0
 end
 function c101112049.spop(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone(tp)
@@ -73,6 +73,7 @@ function c101112049.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #sg==0 or Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP,zone)==0 then return end
 	if Duel.NegateActivation(ev) and Duel.IsExistingMatchingCard(c101112049.tefilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(101112049,0)) then
+		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101112049,1))
 		local exg=Duel.SelectMatchingCard(tp,c101112049.tefilter,tp,LOCATION_DECK,0,1,1,nil)
 		Duel.SendtoExtraP(exg,nil,REASON_EFFECT)

@@ -106,10 +106,8 @@ function c101112035.spittg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101112035.spitop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local rg=Duel.GetMatchingGroup(c101112035.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e,tp)
-	if not c:IsRelateToEffect(e) or #rg<4 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=rg:Select(tp,4,4,nil)
-	if Duel.Release(g,REASON_EFFECT)~=4 then return end
-	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	local rg=Duel.GetMatchingGroup(c101112035.rfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if #rg==4 and Duel.Release(rg,REASON_EFFECT)==4 and c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
 end

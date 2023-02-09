@@ -36,29 +36,27 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
-function s.rmfilter(c)
+function s.rmfilter(c,e,tp)
 	return c:IsCode(56099748) and c:IsAbleToRemove()
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
-function s.spfilter(c,e,tp)
-	return c:IsCode(101112036) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+function s.spfilter(c,e,tp,rc)
+	return c:IsCode(101112036) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,rc,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,nil)
-	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
-	if chk==0 then return #rg>0 and #sg>0 end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,1,tp,LOCATION_EXTRA)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,rg,1,0,0)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local rg=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,nil)
-	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
-	if #rg==0 or #sg==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg1=rg:Select(tp,1,1,nil)
-	if #rg1>0 and Duel.Remove(rg1,POS_FACEUP,REASON_EFFECT)>0 then
+	local rg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,1,1,nil,e,tp)
+	if #rg>0 and Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg1=sg:Select(tp,1,1,nil)
-		Duel.SpecialSummon(sg1,0,tp,tp,true,false,POS_FACEUP)
+		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,nil)
+		if #sg>0 then
+			Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEUP)
+		end
 	end
 end
 function s.thfilter(c)

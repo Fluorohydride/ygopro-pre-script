@@ -26,6 +26,14 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,1-tp)
 end
+function s.thfilter(c)
+	return (c:IsCode(68468459) or aux.IsCodeListed(c,68468459) and c:IsType(TYPE_MONSTER))
+		and c:IsAbleToHand()
+end
+function s.spfilter(c,e,tp)
+	return (c:IsCode(68468459) or aux.IsCodeListed(c,68468459) and c:IsType(TYPE_MONSTER))
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local l=Duel.GetFlagEffectLabel(tp,id)
 	local b1=(not l or l&1==0) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
@@ -55,23 +63,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	end
 end
-function s.thfilter(c)
-	return (c:IsCode(68468459) or aux.IsCodeListed(c,68468459) and c:IsType(TYPE_MONSTER))
-		and c:IsAbleToHand()
-end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,g)
 end
-function s.spfilter(c,e,tp)
-	return (c:IsCode(68468459) or aux.IsCodeListed(c,68468459) and c:IsType(TYPE_MONSTER))
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	end
 end

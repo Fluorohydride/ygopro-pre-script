@@ -29,8 +29,8 @@ function s.initial_effect(c)
 end
 function s.cfilter(c)
 	local b1=c:IsCode(56099748)
-	local b2=c:IsSetCard(0x291)
-	return not c:IsPublic() and c:IsType(TYPE_MONSTER) and (b1 or b2)
+	local b2=c:IsSetCard(0x291) and c:IsType(TYPE_MONSTER)
+	return not c:IsPublic() and (b1 or b2)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

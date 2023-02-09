@@ -35,9 +35,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	local b1=c:IsSetCard(0x291)
+	local b1=c:IsSetCard(0x291) and c:IsType(TYPE_MONSTER)
 	local b2=c:IsCode(56099748)
-	return (b1 or b2) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return (b1 or b2) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
@@ -48,11 +48,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-function s.ckfilter(c)
-	return c:IsType(TYPE_TUNER) and c:IsFaceupEx()
-end
 function s.atktg(e,c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT)
+end
+function s.ckfilter(c)
+	return c:IsType(TYPE_TUNER) and c:IsFaceupEx()
 end
 function s.atkval(e,c)
 	local ct=Duel.GetMatchingGroupCount(s.ckfilter,e:GetHandlerPlayer(),LOCATION_MZONE+LOCATION_GRAVE,0,nil)
@@ -83,6 +83,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
+	if not tc:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 end

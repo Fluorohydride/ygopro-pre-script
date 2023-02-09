@@ -63,7 +63,7 @@ function c101112042.atkop(e,tp,eg,ep,ev,re,r,rp)
 		if sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101112042,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
-			local tg=Duel.SelectMatchingCard(tp,aux.NegateAnyFilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+			local tg=sg:Select(tp,1,1,nil)
 			Duel.HintSelection(tg)
 			local sc=tg:GetFirst()
 			Duel.NegateRelatedChain(sc,RESET_TURN_SET)

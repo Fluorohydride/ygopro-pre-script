@@ -36,15 +36,15 @@ function c101112044.matfilter2(c,syncard)
 	return c:IsNotTuner(syncard) and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
 end
 function c101112044.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() end
-	if chk==0 then return true end
+	if chkc then return chkc:IsOnField() and chkc:IsAbleToRemove() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c101112044.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end

@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return end
 	Duel.ConfirmDecktop(tp,ct)
 	local g=Duel.GetDecktopGroup(tp,ct)
-	if #g>0 and g:FilterCount(s.filter,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if g:FilterCount(s.filter,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.DisableShuffleCheck()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sg=g:FilterSelect(tp,s.filter,1,1,nil)

@@ -48,6 +48,7 @@ function c101112039.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 		local xg=tg:Select(tp,1,1,nil)
 		Duel.SetTargetCard(xg)
+		xg:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
 		return true
 	else return false end
 end
@@ -57,18 +58,17 @@ end
 function c101112039.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,101112039)
 	local tc=Duel.GetFirstTarget()
+	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
 	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
 end
 function c101112039.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function c101112039.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local h=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-		return h<3 and Duel.IsPlayerCanDraw(tp,3-h)
-	end
 	local h=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+	if chk==0 then return h<3 and Duel.IsPlayerCanDraw(tp,3-h) end
 	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(3-h)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3-h)
 end
 function c101112039.drop(e,tp,eg,ep,ev,re,r,rp)

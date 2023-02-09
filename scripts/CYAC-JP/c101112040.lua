@@ -9,6 +9,7 @@ function c101112040.initial_effect(c)
 	--spsummon (self)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101112040,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -25,7 +26,7 @@ function c101112040.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(101112040,2))
+	e3:SetDescription(aux.Stringid(101112040,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -48,9 +49,6 @@ function c101112040.spdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	if not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP) then
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,1,0,0)
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON+EFFECT_DISABLE+CATEGORY_ATKCHANGE)
-	else
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	end
 end
 function c101112040.spdop(e,tp,eg,ep,ev,re,r,rp)
@@ -61,6 +59,7 @@ function c101112040.spdop(e,tp,eg,ep,ev,re,r,rp)
 		and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 		and tc:IsControler(1-tp) and tc:IsFaceup()
 		and (tc:GetAttack()>0 or aux.NegateMonsterFilter(tc)) then
+		Duel.BreakEffect()
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -106,7 +105,7 @@ function c101112040.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,1,1,nil)
 	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)>0
 		and c:IsRelateToEffect(e) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
-		and Duel.SelectYesNo(tp,aux.Stringid(101112040,1)) then
+		and Duel.SelectYesNo(tp,aux.Stringid(101112040,2)) then
 		Duel.BreakEffect()
 		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
