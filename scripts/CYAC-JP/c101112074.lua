@@ -4,11 +4,11 @@ function c101112074.initial_effect(c)
 	aux.AddCodeList(c,56099748)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_ATTACK,0x11e0)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCondition(c101112074.condition)
 	e1:SetTarget(c101112074.target)
 	e1:SetOperation(c101112074.activate)
@@ -24,6 +24,9 @@ function c101112074.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
+function c101112074.spfilter(c,e,tp)
+	return c:IsFaceup() and c:IsCode(56099748) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function c101112074.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
@@ -32,11 +35,13 @@ function c101112074.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ag=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_MZONE,0,nil,101112036)
 		if tc:IsOriginalCodeRule(101112036) and ft>0 and #sg>0
 			and Duel.SelectYesNo(tp,aux.Stringid(101112074,0)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg1=sg:Select(tp,1,1,nil)
 			Duel.SpecialSummon(sg1,0,tp,tp,false,false,POS_FACEUP)
 		elseif not tc:IsOriginalCodeRule(101112036) and #ag>0
 			and Duel.SelectYesNo(tp,aux.Stringid(101112074,1)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local ag1=ag:Select(tp,1,1,nil)
 			Duel.HintSelection(ag1)
@@ -48,7 +53,4 @@ function c101112074.activate(e,tp,eg,ep,ev,re,r,rp)
 			ag1:GetFirst():RegisterEffect(e1)
 		end
 	end
-end
-function c101112074.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsCode(56099748) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

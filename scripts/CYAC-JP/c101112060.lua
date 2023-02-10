@@ -37,6 +37,7 @@ function c101112060.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-tp,g)
 	if g:GetFirst():IsLocation(LOCATION_HAND)
 		and Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsCode),tp,LOCATION_EXTRA,0,1,nil,101112015) then
+		Duel.BreakEffect()
 		Duel.Hint(HINT_CARD,0,101112015)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -68,13 +69,14 @@ function c101112060.mvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_COST)
 end
 function c101112060.mvfilter(c)
-	return c:IsFaceup() and c:IsCode(101112015) and c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsCode(101112015) and c:IsType(TYPE_PENDULUM) and c:IsAbleToExtra()
 end
 function c101112060.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101112060.mvfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101112060.mvfilter,tp,LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c101112060.mvfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,g,1,0,0)
 end
 function c101112060.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

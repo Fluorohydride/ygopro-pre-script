@@ -46,10 +46,6 @@ end
 function c101112071.spfilter(c,mg)
 	return mg:IsExists(c101112071.cfilter,1,nil,c)
 end
-function c101112071.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-end
 function c101112071.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg=Duel.GetMatchingGroup(c101112071.mfilter,tp,LOCATION_MZONE,0,nil)

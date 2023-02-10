@@ -102,9 +102,9 @@ function c101112062.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e1)
+		if c:IsRelateToEffect(e) then
+			Duel.Equip(tp,c,tc)
+		end
 	end
-	if Duel.SpecialSummonComplete()==0 then return end
-	if c:IsRelateToEffect(e) then
-		Duel.Equip(tp,c,tc)
-	end
+	Duel.SpecialSummonComplete()
 end

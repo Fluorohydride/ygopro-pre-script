@@ -67,7 +67,7 @@ function c101112008.op(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or Duel.SendtoGrave(c,REASON_EFFECT)==0 then return end
 	if c:GetLocation()~=LOCATION_GRAVE or not tc:IsRelateToEffect(e) then return end
 	if e:GetLabel()==0 then
-		Duel.GetControl(tc,tp)
+		Duel.GetControl(tc,tp,PHASE_END,1)
 	else
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end

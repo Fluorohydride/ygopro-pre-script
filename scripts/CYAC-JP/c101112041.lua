@@ -1,4 +1,4 @@
---深淵の神獣 ディス・パテル
+--深淵の神獣ディス・パテル
 --Script by Ruby
 function c101112041.initial_effect(c)
 	--synchro summon

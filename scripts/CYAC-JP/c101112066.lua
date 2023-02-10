@@ -44,6 +44,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g)
+	Duel.ShuffleHand(tp)
 end
 function s.rfilter(c)
 	return c:IsSetCard(0x166) and c:IsType(TYPE_XYZ) and not c:IsPublic()
@@ -60,6 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not c:AddCounter(0x163,1) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_EXTRA,0,1,1,nil)
+	if #g==0 then return end
 	Duel.ConfirmCards(1-tp,g)
 	local nt={}
 	for i,n in ipairs(aux.SushipMentionsTable) do

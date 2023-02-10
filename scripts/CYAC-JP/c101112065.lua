@@ -6,7 +6,10 @@ function c101112065.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,101112065+EFFECT_COUNT_CODE_OATH)
+	e1:SetCondition(aux.dscon)
 	e1:SetTarget(c101112065.target)
 	e1:SetOperation(c101112065.operation)
 	c:RegisterEffect(e1)
@@ -46,6 +49,7 @@ function c101112065.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 	if b2 and Duel.SelectYesNo(tp,aux.Stringid(101112065,1)) then
+		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
 		Duel.HintSelection(dg)
@@ -55,6 +59,7 @@ function c101112065.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if b3 and Duel.SelectYesNo(tp,aux.Stringid(101112065,2)) then
+		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,c101112065.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 		if #sg==0 then return end
