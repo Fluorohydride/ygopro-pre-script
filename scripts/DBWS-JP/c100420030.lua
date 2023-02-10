@@ -53,7 +53,7 @@ function cm.tgf2_1(c)
 	return c:IsReleasableByEffect() and c:IsPosition(POS_ATTACK)
 end
 function cm.tgf2_2(c,e,tp)
-	return c:IsSetCard(0x3fd1) and c:IsLevel(3,4) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81
+	return c:IsSetCard(0x293) and c:IsLevel(3,4) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81
 end
 function cm.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasableByEffect() and Duel.IsExistingMatchingCard(cm.tgf2_1,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())

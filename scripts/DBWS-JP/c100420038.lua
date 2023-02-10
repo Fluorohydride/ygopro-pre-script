@@ -5,7 +5,7 @@ function cm.initial_effect(c)
 	aux.AddRitualProcGreater2(c,cm.filter,LOCATION_HAND,nil,nil,false,cm.op)
 end
 function cm.filter(c,e,tp)
-	return c:IsSetCard(0x3fd1)
+	return c:IsSetCard(0x293)
 end
 function cm.op(e,tp,eg,ep,ev,re,r,rp,tc,mat)
 	if not tc then return end

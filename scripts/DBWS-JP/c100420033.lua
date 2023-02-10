@@ -33,7 +33,7 @@ function cm.initial_effect(c)
 end
 --spsummon success
 function cm.tgf1(c)
-	return c:IsSetCard(0x3fd1,0x5fd1) and c:IsAbleToHand()
+	return c:IsSetCard(0x293,0x294) and c:IsAbleToHand()
 end
 function cm.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.tgf1,tp,LOCATION_DECK,0,1,nil) end
@@ -58,7 +58,7 @@ function cm.tgf2_1(c)
 	return c:IsReleasableByEffect() and c:IsPosition(POS_ATTACK)
 end
 function cm.tgf2_2(c,e,tp)
-	return c:IsSetCard(0x3fd1) and c:IsLevel(6) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81
+	return c:IsSetCard(0x293) and c:IsLevel(6) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81
 end
 function cm.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and cm.tgf2_1(chkc) end

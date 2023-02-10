@@ -62,7 +62,7 @@ function cm.op2(e,tp,eg,ep,ev,re,r,rp)
 end
 --ritual
 function cm.filter(c,e,tp)
-	return c:IsSetCard(0x3fd1)
+	return c:IsSetCard(0x293)
 end
 function cm.con4(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsFaceup()

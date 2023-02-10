@@ -35,7 +35,7 @@ function cm.initial_effect(c)
 end
 --Activate
 function cm.opf1(c)
-	return c:IsSetCard(0x5fd1) and c:IsAbleToHand()
+	return c:IsSetCard(0x294) and c:IsAbleToHand()
 end
 function cm.op1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(cm.opf1,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
@@ -71,13 +71,13 @@ function cm.op2(e,tp,eg,ep,ev,re,r,rp)
 end
 --phase end
 function cm.tgf3(c,tp)
-	return c:IsSetCard(0x5fd1) and c:IsAbleToDeck() and Duel.IsExistingTarget(nil,tp,LOCATION_GRAVE,0,1,nil,c)
+	return c:IsSetCard(0x294) and c:IsAbleToDeck() and Duel.IsExistingTarget(nil,tp,LOCATION_GRAVE,0,1,nil,c)
 end
 function cm.tg3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) end
 	if chk==0 then return Duel.IsExistingTarget(cm.tgf3,tp,LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_GRAVE,0,nil):SelectSubGroup(tp,Group.IsExists,false,2,2,Card.IsSetCard,1,nil,0x5fd1)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_GRAVE,0,nil):SelectSubGroup(tp,Group.IsExists,false,2,2,Card.IsSetCard,1,nil,0x294)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
