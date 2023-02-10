@@ -13,6 +13,7 @@ function cm.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,m)
 	e2:SetTarget(cm.tg2)
@@ -24,7 +25,6 @@ function cm.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1,m+o)
-	e4:SetCondition(cm.con4)
 	e4:SetCost(cm.cos4)
 	c:RegisterEffect(e4)
 end
@@ -64,10 +64,7 @@ end
 function cm.filter(c,e,tp)
 	return c:IsSetCard(0x293)
 end
-function cm.con4(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsFaceup()
-end
 function cm.cos4(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED)  end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end

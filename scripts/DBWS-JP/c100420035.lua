@@ -29,6 +29,7 @@ function cm.initial_effect(c)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1)
+	e3:SetCondition(cm.con3)
 	e3:SetTarget(cm.tg3)
 	e3:SetOperation(cm.op3)
 	c:RegisterEffect(e3)
@@ -70,6 +71,9 @@ function cm.op2(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterFlagEffect(91228233,RESET_PHASE+PHASE_END,0,1)
 end
 --phase end
+function cm.con3(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
+end
 function cm.tgf3(c,tp)
 	return c:IsSetCard(0x294) and c:IsAbleToDeck() and Duel.IsExistingTarget(nil,tp,LOCATION_GRAVE,0,1,nil,c)
 end

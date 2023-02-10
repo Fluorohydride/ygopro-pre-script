@@ -26,7 +26,7 @@ function cm.initial_effect(c)
 	e2:SetOperation(cm.op2)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	e3:SetCondition(aux.TRUE)
 	c:RegisterEffect(e3)
@@ -44,7 +44,7 @@ function cm.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --be target
 function cm.con2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsContains(e:GetHandler())
+	return eg:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0
 end
 function cm.tgf2_1(c,tp,g)
 	if not (c:IsSetCard(0x293) and c:IsFaceup() and c:IsReleasableByEffect()) then return false end
