@@ -4,9 +4,9 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **January 14, 2023**: CYBERSTORM ACCESS (CYAC-JP) : `101112XXX`
 - **March 18, 2023**: Deck Build Pack: Wild Survivors (DBWS-JP) : `100420XXX`
+- **April 22, 2023**: DUELIST NEXUS (DUNE?-JP) : `101201XXX`
 
 # Announced
-- **April 22, 2023**: DUELIST NEXUS (????-JP) : `101201XXX`
 - **May 27, 2023**: Duelist Pack: Duelists of Explosion (DP28-JP) : `100428XXX`
 
 # Archived
