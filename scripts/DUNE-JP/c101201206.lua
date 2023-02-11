@@ -66,7 +66,7 @@ function s.ctfilter(c)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.ctfilter,1,nil) then
-		e:GetHandler():AddCounter(0x65,10)
+		e:GetHandler():AddCounter(0x65,2)
 	end
 end
 function s.countercost(e,tp,eg,ep,ev,re,r,rp,chk)
