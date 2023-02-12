@@ -3,7 +3,7 @@
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,101201204)
-	c:EnableCounterPermit(0x65)
+	c:EnableCounterPermit(0x104d)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -60,19 +60,19 @@ function s.initial_effect(c)
 	e6:SetOperation(s.spop3)
 	c:RegisterEffect(e6)
 end
-s.counter_add_list={0x65}
+s.counter_add_list={0x104d}
 function s.ctfilter(c)
 	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.ctfilter,1,nil) then
-		e:GetHandler():AddCounter(0x65,2)
+		e:GetHandler():AddCounter(0x104d,2)
 	end
 end
 function s.countercost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x65,e:GetLabel(),REASON_COST) end
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x104d,e:GetLabel(),REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	Duel.RemoveCounter(tp,1,0,0x65,e:GetLabel(),REASON_COST)
+	Duel.RemoveCounter(tp,1,0,0x104d,e:GetLabel(),REASON_COST)
 end
 function s.lvfilter(c)
 	return c:IsFaceup() and c:GetLevel()>0
