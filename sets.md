@@ -2,7 +2,7 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **January 14, 2023**: CYBERSTORM ACCESS (CYAC-JP) : `101112XXX`
+- **March 17, 2023**: The Valuable Book EX 3 promotional cards (VX03-JP) : `100205XXX`
 - **March 18, 2023**: Deck Build Pack: Wild Survivors (DBWS-JP) : `100420XXX`
 - **April 22, 2023**: DUELIST NEXUS (DUNE?-JP) : `101201XXX`
 
@@ -207,3 +207,4 @@
 - POWER OF THE ELEMENTS (POTE-JP): `101109XXX`
 - DARKWING BLAST (DABL-JP): `101110XXX`
 - Photon Hypernova (PHHY-JP) : `101111XXX`
+- CYBERSTORM ACCESS (CYAC-JP) : `101112XXX`
