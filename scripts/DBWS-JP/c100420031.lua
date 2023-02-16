@@ -48,7 +48,8 @@ function cm.con2(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.tgf2_1(c,tp,g)
 	if not (c:IsSetCard(0x293) and c:IsFaceup() and c:IsReleasableByEffect()) then return false end
-	return g and g:IsExists(cm.tgf2_3,1,c) or Duel.IsExistingMatchingCard(cm.tgf2_3,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
+	if g then return g:IsExists(cm.tgf2_3,1,c) end
+	return Duel.IsExistingMatchingCard(cm.tgf2_3,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function cm.tgf2_2(c,e,tp)
 	return c:IsSetCard(0x293) and c:IsLevel(4,5) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81
@@ -61,8 +62,8 @@ function cm.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(cm.tgf2_2,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
-function cm.opf2(g,tp)
-	return g:IsExists(cm.tgf2_1,1,nil,tp,g)
+function cm.opf2(g)
+	return g:IsExists(cm.tgf2_1,1,nil,nil,g)
 end
 function cm.op2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE):SelectSubGroup(tp,cm.opf2,false,2,2)

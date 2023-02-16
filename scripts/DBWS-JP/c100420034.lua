@@ -35,26 +35,22 @@ function cm.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.op1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NegateAnyFilter,tp,0,LOCATION_ONFIELD,nil)
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
+		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e2:SetValue(RESET_TURN_SET)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
-	if e:GetHandler():GetFlagEffect(100420029)>0 then 
-		g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
+	g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
+	if e:GetHandler():GetFlagEffect(100420029)>0 and #g>0 then 
+		Duel.BreakEffect()
 		Duel.Release(g,REASON_EFFECT)
 	end
 end

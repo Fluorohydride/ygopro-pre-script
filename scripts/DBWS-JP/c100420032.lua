@@ -51,7 +51,8 @@ function cm.con2(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.tgf2_1(c,tp,g)
 	if not (c:IsSetCard(0x293) and c:IsFaceup() and c:IsReleasableByEffect()) then return false end
-	return g and g:IsExists(cm.tgf2_3,1,c) or Duel.IsExistingMatchingCard(cm.tgf2_3,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
+	if g then return g:IsExists(cm.tgf2_3,1,c) end
+	return Duel.IsExistingMatchingCard(cm.tgf2_3,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function cm.tgf2_2(c,e,tp)
 	return c:IsSetCard(0x293) and c:IsLevel(5,6) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81

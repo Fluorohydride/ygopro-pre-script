@@ -78,8 +78,8 @@ function cm.tgf3(c,tp)
 	return c:IsSetCard(0x294) and c:IsAbleToDeck() and Duel.IsExistingTarget(nil,tp,LOCATION_GRAVE,0,1,nil,c)
 end
 function cm.tg3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) end
-	if chk==0 then return Duel.IsExistingTarget(cm.tgf3,tp,LOCATION_GRAVE,0,1,nil,tp) end
+	if chkc then return false end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingTarget(cm.tgf3,tp,LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_GRAVE,0,nil):SelectSubGroup(tp,Group.IsExists,false,2,2,Card.IsSetCard,1,nil,0x294)
 	Duel.SetTargetCard(g)
@@ -88,9 +88,7 @@ function cm.tg3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function cm.op3(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if not g or g:FilterCount(Card.IsRelateToEffect,nil,e)~=2 then return end
-	if aux.PlaceCardsOnDeckBottom(tp,g)==2 then
-		Duel.BreakEffect()
-		Duel.Draw(tp,1,REASON_EFFECT)
-	end
+	if not g or g:FilterCount(Card.IsRelateToEffect,nil,e)~=2 or aux.PlaceCardsOnDeckBottom(tp,g)==0 then return end
+	Duel.BreakEffect()
+	Duel.Draw(tp,1,REASON_EFFECT)
 end
