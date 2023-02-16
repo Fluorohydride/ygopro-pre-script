@@ -1,4 +1,5 @@
---新式魔厨旅馆『ATable』
+--Nouvellez Auberge 『ÀTable』
+--Script by 小壶
 local cm,m,o=GetID()
 function cm.initial_effect(c)
 	--Activate

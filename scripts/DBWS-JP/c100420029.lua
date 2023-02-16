@@ -1,4 +1,5 @@
---新式魔厨·法式鱼羹
+--ブエリヤベース・ド・ヌーベルズ
+--Script by 小壶
 local cm,m,o=GetID()
 function cm.initial_effect(c)
 	c:EnableReviveLimit()

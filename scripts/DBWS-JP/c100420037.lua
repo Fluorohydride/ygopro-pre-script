@@ -1,4 +1,5 @@
---Recette de Poisson～鱼料理的食谱～ 
+--Recette de Poisson～魚料理のレシピ～
+--Script by 小壶
 local cm,m,o=GetID()
 function cm.initial_effect(c)
 	aux.AddCodeList(c,100420029,m)

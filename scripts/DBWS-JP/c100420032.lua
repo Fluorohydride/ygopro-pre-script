@@ -1,4 +1,5 @@
---新式魔厨·酱鹅肝格剌西亚拉波斯
+--フォアグラシャ・ド・ヌーベルズ
+--Script by 小壶
 local cm,m,o=GetID()
 function cm.initial_effect(c)
 	c:EnableReviveLimit()

@@ -1,4 +1,5 @@
---新式魔厨·汉堡里艾尔
+--バグリエル・ド・ヌーベルズ
+--Script by 小壶
 local cm,m,o=GetID()
 function cm.initial_effect(c)
 	aux.AddCodeList(c,30243636)
@@ -49,7 +50,7 @@ function cm.op1(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 	g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
-	if e:GetHandler():GetFlagEffect(100420029)>0 and #g>0 then 
+	if e:GetHandler():GetFlagEffect(100420029)>0 and #g>0 then
 		Duel.BreakEffect()
 		Duel.Release(g,REASON_EFFECT)
 	end

@@ -1,7 +1,7 @@
---Recette de Personnel～伙食的食谱～
+--Recette de Personnel～賄いのレシピ～
+--Script by 小壶
 local cm,m,o=GetID()
 function cm.initial_effect(c)
-	aux.AddCodeList(c,200000011)
 	--activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
@@ -36,7 +36,7 @@ function cm.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and cm.tgf2(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(cm.tgf2,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,200000011,0,TYPES_TOKEN_MONSTER,500,500,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,100420139,0,TYPES_TOKEN_MONSTER,500,500,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,cm.tgf2,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
@@ -44,8 +44,8 @@ function cm.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function cm.op2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,200000011,0,TYPES_TOKEN_MONSTER,500,500,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP) then return end
-	local token=Duel.CreateToken(tp,200000011)
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100420139,0,TYPES_TOKEN_MONSTER,500,500,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP) then return end
+	local token=Duel.CreateToken(tp,100420139)
 	if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) then
@@ -65,6 +65,6 @@ function cm.filter(c,e,tp)
 	return c:IsSetCard(0x293)
 end
 function cm.cos4(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)  end
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED) end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end

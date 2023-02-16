@@ -1,4 +1,5 @@
---Recette de Specialite～料理长自慢的食谱～
+--Recette de Spécialité～料理長自慢のレシピ～
+--Script by 小壶
 local cm,m,o=GetID()
 function cm.initial_effect(c)
 	aux.AddCodeList(c,30243636)

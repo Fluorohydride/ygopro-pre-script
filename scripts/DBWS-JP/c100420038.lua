@@ -1,4 +1,5 @@
---Recette de Viande～肉料理的食谱～
+--Recette de Viande～肉料理のレシピ～
+--Script by 小壶
 local cm,m,o=GetID()
 function cm.initial_effect(c)
 	aux.AddCodeList(c,100420030,m)
