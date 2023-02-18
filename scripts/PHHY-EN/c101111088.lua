@@ -80,7 +80,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_GRAVE,0,1,3,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
 	local c=e:GetHandler()
