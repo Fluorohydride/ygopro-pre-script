@@ -69,9 +69,10 @@ function s.syncon(e,c,smat,mg1,min,max)
 	if c==nil then return true end
 	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 	local tp=c:GetControler()
+	if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false) then return false end
 	local mt=getmetatable(c)
-	local f1,f4,f2,f3=mt.material[1],mt.material[2],mt.material[3],mt.material[4]
-	if not mt.material or #(mt.material)==0 then f1=aux.Tuner(nil) f2=nil f3=nil f4=nil end
+	local f1,f4,f2,f3=mt.material_reqs[1],mt.material_reqs[2],mt.material_reqs[3],mt.material_reqs[4]
+	if not mt.material_reqs or #(mt.material_reqs)==0 then f1=aux.Tuner(nil) f2=nil f3=nil f4=nil end
 	local tc=Duel.GetFirstMatchingCard(s.hsfilter,tp,LOCATION_HAND,0,nil,tp,f1)
 	if not tc then return false end
 	local minc,maxc=aux.GetMaterialListCount(c)
@@ -92,8 +93,8 @@ function s.syncon(e,c,smat,mg1,min,max)
 end
 function s.syntg(e,tp,eg,ep,ev,re,r,rp,chk,c,smat,mg1,min,max)
 	local mt=getmetatable(c)
-	local f1,f4,f2,f3=mt.material[1],mt.material[2],mt.material[3],mt.material[4]
-	if not mt.material or #(mt.material)==0 then f1=aux.Tuner(nil) f2=nil f3=nil f4=nil end
+	local f1,f4,f2,f3=mt.material_reqs[1],mt.material_reqs[2],mt.material_reqs[3],mt.material_reqs[4]
+	if not mt.material_reqs or #(mt.material_reqs)==0 then f1=aux.Tuner(nil) f2=nil f3=nil f4=nil end
 	local minc,maxc=aux.GetMaterialListCount(c)
 	if min then
 		if min>minc then minc=min end
