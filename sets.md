@@ -2,9 +2,10 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
+- **March 9, 2023**: Maze of Memories (MAZE-EN) : `100206XXX`
 - **March 17, 2023**: The Valuable Book EX 3 promotional cards (VX03-JP) : `100205XXX`
 - **March 18, 2023**: Deck Build Pack: Wild Survivors (DBWS-JP) : `100420XXX`
-- **April 22, 2023**: DUELIST NEXUS (DUNE?-JP) : `101201XXX`
+- **April 22, 2023**: DUELIST NEXUS (DUNE-JP) : `101201XXX`
 
 # Announced
 - **May 27, 2023**: Duelist Pack: Duelists of Explosion (DP28-JP) : `100428XXX`
