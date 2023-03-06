@@ -9,7 +9,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
-	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -19,19 +18,11 @@ function s.thfilter(c,code)
 end
 function s.cfilter(c,tp)
 	return not c:IsPublic() and c:IsSetCard(0x290) and c:IsType(TYPE_MONSTER)
-		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,code)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	if chk==0 then return true end
+		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		if e:GetLabel()==0 then return false end
-		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,tp)
-	end
-	e:SetLabel(0)
+	if chk==0 then return e:IsCostChecked()
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
 	e:SetLabel(g:GetFirst():GetCode())
@@ -55,11 +46,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-			if sg:GetCount()>0 then
-				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-				local atk=sg:GetFirst():GetAttack()
-				Duel.SetLP(tp,Duel.GetLP(tp)-atk)
-			end
+			Duel.ShuffleHand(tp)
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+			local atk=sg:GetFirst():GetBaseAttack()
+			Duel.SetLP(tp,Duel.GetLP(tp)-atk)
 		end
 	end
 end

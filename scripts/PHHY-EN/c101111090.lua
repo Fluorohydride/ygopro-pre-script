@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1,id+o)
+	e1:SetCountLimit(1,id)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
@@ -29,9 +29,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-Card.GetLinkLevel=Card.GetLevel
 function s.lcheck(g,lc)
-	return g:GetClassCount(Card.GetLinkLevel)==g:GetCount()
+	return g:GetClassCount(Card.GetLevel)==g:GetCount()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
@@ -39,24 +38,39 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+end
+function s.desfilter(c,tp,seq)
+	local sseq=c:GetSequence()
+	if c:IsControler(tp) then
+		return sseq==5 and seq==3 or sseq==6 and seq==1
+	end
+	if c:IsLocation(LOCATION_SZONE) then
+		return sseq<5 and sseq==seq
+	end
+	if sseq<5 then
+		return math.abs(sseq-seq)==1
+	end
+	if sseq>=5 then
+		return sseq==5 and seq==1 or sseq==6 and seq==3
+	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local cg=tc:GetColumnGroup()
-		if Duel.Destroy(tc,REASON_EFFECT)~=0 and Duel.GetLP(tp)<Duel.GetLP(1-tp)
-			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) and #cg>0 then
+	if tc:IsRelateToEffect(e) then
+		local cg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,tc,tp,tc:GetSequence())
+		if Duel.Destroy(tc,REASON_EFFECT)~=0 and Duel.GetLP(tp)<Duel.GetLP(1-tp) and #cg>0
+			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			Duel.Destroy(cg,REASON_EFFECT)
 		end
 	end
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,id)>0
+	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_DECK)
 end
