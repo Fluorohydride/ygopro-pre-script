@@ -1,4 +1,5 @@
 --Gold Pride - Captain Carrie
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -81,16 +82,17 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_GRAVE,0,1,3,nil)
+	if #g==0 then return end
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if ct>0 and tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if ct>0 and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(ct*500)
-		c:RegisterEffect(e1)
+		tc:RegisterEffect(e1)
 	end
 end

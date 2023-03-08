@@ -1,5 +1,5 @@
---coded by Lyris
 --Gold Pride - Nytro Head
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon self
@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id+o*2)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e3:SetCondition(s.descon)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
@@ -53,10 +54,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) end
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+o,0,TYPES_TOKEN_MONSTER,0,0,8,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP,1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,1-tp,0)
@@ -77,11 +78,10 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()~=tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+	return Duel.GetTurnPlayer()==1-tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function s.dfilter(c)
-	return c:IsCode(id+o)
-		and Duel.IsExistingMatchingCard(s.sfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,c:GetControler(),c:GetSequence(),c:GetLocation())
+	return c:IsCode(id+o) and c:IsFaceup()
 end
 function s.sfilter(c,tp,seq,loc)
 	local sseq=c:GetSequence()
@@ -98,17 +98,17 @@ function s.sfilter(c,tp,seq,loc)
 	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsCode(id+o) end
+	if chkc then return chkc:IsOnField() and s.dfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.dfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local tc=Duel.SelectTarget(s.dfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil):GetFirst()
+	local tc=Duel.SelectTarget(tp,s.dfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil):GetFirst()
 	local g=Duel.GetMatchingGroup(s.sfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tc:GetControler(),tc:GetSequence(),tc:GetLocation())
 	g:AddCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		local g=Duel.GetMatchingGroup(s.sfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,tc,tc:GetControler(),tc:GetSequence(),tc:GetLocation())+tc
 		Duel.Destroy(g,REASON_EFFECT)
 	end
