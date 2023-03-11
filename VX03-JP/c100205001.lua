@@ -46,7 +46,7 @@ end
 function s.valcheck(e,c)
 	local mg=c:GetMaterial()
 	local fg=mg:Filter(Card.IsType,nil,TYPE_NORMAL)
-	if #fg==2 then
+	if #fg>0 then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
