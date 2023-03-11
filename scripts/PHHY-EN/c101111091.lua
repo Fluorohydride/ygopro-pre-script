@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c,code)
-	return not c:IsCode(code) and c:IsSetCard(0x290) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return not c:IsCode(code) and c:IsSetCard(0x192) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.cfilter(c,tp)
-	return not c:IsPublic() and c:IsSetCard(0x290) and c:IsType(TYPE_MONSTER)
+	return not c:IsPublic() and c:IsSetCard(0x192) and c:IsType(TYPE_MONSTER)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -31,7 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x290) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x192) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()

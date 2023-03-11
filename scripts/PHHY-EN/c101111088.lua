@@ -53,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) end
 end
 function s.filter(c)
-	return c:IsSetCard(0x290) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x192) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -66,10 +66,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-tp,g)
 end
 function s.afilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x290) and c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsFaceup() and c:IsSetCard(0x192) and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.rfilter(c)
-	return c:IsSetCard(0x290) and c:IsAbleToRemove()
+	return c:IsSetCard(0x192) and c:IsAbleToRemove()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.afilter(chkc) end
