@@ -1,6 +1,6 @@
---coded by Lyris
 --Link Decoder
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
@@ -21,13 +21,12 @@ end
 function s.mfilter(c)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSE)
 end
---snip 1: edited from "Doppelwarrior"
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and rc:IsRace(RACE_CYBERSE) and tc:GetBaseAttack()>=2300
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK
+		and rc:IsRace(RACE_CYBERSE) and rc:GetBaseAttack()>=2300
 end
---end snip 1; snip 2: edited from "Jet Synchron"
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -46,4 +45,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1,true)
 	end
 end
---end snip 2
