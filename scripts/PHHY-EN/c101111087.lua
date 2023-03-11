@@ -83,18 +83,19 @@ end
 function s.dfilter(c)
 	return c:IsCode(id+o) and c:IsFaceup()
 end
-function s.sfilter(c,tp,seq,loc)
+function s.sfilter(c,p,seq,loc)
 	local sseq=c:GetSequence()
-	if c:IsControler(1-tp) and loc==LOCATION_MZONE then
-		return sseq==5 and seq==3 or sseq==6 and seq==1
+	if c:IsControler(1-p) then
+		return loc==LOCATION_MZONE and c:IsLocation(LOCATION_MZONE)
+			and (sseq==5 and seq==3 or sseq==6 and seq==1)
 	end
 	if c:IsLocation(LOCATION_SZONE) then
 		return sseq<5 and (sseq==seq or loc==LOCATION_SZONE and math.abs(sseq-seq)==1)
 	end
 	if sseq<5 then
-		return math.abs(sseq-seq)==1
+		return sseq==seq or loc==LOCATION_MZONE and math.abs(sseq-seq)==1
 	else
-		return sseq==5 and seq==1 or sseq==6 and seq==3
+		return loc==LOCATION_MZONE and (sseq==5 and seq==1 or sseq==6 and seq==3)
 	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -109,7 +110,8 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		local g=Duel.GetMatchingGroup(s.sfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,tc,tc:GetControler(),tc:GetSequence(),tc:GetLocation())+tc
+		local g=Duel.GetMatchingGroup(s.sfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,tc,tc:GetControler(),tc:GetSequence(),tc:GetLocation())
+		g:AddCard(tc)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
