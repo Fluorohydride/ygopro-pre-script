@@ -3,7 +3,7 @@
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x192),2,2,s.lcheck)
+	aux.AddLinkProcedure(c,s.mfilter,2,2,s.lcheck)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
@@ -28,6 +28,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
+end
+function s.mfilter(c)
+	return c:IsLevelAbove(0) and c:IsLinkSetCard(0x192)
 end
 function s.lcheck(g,lc)
 	return g:GetClassCount(Card.GetLevel)==g:GetCount()
