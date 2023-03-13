@@ -1,9 +1,4 @@
 --征服斗魂 重型电子人
---这个卡名的①②的效果1回合各能使用1次，同一连锁上不能发动。
---①：自己·对方的主要阶段，以机械族以外的自己场上1只「征服斗魂」怪兽为对象才能发动。那只怪兽回到手卡，这张卡从手卡特殊召唤。
---②：自己·对方回合，可以从以下选择1个，把那属性的手卡的怪兽各1只给对方观看发动。
---●暗：自己从卡组抽1张。
---●地·炎：给与对方1500伤害。
 function c100420018.initial_effect(c)
 	--return and spsummon
 	local e1=Effect.CreateEffect(c)
@@ -38,13 +33,13 @@ function c100420018.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCountLimit(1,100420018+100)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(c100420018.descost)
-	e3:SetTarget(c100420018.destg)
-	e3:SetOperation(c100420018.desop)
+	e3:SetCost(c100420018.dmgcost)
+	e3:SetTarget(c100420018.dmgtg)
+	e3:SetOperation(c100420018.dmgop)
 	c:RegisterEffect(e3)
 end
-function c100420018.spfilter(c)
-	return c:IsSetCard(0xfb) and c:IsFaceup() and c:IsAbleToHand() and not c:IsRace(RACE_MACHINE)
+function c100420018.spfilter(c,tp)
+	return c:IsSetCard(0x297) and c:IsFaceup() and c:IsAbleToHand() and not c:IsRace(RACE_MACHINE)
 		and Duel.GetMZoneCount(tp,c,tp)>0
 end
 function c100420018.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -80,29 +75,33 @@ function c100420018.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:GetFlagEffect(100420018)==0
 		and Duel.IsPlayerCanDraw(tp,1) end
 	c:RegisterFlagEffect(100420018,RESET_CHAIN,0,1)
+	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c100420018.drop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Draw(tp,1,REASON_EFFECT)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Draw(p,d,REASON_EFFECT)
 end
-function c100420018.descfilter(c)
-	return c:IsAttribute(ATTRIBUTE_EARTH+ATTRIBUTE_DARK) and not c:IsPublic()
+function c100420018.dmgcfilter(c)
+	return c:IsAttribute(ATTRIBUTE_EARTH+ATTRIBUTE_FIRE) and not c:IsPublic()
 end
-function c100420018.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c100420018.descfilter,tp,LOCATION_HAND,0,nil)
-	if chk==0 then return g:CheckSubGroup(aux.gfcheck,2,2,Card.IsAttribute,ATTRIBUTE_EARTH,ATTRIBUTE_DARK) end
+function c100420018.dmgcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=Duel.GetMatchingGroup(c100420018.dmgcfilter,tp,LOCATION_HAND,0,nil)
+	if chk==0 then return g:CheckSubGroup(aux.gfcheck,2,2,Card.IsAttribute,ATTRIBUTE_EARTH,ATTRIBUTE_FIRE) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local sg=g:SelectSubGroup(tp,aux.gfcheck,false,2,2,Card.IsAttribute,ATTRIBUTE_EARTH,ATTRIBUTE_DARK)
+	local sg=g:SelectSubGroup(tp,aux.gfcheck,false,2,2,Card.IsAttribute,ATTRIBUTE_EARTH,ATTRIBUTE_FIRE)
 	Duel.ConfirmCards(1-tp,sg)
 	Duel.ShuffleHand(tp)
 end
-function c100420018.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=e:GetHandler():GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_SZONE)
-	if chk==0 then return #g>0 and c:GetFlagEffect(100420018)==0 end
+function c100420018.dmgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return c:GetFlagEffect(100420018)==0 end
 	c:RegisterFlagEffect(100420018,RESET_CHAIN,0,1)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(1500)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
 end
-function c100420018.desop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToChain(0) then return end
-	local g=e:GetHandler():GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_SZONE)
-	Duel.Destroy(g,REASON_EFFECT)
+function c100420018.damop(e,tp,eg,ep,ev,re,r,rp)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Damage(p,d,REASON_EFFECT)
 end

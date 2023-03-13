@@ -41,7 +41,6 @@ function c100420017.initial_effect(c)
 	e3:SetOperation(c100420017.desop)
 	c:RegisterEffect(e3)
 end
-
 function c100420017.spcfilter(c)
 	return c:GetSequence()<5
 end
@@ -78,6 +77,7 @@ function c100420017.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100420017.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not c:IsRelateToChain(0) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

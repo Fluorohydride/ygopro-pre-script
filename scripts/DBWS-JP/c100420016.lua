@@ -76,6 +76,7 @@ function c100420016.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100420016.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not c:IsRelateToChain(0) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
