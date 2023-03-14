@@ -28,8 +28,8 @@ function c100206004.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100206004.thfilter(c)
-	return (aux.IsCodeListed(25955164) or aux.IsCodeListed(62340868)
-		or aux.IsCodeListed(98434877)) and c:IsAbleToHand()
+	return (aux.IsCodeListed(c,25955164) or aux.IsCodeListed(c,62340868)
+		or aux.IsCodeListed(c,98434877)) and c:IsAbleToHand()
 end
 function c100206004.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100206004.thfilter,tp,LOCATION_DECK,0,1,nil) end

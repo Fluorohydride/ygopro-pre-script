@@ -1,4 +1,5 @@
 --征服斗魂 重型电子人
+--scripted by JoyJ
 function c100420018.initial_effect(c)
 	--return and spsummon
 	local e1=Effect.CreateEffect(c)

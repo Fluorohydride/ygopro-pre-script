@@ -44,6 +44,7 @@ function c100420019.thfilter(c)
 	return c:IsSetCard(0x297) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100420019.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c100420019.thfilter,tp,LOCATION_DECK,0,1,nil)
 		and c:GetFlagEffect(100420019)==0 end
 	c:RegisterFlagEffect(100420019,RESET_CHAIN,0,1)

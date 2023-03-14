@@ -1,9 +1,5 @@
 --征服斗魂 螺禅
---这个卡名的①②的效果1回合各能使用1次，同一连锁上不能发动。
---①：这张卡召唤·特殊召唤成功的场合才能发动。从卡组把1只战士族以外的「征服斗魂」怪兽加入手卡。
---②：自己·对方回合，可以从以下选择1个，把那属性的手卡的怪兽各1只给对方观看发动。
---●炎：这个回合，这张卡不会被效果破坏。
---●炎·暗：和这张卡相同纵列的其他怪兽全部破坏。
+--scripted by JoyJ
 function c100420016.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
@@ -72,6 +68,7 @@ function c100420016.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420016.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(100420016)==0 end
 	c:RegisterFlagEffect(100420016,RESET_CHAIN,0,1)
 end

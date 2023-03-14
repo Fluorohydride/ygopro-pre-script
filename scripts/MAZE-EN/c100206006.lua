@@ -33,6 +33,7 @@ function c100206006.atkfilter(c)
 	return c:IsFaceup() and c:GetAttack()>0
 end
 function c100206006.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local c=e:GetHandler()
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c100206006.atkfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100206006.atkfilter,tp,0,LOCATION_MZONE,1,nil)
 		and e:GetHandler():GetFlagEffect(100206006)==0 end

@@ -71,6 +71,7 @@ function c100420021.imcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420021.imtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(100420021)==0 end
 	c:RegisterFlagEffect(100420021,RESET_CHAIN,0,1)
 end

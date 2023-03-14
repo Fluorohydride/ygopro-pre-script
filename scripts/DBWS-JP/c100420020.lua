@@ -1,9 +1,5 @@
 --征服斗魂 普鲁同HG
---[[这个卡名的①②的效果1回合各能使用1次，同一连锁上不能发动。
-①：对方回合，自己的主要怪兽区域的怪兽不存在的场合或者只有「征服斗魂」怪兽的场合才能发动。这张卡从手卡特殊召唤。
-②：自己·对方回合，可以从以下选择1个，把那属性的手卡的怪兽各1只给对方观看发动。
-●炎：这张卡的守备力直到回合结束时上升3000。
-●暗·地：这张卡的攻击力直到回合结束时上升3000。]]--
+--scripted by JoyJ
 function c100420020.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -14,7 +10,6 @@ function c100420020.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,100420020)
 	e1:SetCondition(c100420020.spcon)
-	e1:SetCost(c100420020.spcost)
 	e1:SetTarget(c100420020.sptg)
 	e1:SetOperation(c100420020.spop)
 	c:RegisterEffect(e1)
@@ -113,5 +108,5 @@ function c100420020.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(3000)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	tc:RegisterEffect(e1)
+	c:RegisterEffect(e1)
 end
