@@ -34,6 +34,7 @@ function c100206005.discon(e,tp,eg,ep,ev,re,r,rp)
 		and (re:GetActivateLocation() & LOCATION_ONFIELD)>0 and Duel.IsChainDisablable(ev)
 end
 function c100206005.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(100206005)==0 end
 	c:RegisterFlagEffect(100206005,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)

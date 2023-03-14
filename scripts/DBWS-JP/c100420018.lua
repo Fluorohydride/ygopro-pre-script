@@ -9,7 +9,6 @@ function c100420018.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetCost(c100420018.spcost)
 	e1:SetTarget(c100420018.sptg)
 	e1:SetOperation(c100420018.spop)
 	c:RegisterEffect(e1)
@@ -72,6 +71,7 @@ function c100420018.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420018.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(100420018)==0
 		and Duel.IsPlayerCanDraw(tp,1) end
 	c:RegisterFlagEffect(100420018,RESET_CHAIN,0,1)
@@ -95,6 +95,7 @@ function c100420018.dmgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420018.dmgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(100420018)==0 end
 	c:RegisterFlagEffect(100420018,RESET_CHAIN,0,1)
 	Duel.SetTargetPlayer(1-tp)

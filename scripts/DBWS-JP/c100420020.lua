@@ -75,6 +75,7 @@ function c100420020.defcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420020.deftg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(100420020)==0 end
 	c:RegisterFlagEffect(100420020,RESET_CHAIN,0,1)
 end
@@ -100,6 +101,7 @@ function c100420020.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420020.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(100420020)==0 end
 	c:RegisterFlagEffect(100420020,RESET_CHAIN,0,1)
 end

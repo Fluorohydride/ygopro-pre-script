@@ -68,6 +68,7 @@ function c100420019.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420019.adtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(100420019)==0
 		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	c:RegisterFlagEffect(100420019,RESET_CHAIN,0,1)
@@ -101,6 +102,7 @@ function c100420019.rthtgfilter(c)
 	return c:IsFaceup() and not c:IsType(TYPE_LINK)
 end
 function c100420019.rthtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(100420019)==0
 		and Duel.IsExistingMatchingCard(c100420019.rthtgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	c:RegisterFlagEffect(100420019,RESET_CHAIN,0,1)

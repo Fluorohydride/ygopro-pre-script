@@ -47,6 +47,7 @@ function c100420016.thfilter(c)
 	return c:IsSetCard(0x297) and c:IsType(TYPE_MONSTER) and not c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
 function c100420016.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c100420016.thfilter,tp,LOCATION_DECK,0,1,nil)
 		and c:GetFlagEffect(100420016)==0 end
 	c:RegisterFlagEffect(100420016,RESET_CHAIN,0,1)
@@ -97,13 +98,15 @@ function c100420016.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420016.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=e:GetHandler():GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_MZONE)
+	local c=e:GetHandler()
+	local g=c:GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_MZONE)
 	if chk==0 then return #g>0 and c:GetFlagEffect(100420016)==0 end
 	c:RegisterFlagEffect(100420016,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function c100420016.desop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToChain(0) then return end
-	local g=e:GetHandler():GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_MZONE)
+	local c=e:GetHandler()
+	if not c:IsRelateToChain(0) then return end
+	local g=c:GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_MZONE)
 	Duel.Destroy(g,REASON_EFFECT)
 end

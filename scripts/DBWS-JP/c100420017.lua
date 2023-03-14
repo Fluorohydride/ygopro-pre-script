@@ -13,7 +13,6 @@ function c100420017.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,100420017)
 	e1:SetCondition(c100420017.spcon)
-	e1:SetCost(c100420017.spcost)
 	e1:SetTarget(c100420017.sptg)
 	e1:SetOperation(c100420017.spop)
 	c:RegisterEffect(e1)
@@ -72,6 +71,7 @@ function c100420017.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420017.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(100420017)==0 end
 	c:RegisterFlagEffect(100420017,RESET_CHAIN,0,1)
 end
@@ -98,13 +98,15 @@ function c100420017.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420017.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=e:GetHandler():GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_SZONE)
+	local c=e:GetHandler()
+	local g=c:GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_SZONE)
 	if chk==0 then return #g>0 and c:GetFlagEffect(100420017)==0 end
 	c:RegisterFlagEffect(100420017,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function c100420017.desop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToChain(0) then return end
-	local g=e:GetHandler():GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_SZONE)
+	local c=e:GetHandler()
+	if not c:IsRelateToChain(0) then return end
+	local g=c:GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_SZONE)
 	Duel.Destroy(g,REASON_EFFECT)
 end
