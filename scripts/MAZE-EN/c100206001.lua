@@ -1,6 +1,7 @@
 --Labyrinth heavy tank
 --scripted by JoyJ
 function c100206001.initial_effect(c)
+	aux.AddCodeList(c,25955164,62340868,98434877)
 	--summon with no tribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100206001,0))

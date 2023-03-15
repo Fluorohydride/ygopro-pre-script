@@ -1,6 +1,7 @@
 --Double Attack! Wind and Thunder!!
 --scripted by JoyJ
 function c100206008.initial_effect(c)
+	aux.AddCodeList(c,25955164,62340868,98434877)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
