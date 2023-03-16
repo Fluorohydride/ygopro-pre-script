@@ -39,7 +39,7 @@ function c100206007.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100206007.target(e,c)
-	return c:IsStatus(STATUS_SUMMON_TURN+STATUS_FLIP_SUMMON_TURN+STATUS_SPSUMMON_TURN)
+	return c:IsStatus(STATUS_SUMMON_TURN+STATUS_FLIP_SUMMON_TURN+STATUS_SPSUMMON_TURN) and not c:IsLevelAbove(5)
 end
 function c100206007.tffilter(c)
 	return c:IsCode(25955164,62340868,98434877) and not c:IsForbidden()
@@ -61,12 +61,6 @@ function c100206007.tfop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 		e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 		tc:RegisterEffect(e1)
-		Duel.BreakEffect()
-		if #(Duel.GetFieldGroup(tp,0,LOCATION_MZONE))>0 and Duel.SelectYesNo(tp,aux.Stringid(100206007,2)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
-			Duel.Destroy(g,REASON_EFFECT)
-		end
 	end
 end
 function c100206007.descon(e,tp,eg,ep,ev,re,r,rp)

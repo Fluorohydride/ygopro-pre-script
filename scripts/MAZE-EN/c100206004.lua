@@ -28,7 +28,7 @@ function c100206004.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100206004.thfilter(c)
-	return aux.IsCodeListed(c,25955164) and aux.IsCodeListed(c,62340868)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and aux.IsCodeListed(c,25955164) and aux.IsCodeListed(c,62340868)
 		and aux.IsCodeListed(c,98434877) and c:IsAbleToHand()
 end
 function c100206004.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
