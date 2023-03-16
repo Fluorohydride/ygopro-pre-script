@@ -4,7 +4,7 @@ function c100206004.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcCode2(c,25955164,62340868,true,true)
-	aux.AddContactFusionProcedure(c,Card.IsAbleToRemoveAsCost,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_REMOVED,0,Duel.Remove,POS_FACEUP,REASON_COST)
+	aux.AddContactFusionProcedure(c,Card.IsAbleToRemoveAsCost,LOCATION_ONFIELD,0,Duel.Remove,POS_FACEUP,REASON_COST)
 	--to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100206004,1))
