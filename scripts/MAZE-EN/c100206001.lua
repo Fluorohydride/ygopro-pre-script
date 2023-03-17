@@ -45,6 +45,9 @@ function c100206001.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c100206001.tffilter,tp,LOCATION_DECK+LOCATION_REMOVED+LOCATION_HAND,0,1,nil) end
 end
+function c100206001.desfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x296)
+end
 function c100206001.tfop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
@@ -59,7 +62,8 @@ function c100206001.tfop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 		tc:RegisterEffect(e1)
 		Duel.BreakEffect()
-		if #(Duel.GetFieldGroup(tp,0,LOCATION_MZONE))>0 and Duel.SelectYesNo(tp,aux.Stringid(100206001,2)) then
+		if #(Duel.GetFieldGroup(tp,0,LOCATION_MZONE))>0 and Duel.IsExistingMatchingCard(c100206001.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
+			and Duel.SelectYesNo(tp,aux.Stringid(100206001,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
 			Duel.Destroy(g,REASON_EFFECT)
