@@ -31,7 +31,8 @@ function c100206005.initial_effect(c)
 end
 function c100206005.discon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
-		and (re:GetActivateLocation() & LOCATION_ONFIELD)>0 and Duel.IsChainDisablable(ev)
+		and ((re:GetActivateLocation() & LOCATION_ONFIELD)>0 or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+		and Duel.IsChainDisablable(ev)
 end
 function c100206005.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
