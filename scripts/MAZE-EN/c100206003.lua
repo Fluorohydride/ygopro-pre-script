@@ -49,7 +49,8 @@ function c100206003.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100206003.spfilter(c,e,tp)
-	return c:IsSetCard(0x1052) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(0x1052) and c:IsLevelBelow(11)
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c100206003.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
