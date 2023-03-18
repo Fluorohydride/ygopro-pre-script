@@ -83,7 +83,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 			local op=Duel.SelectOption(tp,table.unpack(ops))+1
 			local sel=opval[op]
-			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,sel+1))
+			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,sel+2))
 			if sel==0 then
 				Duel.BreakEffect()
 				Duel.Equip(tp,tc,sc)
