@@ -25,7 +25,7 @@ function c100420025.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100420025.filter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(c100420025.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c100420025.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SelectTarget(tp,c100420025.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 end
 function c100420025.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
