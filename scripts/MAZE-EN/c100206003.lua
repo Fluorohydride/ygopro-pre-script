@@ -1,10 +1,10 @@
---Gate guardian combined
+--Gate Guardian Combined
 --scripted by JoyJ
 function c100206003.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcCode3(c,25955164,62340868,98434877,true,true)
-	aux.AddContactFusionProcedure(c,Card.IsAbleToRemoveAsCost,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_REMOVED,0,Duel.Remove,POS_FACEUP,REASON_COST)
+	aux.AddContactFusionProcedure(c,Card.IsAbleToRemoveAsCost,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,0,Duel.Remove,POS_FACEUP,REASON_COST)
 	--negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100206003,1))
