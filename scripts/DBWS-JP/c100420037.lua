@@ -6,10 +6,10 @@ function s.initial_effect(c)
 	aux.AddRitualProcGreater2(c,s.filter,LOCATION_HAND,nil,nil,false,s.extraop)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x293)
+	return c:IsSetCard(0x196)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x294) and c:IsAbleToHand() and not c:IsCode(id) and c:GetType()&0x82==0x82
+	return c:IsSetCard(0x197) and c:IsAbleToHand() and not c:IsCode(id) and c:GetType()&0x82==0x82
 end
 function s.extraop(e,tp,eg,ep,ev,re,r,rp,tc,mat)
 	if not tc then return end

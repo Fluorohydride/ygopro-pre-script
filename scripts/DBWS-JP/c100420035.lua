@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 --Activate
 function s.thfilter(c)
-	return c:IsSetCard(0x294) and c:IsAbleToHand()
+	return c:IsSetCard(0x197) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
@@ -76,7 +76,7 @@ function s.drcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.tdfilter(c,tp)
-	return c:IsSetCard(0x294) and c:IsAbleToDeck() and Duel.IsExistingTarget(nil,tp,LOCATION_GRAVE,0,1,nil,c)
+	return c:IsSetCard(0x197) and c:IsAbleToDeck() and Duel.IsExistingTarget(nil,tp,LOCATION_GRAVE,0,1,nil,c)
 end
 function s.drtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

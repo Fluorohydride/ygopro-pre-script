@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 --Activate
 function s.conf1(c)
-	return c:IsFaceup() and c:IsSetCard(0x293) and c:GetType()&0x81==0x81
+	return c:IsFaceup() and c:IsSetCard(0x196) and c:GetType()&0x81==0x81
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.conf1,tp,LOCATION_MZONE,0,1,nil)
@@ -42,7 +42,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function s.opf1(c)
-	return c:IsFaceup() and c:IsSetCard(0x293) and c:GetType()&0x81==0x81 and c:GetFlagEffect(100420029)>0
+	return c:IsFaceup() and c:IsSetCard(0x196) and c:GetType()&0x81==0x81 and c:GetFlagEffect(100420029)>0
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()

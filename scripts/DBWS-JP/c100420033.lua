@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 --spsummon success
 function s.tgf1(c)
-	return c:IsSetCard(0x293,0x294) and c:IsAbleToHand()
+	return c:IsSetCard(0x196,0x197) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgf1,tp,LOCATION_DECK,0,1,nil) end
@@ -59,7 +59,7 @@ function s.relfilter(c)
 	return c:IsReleasableByEffect() and c:IsPosition(POS_ATTACK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x293) and c:IsLevel(6) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81
+	return c:IsSetCard(0x196) and c:IsLevel(6) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.relfilter(chkc) end

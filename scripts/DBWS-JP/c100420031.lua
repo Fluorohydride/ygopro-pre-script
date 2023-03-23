@@ -48,12 +48,12 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0
 end
 function s.tgf2_1(c,tp,g)
-	if not (c:IsSetCard(0x293) and c:IsFaceup() and c:IsReleasableByEffect()) then return false end
+	if not (c:IsSetCard(0x196) and c:IsFaceup() and c:IsReleasableByEffect()) then return false end
 	if g then return g:IsExists(s.relfilter,1,c) end
 	return Duel.IsExistingMatchingCard(s.relfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x293) and c:IsLevel(4,5) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81
+	return c:IsSetCard(0x196) and c:IsLevel(4,5) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81
 end
 function s.relfilter(c)
 	return c:IsReleasableByEffect() and c:IsPosition(POS_ATTACK)

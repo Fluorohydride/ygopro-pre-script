@@ -62,7 +62,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 end
 --ritual
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x293)
+	return c:IsSetCard(0x196)
 end
 function s.ritcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED) end

@@ -45,7 +45,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(p,5)
 	local g=Duel.GetDecktopGroup(p,5)
 	if not g or #g<5 then return end
-	g=g:Filter(Card.IsAbleToHand,nil):Filter(Card.IsSetCard,nil,0x293)
+	g=g:Filter(Card.IsAbleToHand,nil):Filter(Card.IsSetCard,nil,0x196)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
 		g=g:Select(p,1,1,nil)
@@ -64,7 +64,7 @@ function s.relfilter(c)
 	return c:IsReleasableByEffect() and c:IsPosition(POS_ATTACK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x293) and c:IsLevel(2,3) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81
+	return c:IsSetCard(0x196) and c:IsLevel(2,3) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetType()&0x81==0x81
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasableByEffect() and Duel.IsExistingMatchingCard(s.relfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
