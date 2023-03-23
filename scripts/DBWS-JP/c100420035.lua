@@ -32,23 +32,21 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.drcon2)
 	e3:SetTarget(s.drtg2)
-	e3:SetOperation(s.drop3)
+	e3:SetOperation(s.drop2)
 	c:RegisterEffect(e3)
 end
---Activate
 function s.thfilter(c)
 	return c:IsSetCard(0x197) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		g=g:Select(tp,1,1,nil)
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+		local sg=g:Select(tp,1,1,nil)
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,sg)
 	end
 end
---draw
 function s.costfilter(c)
 	return c:GetType()&0x81==0x81 and c:IsAbleToDeck()
 end
@@ -57,7 +55,7 @@ function s.drcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g)
-	Duel.SendtoDeck(g,nil,1,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)
 end
 function s.drtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -69,29 +67,29 @@ function s.drop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
-	c:RegisterFlagEffect(91228233,RESET_PHASE+PHASE_END,0,1)
 end
---phase end
 function s.drcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.tdfilter(c,tp)
-	return c:IsSetCard(0x197) and c:IsAbleToDeck() and Duel.IsExistingTarget(nil,tp,LOCATION_GRAVE,0,1,nil,c)
+	return c:IsSetCard(0x197) and c:IsAbleToDeck()
+		and Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_GRAVE,0,1,c)
 end
 function s.drtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
+		and Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local sg=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_GRAVE,0,1,1,g)
-	g:Merge(sg)
+	local g2=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_GRAVE,0,1,1,g)
+	g:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
-function s.drop3(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if not g or g:FilterCount(Card.IsRelateToEffect,nil,e)~=2 or aux.PlaceCardsOnDeckBottom(tp,g)==0 then return end
+function s.drop2(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetTargetsRelateToChain()
+	if #g==0 or aux.PlaceCardsOnDeckBottom(tp,g)==0 then return end
 	Duel.BreakEffect()
 	Duel.Draw(tp,1,REASON_EFFECT)
 end

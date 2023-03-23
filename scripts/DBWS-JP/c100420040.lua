@@ -28,12 +28,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.relop)
 	c:RegisterEffect(e2)
 end
---Activate
-function s.conf1(c)
+function s.negfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x196) and c:GetType()&0x81==0x81
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.conf1,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.negfilter,tp,LOCATION_MZONE,0,1,nil)
 		and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 		and Duel.IsChainNegatable(ev)
 end
@@ -41,26 +40,26 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
-function s.opf1(c)
+function s.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x196) and c:GetType()&0x81==0x81 and c:GetFlagEffect(100420029)>0
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) and rc:IsDestructable() and Duel.IsExistingMatchingCard(s.opf1,tp,LOCATION_MZONE,0,1,nil)
+	if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) and rc:IsDestructable()
+		and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.Destroy(rc,REASON_EFFECT)
 	end
 end
---release
-function s.conf2(c,tp)
-	return c:IsCode(30243636) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+function s.relfilter(c,tp)
+	return c:IsCode(30243636) and c:IsSummonPlayer(tp)
 end
 function s.relcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.conf2,1,nil,tp)
+	return eg:IsExists(s.relfilter,1,nil,tp)
 end
 function s.reltg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsReleasable,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.relop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsReleasable,tp,0,LOCATION_MZONE,nil)
