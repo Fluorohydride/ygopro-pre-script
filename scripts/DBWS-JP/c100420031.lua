@@ -68,7 +68,7 @@ function s.opf2(g)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE):SelectSubGroup(tp,s.opf2,false,2,2)
-	if Duel.Release(g,REASON_EFFECT)~=2 then return end
+	if not g or Duel.Release(g,REASON_EFFECT)~=2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)>0 then
