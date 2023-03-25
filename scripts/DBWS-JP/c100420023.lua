@@ -1,4 +1,4 @@
---赌上你的灵魂！
+--Stake Your Soul！
 --Script by 奥克斯
 function c100420023.initial_effect(c)
 	--Activate
@@ -13,15 +13,16 @@ function c100420023.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100420023.filter(c,e,tp)
-	return not c:IsPublic() and c:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(c100420023.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
+	return not c:IsPublic() and c:IsType(TYPE_MONSTER)
+		and Duel.IsExistingMatchingCard(c100420023.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end
 function c100420023.spfilter(c,e,tp,pc)
-	if c:IsCode(pc:GetCode()) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
-	local chk=c:IsSetCard(0x297) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	return chk and c:IsAttribute(pc:GetAttribute())
+	return c:IsSetCard(0x195) and c:IsAttribute(pc:GetAttribute()) and not c:IsCode(pc:GetCode())
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100420023.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100420023.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c100420023.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,c100420023.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	e:SetLabelObject(g:GetFirst())
@@ -29,12 +30,12 @@ function c100420023.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420023.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return e:IsCostChecked() end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c100420023.activate(e,tp,eg,ep,ev,re,r,rp)
 	local pc=e:GetLabelObject()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or pc==nil or not pc then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or pc==nil then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c100420023.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,pc):GetFirst()
 	if tc then
