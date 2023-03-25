@@ -1,4 +1,4 @@
---超越龙 流星衔尾龙
+--超越竜メテオロス
 --Script by 奥克斯
 function c100420002.initial_effect(c)
 	--splimit
@@ -10,6 +10,7 @@ function c100420002.initial_effect(c)
 	c:RegisterEffect(e0)
 	--destroy and special summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100420002,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -19,9 +20,10 @@ function c100420002.initial_effect(c)
 	e1:SetCondition(c100420002.dspcon)
 	e1:SetTarget(c100420002.dsptg)
 	e1:SetOperation(c100420002.dspop)
-	c:RegisterEffect(e1)   
+	c:RegisterEffect(e1)
 	--tograve
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(100420002,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -32,6 +34,7 @@ function c100420002.initial_effect(c)
 	c:RegisterEffect(e2)
 	--special summon or self
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(100420002,2))
 	e3:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
@@ -48,26 +51,21 @@ function c100420002.dspcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function c100420002.desfilter(c)
-	if c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return false end
-	return c:IsRace(RACE_DINOSAUR)
-end
-function c100420002.fselect(g,tp)
-	return aux.mzctcheck(g,tp)
+	return c:IsRace(RACE_DINOSAUR) and c:IsFaceupEx()
 end
 function c100420002.dsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c100420002.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,c)
-	if chk==0 then return g:CheckSubGroup(c100420002.fselect,2,2,tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return g:CheckSubGroup(aux.mzctcheck,2,2,tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
 end
 function c100420002.dspop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c100420002.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,c)
-	if #g==0 or not g:CheckSubGroup(c100420002.fselect,2,2,tp) then return end
+	if #g==0 or not g:CheckSubGroup(aux.mzctcheck,2,2,tp) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dg=g:SelectSubGroup(tp,c100420002.fselect,false,2,2,tp)
-	if #dg==0 then return false end
+	local dg=g:SelectSubGroup(tp,aux.mzctcheck,false,2,2,tp)
 	Duel.HintSelection(dg)
 	if Duel.Destroy(dg,REASON_EFFECT)==0 or not c:IsRelateToEffect(e) then return false end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
@@ -93,7 +91,9 @@ function c100420002.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100420002.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 	if e:GetActivateLocation()==LOCATION_GRAVE then
-		e:SetCategory(e:GetCategory()|CATEGORY_GRAVE_SPSUMMON)
+		e:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON)
+	else
+		e:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	end
 end
 function c100420002.tdop(e,tp,eg,ep,ev,re,r,rp)
@@ -102,9 +102,13 @@ function c100420002.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		local c=e:GetHandler()
 		Duel.HintSelection(g)
-		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)>0 and c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(100420002,0)) then
+		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
+			and g:FilterCount(Card.IsLocation,nil,LOCATION_DECK)>0
+			and c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			and Duel.SelectYesNo(tp,aux.Stringid(100420002,3)) then
+			Duel.BreakEffect()
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 end
-

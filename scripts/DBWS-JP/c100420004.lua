@@ -1,4 +1,4 @@
---超越龙 冰封腕龙
+--超越竜グレイスザウルス
 --Script by 奥克斯
 function c100420004.initial_effect(c)
 	--synchro summon
@@ -28,6 +28,7 @@ function c100420004.initial_effect(c)
 	c:RegisterEffect(e3)
 	--special summon or self
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(100420004,0))
 	e4:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
@@ -47,7 +48,9 @@ function c100420004.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100420004.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 	if e:GetActivateLocation()==LOCATION_GRAVE then
-		e:SetCategory(e:GetCategory()|CATEGORY_GRAVE_SPSUMMON)
+		e:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_SPSUMMON)
+	else
+		e:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	end
 end
 function c100420004.tdop(e,tp,eg,ep,ev,re,r,rp)
@@ -56,7 +59,12 @@ function c100420004.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		local c=e:GetHandler()
 		Duel.HintSelection(g)
-		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)>0 and c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(m,0)) then
+		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
+			and g:FilterCount(Card.IsLocation,nil,LOCATION_DECK)>0
+			and c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			and Duel.SelectYesNo(tp,aux.Stringid(100420004,1)) then
+			Duel.BreakEffect()
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end

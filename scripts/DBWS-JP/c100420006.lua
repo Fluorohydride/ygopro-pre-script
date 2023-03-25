@@ -1,4 +1,4 @@
---地面异临点
+--グラウンド・ゼノ
 --Script by 奥克斯
 function c100420006.initial_effect(c)
 	--Activate
@@ -10,8 +10,8 @@ function c100420006.initial_effect(c)
 	e1:SetTarget(c100420006.target)
 	e1:SetOperation(c100420006.activate)
 	c:RegisterEffect(e1)
-	--Effect 2  
-	local e2=Effect.CreateEffect(c)  
+	--fusion
+	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
@@ -19,14 +19,13 @@ function c100420006.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c100420006.fstg)
 	e2:SetOperation(c100420006.fsop)
-	c:RegisterEffect(e2)   
+	c:RegisterEffect(e2)
 end
 function c100420006.filter(c)
-	if not c:IsRace(RACE_DINOSAUR) then return false end 
-	return c:IsType(TYPE_TUNER+TYPE_NORMAL) and c:IsAbleToHand()
+	return c:IsRace(RACE_DINOSAUR) and c:IsType(TYPE_TUNER+TYPE_NORMAL) and c:IsAbleToHand()
 end
 function c100420006.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100420006.filter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(nil,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100420006.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND)
 end
@@ -35,7 +34,7 @@ function c100420006.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100420006.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g==0 then return false end
 	local tc=g:GetFirst()
-	if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) and Duel.IsExistingMatchingCard(nil,tp,LOCATION_HAND,0,1,nil) then
+	if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
 		Duel.ShuffleHand(tp)
@@ -44,12 +43,11 @@ function c100420006.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end
-
 function c100420006.filter1(c,e)
 	return not c:IsImmuneToEffect(e)
 end
 function c100420006.filter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsRace(RACE_DINOSAUR) 
+	return c:IsType(TYPE_FUSION) and c:IsRace(RACE_DINOSAUR)
 		and (not f or f(c)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c100420006.fstg(e,tp,eg,ep,ev,re,r,rp,chk)
