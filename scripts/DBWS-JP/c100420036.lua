@@ -12,7 +12,7 @@ function c100420036.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100420036.filter(c)
-	return c:IsSetCard(0x293) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x196) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c100420036.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c100420036.filter,tp,LOCATION_DECK,0,nil)
@@ -25,20 +25,21 @@ end
 function c100420036.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100420036.filter,tp,LOCATION_DECK,0,nil)
 	if g:GetClassCount(Card.GetCode)<2 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
+	Duel.ConfirmCards(1-tp,sg)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_ATOHAND)
 	local tc=sg:Select(1-tp,1,1,nil):GetFirst()
 	local code=0
 	if tc:IsRace(RACE_BEASTWARRIOR) then code=100420037 end
 	if tc:IsRace(RACE_WARRIOR) then code=100420038 end
+	local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100420036.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,code)
 	if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsRace(RACE_BEASTWARRIOR+RACE_WARRIOR)
-		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c100420036.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,code)
-		and Duel.SelectYesNo(tp,aux.Stringid(100420036,1)) then
+		and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(100420036,1)) then
 		Duel.BreakEffect()
-		g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100420036.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,code)
-		if #g>0 then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
-		end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local sg2=g2:Select(tp,1,1,nil)
+		Duel.SendtoHand(sg2,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,sg2)
 	end
 end
