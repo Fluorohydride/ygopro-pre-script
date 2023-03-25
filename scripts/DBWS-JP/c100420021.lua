@@ -1,4 +1,4 @@
---征服斗魂 龙帝 瓦利乌斯
+--VS 龍帝ヴァリウス
 --scripted by JoyJ
 function c100420021.initial_effect(c)
 	--return and spsummon
@@ -38,7 +38,7 @@ function c100420021.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100420021.spfilter(c)
-	return c:IsSetCard(0x297) and c:IsFaceup() and c:IsAbleToHand() and not c:IsRace(RACE_DRAGON)
+	return c:IsSetCard(0x195) and c:IsFaceup() and c:IsAbleToHand() and not c:IsRace(RACE_DRAGON)
 		and Duel.GetMZoneCount(tp,c,tp)>0
 end
 function c100420021.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

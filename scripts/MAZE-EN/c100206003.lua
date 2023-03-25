@@ -1,4 +1,4 @@
---Gate Guardian Combined
+--Gate Guardians Combined
 --scripted by JoyJ
 function c100206003.initial_effect(c)
 	--fusion material

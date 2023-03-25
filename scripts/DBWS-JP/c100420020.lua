@@ -1,4 +1,4 @@
---征服斗魂 普鲁同HG
+--VS プルトンHG
 --scripted by JoyJ
 function c100420020.initial_effect(c)
 	--spsummon
@@ -39,7 +39,7 @@ function c100420020.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100420020.spcfilter(c)
-	return c:GetSequence()<5 or (c:IsSetCard(0x297) and c:IsFaceup())
+	return c:GetSequence()<5 or (c:IsSetCard(0x195) and c:IsFaceup())
 end
 function c100420020.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(c100420020.spcfilter,tp,LOCATION_MZONE,0,1,nil)

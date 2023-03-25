@@ -1,4 +1,4 @@
---斗神的虚像
+--闘神の虚像
 --scripted by JoyJ
 function c100420022.initial_effect(c)
 	--link summon
@@ -47,10 +47,10 @@ function c100420022.initial_effect(c)
 end
 
 function c100420022.matfilter(c,lc,sumtype,tp)
-	return c:IsLinkSetCard(0x297)
+	return c:IsLinkSetCard(0x195)
 end
 function c100420022.atkfilter(c)
-	return c:IsSetCard(0x297) and c:IsFaceup()
+	return c:IsSetCard(0x195) and c:IsFaceup()
 end
 function c100420022.atkcon(e)
 	return Duel.IsExistingMatchingCard(c100420022.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
@@ -65,7 +65,7 @@ function c100420022.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c100420022.spfilter(c,e,tp)
-	return c:IsSetCard(0x297) and c:IsCanBeSpecialSummoned(e,0,tp,tp,false,false)
+	return c:IsSetCard(0x195) and c:IsCanBeSpecialSummoned(e,0,tp,tp,false,false)
 end
 function c100420022.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,4 +1,4 @@
---征服斗魂 三一爆发
+--VS トリニティ・バースト
 --scripted by JoyJ
 function c100420026.initial_effect(c)
 	--Activate
@@ -13,11 +13,11 @@ function c100420026.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100420026.spfilter(c,e,tp,attr)
-	return c:IsSetCard(0x297) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x195) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not c:IsAttribute(attr)
 end
 function c100420026.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x297) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x195) and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(c100420026.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetAttribute())
 end
 function c100420026.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

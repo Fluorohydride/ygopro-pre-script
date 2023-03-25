@@ -1,4 +1,4 @@
---这是菜单
+--Voici la Carte～メニューはこちら～
 --scripted by JoyJ
 function c100420036.initial_effect(c)
 	--Activate

@@ -1,4 +1,4 @@
---征服斗魂 重型电子人
+--VS ヘヴィ・ボーガー
 --scripted by JoyJ
 function c100420018.initial_effect(c)
 	--return and spsummon
@@ -39,7 +39,7 @@ function c100420018.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100420018.spfilter(c,tp)
-	return c:IsSetCard(0x297) and c:IsFaceup() and c:IsAbleToHand() and not c:IsRace(RACE_MACHINE)
+	return c:IsSetCard(0x195) and c:IsFaceup() and c:IsAbleToHand() and not c:IsRace(RACE_MACHINE)
 		and Duel.GetMZoneCount(tp,c,tp)>0
 end
 function c100420018.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

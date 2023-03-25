@@ -1,4 +1,4 @@
---Labyrinth heavy tank
+--Labyrinth Heavy Tank
 --scripted by JoyJ
 function c100206001.initial_effect(c)
 	aux.AddCodeList(c,25955164,62340868,98434877)
@@ -46,7 +46,7 @@ function c100206001.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(c100206001.tffilter,tp,LOCATION_DECK+LOCATION_REMOVED+LOCATION_HAND,0,1,nil) end
 end
 function c100206001.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x296)
+	return c:IsFaceup() and c:IsSetCard(0x193)
 end
 function c100206001.tfop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end

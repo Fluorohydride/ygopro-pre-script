@@ -1,4 +1,4 @@
---征服斗魂 螺禅
+--VS ラゼン
 --scripted by JoyJ
 function c100420016.initial_effect(c)
 	--search
@@ -40,7 +40,7 @@ function c100420016.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100420016.thfilter(c)
-	return c:IsSetCard(0x297) and c:IsType(TYPE_MONSTER) and not c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
+	return c:IsSetCard(0x195) and c:IsType(TYPE_MONSTER) and not c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
 function c100420016.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -1,4 +1,4 @@
---征服斗魂 螺旋流辻风
+--VS 螺旋流辻風
 --scripted by JoyJ
 function c100420024.initial_effect(c)
 	--Activate
@@ -14,7 +14,7 @@ function c100420024.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100420024.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x297) and c:IsCanChangePosition()
+	return c:IsFaceup() and c:IsSetCard(0x195) and c:IsCanChangePosition()
 end
 function c100420024.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100420024.filter1(chkc) end
@@ -24,7 +24,7 @@ function c100420024.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
 function c100420024.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x297)
+	return c:IsFaceup() and c:IsSetCard(0x195)
 end
 function c100420024.filter3(c)
 	return c:IsFaceup() and c:IsCanTurnSet()

@@ -1,4 +1,4 @@
---Shadow ghoul of the labyrinth
+--Shadow Ghoul of the Labyrinth
 --scripted by JoyJ
 function c100206002.initial_effect(c)
 	--search
@@ -31,7 +31,7 @@ function c100206002.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function c100206002.thfilter(c)
-	return c:IsSetCard(0x296) and c:IsAbleToHand()
+	return c:IsSetCard(0x193) and c:IsAbleToHand()
 end
 function c100206002.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100206002.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -44,7 +44,7 @@ function c100206002.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100206002.descfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x296)
+	return c:IsFaceup() and c:IsSetCard(0x193)
 end
 function c100206002.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()

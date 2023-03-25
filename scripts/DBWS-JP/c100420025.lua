@@ -1,4 +1,4 @@
---征服斗魂 继续
+--VS コンティニュー
 --scripted by JoyJ
 function c100420025.initial_effect(c)
 	--activate
@@ -18,7 +18,7 @@ function c100420025.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,500)
 end
 function c100420025.filter(c,e,tp)
-	return c:IsSetCard(0x297) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x195) and c:IsType(TYPE_MONSTER)
 		and (c:IsAbleToHand() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function c100420025.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

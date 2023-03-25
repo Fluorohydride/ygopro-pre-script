@@ -1,4 +1,4 @@
---征服斗魂 潘特拉
+--VS パンテラ
 --scripted by JoyJ
 function c100420017.initial_effect(c)
 	--spsummon

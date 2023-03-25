@@ -1,6 +1,4 @@
---征服斗魂 龙帝之枪
---这个卡名的卡在1回合只能发动1张。
---①：自己场上有「征服斗魂」怪兽存在，自己场上的卡为对象的怪兽的效果·魔法·陷阱卡由对方发动时才能发动。那个发动无效并破坏。那之后，可以选自己场上1只「征服斗魂」怪兽给与对方那个攻击力数值的伤害。
+--VS 龍帝ノ槍
 function c100420027.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -13,7 +11,7 @@ function c100420027.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100420027.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x297)
+	return c:IsFaceup() and c:IsSetCard(0x195)
 end
 function c100420027.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end

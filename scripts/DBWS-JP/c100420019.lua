@@ -1,4 +1,4 @@
---征服斗魂 狂爱博士
+--VS Dr.マッドラヴ
 --scripted by JoyJ
 function c100420019.initial_effect(c)
 	--search
@@ -41,7 +41,7 @@ function c100420019.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100420019.thfilter(c)
-	return c:IsSetCard(0x297) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x195) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100420019.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
