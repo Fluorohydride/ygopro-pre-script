@@ -1,33 +1,33 @@
---燃烧龙
+--バーニング・ドラゴン
 --Script by 奥克斯
 function c100200231.initial_effect(c)
 	--special summon
-	local e0=Effect.CreateEffect(c)  
-	e0:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e0:SetType(EFFECT_TYPE_IGNITION)
-	e0:SetRange(LOCATION_HAND)
-	e0:SetCountLimit(1,100200231)
-	e0:SetCondition(c100200231.spcon)
-	e0:SetTarget(c100200231.sptg)
-	e0:SetOperation(c100200231.spop)
-	c:RegisterEffect(e0)   
+	local e1=Effect.CreateEffect(c)  
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetCountLimit(1,100200231)
+	e1:SetCondition(c100200231.spcon)
+	e1:SetTarget(c100200231.sptg)
+	e1:SetOperation(c100200231.spop)
+	c:RegisterEffect(e1)   
 	--destroy
-	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
-	e1:SetCountLimit(1,100200231+100)
-	e1:SetCost(c100200231.descost)
-	e1:SetTarget(c100200231.destg)
-	e1:SetOperation(c100200231.desop)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_DESTROY)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_SUMMON_SUCCESS)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCountLimit(1,100200231+100)
+	e2:SetCost(c100200231.descost)
+	e2:SetTarget(c100200231.destg)
+	e2:SetOperation(c100200231.desop)
 	c:RegisterEffect(e2)
+	local e3=e2:Clone()
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e3)
 end
-function c100200231.spcon(e)
-	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)>=2
+function c100200231.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=2
 end
 function c100200231.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -44,7 +44,7 @@ function c100200231.costfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
 end
 function c100200231.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100200231.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100200231.costfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,c100200231.costfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c100200231.desfilter(c)

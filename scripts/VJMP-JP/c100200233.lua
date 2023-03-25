@@ -1,4 +1,4 @@
---蔷薇蝴蝶
+--ローズ・パピヨン
 --Script by 奥克斯
 function c100200233.initial_effect(c)
 	--extra summon
@@ -18,6 +18,9 @@ function c100200233.initial_effect(c)
 	e2:SetCondition(c100200233.dircon)
 	c:RegisterEffect(e2)
 end
+function c100200233.cfilter(c)
+	return c:IsFaceup() and c:IsRace(RACE_INSECT)
+end
 function c100200233.dircon(e)
-	return Duel.IsExistingMatchingCard(aux.AND(Card.IsFaceup,Card.IsRace),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler(),RACE_INSECT)
+	return Duel.IsExistingMatchingCard(c100200233.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
