@@ -31,7 +31,7 @@ function c100420024.filter3(c)
 end
 function c100420024.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToChain(0) and tc:IsLocation(LOCATION_MZONE)
+	if tc:IsRelateToChain() and tc:IsLocation(LOCATION_MZONE)
 		and Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0 then
 		local g=Duel.GetMatchingGroup(c100420024.filter2,tp,LOCATION_MZONE,0,nil)
 		local num=g:GetClassCount(Card.GetCode)

@@ -57,7 +57,7 @@ end
 function c100420018.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToChain(0) and Duel.SendtoHand(tc,nil,REASON_EFFECT) and c:IsRelateToChain(0) then
+	if tc:IsRelateToChain() and Duel.SendtoHand(tc,nil,REASON_EFFECT) and c:IsRelateToChain() then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

@@ -52,7 +52,7 @@ function c100420017.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100420017.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToChain(0) then
+	if c:IsRelateToChain() then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
@@ -73,7 +73,7 @@ function c100420017.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100420017.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToChain(0) then return end
+	if not c:IsRelateToChain() then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -102,7 +102,7 @@ function c100420017.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100420017.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToChain(0) then return end
+	if not c:IsRelateToChain() then return end
 	local g=c:GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_SZONE)
 	Duel.Destroy(g,REASON_EFFECT)
 end

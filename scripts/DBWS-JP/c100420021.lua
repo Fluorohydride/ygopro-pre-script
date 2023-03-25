@@ -56,7 +56,7 @@ end
 function c100420021.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToChain(0) and Duel.SendtoHand(tc,nil,REASON_EFFECT) and c:IsRelateToChain(0) then
+	if tc:IsRelateToChain() and Duel.SendtoHand(tc,nil,REASON_EFFECT) and c:IsRelateToChain() then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
@@ -77,7 +77,7 @@ function c100420021.imtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100420021.imop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToChain(0) then return end
+	if not c:IsRelateToChain() then return end
 	--immune
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -111,7 +111,7 @@ function c100420021.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100420021.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not e:GetHandler():IsRelateToChain(0) then c=nil end
+	if not e:GetHandler():IsRelateToChain() then c=nil end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)
 	Duel.Destroy(g,REASON_EFFECT)
