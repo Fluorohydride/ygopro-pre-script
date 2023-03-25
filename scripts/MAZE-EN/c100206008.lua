@@ -4,6 +4,7 @@ function c100206008.initial_effect(c)
 	aux.AddCodeList(c,25955164,62340868,98434877)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(100206008,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -15,7 +16,7 @@ function c100206008.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100206008,2))
+	e2:SetDescription(aux.Stringid(100206008,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
@@ -40,12 +41,12 @@ function c100206008.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100206008.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToChain(0) then
+	if tc:IsRelateToChain() then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
 function c100206008.thfilter(c)
-	return c:IsCode(25955164,62340868,98434877) and c:IsAbleToHand()
+	return c:IsFaceupEx() and c:IsCode(25955164,62340868,98434877) and c:IsAbleToHand()
 end
 function c100206008.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100206008.thfilter,tp,LOCATION_DECK+LOCATION_REMOVED,0,1,nil) end

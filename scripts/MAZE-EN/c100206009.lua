@@ -27,8 +27,7 @@ function c100206009.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100206009.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
-		and Duel.GetLP(tp)<Duel.GetLP(1-tp)
+	return aux.dscon() and Duel.GetLP(tp)<Duel.GetLP(1-tp)
 end
 function c100206009.filter(c)
 	return c:IsOriginalSetCard(0x1052) and c:IsFaceup()
@@ -43,6 +42,7 @@ function c100206009.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,math.ceil(Duel.GetLP(1-tp)/2))
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		Duel.BreakEffect()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -52,7 +52,7 @@ function c100206009.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100206009.thfilter(c)
-	return c:IsCode(25955164,62340868,98434877) and c:IsAbleToHand()
+	return c:IsFaceupEx() and c:IsCode(25955164,62340868,98434877) and c:IsAbleToHand()
 end
 function c100206009.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100206009.thfilter,tp,LOCATION_DECK+LOCATION_REMOVED,0,1,nil) end

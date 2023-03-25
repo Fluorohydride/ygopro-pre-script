@@ -39,19 +39,20 @@ function c100206007.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100206007.target(e,c)
-	return c:IsStatus(STATUS_SUMMON_TURN+STATUS_FLIP_SUMMON_TURN+STATUS_SPSUMMON_TURN) and not c:IsLevelAbove(5)
+	return c:IsStatus(STATUS_SUMMON_TURN+STATUS_FLIP_SUMMON_TURN+STATUS_SPSUMMON_TURN) and c:GetOriginalLevel()<5
 end
-function c100206007.tffilter(c)
-	return c:IsCode(25955164,62340868,98434877) and not c:IsForbidden()
+function c100206007.tffilter(c,tp)
+	return c:IsFaceupEx() and c:IsCode(25955164,62340868,98434877)
+		and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c100206007.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c100206007.tffilter,tp,LOCATION_DECK+LOCATION_REMOVED+LOCATION_HAND,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c100206007.tffilter,tp,LOCATION_DECK+LOCATION_REMOVED+LOCATION_HAND,0,1,nil,tp) end
 end
 function c100206007.tfop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local g=Duel.SelectMatchingCard(tp,c100206007.tffilter,tp,LOCATION_DECK+LOCATION_REMOVED+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100206007.tffilter,tp,LOCATION_DECK+LOCATION_REMOVED+LOCATION_HAND,0,1,1,nil,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -78,7 +79,7 @@ function c100206007.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100206007.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToChain(0) then
+	if tc:IsRelateToChain() then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

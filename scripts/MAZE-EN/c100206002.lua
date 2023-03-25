@@ -38,8 +38,9 @@ function c100206002.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100206002.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tg=Duel.SelectMatchingCard(tp,c100206002.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if tg and Duel.SendtoHand(tg,nil,REASON_EFFECT)>0 then
+	if #tg>0 and Duel.SendtoHand(tg,nil,REASON_EFFECT)>0 then
 		Duel.ConfirmCards(1-tp,tg)
 	end
 end
@@ -47,9 +48,8 @@ function c100206002.descfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x193)
 end
 function c100206002.descon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttacker()
-	if not tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-	if not tc or tc:IsControler(tp) then return false end
+	local tc=Duel.GetBattleMonster(1-tp)
+	if not tc then return false end
 	e:SetLabelObject(tc)
 	return Duel.IsExistingMatchingCard(c100206002.descfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end

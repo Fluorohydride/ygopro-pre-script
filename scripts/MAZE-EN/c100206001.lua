@@ -19,8 +19,8 @@ function c100206001.initial_effect(c)
 	--to field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100206001,1))
-	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCategory(CATEGORY_DESTROY)
+	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCountLimit(1,100206001)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTarget(c100206001.tftg)
@@ -38,12 +38,13 @@ function c100206001.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
-function c100206001.tffilter(c)
-	return c:IsCode(25955164,62340868,98434877) and not c:IsForbidden()
+function c100206001.tffilter(c,tp)
+	return c:IsFaceupEx() and c:IsCode(25955164,62340868,98434877)
+		and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c100206001.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c100206001.tffilter,tp,LOCATION_DECK+LOCATION_REMOVED+LOCATION_HAND,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c100206001.tffilter,tp,LOCATION_DECK+LOCATION_REMOVED+LOCATION_HAND,0,1,nil,tp) end
 end
 function c100206001.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x193)
@@ -51,7 +52,7 @@ end
 function c100206001.tfop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local g=Duel.SelectMatchingCard(tp,c100206001.tffilter,tp,LOCATION_DECK+LOCATION_REMOVED+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100206001.tffilter,tp,LOCATION_DECK+LOCATION_REMOVED+LOCATION_HAND,0,1,1,nil,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -62,11 +63,13 @@ function c100206001.tfop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 		tc:RegisterEffect(e1)
 		Duel.BreakEffect()
-		if #(Duel.GetFieldGroup(tp,0,LOCATION_MZONE))>0 and Duel.IsExistingMatchingCard(c100206001.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
+		if Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+			and Duel.IsExistingMatchingCard(c100206001.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(100206001,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
-			Duel.Destroy(g,REASON_EFFECT)
+			local tg=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
+			Duel.HintSelection(tg)
+			Duel.Destroy(tg,REASON_EFFECT)
 		end
 	end
 end
