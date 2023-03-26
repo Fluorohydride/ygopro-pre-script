@@ -101,9 +101,9 @@ function c100420018.dmgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterFlagEffect(tp,100420018,RESET_CHAIN,0,1)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(1500)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1500)
 end
-function c100420018.damop(e,tp,eg,ep,ev,re,r,rp)
+function c100420018.dmgop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
