@@ -2,9 +2,10 @@
 function c100420027.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
+	e1:SetCountLimit(1,100420027+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c100420027.condition)
 	e1:SetTarget(c100420027.target)
 	e1:SetOperation(c100420027.activate)

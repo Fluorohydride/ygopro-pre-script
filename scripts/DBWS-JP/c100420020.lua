@@ -9,6 +9,7 @@ function c100420020.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,100420020)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCondition(c100420020.spcon)
 	e1:SetTarget(c100420020.sptg)
 	e1:SetOperation(c100420020.spop)
@@ -19,8 +20,11 @@ function c100420020.initial_effect(c)
 	e2:SetCategory(CATEGORY_DEFCHANGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCountLimit(1,100420020+100)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,100420020+100)
+	e2:SetHintTiming(TIMING_DAMAGE_STEP)
+	e2:SetCondition(aux.dscon)
 	e2:SetCost(c100420020.defcost)
 	e2:SetTarget(c100420020.deftg)
 	e2:SetOperation(c100420020.defop)
@@ -31,26 +35,34 @@ function c100420020.initial_effect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetCountLimit(1,100420020+100)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1,100420020+100)
+	e3:SetHintTiming(TIMING_DAMAGE_STEP)
+	e3:SetCondition(aux.dscon)
 	e3:SetCost(c100420020.atkcost)
 	e3:SetTarget(c100420020.atktg)
 	e3:SetOperation(c100420020.atkop)
 	c:RegisterEffect(e3)
 end
-function c100420020.spcfilter(c)
-	return c:GetSequence()<5 or (c:IsSetCard(0x195) and c:IsFaceup())
+function c100420020.spcfilter1(c)
+	return c:GetSequence()<5
+end
+function c100420020.spcfilter2(c)
+	return c:GetSequence()<5 and c:IsSetCard(0x195) and c:IsFaceup()
 end
 function c100420020.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c100420020.spcfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.GetTurnPlayer()==1-tp
+	if Duel.GetTurnPlayer()~=1-tp then return false end
+	local ct1=Duel.GetMatchingGroupCount(c100420020.spcfilter1,tp,LOCATION_MZONE,0,nil)
+	local ct2=Duel.GetMatchingGroupCount(c100420020.spcfilter2,tp,LOCATION_MZONE,0,nil)
+	return ct1==0 or ct1==ct2
 end
 function c100420020.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and c:GetFlagEffect(100420020)==0 end
-	c:RegisterFlagEffect(100420020,RESET_CHAIN,0,1)
+		and Duel.GetFlagEffect(tp,100420020)==0 end
+	Duel.RegisterFlagEffect(tp,100420020,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c100420020.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -70,9 +82,8 @@ function c100420020.defcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420020.deftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(100420020)==0 end
-	c:RegisterFlagEffect(100420020,RESET_CHAIN,0,1)
+	if chk==0 then return Duel.GetFlagEffect(tp,100420020)==0 end
+	Duel.RegisterFlagEffect(tp,100420020,RESET_CHAIN,0,1)
 end
 function c100420020.defop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -96,9 +107,8 @@ function c100420020.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420020.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(100420020)==0 end
-	c:RegisterFlagEffect(100420020,RESET_CHAIN,0,1)
+	if chk==0 then return Duel.GetFlagEffect(tp,100420020)==0 end
+	Duel.RegisterFlagEffect(tp,100420020,RESET_CHAIN,0,1)
 end
 function c100420020.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -21,8 +21,9 @@ function c100420019.initial_effect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetCountLimit(1,100420019+100)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1,100420019+100)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e3:SetCost(c100420019.adcost)
 	e3:SetTarget(c100420019.adtg)
 	e3:SetOperation(c100420019.adop)
@@ -33,8 +34,9 @@ function c100420019.initial_effect(c)
 	e4:SetCategory(CATEGORY_TOHAND)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
-	e4:SetCountLimit(1,100420019+100)
 	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1,100420019+100)
+	e4:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e4:SetCost(c100420019.rthcost)
 	e4:SetTarget(c100420019.rthtg)
 	e4:SetOperation(c100420019.rthop)
@@ -44,10 +46,9 @@ function c100420019.thfilter(c)
 	return c:IsSetCard(0x195) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c100420019.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c100420019.thfilter,tp,LOCATION_DECK,0,1,nil)
-		and c:GetFlagEffect(100420019)==0 end
-	c:RegisterFlagEffect(100420019,RESET_CHAIN,0,1)
+		and Duel.GetFlagEffect(tp,100420019)==0 end
+	Duel.RegisterFlagEffect(tp,100420019,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100420019.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -69,10 +70,9 @@ function c100420019.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420019.adtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(100420019)==0
-		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
-	c:RegisterFlagEffect(100420019,RESET_CHAIN,0,1)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.GetFlagEffect(tp,100420019)==0 end
+	Duel.RegisterFlagEffect(tp,100420019,RESET_CHAIN,0,1)
 end
 function c100420019.adop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -81,6 +81,7 @@ function c100420019.adop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetValue(-500)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc:RegisterEffect(e1)
@@ -104,9 +105,9 @@ function c100420019.rthtgfilter(c)
 end
 function c100420019.rthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(100420019)==0
-		and Duel.IsExistingMatchingCard(c100420019.rthtgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	c:RegisterFlagEffect(100420019,RESET_CHAIN,0,1)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100420019.rthtgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		and Duel.GetFlagEffect(tp,100420019)==0 end
+	Duel.RegisterFlagEffect(tp,100420019,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,PLAYER_ALL,LOCATION_MZONE)
 end
 function c100420019.rthop(e,tp,eg,ep,ev,re,r,rp)

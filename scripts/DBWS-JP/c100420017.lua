@@ -17,8 +17,8 @@ function c100420017.initial_effect(c)
 	e2:SetDescription(aux.Stringid(100420017,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCountLimit(1,100420017+100)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,100420017+100)
 	e2:SetCost(c100420017.indescost)
 	e2:SetTarget(c100420017.indestg)
 	e2:SetOperation(c100420017.indesop)
@@ -29,8 +29,9 @@ function c100420017.initial_effect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetCountLimit(1,100420017+100)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1,100420017+100)
+	e3:SetHintTiming(0,TIMING_EQUIP+TIMING_END_PHASE)
 	e3:SetCost(c100420017.descost)
 	e3:SetTarget(c100420017.destg)
 	e3:SetOperation(c100420017.desop)
@@ -46,8 +47,8 @@ function c100420017.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and c:GetFlagEffect(100420017)==0 end
-	c:RegisterFlagEffect(100420017,RESET_CHAIN,0,1)
+		and Duel.GetFlagEffect(tp,100420017)==0 end
+	Duel.RegisterFlagEffect(tp,100420017,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c100420017.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -67,9 +68,8 @@ function c100420017.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c100420017.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(100420017)==0 end
-	c:RegisterFlagEffect(100420017,RESET_CHAIN,0,1)
+	if chk==0 then return Duel.GetFlagEffect(tp,100420017)==0 end
+	Duel.RegisterFlagEffect(tp,100420017,RESET_CHAIN,0,1)
 end
 function c100420017.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -95,14 +95,14 @@ function c100420017.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100420017.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=c:GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_SZONE)
-	if chk==0 then return #g>0 and c:GetFlagEffect(100420017)==0 end
-	c:RegisterFlagEffect(100420017,RESET_CHAIN,0,1)
+	local g=c:GetColumnGroup():Filter(Card.IsType,nil,TYPE_SPELL+TYPE_TRAP)
+	if chk==0 then return #g>0 and Duel.GetFlagEffect(tp,100420017)==0 end
+	Duel.RegisterFlagEffect(tp,100420017,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function c100420017.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToChain() then return end
-	local g=c:GetColumnGroup():Filter(Card.IsLocation,nil,LOCATION_SZONE)
+	local g=c:GetColumnGroup():Filter(Card.IsType,nil,TYPE_SPELL+TYPE_TRAP)
 	Duel.Destroy(g,REASON_EFFECT)
 end
