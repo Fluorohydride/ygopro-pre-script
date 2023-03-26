@@ -66,11 +66,12 @@ function c100420022.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c100420022.spfilter(c,e,tp)
-	return c:IsSetCard(0x195) and c:IsCanBeSpecialSummoned(e,0,tp,tp,false,false)
+	return c:IsSetCard(0x195) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100420022.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100420022.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c100420022.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -85,6 +86,7 @@ function c100420022.thfilter(c)
 end
 function c100420022.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100420022.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function c100420022.thop(e,tp,eg,ep,ev,re,r,rp)
