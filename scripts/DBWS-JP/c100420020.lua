@@ -93,7 +93,7 @@ function c100420020.defop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_DEFENSE)
 	e1:SetValue(3000)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	tc:RegisterEffect(e1)
+	c:RegisterEffect(e1)
 end
 function c100420020.atkcfilter(c)
 	return c:IsAttribute(ATTRIBUTE_EARTH+ATTRIBUTE_DARK) and not c:IsPublic()
