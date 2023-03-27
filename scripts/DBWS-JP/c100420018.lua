@@ -11,6 +11,7 @@ function c100420018.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,100420018)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetCondition(c100420018.spcon)
 	e1:SetTarget(c100420018.sptg)
 	e1:SetOperation(c100420018.spop)
 	c:RegisterEffect(e1)
@@ -40,6 +41,9 @@ function c100420018.initial_effect(c)
 	e3:SetTarget(c100420018.dmgtg)
 	e3:SetOperation(c100420018.dmgop)
 	c:RegisterEffect(e3)
+end
+function c100420018.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c100420018.spfilter(c,tp)
 	return c:IsSetCard(0x195) and c:IsFaceup() and c:IsAbleToHand() and not c:IsRace(RACE_MACHINE)

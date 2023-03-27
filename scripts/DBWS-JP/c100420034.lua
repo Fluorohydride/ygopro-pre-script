@@ -53,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
 	if e:GetLabel()>0 and #rg>0 then
 		Duel.BreakEffect()
-		Duel.Release(g,REASON_EFFECT)
+		Duel.Release(rg,REASON_EFFECT)
 	end
 end
 function s.relfilter(c)

@@ -26,7 +26,7 @@ function c100420001.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100420001.cfilter(c)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsType(TYPE_TOKEN)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function c100420001.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c100420001.cfilter,1,nil)
@@ -76,5 +76,5 @@ function c100420001.dspop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 end
 function c100420001.splimit(e,c)
-	return not c:IsRace(RACE_DRAGON+RACE_DINOSAUR+RACE_SEASERPENT+RACE_WYRM)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(RACE_DRAGON+RACE_DINOSAUR+RACE_SEASERPENT+RACE_WYRM)
 end
