@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetCondition(aux.TRUE)
 	c:RegisterEffect(e3)
 end
+SUMMON_VALUE_NOUVELLEZ=0x8000
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
@@ -72,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Release(g,REASON_EFFECT)~=2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
-	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)>0 then
-		tc:RegisterFlagEffect(100420029,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(100420029,3))
+	if tc then
+		Duel.SpecialSummon(tc,SUMMON_VALUE_NOUVELLEZ,tp,tp,true,false,POS_FACEUP)
 	end
 end

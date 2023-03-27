@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.relop)
 	c:RegisterEffect(e2)
 end
+SUMMON_VALUE_NOUVELLEZ=0x8000
 function s.negfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x196) and c:GetType()&0x81==0x81
 end
@@ -40,13 +41,13 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
-function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x196) and c:GetType()&0x81==0x81 and c:GetFlagEffect(100420029)>0
+function s.descfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x196) and c:GetType()&0x81==0x81 and c:GetSummonType()&SUMMON_VALUE_NOUVELLEZ>0
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) and rc:IsDestructable()
-		and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.Destroy(rc,REASON_EFFECT)
