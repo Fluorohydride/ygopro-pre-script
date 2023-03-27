@@ -68,7 +68,7 @@ function c100206007.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
 end
 function c100206007.desfilter(c)
-	return c:IsAttackBelow(1600) and c:IsFaceup()
+	return c:GetAttack()<1600 and c:IsFaceup()
 end
 function c100206007.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100206007.desfilter(chkc) end
