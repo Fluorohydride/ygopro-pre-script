@@ -10,7 +10,7 @@ function s.filter(c,e,tp)
 end
 function s.extraop(e,tp,eg,ep,ev,re,r,rp,tc,mat)
 	if not tc or not tc:IsCode(100420030) then return end
-	local g=Duel.GetMatchingGroup(Card.IsPosition,tp,0,LOCATION_MZONE,nil,POS_DEFENSE)
+	local g=Duel.GetMatchingGroup(Card.IsDefensePos,tp,0,LOCATION_MZONE,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.ChangePosition(g,POS_FACEUP_ATTACK)

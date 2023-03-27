@@ -58,7 +58,6 @@ function c100420004.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100420004.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		local c=e:GetHandler()
-		Duel.HintSelection(g)
 		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
 			and g:FilterCount(Card.IsLocation,nil,LOCATION_DECK)>0
 			and c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

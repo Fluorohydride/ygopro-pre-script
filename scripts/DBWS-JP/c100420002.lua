@@ -67,7 +67,7 @@ function c100420002.dspop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dg=g:SelectSubGroup(tp,aux.mzctcheck,false,2,2,tp)
 	Duel.HintSelection(dg)
-	if Duel.Destroy(dg,REASON_EFFECT)==0 or not c:IsRelateToEffect(e) then return false end
+	if Duel.Destroy(dg,REASON_EFFECT)==0 or not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c100420002.tgfilter(c)
@@ -101,7 +101,6 @@ function c100420002.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100420002.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		local c=e:GetHandler()
-		Duel.HintSelection(g)
 		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
 			and g:FilterCount(Card.IsLocation,nil,LOCATION_DECK)>0
 			and c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

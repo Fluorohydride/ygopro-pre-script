@@ -3,7 +3,9 @@
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,100420029)
-	aux.AddRitualProcGreater2(c,s.filter,LOCATION_HAND,nil,nil,false,s.extraop)
+	local e1=aux.AddRitualProcGreater2(c,s.filter,LOCATION_HAND,nil,nil,true,s.extraop)
+	e1:SetCategory(e1:GetCategory()|(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_GRAVE_ACTION))
+	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x196)

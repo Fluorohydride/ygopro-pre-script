@@ -5,9 +5,10 @@ function c100420025.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_ACTION+CATEGORY_GRAVE_SPSUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,100420025+EFFECT_COUNT_CODE_OATH)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e1:SetCountLimit(1,100420025+EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(c100420025.cost)
 	e1:SetTarget(c100420025.target)
 	e1:SetOperation(c100420025.activate)
@@ -35,7 +36,7 @@ function c100420025.activate(e,tp,eg,ep,ev,re,r,rp)
 		if not aux.NecroValleyFilter()(tc) then return end
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 			and (not tc:IsAbleToHand() or Duel.SelectOption(tp,1190,1152)==1) then
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		else
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		end

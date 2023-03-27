@@ -50,8 +50,7 @@ function c100420001.spfilter(c,e,tp)
 	return c:IsRace(RACE_DINOSAUR) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100420001.dsptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c100420001.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,e,tp)
-	if chk==0 then return #g>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100420001.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
@@ -67,11 +66,11 @@ function c100420001.dspop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c100420001.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,e,tp)
 	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dc=g:Select(tp,1,1,nil):GetFirst()
-	if Duel.Destroy(dc,REASON_EFFECT)==0 then return false end
+	local dg=g:Select(tp,1,1,nil)
+	if Duel.Destroy(dg,REASON_EFFECT)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,c100420001.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
-	if #sg==0 then return false end
+	if #sg==0 then return end
 	Duel.BreakEffect()
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 end

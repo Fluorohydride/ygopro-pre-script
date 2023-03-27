@@ -37,8 +37,11 @@ function c100420024.activate(e,tp,eg,ep,ev,re,r,rp)
 		local num=g:GetClassCount(Card.GetCode)
 		local g2=Duel.GetMatchingGroup(c100420024.filter3,tp,0,LOCATION_MZONE,nil)
 		if #g>0 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(100420024,1)) then
-			g2=g2:Select(tp,1,num,nil)
-			Duel.ChangePosition(g2,POS_FACEDOWN_DEFENSE)
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+			local sg=g2:Select(tp,1,num,nil)
+			Duel.HintSelection(sg)
+			Duel.ChangePosition(sg,POS_FACEDOWN_DEFENSE)
 		end
 	end
 end

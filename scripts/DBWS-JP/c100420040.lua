@@ -53,16 +53,16 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.relfilter(c,tp)
-	return c:IsCode(30243636) and c:IsSummonPlayer(tp)
+	return c:IsCode(30243636) and c:IsFaceup() and c:IsSummonPlayer(tp)
 end
 function s.relcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.relfilter,1,nil,tp)
 end
 function s.reltg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsReleasableByEffect,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.relop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsReleasable,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsReleasableByEffect,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		Duel.Release(g,REASON_EFFECT)
 	end

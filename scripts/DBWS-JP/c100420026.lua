@@ -5,9 +5,10 @@ function c100420026.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCountLimit(1,100420026+EFFECT_COUNT_CODE_OATH)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,100420026+EFFECT_COUNT_CODE_OATH)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetTarget(c100420026.target)
 	e1:SetOperation(c100420026.activate)
 	c:RegisterEffect(e1)
@@ -44,7 +45,6 @@ function c100420026.activate(e,tp,eg,ep,ev,re,r,rp)
 		local rg=tc:GetColumnGroup():Filter(Card.IsControler,nil,1-tp)
 		local fid=c:GetFieldID()
 		local sg=Group.CreateGroup()
-		sg:KeepAlive()
 		for sc in aux.Next(tg) do
 			if Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
 				local e1=Effect.CreateEffect(c)
@@ -64,6 +64,7 @@ function c100420026.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 		if #sg>0 then
+			sg:KeepAlive()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -77,6 +78,7 @@ function c100420026.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.SpecialSummonComplete()
 		if #rg>0 and Duel.SelectYesNo(tp,aux.Stringid(100420026,1)) then
+			Duel.BreakEffect()
 			Duel.SendtoHand(rg,nil,REASON_EFFECT)
 		end
 	end
