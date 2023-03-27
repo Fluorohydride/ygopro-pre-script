@@ -50,10 +50,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()&SUMMON_VALUE_NOUVELLEZ==0
+	return not e:GetHandler():IsSummonType(SUMMON_VALUE_NOUVELLEZ)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()&SUMMON_VALUE_NOUVELLEZ>0
+	return e:GetHandler():IsSummonType(SUMMON_VALUE_NOUVELLEZ)
 end
 function s.relfilter(c)
 	return c:IsReleasableByEffect() and c:IsAttackPos()
