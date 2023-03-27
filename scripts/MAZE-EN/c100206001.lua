@@ -62,10 +62,10 @@ function c100206001.tfop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 		e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 		tc:RegisterEffect(e1)
-		Duel.BreakEffect()
 		if Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 			and Duel.IsExistingMatchingCard(c100206001.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(100206001,2)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local tg=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
 			Duel.HintSelection(tg)

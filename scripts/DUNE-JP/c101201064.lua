@@ -16,24 +16,11 @@ end
 function s.costfilter(c)
 	return c:IsLevelAbove(0) and c:IsFaceupEx() and c:IsAbleToGraveAsCost()
 end
-function s.costgoal(g)
-	return g:GetSum(Card.GetLevel)==10
-end
-function s.gcheck(g)
-	return g:GetSum(Card.GetLevel)<=10
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
-	if chk==0 then
-		aux.GCheckAdditional=s.gcheck
-		local res=g:CheckSubGroup(s.costgoal,1,#g)
-		aux.GCheckAdditional=nil
-		return res
-	end
+	if chk==0 then return g:CheckWithSumEqual(Card.GetLevel,10,1,#g) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	aux.GCheckAdditional=s.gcheck
-	local sg=g:SelectSubGroup(tp,s.costgoal,false,1,#g)
-	aux.GCheckAdditional=nil
+	local sg=g:SelectWithSumEqual(tp,Card.GetLevel,10,1,#g)
 	Duel.SendtoGrave(sg,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

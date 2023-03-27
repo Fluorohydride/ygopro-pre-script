@@ -5,7 +5,7 @@ function c100206010.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100206010,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100206010)
@@ -52,6 +52,7 @@ function c100206010.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 				tg=g:Select(tp,1,1,nil)
 			end
+			Duel.HintSelection(tg)
 			Duel.Destroy(tg,REASON_EFFECT)
 		end
 	end

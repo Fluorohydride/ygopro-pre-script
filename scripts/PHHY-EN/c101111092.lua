@@ -9,7 +9,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetRange(LOCATION_SZONE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -29,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return eg:IsExists(s.dgfilter,1,nil,e,tp) and #sg>=3 end
 	local dg=eg
 	if #eg>1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		dg=eg:FilterSelect(tp,s.dgfilter,1,1,nil,e,tp)
 	end
 	Duel.SetTargetCard(dg)

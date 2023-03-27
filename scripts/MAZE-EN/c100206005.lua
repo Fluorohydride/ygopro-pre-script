@@ -49,13 +49,13 @@ end
 function c100206005.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
-function c100206005.spfilter(c,e,tp)
-	return c:IsCode(62340868,98434877) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function c100206005.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp
+end
+function c100206005.spfilter(c,e,tp)
+	return c:IsCode(62340868,98434877) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100206005.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

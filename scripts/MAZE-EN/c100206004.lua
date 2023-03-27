@@ -43,18 +43,19 @@ function c100206004.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100206004.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tg=Duel.SelectMatchingCard(tp,c100206004.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #tg>0 and Duel.SendtoHand(tg,nil,REASON_EFFECT)>0 then
 		Duel.ConfirmCards(1-tp,tg)
 	end
 end
-function c100206004.spfilter(c,e,tp)
-	return c:IsCode(25955164,62340868) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function c100206004.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp
+end
+function c100206004.spfilter(c,e,tp)
+	return c:IsCode(25955164,62340868) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100206004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -15,7 +15,7 @@ function c100206002.initial_effect(c)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_START)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,100206002+100)
