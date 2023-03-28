@@ -12,15 +12,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.tgfilter(c)
-	return c:IsFaceup() and c:IsLevelAbove(0)
+function s.tgfilter(c,e)
+	return c:IsFaceup() and c:IsLevelAbove(0) and c:IsCanBeEffectTarget(e)
 end
 function s.gcheck(sg,tp)
 	return sg:IsExists(Card.IsControler,1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
 	if chk==0 then return g:CheckSubGroup(s.gcheck,2,2,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	local sg=g:SelectSubGroup(tp,s.gcheck,false,2,2,tp)
@@ -62,5 +62,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(e,c)
-	return not c:IsRace(e:GetLabel())
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(e:GetLabel())
 end
