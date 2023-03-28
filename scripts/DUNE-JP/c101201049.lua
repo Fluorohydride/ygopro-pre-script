@@ -1,4 +1,4 @@
---破械神王 阎摩
+--破械神王ヤマ
 --Script by 奥克斯
 function c101201049.initial_effect(c)
 	--same effect send this card to grave and spsummon another card check
@@ -71,7 +71,7 @@ function c101201049.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c101201049.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,e:GetHandler(),e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,0,nil)
-		if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(101201020,1)) then
+		if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(101201049,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local deg=dg:Select(tp,1,1,nil)

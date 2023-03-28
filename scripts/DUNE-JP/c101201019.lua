@@ -1,4 +1,4 @@
---破械神 萨巴拉
+--破械神シャバラ
 --Script by 奥克斯
 function c101201019.initial_effect(c)
 	--special summon

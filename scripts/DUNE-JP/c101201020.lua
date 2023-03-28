@@ -1,4 +1,4 @@
---破械神 萨玛
+--破械神シュヤーマ
 --Script by 奥克斯
 function c101201020.initial_effect(c)
 	--destroy
