@@ -1,6 +1,7 @@
---coded by Lyris
+--ホイール・シンクロン
 --Wheel Synchron
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--nontuner
 	local e1=Effect.CreateEffect(c)
@@ -31,16 +32,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.lvop)
 	c:RegisterEffect(e3)
 end
---snip 1: edited from "Phantom King Hydride"
 function s.tnval(e,c)
 	return e:GetHandler():IsControler(c:GetControler())
 end
---end snip 1
 function s.filter(c)
 	return c:IsLevelBelow(4) and c:IsSummonable(true,nil)
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	--snip 2: edited from "Arrivalrivals"
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
@@ -51,7 +49,6 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.Summon(tp,tc,true,nil)
 	end
-	--end snip 2; snip 3: edited from "Assault Sentinel"
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -63,7 +60,6 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.splimit(e,c)
 	return not c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_EXTRA)
-	--end snip 3
 end
 function s.lvfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsLevelAbove(2)
@@ -75,7 +71,6 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.lvfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
-	--snip 4: edited from "Risebell the Star Adjuster"
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
@@ -93,5 +88,4 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(-lv)
 		tc:RegisterEffect(e1)
 	end
-	--end snip 4
 end
