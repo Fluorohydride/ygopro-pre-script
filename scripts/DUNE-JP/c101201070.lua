@@ -2,6 +2,7 @@
 -- Scripted by Yummy Catnip
 local s,id,o=GetID()
 function s.initial_effect(c)
+	aux.AddCodeList(c,56099748)
 	--Set 1 Spell/Trap that mentions "56099748" from your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -28,7 +29,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdoper)
 	c:RegisterEffect(e2)
 end
-s.listed_names={56099748}
 -- e1 Effect Code
 function s.sfilter(c)
 	return aux.IsCodeListed(c,56099748) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
