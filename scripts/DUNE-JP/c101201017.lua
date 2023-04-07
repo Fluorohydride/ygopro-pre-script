@@ -1,5 +1,5 @@
 --エヴォルド・フォリス
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -35,9 +35,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desrepop)
 	c:RegisterEffect(e4)
 end
-
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x304e) and c:IsCanBeSpecialSummoned(e,SUMMON_VALUE_EVOLTILE,tp,false,false,POS_FACEDOWN_DEFENSE) 
+	return c:IsSetCard(0x304e) and c:IsCanBeSpecialSummoned(e,SUMMON_VALUE_EVOLTILE,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -53,7 +52,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
 function s.setfilter(c)
 	return c:IsCode(5338223,24362891) and c:IsSSetable()
 end
@@ -67,7 +65,6 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,g)
 	end
 end
-
 function s.desrepfilter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsReason(REASON_BATTLE|REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end

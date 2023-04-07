@@ -1,5 +1,5 @@
 --魔頭砲グレンザウルス
-
+--Script by XGlitchy30
 local s,id = GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -67,7 +67,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetPreviousLocation()&LOCATION_MZONE==LOCATION_MZONE and c:IsSummonType(SUMMON_TYPE_XYZ)

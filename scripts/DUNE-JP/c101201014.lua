@@ -1,5 +1,5 @@
 --焔聖騎士－テュルパン
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -56,7 +56,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1,true)
 	end
 end
-
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_WARRIOR)
 end
@@ -93,7 +92,6 @@ end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-
 function s.tunerval(e,sc)
 	return sc:IsControler(e:GetHandlerPlayer())
 end

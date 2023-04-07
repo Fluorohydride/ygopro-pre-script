@@ -1,5 +1,5 @@
 --竜王キング・レックス
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--extra attack
@@ -41,7 +41,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	c:RegisterEffect(e1)
 end
-
 function s.condition(e)
 	return not e:GetHandler():IsStatus(STATUS_SUMMON_TURN|STATUS_FLIP_SUMMON_TURN|STATUS_SPSUMMON_TURN)
 end

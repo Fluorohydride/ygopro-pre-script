@@ -1,5 +1,5 @@
 --聖剣を巡る王姫アンジェリカ
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,77656797)
@@ -47,7 +47,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(e:GetHandler())
 end

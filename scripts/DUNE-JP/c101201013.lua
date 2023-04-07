@@ -1,5 +1,5 @@
 --焔聖騎士－リッチャルデット
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon as tuner
@@ -28,7 +28,6 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-
 function s.spfilter(c,e,tp,code)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsRace(RACE_WARRIOR) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and (not code or not c:IsCode(code))
@@ -60,7 +59,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 end
-
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp,id) end
 	if chk==0 then

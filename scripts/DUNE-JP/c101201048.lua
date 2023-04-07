@@ -1,5 +1,5 @@
 --シャルル大帝
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,77656797)
@@ -34,7 +34,6 @@ end
 function s.matfilter(c)
 	return c:IsLevel(9) and c:IsLinkCode(77656797) and c:GetEquipCount()>0
 end
-
 function s.copycon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
@@ -91,7 +90,6 @@ end
 function s.eqlimit(e,c)
 	return e:GetOwner()==c
 end
-
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL|TYPE_TRAP) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end

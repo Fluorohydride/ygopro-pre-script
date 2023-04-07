@@ -1,6 +1,6 @@
 --ジュラシック・パワー
-
-local s,id=GetID()
+--Script by XGlitchy30
+local s,id,o=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -44,7 +44,6 @@ end
 function s.nttg(e,c)
 	return c:IsLevelAbove(5) and c:IsRace(RACE_DINOSAUR)
 end
-
 function s.cfilter(c)
 	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToGraveAsCost() and (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup())
 end

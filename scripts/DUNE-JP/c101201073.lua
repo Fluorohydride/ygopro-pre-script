@@ -1,5 +1,5 @@
 --ネムレリア・ルーヴ
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -73,7 +73,6 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
 end
-
 function s.stattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
 	if chk==0 then

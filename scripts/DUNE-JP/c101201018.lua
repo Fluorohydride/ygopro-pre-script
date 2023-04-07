@@ -1,5 +1,5 @@
 --エヴォルダー・リオス
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--set
@@ -47,14 +47,12 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,g)
 	end
 end
-
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	if re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsAttribute(ATTRIBUTE_FIRE) then
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&(~(RESET_TOFIELD|RESET_TEMP_REMOVE)),0,1)
 	end
 end
-
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsSummonType(SUMMON_TYPE_NORMAL) then

@@ -1,5 +1,5 @@
 --シャルルの叙事詩
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,77656797)
@@ -94,7 +94,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function s.charlesfilter(c)
 	return c:IsFaceup() and c:IsCode(77656797)
 end

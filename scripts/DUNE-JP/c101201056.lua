@@ -1,6 +1,6 @@
 --『焔聖剣－アルマス』
-
-local s,id=GetID()
+--Script by XGlitchy30
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -55,7 +55,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Equip(tp,e:GetHandler(),tc)
 	end
 end
-
 function s.filter(c,ec)
 	return c:IsFaceup() and ec:CheckEquipTarget(c)
 end
@@ -90,7 +89,6 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_LOST_TARGET) and c:GetPreviousEquipTarget():IsLocation(LOCATION_GRAVE)

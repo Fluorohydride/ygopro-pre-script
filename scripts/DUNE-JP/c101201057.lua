@@ -1,6 +1,6 @@
 --大聖剣博物館
-
-local s,id=GetID()
+--Script by XGlitchy30
+local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,77656797)
 	local e1=Effect.CreateEffect(c)
@@ -44,7 +44,6 @@ end
 function s.atktg(e,c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsRace(RACE_WARRIOR)
 end
-
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1200) end
 	Duel.PayLPCost(tp,1200)
@@ -65,7 +64,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end

@@ -1,5 +1,5 @@
 --エヴォルカイザー・ラーズ
-
+--Script by XGlitchy30
 local s,id = GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -34,7 +34,6 @@ end
 function s.prval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer() and re:IsActiveType(TYPE_MONSTER)
 end
-
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp
 end

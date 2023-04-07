@@ -1,5 +1,5 @@
 --双頭竜キング・レックス
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -32,7 +32,6 @@ function s.spcon(e,c)
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0,nil)==0
 end
-
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR)
 end

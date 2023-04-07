@@ -1,6 +1,6 @@
 --超越進化薬β
-
-local s,id=GetID()
+--Script by XGlitchy30
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

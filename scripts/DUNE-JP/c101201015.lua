@@ -1,5 +1,5 @@
 --夢現の眠姫－ネムレリア・レアリゼ
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--gain atk
@@ -35,7 +35,6 @@ end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsFacedown,c:GetControler(),LOCATION_EXTRA,0,nil)*100
 end
-
 function s.filter(c,tp)
 	return Duel.GetMZoneCount(tp,c)>0 and c:IsAbleToDeck()
 end
@@ -58,7 +57,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function s.edfilter(c)
 	return c:IsCode(70155677) and c:GetType()&(TYPE_MONSTER|TYPE_PENDULUM)==TYPE_MONSTER|TYPE_PENDULUM and not c:IsForbidden()
 end

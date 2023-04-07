@@ -1,5 +1,5 @@
 --ベアルクティ－ポーラ＝スター
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -54,7 +54,6 @@ function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	local tg=g:SelectSubGroup(tp,s.fselect,false,2,2,tp,c)
 	Duel.SendtoGrave(tg,REASON_COST)
 end
-
 function s.checkrelrep(c,tp)
 	return c:IsHasEffect(16471775,tp) or c:IsHasEffect(89264428,tp)
 end

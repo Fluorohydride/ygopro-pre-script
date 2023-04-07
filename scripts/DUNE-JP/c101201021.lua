@@ -1,6 +1,6 @@
 --天極輝士－熊斗竜巧α
-
-local s,id=GetID()
+--Script by XGlitchy30
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--splimit
 	local e1=Effect.CreateEffect(c)
@@ -24,7 +24,6 @@ end
 function s.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS)
 end
-
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x163,0x154) and not c:IsCode(id)
 end

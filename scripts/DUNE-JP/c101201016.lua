@@ -1,5 +1,5 @@
 --ネムレリアの夢喰い－レヴェイユ
-
+--Script by XGlitchy30
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -67,7 +67,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function s.tgfilter(c)
 	return c:IsLevel(10) and c:IsRace(RACE_BEAST) and c:IsAbleToGraveAsCost() and (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup())
 end
