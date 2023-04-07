@@ -44,7 +44,7 @@ function c100428038.activate(e,tp,eg,ep,ev,re,r,rp)
 			and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)~=0 then
 			local c=e:GetHandler()
 			local g=Duel.GetMatchingGroup(c100428038.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,tc:GetOriginalCode())
-			if g:GetCount()>0 and c:IsRelateToEffect(e) and c:IsCanOverlay()
+			if g:GetCount()>0 and c:IsRelateToChain() and c:IsCanOverlay()
 				and Duel.SelectYesNo(tp,aux.Stringid(100428038,0)) then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

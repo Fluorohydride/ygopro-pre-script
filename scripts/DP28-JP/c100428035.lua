@@ -52,7 +52,7 @@ function c100428035.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100428035.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,2,2,REASON_EFFECT)>0 then
+	if c:IsRelateToChain() and c:RemoveOverlayCard(tp,2,2,REASON_EFFECT)>0 then
 		Duel.NegateSummon(eg)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
@@ -81,7 +81,7 @@ function c100428035.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0
 		and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) and tc:IsControler(1-tp) then
+		if tc:IsRelateToChain() and tc:IsControler(1-tp) then
 			Duel.Overlay(c,tc)
 		end
 	end
