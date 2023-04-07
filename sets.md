@@ -2,9 +2,6 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **March 9, 2023**: Maze of Memories (MAZE-EN) : `100206XXX`
-- **March 17, 2023**: The Valuable Book EX 3 promotional cards (VX03-JP) : `100205XXX`
-- **March 18, 2023**: Deck Build Pack: Wild Survivors (DBWS-JP) : `100420XXX`
 - **April 22, 2023**: DUELIST NEXUS (DUNE-JP) : `101201XXX`
 
 # Announced
@@ -115,6 +112,8 @@
 - Promotion Pack 2023 (23PR-JP) : `100298XXX`
 - Secret Utility Box (SUB1-JP) : `100294XXX`
 - Yu-Gi-Oh! OCG Structures Volume 6 promotional card (YO06-JP) : `100295XXX`
+- Maze of Memories (MAZE-EN) : `100206XXX`
+- The Valuable Book EX 3 promotional cards (VX03-JP) : `100205XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -167,6 +166,7 @@
 - Deck Build Pack: Grand Creators (DBGC-JP) : `100417XXX`
 - Deck Build Pack: Tactical Masters (DBTM-JP): `100418XXX`
 - Deck Build Pack: Amazing Defenders (DBAD-JP) : `100419XXX`
+- Deck Build Pack: Wild Survivors (DBWS-JP) : `100420XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
