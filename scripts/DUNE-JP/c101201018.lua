@@ -5,8 +5,8 @@ function s.initial_effect(c)
 	--set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetType(EFFECT_TYPE_SINGLE|EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY|EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.settg)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--check special summon method
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE|EFFECT_TYPE_CONTINUOUS)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetOperation(s.checkop)
@@ -50,7 +50,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	if re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsAttribute(ATTRIBUTE_FIRE) then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&(~(RESET_TOFIELD|RESET_TEMP_REMOVE)),0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD&(~(RESET_TOFIELD+RESET_TEMP_REMOVE)),0,1)
 	end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
@@ -64,14 +64,14 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsRace(RACE_REPTILE|RACE_DINOSAUR) and c:IsAbleToGrave()
+	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsRace(RACE_REPTILE+RACE_DINOSAUR) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c,race,lv)
-	return c:IsFaceup() and not c:IsType(TYPE_LINK|TYPE_XYZ) and (not c:IsRace(race) or not c:IsLevel(lv))
+	return c:IsFaceup() and not c:IsType(TYPE_LINK+TYPE_XYZ) and (not c:IsRace(race) or not c:IsLevel(lv))
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -94,13 +94,13 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 						e1:SetType(EFFECT_TYPE_SINGLE)
 						e1:SetCode(EFFECT_CHANGE_RACE)
 						e1:SetValue(race)
-						e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+						e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 						sc:RegisterEffect(e1)
 						local e2=Effect.CreateEffect(c)
 						e2:SetType(EFFECT_TYPE_SINGLE)
 						e2:SetCode(EFFECT_CHANGE_LEVEL)
 						e2:SetValue(lv)
-						e2:SetReset(RESET_EVENT|RESETS_STANDARD)
+						e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 						sc:RegisterEffect(e2)
 					end
 				end

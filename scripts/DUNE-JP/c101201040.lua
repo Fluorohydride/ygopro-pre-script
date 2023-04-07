@@ -8,9 +8,9 @@ function s.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SEARCH|CATEGORY_TOHAND)
-	e1:SetType(EFFECT_TYPE_SINGLE|EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY|EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.thtg)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	--send to GY and Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_TOGRAVE|CATEGORY_REMOVE|CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_BECOME_TARGET)
 	e2:SetRange(LOCATION_MZONE)
@@ -74,23 +74,23 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if c:IsRelateToEffect(e) then
 			local fid=c:GetFieldID()
-			if Duel.Remove(c,0,REASON_EFFECT|REASON_TEMPORARY)>0 then
+			if Duel.Remove(c,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
 				if c:IsLocation(LOCATION_REMOVED) then
-					c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1,fid)
+					c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 					local e1=Effect.CreateEffect(c)
-					e1:SetType(EFFECT_TYPE_FIELD|EFFECT_TYPE_CONTINUOUS)
-					e1:SetCode(EVENT_PHASE|PHASE_END)
+					e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+					e1:SetCode(EVENT_PHASE+PHASE_END)
 					e1:SetLabel(fid)
 					e1:SetLabelObject(c)
 					e1:SetCountLimit(1)
 					e1:SetCondition(s.retcon)
 					e1:SetOperation(s.retop)
-					e1:SetReset(RESET_PHASE|PHASE_END)
+					e1:SetReset(RESET_PHASE+PHASE_END)
 					Duel.RegisterEffect(e1,tp)
 				end
-				if Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+				if Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-					local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil,e,tp)
+					local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,e,tp)
 					if #sg>0 then
 						Duel.BreakEffect()
 						Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
