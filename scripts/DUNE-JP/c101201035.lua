@@ -40,7 +40,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 		or (tn==1-tp and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
 	--end snip 1
 end
-function s.filter()
+function s.filter(c)
 	return c:IsFaceup() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -48,7 +48,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToRemove() and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g-Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 --snip 3: edited from "Zefra Metaltron"
