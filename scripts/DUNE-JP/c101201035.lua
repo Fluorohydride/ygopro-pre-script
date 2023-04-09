@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--token
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid((id,1)))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_HAND)
@@ -51,13 +51,13 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g-Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	local g=Group.CreateGroup(tc,e:GetHandler())
 --snip 3: edited from "Zefra Metaltron"
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	local g=Group.CreateGroup(tc,c)
 	if not tc:IsRelateToEffect(e) or #g~=2 then return end
 	if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)~=0 and g:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then
 		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_REMOVED)
-		local c=e:GetHandler()
 		for tc in aux.Next(og) do
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
@@ -77,7 +77,11 @@ function s.retfilter(c)
 	return c:GetFlagEffect(id)~=0
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject():IsExists(s.retfilter,1,nil)
+	if not e:GetLabelObject():IsExists(s.retfilter,1,nil) then
+		e:GetLabelObject():DeleteGroup()
+		return false
+	end
+	return true
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject():Filter(s.retfilter,nil)
