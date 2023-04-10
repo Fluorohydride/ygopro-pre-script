@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.settg)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,id+o*100)
+	e3:SetCountLimit(1,id+o)
 	e3:SetCondition(s.tgcon)
 	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
@@ -50,21 +50,16 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	if re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsAttribute(ATTRIBUTE_FIRE) then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD&(~(RESET_TOFIELD+RESET_TEMP_REMOVE)),0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TEMP_REMOVE,0,1)
 	end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsSummonType(SUMMON_TYPE_NORMAL) then
-		return true
-	elseif c:IsSummonType(SUMMON_TYPE_SPECIAL) then
-		return c:GetFlagEffect(id)>0
-	else
-		return false
-	end
+	return c:IsSummonType(SUMMON_TYPE_NORMAL) or c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetFlagEffect(id)>0
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsRace(RACE_REPTILE+RACE_DINOSAUR) and c:IsAbleToGrave()
+	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsRace(RACE_REPTILE+RACE_DINOSAUR)
+		and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -85,24 +80,21 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 			if #g>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 				local sg=g:Select(tp,2,2,nil)
-				if #sg>0 then
-					local c=e:GetHandler()
-					Duel.HintSelection(sg)
-					Duel.BreakEffect()
-					for sc in aux.Next(sg) do
-						local e1=Effect.CreateEffect(c)
-						e1:SetType(EFFECT_TYPE_SINGLE)
-						e1:SetCode(EFFECT_CHANGE_RACE)
-						e1:SetValue(race)
-						e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-						sc:RegisterEffect(e1)
-						local e2=Effect.CreateEffect(c)
-						e2:SetType(EFFECT_TYPE_SINGLE)
-						e2:SetCode(EFFECT_CHANGE_LEVEL)
-						e2:SetValue(lv)
-						e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-						sc:RegisterEffect(e2)
-					end
+				local c=e:GetHandler()
+				Duel.HintSelection(sg)
+				Duel.BreakEffect()
+				for sc in aux.Next(sg) do
+					local e1=Effect.CreateEffect(c)
+					e1:SetType(EFFECT_TYPE_SINGLE)
+					e1:SetCode(EFFECT_CHANGE_RACE)
+					e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+					e1:SetValue(race)
+					e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+					sc:RegisterEffect(e1)
+					local e2=e1:Clone()
+					e2:SetCode(EFFECT_CHANGE_LEVEL)
+					e2:SetValue(lv)
+					sc:RegisterEffect(e2)
 				end
 			end
 		end

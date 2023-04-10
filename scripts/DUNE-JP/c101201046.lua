@@ -1,6 +1,6 @@
 --魔頭砲グレンザウルス
 --Script by XGlitchy30
-local s,id = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,nil,4,2)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.egfilter(c,tp)
-	if not c:IsPreviousControler(1-tp) then return false end
+	if not c:IsPreviousControler(1-tp) or not c:IsLocation(LOCATION_GRAVE) then return false end
 	local bc=c:GetReasonCard()
 	if not bc then return false end
 	if bc:IsRelateToBattle() then
@@ -41,7 +41,7 @@ function s.egfilter(c,tp)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:Filter(Card.IsLocation,nil,LOCATION_GRAVE):IsExists(s.egfilter,1,nil,tp)
+	return eg:IsExists(s.egfilter,1,nil,tp)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

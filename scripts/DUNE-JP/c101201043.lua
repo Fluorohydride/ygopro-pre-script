@@ -1,6 +1,6 @@
 --エヴォルカイザー・ラーズ
 --Script by XGlitchy30
-local s,id = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,nil,6,2)

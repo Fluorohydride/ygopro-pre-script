@@ -22,33 +22,36 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,id+o*100)
+	e2:SetCountLimit(1,id+o)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c,e,tp,ft)
+function s.cfilter0(c)
 	return c:IsSetCard(0x207a) and c:GetType()&(TYPE_SPELL+TYPE_EQUIP)==TYPE_SPELL+TYPE_EQUIP and not c:IsPublic()
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,c,ft)
+end
+function s.cfilter(c,e,tp,ft)
+	return s.cfilter0(c) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,c,ft)
 end
 function s.spfilter(c,e,tp,ec,ft)
 	if not c:IsSetCard(0x507a) or not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
 	if ec:IsAbleToGrave() then
 		return true
 	else
-		return ft>0 and tc:CheckEquipTarget(c) and tc:CheckUniqueOnField(tp) and not tc:IsForbidden()
+		return ft>0 and ec:CheckEquipTarget(c) and ec:CheckUniqueOnField(tp) and not ec:IsForbidden()
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local c=e:GetHandler()
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-		if e:IsHasType(EFFECT_TYPE_ACTIVATE) and (not c:IsLocation(LOCATION_SZONE) or c:GetSequence()>4) then
+		if e:IsHasType(EFFECT_TYPE_ACTIVATE) and not c:IsLocation(LOCATION_SZONE) then
 			ft=ft-1
 		end
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp,ft)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp,ft)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
@@ -59,15 +62,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		local tc=g:GetFirst()
 		Duel.ConfirmCards(1-tp,g)
+		Duel.ShuffleHand(tp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,tc,ft)
 		if #sg>0 and Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)>0 then
-			ft=Duel.GetLocationCount(tp,LOCATION_SZONE) --update ft
+			ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 			local sc=sg:GetFirst()
-			local b1=sc:IsFaceup() and sc:IsLocation(LOCATION_MZONE) and ft>0 and tc:CheckEquipTarget(sc) and tc:CheckUniqueOnField(tp) and not tc:IsForbidden()
+			local b1=sc:IsFaceup() and sc:IsLocation(LOCATION_MZONE) and ft>0
+				and tc:CheckEquipTarget(sc) and tc:CheckUniqueOnField(tp) and not tc:IsForbidden()
 			local b2=tc:IsAbleToGrave()
-			
 			local off=1
 			local ops={}
 			local opval={}
@@ -83,7 +87,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 			local op=Duel.SelectOption(tp,table.unpack(ops))+1
 			local sel=opval[op]
-			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,sel+2))
 			if sel==0 then
 				Duel.BreakEffect()
 				Duel.Equip(tp,tc,sc)
@@ -91,6 +94,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 				Duel.SendtoGrave(tc,REASON_EFFECT)
 			end
+		end
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+		g=Duel.SelectMatchingCard(tp,s.cfilter0,tp,LOCATION_HAND,0,1,1,nil)
+		if #g>0 then
+			Duel.ConfirmCards(1-tp,g)
+			Duel.ShuffleHand(tp)
 		end
 	end
 end
@@ -102,11 +112,9 @@ function s.eqfilter(c,tp)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.charlesfilter(chkc) end
-	if chk==0 then
-		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(s.charlesfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,tp)
-	end
+		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.charlesfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_HAND+LOCATION_DECK)

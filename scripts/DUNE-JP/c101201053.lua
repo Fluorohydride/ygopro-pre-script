@@ -45,7 +45,7 @@ function s.nttg(e,c)
 	return c:IsLevelAbove(5) and c:IsRace(RACE_DINOSAUR)
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToGraveAsCost() and (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup())
+	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToGraveAsCost() and c:IsFaceupEx()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end

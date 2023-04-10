@@ -17,9 +17,9 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetCountLimit(1,id+o*100)
+	e2:SetCountLimit(1,id+o)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
@@ -40,13 +40,9 @@ function s.filter(c,atk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local atk=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil):GetSum(Card.GetAttack)
-	if chkc then
-		return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,atk)
-	end
-	if chk==0 then
-		return atk>0 and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,atk)
-	end
-	if atk<=0 then return end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,atk) end
+	if chk==0 then return atk>0
+		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,atk) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,atk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
