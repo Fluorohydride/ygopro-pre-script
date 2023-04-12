@@ -48,10 +48,10 @@ function c100428038.activate(e,tp,eg,ep,ev,re,r,rp)
 				and Duel.SelectYesNo(tp,aux.Stringid(100428038,0)) then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local sg=g:Select(tp,1,1,nil)
-				if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 then
+				local sc=g:Select(tp,1,1,nil):GetFirst()
+				if Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 					c:CancelToGrave()
-					Duel.Overlay(tc,c)
+					Duel.Overlay(sc,c)
 				end
 			end
 		end

@@ -18,7 +18,6 @@ function c100428032.initial_effect(c)
 	c:RegisterEffect(e2)
 	--leave grave
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(100428032,1))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_GRAVE)
