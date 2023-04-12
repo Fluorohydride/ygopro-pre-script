@@ -1,6 +1,7 @@
---coded by Lyris
+--邪炎帝王テスタロス
 --Thestalos the Shadow Firestorm Monarch
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--tribute from each field for advance summon
 	local e1=Effect.CreateEffect(c)
@@ -9,8 +10,9 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCondition(s.tcon)
-	e1:SetOperation(s.top)
+	e1:SetCondition(s.otcon)
+	e1:SetOperation(s.otop)
+	e1:SetValue(SUMMON_TYPE_ADVANCE)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_PROC)
@@ -34,17 +36,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.tfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_ADVANCE)
-		and Duel.IsExistingMatchingCard(Card.IsReleasable,tp,0,LOCATION_MZONE,1,c)
+	return c:IsSummonType(SUMMON_TYPE_ADVANCE) and c:IsControler(tp)
 end
-function s.tcon(e,c,minc)
+function s.tcheck(g,tp)
+	return g:IsExists(s.tfilter,1,nil,tp) and g:IsExists(Card.IsControler,1,nil,1-tp)
+		and Duel.GetMZoneCount(tp,g)>0
+end
+function s.otcon(e,c,minc)
 	if c==nil then return true end
-	local g=Duel.GetMatchingGroup(s.tfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c:GetControler())
-	return c:IsLevelAbove(5) and minc<=2 and Duel.CheckTribute(c,1,1,g)
+	local tp=c:GetControler()
+	local g=Duel.GetMatchingGroup(Card.IsReleasable,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	return c:IsLevelAbove(7) and minc<=2 and g:CheckSubGroup(s.tcheck,2,2,tp)
 end
-function s.top(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetMatchingGroup(s.tfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c:GetControler())
-	local sg=Duel.SelectTribute(tp,c,1,1,g)
+function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=Duel.GetMatchingGroup(Card.IsReleasable,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local sg=g:SelectSubGroup(tp,s.tcheck,false,2,2,tp)
 	c:SetMaterial(sg)
 	Duel.Release(sg,REASON_MATERIAL+REASON_SUMMON)
 end
@@ -72,12 +79,12 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		if e:GetLabelObject():GetLabel()>0 and #rg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local rc=rg:Select(tp,1,1,nil):GetFirst()
-			if rc then
-				Duel.BreakEffect()
-				if Duel.Remove(rc,POS_FACEUP,REASON_EFFECT) and rc:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_FIRE)
-					and rc:GetOriginalType()&TYPE_MONSTER>0 then
-					Duel.Damage(1-tp,rc:GetOriginalLevel()*200,REASON_EFFECT)
-				end
+			Duel.BreakEffect()
+			if Duel.Remove(rc,POS_FACEUP,REASON_EFFECT)>0
+				and rc:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_FIRE)
+				and rc:GetOriginalType()&TYPE_MONSTER>0
+				and rc:GetOriginalLevel()>0 then
+				Duel.Damage(1-tp,rc:GetOriginalLevel()*200,REASON_EFFECT)
 			end
 		end
 	end

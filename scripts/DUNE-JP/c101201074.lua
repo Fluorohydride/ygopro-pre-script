@@ -1,5 +1,6 @@
---coded by Lyris
+--VV－マスターフェイズ
 --Vaylantz Wave - Master Phase
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -16,7 +17,6 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCondition(s.condition)
-	e2:SetCost(s.cost)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
@@ -29,32 +29,24 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e3:SetCondition(s.condition)
-	e3:SetCost(s.cost)
+	e3:SetCost(s.mvcost)
 	e3:SetTarget(s.mvtg)
 	e3:SetOperation(s.mvop)
 	c:RegisterEffect(e3)
 end
-function s.cfilter(c,tp)
-	--snip 1: from "Hojo the Vaylantz Warrior"
+function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsLocation(LOCATION_MZONE)
-		and (c:GetPreviousSequence()~=c:GetSequence() or c:GetPreviousControler()~=tp)
-	--end snip 1
+		and (c:GetPreviousSequence()~=c:GetSequence() or c:GetPreviousControler()~=c:GetControler())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:FilterCount(s.cfilter,nil,tp)==1
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b=e:GetDescription()==aux.Stringid(id,0)
-	local c=e:GetHandler()
-	if chk==0 then return b or c:IsAbleToGraveAsCost() end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	if not b then Duel.SendtoGrave(c,REASON_COST) end
+	return eg:IsExists(s.cfilter,1,nil)
 end
 function s.afilter(c)
 	return c:IsFaceup() and c:IsLevelAbove(5) and c:IsSetCard(0x17d)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.afilter,tp,LOCATION_MZONE,0,nil)
@@ -67,7 +59,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
---snip 2: edited from "Vaylantz World - Konig Wissen"
+function s.mvcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsStatus(STATUS_EFFECT_ENABLED) and c:IsAbleToGraveAsCost() end
+	Duel.SendtoGrave(c,REASON_COST)
+end
 function s.mfilter(c)
 	local seq=c:GetSequence()
 	return seq<=4 and c:IsType(TYPE_EFFECT) and c:IsFaceup()
@@ -75,6 +71,7 @@ end
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cgkc:IsControler(1-tp) and s.mfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.mfilter,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	Duel.SelectTarget(tp,s.mfilter,tp,0,LOCATION_MZONE,1,1,nil)
 end
@@ -99,4 +96,3 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
---end snip 2
