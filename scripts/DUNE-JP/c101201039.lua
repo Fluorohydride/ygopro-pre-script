@@ -1,6 +1,7 @@
+--ヴィサス＝アムリターラ
+--Script by beyond
 local s,id,o=GetID()
 function s.initial_effect(c)
-	aux.AddCodeList(c,56099748)
 	aux.EnableChangeCode(c,56099748)
 	--synchro summon
 	aux.AddSynchroMixProcedure(c,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_LIGHT),nil,nil,aux.Tuner(nil),1,99)
@@ -16,14 +17,15 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-    --atk
+	--destroy & atkup
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
-	e2:SetTarget(s.atktg1)
-	e2:SetOperation(s.atkop)
+	e2:SetCountLimit(1,id+o)
+	e2:SetTarget(s.destg)
+	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -44,23 +46,25 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.atktg1(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_MZONE)
 end
-function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_MZONE,0,1,1,nil,TYPE_MONSTER)
-	if g1:GetCount()>0 and Duel.Destroy(g1,REASON_EFFECT)~=0 then
-        local e2=Effect.CreateEffect(e:GetHandler())
-        e2:SetType(EFFECT_TYPE_FIELD)
-        e2:SetCode(EFFECT_UPDATE_ATTACK)
-        e2:SetTargetRange(LOCATION_MZONE,0)
-        e2:SetTarget(s.atktg)
-        e2:SetValue(800)
-        e2:SetReset(RESET_PHASE+PHASE_END)
-        Duel.RegisterEffect(e2,tp)
-    end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_MZONE,0,1,1,nil)
+	if #g==0 then return end
+	Duel.HintSelection(g)
+	if Duel.Destroy(g,REASON_EFFECT)~=0 then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetTargetRange(LOCATION_MZONE,0)
+		e1:SetTarget(s.atktg)
+		e1:SetValue(800)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+	end
 end
 function s.atktg(e,c)
 	return c:IsType(TYPE_SYNCHRO)
