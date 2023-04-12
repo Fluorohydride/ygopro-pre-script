@@ -13,8 +13,8 @@ function c101201019.initial_effect(c)
 	e1:SetCondition(c101201019.spdcon)
 	e1:SetTarget(c101201019.spdtg)
 	e1:SetOperation(c101201019.spdop)
-	c:RegisterEffect(e1)   
-	--set  
+	c:RegisterEffect(e1)
+	--set
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -26,7 +26,7 @@ function c101201019.initial_effect(c)
 end
 function c101201019.spdcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
-end 
+end
 function c101201019.desfilter(c,tp)
 	return (c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsRace(RACE_FIEND) or c:IsFacedown())
 		and Duel.GetMZoneCount(tp,c)>0
@@ -55,7 +55,7 @@ function c101201019.spdop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(c101201019.splimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1,true)
-	end   
+	end
 end
 function c101201019.splimit(e,c)
 	return not c:IsRace(RACE_FIEND)

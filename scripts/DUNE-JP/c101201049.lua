@@ -49,7 +49,7 @@ function c101201049.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101201049.cfilter(c,tp,se)
-	return c:GetPreviousControler()==tp 
+	return c:GetPreviousControler()==tp
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 		and (se==nil or c:GetReasonEffect()~=se)
@@ -59,7 +59,7 @@ function c101201049.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101201049.cfilter,1,nil,tp,se) and not eg:IsContains(e:GetHandler())
 end
 function c101201049.spfilter(c,e,tp)
-	return c:IsRace(RACE_FIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+	return c:IsRace(RACE_FIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101201049.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

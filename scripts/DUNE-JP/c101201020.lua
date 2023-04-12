@@ -2,7 +2,7 @@
 --Script by 奥克斯
 function c101201020.initial_effect(c)
 	--destroy
-	local e1=Effect.CreateEffect(c)  
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101201020,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -11,9 +11,9 @@ function c101201020.initial_effect(c)
 	e1:SetCountLimit(1,101201020)
 	e1:SetTarget(c101201020.destg)
 	e1:SetOperation(c101201020.desop)
-	c:RegisterEffect(e1)  
-	--special summon 
-	local e2=Effect.CreateEffect(c)  
+	c:RegisterEffect(e1)
+	--special summon
+	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -21,7 +21,7 @@ function c101201020.initial_effect(c)
 	e2:SetCountLimit(1,101201020+100)
 	e2:SetTarget(c101201020.spdtg)
 	e2:SetOperation(c101201020.spdop)
-	c:RegisterEffect(e2)  
+	c:RegisterEffect(e2)
 end
 function c101201020.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) end
@@ -69,5 +69,5 @@ function c101201020.spdop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_DECKBOT)
 		c:RegisterEffect(e1,true)
-	end   
+	end
 end
