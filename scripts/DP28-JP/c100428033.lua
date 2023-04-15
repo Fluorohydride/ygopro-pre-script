@@ -38,9 +38,7 @@ function c100428033.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if g:GetCount()>0 then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
-	end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c100428033.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

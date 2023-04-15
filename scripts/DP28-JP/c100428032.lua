@@ -31,8 +31,8 @@ function c100428032.thfilter(c)
 	return (c:IsSetCard(0x1084) and c:IsType(TYPE_MONSTER) and not c:IsCode(100428032)
 		or c:IsSetCard(0x299) and c:IsType(TYPE_COUNTER)) and c:IsAbleToHand()
 end
-function c100428032.thtg(e,tp,eg,ep,ev,re,r,rp,chk,_,exc)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100428032.thfilter,tp,LOCATION_DECK,0,1,exc) end
+function c100428032.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100428032.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c100428032.thop(e,tp,eg,ep,ev,re,r,rp)

@@ -58,7 +58,7 @@ function c100428035.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100428035.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,71921856) then return end
+	if not e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,71921856) then return false end
 	local a,d=Duel.GetBattleMonster(tp)
 	if a and d and a:IsFaceup() and a:IsSetCard(0x1084) then
 		e:SetLabelObject(d)
