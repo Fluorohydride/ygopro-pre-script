@@ -3,9 +3,11 @@
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **April 22, 2023**: DUELIST NEXUS (DUNE-JP) : `101201XXX`
+- **May 27, 2023**: Duelist Pack: Duelists of Explosion (DP28-JP) : `100428XXX`
+- **June 10, 2023**: Animation Chronicle 2023 (AC03-JP) : `100207XXX`
+- **June 24, 2023**: Structure Deck: Pulse of the King (SD46-JP) : `100346XXX`
 
 # Announced
-- **May 27, 2023**: Duelist Pack: Duelists of Explosion (DP28-JP) : `100428XXX`
 
 # Archived
 ## Other packs
