@@ -21,10 +21,11 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND+CATEGORY_GRAVE_ACTION)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_END)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetHintTiming(TIMING_END_PHASE)	
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.condition)
 	e3:SetTarget(s.target)
@@ -43,7 +44,7 @@ function s.indct(e,re,r,rp)
 	else return 0 end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_END
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c,check)
