@@ -81,6 +81,7 @@ end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetLabelObject():IsExists(s.retfilter,1,nil) then
 		e:GetLabelObject():DeleteGroup()
+		e:Reset()
 		return false
 	end
 	return true
