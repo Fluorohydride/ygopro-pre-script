@@ -1,8 +1,9 @@
 --ソウル・リゾネーター
+--Script by beyond
 local s,id,o=GetID()
 function s.initial_effect(c)
-    aux.AddCodeList(c,70902743)
-    --search
+	aux.AddCodeList(c,70902743)
+	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-    --destroy replace
+	--destroy replace
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
@@ -57,7 +58,7 @@ function s.repfilter(c,tp)
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.confilter(c)
-    return c:IsType(TYPE_SYNCHRO) and c:IsFaceup() and c:IsCode(70902743,97489701,67030233,80666118,101401046) --to be changed
+	return c:IsType(TYPE_SYNCHRO) and c:IsFaceup() and c:IsCode(70902743,97489701,67030233,80666118,101401046) --to be changed
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) and Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil) end
