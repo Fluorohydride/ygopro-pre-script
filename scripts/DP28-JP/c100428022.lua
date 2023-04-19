@@ -3,7 +3,7 @@
 function c100428022.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DAMAGE+CATEGORY_DECKDES+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DAMAGE+CATEGORY_DECKDES+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,100428022+EFFECT_COUNT_CODE_OATH)
@@ -23,8 +23,9 @@ function c100428022.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100428022.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) and tc:IsSetCard(0x32) then
-		local b1=aux.TRUE
-		local b2=Duel.IsPlayerCanSpecialSummonMonster(tp,100428122,0,TYPES_TOKEN_MONSTER,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP,1-tp)
+		local b1=tc:GetLevel()>0
+		local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,100428122,0,TYPES_TOKEN_MONSTER,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP,1-tp)
 		local off=1
 		local ops,opval={},{}
 		if b1 then
@@ -42,9 +43,11 @@ function c100428022.activate(e,tp,eg,ep,ev,re,r,rp)
 		local op=Duel.SelectOption(tp,table.unpack(ops))+1
 		local sel=opval[op]
 		if sel==1 then
+			Duel.BreakEffect()
 			local val=tc:GetLevel()*100
 			Duel.Damage(1-tp,val,REASON_EFFECT)
 		elseif sel==2 then
+			Duel.BreakEffect()
 			local token=Duel.CreateToken(tp,100428122)
 			if Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP) then
 				local e1=Effect.CreateEffect(e:GetHandler())

@@ -82,10 +82,10 @@ function c100428018.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+SUMMON_VALUE_SELF
 end
 function c100428018.damfilter(c)
-	return c:IsRace(RACE_PYRO)
+	return c:IsRace(RACE_PYRO) and c:IsFaceup()
 end
 function c100428018.scfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSetCard(0x32)
+	return c:IsType(TYPE_TRAP) and c:IsSetCard(0x32) and c:IsSSetable()
 end
 function c100428018.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100428018.damfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
@@ -94,12 +94,11 @@ function c100428018.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100428018.damop(e,tp,eg,ep,ev,re,r,rp)
 	local val=Duel.GetMatchingGroupCount(c100428018.damfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)*500
-	if Duel.Damage(1-tp,val,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(c100428018.scfilter,tp,LOCATION_DECK,0,1,nil)
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	if Duel.Damage(1-tp,val,REASON_EFFECT)~=0
+		and Duel.IsExistingMatchingCard(c100428018.scfilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(100428018,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local g=Duel.SelectMatchingCard(tp,c100428018.scfilter,tp,LOCATION_DECK,0,1,1,nil)
-			Duel.ConfirmCards(1-tp,g)
 			Duel.SSet(tp,g:GetFirst())
 	end
 end

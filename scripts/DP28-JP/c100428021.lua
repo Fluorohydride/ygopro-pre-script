@@ -18,7 +18,7 @@ function c100428021.initial_effect(c)
 	e2:SetTarget(c100428021.sptg)
 	e2:SetOperation(c100428021.spop)
 	c:RegisterEffect(e2)
-	 --destroy
+	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100428021,1))
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_DECKDES)
@@ -30,7 +30,7 @@ function c100428021.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c100428021.costfilter(c)
-	return ((c:IsLocation(LOCATION_ONFIELD) and c:IsFaceup()) or c:IsLocation(LOCATION_HAND+LOCATION_DECK) ) and c:IsCode(69537999) and c:IsAbleToGraveAsCost()
+	return c:IsFaceupEx() and c:IsCode(69537999) and c:IsAbleToGraveAsCost()
 end
 function c100428021.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100428021.costfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,1,nil) end
@@ -44,6 +44,7 @@ end
 function c100428021.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c100428021.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c100428021.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -64,6 +65,7 @@ function c100428021.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c100428021.desfilter(chkc) end
 	if chk==0 then return Duel.IsExistingMatchingCard(c100428021.disfilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.IsExistingTarget(c100428021.desfilter,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,c100428021.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
@@ -75,7 +77,7 @@ function c100428021.desop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 		local tc=Duel.GetFirstTarget()
-		if tc and tc:IsRelateToEffect(e) then
+		if tc:IsRelateToEffect(e) then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	end
