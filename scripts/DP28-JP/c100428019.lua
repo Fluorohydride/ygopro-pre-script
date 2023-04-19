@@ -1,4 +1,5 @@
---火山士兵
+--ヴォルカニック・トルーパー
+--Script by Ruby
 function c100428019.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)

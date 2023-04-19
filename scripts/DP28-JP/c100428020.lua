@@ -1,4 +1,5 @@
---火山缘发式子弹
+--ヴォルカニック・リムファイア
+--Script by Ruby
 function c100428020.initial_effect(c)
 	--to grave/set canon
 	local e1=Effect.CreateEffect(c)

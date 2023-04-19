@@ -1,4 +1,5 @@
---火焰喷射
+--ファイヤー・エジェクション
+--Script by Ruby
 function c100428022.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,5 @@
---火山皇帝
+--ヴォルカニック・エンペラー
+--Script by Ruby
 function c100428018.initial_effect(c)
 	c:EnableReviveLimit()
 	c:SetSPSummonOnce(100428018)

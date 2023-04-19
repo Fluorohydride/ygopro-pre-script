@@ -1,4 +1,5 @@
---火山烈焰加农炮
+--ヴォルカニック・ブレイズ・キャノン
+--Script by Ruby
 function c100428021.initial_effect(c)
 	c:SetUniqueOnField(1,0,100428021)
 	--Activate

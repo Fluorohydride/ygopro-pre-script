@@ -1,4 +1,5 @@
---火山业火
+--ヴォルカニック・インフェルノ
+--Script by Ruby
 function c100428024.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -45,7 +46,7 @@ function c100428024.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100428024.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
-		and re:GetActivateLocation()==LOCATION_MZONE 
+		and re:GetActivateLocation()==LOCATION_MZONE
 end
 function c100428024.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
