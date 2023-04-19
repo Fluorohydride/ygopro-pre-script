@@ -16,67 +16,60 @@ function c100428018.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
-	e1:SetCondition(c100428018.sprcon1)
-	e1:SetOperation(c100428018.sprop1)
+	e1:SetCondition(c100428018.sprcon)
+	e1:SetTarget(c100428018.sprtg)
+	e1:SetOperation(c100428018.sprop)
 	e1:SetValue(SUMMON_VALUE_SELF)
 	c:RegisterEffect(e1)
-	--special summon(remove 1 canon)
+	--Burn and Search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100428018,1))
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_SPSUMMON_PROC)
-	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
-	e2:SetCondition(c100428018.sprcon2)
-	e2:SetOperation(c100428018.sprop2)
-	e2:SetValue(SUMMON_VALUE_SELF)
+	e2:SetCategory(CATEGORY_DAMAGE)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(c100428018.damcon)
+	e2:SetTarget(c100428018.damtg)
+	e2:SetOperation(c100428018.damop)
+	e2:SetCategory(CATEGORY_DAMAGE)
 	c:RegisterEffect(e2)
-	--Burn and Search
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(c100428018.damcon)
-	e3:SetTarget(c100428018.damtg)
-	e3:SetOperation(c100428018.damop)
-	e3:SetCategory(CATEGORY_DAMAGE)
-	c:RegisterEffect(e3)
 	--damage
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetCondition(c100428018.damcon2)
-	e4:SetOperation(c100428018.damop2)
-	c:RegisterEffect(e4)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetCondition(c100428018.damcon2)
+	e3:SetOperation(c100428018.damop2)
+	c:RegisterEffect(e3)
 end
-function c100428018.sprfilter1(c)
-	return c:IsRace(RACE_PYRO) and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
-		 and Duel.GetMZoneCount(tp,c)>0
+function c100428018.sprfilter(c)
+	return c:IsFaceupEx() and c:IsAbleToRemoveAsCost() and (c:IsRace(RACE_PYRO) or c:IsSetCard(0xb9))
 end
-function c100428018.sprcon1(e,c)
+function c100428018.gcheck(g,tp)
+	return Duel.GetMZoneCount(tp,g)>0
+		and (#g==3 and g:FilterCount(Card.IsRace,nil,RACE_PYRO)==3
+			or #g==1 and g:FilterCount(Card.IsSetCard,nil,0xb9)==1)
+end
+function c100428018.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.IsExistingMatchingCard(c100428018.sprfilter1,tp,LOCATION_GRAVE+LOCATION_MZONE,0,3,e:GetHandler())
+	local g=Duel.GetMatchingGroup(c100428018.sprfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,e:GetHandler())
+	return g:CheckSubGroup(c100428018.gcheck,1,3,tp)
 end
-function c100428018.sprop1(e,tp,eg,ep,ev,re,r,rp,c)
+function c100428018.sprtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local g=Duel.GetMatchingGroup(c100428018.sprfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,e:GetHandler())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c100428018.sprfilter1,tp,LOCATION_GRAVE+LOCATION_MZONE,0,3,3,e:GetHandler())
+	local sg=g:SelectSubGroup(tp,c100428018.gcheck,false,1,3,tp)
+	if sg then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
+	else return false end
+end
+function c100428018.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-end
-function c100428018.sprfilter2(c)
-	return c:IsSetCard(0xb9) and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
-		 and Duel.GetMZoneCount(tp,c)>0
-end
-function c100428018.sprcon2(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	return Duel.IsExistingMatchingCard(c100428018.sprfilter2,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil)
-end
-function c100428018.sprop2(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c100428018.sprfilter2,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,1,nil)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function c100428018.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+SUMMON_VALUE_SELF

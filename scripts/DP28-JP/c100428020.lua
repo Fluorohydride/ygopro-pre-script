@@ -49,7 +49,7 @@ function c100428020.opop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local op=e:GetLabel()
 	if op==0 then
-		if IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 then
+		if c:IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local g1=Duel.SelectMatchingCard(tp,c100428020.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 			if #g1>0 then
