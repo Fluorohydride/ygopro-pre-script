@@ -58,7 +58,8 @@ function s.repfilter(c,tp)
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.confilter(c)
-	return c:IsType(TYPE_SYNCHRO) and c:IsFaceup() and c:IsCode(70902743,97489701,67030233,80666118,100346051) --to be changed
+	return c:IsType(TYPE_SYNCHRO) and c:IsFaceup()
+		and (c:IsCode(70902743) or aux.IsCodeListed(c,70902743))
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp)
