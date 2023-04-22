@@ -2,14 +2,12 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **December 2, 2022**: Yu-Gi-Oh! OCG Stories Volume 1 promotional card (YOS1-JP) : `100296XXX`
-- **December 3, 2022**: Structure Deck: Forest of the Traptrix (SD45-JP) : `100345XXX`
-- **December 24, 2022**: Secret Utility Box (SUB1-JP) : `100294XXX`
-- **January 4, 2023**: Yu-Gi-Oh! OCG Structures Volume 6 promotional card (YO06-JP) : `100295XXX`
-- **January 14, 2023**: CYBERSTORM ACCESS (CYAC-JP) : `101112XXX`
+- **April 22, 2023**: DUELIST NEXUS (DUNE-JP) : `101201XXX`
+- **May 27, 2023**: Duelist Pack: Duelists of Explosion (DP28-JP) : `100428XXX`
+- **June 10, 2023**: Animation Chronicle 2023 (AC03-JP) : `100207XXX`
+- **June 24, 2023**: Structure Deck: Pulse of the King (SD46-JP) : `100346XXX`
 
 # Announced
-- **December 17, 2022**: Premium Pack 2023 (23PP-JP) : `100297XXX`
 
 # Archived
 ## Other packs
@@ -111,6 +109,13 @@
 - World Premiere Pack 2022 (WPP3-JP) : `100292XXX`
 - 2022 Tin of the Pharaoh's Gods (MP22-EN) : `100292XXX`
 - Selection 5 (SLF1-JP) : `100293XXX`
+- Yu-Gi-Oh! OCG Stories Volume 1 promotional card (YOS1-JP) : `100296XXX`
+- Premium Pack 2023 (23PP-JP) : `100297XXX`
+- Promotion Pack 2023 (23PR-JP) : `100298XXX`
+- Secret Utility Box (SUB1-JP) : `100294XXX`
+- Yu-Gi-Oh! OCG Structures Volume 6 promotional card (YO06-JP) : `100295XXX`
+- Maze of Memories (MAZE-EN) : `100206XXX`
+- The Valuable Book EX 3 promotional cards (VX03-JP) : `100205XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -146,7 +151,8 @@
 - Structure Deck: Cyber Style's Successor (SD41-JP) : `100341XXX`
 - Structure Deck: Overlay Universe (SD42-JP) : `100342XXX`
 - Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
-- Structure Deck: Legend of the Crystals (SD44-JP): `100344XXX`
+- Structure Deck: Legend of the Crystals (SD44-JP) : `100344XXX`
+- Structure Deck: Forest of the Traptrix (SD45-JP) : `100345XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
@@ -162,6 +168,7 @@
 - Deck Build Pack: Grand Creators (DBGC-JP) : `100417XXX`
 - Deck Build Pack: Tactical Masters (DBTM-JP): `100418XXX`
 - Deck Build Pack: Amazing Defenders (DBAD-JP) : `100419XXX`
+- Deck Build Pack: Wild Survivors (DBWS-JP) : `100420XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
@@ -203,3 +210,4 @@
 - POWER OF THE ELEMENTS (POTE-JP): `101109XXX`
 - DARKWING BLAST (DABL-JP): `101110XXX`
 - Photon Hypernova (PHHY-JP) : `101111XXX`
+- CYBERSTORM ACCESS (CYAC-JP) : `101112XXX`
