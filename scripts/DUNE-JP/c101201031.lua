@@ -27,9 +27,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 				table.insert(opvals,options[i][3] or i)
 			end
 		end
-		if #ops==0 then return nil end
-		local select=Duel.SelectOption(tp,table.unpack(ops))
-		op=opvals[select+1]
+		if #ops>0 then
+			local select=Duel.SelectOption(tp,table.unpack(ops))
+			op=opvals[select+1]
+		end
 	else op=aux.SelectFromOptions(tp,{b1,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)},{true,aux.Stringid(id,3)}) end
 	local cat=CATEGORY_DRAW
 	if op==1 then
