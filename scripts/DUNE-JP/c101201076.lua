@@ -80,7 +80,7 @@ function s.eqlimit(e,c)
 	return e:GetLabelObject()==c
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x18d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) c:IsFaceupEx()
+	return c:IsSetCard(0x18d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceupEx()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
