@@ -1,4 +1,5 @@
-----ヘルホーンドザウルス
+--ヘルホーンドザウルス
+--Script by 奥克斯
 function c100207003.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
@@ -19,7 +20,7 @@ function c100207003.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	e2:SetCondition(c100207003.pcon)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 	--summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(100207003,1))
@@ -67,4 +68,3 @@ function c100207003.sumop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Summon(tp,tc,true,nil)
 	end
 end
- 

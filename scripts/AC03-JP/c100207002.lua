@@ -33,7 +33,7 @@ function c100207002.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100207002.filter(c)
-	return not c:IsAttribute(ATTRIBUTE_WIND) and c:IsFaceup() 
+	return not c:IsAttribute(ATTRIBUTE_WIND) and c:IsFaceup()
 end
 function c100207002.atcon(e)
 	local tp=e:GetHandlerPlayer()
@@ -68,7 +68,7 @@ function c100207002.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100207002.thfilter),tp,LOCATION_GRAVE,0,nil)
 		if #g==0 then return end
-		if Duel.SelectYesNo(tp,aux.Stringid(100207002,1)) then 
+		if Duel.SelectYesNo(tp,aux.Stringid(100207002,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100207002.thfilter),tp,LOCATION_GRAVE,0,1,1,nil)
 			Duel.BreakEffect()
