@@ -35,7 +35,7 @@ function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
 function s.filter(c)
-	return c:GetType()==TYPE_TRAP and not c:IsCode(id) and c:CheckActivateEffect(false,true,false)~=nil
+	return c:GetType()==TYPE_TRAP and not c:IsCode(id,79766336) and c:CheckActivateEffect(false,true,false)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
