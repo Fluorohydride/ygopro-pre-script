@@ -1,3 +1,5 @@
+--オルターガイスト・リバイタリゼーション
+--Script by beyond
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,19 +8,19 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-    e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-    local e2=Effect.CreateEffect(c)
+	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(41215808,0))
 	e2:SetCategory(CATEGORY_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-    e2:SetRange(LOCATION_GRAVE)
-    e2:SetCost(aux.bfgcost)
-    e2:SetCountLimit(1,id)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCost(aux.bfgcost)
+	e2:SetCountLimit(1,id)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e2:SetTarget(s.sumtg)
 	e2:SetOperation(s.sumop)
@@ -40,8 +42,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-        Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK)
-    end
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+	end
 end
 function s.sumfilter(c)
 	return c:IsSetCard(0x103) and c:IsSummonable(true,nil)

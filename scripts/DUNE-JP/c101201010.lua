@@ -1,3 +1,5 @@
+--オルターガイスト・ペリネトレータ
+--Script by beyond
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--direct attack

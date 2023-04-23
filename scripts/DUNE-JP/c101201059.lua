@@ -1,4 +1,5 @@
 --暗黒回廊
+--Script by beyond
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

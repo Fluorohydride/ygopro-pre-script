@@ -1,3 +1,5 @@
+--オルターガイスト・マルウィスプ
+--Script by beyond
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -12,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-    --special summon
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(59975920,2))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -23,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
-    local e3=e2:Clone()
-    e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-    c:RegisterEffect(e3)
+	local e3=e2:Clone()
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e3)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsReason(REASON_DRAW)
