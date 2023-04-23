@@ -1,8 +1,10 @@
---アラヒメの御巫（アラヒメのみかんこ）
+--アラヒメの御巫
+--Script by 小壶
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,16310544)
 	c:EnableReviveLimit()
+	--equip
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -38,11 +40,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():CheckUniqueOnField(tp) and Duel.IsExistingTarget(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,e:GetHandler(),0x18d)
+	return e:GetHandler():CheckUniqueOnField(tp)
+		and Duel.IsExistingTarget(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,e:GetHandler(),0x18d)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
@@ -68,15 +72,16 @@ function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ec=e:GetHandler():GetEquipTarget()
-	if chk==0 then return ec and ec:IsAbleToRemove() and e:GetHandler():IsAbleToHand() end
+	local c=e:GetHandler()
+	local ec=c:GetEquipTarget()
+	if chk==0 then return ec and ec:IsAbleToHand() and c:IsAbleToHand() end
 	ec:CreateEffectRelation(e)
-	local g=Group.FromCards(ec,e:GetHandler())
+	local g=Group.FromCards(ec,c)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,2,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ec=e:GetHandler():GetEquipTarget()
+	local ec=c:GetEquipTarget()
 	if not c:IsRelateToEffect(e) or not ec:IsRelateToEffect(e) then return end
 	local g=Group.FromCards(c,ec)
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
