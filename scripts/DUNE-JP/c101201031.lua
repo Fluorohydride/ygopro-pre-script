@@ -1,6 +1,7 @@
---coded by Lyris
+--鳴いて時鳥
 --Singing Cuckoo
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)
@@ -11,27 +12,28 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 end
+function Auxiliary.SelectFromOptions(tp,...)
+	local options={...}
+	local ops={}
+	local opvals={}
+	for i=1,#options do
+		if options[i][1] then
+			table.insert(ops,options[i][2])
+			table.insert(opvals,options[i][3] or i)
+		end
+	end
+	if #ops==0 then return nil end
+	local select=Duel.SelectOption(tp,table.unpack(ops))
+	return opvals[select+1]
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local b1=Duel.IsPlayerCanDraw(tp,1)
 	local b2=Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil,REASON_EFFECT) and b1
-	--'plagiarizing' my "Egomorph" script, here:
-	local op=0
-	if not aux.SelectFromOptions then
-		local options={{b1,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)},{true,aux.Stringid(id,3)}}
-		local ops={}
-		local opvals={}
-		for i=1,#options do
-			if options[i][1] then
-				table.insert(ops,options[i][2])
-				table.insert(opvals,options[i][3] or i)
-			end
-		end
-		if #ops>0 then
-			local select=Duel.SelectOption(tp,table.unpack(ops))
-			op=opvals[select+1]
-		end
-	else op=aux.SelectFromOptions(tp,{b1,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)},{true,aux.Stringid(id,3)}) end
+	local op=aux.SelectFromOptions(tp,
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)},
+		{true,aux.Stringid(id,3)})
 	local cat=CATEGORY_DRAW
 	if op==1 then
 		cat=cat+CATEGORY_DESTROY
@@ -59,7 +61,6 @@ function s.discard(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.epdelay(e,tp,eg,ep,ev,re,r,rp)
---snip: edited from "Book of Eclipse"
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -72,4 +73,3 @@ function s.draw(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end
---end snip

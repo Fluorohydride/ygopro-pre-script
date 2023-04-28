@@ -1,5 +1,6 @@
---coded by Lyris
+--火天獣－キャンドル
 --Agnimal Candle
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -26,6 +27,20 @@ function s.initial_effect(c)
 	e2:SetTarget(s.lvtg)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
+end
+function Auxiliary.SelectFromOptions(tp,...)
+	local options={...}
+	local ops={}
+	local opvals={}
+	for i=1,#options do
+		if options[i][1] then
+			table.insert(ops,options[i][2])
+			table.insert(opvals,options[i][3] or i)
+		end
+	end
+	if #ops==0 then return nil end
+	local select=Duel.SelectOption(tp,table.unpack(ops))
+	return opvals[select+1]
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsReason(REASON_DRAW)
@@ -54,24 +69,10 @@ end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local d=c:IsLevelAbove(2)
-	--'plagiarizing' my "Egomorph" script, here:
-	local op=0
-	if not aux.SelectFromOptions then
-		local options={{true,aux.Stringid(id,2)},{d,aux.Stringid(id,3),-1}}
-		local ops={}
-		local opvals={}
-		for i=1,#options do
-			if options[i][1] then
-				table.insert(ops,options[i][2])
-				table.insert(opvals,options[i][3] or i)
-			end
-		end
-		if #ops>0 then
-			local select=Duel.SelectOption(tp,table.unpack(ops))
-			op=opvals[select+1]
-		end
-	else op=aux.SelectFromOptions(tp,{true,aux.Stringid(id,2)},{d,aux.Stringid(id,3),-1}) end
+	local down=c:IsLevelAbove(2)
+	local op=aux.SelectFromOptions(tp,
+		{true,aux.Stringid(id,2),1},
+		{down,aux.Stringid(id,3),-1})
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)

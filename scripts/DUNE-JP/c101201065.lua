@@ -1,6 +1,7 @@
---coded by Lyris
+--誇大化
 --Egomorph
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -12,6 +13,20 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 end
+function Auxiliary.SelectFromOptions(tp,...)
+	local options={...}
+	local ops={}
+	local opvals={}
+	for i=1,#options do
+		if options[i][1] then
+			table.insert(ops,options[i][2])
+			table.insert(opvals,options[i][3] or i)
+		end
+	end
+	if #ops==0 then return nil end
+	local select=Duel.SelectOption(tp,table.unpack(ops))
+	return opvals[select+1]
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()~=nil
 end
@@ -21,22 +36,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local d=Duel.GetAttackTarget()
 	local b1=a:IsCanChangePosition() and a:IsAttackPos()
 	local b2=d and d:IsAbleToHand()
-	local op=0
-	if not aux.SelectFromOptions then
-		local options={{b1,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)},{true,aux.Stringid(id,3)}}
-		local ops={}
-		local opvals={}
-		for i=1,#options do
-			if options[i][1] then
-				table.insert(ops,options[i][2])
-				table.insert(opvals,options[i][3] or i)
-			end
-		end
-		if #ops>0 then
-			local select=Duel.SelectOption(tp,table.unpack(ops))
-			op=opvals[select+1]
-		end
-	else op=aux.SelectFromOptions(tp,{b1,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)},{true,aux.Stringid(id,3)}) end
+	local op=aux.SelectFromOptions(tp,
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)},
+		{true,aux.Stringid(id,3)})
 	if op==1 then
 		e:SetCategory(CATEGORY_POSITION)
 		e:SetOperation(s.defense)

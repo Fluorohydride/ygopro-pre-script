@@ -1,6 +1,7 @@
---coded by Lyris
+--烈日の騎士ガイアブレイズ
 --Gaia Blaze, the Force of Blazing Sun
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
@@ -24,7 +25,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
---snip 1: edited from "Shootingcode Talker"
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_BATTLE_DESTROYING)
@@ -37,7 +37,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=c:GetFlagEffectLabel(id)
 	if ct then c:SetFlagEffectLabel(id,ct+1)
 	else c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,1) end
---end snip 1
 end
 function s.chacon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

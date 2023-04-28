@@ -1,6 +1,7 @@
---coded by Lyris
+--幻惑の魔術師
 --Nightmare Magician
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--indes
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,7 @@
---coded by Lyris
+--億年の氷墓
 --Eternal Ice Grave
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
