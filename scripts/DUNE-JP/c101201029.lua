@@ -26,6 +26,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if dc>1 then
 			local t={}
 			for i=1,dc do table.insert(t,i) end
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 			dc=Duel.AnnounceNumber(tp,table.unpack(t))
 		end
 		Duel.ConfirmDecktop(tp,dc)
