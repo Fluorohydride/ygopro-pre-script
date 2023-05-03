@@ -39,7 +39,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rc:IsSummonType(SUMMON_TYPE_FUSION) and c:IsLocation(LOCATION_GRAVE)
 end
 function s.ifilter(c)
-	return c:IsRace(RACE_ILLUSIONIST) and c:IsAbleToHand()
+	return c:IsRace(RACE_ILLUSION) and c:IsAbleToHand()
 end
 function s.thtg(f)
 	return  function(e,tp,eg,ep,ev,re,r,rp,chk)
