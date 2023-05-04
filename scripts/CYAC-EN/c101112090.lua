@@ -80,8 +80,8 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then Duel.SSet(tp,c) end
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x192) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsPreviousSetCard(0x192) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.check(e,tp,eg,ep,ev,re,r,rp)
 	for p=0,1 do
