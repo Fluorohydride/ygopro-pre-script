@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 	local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~z)
 	local ts=math.log(s,2)
-	e:SetLabel(ts)
+	e:SetLabel(s)
 	Duel.Hint(HINT_ZONE,tp,s|2^(4-ts)<<16)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(1-tp,1,1,nil)
 			Duel.BreakEffect()
-			Duel.SpecialSummon(sg,0,1-tp,1-tp,false,false,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE,sq)
+			Duel.SpecialSummon(sg,0,1-tp,1-tp,false,false,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE,2^sq)
 		end
 	end
 end
