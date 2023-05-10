@@ -46,6 +46,8 @@ function s.initial_effect(c)
     e4:SetCode(EVENT_PHASE + PHASE_END + EFFECT_UPDATE_ATTACK)
     e4:SetValue(700)
     e4:SetCountLimit(1)
+    e4:SetCondition(s.atkcon)
+    e4:SetOperation(s.atkop)
     c:RegisterEffect(e4)
 end
 
@@ -54,10 +56,28 @@ function s.otcon(e, c, minc)
     return c:IsLevelAbove(9) and minc <= 1 and Duel.CheckTribute(c, 1)
 end
 
+
+
 function s.otop(e, tp, eg, ep, ev, re, r, rp, c)
     local g = Duel.SelectTribute(tp, c, 1, 1)
     c:SetMaterial(g)
     Duel.Release(g, REASON_SUMMON + REASON_MATERIAL)
+end
+
+function s.atkcon(e, tp, eg, ep, ev, re, r, rp)
+    return tp == Duel.GetTurnPlayer()
+end
+
+function s.atkop(e, tp, eg, ep, ev, re, r, rp)
+    local c = e:GetHandler()
+    if c:IsRelateToEffect(e) and c:IsFaceup() then
+        local e1 = Effect.CreateEffect(c)
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetCode(EFFECT_UPDATE_ATTACK)
+        e1:SetValue(700)
+        e1:SetReset(RESET_EVENT + RESETS_STANDARD_DISABLE)
+        c:RegisterEffect(e1)
+    end
 end
 
 function s.abtar(e, tp, eg, ep, ev, re, r, rp, chk, chkc)
