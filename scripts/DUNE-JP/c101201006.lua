@@ -2,7 +2,7 @@
 --Mirror Swordsman
 local s, id, o = GetID()
 function s.initial_effect(c)
-	aux.AddCodeList(c,101201052,63136489)
+	aux.AddCodeList(c,101201052)
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -52,8 +52,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(c,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return (aux.IsCodeListed(c,101201052) or aux.IsCodeListed(c,63136489))
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
+	return aux.IsCodeListed(c,101201052) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
