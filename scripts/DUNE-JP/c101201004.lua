@@ -2,7 +2,7 @@
 --Berfomet the Great Wings
 local s, id, o = GetID()
 function s.initial_effect(c)
-	aux.AddCodeList(c,101201052,63136489)
+	aux.AddCodeList(c,101201052)
 	--tohand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -31,15 +31,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	return (c:IsLevel(4) and c:IsRace(RACE_BEAST) or c:IsCode(101201052,63136489)) and c:IsAbleToHand()
+	return (c:IsLevel(4) and c:IsRace(RACE_BEAST) or c:IsCode(101201052)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
+function s.check(g)
+	return g:FilterCount(Card.IsLevel,nil,4)<2 and g:FilterCount(Card.IsCode,nil,101201052)<2
+end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=tg:SelectSubGroup(tp,s.check,false,1,2)
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,g)
 	local e1=Effect.CreateEffect(c)

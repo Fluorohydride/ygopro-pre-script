@@ -2,7 +2,7 @@
 --Gazelle the King of Mythical Claws
 local s, id, o = GetID()
 function s.initial_effect(c)
-	aux.AddCodeList(c,101201052,63136489)
+	aux.AddCodeList(c,101201052)
 	--add fusion/fiend
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

@@ -30,7 +30,7 @@ function s.filter(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
-function s.check(g)
+function s.check(tp,g,fc)
 	return g:IsExists(Card.IsRace,1,nil,RACE_BEAST+RACE_FIEND)
 end
 function s.fstg(e,tp,eg,ep,ev,re,r,rp,chk)
