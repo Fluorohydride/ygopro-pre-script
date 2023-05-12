@@ -57,7 +57,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsSummonType(SUMMON_TYPE_SPECIAL+SUMMON_VALUE_SELF) then Duel) end
+	if c:IsSummonType(SUMMON_TYPE_SPECIAL+SUMMON_VALUE_SELF) then Duel.ChangePosition(c,POS_FACEDOWN_DEFENSE) end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp
@@ -65,7 +65,7 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
-	if chk==0 then return #g>0 and c:IsCanTurnSet() end
+	if chk==0 then return #g>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and c:IsCanTurnSet() end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
