@@ -52,7 +52,7 @@ function s.mlimit(e,c,st)
 	return st==SUMMON_TYPE_FUSION or st==SUMMON_TYPE_SYNCHRO or st==SUMMON_TYPE_XYZ
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_LINK and c:IsLocation(LOCATION_GRAVE)
+	return r==REASON_LINK and e:GetHandler():IsLocation(LOCATION_GRAVE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
