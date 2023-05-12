@@ -4,7 +4,7 @@ local s, id, o = GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsRace,RACE_BEAST),aux.FilterBoolFunction(Card.IsRace(RACE_FIEND)),true)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsRace,RACE_BEAST),aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),true)
 	--change name
 	aux.EnableChangeCode(c,4796100,LOCATION_GRAVE+LOCATION_MZONE)
 	--handes
