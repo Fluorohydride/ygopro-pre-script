@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	return (c:IsCode(101201052,63136489) or c:IsLevel(5) and c:IsRace(RACE_FIEND)) and c:IsAbleToHand()
+	return (c:IsCode(101201052) or c:IsLevel(5) and c:IsRace(RACE_FIEND)) and c:IsAbleToHand()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
