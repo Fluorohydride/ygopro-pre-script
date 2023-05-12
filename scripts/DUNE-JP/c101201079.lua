@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
-	e1:SetOperation(a.activate)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 --snip 1: edited from "Gorz the Emissary of Darkness"
