@@ -75,7 +75,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g and g:IsExists(s.dfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
 end
-function s.distg(e,tp,eg,ep,ev,re,r,rp)
+function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 	local rc=re:GetHandler()
