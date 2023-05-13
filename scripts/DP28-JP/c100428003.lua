@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.costfilter(c)
-	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsDiscardable() 
+	return c:IsSetCard(0x119) and c:IsDiscardable() 
 	and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
