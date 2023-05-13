@@ -42,7 +42,7 @@ function s.indtg(e,c)
 	return c==tc or c==tc:GetBattleTarget()
 end
 function s.atkct(e,c)
-	return c:GetMaterialCount()-1
+	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterialCount()-1 or 0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetHandler():GetBattleTarget()
