@@ -47,7 +47,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
-	local g=Duel.GetFieldGroup(tp,0,~LOCATION_HAND):RandomSelect(tp,1)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,1)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
