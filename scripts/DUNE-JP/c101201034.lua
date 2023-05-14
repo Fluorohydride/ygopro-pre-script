@@ -19,8 +19,8 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetCondition(s.indcon)
 	e2:SetTarget(s.indtg)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--disable
 	local e3=Effect.CreateEffect(c)
@@ -32,10 +32,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-end
-function s.indcon(e)
-	local c=e:GetHandler()
-	return (Duel.GetAttacker()==c or Duel.GetAttackTarget()==c) and c:GetBattleTarget()~=nil
 end
 function s.indtg(e,c)
 	local tc=e:GetHandler()
