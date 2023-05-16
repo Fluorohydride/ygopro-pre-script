@@ -32,7 +32,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)
 	Duel.RegisterEffect(e1,tp)
 	if e:GetLabel()==1 then
---snip 1: edited from "Sangan"
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -42,7 +41,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabel(tc:GetOriginalCodeRule())
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
---end snip 1
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

@@ -44,6 +44,20 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sop)
 	c:RegisterEffect(e4)
 end
+function Auxiliary.SelectFromOptions(tp,...)
+	local options={...}
+	local ops={}
+	local opvals={}
+	for i=1,#options do
+		if options[i][1] then
+			table.insert(ops,options[i][2])
+			table.insert(opvals,options[i][3] or i)
+		end
+	end
+	if #ops==0 then return nil end
+	local select=Duel.SelectOption(tp,table.unpack(ops))
+	return opvals[select+1]
+end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:IsActiveType(TYPE_TRAP+TYPE_MONSTER) and rp==1-tp and e:GetHandler():GetFlagEffect(1)>0
 end

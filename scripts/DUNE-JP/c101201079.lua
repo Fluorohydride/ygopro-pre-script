@@ -16,11 +16,23 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
---snip 1: edited from "Gorz the Emissary of Darkness"
+function Auxiliary.SelectFromOptions(tp,...)
+	local options={...}
+	local ops={}
+	local opvals={}
+	for i=1,#options do
+		if options[i][1] then
+			table.insert(ops,options[i][2])
+			table.insert(opvals,options[i][3] or i)
+		end
+	end
+	if #ops==0 then return nil end
+	local select=Duel.SelectOption(tp,table.unpack(ops))
+	return opvals[select+1]
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and 1-tp==rp and r&(REASON_EFFECT+REASON_BATTLE)>0
 end
---end snip 1
 function s.filter(c,v,e,tp)
 	return c:IsAttackBelow(v) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -30,9 +42,13 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ss=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE,0,1,nil,ev,e,tp)
 	local op=0
-	if r&(REASON_BATTLE+REASON_EFFECT)==REASON_BATTLE+REASON_EFFECT then op=aux.SelectFromOptions(tp,{ss,aux.Stringid(id,1)},{true,aux.Stringid(id,2)})
-	elseif r&REASON_BATTLE>0 then op=1
-	else op=2 end
+	if r&(REASON_BATTLE+REASON_EFFECT)==REASON_BATTLE+REASON_EFFECT then
+		op=aux.SelectFromOptions(tp,{ss,aux.Stringid(id,1)},{true,aux.Stringid(id,2)})
+	elseif r&REASON_BATTLE>0 then
+		op=1
+	else
+		op=2
+	end
 	if op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,ev,e,tp)

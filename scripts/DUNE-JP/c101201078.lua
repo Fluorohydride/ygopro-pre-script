@@ -38,7 +38,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE,z)>0 then
 		local sq=4-sc:GetSequence()
 		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_DECK+LOCATION_HAND,nil,e,1-tp,2^sq)
-		if Duel.CheckLocation(1-tp,LOCATION_MZONE,sq) and #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
+		if Duel.CheckLocation(1-tp,LOCATION_MZONE,sq) and #g>0
+			and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(1-tp,1,1,nil)
 			Duel.BreakEffect()

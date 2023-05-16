@@ -25,6 +25,20 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+function Auxiliary.SelectFromOptions(tp,...)
+	local options={...}
+	local ops={}
+	local opvals={}
+	for i=1,#options do
+		if options[i][1] then
+			table.insert(ops,options[i][2])
+			table.insert(opvals,options[i][3] or i)
+		end
+	end
+	if #ops==0 then return nil end
+	local select=Duel.SelectOption(tp,table.unpack(ops))
+	return opvals[select+1]
+end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToChain() or c:IsFacedown() then return end

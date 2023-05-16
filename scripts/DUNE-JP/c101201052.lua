@@ -23,6 +23,20 @@ function s.initial_effect(c)
 	e2:SetTarget(s.gytg)
 	c:RegisterEffect(e2)
 end
+function Auxiliary.SelectFromOptions(tp,...)
+	local options={...}
+	local ops={}
+	local opvals={}
+	for i=1,#options do
+		if options[i][1] then
+			table.insert(ops,options[i][2])
+			table.insert(opvals,options[i][3] or i)
+		end
+	end
+	if #ops==0 then return nil end
+	local select=Duel.SelectOption(tp,table.unpack(ops))
+	return opvals[select+1]
+end
 function s.fscon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
@@ -61,7 +75,7 @@ function s.fsop(e,tp,eg,ep,ev,re,r,rp)
 	local sg1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	local mg2,sg2=nil,nil
 	local ce=Duel.GetChainMaterial(tp)
-	if ce~=bil then
+	if ce~=nil then
 		local fgroup=ce:GetTarget()
 		mg2=fgroup(ce,e,tp)
 		local mf=ce:GetValue()

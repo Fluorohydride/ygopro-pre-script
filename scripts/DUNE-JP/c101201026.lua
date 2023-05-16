@@ -49,10 +49,11 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
-	Duel.SendtoHand(g,nil,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,g)
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	end
 	local c=e:GetHandler()
---snip 1: edited from "Aussa the Earth Channeler"
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -64,7 +65,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsNonAttribute(ATTRIBUTE_FIRE)
---end snip 1
 end
 function s.cfilter(c,tp)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsPreviousControler(tp)
