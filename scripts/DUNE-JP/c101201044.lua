@@ -48,10 +48,9 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	local g=Duel.GetTargetsRelateToChain()
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)

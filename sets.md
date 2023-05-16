@@ -6,6 +6,7 @@
 - **May 27, 2023**: Duelist Pack: Duelists of Explosion (DP28-JP) : `100428XXX`
 - **June 10, 2023**: Animation Chronicle 2023 (AC03-JP) : `100207XXX`
 - **June 24, 2023**: Structure Deck: Pulse of the King (SD46-JP) : `100346XXX`
+- **July 22, 2023**: AGE OF OVERLORD (AGOV-JP) : `101202XXX`
 
 # Announced
 
