@@ -1,6 +1,7 @@
---coded by Lyris
+--幻想魔獣キマイラ
 --Chimera the Illusion Magical Beast
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

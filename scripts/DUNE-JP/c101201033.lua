@@ -1,6 +1,7 @@
---coded by Lyris
+--幻獣王キマイラ
 --Chimera the Phantom Beast King
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

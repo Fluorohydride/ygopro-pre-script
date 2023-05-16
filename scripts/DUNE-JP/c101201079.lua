@@ -1,6 +1,7 @@
---coded by Lyeis
+--冥府の合わせ鏡
 --Opposing Mirrors of the Underworld
-local s, id, o = GetID()
+--coded by Lyeis
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,6 @@
---coded by Lyris
 --Gold Pride - Pin Baller
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

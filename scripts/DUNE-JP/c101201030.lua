@@ -1,6 +1,7 @@
---coded by Lyris
+--クリック&エコー
 --Click & Echo
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--cannot be material
 	local e1=Effect.CreateEffect(c)

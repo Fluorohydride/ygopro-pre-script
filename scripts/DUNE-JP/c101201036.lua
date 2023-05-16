@@ -1,6 +1,7 @@
---coded by Lyris
+--マグナム・ザ・リリーバー
 --Magnum the Reliever
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

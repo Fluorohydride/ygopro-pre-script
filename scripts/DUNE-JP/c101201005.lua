@@ -1,6 +1,7 @@
---coded by Lyris
+--コーンフィールド コアトル
 --Cornfield Koator
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,101201052)
 	--indes

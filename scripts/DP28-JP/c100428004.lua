@@ -1,6 +1,7 @@
---coded by Lyris
+--転生炎獣バースト・グリフォン
 --Salamangreat Burst Gryphon
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

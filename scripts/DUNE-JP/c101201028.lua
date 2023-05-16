@@ -1,6 +1,7 @@
---coded by Lyris
+--魔星のウルカ
 --Uruka the Magic Star
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

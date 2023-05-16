@@ -1,6 +1,7 @@
---coded by Lyris
+--セレマテック・クラティス
 --Thelematech Cratis
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

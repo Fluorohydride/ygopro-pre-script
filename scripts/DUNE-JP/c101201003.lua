@@ -1,6 +1,7 @@
---coded by Lyris
+--幻爪の王ガゼル
 --Gazelle the King of Mythical Claws
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,101201052)
 	--add fusion/fiend

@@ -1,6 +1,6 @@
---coded by Lyris
 --How Did Dai Get Here?
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

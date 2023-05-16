@@ -1,6 +1,7 @@
---coded by Lyris
+--強欲なポッド
 --Pod of Greed
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--flip
 	local e1=Effect.CreateEffect(c)
