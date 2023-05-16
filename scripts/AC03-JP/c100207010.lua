@@ -1,23 +1,27 @@
+--トライアングル－O
 --Triangle O
+--Script by StupidStudiosN
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--destroy and damage
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetCode(EVENT_FREE_CHAIN)
-    e1:SetCountLimit(1,id)
-    e1:SetCondition(s.descon)
-    e1:SetTarget(s.destarget)
+	e1:SetCountLimit(1,id)
+	e1:SetCondition(s.descon)
+	e1:SetTarget(s.destarget)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-    --draw
-    local e2=Effect.CreateEffect(c)
+	--draw
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-    e2:SetCountLimit(1,id)
+	e2:SetCountLimit(1,id)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
@@ -28,8 +32,8 @@ function s.desfilter(c, code)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil,7903368) 
-    and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil,100207008) 
-    and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil,100207009)
+	and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil,100207008) 
+	and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil,100207009)
 end
 function s.destarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
@@ -38,9 +42,9 @@ function s.destarget(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,aux.ExceptThisCard(e))
-    local c=e:GetHandler()
+	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.Destroy(g,REASON_EFFECT) then
-        local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_REFLECT_DAMAGE)
@@ -48,7 +52,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(s.val)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
-    end
+	end
 end
 function s.val(e,re,ev,r,rp,rc)
 	return bit.band(r,REASON_EFFECT)~=0
@@ -59,9 +63,9 @@ end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,e)
-    if chk==0 then return g:GetClassCount(Card.GetCode)>=3 and Duel.IsPlayerCanDraw(tp,3) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-    aux.GCheckAdditional=aux.dncheck
+	if chk==0 then return g:GetClassCount(Card.GetCode)>=3 and Duel.IsPlayerCanDraw(tp,3) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	aux.GCheckAdditional=aux.dncheck
 	local sg=g:SelectSubGroup(tp,aux.TRUE,false,3,3)
 	aux.GCheckAdditional=nil
 	Duel.SetTargetCard(sg)

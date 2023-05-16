@@ -1,4 +1,6 @@
+--ダンディ・ホワイトライオン
 --Dandy White Lion
+--Script by StupidStudiosN
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--token
@@ -7,12 +9,12 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
-    e1:SetCountLimit(1,id)
-    e1:SetCost(s.spcost)
+	e1:SetCountLimit(1,id)
+	e1:SetCost(s.spcost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-    Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
+	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA)
@@ -39,7 +41,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<3 then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,15341822,0,TYPES_TOKEN_MONSTER,0,0,1,RACE_PLANT,ATTRIBUTE_WIND,POS_FACEUP_DEFENSE) then return end
-    for i=1,3 do
+	for i=1,3 do
 		local token=Duel.CreateToken(tp,15341822)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end

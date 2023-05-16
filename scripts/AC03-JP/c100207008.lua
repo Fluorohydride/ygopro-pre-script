@@ -1,8 +1,10 @@
+--アショカ・ピラー
 --Ashoka Pillar
+--Script by StupidStudiosN
 local s,id,o=GetID()
 function s.initial_effect(c)
-    --equip search
-    local e1=Effect.CreateEffect(c)
+	--equip search
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -18,8 +20,8 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-    --damage
-    local e4=Effect.CreateEffect(c)
+	--damage
+	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_DAMAGE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_DESTROYED)
@@ -42,9 +44,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-    if e:GetHandler():IsPosition(POS_FACEUP_ATTACK) then
-        Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE)
-    end
+	if e:GetHandler():IsPosition(POS_FACEUP_ATTACK) then
+		Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE)
+	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,14 +1,16 @@
+--トーテムポール
 --Totem Pole
+--Script by StupidStudiosN
 local s,id,o=GetID()
 function s.initial_effect(c)
-    c:EnableCounterPermit(0x28)
-    --Activate
+	c:EnableCounterPermit(0x28)
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-    --untarget
+	--untarget
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -17,9 +19,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.intg)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-    --negate attack+counter
+	--negate attack+counter
 	local e3=Effect.CreateEffect(c)
-    e3:SetCategory(CATEGORY_COUNTER)
+	e3:SetCategory(CATEGORY_COUNTER)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_SZONE)
@@ -27,16 +29,16 @@ function s.initial_effect(c)
 	e3:SetTarget(s.ntg)
 	e3:SetOperation(s.nop)
 	c:RegisterEffect(e3)
-    --destroy
-    local e4=Effect.CreateEffect(c)
+	--destroy
+	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(EFFECT_SELF_DESTROY)
 	e4:SetCondition(s.sdcon)
 	c:RegisterEffect(e4)
-    --inflict double damage
-    local e5=Effect.CreateEffect(c)
+	--inflict double damage
+	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetCode(EVENT_FREE_CHAIN)
@@ -69,7 +71,7 @@ function s.ddfilter(c)
 	return c:IsAttack(0)
 end
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(s.ddfilter,tp,LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.ddfilter,tp,LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetCode)>=3
 end
 function s.ddop(e,tp,eg,ep,ev,re,r,rp)

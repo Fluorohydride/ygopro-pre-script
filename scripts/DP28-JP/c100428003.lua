@@ -1,4 +1,6 @@
+--転生炎獣ティガー
 --Salamangreat Teeger
+--Script by StupidStudiosN
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon (self)

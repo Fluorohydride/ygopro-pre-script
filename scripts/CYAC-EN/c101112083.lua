@@ -1,7 +1,8 @@
 --Imperial Princess Quinquery
+--Script by StupidStudiosN
 local s,id,o=GetID()
 function s.initial_effect(c)
-    --xyz summon
+	--xyz summon
 	aux.AddXyzProcedure(c,nil,5,2)
 	c:EnableReviveLimit()
 	--special summon
