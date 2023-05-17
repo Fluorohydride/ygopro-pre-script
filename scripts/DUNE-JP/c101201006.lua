@@ -67,7 +67,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(4796100)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsOnField()
+	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsOnField() and re:GetHandler():IsControler(1-tp)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) and Duel.IsChainDisablable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
