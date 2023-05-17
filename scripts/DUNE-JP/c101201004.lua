@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+RACE_ILLUSION=0x2000000
 function s.filter(c)
 	return (c:IsLevel(4) and c:IsRace(RACE_BEAST) or c:IsCode(101201052)) and c:IsAbleToHand()
 end

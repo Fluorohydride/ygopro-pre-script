@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+RACE_ILLUSION=0x2000000
 function s.indtg(e,c)
 	local tc=e:GetHandler()
 	return c==tc or c==tc:GetBattleTarget()
