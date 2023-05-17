@@ -56,7 +56,7 @@ function s.sfilter(c,e,tp,code)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,r,rp,0)
+	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)
 		and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
