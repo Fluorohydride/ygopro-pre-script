@@ -1,4 +1,6 @@
+--覇王門の魔術師
 --Supreme King Gate Magician
+--Script by StupidStudiosN
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,13331639)
@@ -33,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-    --search
+	--search
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -45,14 +47,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
---Effect 1
 function s.indtg(e,c)
 	return c:IsFaceup() and c:IsCode(13331639)
 end
 function s.indval(e,re,tp)
 	return e:GetHandler():GetControler()~=tp
 end
---Effect 2
 function s.penfilter(c)
 	return c:IsSetCard(0x10f8) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and not c:IsForbidden()
 end
@@ -71,7 +71,6 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
---Effect 3
 function s.spfilter(c)
 	return c:IsSetCard(0x10f8) and not c:IsCode(id)
 end
@@ -91,13 +90,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_EXTRA,0,1,1,nil,tp)
 	local gc=g:GetFirst()
 	if gc and Duel.SendtoGrave(gc,REASON_EFFECT)~=0 and gc:IsLocation(LOCATION_GRAVE) then
-        local c=e:GetHandler()
+		local c=e:GetHandler()
 		if c:IsRelateToEffect(e) then
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		end
-    end
+	end
 end
---Effect 4
 function s.thfilter(c)
 	return aux.IsCodeListed(c,13331639) and not c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()
 end

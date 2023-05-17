@@ -1,19 +1,21 @@
+--サラマングレイト・リヴァイブ
 --Salamangreat Revive
+--Script by StupidStudiosN
 local s,id,o=GetID()
 function s.initial_effect(c)
-    --Special Summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-    e1:SetCountLimit(1,id+o)
+	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.stgt)
 	e1:SetOperation(s.sop)
 	c:RegisterEffect(e1)
-    --ATK Gain
-    local e2=Effect.CreateEffect(c)
+	--ATK Gain
+	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
@@ -21,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetLabel(0)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
-	e2:SetCountLimit(1,id+o*2)
+	e2:SetCountLimit(1,id+o)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)

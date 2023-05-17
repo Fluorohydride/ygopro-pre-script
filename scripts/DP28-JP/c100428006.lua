@@ -1,21 +1,23 @@
+--転生炎獣の炎軍
 --Salamangreat Charge
+--Script by StupidStudiosN
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
-    e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-    e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-    --Destroy
+	--Destroy
 	local e2=Effect.CreateEffect(c)
-    e2:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -26,7 +28,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
---Effect 1
 function s.filter1(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
@@ -49,11 +50,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ex,g1=Duel.GetOperationInfo(0,CATEGORY_TODECK)
 	local ex,g2=Duel.GetOperationInfo(0,CATEGORY_SPECIAL_SUMMON)
 	if g1:GetFirst():IsRelateToEffect(e) and g1:GetNext():IsRelateToEffect(e) then
-        local tc=g2:GetFirst()
+		local tc=g2:GetFirst()
 		if Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) and tc:IsRelateToEffect(e) then
-            Duel.BreakEffect()
-            Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-            local e1=Effect.CreateEffect(e:GetHandler())
+			Duel.BreakEffect()
+			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
@@ -67,11 +68,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetCode(EFFECT_CANNOT_ATTACK)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e3)
-            Duel.SpecialSummonComplete()
+			Duel.SpecialSummonComplete()
 		end
 	end
 end
---Effect 2
 function s.desfilter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and c:GetAttack()>c:GetBaseAttack()
 end
