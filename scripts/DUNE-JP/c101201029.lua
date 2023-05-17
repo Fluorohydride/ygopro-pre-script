@@ -40,6 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				Duel.ConfirmCards(1-tp,sg)
 				Duel.ShuffleHand(tp)
 				g:Sub(sg)
+			end
 			Duel.SendtoGrave(g,REASON_EFFECT)
 		end
 		Duel.BreakEffect()
