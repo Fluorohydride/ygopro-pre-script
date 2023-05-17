@@ -33,8 +33,8 @@ end
 function s.filter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToHand()
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,_,exc)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,exc) end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -44,8 +44,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-	if e:GetHandler():IsPosition(POS_FACEUP_ATTACK) then
-		Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE)
+	local c=e:GetHandler()
+	if c:IsRelateToChain() and c:IsPosition(POS_FACEUP_ATTACK) then
+		Duel.BreakEffect()
+		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

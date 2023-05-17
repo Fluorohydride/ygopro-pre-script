@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	--material
 	aux.AddXyzProcedure(c,nil,8,2)
 	--add counter
-	c:EnableCounterPermit(c,0x1)
+	c:EnableCounterPermit(0x1)
 	c:SetCounterLimit(0x1,9)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local xc=Duel.GetMatchingGroupCount(Card.IsSummonLocation,tp,0,LOCATION_MZONE,nil,LOCATION_EXTRA)
 	if xc>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local tg=Duel.SelectMatchingCard(Card.IsAbleToGrave,tp,LOCATION_EXTRA,0,1,xc,nil)
+		local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_EXTRA,0,1,xc,nil)
 		Duel.SendtoGrave(tg,REASON_EFFECT)
 	end
 end
