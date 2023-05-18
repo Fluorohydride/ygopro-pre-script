@@ -68,7 +68,7 @@ function s.sdcon(e)
 	return e:GetHandler():GetCounter(0x28)==3
 end
 function s.ddfilter(c)
-	return c:IsAttack(0)
+	return c:IsAttack(0) and c:IsRace(RACE_ROCK)
 end
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.ddfilter,tp,LOCATION_GRAVE,0,nil)
@@ -76,13 +76,11 @@ function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	--becomes doubled
-	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
-	e1:SetLabel(cid)
 	e1:SetValue(s.damval)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)

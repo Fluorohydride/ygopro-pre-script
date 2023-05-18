@@ -13,7 +13,7 @@ function c100428020.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c100428020.tgfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x32) and c:IsAbleToGrave()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x32) and not c:IsCode(100428020) and c:IsAbleToGrave()
 end
 function c100428020.rmfilter(c,tp)
 	return c:IsSetCard(0xb9) and c:IsFaceupEx() and c:IsAbleToRemove()

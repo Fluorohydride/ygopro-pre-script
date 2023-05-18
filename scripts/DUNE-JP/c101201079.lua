@@ -31,7 +31,8 @@ function Auxiliary.SelectFromOptions(tp,...)
 	return opvals[select+1]
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and 1-tp==rp and r&(REASON_EFFECT+REASON_BATTLE)>0
+	if ep~=tp then return false end
+	return r&REASON_BATTLE>0 and Duel.GetAttacker():IsControler(1-tp) or r&REASON_EFFECT>0 and rp==1-tp
 end
 function s.filter(c,v,e,tp)
 	return c:IsAttackBelow(v) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

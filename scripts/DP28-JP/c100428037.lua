@@ -16,7 +16,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return aux.bpcon() and eg:IsExists(Card.IsReason,1,nil,REASON_BATTLE+REASON_EFFECT)
+	local ph=Duel.GetCurrentPhase()
+	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+		and eg:IsExists(Card.IsReason,1,nil,REASON_BATTLE+REASON_EFFECT)
 end
 function s.tfilter(c)
 	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and c:IsCanOverlay()
