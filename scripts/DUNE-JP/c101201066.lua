@@ -16,7 +16,8 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsPreviousControler(tp) and not c:IsReason(REASON_DESTROY)
-		and c:GetReasonEffect():IsActiveType(TYPE_MONSTER) and c:GetReasonPlayer()==1-tp
+		and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():IsActiveType(TYPE_MONSTER)
+		and c:GetReasonPlayer()==1-tp
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
