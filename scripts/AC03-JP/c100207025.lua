@@ -35,9 +35,10 @@ function s.chk(g,e,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return mg:CheckSubGroup(s.chk,2,2,e,tp) and Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
+	if chk==0 then return mg:CheckSubGroup(s.chk,2,2,e,tp)
+		and Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=mg:SelectSubGroup(tp,s.cfilter,false,2,2,e,tp)
+	local g=mg:SelectSubGroup(tp,s.chk,false,2,2,e,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 	g:KeepAlive()
 	e:SetLabelObject(g)
@@ -68,6 +69,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local fg=g:FilterSelect(tp,Card.CheckFusionMaterial,1,1,nil,mg)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=g:FilterSelect(tp,Card.IsSynchroSummonable,1,1,nil,nil,g)
-	if #fg>0 and #sg>0 then Duel.SpecialSummon(fg+sg,0,tp,tp,false,false,POS_FACEUP) end
+	local sg=g:FilterSelect(tp,Card.IsSynchroSummonable,1,1,fg,nil,mg)
+	if #fg>0 and #sg>0 then
+		Duel.SpecialSummon(fg+sg,0,tp,tp,false,false,POS_FACEUP)
+	end
 end
