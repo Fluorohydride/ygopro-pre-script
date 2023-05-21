@@ -12,8 +12,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	local e3=e1:Clone()
+	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 	c:RegisterEffect(e3)
 	--cannot tribute
@@ -50,7 +51,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function s.mlimit(e,c,st)
-	return st==SUMMON_TYPE_FUSION or st==SUMMON_TYPE_SYNCHRO or st==SUMMON_TYPE_XYZ
+	return st==SUMMON_TYPE_FUSION
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_LINK and e:GetHandler():IsLocation(LOCATION_GRAVE)

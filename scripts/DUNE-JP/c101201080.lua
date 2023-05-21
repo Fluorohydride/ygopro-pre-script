@@ -39,7 +39,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not (c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPES_EFFECT_TRAP_MONSTER,3000,3000,10,RACE_CYBERSE,ATTRIBUTE_DARK)) then return end
-	c:AddMonsterAttribute(c,TYPE_EFFECT+TYPE_TRAP)
+	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_TRAP)
 	if Duel.SpecialSummonStep(c,SUMMON_VALUE_SELF,tp,tp,true,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

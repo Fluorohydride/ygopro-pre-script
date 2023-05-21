@@ -36,8 +36,8 @@ end
 function s.condition(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>24
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>=25
 end
 function s.atkcon(e)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>24
+	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_GRAVE)>=25
 end

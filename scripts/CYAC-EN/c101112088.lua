@@ -2,6 +2,7 @@
 --coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
+	aux.AddCodeList(c,96305350)
 	c:EnableReviveLimit()
 	--material
 	aux.AddXyzProcedure(c,nil,3,2)
@@ -17,7 +18,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 	--todeck
-	aux.AddCodeList(c,96305350)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON)
