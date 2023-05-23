@@ -26,8 +26,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,e,tp)
 	local tg=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsCanBeSpecialSummoned),tp,0,LOCATION_GRAVE+LOCATION_HAND,nil,e,0,1-tp,false,false)
-	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and #tg>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
+	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0
+		and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and #tg>0
+		and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
+		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 		local tc=tg:Select(1-tp,1,1,nil):GetFirst()
 		Duel.BreakEffect()
 		if Duel.SpecialSummonStep(tc,0,1-tp,1-tp,false,false,POS_FACEUP) then
