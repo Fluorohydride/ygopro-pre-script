@@ -30,7 +30,6 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsAbleToChangeControler()
-		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.eqfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x18d)
@@ -41,6 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 		if e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE) then ft=ft-1 end
 		return ft>0 and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,tp)
+			and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_MZONE,0,1,nil)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,tp)

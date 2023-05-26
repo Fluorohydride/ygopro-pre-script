@@ -63,7 +63,7 @@ function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(id)==0 end
+	if chk==0 then return c:IsLevelAbove(0) and c:GetFlagEffect(id)==0 end
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)

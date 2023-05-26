@@ -80,7 +80,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if sg and Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local tg=Duel.SelectMatchingCard(tp,s.synfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,nil)
-			Duel.SpecialSummon(tg,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)
+			local tc=tg:GetFirst()
+			if tc then
+				Duel.SpecialSummon(tc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)
+				tc:CompleteProcedure()
+			end
 		end
 	end
 end

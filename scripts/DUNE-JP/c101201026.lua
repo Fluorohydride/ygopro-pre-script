@@ -28,7 +28,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.dfilter(c,tp)
-	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsDiscardable() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,c:GetAttack())
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsDiscardable()
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,c:GetAttack())
 end
 function s.filter(c,atk)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:GetAttack()>atk and c:IsAbleToHand()

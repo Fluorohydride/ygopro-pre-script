@@ -45,7 +45,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-	elseif c:IsLocation(LOCATION_REMOVED) then Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) end
+	elseif c:IsRelateToEffect(e) and c:IsLocation(LOCATION_REMOVED) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -19,10 +19,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)==0 then e:SetLabel(1) else e:SetLabel(0) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local tc=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
 	if not tc or Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)==0 then return end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetCountLimit(1)
@@ -31,8 +32,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.operation)
 	e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)
 	Duel.RegisterEffect(e1,tp)
-	if e:GetLabel()==1 then
-		local e2=Effect.CreateEffect(e:GetHandler())
+	if e:GetLabel()==1 and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetCode(EFFECT_CANNOT_ACTIVATE)

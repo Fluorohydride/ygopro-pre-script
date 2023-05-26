@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():CheckUniqueOnField(tp)
-		and Duel.IsExistingTarget(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,e:GetHandler(),0x18d)
+		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,e:GetHandler(),0x18d)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end

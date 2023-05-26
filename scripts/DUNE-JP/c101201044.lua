@@ -38,13 +38,9 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	local g
+	local ct=e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,21347668) and 2 or 1
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	if e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,21347668) then
-		g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,2,nil)
-	else
-		g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
-	end
+	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

@@ -29,9 +29,6 @@ end
 function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsType(TYPE_PENDULUM)
 end
-function s.splimit(e,c)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_PENDULUM)
-end
 function s.rmfilter(c)
 	return c:IsAbleToRemoveAsCost(POS_FACEDOWN) and not c:IsCode(70155677)
 end
@@ -49,6 +46,9 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_EXTRA,0,3,3,nil)
 	Duel.Remove(g,POS_FACEDOWN,REASON_COST)
+end
+function s.splimit(e,c)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_PENDULUM)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

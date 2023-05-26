@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -36,14 +37,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp,z):GetFirst()
 	if Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE,z)>0 then
+		if sc:IsFacedown() then Duel.ConfirmCards(1-tp,sc) end
 		local sq=4-sc:GetSequence()
 		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_DECK+LOCATION_HAND,nil,e,1-tp,2^sq)
 		if Duel.CheckLocation(1-tp,LOCATION_MZONE,sq) and #g>0
 			and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
-			local sg=g:Select(1-tp,1,1,nil)
+			local sc2=g:Select(1-tp,1,1,nil):GetFirst()
 			Duel.BreakEffect()
-			Duel.SpecialSummon(sg,0,1-tp,1-tp,false,false,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE,2^sq)
+			Duel.SpecialSummon(sc2,0,1-tp,1-tp,false,false,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE,2^sq)
+			if sc2:IsFacedown() then Duel.ConfirmCards(tp,sc2) end
 		end
 	end
 end

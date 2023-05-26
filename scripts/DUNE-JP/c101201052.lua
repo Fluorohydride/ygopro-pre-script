@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e1:SetCondition(s.fscon)
 	e1:SetTarget(s.fstg)
 	e1:SetOperation(s.fsop)
@@ -145,5 +146,5 @@ function s.banish(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.sfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:SelectSubGroup(tp,aux.dncheck,false,2,2)
-	if sg and #sg==2 then Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) end
+	if sg then Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) end
 end

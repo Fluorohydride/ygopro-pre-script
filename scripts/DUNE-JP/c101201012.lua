@@ -28,14 +28,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-function s.desfilter(c,tp)
+function s.desfilter(c)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.confilter(c)
 	return c:IsFaceup() and c:IsCode(56099748)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.desfilter,1,nil,tp)
+	return eg:IsExists(s.desfilter,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

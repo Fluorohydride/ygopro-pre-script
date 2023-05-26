@@ -59,5 +59,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD):Select(tp,1,1,nil)
-	Duel.Destroy(g,REASON_EFFECT)
+	if #g>0 then
+		Duel.Destroy(g,REASON_EFFECT)
+	end
 end

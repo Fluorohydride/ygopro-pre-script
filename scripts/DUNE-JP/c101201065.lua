@@ -51,7 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		e:SetCategory(CATEGORY_DESTROY)
 		e:SetOperation(s.destroy)
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,Group.CreateGroup(a,d),2,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,Group.FromCards(a,d),2,0,0)
 	end
 end
 function s.defense(e,tp,eg,ep,ev,re,r,rp)
@@ -64,6 +64,6 @@ function s.rtohand(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destroy(e,tp,eg,ep,ev,re,r,rp)
 	local a,d=Duel.GetAttacker(),Duel.GetAttackTarget()
-	local g=Group.CreateGroup(a,d):Filter(Card.IsRelateToBattle,nil)
+	local g=Group.FromCards(a,d):Filter(Card.IsRelateToBattle,nil)
 	if #g==2 then Duel.Destroy(g,REASON_EFFECT) end
 end
