@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 function s.mfilter(typ)
 	return  function(c)
-				return c:IsFusionSetCard(0x21) c:IsFusionType(typ)
+				return c:IsFusionSetCard(0x21) and c:IsFusionType(typ)
 			end
 end
 function s.zstg(e,tp,eg,ep,ev,re,r,rp,chk)
