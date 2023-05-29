@@ -67,7 +67,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_EXTRA,0,nil,e,tp,tc:GetCode())
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
 		and tc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g>0
-		and Duel.SelectYesNo(1-tp,aux.Stringid(id,2))) then
+		and Duel.SelectYesNo(1-tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(1-tp,1,1,nil)
 		Duel.BreakEffect()
