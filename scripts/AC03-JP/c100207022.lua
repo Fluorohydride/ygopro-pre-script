@@ -46,7 +46,7 @@ function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local op=aux.SelectFromOptions(1-tp,{true,aux.Stringid(id,2)},{aux.nzatk,aux.Stringid(id,3)})
-	if op==0 then Duel.Destroy(tc,REASON_EFFECT)
+	if op==1 then Duel.Destroy(tc,REASON_EFFECT)
 	else Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT) end
 end
 function s.mfilter(c,e)
