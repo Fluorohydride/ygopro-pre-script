@@ -28,9 +28,12 @@ function s.xfilter(c)
 	return not c:IsType(TYPE_TUNER)
 end
 function s.chk(g,e,tp)
-	if not (g:IsExists(Card.IsType,1,nil,TYPE_TUNER) and g:IsExists(s.xfilter,1,nil)) then return false end
+	if not (g:IsExists(Card.IsType,1,nil,TYPE_TUNER) and g:IsExists(s.xfilter,1,nil)
+		and Duel.GetLocationCountFromEx(tp,tp,g,TYPE_FUSION)
+		&Duel.GetLocationCountFromEx(tp,tp,g,TYPE_SYNCHRO)>1) then return false end
+
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
-	return Duel.GetLocationCountFromEx(tp,tp,g,0)>1 and sg:IsExists(Card.CheckFusionMaterial,1,nil,g)
+	return sg:IsExists(Card.CheckFusionMaterial,1,nil,g)
 		and sg:IsExists(Card.IsSynchroSummonable,1,nil,nil,g)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,7 +67,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg=Duel.GetTargetsRelateToChain()
-	if #mg<2 or Duel.GetLocationCountFromEx(tp,tp,nil,0)<2
+	if #mg<2 or Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_FUSION)&Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_SYNCHRO)<2
 		or Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
