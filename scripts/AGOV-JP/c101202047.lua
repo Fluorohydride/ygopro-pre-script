@@ -107,7 +107,7 @@ function c101202047.pcon(e,tp,eg,ep,ev,re,r,rp)
 	local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
 	if lpz==nil or rpz==nil then return false end
-	local lscale=c:GetLeftScale()
+	local lscale=lpz:GetLeftScale()
 	local rscale=rpz:GetRightScale()
 	if lscale>rscale then lscale,rscale=rscale,lscale end
 	local loc=0
@@ -128,7 +128,7 @@ function c101202047.pop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(aux.TRUE)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)	
+	Duel.RegisterEffect(e1,tp)  
 	local eset={e1}
 	local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
