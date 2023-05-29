@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id+o)
-	e2:SetCondition(aux.bpcon)
+	e2:SetCondition(s.fscon)
 	e2:SetTarget(s.fstg)
 	e2:SetOperation(s.fsop)
 	c:RegisterEffect(e2)
@@ -48,6 +48,10 @@ function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	local op=aux.SelectFromOptions(1-tp,{true,aux.Stringid(id,2)},{aux.nzatk,aux.Stringid(id,3)})
 	if op==1 then Duel.Destroy(tc,REASON_EFFECT)
 	else Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT) end
+end
+function s.fscon(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
+	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function s.mfilter(c,e)
 	return c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
