@@ -31,7 +31,6 @@ function s.chk(g,e,tp)
 	if not (g:IsExists(Card.IsType,1,nil,TYPE_TUNER) and g:IsExists(s.xfilter,1,nil)
 		and Duel.GetLocationCountFromEx(tp,tp,g,TYPE_FUSION)
 		&Duel.GetLocationCountFromEx(tp,tp,g,TYPE_SYNCHRO)>1) then return false end
-
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	return sg:IsExists(Card.CheckFusionMaterial,1,nil,g)
 		and sg:IsExists(Card.IsSynchroSummonable,1,nil,nil,g)
