@@ -1,5 +1,6 @@
---coded by Lyris
+--異界共鳴－シンクロ・フュージョン
 --Harmonic Synchro Fusion
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

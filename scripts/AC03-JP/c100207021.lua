@@ -1,6 +1,7 @@
---coded by Lyris
+--地縛戒隷 ジオグラシャ＝ラボラス
 --Earthbound Servant Geo Grasha
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

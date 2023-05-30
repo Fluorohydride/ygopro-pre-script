@@ -1,6 +1,7 @@
---coded by Lyris
+--幻惑の眼
 --Eye of Illusion
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -27,10 +28,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		return f[e:GetLabel()] and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp)
 	end
 	if chk==0 then return true end
-	local b1=Duel.GetTurnPlayer()==1-tp and Duel.IsExistingTarget(s.tfilter,tp,0,LOCATION_MZONE,1,nil)
-	local b2=Duel.GetTurnPlayer()==1-tp and Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE)
+	local b2=Duel.GetTurnPlayer()==1-tp
+		and Duel.IsExistingTarget(s.tfilter,tp,0,LOCATION_MZONE,1,nil)
+	local b3=Duel.GetTurnPlayer()==1-tp
+		and Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE)
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,a)
-	local op=aux.SelectFromOptions(tp,{true,aux.Stringid(id,1)},{b1,aux.Stringid(id,2)},{b2,aux.Stringid(id,3)})
+	local op=aux.SelectFromOptions(tp,{true,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)},{b3,aux.Stringid(id,3)})
 	e:SetLabel(op)
 	if op==1 then
 		e:SetCategory(0)

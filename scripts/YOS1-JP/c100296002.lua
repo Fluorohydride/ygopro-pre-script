@@ -1,6 +1,7 @@
---coded by Lyris
+--閃刀姫－カメリア
 --Sky Striker Ace - Camellia
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
-	--If this card is sent to the GY: You can target 1 monster your opponent controls; Special Summon this card to their field, and if you do, send that monster to the GY, also shift control to this card's owner during the End Phase of this turn.
+	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOGRAVE)

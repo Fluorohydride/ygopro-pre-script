@@ -1,5 +1,6 @@
---coded by Lyris
+--ヴォルカニック・エミッション
 --Volcanic Emission
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

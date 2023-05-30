@@ -1,5 +1,6 @@
---coded by Lyris
+--地縛囚人 ストーン・スィーパー
 --Earthbound Prisoner Stone Sweeper
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
