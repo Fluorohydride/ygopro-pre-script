@@ -62,16 +62,19 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.sfilter(c,e,tp,...)
 	return c:IsCode(...) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local g=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_EXTRA,0,nil,e,tp,tc:GetCode())
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
-		and tc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g>0
-		and Duel.SelectYesNo(1-tp,aux.Stringid(id,2)) then
-		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
-		local sg=g:Select(1-tp,1,1,nil)
-		Duel.BreakEffect()
-		Duel.SpecialSummon(sg,0,1-tp,1-tp,false,false,POS_FACEUP)
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsType(TYPE_EFFECT)
+		and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
+		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+		local g=Duel.GetMatchingGroup(s.sfilter,tp,0,LOCATION_EXTRA,nil,e,1-tp,tc:GetCode())
+		if #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,2)) then
+			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
+			local sg=g:Select(1-tp,1,1,nil)
+			Duel.BreakEffect()
+			Duel.SpecialSummon(sg,0,1-tp,1-tp,false,false,POS_FACEUP)
+		end
 	end
 end

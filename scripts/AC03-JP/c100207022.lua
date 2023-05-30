@@ -40,15 +40,19 @@ function s.rdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
-	if not aux.nzatk(tc) then Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0) end
+	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	local op=aux.SelectFromOptions(1-tp,{true,aux.Stringid(id,2)},{aux.nzatk,aux.Stringid(id,3)})
-	if op==1 then Duel.Destroy(tc,REASON_EFFECT)
-	else Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT) end
+	local op=aux.SelectFromOptions(1-tp,
+		{true,aux.Stringid(id,2)},
+		{aux.nzatk(tc),aux.Stringid(id,3)})
+	if op==1 then
+		Duel.Destroy(tc,REASON_EFFECT)
+	else
+		Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
+	end
 end
 function s.fscon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

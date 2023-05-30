@@ -19,8 +19,10 @@ function s.dfilter(c,tp)
 	return c:IsFaceup() and c:GetBaseAttack()>0 and c:IsRace(RACE_PYRO)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
-	local b2=Duel.IsExistingTarget(s.dfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp)
+	local b1=Duel.GetFlagEffect(tp,id)==0
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
+	local b2=Duel.GetFlagEffect(tp,id+o)==0
+		and Duel.IsExistingTarget(s.dfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp)
 	if chk==0 then return b1 or b2 end
 	local op=aux.SelectFromOptions(tp,{b1,aux.Stringid(id,0)},{b2,aux.Stringid(id,1)})
 	if op==1 then
@@ -68,14 +70,10 @@ function s.ret(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	--snip 1: from "Misfortune"
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		--end snip 1
 		local d=1
 		if tc:IsControler(tp) then d=2 end
-		--snip 2: edited from "Misfortune"
 		Duel.Damage(1-tp,tc:GetBaseAttack()//d,REASON_EFFECT)
 	end
-	--end snip 2
 end
