@@ -20,21 +20,25 @@ end
 function c101202048.cfilter(c)
 	return c:IsCode(13331639) and c:IsFaceup()
 end
-function c101202048.filter(c,e,tp)
+function c101202048.filter(c,e,tp,check)
 	return c:IsSetCard(0x10f8,0x20f8) and c:IsType(TYPE_PENDULUM) and (c:IsAbleToHand()
-		or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101202048.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+		or check and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c101202048.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101202048.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then
+		local check=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and Duel.IsExistingMatchingCard(c101202048.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+		return Duel.IsExistingMatchingCard(c101202048.filter,tp,LOCATION_DECK,0,1,nil,e,tp,check)
+	end
 end
 function c101202048.activate(e,tp,eg,ep,ev,re,r,rp)
+	local check=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c101202048.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local g=Duel.SelectMatchingCard(tp,c101202048.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c101202048.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,check)
 	if g:GetCount()<=0 then return end
 	local tc=g:GetFirst()
-	local b=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c101202048.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
-		and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	local b=check and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	if tc:IsAbleToHand() and (not b or Duel.SelectOption(tp,1190,1152)==0) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
