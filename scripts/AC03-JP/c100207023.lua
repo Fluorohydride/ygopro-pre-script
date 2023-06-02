@@ -65,7 +65,7 @@ function s.dfilter(c)
 	return c:IsFaceupEx() and c:IsSetCard(0x21) and c:IsType(TYPE_MONSTER)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)>0
+	local g=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
 	if chk==0 then return #g>0
 		and Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil) end
 	local ct=Duel.GetMatchingGroup(s.dfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,nil):GetClassCount(Card.GetCode)
