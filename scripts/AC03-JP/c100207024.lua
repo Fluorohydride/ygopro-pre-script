@@ -45,8 +45,9 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then e:GetHandler():SetCardTarget(tc) end
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then c:SetCardTarget(tc) end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_TARGET)
 	e1:SetCode(EFFECT_DISABLE)
