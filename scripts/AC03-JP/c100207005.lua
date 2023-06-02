@@ -56,7 +56,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	local res=0
 	if c:IsHasEffect(73206827) then
-		1-Duel.SelectOption(tp,60,61)
+		res=1-Duel.SelectOption(tp,60,61)
 	else res=Duel.TossCoin(tp,1) end
 	s.arcanareg(c,res)
 end
