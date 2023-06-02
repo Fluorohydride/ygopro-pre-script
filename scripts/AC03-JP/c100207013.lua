@@ -4,7 +4,7 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
-	aux.AddXyzProcedure(c.nil,8,2,nil,nil,99)
+	aux.AddXyzProcedure(c,nil,8,2,nil,nil,99)
 	--attach
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
