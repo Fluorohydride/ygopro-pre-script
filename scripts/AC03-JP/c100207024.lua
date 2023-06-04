@@ -21,7 +21,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x21))
-	e2:SetValue(0x1)
 	c:RegisterEffect(e2)
 	--halve lp
 	local e3=Effect.CreateEffect(c)
