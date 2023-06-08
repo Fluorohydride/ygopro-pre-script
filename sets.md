@@ -2,11 +2,12 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **April 22, 2023**: DUELIST NEXUS (DUNE-JP) : `101201XXX`
 - **May 27, 2023**: Duelist Pack: Duelists of Explosion (DP28-JP) : `100428XXX`
 - **June 10, 2023**: Animation Chronicle 2023 (AC03-JP) : `100207XXX`
 - **June 24, 2023**: Structure Deck: Pulse of the King (SD46-JP) : `100346XXX`
 - **July 22, 2023**: AGE OF OVERLORD (AGOV-JP) : `101202XXX`
+- **August 4, 2023**: Yu-Gi-Oh! OCG Structures Volume 7 promotional card (YO07-JP) : `100208XXX`
+- **August 26, 2023**: Deck Build Pack: Valiant Smashers (DBVS?-JP) : `100421XXX`
 
 # Announced
 
@@ -212,3 +213,4 @@
 - DARKWING BLAST (DABL-JP): `101110XXX`
 - Photon Hypernova (PHHY-JP) : `101111XXX`
 - CYBERSTORM ACCESS (CYAC-JP) : `101112XXX`
+- DUELIST NEXUS (DUNE-JP) : `101201XXX`
