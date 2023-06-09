@@ -15,7 +15,6 @@ function c101202047.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,101202047)
-	e2:SetCost(c101202047.thcost)
 	e2:SetTarget(c101202047.thtg)
 	e2:SetOperation(c101202047.thop)
 	c:RegisterEffect(e2)
@@ -67,21 +66,13 @@ end
 function c101202047.thfilter(c,code)
 	return c:IsType(TYPE_PENDULUM) and c:GetAttack()==2500 and not c:IsCode(code) and c:IsAbleToHand()
 end
-function c101202047.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(100)
-	return true
-end
 function c101202047.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		if e:GetLabel()~=100 then return false end
-		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(c101202047.cfilter,tp,LOCATION_HAND,0,1,nil,tp)
-	end
+	if chk==0 then return e:IsCostChecked()
+		and Duel.IsExistingMatchingCard(c101202047.cfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,c101202047.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
 	e:SetLabel(g:GetFirst():GetCode())
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c101202047.thop(e,tp,eg,ep,ev,re,r,rp)

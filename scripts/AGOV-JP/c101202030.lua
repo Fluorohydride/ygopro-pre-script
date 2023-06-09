@@ -105,6 +105,7 @@ function c101202030.pop(e,tp,eg,ep,ev,re,r,rp)
 			if sc and Duel.SendtoDeck(sc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and sc:IsLocation(LOCATION_EXTRA)
 				and sc:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,nil,sc)>0
 				and Duel.SelectYesNo(tp,aux.Stringid(101202030,2)) then
+				Duel.BreakEffect()
 				Duel.SpecialSummon(sc,0,tp,tp,true,false,POS_FACEUP)
 			end
 		end
