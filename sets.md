@@ -10,6 +10,7 @@
 - **August 26, 2023**: Deck Build Pack: Valiant Smashers (DBVS?-JP) : `100421XXX`
 
 # Announced
+* **September 2023**: Legendary "Black Luster Soldier" GET Campaign: `100199XXX`
 
 # Archived
 ## Other packs
