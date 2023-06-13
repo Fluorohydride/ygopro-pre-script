@@ -5,6 +5,7 @@ function c101202073.initial_effect(c)
 	aux.AddCodeList(c,56099748)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101202073,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -15,6 +16,7 @@ function c101202073.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101202073,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -31,7 +33,7 @@ function c101202073.costfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(c101202073.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function c101202073.spfilter(c,e,tp,sc)
-	return c:IsSetCard(0x201) and c:IsAttack(3000) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(0x29b) and c:IsAttack(3000) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 		and Duel.GetLocationCountFromEx(tp,tp,sc,c)>0
 end
 function c101202073.cost(e,tp,eg,ep,ev,re,r,rp,chk)

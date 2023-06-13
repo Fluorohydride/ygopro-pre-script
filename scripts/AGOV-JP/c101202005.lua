@@ -3,7 +3,7 @@
 --Script by Trishula9
 function c101202005.initial_effect(c)
 	c:SetSPSummonOnce(101202005)
-	c:EnableCounterPermit(0x67,LOCATION_PZONE)
+	c:EnableCounterPermit(0x169,LOCATION_PZONE)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	c:EnableReviveLimit()
@@ -19,6 +19,7 @@ function c101202005.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetRange(LOCATION_PZONE)
+	e1:SetCountLimit(1,EFFECT_COUNT_CODE_CHAIN)
 	e1:SetCondition(c101202005.stcon)
 	e1:SetTarget(c101202005.sttg)
 	e1:SetOperation(c101202005.stop)
@@ -46,6 +47,7 @@ function c101202005.initial_effect(c)
 	c:RegisterEffect(e4)
 	--end turn
 	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(101202005,1))
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e5:SetRange(LOCATION_MZONE)
@@ -57,6 +59,7 @@ function c101202005.initial_effect(c)
 	c:RegisterEffect(e5)
 	--to hand
 	local e6=Effect.CreateEffect(c)
+	e6:SetDescription(aux.Stringid(101202005,2))
 	e6:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetCode(EVENT_PHASE+PHASE_STANDBY)
@@ -71,22 +74,20 @@ function c101202005.stcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsType,1,nil,TYPE_MONSTER)
 end
 function c101202005.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(101202005)==0 end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,3,0,0x67)
-	c:RegisterFlagEffect(101202005,RESET_CHAIN,0,1)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,3,0,0x169)
 end
 function c101202005.stop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(0x67,3)
+		e:GetHandler():AddCounter(0x169,3)
 	end
 end
 function c101202005.scval(e,c)
-	return c:GetCounter(0x67)
+	return c:GetCounter(0x169)
 end
 function c101202005.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x67,12,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x67,12,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x169,12,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,0x169,12,REASON_COST)
 end
 function c101202005.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -112,11 +113,12 @@ function c101202005.etcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEDOWN,REASON_COST)
 end
 function c101202005.etop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(1-tp,PHASE_DRAW,RESET_PHASE+PHASE_END,1)
-	Duel.SkipPhase(1-tp,PHASE_STANDBY,RESET_PHASE+PHASE_END,1)
-	Duel.SkipPhase(1-tp,PHASE_MAIN1,RESET_PHASE+PHASE_END,1)
-	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_END,1,1)
-	Duel.SkipPhase(1-tp,PHASE_MAIN2,RESET_PHASE+PHASE_END,1)
+	local turnp=Duel.GetTurnPlayer()
+	Duel.SkipPhase(turnp,PHASE_DRAW,RESET_PHASE+PHASE_END,1)
+	Duel.SkipPhase(turnp,PHASE_STANDBY,RESET_PHASE+PHASE_END,1)
+	Duel.SkipPhase(turnp,PHASE_MAIN1,RESET_PHASE+PHASE_END,1)
+	Duel.SkipPhase(turnp,PHASE_BATTLE,RESET_PHASE+PHASE_END,1,1)
+	Duel.SkipPhase(turnp,PHASE_MAIN2,RESET_PHASE+PHASE_END,1)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -133,7 +135,7 @@ function c101202005.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function c101202005.spfilter(c,e,tp)
-	return c:IsSetCard(0x200) and (c:IsLocation(LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE) or c:IsFaceup())
+	return c:IsSetCard(0x29a) and (c:IsLocation(LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE) or c:IsFaceup())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101202005.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -141,7 +143,7 @@ function c101202005.thop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)>0 and c:IsLocation(LOCATION_HAND) then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local g=Duel.GetMatchingGroup(c101202005.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
-		if ft>0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101202005,1)) then
+		if ft>0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101202005,3)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)

@@ -5,6 +5,7 @@ function c101202072.initial_effect(c)
 	aux.AddCodeList(c,56099748)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101202072,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -16,6 +17,7 @@ function c101202072.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(101202072,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -71,10 +73,11 @@ end
 function c101202072.srop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if not tc then return end
+	Duel.Hint(HINT_CARD,0,101202072)
 	local op=tc:GetOwner()
 	local race=tc:GetRace()
 	local lv=tc:GetLevel()|tc:GetRank()|tc:GetLink()
-	if tc and Duel.SelectYesNo(op,aux.Stringid(101202072,0)) then
+	if Duel.SelectYesNo(op,aux.Stringid(101202072,2)) then
 		Duel.Hint(HINT_SELECTMSG,op,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(op,c101202072.srfilter,op,LOCATION_DECK,0,1,1,nil,race,lv)
 		if g:GetCount()>0 then
@@ -84,7 +87,7 @@ function c101202072.srop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101202072.thfilter(c,tp)
-	return c:IsSetCard(0x200) and c:IsFaceup()
+	return c:IsSetCard(0x29a) and c:IsFaceup()
 end
 function c101202072.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101202072.thfilter,1,nil,tp)

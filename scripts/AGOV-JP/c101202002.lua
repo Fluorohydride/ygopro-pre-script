@@ -61,37 +61,36 @@ function c101202002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function c101202002.filter(c)
+function c101202002.filter(c,ec)
 	return c:IsType(TYPE_PENDULUM) and c:IsFaceup() and c:IsLevelAbove(0)
+		and (not c:IsAttribute(ec:GetAttribute()) or not c:IsLevel(ec:GetLevel()))
 end
 function c101202002.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c101202002.filter,tp,LOCATION_MZONE,0,nil)
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0
-		and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101202002,3)) then
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local rc=g:Select(tp,1,1,c):GetFirst()
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101202002,4))
-		local rg=Group.FromCards(c,rc)
-		local sg=rg:Select(tp,1,1,nil)
-		Duel.HintSelection(sg)
-		local sc=sg:GetFirst()
-		local tc=c
-		if sc==c then
-			tc=rc
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+		local g=Duel.GetMatchingGroup(c101202002.filter,tp,LOCATION_MZONE,0,c,c)
+		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101202002,3)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+			local rc=g:Select(tp,1,1,c):GetFirst()
+			local rg=Group.FromCards(c,rc)
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(101202002,4))
+			local sg=rg:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
+			local tc=sg:GetFirst()
+			local sc=(rg-sg):GetFirst()
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetValue(sc:GetAttribute())
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_CHANGE_LEVEL)
+			e2:SetValue(sc:GetLevel())
+			tc:RegisterEffect(e2)
 		end
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetValue(sc:GetAttribute())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_CHANGE_LEVEL)
-		e2:SetValue(sc:GetLevel())
-		tc:RegisterEffect(e2)
 	end
 end
 function c101202002.thfilter(c)
@@ -108,21 +107,22 @@ function c101202002.xyzfilter(c)
 	return c:IsSetCard(0x20f8) and c:IsXyzSummonable(nil)
 end
 function c101202002.thop1(e,tp,eg,ep,ev,re,r,rp)
-	local g1=Duel.GetMatchingGroup(c101202002.scfilter,tp,LOCATION_EXTRA,0,nil)
-	local g2=Duel.GetMatchingGroup(c101202002.xyzfilter,tp,LOCATION_EXTRA,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tc=Duel.SelectMatchingCard(tp,c101202002.thfilter,tp,LOCATION_EXTRA,0,1,1,nil):GetFirst()
-	if tc and Duel.SendtoHand(tc,nil,REASON_EFFECT) and tc:IsLocation(LOCATION_HAND)
-		and (g1:GetCount()>0 or g2:GetCount()>0)
-		and Duel.SelectYesNo(tp,aux.Stringid(101202002,5)) then
-		Duel.BreakEffect()
-		local g=g1+g2
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sc=g:Select(tp,1,1,nil):GetFirst()
-		if g1:IsContains(sc) then
-			Duel.SynchroSummon(tp,sc,nil)
-		else
-			Duel.XyzSummon(tp,sc,nil)
+	if tc and Duel.SendtoHand(tc,nil,REASON_EFFECT) and tc:IsLocation(LOCATION_HAND) then
+		local g1=Duel.GetMatchingGroup(c101202002.scfilter,tp,LOCATION_EXTRA,0,nil)
+		local g2=Duel.GetMatchingGroup(c101202002.xyzfilter,tp,LOCATION_EXTRA,0,nil)
+		if (g1:GetCount()>0 or g2:GetCount()>0)
+			and Duel.SelectYesNo(tp,aux.Stringid(101202002,5)) then
+			Duel.BreakEffect()
+			local g=g1+g2
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sc=g:Select(tp,1,1,nil):GetFirst()
+			if g1:IsContains(sc) then
+				Duel.SynchroSummon(tp,sc,nil)
+			else
+				Duel.XyzSummon(tp,sc,nil)
+			end
 		end
 	end
 end

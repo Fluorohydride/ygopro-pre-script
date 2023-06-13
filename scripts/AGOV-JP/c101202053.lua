@@ -5,6 +5,7 @@ function c101202053.initial_effect(c)
 	aux.AddCodeList(c,56099748)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101202053,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -15,7 +16,7 @@ function c101202053.initial_effect(c)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101202053,0))
+	e2:SetDescription(aux.Stringid(101202053,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
@@ -38,6 +39,9 @@ function c101202053.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g2,1,0,0)
 end
+function c101202053.filter(c)
+	return c:IsFaceup() and c:IsCode(56099748)
+end
 function c101202053.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local hc=e:GetLabelObject()
@@ -58,15 +62,16 @@ function c101202053.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
+		Duel.AdjustInstantly(c)
 		if Duel.IsExistingMatchingCard(c101202053.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
-			and Duel.SelectYesNo(tp,aux.Stringid(101202053,1)) then
+			and Duel.SelectYesNo(tp,aux.Stringid(101202053,2)) then
 			Duel.BreakEffect()
-			Duel.Destroy(tc,REASON_EFFECT)
+			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end
 end
 function c101202053.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x200) and c:GetOriginalType()&TYPE_MONSTER>0
+	return c:IsFaceup() and c:IsSetCard(0x29a) and c:GetOriginalType()&TYPE_MONSTER>0
 end
 function c101202053.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101202053.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
