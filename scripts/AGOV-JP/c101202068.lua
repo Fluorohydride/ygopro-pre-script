@@ -1,42 +1,17 @@
 --覇王龍の奇跡
 --
---Script by Trishula9
+--Script by Trishula9 & mercury233
 function c101202068.initial_effect(c)
 	aux.AddCodeList(c,13331639)
-	--spsummon
+	--select effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101202068,0))
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
-	e1:SetCountLimit(1,101202068)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCondition(c101202068.condition)
-	e1:SetTarget(c101202068.sptg)
-	e1:SetOperation(c101202068.spop)
+	e1:SetTarget(c101202068.target)
 	c:RegisterEffect(e1)
-	--pendulum set
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101202068,1))
-	e2:SetType(EFFECT_TYPE_ACTIVATE)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
-	e2:SetCountLimit(1,101202068+100)
-	e2:SetCondition(c101202068.condition)
-	e2:SetTarget(c101202068.pstg)
-	e2:SetOperation(c101202068.psop)
-	c:RegisterEffect(e2)
-	--spell set
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(101202068,2))
-	e3:SetType(EFFECT_TYPE_ACTIVATE)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
-	e3:SetCountLimit(1,101202068+200)
-	e3:SetCondition(c101202068.condition)
-	e3:SetTarget(c101202068.sstg)
-	e3:SetOperation(c101202068.ssop)
-	c:RegisterEffect(e3)
 end
 function c101202068.cfilter(c)
 	return c:IsCode(13331639) and c:IsFaceup()
@@ -53,12 +28,40 @@ function c101202068.spfilter(c,e,tp)
 		or (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0))
 		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
-function c101202068.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101202068.psfilter(c)
+	return c:IsType(TYPE_PENDULUM) and c:IsFaceup() and not c:IsForbidden()
+end
+function c101202068.ssfilter(c)
+	return c:IsType(TYPE_QUICKPLAY) and c:IsSSetable()
+end
+function c101202068.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroup(c101202068.desfilter,tp,LOCATION_ONFIELD,0,nil)
 	local g2=Duel.GetMatchingGroup(c101202068.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp)
-	if chk==0 then return g1:GetCount()>0 and g2:GetCount()>0 end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+	local b1=Duel.GetFlagEffect(tp,101202068+1)==0
+		and g1:GetCount()>0 and g2:GetCount()>0
+	local b2=Duel.GetFlagEffect(tp,101202068+2)==0
+		and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+		and Duel.IsExistingMatchingCard(c101202068.psfilter,tp,LOCATION_EXTRA,0,1,nil)
+	local b3=Duel.GetFlagEffect(tp,101202068+3)==0
+		and Duel.IsExistingMatchingCard(c101202068.ssfilter,tp,LOCATION_DECK,0,1,nil)
+	if chk==0 then return b1 or b2 or b3 end
+	local op=aux.SelectFromOptions(tp,
+		{b1,aux.Stringid(101202068,1)},
+		{b2,aux.Stringid(101202068,2)},
+		{b3,aux.Stringid(101202068,3)})
+	Duel.RegisterFlagEffect(tp,101202068+op,RESET_PHASE+PHASE_END,0,1)
+	if op==1 then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+		e:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
+		e:SetOperation(c101202068.spop)
+	elseif op==2 then
+		e:SetCategory(0)
+		e:SetOperation(c101202068.psop)
+	else
+		e:SetCategory(0)
+		e:SetOperation(c101202068.ssop)
+	end
 end
 function c101202068.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -70,13 +73,6 @@ function c101202068.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sc,0,tp,tp,true,false,POS_FACEUP)
 	end
 end
-function c101202068.psfilter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsFaceup() and not c:IsForbidden()
-end
-function c101202068.pstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
-		and Duel.IsExistingMatchingCard(c101202068.psfilter,tp,LOCATION_EXTRA,0,1,nil) end
-end
 function c101202068.psop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
@@ -86,12 +82,6 @@ function c101202068.psop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,false) then
 		tc:SetStatus(STATUS_EFFECT_ENABLED,true)
 	end
-end
-function c101202068.ssfilter(c)
-	return c:IsType(TYPE_QUICKPLAY) and c:IsSSetable()
-end
-function c101202068.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c101202068.ssfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function c101202068.ssop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
