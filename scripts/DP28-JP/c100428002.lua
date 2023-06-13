@@ -55,7 +55,8 @@ end
 function s.spdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spdfilter(chkc,e,tp) and chkc~=c end
-	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
+		and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.spdfilter,tp,LOCATION_GRAVE,0,1,c,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spdfilter,tp,LOCATION_GRAVE,0,1,1,c,e,tp)
