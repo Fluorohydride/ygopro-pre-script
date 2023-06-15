@@ -67,7 +67,7 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc and tc:IsRelateToEffect(e)) or Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==0
-		or not tc:IsLocation(LOCATION_DECK) then return end
+		or not tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then return end
 	Duel.ShuffleDeck(tp)
 	local g=Duel.GetMatchingGroup(s.gfilter,tp,LOCATION_DECK,0,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
