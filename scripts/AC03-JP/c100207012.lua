@@ -20,7 +20,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(6)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return g:IsExists(s.filter,1,nil)
+	return eg:IsExists(s.filter,1,nil)
 end
 function s.cfilter(c)
 	return c:IsLevel(10) and c:IsSetCard(0x21)
