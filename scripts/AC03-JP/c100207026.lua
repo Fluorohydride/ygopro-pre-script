@@ -1,5 +1,6 @@
---coded by Lyris
+--フェニックス・ギア・ブレード
 --Phoenix Gearblade
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--Activate

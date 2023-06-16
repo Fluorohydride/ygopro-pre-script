@@ -1,5 +1,6 @@
---coded by Lyris
+--超未来融合－オーバーフューチャー・フュージョン
 --Over Future Fusion
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

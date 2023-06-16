@@ -1,5 +1,6 @@
---coded by Lyris
+--超越竜エグザラプトル
 --Transcendosaurus Exaraptor
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit

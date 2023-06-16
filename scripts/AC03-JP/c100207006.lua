@@ -1,5 +1,6 @@
---coded by Lyris
+--篝火
 --Bonfire
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--Add 1 Level 4 or lower Pyro monster from your Deck to your hand. You can only activate 1 "Bonfire" per turn.

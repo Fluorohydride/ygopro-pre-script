@@ -1,5 +1,6 @@
---coded by Lyris
+--No.1 インフェクション・バアル・ゼブル
 --Number 1: Infection Buzz King
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

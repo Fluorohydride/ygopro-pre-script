@@ -1,5 +1,6 @@
---coded by Lyris
+--アルカナフォースXV－THE DEVIL
 --Arcana Force XV - The Fiend
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--to hand

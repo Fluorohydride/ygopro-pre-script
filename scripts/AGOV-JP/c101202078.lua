@@ -1,5 +1,6 @@
---coded by Lyris
+--VS 裏螺旋流雪風
 --Vanquish Soul Snow Devil
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

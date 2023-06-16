@@ -1,5 +1,6 @@
---coded by Lyris
+--黎溟界闢
 --Ogdoadic Dawn of Creation
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--token

@@ -1,5 +1,6 @@
---coded by Lyris
+--炎魔刃フレイムタン
 --Flametongue the Blazing Magical Blade
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

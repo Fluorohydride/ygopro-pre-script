@@ -1,5 +1,6 @@
---coded by Lyris
+--地縛牢
 --Earthbound Prison
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--Activate

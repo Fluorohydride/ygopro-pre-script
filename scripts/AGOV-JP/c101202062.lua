@@ -1,5 +1,6 @@
---coded by Lyris
+--エレキングダム
 --Wattkingdom
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--activate limit

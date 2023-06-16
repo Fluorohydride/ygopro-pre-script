@@ -1,5 +1,6 @@
---coded by Lyris
+--選手入場アナウンス
 --Ring Announcer
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
