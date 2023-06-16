@@ -40,6 +40,7 @@ function c101202012.sprfilter(c)
 end
 function c101202012.sprcon(e,c)
 	if c==nil then return true end
+	if c:IsHasEffect(EFFECT_NECRO_VALLEY) then return false end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101202012.sprfilter,tp,LOCATION_ONFIELD,0,1,nil)
