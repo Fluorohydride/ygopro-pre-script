@@ -1,4 +1,5 @@
 --カノプスの守護者
+--Script by Ruby
 function c101202076.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)
@@ -19,7 +20,7 @@ function c101202076.initial_effect(c)
 	c:RegisterEffect(e1)
 	--set
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101202076,2))
+	e2:SetDescription(aux.Stringid(101202076,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)

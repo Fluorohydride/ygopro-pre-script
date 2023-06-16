@@ -1,4 +1,5 @@
 --ホルスの先導-ハーピ
+--Script by Ruby
 function c101202013.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -11,7 +12,7 @@ function c101202013.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Leave Field
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101202013,2))
+	e2:SetDescription(aux.Stringid(101202013,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -23,7 +24,6 @@ function c101202013.initial_effect(c)
 	e2:SetTarget(c101202013.destg)
 	c:RegisterEffect(e2)
 end
---spsummon
 function c101202013.sprfilter(c)
 	return c:IsFaceup() and c:IsCode(101202058)
 end
@@ -34,7 +34,6 @@ function c101202013.sprcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101202013.sprfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
---Leave Field
 function c101202013.cfilter(c,tp)
 	return c:IsPreviousControler(tp)
 		and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)
@@ -59,7 +58,7 @@ end
 function c101202013.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if tg:GetCount()==2 and tg:FilterCount(Card.IsAbleToHand,nil,e)==tg:GetCount()
-		and (not tg:FilterCount(Card.IsAbleToDeck,nil,e)==tg:GetCount() or Duel.SelectYesNo(tp,aux.Stringid(101202013,0))) then
+		and (not tg:FilterCount(Card.IsAbleToDeck,nil,e)==tg:GetCount() or Duel.SelectYesNo(tp,aux.Stringid(101202013,2))) then
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 	else
 		Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)

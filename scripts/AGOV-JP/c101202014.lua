@@ -1,4 +1,5 @@
 --ホルスの加護-ケベンセヌフ
+--Script by Ruby
 function c101202014.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -11,7 +12,7 @@ function c101202014.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Leave Field
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(101202014,2))
+	e2:SetDescription(aux.Stringid(101202014,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -22,7 +23,6 @@ function c101202014.initial_effect(c)
 	e2:SetOperation(c101202014.desop)
 	c:RegisterEffect(e2)
 end
---spsummon
 function c101202014.sprfilter(c)
 	return c:IsFaceup() and c:IsCode(101202058)
 end
@@ -33,7 +33,6 @@ function c101202014.sprcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101202014.sprfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
---Leave Field
 function c101202014.cfilter(c,tp)
 	return c:IsPreviousControler(tp)
 		and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)

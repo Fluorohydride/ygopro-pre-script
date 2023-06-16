@@ -1,4 +1,5 @@
 --ホルスの祝福-ドゥアムテフ
+--Script by Ruby
 function c101202012.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -22,7 +23,7 @@ function c101202012.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Leave Field
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(101202012,2))
+	e4:SetDescription(aux.Stringid(101202012,1))
 	e4:SetCategory(CATEGORY_DRAW)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
@@ -34,7 +35,6 @@ function c101202012.initial_effect(c)
 	e4:SetOperation(c101202012.desop)
 	c:RegisterEffect(e4)
 end
---spsummon
 function c101202012.sprfilter(c)
 	return c:IsFaceup() and c:IsCode(101202058)
 end
@@ -45,14 +45,12 @@ function c101202012.sprcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101202012.sprfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
---buff
 function c101202012.bfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x29c)
 end
 function c101202012.atkval(e,c)
 	return Duel.GetMatchingGroupCount(c101202012.bfilter,c:GetControler(),LOCATION_MZONE,0,nil)*1200
 end
---leave filed
 function c101202012.cfilter(c,tp)
 	return c:IsPreviousControler(tp)
 		and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)

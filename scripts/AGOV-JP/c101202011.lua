@@ -1,4 +1,5 @@
 --ホルスの栄光-イムセティ
+--Script by Ruby
 function c101202011.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -22,7 +23,7 @@ function c101202011.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Leave Field
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(101202011,2))
+	e3:SetDescription(aux.Stringid(101202011,1))
 	e3:SetCategory(CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
@@ -33,7 +34,6 @@ function c101202011.initial_effect(c)
 	e3:SetOperation(c101202011.desop)
 	c:RegisterEffect(e3)
 end
---spsummon
 function c101202011.sprfilter(c)
 	return c:IsFaceup() and c:IsCode(101202058)
 end
@@ -44,7 +44,6 @@ function c101202011.sprcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c101202011.sprfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
---cost
 function c101202011.costfilter(c)
 	return c:IsAbleToGraveAsCost()
 end
@@ -56,7 +55,6 @@ function c101202011.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	g:AddCard(c)
 	Duel.SendtoGrave(g,REASON_COST)
 end
---SearchCard
 function c101202011.filter(c)
 	return c:IsCode(101202058) and c:IsAbleToHand()
 end
@@ -67,13 +65,12 @@ end
 function c101202011.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetFirstMatchingCard(c101202011.filter,tp,LOCATION_DECK,0,nil)
 	if tg and Duel.SendtoHand(tg,nil,REASON_EFFECT)~=0 and Duel.ConfirmCards(1-tp,tg)~=0
-		and Duel.SelectYesNo(tp,aux.Stringid(54880296,0))
+		and Duel.SelectYesNo(tp,aux.Stringid(101202011,2))
 		and Duel.IsPlayerCanDraw(tp,1) then
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
---Leave Field
 function c101202011.cfilter(c,tp)
 	return c:IsPreviousControler(tp)
 		and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)

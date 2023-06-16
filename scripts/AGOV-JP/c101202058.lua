@@ -1,4 +1,5 @@
 --王の棺
+--Script by Ruby
 function c101202058.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)
@@ -28,7 +29,7 @@ function c101202058.initial_effect(c)
 	c:RegisterEffect(e2)
 	--destroy
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(101202058,0))
+	e3:SetDescription(aux.Stringid(101202058,1))
 	e3:SetCategory(CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_START)
