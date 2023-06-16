@@ -3,7 +3,7 @@
 --coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
-	--Add 1 Level 4 or lower Pyro monster from your Deck to your hand. You can only activate 1 "Bonfire" per turn.
+	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
