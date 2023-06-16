@@ -3,7 +3,7 @@
 --Script by StupidStudiosN
 local s,id,o=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x28)
+	c:EnableCounterPermit(0x168)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -56,16 +56,16 @@ function s.ncon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ntg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x28)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x168)
 end
 function s.nop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.NegateAttack() then return end
 	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(0x28,1)
+		e:GetHandler():AddCounter(0x168,1)
 	end
 end
 function s.sdcon(e)
-	return e:GetHandler():GetCounter(0x28)==3
+	return e:GetHandler():GetCounter(0x168)==3
 end
 function s.ddfilter(c)
 	return c:IsAttack(0) and c:IsRace(RACE_ROCK)

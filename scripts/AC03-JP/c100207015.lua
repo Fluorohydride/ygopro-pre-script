@@ -69,7 +69,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetTarget(s.catg)
 		e4:SetOperation(s.caop)
 		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
-		ec:RegisterEffect(e4)		
+		ec:RegisterEffect(e4)
 	end
 end
 function s.eqlimit(e,c)

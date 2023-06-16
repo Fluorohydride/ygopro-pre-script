@@ -84,7 +84,7 @@ function c101202047.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101202047.pcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,101202047)<=0 then return false end	
+	if Duel.GetFlagEffect(tp,101202047)<=0 then return false end
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -93,7 +93,7 @@ function c101202047.pcon(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(aux.TRUE)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)  
+	Duel.RegisterEffect(e1,tp)
 	local eset={e1}
 	local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
@@ -119,7 +119,7 @@ function c101202047.pop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(aux.TRUE)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)  
+	Duel.RegisterEffect(e1,tp)
 	local eset={e1}
 	local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
