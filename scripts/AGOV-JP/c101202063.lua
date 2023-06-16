@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.tdtg)
-	e2:SetOperation(s.tdop)s
+	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)

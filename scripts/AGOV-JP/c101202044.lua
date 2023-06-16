@@ -3,7 +3,7 @@
 --coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
-	c:EnableReviveLimit
+	c:EnableReviveLimit()
 	--material
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_DINOSAUR),2,99,s.chk)
 	--hand spsummon
