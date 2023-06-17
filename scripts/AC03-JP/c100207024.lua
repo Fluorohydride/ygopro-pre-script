@@ -36,7 +36,8 @@ function s.initial_effect(c)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(id,2)) then
+	if Duel.IsExistingTarget(aux.NegateEffectMonsterFilter,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(id,2)) then
 		e:SetCategory(CATEGORY_DISABLE)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		e:SetOperation(s.disop)

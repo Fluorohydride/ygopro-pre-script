@@ -53,7 +53,7 @@ function c101202058.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsAbleToGraveAsCost,1,1,REASON_COST)
 end
 function c101202058.filter(c)
-	return c:IsSetCard(0x29c) and c:IsAbleToHand()
+	return c:IsSetCard(0x29c) and c:IsAbleToGrave()
 end
 function c101202058.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101202058.filter,tp,LOCATION_DECK,0,1,nil) end

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetRange(LOCATION_EXTRA)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetValue(aux.linklimit)
 	c:RegisterEffect(e1)
 	--to grave
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_TOGRAVE)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
@@ -66,7 +66,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToChain() or Duel.SpecialSummon(c,0,tp,1-tp,false,false,POS_FACEUP)==0 then return end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -74,16 +74,21 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCondition(s.retcon)
 	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToChain() then Duel.SendtoGrave(tc,REASON_EFFECT) end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetOwner():GetFlagEffect(id)>0
+	local c=e:GetHandler()
+	if c:GetFlagEffect(id)>0 then
+		return true
+	else
+		e:Reset()
+		return false
+	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetOwner()
+	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_REMOVE_BRAINWASHING)
@@ -103,6 +108,9 @@ function s.rettg(e,c)
 	return c==e:GetLabelObject() and c:GetFlagEffect(id)>0
 end
 function s.reset(e,tp,eg,ep,ev,re,r,rp)
-	e:GetLabelObject():Reset()
+	local e1=e:GetLabelObject()
+	local tc=e1:GetLabelObject()
+	tc:ResetFlagEffect(id)
+	e1:Reset()
 	e:Reset()
 end
