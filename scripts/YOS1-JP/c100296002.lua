@@ -3,6 +3,7 @@
 --coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
+	Duel.EnableGlobalFlag(GLOBALFLAG_BRAINWASHING_CHECK)
 	c:EnableReviveLimit()
 	c:SetSPSummonOnce(id)
 	--material
@@ -74,6 +75,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCondition(s.retcon)
 	e1:SetOperation(s.retop)
+	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToChain() then Duel.SendtoGrave(tc,REASON_EFFECT) end
@@ -97,20 +99,10 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetTarget(s.rettg)
 	Duel.RegisterEffect(e1,tp)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_ADJUST)
-	e2:SetLabelObject(e1)
-	e2:SetOperation(s.reset)
-	Duel.RegisterEffect(e2,tp)
+	Duel.AdjustAll()
+	c:ResetFlagEffect(id)
+	e1:Reset()
 end
 function s.rettg(e,c)
 	return c==e:GetLabelObject() and c:GetFlagEffect(id)>0
-end
-function s.reset(e,tp,eg,ep,ev,re,r,rp)
-	local e1=e:GetLabelObject()
-	local tc=e1:GetLabelObject()
-	tc:ResetFlagEffect(id)
-	e1:Reset()
-	e:Reset()
 end

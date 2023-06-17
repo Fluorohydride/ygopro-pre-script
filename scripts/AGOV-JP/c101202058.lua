@@ -43,10 +43,10 @@ end
 function c101202058.intg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x29c)
 end
-function c101202058.efilter(e,re,rp)
+function c101202058.efilter(e,re,rp,c)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return true end
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	return not g:IsContains(e:GetHandler())
+	return not g or not g:IsContains(c)
 end
 function c101202058.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end

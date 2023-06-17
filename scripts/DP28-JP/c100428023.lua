@@ -50,7 +50,7 @@ function s.sop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	local b1=tc:IsAbleToHand()
 	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,true,false)
-	local op=aux.SelectFromOptions(tp,{b1,1192},{b2,1152})
+	local op=aux.SelectFromOptions(tp,{b1,1190},{b2,1152})
 	if op==1 then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)

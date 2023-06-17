@@ -86,6 +86,13 @@ end
 function c101202047.pcon(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,101202047)<=0 then return false end
 	local c=e:GetHandler()
+	local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
+	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
+	if lpz==nil or rpz==nil then return false end
+	local loc=0
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_HAND end
+	if Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)>0 then loc=loc+LOCATION_EXTRA end
+	if loc==0 then return false end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_PENDULUM_SUMMON)
@@ -95,16 +102,9 @@ function c101202047.pcon(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local eset={e1}
-	local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
-	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	if lpz==nil or rpz==nil then return false end
 	local lscale=lpz:GetLeftScale()
 	local rscale=rpz:GetRightScale()
 	if lscale>rscale then lscale,rscale=rscale,lscale end
-	local loc=0
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_HAND end
-	if Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)>0 then loc=loc+LOCATION_EXTRA end
-	if loc==0 then return false end
 	local g=Duel.GetFieldGroup(tp,loc,0)
 	local res=g:IsExists(aux.PConditionFilter,1,nil,e,tp,lscale,rscale,eset)
 	e1:Reset()
@@ -145,7 +145,10 @@ function c101202047.pop(e,tp,eg,ep,ev,re,r,rp)
 	aux.GCheckAdditional=aux.PendOperationCheck(ft1,ft2,ft)
 	local g=tg:SelectSubGroup(tp,aux.TRUE,true,1,math.min(#tg,ft))
 	aux.GCheckAdditional=nil
-	if not g then return end
+	if not g then
+		e1:Reset()
+		return
+	end
 	local sg=Group.CreateGroup()
 	sg:Merge(g)
 	Duel.HintSelection(Group.FromCards(lpz))
