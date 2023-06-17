@@ -51,6 +51,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,0)
+		e1:SetLabel(sc:GetCode())
 		e1:SetTarget(s.slimit)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
@@ -61,7 +62,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.slimit(e,c,sp,st,spos,tp,se)
-	return st&SUMMON_TYPE_SPECIAL==SUMMON_TYPE_SPECIAL and c:IsCode(e:GetLabel())
+	return c:IsCode(e:GetLabel())
 end
 function s.alimit(e,te)
 	return te:IsActiveType(TYPE_MONSTER) and te:GetHandler():IsCode(e:GetLabel())

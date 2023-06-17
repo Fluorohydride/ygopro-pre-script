@@ -55,7 +55,7 @@ function c101202047.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(c101202047.checkfilter,nil)
 	local tc=g:GetFirst()
 	while tc do
-		Duel.RegisterFlagEffect(tp,101202047,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),101202047,RESET_PHASE+PHASE_END,0,1)
 		tc=g:GetNext()
 	end
 end
