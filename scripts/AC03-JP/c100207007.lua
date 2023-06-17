@@ -1,6 +1,6 @@
 --Combat Wheel
 --coded by CVen00/ToonyBirb using modified outline originally created by XGlitchy30, edited & formatted by Lyris
-local s,id=GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
