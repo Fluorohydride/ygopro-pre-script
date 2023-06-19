@@ -5,6 +5,7 @@ function s.initial_effect(c)
 	--indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_BE_MATERIAL)
 	e1:SetCondition(s.indcon)
 	e1:SetOperation(s.indop)
 	c:RegisterEffect(e1)
