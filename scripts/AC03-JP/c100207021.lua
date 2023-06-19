@@ -47,6 +47,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.material_type=TYPE_FUSION+TYPE_SYNCHRO
 function s.mfilter(typ)
 	return  function(c)
 				return c:IsFusionSetCard(0x21) and c:IsFusionType(typ)
