@@ -3,7 +3,7 @@
 --coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
-	c:EnableReviveLimit
+	c:EnableReviveLimit()
 	--material
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_DINOSAUR),2,99,s.chk)
 	--hand spsummon
@@ -110,6 +110,6 @@ function s.sspop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.BreakEffect()
-		Duel.SpecialSummon(c,0,false,false,POS_FACEUP)
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

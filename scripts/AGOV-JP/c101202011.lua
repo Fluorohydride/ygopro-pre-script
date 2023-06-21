@@ -65,8 +65,7 @@ end
 function c101202011.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetFirstMatchingCard(c101202011.filter,tp,LOCATION_DECK,0,nil)
 	if tg and Duel.SendtoHand(tg,nil,REASON_EFFECT)~=0 and Duel.ConfirmCards(1-tp,tg)~=0
-		and Duel.SelectYesNo(tp,aux.Stringid(101202011,2))
-		and Duel.IsPlayerCanDraw(tp,1) then
+		and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(101202011,2)) then
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)
 	end
@@ -82,6 +81,6 @@ function c101202011.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
-		Duel.Destroy(g,REASON_EFFECT)
+		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end

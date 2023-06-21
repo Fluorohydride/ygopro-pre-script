@@ -78,6 +78,7 @@ function c101202037.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
+		tc=g:GetNext()
 	end
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)

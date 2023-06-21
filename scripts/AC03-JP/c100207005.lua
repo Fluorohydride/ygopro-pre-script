@@ -113,7 +113,7 @@ function s.fdestg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
-function s.fedsop(e,tp,eg,ep,ev,re,r,rp)
+function s.fdesop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	Duel.Destroy(g,REASON_EFFECT)
 end

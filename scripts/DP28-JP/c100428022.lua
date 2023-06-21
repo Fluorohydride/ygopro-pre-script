@@ -24,24 +24,12 @@ function c100428022.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) and tc:IsSetCard(0x32) then
 		local b1=tc:GetLevel()>0
-		local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		local b2=Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,100428122,0,TYPES_TOKEN_MONSTER,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP,1-tp)
-		local off=1
-		local ops,opval={},{}
-		if b1 then
-			ops[off]=aux.Stringid(100428022,0)
-			opval[off]=1
-			off=off+1
-		end
-		if b2 then
-			ops[off]=aux.Stringid(100428022,1)
-			opval[off]=2
-			off=off+1
-		end
-		ops[off]=aux.Stringid(100428022,2)
-		opval[off]=0
-		local op=Duel.SelectOption(tp,table.unpack(ops))+1
-		local sel=opval[op]
+		local sel=aux.SelectFromOptions(tp,
+			{b1,aux.Stringid(100428022,0)},
+			{b2,aux.Stringid(100428022,1)},
+			{true,aux.Stringid(100428022,2)})
 		if sel==1 then
 			Duel.BreakEffect()
 			local val=tc:GetLevel()*100

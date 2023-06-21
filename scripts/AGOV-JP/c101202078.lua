@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ct>2 then
 		Duel.BreakEffect()
 		if Duel.Damage(1-tp,800,REASON_EFFECT)>0 and Duel.GetLP(1-tp)>0 then
-			local g=Duel.GetFieldCard(tp,LOCATION_MZONE,LOCATION_MZONE)
+			local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 			if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 				Duel.BreakEffect()
 				Duel.Destroy(g,REASON_EFFECT)

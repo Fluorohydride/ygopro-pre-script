@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.tdtg)
-	e2:SetOperation(s.tdop)s
+	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
@@ -44,12 +44,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=math.min(e:GetLabel(),Duel.GetLocationCount(tp,LOCATION_MZONE))
-	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+o,0x161,TYPES_TOKEN_MONSTER,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK) then return end
+	if ct<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+o,0x161,TYPES_TOKEN_MONSTER,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK) then return end
 	repeat
 		local tk=Duel.CreateToken(tp,id+o)
 		Duel.SpecialSummonStep(tk,0,tp,tp,false,false,POS_FACEUP)
-		ft=ft-1
-	until ft<=0 or Duel.IsPlayerAffectedByEffect(tp,59822133) or not Duel.SelectYesNo(tp,210)
+		ct=ct-1
+	until ct<=0 or Duel.IsPlayerAffectedByEffect(tp,59822133) or not Duel.SelectYesNo(tp,210)
 	Duel.SpecialSummonComplete()
 end
 function s.filter(c)

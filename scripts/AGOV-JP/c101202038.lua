@@ -54,7 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local dg=(tg+mg):SelectSubGroup(tp,s.chk,false,2,2)
 	if not dg or Duel.SendtoDeck(dg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)<2
-		or dg:IsExists(aux.NOT(Card.IsLocation),1,nil,LOCATION_DECK) then return end
+		or dg:IsExists(aux.NOT(Card.IsLocation),1,nil,LOCATION_DECK+LOCATION_EXTRA) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
