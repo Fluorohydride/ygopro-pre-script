@@ -1,6 +1,7 @@
---coded by Lyris
+--エレキハダマグロ
 --Wattuna
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--direct attack
 	local e1=Effect.CreateEffect(c)
@@ -45,7 +46,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_HAND)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
@@ -54,38 +55,40 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) end
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and rp==tp
+	return ep~=rp
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_DAMAGE,0,1)
+	Duel.RegisterFlagEffect(rp,id,RESET_PHASE+PHASE_DAMAGE,0,1)
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and Duel.GetAttackTarget()==nil
 end
 function s.mfilter(c)
-	return not c:IsType(TYPE_TUNER) and c:IsFaceupEx() and c:IsReleasableByEffect() and c:GetOriginalLevel()>0
+	return not c:IsType(TYPE_TUNER) and c:IsFaceupEx() and c:IsReleasableByEffect() and c:GetLevel()>0
 end
-function s.filter(c,e,tp,g)
+function s.spfilter(c,e,tp,g)
 	return c:IsSetCard(0xe) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and g:CheckWithSumEqual(Card.GetOriginalLevel,c:GetLevel()-4,1,99)
-		and Duel.GetLocationCountFromEx(tp,tp,g,c)>0
+		and g:CheckSubGroup(s.gcheck,1,#g,tp,e:GetHandler(),c)
+end
+function s.gcheck(g,tp,ec,sc)
+	return Duel.GetLocationCountFromEx(tp,tp,g+ec,sc)>0 and g:GetSum(Card.GetLevel)+ec:GetLevel()==sc:GetLevel()
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=Duel.GetReleaseGroup(tp,true):Filter(s.mfilter,nil)+c
+	local g=Duel.GetReleaseGroup(tp,true):Filter(s.mfilter,c)
 	if chk==0 then return c:IsReleasableByEffect()
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g) end
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g) end
 	Duel.SetOperationInfo(0,CATEGORY_RELEASE,g,2,0,0)
 end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetReleaseGroup(tp,true):Filter(s.mfilter,nil)
+	local g=Duel.GetReleaseGroup(tp,true):Filter(s.mfilter,c)
 	if not (c:IsRelateToEffect(e) and c:IsReleasableByEffect()) or #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,g):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,g):GetFirst()
 	if tc then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local sg=g:SelectWithSumEqual(tp,Card.GetOriginalLevel,tc:GetLevel()-4,1,99)+c
+		local sg=g:SelectSubGroup(tp,s.gcheck,false,1,#g,tp,c,tc)+c
 		if Duel.Release(sg,REASON_EFFECT)>0 then Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end
 	end
 end

@@ -1,6 +1,7 @@
---coded by Lyris
+--VS 蛟龍
 --Vanquish Soul Jiaolong
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
 	--! needs an event to be raised for Duel.ConfirmCards, plus maybe a reason parameter
