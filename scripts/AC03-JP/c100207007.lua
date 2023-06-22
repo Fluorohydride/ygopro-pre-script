@@ -1,3 +1,4 @@
+--コンバット・ホイール
 --Combat Wheel
 --coded by CVen00/ToonyBirb using modified outline originally created by XGlitchy30, edited & formatted by Lyris
 local s,id,o=GetID()
@@ -62,27 +63,33 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		local atk=(Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,c):GetSum(Card.GetAttack))/2
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,c)
+	if c:IsFaceup() and c:IsRelateToEffect(e) and #g>0 then
+		local atk=g:GetSum(Card.GetAttack)/2
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		e1:SetValue(atk)
 		c:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetTargetRange(0,LOCATION_MZONE)
-		e2:SetValue(s.atlimit)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e2)
+		Duel.BreakEffect()
 		if c:IsCanAddCounter(0x167,1) then c:AddCounter(0x167,1) end
 	end
+	local fid=0
+	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		fid=c:GetFieldID()
+	end
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
+	e2:SetTargetRange(0,LOCATION_MZONE)
+	e2:SetLabel(fid)
+	e2:SetValue(s.atlimit)
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e2,tp)
 end
 function s.atlimit(e,c)
-	return c~=e:GetHandler()
+	return c~=e:GetHandler() or e:GetHandler():GetFieldID()~=e:GetLabel()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetCounter(0x167)>0 then
