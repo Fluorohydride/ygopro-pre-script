@@ -59,6 +59,7 @@ function s.splim(e,c)
 	return c:GetRace()~=RACE_THUNDER
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -66,7 +67,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splim)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	c:RegisterEffect(e1)
+	Duel.RegisterEffect(e1,tp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
