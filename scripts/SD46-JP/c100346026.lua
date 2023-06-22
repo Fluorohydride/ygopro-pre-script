@@ -35,17 +35,14 @@ function s.initial_effect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_BATTLE_DESTROYED)
+	e4:SetCode(EVENT_DESTROYED)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1,id+o*2)
-	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCondition(s.spcon)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
-	local e5=e4:Clone()
-	e5:SetCode(EVENT_DESTROYED)
-	e4:SetCondition(s.spcon)
-	c:RegisterEffect(e5)
 end
 function s.filter(c)
 	return (c:IsCode(70902743) or aux.IsCodeListed(c,70902743)) and c:IsAbleToHand() and not c:IsCode(id)
@@ -73,6 +70,12 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,nil)
 	Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 end
+function s.cfilter(c)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+end
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.cfilter,1,nil)
+end
 function s.sfilter(c,e,tp)
 	return c:IsCode(70902743) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -82,13 +85,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-end
-function s.cfilter(c)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
-end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil)
 end
