@@ -56,6 +56,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
+function s.splim(e,c)
+	return c:GetRace()~=RACE_REPTILE
+end
 function s.gscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonLocation(LOCATION_GRAVE)
 end
