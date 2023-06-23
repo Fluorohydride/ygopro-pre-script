@@ -63,7 +63,7 @@ function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.gstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
