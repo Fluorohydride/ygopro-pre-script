@@ -36,7 +36,7 @@ function s.sfilter1(c,e,tp,g)
 		and g:IsExists(s.sfilter2,1,c,e,tp,c)
 end
 function s.sfilter2(c,e,tp,oc)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,1-tp)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
 		and (not c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
 			or c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(1-tp,tp,nil,c)>0)
 		and aux.gfcheck(Group.FromCards(c,oc),Card.IsSetCard,0x196,0x29d)
@@ -90,6 +90,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local ct=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,0x197)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
