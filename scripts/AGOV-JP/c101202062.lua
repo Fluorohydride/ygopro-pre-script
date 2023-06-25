@@ -41,7 +41,7 @@ function s.actlim(e,re,tp)
 	return rc:IsControler(1-p) and rg:IsContains(e:GetHandler()) or rg:IsExists(s.lfilter,1,nil,p)
 end
 function s.cfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xe) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
+	return c:IsFaceup() and c:IsSetCard(0xe) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.filter(c,e,tp,...)
 	return c:IsSetCard(0xe) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(...)
@@ -59,6 +59,7 @@ function s.splim(e,c)
 	return c:GetRace()~=RACE_THUNDER
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -66,11 +67,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splim)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	c:RegisterEffect(e1)
+	Duel.RegisterEffect(e1,tp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode()):GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode()):GetFirst()
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)>0 and aux.nzatk(sc) then
 		local lp=Duel.GetLP(tp)
 		Duel.SetLP(tp,lp-sc:GetAttack())
