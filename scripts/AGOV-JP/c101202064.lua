@@ -1,6 +1,6 @@
 --Concours de Cuisine～菓冷なる料理対決～
 --Concours de Cuisine (Confectionery Contest)
---coded by Lyris
+--coded by Lyris & Mercury233
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,33 +29,31 @@ end
 function s.filter(c)
 	return c:IsSetCard(0x196,0x29d) and c:IsType(TYPE_PENDULUM)
 end
-function s.sfilter(c,e,tp,p,arches)
-	if not p then p=tp end
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,p) and (not arches or c:IsSetCard(table.unpack(arches)))
+function s.sfilter1(c,e,tp,g)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and (not c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			or c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0)
+		and g:IsExists(s.sfilter2,1,c,e,tp,c)
 end
-function s.chk(g,e,tp)
-	if #g<2 then return false end
-	local ac,bc=g:GetFirst(),g:GetNext()
-	return (s.sfilter(ac,e,tp) and s.sfilter(bc,e,tp,1-tp) or s.sfilter(bc,e,tp) and s.sfilter(ac,e,tp,1-tp))
-		and (ac:IsSetCard(0x196) and bc:IsSetCard(0x29d) or ac:IsSetCard(0x29d) and bc:IsSetCard(0x196))
+function s.sfilter2(c,e,tp,oc)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,1-tp)
+		and (not c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
+			or c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(1-tp,tp,nil,c)>0)
+		and aux.gfcheck(Group.FromCards(c,oc),Card.IsSetCard,0x196,0x29d)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_EXTRA+LOCATION_HAND,0,1,nil)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 and not Duel.IsPlayerAffectedByEffect(tp,59822133)
-		and g:CheckSubGroup(s.chk,2,2,e,tp) end
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
+		and g:IsExists(s.sfilter1,1,nil,e,tp,g) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,PLAYER_ALL,LOCATION_DECK+LOCATION_EXTRA+LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_EXTRA+LOCATION_HAND,0,1,nil)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
-		and not Duel.IsPlayerAffectedByEffect(tp,59822133) and g:CheckSubGroup(s.chk,2,2) then
+	if not Duel.IsPlayerAffectedByEffect(tp,59822133) and g:IsExists(s.sfilter1,1,nil,e,tp,g) then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-		local sc=g:FilterSelect(tp,s.sfilter,1,1,nil,e,tp,tp,{0x196,0x29d}):GetFirst()
-		local arches={sc:IsSetCard(0x196) and 0x29d,sc:IsSetCard(0x29d) and 0x196}
-		for i=#arches,1,-1 do if not t[i] then table.remove(t,i) end end
+		local sc=g:FilterSelect(tp,s.sfilter1,1,1,nil,e,tp,g):GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
-		local oc=g:FilterSelect(tp,s.sfilter,1,1,sc,e,tp,1-tp,arches):GetFirst()
+		local oc=g:FilterSelect(tp,s.sfilter2,1,1,sc,e,tp,sc):GetFirst()
 		Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
 		Duel.SpecialSummonStep(oc,0,tp,1-tp,false,false,POS_FACEUP)
 		Duel.SpecialSummonComplete()
