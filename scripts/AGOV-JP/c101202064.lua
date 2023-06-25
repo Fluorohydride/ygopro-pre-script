@@ -1,6 +1,7 @@
---coded by Lyris
+--Concours de Cuisine～菓冷なる料理対決～
 --Concours de Cuisine (Confectionery Contest)
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

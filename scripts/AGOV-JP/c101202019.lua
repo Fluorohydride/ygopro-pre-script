@@ -1,6 +1,7 @@
---coded by Lyris
+--ポワソニエル・ド・ヌーベルズ
 --Poissoniere de Nouvelles
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--spsummon

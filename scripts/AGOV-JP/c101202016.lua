@@ -1,5 +1,6 @@
---coded by Lyris
+--溟界神－ネフェルアビス
 --Neferabyss, the Ogdoadic Overlord
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
