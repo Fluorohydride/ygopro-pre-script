@@ -32,7 +32,7 @@ function s.filter(c,tp)
 	return c:IsType(TYPE_FUSION) and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.sfilter(c,tc)
-	return aux.IsMaterialListCode(tc,c:GetCode())
+	return aux.IsMaterialListCode(tc,c:GetCode()) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,tp) end

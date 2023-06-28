@@ -33,7 +33,7 @@ function c100207002.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100207002.filter(c)
-	return not c:IsAttribute(ATTRIBUTE_WIND) and c:IsFaceup()
+	return c:GetAttribute()~=ATTRIBUTE_WIND and c:IsFaceup()
 end
 function c100207002.atcon(e)
 	local tp=e:GetHandlerPlayer()
@@ -42,7 +42,7 @@ function c100207002.atcon(e)
 end
 function c100207002.atlimit(e,c)
 	local tp=e:GetHandlerPlayer()
-	return not c:IsAttribute(ATTRIBUTE_WIND) and c:IsControler(1-tp) and not c:IsImmuneToEffect(e)
+	return c:GetAttribute()~=ATTRIBUTE_WIND and c:IsControler(1-tp) and not c:IsImmuneToEffect(e)
 end
 function c100207002.thfilter(c)
 	return c:IsCode(24094653) and c:IsAbleToHand()

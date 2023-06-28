@@ -97,7 +97,7 @@ end
 function s.sfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsAbleToDeck()
 end
-function s.ssptg(e,tp,eg,ep,ev,re,rp,chk)
+function s.ssptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end

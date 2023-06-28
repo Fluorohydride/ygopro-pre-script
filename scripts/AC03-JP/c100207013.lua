@@ -56,7 +56,9 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_GRAVE):Select(tp,1,1,nil)
-	Duel.Overlay(c,g)
+	if #g>0 then
+		Duel.Overlay(c,g)
+	end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
@@ -68,6 +70,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
+	if #g==0 then return end
 	Duel.ConfirmCards(tp,g)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg=g:FilterSelect(tp,Card.IsAbleToGrave,1,1,nil)
@@ -96,7 +99,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) then return end
 	local atk=0
 	if tc:IsFaceup() then atk=tc:GetAttack() end
-	if Duel.Destroy(tc,REASON_EFFECT)>0 and tc:IsPreviousLocation(LOCATION_MZONE) then
+	if Duel.Destroy(tc,REASON_EFFECT)>0 and tc:IsPreviousLocation(LOCATION_MZONE) and atk>0 then
 		Duel.BreakEffect()
 		Duel.Damage(1-tp,atk//2,REASON_EFFECT)
 	end

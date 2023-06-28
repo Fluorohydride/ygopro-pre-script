@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_DAMAGE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_DESTROYED)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetCondition(s.damcon)
 	e4:SetTarget(s.damtg)
 	e4:SetOperation(s.damop)
@@ -44,8 +45,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-	if e:GetHandler():IsPosition(POS_FACEUP_ATTACK) then
-		Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE)
+	local c=e:GetHandler()
+	if c:IsRelateToChain() and c:IsPosition(POS_FACEUP_ATTACK) then
+		Duel.BreakEffect()
+		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
@@ -59,5 +62,6 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,1000)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Damage(tp,1000,REASON_EFFECT)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Damage(p,d,REASON_EFFECT)
 end

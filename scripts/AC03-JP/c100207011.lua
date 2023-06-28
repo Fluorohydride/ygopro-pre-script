@@ -3,12 +3,12 @@
 --Script by StupidStudiosN
 local s,id,o=GetID()
 function s.initial_effect(c)
+	Duel.EnableGlobalFlag(GLOBALFLAG_SELF_TOGRAVE)
 	c:EnableCounterPermit(0x168)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 	--untarget
 	local e2=Effect.CreateEffect(c)
@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	e3:SetTarget(s.ntg)
 	e3:SetOperation(s.nop)
 	c:RegisterEffect(e3)
-	--destroy
+	--to grave
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EFFECT_SELF_DESTROY)
+	e4:SetCode(EFFECT_SELF_TOGRAVE)
 	e4:SetCondition(s.sdcon)
 	c:RegisterEffect(e4)
 	--inflict double damage
@@ -49,13 +49,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.intg(e,c)
-	return c:IsFaceup() and c:GetBaseAttack()==0 and c:IsRace(RACE_DRAGON)
+	return c:IsFaceup() and c:GetBaseAttack()==0 and c:IsRace(RACE_ROCK)
 end
 function s.ncon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and aux.bpcon()
+	return Duel.GetTurnPlayer()~=tp
 end
 function s.ntg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return e:GetHandler():IsCanAddCounter(0x168,1) end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x168)
 end
 function s.nop(e,tp,eg,ep,ev,re,r,rp)
@@ -86,5 +86,7 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damval(e,re,val,r,rp,rc)
-	return math.floor(val*2)
+	if r&REASON_EFFECT==REASON_EFFECT then
+		return val*2
+	else return val end
 end

@@ -42,23 +42,22 @@ function s.destarget(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,aux.ExceptThisCard(e))
+	Duel.Destroy(g,REASON_EFFECT)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.Destroy(g,REASON_EFFECT) then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e1:SetCode(EFFECT_REFLECT_DAMAGE)
-		e1:SetTargetRange(1,0)
-		e1:SetValue(s.val)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
-	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_REFLECT_DAMAGE)
+	e1:SetTargetRange(1,0)
+	e1:SetValue(s.val)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
 function s.val(e,re,ev,r,rp,rc)
 	return bit.band(r,REASON_EFFECT)~=0
 end
 function s.tdfilter(c,e)
-	return c:IsFaceup() and c:IsCode(7903368,100207008,100207009) and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
+	return c:IsCode(7903368,100207008,100207009) and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end
