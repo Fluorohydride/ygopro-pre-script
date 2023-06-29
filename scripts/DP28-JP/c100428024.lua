@@ -14,8 +14,8 @@ function c100428024.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,100428024)
-	e2:SetCost(c100428024.discost)
 	e2:SetCondition(c100428024.discon)
+	e2:SetCost(c100428024.discost)
 	e2:SetTarget(c100428024.distg)
 	e2:SetOperation(c100428024.disop)
 	c:RegisterEffect(e2)
@@ -34,28 +34,30 @@ function c100428024.initial_effect(c)
 	e3:SetOperation(c100428024.tdop)
 	c:RegisterEffect(e3)
 end
-function c100428024.cfilter(c,tp)
-	return c:IsRace(RACE_PYRO) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
-end
-function c100428024.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100428024.cfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c100428024.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	if g:GetFirst():IsSetCard(0x32) then e:SetLabel(1)
-	else e:SetLabel(0) end
-end
 function c100428024.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
 		and re:GetActivateLocation()==LOCATION_MZONE
 end
+function c100428024.cfilter(c)
+	return c:IsRace(RACE_PYRO) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+end
+function c100428024.discost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c100428024.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,c100428024.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	if g:GetFirst():IsSetCard(0x32) then e:SetLabel(1)
+	else e:SetLabel(0) end
+end
 function c100428024.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(500)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 end
 function c100428024.disop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Damage(1-tp,500,REASON_EFFECT) and e:GetLabel()>0
+	if Duel.Damage(p,d,REASON_EFFECT)>0 and e:GetLabel()>0
 		and Duel.SelectYesNo(tp,aux.Stringid(100428024,2)) then
 		Duel.BreakEffect()
 		Duel.NegateEffect(ev)

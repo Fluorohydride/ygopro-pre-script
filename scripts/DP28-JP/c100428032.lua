@@ -72,6 +72,7 @@ function c100428032.lgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100428032.lgop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100428032.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if g:GetCount()>0 then

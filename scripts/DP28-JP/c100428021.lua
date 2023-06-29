@@ -57,7 +57,7 @@ function c100428021.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100428021.disfilter(c)
-	return c:IsLevel(1) and c:IsRace(RACE_PYRO)
+	return c:IsLevel(1) and c:IsRace(RACE_PYRO) and c:IsAbleToGrave()
 end
 function c100428021.desfilter(c)
 	return c:IsFaceup()
@@ -75,8 +75,7 @@ end
 function c100428021.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c100428021.disfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoGrave(g,REASON_EFFECT)
+	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) then
 			Duel.Destroy(tc,REASON_EFFECT)

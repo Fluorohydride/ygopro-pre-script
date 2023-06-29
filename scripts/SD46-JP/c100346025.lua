@@ -8,13 +8,10 @@ function c100346025.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(c100346025.condition)
+	e1:SetCondition(aux.bpcon)
 	e1:SetTarget(c100346025.target)
 	e1:SetOperation(c100346025.activate)
 	c:RegisterEffect(e1)
-end
-function c100346025.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()<PHASE_MAIN2
 end
 function c100346025.filter(c)
 	return c:IsFaceup() and c:IsCode(70902743) and c:GetFlagEffect(100346025)==0

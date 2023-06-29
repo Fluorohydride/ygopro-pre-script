@@ -4,7 +4,6 @@ function c100428020.initial_effect(c)
 	--to grave/set canon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100428020,0))
-	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -37,10 +36,12 @@ function c100428020.optg(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif b2 then op=Duel.SelectOption(tp,aux.Stringid(100428020,2))+1 end
 	e:SetLabel(op)
 	if op==0 then
+		e:SetCategory(CATEGORY_TOGRAVE+CATEGORY_REMOVE)
 		Duel.RegisterFlagEffect(tp,100428020,RESET_PHASE+PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,c,1,0,0)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	else
+		e:SetCategory(CATEGORY_REMOVE)
 		Duel.RegisterFlagEffect(tp,100428120,RESET_PHASE+PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_ONFIELD+LOCATION_GRAVE)
 	end

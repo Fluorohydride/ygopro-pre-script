@@ -71,14 +71,14 @@ end
 function c100428035.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
 	if chk==0 then return tc:IsCanOverlay()
-		and Duel.IsExistingMatchingCard(c100428035.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c100428035.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
 	Duel.SetTargetCard(tc)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function c100428035.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c100428035.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c100428035.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0
 		and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 		local tc=Duel.GetFirstTarget()

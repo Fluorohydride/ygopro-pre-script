@@ -9,6 +9,7 @@ function c100346032.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetTarget(c100346032.target)
 	e1:SetOperation(c100346032.activate)
 	c:RegisterEffect(e1)
@@ -26,8 +27,8 @@ function c100346032.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,c100346032.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
-	local cg=Duel.GetMatchingGroup(c100346032.cfilter,tp,LOCATION_ONFIELD,0,nil)
-	e:SetLabel(cg:GetCount())
+	local ct=Duel.GetMatchingGroupCount(c100346032.cfilter,tp,LOCATION_ONFIELD,0,nil)
+	e:SetLabel(ct)
 end
 function c100346032.stfilter(c)
 	return c:IsCode(50078509) and c:IsSSetable()
@@ -47,13 +48,11 @@ function c100346032.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabel(Duel.GetTurnCount())
 		Duel.RegisterEffect(e1,tp)
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100346032.stfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
-		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-		if e:GetLabel()>0 and g:GetCount()>0 and ft>0 and Duel.SelectYesNo(tp,aux.Stringid(100346032,0)) then
+		if e:GetLabel()>0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100346032,0)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local sc=g:Select(tp,1,1,nil)
-			if sc then
-				Duel.SSet(tp,sc)
-			end
+			Duel.SSet(tp,sc)
 		end
 	end
 end
