@@ -87,9 +87,12 @@ function s.changeop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetValue(HALF_DAMAGE)
+	e1:SetValue(s.damval)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+end
+function s.damval(e,re,val,r,rp,rc)
+	return math.floor(val/2)
 end
 function s.tgfilter(c)
 	return c:IsRace(RACE_BEAST) and c:IsLevel(10) and c:IsAbleToGrave()
