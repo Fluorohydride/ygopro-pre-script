@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) and r&REASON_COST>0 and re:IsActivated()
-		and re:GetHandler():IsSetCard(0x195)
+		and re:GetHandler():IsSetCard(0x195) and rp==tp
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -65,6 +65,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,ct,ct,nil)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.RaiseEvent(g,EVENT_CUSTOM+id,e,REASON_COST,tp,tp,0)
+	Duel.ShuffleHand(tp)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsCanChangePosition,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
