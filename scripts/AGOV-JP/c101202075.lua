@@ -22,7 +22,7 @@ end
 function s.mfilter(c,tp,ft)
 	local r=LOCATION_REASON_TOFIELD
 	if not chkc:IsControler(chkc:GetOwner()) then r=LOCATION_REASON_CONTROL end
-	return Duel.GetLocationCount(chkc:GetOwner,LOCATION_SZONE,tp,r)>0
+	return Duel.GetLocationCount(chkc:GetOwner(),LOCATION_SZONE,tp,r)>0
 end
 function s.sfilter(c,e,tp)
 	return c:GetOriginalType()&TYPE_MONSTER>0 and c:GetType()&TYPE_CONTINUOUS+TYPE_SPELL==TYPE_CONTINUOUS+TYPE_SPELL
