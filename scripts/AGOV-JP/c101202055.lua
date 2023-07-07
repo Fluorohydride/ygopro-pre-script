@@ -75,7 +75,8 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()~=e:GetLabel()
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+	e:Reset()
+	if Duel.GetTurnCount()~=e:GetLabel()+1 then return end
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
-	e:Reset()
 end
