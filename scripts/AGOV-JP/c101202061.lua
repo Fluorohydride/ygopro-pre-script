@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	c:RegisterEffect(e3)
 end
+s.has_text_type=TYPE_SPIRIT
 function s.mfilter(c,tp)
 	return c:IsType(TYPE_SPIRIT) or c:IsCode(25415053)
 end
