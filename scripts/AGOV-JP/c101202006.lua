@@ -40,8 +40,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.rvop)
 	c:RegisterEffect(e4)
 end
-function s.cfilter(c,tp,f,chk)
-	return f(c) and (chk or Duel.GetMZoneCount(tp,c)>0)
+function s.cfilter(c,tp,f)
+	return f(c) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.sprcon(e,c)
 	if c==nil then return true end
@@ -82,9 +82,11 @@ function s.rvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.rvop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local chk=c:IsRelateToEffect(e)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp,Card.IsAbleToGrave,not chk)
-	if Duel.SendtoGrave(g,REASON_EFFECT)>0 and chk then Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) end
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp,Card.IsAbleToGrave)
+	local tc=g:GetFirst()
+	local c=e:GetHandler()
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) and c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
 end
