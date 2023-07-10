@@ -11,7 +11,6 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCondition(s.sprcon)
-	e1:SetTarget(s.sprtg)
 	e1:SetOperation(s.sprop)
 	c:RegisterEffect(e1)
 	--set s/t
@@ -48,17 +47,10 @@ function s.sprcon(e,c)
 	local tp=c:GetControler()
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp,Card.IsAbleToGraveAsCost)
 end
-function s.sprtg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil,tp,Card.IsAbleToGraveAsCost)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local sg=g:SelectSubGroup(tp,aux.TRUE,true,1,1)
-	e:SetLabelObject(sg)
-	return sg
-end
 function s.sprop(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp,Card.IsAbleToGraveAsCost)
 	Duel.SendtoGrave(g,REASON_COST)
-	g:DeleteGroup()
 end
 function s.filter(c)
 	return c:IsSetCard(0x29e) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()

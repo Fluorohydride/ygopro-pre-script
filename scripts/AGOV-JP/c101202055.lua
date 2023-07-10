@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		if chk then Duel.BreakEffect() end
 		local dg=Group.CreateGroup()
-		for sc in aux.Next(g)
+		for sc in aux.Next(g) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
