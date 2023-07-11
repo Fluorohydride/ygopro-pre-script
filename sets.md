@@ -4,7 +4,8 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **July 22, 2023**: AGE OF OVERLORD (AGOV-JP) : `101202XXX`
 - **August 4, 2023**: Yu-Gi-Oh! OCG Structures Volume 7 promotional card (YO07-JP) : `100208XXX`
-- **August 26, 2023**: Deck Build Pack: Valiant Smashers (DBVS?-JP) : `100421XXX`
+- **August 26, 2023**: Deck Build Pack: Valiant Smashers (DBVS-JP) : `100421XXX`
+- **September 9, 2023**: Structure Deck R: Onslaught of the Fire Kings (SR14-JP) : `100314XXX`
 
 # Announced
 
