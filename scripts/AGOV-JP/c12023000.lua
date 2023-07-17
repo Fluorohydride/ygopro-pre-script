@@ -21,17 +21,16 @@ function c12023000.initial_effect(c)
 	e2:SetTarget(c12023000.thtg)
 	e2:SetOperation(c12023000.thop)
 	c:RegisterEffect(e2)
-	--Equip
+	--overlay
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(12023000,0))
-	e3:SetCategory(CATEGORY_EQUIP)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_EQUIP)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetTarget(c12023000.eqtg)
-	e3:SetOperation(c12023000.eqop)
+	e3:SetTarget(c12023000.ovtg)
+	e3:SetOperation(c12023000.ovop)
 	c:RegisterEffect(e3)
 end
 
@@ -64,30 +63,26 @@ function c12023000.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function c12023000.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,1-tp,LOCATION_MZONE)
+function c12023000.ovfilter2(c)
+	return c:IsCanOverlay()
 end
-function c12023000.eqop(e,tp,eg,ep,ev,re,r,rp)
+function c12023000.ovtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c12023000.ovfilter2(chkc) end
+	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) and Duel.IsExistingTarget(c12023000.ovfilter2,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+end
+
+function c12023000.ovop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil,c)
+	local g=Duel.SelectMatchingCard(tp,c12023000.ovfilter2,tp,0,LOCATION_MZONE,1,1,nil,c)
 	local tc=g:GetFirst()
 	if tc then
-		if not Duel.Equip(tp,tc,c) then return end
-		--Add Equip limit
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(c12023000.eqlimit)
-		tc:RegisterEffect(e1)
+		local og=tc:GetOverlayGroup()
+		if og:GetCount()>0 then
+			Duel.SendtoGrave(og,REASON_RULE)
+		end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+		Duel.Overlay(c,Group.FromCards(tc))
 	end
-end
-function c12023000.eqlimit(e,c)
-	return e:GetOwner()==c
 end
 
