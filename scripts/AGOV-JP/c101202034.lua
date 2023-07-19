@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--If this card is sent from the Monster Zone to the GY: You can send 1 "T.G." card from your Deck to the GY.
+	--to grave
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TOGRAVE)
