@@ -2,12 +2,10 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **May 27, 2023**: Duelist Pack: Duelists of Explosion (DP28-JP) : `100428XXX`
-- **June 10, 2023**: Animation Chronicle 2023 (AC03-JP) : `100207XXX`
-- **June 24, 2023**: Structure Deck: Pulse of the King (SD46-JP) : `100346XXX`
 - **July 22, 2023**: AGE OF OVERLORD (AGOV-JP) : `101202XXX`
 - **August 4, 2023**: Yu-Gi-Oh! OCG Structures Volume 7 promotional card (YO07-JP) : `100208XXX`
-- **August 26, 2023**: Deck Build Pack: Valiant Smashers (DBVS?-JP) : `100421XXX`
+- **August 26, 2023**: Deck Build Pack: Valiant Smashers (DBVS-JP) : `100421XXX`
+- **September 9, 2023**: Structure Deck R: Onslaught of the Fire Kings (SR14-JP) : `100314XXX`
 
 # Announced
 
@@ -118,6 +116,7 @@
 - Yu-Gi-Oh! OCG Structures Volume 6 promotional card (YO06-JP) : `100295XXX`
 - Maze of Memories (MAZE-EN) : `100206XXX`
 - The Valuable Book EX 3 promotional cards (VX03-JP) : `100205XXX`
+- Animation Chronicle 2023 (AC03-JP) : `100207XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -155,6 +154,7 @@
 - Structure Deck: Alba Strike (SD43-JP) : `100343XXX`
 - Structure Deck: Legend of the Crystals (SD44-JP) : `100344XXX`
 - Structure Deck: Forest of the Traptrix (SD45-JP) : `100345XXX`
+- Structure Deck: Pulse of the King (SD46-JP) : `100346XXX`
 
 ## Duelist packs & Booster SP packs & Deck Build packs
 - Booster SP: Destiny Soldiers (SPDS-JP) : `100405XXX`
@@ -183,6 +183,7 @@
 - Duelist Pack: Duelists of Whirlwind (DP25-JP) : `100425XXX`
 - Duelist Pack: Duelists of the Abyss (DP26-JP) : `100426XXX`
 - Duelist Pack: Duelists of Pyroxene (DP27-JP) : `100427XXX`
+- Duelist Pack: Duelists of Explosion (DP28-JP) : `100428XXX`
 
 ## Booster packs
 - THE DARK ILLUSION (TDIL-JP) : `100909XXX`

@@ -65,6 +65,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,ct,ct,nil)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.RaiseEvent(g,EVENT_CUSTOM+id,e,REASON_COST,tp,tp,0)
+	Duel.ShuffleHand(tp)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsCanChangePosition,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
