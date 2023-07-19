@@ -25,6 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=g:SelectSubGroup(tp,aux.dabcheck,false,1,3)
 	Duel.ConfirmCards(1-tp,sg)
 	Duel.RaiseEvent(sg,EVENT_CUSTOM+101202018,e,REASON_COST,tp,tp,0)
+	Duel.ShuffleHand(tp)
 	e:SetLabel(#sg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
