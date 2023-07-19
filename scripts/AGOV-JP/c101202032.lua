@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 function s.mfilter(c,fc,sub,mg,sg)
 	return c:IsRace(RACE_BEAST+RACE_FIEND+RACE_ILLUSION) and (not sg
-		or not sg:IsExists(Card.IsRace,1,nil,c:GetRace()))
+		or not sg:IsExists(Card.IsRace,1,c,c:GetRace()))
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
