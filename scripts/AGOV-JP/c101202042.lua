@@ -45,7 +45,8 @@ function s.initial_effect(c)
 end
 function s.mfilter(tp)
 	return  function(c)
-				return Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack):IsContains(c)
+				local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
+				return g and #g>0 and g:IsContains(c)
 			end
 end
 function s.altop(e,tp,chk)
@@ -82,7 +83,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if chk==0 then return #g>0 end
+	if chk==0 then #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

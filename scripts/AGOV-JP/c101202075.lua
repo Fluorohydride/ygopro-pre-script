@@ -21,8 +21,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.mfilter(c,tp,ft)
 	local r=LOCATION_REASON_TOFIELD
-	if not chkc:IsControler(chkc:GetOwner()) then r=LOCATION_REASON_CONTROL end
-	return Duel.GetLocationCount(chkc:GetOwner(),LOCATION_SZONE,tp,r)>0
+	if not c:IsControler(c:GetOwner()) then r=LOCATION_REASON_CONTROL end
+	return Duel.GetLocationCount(c:GetOwner(),LOCATION_SZONE,tp,r)>0
 end
 function s.sfilter(c,e,tp)
 	return c:GetOriginalType()&TYPE_MONSTER>0 and c:GetType()&TYPE_CONTINUOUS+TYPE_SPELL==TYPE_CONTINUOUS+TYPE_SPELL
@@ -31,7 +31,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
 		if e:GetLabel()==1 then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_MZONE) and chkc:IsControler(1-tp)
-			and s.mfilter(c,tp,0)
+			and s.mfilter(chkc,tp,0)
 		else return chkc:IsOnField() and s.sfilter(chkc,e,tp) end
 	end
 	local ft=e:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetHandler():IsLocation(LOCATION_HAND) and 1 or 0
