@@ -1,6 +1,6 @@
---エクシーズ・アーマー・トルピード
---Script by Dio0
-function c101202039.initial_effect(c)
+--装甲超量鱼雷
+local s,id,o=GetID()
+function s.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,3,2)
 	c:EnableReviveLimit()
@@ -8,7 +8,7 @@ function c101202039.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetCondition(c101202039.attcon)
+	e1:SetCondition(s.attcon)
 	c:RegisterEffect(e1)
 	--draw
 	local e2=Effect.CreateEffect(c)
@@ -16,10 +16,10 @@ function c101202039.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,101202039)
-	e2:SetCost(c101202039.drawcost)
-	e2:SetTarget(c101202039.drawtarget)
-	e2:SetOperation(c101202039.drawoperation)
+	e2:SetCountLimit(1,id)
+	e2:SetCost(s.drawcost)
+	e2:SetTarget(s.drawtarget)
+	e2:SetOperation(s.drawoperation)
 	c:RegisterEffect(e2)
 
 	--actlimit
@@ -29,7 +29,7 @@ function c101202039.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e3:SetTargetRange(0,1)
-	e3:SetCondition(c101202039.actcon)
+	e3:SetCondition(s.actcon)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 	--disable
@@ -37,8 +37,8 @@ function c101202039.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e4:SetCondition(c101202039.actcon)
-	e4:SetOperation(c101202039.disop)
+	e4:SetCondition(s.actcon)
+	e4:SetOperation(s.disop)
 	c:RegisterEffect(e4)
 	--cannot be target
 	local e5=Effect.CreateEffect(c)
@@ -46,45 +46,45 @@ function c101202039.initial_effect(c)
 	e5:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e5:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e5:SetValue(aux.tgoval)
-	e5:SetCondition(c101202039.targetcon)
+	e5:SetCondition(s.targetcon)
 	c:RegisterEffect(e5)
 	
 end
 
-function c101202039.targetcon(e)
+function s.targetcon(e)
 	return e:GetHandler():GetEquipTarget():IsType(TYPE_XYZ)
 end
 
-function c101202039.attcon(e)
+function s.attcon(e)
 	return e:GetHandler():GetOverlayCount()==0
 end
 
-function c101202039.drawcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.drawcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
-function c101202039.drawtarget(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.drawtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
-function c101202039.drawoperation(e,tp,eg,ep,ev,re,r,rp)
+function s.drawoperation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 
-function c101202039.actcon(e)
+function s.actcon(e)
 	local tc=e:GetHandler():GetEquipTarget()
 	return Duel.GetAttacker()==tc or Duel.GetAttackTarget()==tc
 end
 
-function c101202039.disfilter(c)
+function s.disfilter(c)
 	return aux.NegateAnyFilter(c) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
-function c101202039.disop(e,tp,eg,ep,ev,re,r,rp)
+function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c101202039.disfilter,tp,0,LOCATION_MZONE,c)
+	local g=Duel.GetMatchingGroup(s.disfilter,tp,0,LOCATION_MZONE,c)
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(c)
