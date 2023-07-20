@@ -45,7 +45,8 @@ function s.initial_effect(c)
 	aux.RegisterMergedDelayedEvent(c,EVENT_CUSTOM+id,EVENT_REMOVE)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)>1
+	local c=e:GetHandler()
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)>1
 end
 function s.filter(c)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToRemove()
@@ -63,6 +64,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.matchk(e,c)
 	local ef=e:GetLabelObject()
+	ef:Reset()
 	ef:SetCountLimit(c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)-1)
 end
 function s.sfilter(c,e,tp,chkc)
