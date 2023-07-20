@@ -38,7 +38,7 @@ function s.filter(c)
 	return c:IsRace(RACE_PYRO) and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function s.stg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.sop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
