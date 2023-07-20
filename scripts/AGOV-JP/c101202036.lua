@@ -63,7 +63,6 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.matchk(e,c)
 	local ef=e:GetLabelObject()
-	ef:Reset()
 	ef:SetCountLimit(c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)-1)
 end
 function s.sfilter(c,e,tp,chkc)
