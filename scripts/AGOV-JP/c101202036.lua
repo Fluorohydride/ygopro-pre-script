@@ -46,7 +46,7 @@ function s.initial_effect(c)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)>1
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)>1
 end
 function s.filter(c)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToRemove()
