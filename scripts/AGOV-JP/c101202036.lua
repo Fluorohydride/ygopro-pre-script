@@ -45,7 +45,8 @@ function s.initial_effect(c)
 	aux.RegisterMergedDelayedEvent(c,EVENT_CUSTOM+id,EVENT_REMOVE)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)>1
+	local c=e:GetHandler()
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetMaterial():IsExists(Card.IsType,2,nil,TYPE_SYNCHRO)
 end
 function s.filter(c)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToRemove()
