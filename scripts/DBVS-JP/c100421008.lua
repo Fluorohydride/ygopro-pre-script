@@ -49,8 +49,9 @@ function s.lfilter(c,tp)
 	return c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x2a1)
 end
 function s.lecon(e)
+	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return s.lfilter(Duel.GetAttacker(),tp) or d and s.lfilter(d,tp)
+	return a and s.lfilter(a,tp) or d and s.lfilter(d,tp)
 end
 function s.cfilter(c,e,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
