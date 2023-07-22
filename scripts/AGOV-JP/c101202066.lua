@@ -30,8 +30,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK,0,nil)
-		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_DECK,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK,0,1,nil)
+		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_DECK,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
 	Duel.SetTargetParam(Duel.AnnounceType(tp))
 end
