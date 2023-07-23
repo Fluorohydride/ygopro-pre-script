@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetTarget(s.atkfilter)
 	e4:SetValue(1100)
-	-- c:RegisterEffect(e4)
+	c:RegisterEffect(e4)
 
 	
 end
@@ -78,6 +78,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 
-function s.atkfilter(c)
+function s.atkfilter(e,c)
 	return c:IsLevel(1) and c:IsAttribute(ATTRIBUTE_FIRE) 
 end
