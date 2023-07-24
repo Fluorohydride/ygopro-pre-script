@@ -45,7 +45,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not (Duel.SendtoGrave(g,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_GRAVE)
 		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_ONFIELD,3,nil)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then return end
-	local tg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp)
+	local tg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)
 	if #tg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=tg:Select(tp,1,1,nil)
