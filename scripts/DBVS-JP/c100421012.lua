@@ -41,8 +41,8 @@ function s.macon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.matg(e,c)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	return g:GetMaxGroup(Card.GetAttack):IsContains(c)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
+	return g and g:IsContains(c)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(100421001) and c:IsAttackAbove(1000) and c:IsDefenseAbove(1000)
