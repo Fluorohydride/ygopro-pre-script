@@ -61,9 +61,10 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=c:GetFlagEffectLabel(id)
 	local tn=Duel.GetTurnCount()
-	if not ct or tn==ct then return false end
-	c:ResetFlagEffect(id)
-	return tn==ct+1
+	if not ct or tn==ct then
+		c:ResetFlagEffect(id)
+		return false
+	else return tn==ct+1 end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
