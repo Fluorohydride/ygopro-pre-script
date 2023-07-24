@@ -70,7 +70,7 @@ end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,nil)
 	if Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)<1 then return end
-	local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_ONFIELD,0,nil)
+	local sg=Duel.GetMatchingGroup(s.sfilter,tp,0,LOCATION_ONFIELD,nil)
 	if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.BreakEffect()
 		Duel.SendtoGrave(sg,REASON_EFFECT)
