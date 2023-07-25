@@ -38,7 +38,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,s.tfilter,1,nil,e,tp) end
 	local g=Duel.SelectReleaseGroup(tp,s.sfilter,1,1,nil,e,tp)
 	Duel.Release(g,REASON_COST)
-	e:SetLabel(g:GetFirst():GetOriginalCodeRule)
+	e:SetLabel(g:GetFirst():GetOriginalCodeRule())
 end
 function s.dstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:IsCostChecked() end
