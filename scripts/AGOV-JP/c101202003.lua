@@ -28,17 +28,17 @@ function s.initial_effect(c)
 end
 function s.tfilter(c,e,tp)
 	return c:IsSetCard(0x27) and Duel.GetMZoneCount(tp,c)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalCodeRule())
 end
-function s.filter(c,e,tp,tc)
+function s.filter(c,e,tp,...)
 	return c:IsSetCard(0x27) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
-		and not c:IsCode(tc:GetOriginalCodeRule())
+		and (#{...}==0 or not c:IsCode(...))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,s.tfilter,1,nil,e,tp) end
 	local g=Duel.SelectReleaseGroup(tp,s.sfilter,1,1,nil,e,tp)
 	Duel.Release(g,REASON_COST)
-	e:SetLabelObject(g:GetFirst())
+	e:SetLabel(g:GetFirst():GetOriginalCodeRule)
 end
 function s.dstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:IsCostChecked() end
@@ -47,7 +47,7 @@ end
 function s.dsop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,e:GetLabelObject())
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,e:GetLabel())
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.cfilter(c)
