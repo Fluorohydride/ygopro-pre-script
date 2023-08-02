@@ -40,7 +40,7 @@ function s.macon(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.matg(e,c)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
+	local g=Duel.GetMatchingGroup(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
 	return g and g:IsContains(c)
 end
 function s.cfilter(c)
