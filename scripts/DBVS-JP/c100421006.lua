@@ -52,7 +52,7 @@ function s.contg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.conop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then Duel.GetControl(tc,tp,PHASE_END) end
+	if tc:IsRelateToEffect(e) then Duel.GetControl(tc,tp,PHASE_END,1) end
 end
 function s.dfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2a1)
