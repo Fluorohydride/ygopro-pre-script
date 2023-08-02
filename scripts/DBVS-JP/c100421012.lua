@@ -36,9 +36,8 @@ end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2a1)
 end
-function s.macon(e,tp,eg,ep,ev,re,r,rp)
-	if type(tp)~="number" then tp=e:GetHandler():GetControler() end
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
+function s.macon(e)
+	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.matg(e,c)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
