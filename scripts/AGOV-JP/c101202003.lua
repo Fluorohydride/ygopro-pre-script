@@ -80,7 +80,7 @@ function s.gsop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		c:RegisterEffect(e2)
+		tc:RegisterEffect(e2)
 	end
 	Duel.SpecialSummonComplete()
 end
