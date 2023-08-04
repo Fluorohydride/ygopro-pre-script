@@ -1,4 +1,5 @@
---重铠装-暗黑骑士枪兵
+--FA－ダーク・ナイト・ランサー
+--Script by Dio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--xyz summon

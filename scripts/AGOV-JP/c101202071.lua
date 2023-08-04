@@ -1,4 +1,5 @@
---重铠装超量
+--フル・アーマード・エクシーズ
+--Script by Dio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--activate

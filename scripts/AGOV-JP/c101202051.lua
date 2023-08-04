@@ -1,4 +1,5 @@
---超量信托
+--エクシーズ・エントラスト
+--Script by Dio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

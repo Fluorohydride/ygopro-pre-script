@@ -1,4 +1,5 @@
---装甲超量鱼雷
+--エクシーズ・アーマー・トルピード
+--Script by Dio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--xyz summon
