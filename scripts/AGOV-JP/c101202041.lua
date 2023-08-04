@@ -2,7 +2,7 @@
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,7,2,s.ovfilter,aux.Stringid(id,0),7,s.xyzop)
+	aux.AddXyzProcedure(c,nil,7,3,s.ovfilter,aux.Stringid(id,0),7,s.xyzop)
 	c:EnableReviveLimit()
 	--atk
 	local e1=Effect.CreateEffect(c)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--overlay
+	--Equip
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -30,8 +30,8 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_EQUIP)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetTarget(s.ovtg)
-	e3:SetOperation(s.ovop)
+	e3:SetTarget(s.eqtg)
+	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
 end
 
@@ -63,27 +63,28 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-
 function s.ovfilter2(c)
 	return c:IsCanOverlay()
 end
-function s.ovtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.ovfilter2(chkc) end
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) and Duel.IsExistingTarget(s.ovfilter2,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.ovfilter2,tp,0,LOCATION_MZONE,1,nil,e:GetHandler()) end
 end
-
-function s.ovop(e,tp,eg,ep,ev,re,r,rp)
+function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.SelectMatchingCard(tp,s.ovfilter2,tp,0,LOCATION_MZONE,1,1,nil,c)
-	local tc=g:GetFirst()
-	if tc then
-		local og=tc:GetOverlayGroup()
-		if og:GetCount()>0 then
-			Duel.SendtoGrave(og,REASON_RULE)
-		end
+	if not c:IsRelateToEffect(e) then return end
+	local g=Duel.GetMatchingGroup(s.ovfilter2,tp,0,LOCATION_MZONE,nil)
+	if g:GetCount()>0 then 
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		Duel.Overlay(c,Group.FromCards(tc))
+		local tg=g:Select(tp,1,1,nil)
+		Duel.HintSelection(tg)
+		local tc=tg:GetFirst()
+		if not tc:IsImmuneToEffect(e) then
+			local og=tc:GetOverlayGroup()
+			if og:GetCount()>0 then
+				Duel.SendtoGrave(og,REASON_RULE)
+			end
+			Duel.Overlay(c,tg)
+		end
 	end
 end
 

@@ -70,11 +70,15 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local ct=e:GetLabel()
-	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,ct,ct,nil)
-	if g:GetCount()>0 and g:GetClassCount(Card.GetCode)>=ct then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
+	if g:GetCount()>0 then
+		local ct=e:GetLabel()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+		local sg=g:SelectSubGroup(tp,aux.dncheck,false,ct,ct)
+		if sg then
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
+		end
 	end
 end
 
