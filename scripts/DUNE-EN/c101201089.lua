@@ -1,4 +1,4 @@
---crystal god tistina
+--Crystal God Tistina
 --Scripted by: CVen00/ToonyBirb with template provided by XGlitchy30
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,30 +11,21 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-
-    --effect 2
+	--effect 2
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e2:SetCode(EVENT_DESTROYED)
-    e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCountLimit(1,id+1)
-    e2:SetCondition(s.condition)
+	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	
 end
-
---effect 1 and 2
-function s.desfilter(c)
-    return c:IsFaceup()
-end
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
+	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
-
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,nil)
@@ -44,11 +35,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()>0 then
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
-
-        local g1=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_ONFIELD,nil)
-	    if g1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		    Duel.SendtoGrave(g1,REASON_EFFECT)
-	    end
+		local g1=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)
+		if g1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.SendtoGrave(g1,REASON_EFFECT)
+		end
 	end
-
 end
