@@ -35,7 +35,6 @@ function s.initial_effect(c)
 	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
 end
-
 function s.ovfilter(c)
 	return c:IsFaceup() and (c:IsRank(5) or c:IsRank(6))
 end
@@ -43,11 +42,9 @@ function s.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
 end
-
 function s.atkval(e,c)
 	return (c:GetOverlayCount()+c:GetEquipCount())*300
 end
-
 function s.thfilter(c)
 	return c:IsSetCard(0x73) and c:IsAbleToHand()
 end
@@ -74,7 +71,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.ovfilter2,tp,0,LOCATION_MZONE,nil)
-	if g:GetCount()>0 then 
+	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 		local tg=g:Select(tp,1,1,nil)
 		Duel.HintSelection(tg)
@@ -88,4 +85,3 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

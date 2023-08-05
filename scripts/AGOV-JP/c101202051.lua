@@ -23,7 +23,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-
 function s.filter(c)
 	return c:IsSetCard(0x4073) and c:IsAbleToHand()
 end
@@ -60,7 +59,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:GetOriginalType()&TYPE_XYZ~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

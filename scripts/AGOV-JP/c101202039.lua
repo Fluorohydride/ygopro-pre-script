@@ -22,7 +22,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.drawtarget)
 	e2:SetOperation(s.drawoperation)
 	c:RegisterEffect(e2)
-
 	--actlimit
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -49,17 +48,13 @@ function s.initial_effect(c)
 	e5:SetValue(aux.tgoval)
 	e5:SetCondition(s.targetcon)
 	c:RegisterEffect(e5)
-	
 end
-
 function s.targetcon(e)
 	return e:GetHandler():GetEquipTarget():IsType(TYPE_XYZ)
 end
-
 function s.attcon(e)
 	return e:GetHandler():GetOverlayCount()==0
 end
-
 function s.drawcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
@@ -74,12 +69,10 @@ function s.drawoperation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-
 function s.actcon(e)
 	local tc=e:GetHandler():GetEquipTarget()
 	return Duel.GetAttacker()==tc or Duel.GetAttackTarget()==tc
 end
-
 function s.disfilter(c)
 	return aux.NegateAnyFilter(c) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end

@@ -29,12 +29,11 @@ end
 function s.xyzfilter(c)
 	return c:IsXyzSummonable(nil)
 end
-
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 end
 function s.xyzcond(e,tp,eg,ep,ev,re,r,rp,chk)
-	return  Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -48,12 +47,11 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.XyzSummon(tp,tg:GetFirst(),nil)
 	end
 end
-
 function s.tgfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c)
 end
 function s.eqfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:CheckUniqueOnField(tp) and not c:IsForbidden() 
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc,tp) end
