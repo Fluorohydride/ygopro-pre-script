@@ -1,3 +1,4 @@
+--ネムレリア・レペッテ
 --Nemleria Repette
 --scripted by Raye
 local s,id,o=GetID()
