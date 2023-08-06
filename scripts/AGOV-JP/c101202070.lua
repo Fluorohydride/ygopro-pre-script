@@ -1,5 +1,6 @@
---coded by Lyris
+--TG－クローズ
 --T.G. - Close
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--Activate

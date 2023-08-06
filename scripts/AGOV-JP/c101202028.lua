@@ -1,5 +1,6 @@
---coded by Lyris
+--霊魂鳥影－姫孔雀
 --Shinobaroness Shade Peacock
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

@@ -1,5 +1,5 @@
---coded by Lyris
 --Divine Domain Baatistina
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--Activate

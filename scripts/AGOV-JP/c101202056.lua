@@ -1,5 +1,6 @@
---coded by Lyris
+--蛇眼神殿スネークアイ
 --The Shrine of Serpentine Sight - Snake-Eye
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

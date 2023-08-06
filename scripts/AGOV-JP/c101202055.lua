@@ -1,5 +1,6 @@
---coded by Lyris
+--死の罪宝－ルシエラ
 --Tainted Treasure of Doom - Luciela
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

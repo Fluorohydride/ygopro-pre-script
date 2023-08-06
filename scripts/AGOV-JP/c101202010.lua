@@ -1,5 +1,6 @@
---coded by Lyris
+--蛇眼の炎龍
 --Snake-Eyes Flamberge Dragon
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--move

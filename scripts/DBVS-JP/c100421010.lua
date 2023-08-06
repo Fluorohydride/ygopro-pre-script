@@ -1,5 +1,6 @@
---coded by Lyris
+--メメント・ボーン・バック
 --Memento Bone Back
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--Activate

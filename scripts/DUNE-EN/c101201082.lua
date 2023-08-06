@@ -1,5 +1,5 @@
---coded by Lyris
 --Finis Terrae, Tower of the Necroworld
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--spsummon

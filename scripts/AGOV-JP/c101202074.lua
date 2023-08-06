@@ -1,5 +1,6 @@
---coded by Lyris
+--裏切りの罪宝－シルウィア
 --Tainted Treasure of Betrayal - Silvia
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

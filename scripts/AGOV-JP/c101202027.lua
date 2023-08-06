@@ -1,5 +1,6 @@
---coded by Lyris
+--折々の紙神
 --Oriori no Kamigami
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--toss coin

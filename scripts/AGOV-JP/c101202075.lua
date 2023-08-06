@@ -1,5 +1,6 @@
---coded by Lyris
+--睨み統べるスネークアイズ
 --The Glaring Ruler Snake-Eyes
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

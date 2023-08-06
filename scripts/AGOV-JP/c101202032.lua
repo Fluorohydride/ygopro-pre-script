@@ -1,5 +1,6 @@
---coded by Lyris
+--幻獣魔王バフォメット
 --Berfomet the Phantom Beast Dark Ruler
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

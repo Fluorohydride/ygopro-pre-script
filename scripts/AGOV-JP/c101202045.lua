@@ -1,5 +1,6 @@
---coded by Lyris
+--奇跡の魔導剣士
 --Exceed the Pendulum
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

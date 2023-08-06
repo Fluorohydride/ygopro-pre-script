@@ -1,5 +1,6 @@
---coded by Lyris
+--星宵竜転
 --Seishou Ruten
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

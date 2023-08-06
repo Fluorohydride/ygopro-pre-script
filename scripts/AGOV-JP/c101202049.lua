@@ -1,5 +1,6 @@
---coded by Lyris
+--TG－ブレイクリミッター
 --T.G. - Break Limiter
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--Activate

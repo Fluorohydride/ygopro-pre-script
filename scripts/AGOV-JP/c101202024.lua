@@ -1,5 +1,6 @@
---coded by Lyris
+--陀羅威
 --Tarai
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon

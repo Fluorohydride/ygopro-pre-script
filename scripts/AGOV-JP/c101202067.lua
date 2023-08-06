@@ -1,5 +1,6 @@
---coded by Lyris
+--不死武士の悼み
 --Lament of the Immortal Bushi
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

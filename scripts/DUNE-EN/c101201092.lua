@@ -1,5 +1,5 @@
---coded by Lyris
 --Signs of the Tistina
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--Activate

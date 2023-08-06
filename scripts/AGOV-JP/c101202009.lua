@@ -1,5 +1,6 @@
---coded by Lyris
+--スネークアイ・ワイトバーチ
 --Snake-Eye Wight Birch
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon self

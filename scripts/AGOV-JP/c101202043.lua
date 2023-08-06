@@ -1,5 +1,6 @@
---coded by Lyris
+--ヘルフレイムバンシー
 --Infernal Flame Banshee
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

@@ -1,5 +1,6 @@
---coded by Lyris
+--黒魔女ディアベルスター
 --Diabellestarr the Dark Witch
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--spsummon rule

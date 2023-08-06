@@ -1,5 +1,5 @@
---coded by Lyris
 --Breath of the Tistina
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,6 @@
---coded by Lyris
+--“罪宝狩りの悪魔”
 --"The Tainted Treasure Hunter Fiend"
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

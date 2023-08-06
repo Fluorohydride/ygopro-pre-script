@@ -1,5 +1,6 @@
---coded by Lyris
+--氷魔龍 ブリューナク
 --Brionac, the Dragon of Icy Malevolence
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

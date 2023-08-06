@@ -1,5 +1,6 @@
---coded by Lyris
+--オオヤツ・ツマムヒメ
 --Ooyatsu Tsumamuhime
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--token

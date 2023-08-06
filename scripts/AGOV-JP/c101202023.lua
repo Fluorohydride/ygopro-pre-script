@@ -1,5 +1,6 @@
---coded by Lyris
+--侵略的外来種－I.A.S
 --Invasive Alien Species - I.A.S
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--indes

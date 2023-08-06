@@ -1,5 +1,6 @@
---coded by Lyris
+--メメント・ゴブリン
 --Memento Goblin
+--coded by Lyris
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--limit targeting

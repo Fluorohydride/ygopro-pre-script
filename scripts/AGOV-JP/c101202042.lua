@@ -1,5 +1,6 @@
---coded by Lyris
+--厄災の星ティ・フォン
 --Stellar Nemesis T-PHON - Doomsday Star
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

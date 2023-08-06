@@ -1,5 +1,6 @@
---coded by Lyris
+--離世召人形
 --Hanayome Ningyo
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon

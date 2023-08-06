@@ -1,5 +1,6 @@
---coded by Lyris
+--星逢の神籬
 --The Himorogi where Stars Align
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

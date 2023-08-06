@@ -1,5 +1,6 @@
---coded by Lyris
+--スネークアイ・オーク
 --Snake-Eye Oark
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--revive

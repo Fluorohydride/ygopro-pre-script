@@ -1,5 +1,6 @@
---coded by Lyris
+--熾天の騎士ガイアプロミネンス
 --Gaia Prominence, the Kindling Seraph
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

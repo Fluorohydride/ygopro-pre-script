@@ -1,5 +1,6 @@
---coded by Lyris
+--大陰陽師 タオ
 --Tao the Great Chanter
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--indes

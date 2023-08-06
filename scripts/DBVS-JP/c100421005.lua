@@ -1,5 +1,6 @@
---coded by Lyris
+--メメント・エンウィッチ
 --Memento Fairywitch
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--to hand
