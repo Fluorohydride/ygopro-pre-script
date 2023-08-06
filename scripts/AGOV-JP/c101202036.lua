@@ -47,7 +47,7 @@ function s.initial_effect(c)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetMaterial():IsExists(Card.IsType,2,nil,TYPE_SYNCHRO)
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.filter(c)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToRemove()
@@ -65,10 +65,13 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.matchk(e,c)
 	local ef=e:GetLabelObject()
-	ef:SetCountLimit(c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)-1)
+	local ct=c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_SYNCHRO)-1
+	if ct<0 then ct=0 end
+	ef:SetCountLimit(ct)
 end
 function s.sfilter(c,e,tp)
-	return c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsCanBeEffectTarget(e)
+	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsType(TYPE_MONSTER)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=eg:Filter(s.sfilter,nil,e,tp)
