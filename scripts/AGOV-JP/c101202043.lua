@@ -43,7 +43,7 @@ function s.stg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.sop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if not tc then return end
 	local op=aux.SelectFromOptions(tp,{tc:IsAbleToHand(),1190},{tc:IsAbleToGrave(),1191})
 	if op==1 then

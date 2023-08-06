@@ -58,7 +58,7 @@ function s.rttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.rfilter,tp,LOCATION_GRAVE,0,1,nil,check) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.rfilter,tp,LOCATION_GRAVE,0,1,1,nil,check)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end
 function s.rtop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -67,5 +67,5 @@ function s.rtop(e,tp,eg,ep,ev,re,r,rp)
 	if check and Duel.SelectEffectYesNo(tp,tc,aux.Stringid(id,2)) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
-	else Duel.SendtoHand(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) end
+	else Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) end
 end
