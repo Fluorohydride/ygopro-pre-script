@@ -60,7 +60,7 @@ function c101202072.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101202072.srfilter(c,race,lv)
-	return c:IsType(TYPE_MONSTER) and not c:IsRace(race) and c:IsLevelBelow(lv) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and not c:IsRace(race) and c:IsLevelBelow(lv-1) and c:IsAbleToHand()
 end
 function c101202072.srcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
