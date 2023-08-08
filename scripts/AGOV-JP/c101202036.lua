@@ -1,7 +1,7 @@
 --TG グレイヴ・ブラスター
 --T.G. Glaive Blaster
 --coded by Lyris
-local s, id, o = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

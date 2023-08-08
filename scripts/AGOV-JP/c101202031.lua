@@ -1,7 +1,7 @@
 --地縛戒隷 ジオグレムリーナ
 --Earthbound Servant Geo Gremlina
 --coded by Lyris
-local s, id, o = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

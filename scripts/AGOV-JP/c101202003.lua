@@ -1,7 +1,7 @@
 --TG ロケット・サラマンダー
 --T.G. Rocket Salamander
 --coded by Lyris
-local s, id, o = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon from Deck
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,6 @@
 --Breath of the Tistina
 --coded by Lyris
-local s, id, o = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -40,7 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		or b) and chkc:IsCanTurnSet() end
 	local loc=0
 	if b then loc=LOCATION_MZONE end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsCanTurnSet,tp,LOCATION_MZONE,loc,1,nil) 
+	if chk==0 then return Duel.IsExistingTarget(Card.IsCanTurnSet,tp,LOCATION_MZONE,loc,1,nil)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectTarget(tp,Card.IsCanTurnSet,tp,LOCATION_MZONE,loc,1,1,nil)

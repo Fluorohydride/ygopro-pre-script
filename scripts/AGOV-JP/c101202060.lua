@@ -1,7 +1,7 @@
 --シンクロ・ランブル
 --Synchro Rumble
 --coded by Lyris
-local s, id, o = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,63436931)
 	--Activate

@@ -1,7 +1,7 @@
 --TG マイティ・ストライカー
 --T.G. Mighty Striker
 --coded by Lyris
-local s, id, o = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

@@ -1,7 +1,7 @@
 --冥骸合竜－メメントラル・テクトリカ
 --Mementoral Tectolica, the Netherskull Dragon
 --coded by Lyris
-local s, id, o = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsum condition

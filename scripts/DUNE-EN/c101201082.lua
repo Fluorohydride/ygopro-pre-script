@@ -1,6 +1,6 @@
 --Finis Terrae, Tower of the Necroworld
 --coded by Lyris
-local s, id, o = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

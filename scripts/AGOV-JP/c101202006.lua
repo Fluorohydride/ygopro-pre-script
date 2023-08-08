@@ -1,7 +1,7 @@
 --黒魔女ディアベルスター
 --Diabellestarr the Dark Witch
 --coded by Lyris
-local s, id, o = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon rule
 	local e1=Effect.CreateEffect(c)

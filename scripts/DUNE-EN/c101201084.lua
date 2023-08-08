@@ -1,6 +1,6 @@
 --coded by Lyrsi
 --Storagepod
-local s, id, o = GetID()
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
