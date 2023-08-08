@@ -44,6 +44,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+function s.chk(e,tp,eg)
+	for p=0,1 do
+		if eg:IsExists(Card.IsSummonPlayer,1,nil,1-p) then
+			Duel.RegisterFlagEffect(p,id,RESET_PHASE+PHASE_END,0,2)
+		end
+	end
+end
 function s.mfilter(tp)
 	return  function(c)
 				local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
