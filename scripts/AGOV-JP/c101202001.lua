@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_REMOVE)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetTargetRange(LOCATION_ONFIELD,0)
-	e1:SetTarget(s.indtg)
-	e1:SetValue(s.indval)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,1)
+	e1:SetTarget(s.rmlimit)
 	c:RegisterEffect(e1)
 	--pendulum set
 	local e2=Effect.CreateEffect(c)
@@ -47,11 +47,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-function s.indtg(e,c)
-	return c:IsFaceup() and c:IsCode(13331639)
-end
-function s.indval(e,re,tp)
-	return e:GetHandler():GetControler()~=tp
+function s.rmlimit(e,c,rp,r,re)
+	local tp=e:GetHandlerPlayer()
+	return c:IsControler(tp) and c:IsOnField() and c:IsCode(13331639) and c:IsFaceup()
+		and r&REASON_EFFECT~=0 and re:GetOwnerPlayer()~=tp
 end
 function s.penfilter(c)
 	return c:IsSetCard(0x10f8) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and not c:IsForbidden()
