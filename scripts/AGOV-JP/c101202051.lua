@@ -1,9 +1,10 @@
 --エクシーズ・エントラスト
---Script by Dio0
+--Script by Dio0 & mercury233
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -26,8 +27,8 @@ end
 function s.filter(c)
 	return c:IsSetCard(0x4073) and c:IsAbleToHand()
 end
-function s.lvfilter(c)
-	return c:IsFaceup() and c:GetLevel()>0
+function s.lvfilter(c,lv)
+	return c:IsFaceup() and c:GetLevel()>0 and c:GetLevel()~=lv
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
@@ -35,17 +36,20 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.lvfilter),tp,LOCATION_MZONE,0,nil,e,tp)
-		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	if tg:GetCount()>0 then
+		Duel.SendtoHand(tg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tg)
+		local g=Duel.GetMatchingGroup(s.lvfilter,tp,LOCATION_MZONE,0,nil,0)
+		if g:GetCount()>0 then
+			local lv=aux.SelectFromOptions(tp,
+				{g:IsExists(s.lvfilter,1,nil,3),aux.Stringid(id,2),3},
+				{g:IsExists(s.lvfilter,1,nil,5),aux.Stringid(id,3),5},
+				{true,aux.Stringid(id,4),0})
+			if lv==0 then return end
 			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-			local lv=0
-			local sg=g:Select(tp,1,2,nil)
-			if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then lv=5 else lv=3 end
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,5))
+			local sg=g:FilterSelect(tp,s.lvfilter,1,2,nil,lv)
 			local tc=sg:GetFirst()
 			while tc do
 				local e1=Effect.CreateEffect(e:GetHandler())
