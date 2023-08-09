@@ -52,22 +52,9 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	local b2=Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 	if not (b1 or b2) then return end
-	local off=1
-	local ops={}
-	local opval={}
-	if b1 then
-		ops[off]=2
-		opval[off-1]=1
-		off=off+1
-	end
-	if b2 then
-		ops[off]=1153
-		opval[off-1]=2
-		off=off+1
-	end
-	local op=Duel.SelectOption(tp,table.unpack(ops))
-	local sel=opval[op]
-	e:SetLabel(sel)
+	local sel=aux.SelectFromOptions(tp,
+		{b1,aux.Stringid(id,2)},
+		{b2,aux.Stringid(id,3)})
 	if sel==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
