@@ -61,7 +61,7 @@ function s.rmfilter(c)
 end
 function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=e:GetLabel()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_EXTRA,0,ct,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_EXTRA,0,ct,ct,nil)
 	Duel.Remove(g,POS_FACEDOWN,REASON_COST)

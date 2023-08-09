@@ -90,9 +90,10 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetCurrentChain()
-	if ct<2 then return end
+	if ct<2 then return false end
 	local te,p=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
-	local loc1=te and te:GetHandler():IsSetCard(0x17e)
+	if not te then return false end
+	local loc1=te:GetHandler():IsSetCard(0x17e) and not te:GetHandler():IsCode(id)
 	local loc2=te:GetActiveType()==TYPE_TRAP and te:IsHasType(EFFECT_TYPE_ACTIVATE)
 	return (loc1 or loc2) and p==tp and rp==1-tp
 end
