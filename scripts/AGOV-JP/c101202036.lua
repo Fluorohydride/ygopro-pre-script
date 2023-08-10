@@ -76,7 +76,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=eg:Filter(s.sfilter,nil,e,tp)
 	if chkc then return g:IsContains(chkc) end
-	if chk==0 then return #g>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:Select(tp,1,1,nil)
 	Duel.SetTargetCard(sg)

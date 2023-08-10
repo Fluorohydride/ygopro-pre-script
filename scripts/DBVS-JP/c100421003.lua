@@ -61,7 +61,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or Duel.Destroy(tc,REASON_EFFECT)<1 then return end
 	local lv=tc:GetOriginalLevel()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,lv)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg=g:SelectSubGroup(tp,s.chk,false,1,99,lv)
 	if sg then Duel.SendtoGrave(sg,REASON_EFFECT) end
 end

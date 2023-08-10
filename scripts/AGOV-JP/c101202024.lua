@@ -32,11 +32,9 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e,tp)
-	local seq=c:GetSequence()
-	if seq>4 then return false end
-	if c:IsControler(1-tp) then seq=seq+16 end
-	return c:IsFaceup() and c:GetFlagEffect(id)>0 and Duel.GetMZoneCount(tp,c)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,c:GetControler(),1<<seq)
+	local p,seq=tc:GetControler(),tc:GetSequence()
+	return c:IsFaceup() and c:GetFlagEffect(id)>0 and Duel.GetMZoneCount(p,c,tp,LOCATION_REASON_TOFIELD,1<<seq)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,c:GetControler())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end

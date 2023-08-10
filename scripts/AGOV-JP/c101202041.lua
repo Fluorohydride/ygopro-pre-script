@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_EQUIP)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
+	e3:SetCondition(s.eqcon)
 	e3:SetTarget(s.eqtg)
 	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
@@ -60,6 +61,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
+end
+function s.eqcfilter(c,tp)
+	local tc=c:GetEquipTarget()
+	return tc and tc:IsControler(tp)
+end
+function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.eqcfilter,1,nil,tp)
 end
 function s.ovfilter2(c)
 	return c:IsCanOverlay()
