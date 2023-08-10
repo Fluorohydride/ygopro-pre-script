@@ -5,7 +5,7 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material
-	aux.AddXyzProcedure(c,nil,12,2,s.mfilter(c:GetControler()),aux.Stringid(id,0),2,s.altop)
+	aux.AddXyzProcedure(c,nil,12,2,s.mfilter,aux.Stringid(id,0),2,s.altop)
 	if not s.global_check then
 		s.global_check=true
 		local ge1=Effect.CreateEffect(c)
@@ -44,6 +44,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+function Auxiliary.XyzAlterFilter(c,alterf,xyzc,e,tp,alterop)
+	return alterf(c,e,tp,xyzc) and c:IsCanBeXyzMaterial(xyzc) and Duel.GetLocationCountFromEx(tp,tp,c,xyzc)>0
+		and Auxiliary.MustMaterialCheck(c,tp,EFFECT_MUST_BE_XMATERIAL) and (not alterop or alterop(e,tp,0,c))
+end
 function s.chk(e,tp,eg)
 	for p=0,1 do
 		if eg:IsExists(Card.IsSummonPlayer,1,nil,1-p) then
@@ -51,11 +55,9 @@ function s.chk(e,tp,eg)
 		end
 	end
 end
-function s.mfilter(tp)
-	return  function(c)
-				local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
-				return g and #g>0 and g:IsContains(c)
-			end
+function s.mfilter(c,e,tp)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
+	return g and #g>0 and g:IsContains(c)
 end
 function s.altop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)>1 end
