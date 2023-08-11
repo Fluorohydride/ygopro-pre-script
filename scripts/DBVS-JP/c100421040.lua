@@ -1,5 +1,5 @@
 --coded by Lyris
---Valmonica of the Guiding Rhythm
+--Valmonica of the Selecting Melody
 local s, id, o = GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,27 +23,41 @@ function s.afilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2a3) and c:IsType(TYPE_LINK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local chk=Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_MZONE,0,1,nil)
 	local op=aux.SelectFromOptions(tp,{true,aux.Stringid(id,1)},{true,aux.Stringid(id,2)},{chk,aux.Stringid(id,3)})
 	if op&1>0 and Duel.Recover(tp,500,REASON_EFFECT)>0 then
-		local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,aux.ExceptThisCard(e),TYPE_SPELL+TYPE_TRAP)
-		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local sg=g:Select(tp,1,1,nil)
-			Duel.HintSelection(sg)
-			Duel.BreakEffect()
-			Duel.Destroy(sg,REASON_EFFECT)
-		end
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+		e1:SetTargetRange(LOCATION_ONFIELD,0)
+		e1:SetTarget(s.target)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetValue(aux.tgoval)
+		Duel.RegisterEffect(e1,tp)
 		if op==3 then Duel.BreakEffect() end
 	end
 	if op&2>0 and Duel.Damage(tp,500,REASON_EFFECT)>0 then
-		local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,5)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+		local g=Duel.GetMatchingGroup(aux.NegateEffectMonsterFilter,tp,0,LOCATION_MZONE,nil)
+		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)
+			local tc=sg:GetFirst()
 			Duel.BreakEffect()
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			tc:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_DISABLE_EFFECT)
+			e2:SetValue(RESET_TURN_SET)
+			tc:RegisterEffect(e2)
 		end
 	end
+end
+function s.target(e,c)
+	return c:IsSetCard(0x2a3) and c:GetOriginalType()&TYPE_MONSTER>0
 end
