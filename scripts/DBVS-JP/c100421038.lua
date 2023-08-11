@@ -2,7 +2,7 @@
 --Valmonica Intonare
 local s, id, o = GetID()
 function s.initial_effect(c)
-	--Apply 1 of these effects (your opponent's choice, if you do not have a "Valmonica" card in your Pendulum Zone). Gain 500 LP, then, if you have a monster in your GY that can be Special Summoned, your opponent chooses 1 of them for you to Special Summon. Take 500 damage, then you can add 1 Level 4 monster from your GY to your hand. You can only activate 1 "Valmonica Intonare" per turn.
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_RECOVER+CATEGORY_SPECIAL_SUMMON+CATEGORY_DAMAGE+CATEGORY_TOHAND)
