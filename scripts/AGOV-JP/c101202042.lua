@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,1)
 	e2:SetCondition(s.lecon)
-	e2:SetTarget(s.letg)
+	e2:SetValue(s.aclimit)
 	c:RegisterEffect(e2)
 	--to hand
 	local e3=Effect.CreateEffect(c)
@@ -48,10 +48,16 @@ function Auxiliary.XyzAlterFilter(c,alterf,xyzc,e,tp,alterop)
 	return alterf(c,e,tp,xyzc) and c:IsCanBeXyzMaterial(xyzc) and Duel.GetLocationCountFromEx(tp,tp,c,xyzc)>0
 		and Auxiliary.MustMaterialCheck(c,tp,EFFECT_MUST_BE_XMATERIAL) and (not alterop or alterop(e,tp,0,c))
 end
+function s.chkfilter(c,tp)
+	return c:IsSummonPlayer(1-tp) and c:IsSummonLocation(LOCATION_EXTRA)
+end
 function s.chk(e,tp,eg)
 	for p=0,1 do
-		if eg:IsExists(Card.IsSummonPlayer,1,nil,1-p) then
-			Duel.RegisterFlagEffect(p,id,RESET_PHASE+PHASE_END,0,2)
+		if eg:IsExists(s.chkfilter,1,nil,p) then
+			Duel.RegisterFlagEffect(p,id,RESET_PHASE+PHASE_END,0,1)
+			if Duel.GetFlagEffect(p,id)>1 then
+				Duel.RegisterFlagEffect(p,id+o,RESET_PHASE+PHASE_END,0,2)
+			end
 		end
 	end
 end
@@ -60,7 +66,7 @@ function s.mfilter(c,e,tp)
 	return g and #g>0 and g:IsContains(c)
 end
 function s.altop(e,tp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)>1 end
+	if chk==0 then return Duel.GetFlagEffect(tp,id+o)>0 end
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.lscon(e,tp,eg,ep,ev,re,r,rp)
@@ -83,7 +89,7 @@ end
 function s.lecon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
-function s.letg(e,te)
+function s.aclimit(e,te,tp)
 	return te:IsActiveType(TYPE_MONSTER) and te:GetHandler():IsAttackAbove(3000)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
