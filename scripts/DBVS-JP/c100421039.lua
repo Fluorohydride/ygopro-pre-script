@@ -31,6 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)
+			Duel.BreakEffect()
 			Duel.Destroy(sg,REASON_EFFECT)
 		end
 		Duel.BreakEffect()
@@ -41,6 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)
+			Duel.BreakEffect()
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		end
 	end
