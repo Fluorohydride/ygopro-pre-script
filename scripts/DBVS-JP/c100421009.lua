@@ -27,12 +27,11 @@ function s.initial_effect(c)
 end
 function s.dfilter(c,e,tp)
 	return c:IsFaceupEx() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2a1)
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end
-function s.filter(c,e,tp,...)
-	return c:IsSetCard(0x2a1) and c:IsType(TYPE_MONSTER) and (#{...}==0 or not c:IsCode(...)) and (c:IsAbleToHand()
-		or Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE))
+function s.filter(c,e,tp,tc)
+	return c:IsSetCard(0x2a1) and c:IsType(TYPE_MONSTER) and not c:IsCode(tc:GetCode()) and (c:IsAbleToHand()
+		or Duel.GetMZoneCount(tp,tc)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,e,tp) end
@@ -40,12 +39,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,s.dfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,e,tp)
-	if #g==0 the return end
-	local codes={g:GetFirst():GetCode()}
-	if Duel.Destroy(g,REASON_EFFECT)<1 then return end
+	local dc=Duel.SelectMatchingCard(tp,s.dfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,e,tp):GetFirst()
+	if Duel.Destroy(dc,REASON_EFFECT)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,table.unpack(codes)):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,dc):GetFirst()
 	if tc then
 		local op=aux.SelectFromOptions(tp,{tc:IsAbleToHand(),1192},{Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE),1152})
