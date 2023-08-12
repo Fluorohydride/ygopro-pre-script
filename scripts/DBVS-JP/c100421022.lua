@@ -1,8 +1,9 @@
 --騎士の絆
 --Faith of Centurion
---coded by Lyris
+--coded by Lyris & DIO0passing
 local s,id,o=GetID()
 function s.initial_effect(c)
+	local e0=aux.AddThisCardInGraveAlreadyCheck(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -20,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id+o)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e2:SetLabelObject(e0)
 	e2:SetCondition(s.ptcon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.pttg)
@@ -48,11 +50,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function s.cfilter(c,tp)
+function s.cfilter(c,tp,se)
 	return c:IsFaceup() and c:IsSetCard(0x2a5) and c:IsType(TYPE_SYNCHRO) and c:IsControler(tp)
+		and (se==nil or c:GetReasonEffect()~=se)
 end
 function s.ptcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(s.cfilter,1,nil,tp,e:GetLabelObject():GetLabelObject())
 end
 function s.pttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
