@@ -1,5 +1,6 @@
---coded by Lyris
+--騎士魔防陣
 --Centurion Phalanx
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate

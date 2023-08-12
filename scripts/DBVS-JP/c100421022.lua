@@ -1,6 +1,7 @@
---coded by Lyris
+--騎士の絆
 --Faith of Centurion
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

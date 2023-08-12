@@ -1,6 +1,7 @@
---coded by Lyris
+--天魔の聲選器－『ヴァルモニカ』
 --Angelic-Demonic Selector - "Valmonica"
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
