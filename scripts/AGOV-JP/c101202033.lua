@@ -39,7 +39,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and re:IsActiveType(TYPE_MONSTER)
-		and loc&LOCATION_HAND+LOCATION_ONFIELD>0 and Duel.IsChainNegatable(ev)
+		and loc&(LOCATION_HAND|LOCATION_GRAVE)>0 and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
