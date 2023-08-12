@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_MUST_ATTACK_MONSTER)
-	e3:SetTarget(s.matg)
+	e3:SetValue(s.atklimit)
 	c:RegisterEffect(e3)
 	--disable
 	local e4=Effect.CreateEffect(c)
@@ -40,7 +40,7 @@ end
 function s.macon(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
-function s.matg(e,c)
+function s.atklimit(e,c)
 	local g=Duel.GetMatchingGroup(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
 	return g and g:IsContains(c)
 end

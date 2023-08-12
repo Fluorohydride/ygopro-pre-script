@@ -32,7 +32,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e,tp)
-	local p,seq=tc:GetControler(),tc:GetSequence()
+	local p,seq=c:GetControler(),c:GetSequence()
 	return c:IsFaceup() and c:GetFlagEffect(id)>0 and Duel.GetMZoneCount(p,c,tp,LOCATION_REASON_TOFIELD,1<<seq)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,c:GetControler())
 end
