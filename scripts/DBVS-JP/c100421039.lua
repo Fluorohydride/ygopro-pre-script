@@ -1,7 +1,6 @@
---律導のヴァルモニカ
---Valmonica of the Guiding Rhythm
 --coded by Lyris
-local s,id,o=GetID()
+--Valmonica of the Guiding Rhythm
+local s, id, o = GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -25,7 +24,13 @@ function s.afilter(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chk=Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_MZONE,0,1,nil)
-	local op=aux.SelectFromOptions(tp,{true,aux.Stringid(id,1)},{true,aux.Stringid(id,2)},{chk,aux.Stringid(id,3)})
+	local c=e:GetOwner()
+	local b1,b2=c:GetFlagEffect(100421031)>0,c:GetFlagEffect(100421032)>0
+	if not (b1 or b2) then b1,b2=true,true end
+	local op=aux.SelectFromOptions(tp,
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)},
+		{b1 and b2 or chk,aux.Stringid(id,3)})
 	if op&1>0 and Duel.Recover(tp,500,REASON_EFFECT)>0 then
 		local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,aux.ExceptThisCard(e),TYPE_SPELL+TYPE_TRAP)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
