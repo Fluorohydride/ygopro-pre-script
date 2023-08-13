@@ -80,6 +80,7 @@ function s.tacost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local tc=g:FilterSelect(tp,Card.IsCanRemoveCounter,1,1,nil,tp,0x170,1,REASON_COST):GetFirst()
 		tc:RemoveCounter(tp,0x170,1,REASON_COST)
+		ct=ct+1
 	end
 end
 function s.tatg(e,tp,eg,ep,ev,re,r,rp,chk)
