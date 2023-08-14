@@ -37,12 +37,12 @@ function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g and g:IsExists(s.tfilter,1,nil,tp)
 end
-function s.cfilter(c)
+function s.cfilter(c,tp)
 	return Duel.GetMZoneCount(tp,c)>0
 end
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,s.cfilter,1,nil) end
-	local g=Duel.SelectReleaseGroup(tp,s.cfilter,1,1,nil)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,s.cfilter,1,nil,tp) end
+	local g=Duel.SelectReleaseGroup(tp,s.cfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
