@@ -20,7 +20,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local b1=c:GetFlagEffect(100421031)>0
 	local b2=c:GetFlagEffect(100421032)>0
 	if not (b1 or b2) then b1,b2=true,true end
-	local op=aux.SelectFromOptions(p,{b1,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)}) end
+	local op=aux.SelectFromOptions(p,{b1,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)})
 	if op==1 then
 		if Duel.Recover(tp,500,REASON_EFFECT)<1 then return end
 		local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_DECK,0,nil,0x2a3)
