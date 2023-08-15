@@ -34,7 +34,7 @@ end
 function c101202037.spfilter(c,e,tp)
 	return c:IsType(TYPE_TUNER) and c:IsLevel(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c101202037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c101202037.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101202037.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(c101202037.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

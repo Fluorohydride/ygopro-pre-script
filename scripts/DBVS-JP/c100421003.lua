@@ -52,8 +52,10 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-function s.chk(g,lv)
-	return aux.dncheck(g) and g:GetSum(Card.GetLevel)<=lv
+function s.gcheck(lv)
+	return	function(g)
+				return aux.dncheck(g) and g:GetSum(Card.GetLevel)<=lv
+			end
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -62,6 +64,8 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=tc:GetOriginalLevel()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,lv)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local sg=g:SelectSubGroup(tp,s.chk,false,1,99,lv)
+	aux.GCheckAdditional=s.gcheck(lv)
+	local sg=g:SelectSubGroup(tp,aux.TRUE,false,1,lv)
+	aux.GCheckAdditional=nil
 	if sg then Duel.SendtoGrave(sg,REASON_EFFECT) end
 end
