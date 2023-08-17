@@ -179,7 +179,7 @@ function s.op5(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter5,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
-		Duel.SendtoHand(g:GetFirst(),0,REASON_EFFECT)
+		Duel.SendtoHand(g:GetFirst(),nil,REASON_EFFECT)
 		Duel.ShuffleDeck(tp)
 	end
 end
