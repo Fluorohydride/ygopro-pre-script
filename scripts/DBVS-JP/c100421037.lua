@@ -22,7 +22,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not (b1 or b2) then b1,b2=true,true end
 	local op=aux.SelectFromOptions(p,{b1,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)})
 	if op==1 then
-		if Duel.Recover(tp,500,REASON_EFFECT)<1 then return end
+		if Duel.Recover(tp,500,REASON_EFFECT)<1 or not Duel.SelectYesNo(tp,aux.Stringid(id,3)) then return end
 		local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_DECK,0,nil,0x2a3)
 		local dct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 		local seq,hc=-1
@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.BreakEffect()
 		if seq>-1 then
-			Duel.ConfirmDecktop(tp,dct-seq)
+			Duel.ConfirmCards(tp,dct-seq)
 			Duel.DisableShuffleCheck()
 			if hc:IsAbleToHand() then Duel.SendtoHand(hc,nil,REASON_EFFECT)
 			else Duel.SendtoGrave(hc,REASON_RULE) end
