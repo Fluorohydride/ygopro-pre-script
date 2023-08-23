@@ -143,7 +143,7 @@ function c101202047.pop(e,tp,eg,ep,ev,re,r,rp)
 	tg=tg:Filter(aux.PConditionExtraFilterSpecific,nil,e,tp,lscale,rscale,e1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	aux.GCheckAdditional=aux.PendOperationCheck(ft1,ft2,ft)
-	local g=tg:SelectSubGroup(tp,aux.TRUE,true,1,math.min(#tg,ft))
+	local g=tg:SelectSubGroup(tp,aux.TRUE,false,1,math.min(#tg,ft))
 	aux.GCheckAdditional=nil
 	if not g then
 		e1:Reset()
