@@ -68,7 +68,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x170,1)
 end
 function s.adval(e,c)
-	return Duel.GetCounter(e:GetHandlerPlayer(),1,0,0x170)
+	return Duel.GetCounter(e:GetHandlerPlayer(),1,0,0x170)*-100
 end
 function s.pzcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
