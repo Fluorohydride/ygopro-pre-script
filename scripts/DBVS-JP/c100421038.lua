@@ -24,13 +24,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local op=Duel.SelectOption(p,aux.Stringid(id,1),aux.Stringid(id,2))+1
 	if op==1 then
 		if Duel.Recover(tp,500,REASON_EFFECT)<1 then return end
-		local g=Duel.SelectMatchingCard(1-tp,s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(1-tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if #g>0 then
 			Duel.BreakEffect()
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	elseif Duel.Damage(tp,500,REASON_EFFECT)>0 then
-		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.hfilter),tp,LOCATION_GRAVE,0,1,nil)
+		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.hfilter),tp,LOCATION_GRAVE,0,nil)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg=g:Select(tp,1,1,nil)
