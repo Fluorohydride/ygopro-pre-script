@@ -131,7 +131,8 @@ function c101202002.thfilter2(c,tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c101202002.thcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101202002.thfilter2,1,nil,tp) and e:GetHandler():IsFaceup()
+	local c=e:GetHandler()
+	return eg:IsExists(c101202002.thfilter2,1,c,tp) and c:IsFaceup()
 end
 function c101202002.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
