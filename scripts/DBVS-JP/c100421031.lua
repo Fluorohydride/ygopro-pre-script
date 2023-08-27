@@ -66,7 +66,8 @@ function s.cfilter(c)
 	return c:GetOriginalRace()&RACE_FIEND>0 and c:GetOriginalType()&TYPE_MONSTER>0
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_PZONE,0,1,e:GetHandler()) and r==REASON_EFFECT
+	local c=e:GetHandler()
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_PZONE,0,1,c) and r==REASON_EFFECT
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x170,1)
