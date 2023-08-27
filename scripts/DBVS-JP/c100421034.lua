@@ -1,6 +1,7 @@
---coded by Lyris
+--ヴァルモニカの神異－ゼブフェーラ
 --Divine Oddity of Valmonica - Zebufera
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

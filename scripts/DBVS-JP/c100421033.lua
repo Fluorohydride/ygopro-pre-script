@@ -1,6 +1,7 @@
---coded by Lyris
+--ヴァルモニカの異神－ジュラルメ
 --Odd Deity of Valmonica - Giurarme
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--material

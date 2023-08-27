@@ -1,6 +1,7 @@
---coded by Lyris
+--ヴァルモニカ・ヴェルサーレ
 --Valmonica Versare
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

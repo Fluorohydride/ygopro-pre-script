@@ -1,6 +1,7 @@
---coded by Lyris
+--天使の聲
 --Angelo Valmonica
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	c:EnableCounterPermit(0x170,LOCATION_PZONE)
