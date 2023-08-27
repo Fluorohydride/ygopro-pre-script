@@ -1,6 +1,8 @@
+--炎王の聖域
+--Script by beyond
 local s,id,o=GetID()
 function s.initial_effect(c)
-    local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
@@ -14,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.desrepval)
 	e2:SetOperation(s.desrepop)
 	c:RegisterEffect(e2)
-    local e3=Effect.CreateEffect(c)
+	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -30,19 +32,19 @@ function s.stfilter(c,tp)
 	return c:IsCode(57554544) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(s.stfilter,tp,LOCATION_DECK,0,nil)
+	local g=Duel.GetMatchingGroup(s.stfilter,tp,LOCATION_DECK,0,nil)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-        local tc=Duel.SelectMatchingCard(tp,s.stfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-        if tc then
-            local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-            if fc then
-                Duel.SendtoGrave(fc,REASON_RULE)
-                Duel.BreakEffect()
-            end
-            Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
-        end
-    end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+		local tc=Duel.SelectMatchingCard(tp,s.stfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+		if tc then
+			local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+			if fc then
+				Duel.SendtoGrave(fc,REASON_RULE)
+				Duel.BreakEffect()
+			end
+			Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+		end
+	end
 end
 function s.repfilter(c,tp)
 	return c:IsControler(tp) and c:IsOnField() and c:IsLocation(LOCATION_FZONE)
