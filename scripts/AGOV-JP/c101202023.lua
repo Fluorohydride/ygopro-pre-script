@@ -39,8 +39,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if aux.GetValueType(tp)=="Card" then tp=tp:GetControler() end
+function s.condition(e)
+	local tp=e:GetHandlerPlayer()
 	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_FZONE,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

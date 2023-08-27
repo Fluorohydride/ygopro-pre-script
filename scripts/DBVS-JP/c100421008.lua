@@ -52,6 +52,7 @@ end
 function s.lecon(e)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
+	local tp=e:GetHandlerPlayer()
 	return a and s.lfilter(a,tp) or d and s.lfilter(d,tp)
 end
 function s.cfilter(c,e,tp)
@@ -86,7 +87,7 @@ function s.sfilter(c)
 	return c:IsSetCard(0x2a1) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.sfilter(c) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.sfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.sfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectTarget(tp,s.sfilter,tp,LOCATION_GRAVE,0,1,1,nil)

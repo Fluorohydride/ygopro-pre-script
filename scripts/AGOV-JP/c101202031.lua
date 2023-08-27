@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_DAMAGE)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_FIELD)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DESTROYED)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id+o*2)
@@ -74,9 +74,9 @@ function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,e,tp)
-	return c:IsFaceupEx() and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(1-tp)
-		and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():IsSetCard(0x21) and c:GetTextAttack()>0
-		and c:IsCanBeEffectTarget(e)
+	return c:IsFaceupEx() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(1-tp)
+		and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():GetHandler():IsSetCard(0x21)
+		and c:GetBaseAttack()>0 and c:IsCanBeEffectTarget(e) and not c:IsType(TYPE_TOKEN)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=eg:Filter(s.cfilter,nil,e,tp)
@@ -84,9 +84,11 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tg=g:Select(tp,1,1,nil)
 	Duel.SetTargetCard(tg)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,tg:GetFirst():GetTextAttack())
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,tg:GetFirst():GetBaseAttack())
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:GetTextAttack()>0 then Duel.Damage(1-tp,tc:GetTextAttack(),REASON_EFFECT) end
+	if tc:IsRelateToEffect(e) and tc:GetBaseAttack()>0 then
+		Duel.Damage(1-tp,tc:GetTextAttack(),REASON_EFFECT)
+	end
 end

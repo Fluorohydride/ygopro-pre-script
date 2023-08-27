@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,dc):GetFirst()
 	if tc then
-		local op=aux.SelectFromOptions(tp,{tc:IsAbleToHand(),1192},{Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		local op=aux.SelectFromOptions(tp,{tc:IsAbleToHand(),1190},{Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE),1152})
 		if op==1 then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
