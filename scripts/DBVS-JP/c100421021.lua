@@ -1,4 +1,5 @@
---百夫长战旗骑士的誓约
+--誓いのエンブレーマ
+--Script by passingDio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate1
@@ -20,7 +21,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
 end
-
 function s.filter1(c)
 	return c:IsSetCard(0x2a5) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
 end
@@ -29,8 +29,7 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>1 end
 end
 function s.activate1(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-
+	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil)
@@ -44,17 +43,17 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 		e1:SetValue(TYPE_TRAP+TYPE_CONTINUOUS)
 		tc:RegisterEffect(e1)
-        --splimit
-        local e0=Effect.CreateEffect(c)
-        e0:SetType(EFFECT_TYPE_FIELD)
-        e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-        e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-        e0:SetTargetRange(1,0)
-        e0:SetLabelObject(tc)
-        e0:SetCondition(s.con)
-        e0:SetTarget(s.splimit)
-        e0:SetReset(RESET_PHASE+PHASE_END)
-        Duel.RegisterEffect(e0,tp)
+		--splimit
+		local e0=Effect.CreateEffect(c)
+		e0:SetType(EFFECT_TYPE_FIELD)
+		e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e0:SetTargetRange(1,0)
+		e0:SetLabelObject(tc)
+		e0:SetCondition(s.con)
+		e0:SetTarget(s.splimit)
+		e0:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e0,tp)
 	end
 end
 function s.filter2(c,e)
@@ -67,7 +66,6 @@ end
 function s.splimit(e,c)
 	return not c:IsSetCard(0x2a5) and c:IsLocation(LOCATION_EXTRA)
 end
-
 function s.setfilter(c)
 	return c:IsSetCard(0x2a5) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end

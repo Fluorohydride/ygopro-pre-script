@@ -1,4 +1,5 @@
---ユベル-Das Ewig Liebe Wächter
+--ユベル－Das Ewig Liebe Wächter
+--Script by passingDio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,78371393)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.damrtg)
 	e2:SetOperation(s.damrop)
 	c:RegisterEffect(e2)
-    --indes
+	--indes
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -41,28 +42,25 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	c:RegisterEffect(e5)
 end
-
 function s.matfilter(c)
 	return c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_EFFECT)
 end
-
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-    local c=e:GetHandler()
-    local damage=c:GetMaterialCount()*500
+	local c=e:GetHandler()
+	local damage=c:GetMaterialCount()*500
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(damage)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,damage)
-    e:SetLabel(damage)
+	e:SetLabel(damage)
 end
 function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
-
 function s.damrtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()

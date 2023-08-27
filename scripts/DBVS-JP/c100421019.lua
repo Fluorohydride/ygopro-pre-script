@@ -1,4 +1,5 @@
---百夫长战旗骑士皇 蕾伽蒂娅
+--騎士皇レガーティア
+--Script by passingDio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -34,9 +35,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.settg)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
-	
 end
-
 function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
@@ -46,23 +45,21 @@ end
 function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT) and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-        local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-        if #g>0 then
-            local tg=g:GetMaxGroup(Card.GetAttack)
-            if #tg>1 then
-                Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-                local sg=tg:Select(tp,1,1,nil)
-                Duel.HintSelection(sg)
-                Duel.Destroy(sg,REASON_EFFECT)
-            else Duel.Destroy(tg,REASON_EFFECT) end
-        end
-    end
+		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+		if #g>0 then
+			local tg=g:GetMaxGroup(Card.GetAttack)
+			if #tg>1 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+				local sg=tg:Select(tp,1,1,nil)
+				Duel.HintSelection(sg)
+				Duel.Destroy(sg,REASON_EFFECT)
+			else Duel.Destroy(tg,REASON_EFFECT) end
+		end
+	end
 end
-
 function s.bdtg(e,c)
 	return c:IsFaceup() and c:IsAttackBelow(2000)
 end
-
 function s.filter(c)
 	return c:IsSetCard(0x2a5) and c:IsType(TYPE_MONSTER) and not c:IsForbidden() and not c:IsType(TYPE_SYNCHRO)
 end
@@ -71,7 +68,7 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
+	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil)

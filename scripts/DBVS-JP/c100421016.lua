@@ -1,4 +1,5 @@
---百夫长战旗重骑士 芙莉美娜
+--重騎士プリメラ
+--Script by passingDio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -21,11 +22,10 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-    e3:SetCondition(s.edcon)
+	e3:SetCondition(s.edcon)
 	e3:SetTarget(s.edtg)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-
 	--spsummon from szone
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
@@ -39,9 +39,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
-	
 end
-
 function s.thfilter(c)
 	return c:IsSetCard(0x2a5) and not c:IsCode(id) and c:IsAbleToHand()
 end
@@ -68,14 +66,12 @@ end
 function s.splimit(e,c)
 	return c:IsCode(id)
 end
-
 function s.edcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetType()==TYPE_TRAP+TYPE_CONTINUOUS
 end
 function s.edtg(e,c)
 	return c:IsSetCard(0x2a5) and c:IsLevelAbove(5)
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and e:GetHandler():GetType()==TYPE_TRAP+TYPE_CONTINUOUS

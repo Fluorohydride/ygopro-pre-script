@@ -1,4 +1,5 @@
 --ナイトメア・ペイン
+--Script by passingDio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,78371393)
@@ -39,7 +40,6 @@ function s.initial_effect(c)
 	e5:SetTarget(s.reftg)
 	e5:SetValue(1)
 	c:RegisterEffect(e5)
-	
 end
 function s.dfilter(c,e,tp)
 	return c:IsFaceupEx() and c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_DARK)
@@ -64,7 +64,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tg)
 	end
 end
-
 function s.atkfilter(c)
 	return c:IsSetCard(0x2a4)
 end
@@ -74,7 +73,6 @@ end
 function s.atklimit(e,c)
 	return c:IsSetCard(0x2a4)
 end
-
 function s.reftg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x2a4)
 end

@@ -1,4 +1,5 @@
 --エターナル・フェイバリット
+--Script by passingDio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,78371393)
@@ -34,9 +35,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.futg)
 	e3:SetOperation(s.fuop)
 	c:RegisterEffect(e3)
-	
 end
-
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x2a4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -82,7 +81,6 @@ function s.cedop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	e:Reset()
 end
-
 function s.fufilter(c,e,tp)
 	return c:IsFaceup() and c:IsCode(78371393)
 end
@@ -91,7 +89,7 @@ function s.fucon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.fucost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) 
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler())
 		and c:IsAbleToGraveAsCost() end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 	Duel.SendtoGrave(c,REASON_COST)

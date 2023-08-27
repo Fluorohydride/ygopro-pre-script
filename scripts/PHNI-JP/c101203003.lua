@@ -1,4 +1,5 @@
 --サクリファイス・D・ロータス
+--Script by passingDio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,78371393)
@@ -41,9 +42,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thostg)
 	e3:SetOperation(s.thosop)
 	c:RegisterEffect(e3)
-	
 end
-
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
@@ -64,14 +63,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
 function s.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2a4)
 end
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
-return Duel.GetTurnPlayer()==1-tp 
-    and re:IsActiveType(TYPE_MONSTER) 
-    and Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)
+return Duel.GetTurnPlayer()==1-tp
+	and re:IsActiveType(TYPE_MONSTER)
+	and Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
@@ -79,7 +77,7 @@ function s.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-    and Duel.IsPlayerCanDraw(1-tp,1) end
+	and Duel.IsPlayerCanDraw(1-tp,1) end
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
@@ -96,7 +94,6 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-
 function s.rccfilter(c)
 	return c:IsFaceup() and c:IsCode(78371393)
 end
@@ -105,7 +102,7 @@ function s.thoscon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.rccfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thostg(e,tp,eg,ep,ev,re,r,rp,chk)
-    local c=e:GetHandler()
+	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false)end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)

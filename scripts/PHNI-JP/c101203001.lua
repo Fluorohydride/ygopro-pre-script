@@ -1,4 +1,5 @@
 --スピリット・オブ・ユベル
+--Script by passingDio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,78371393)
@@ -47,7 +48,6 @@ function s.initial_effect(c)
 	e5:SetTarget(s.sptg2)
 	e5:SetOperation(s.spop2)
 	c:RegisterEffect(e5)
-	
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
@@ -71,7 +71,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-
 function s.thfilter(c)
 	if not (c:IsType(TYPE_SPELL+TYPE_TRAP) and aux.IsCodeListed(c,78371393)) then return false end
 	return c:IsAbleToHand() or c:IsSSetable()
@@ -92,7 +91,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function s.filter2(c,e,tp)
 	return c:IsCode(78371393) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end

@@ -1,4 +1,5 @@
 --マチュア・クロニクル
+--Script by passingDio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x25)
@@ -71,9 +72,7 @@ function s.initial_effect(c)
 	e7:SetTarget(s.tg5)
 	e7:SetOperation(s.op5)
 	c:RegisterEffect(e7)
-	
 end
-
 function s.cfilter(c)
 	return c:IsSetCard(0x2a4) or aux.IsCodeListed(c,78371393)
 end
@@ -82,7 +81,6 @@ function s.counter(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():AddCounter(0x25,1)
 	end
 end
-
 function s.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x25,1,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
@@ -103,7 +101,6 @@ function s.op1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,true,true,POS_FACEUP)
 	end
 end
-
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x25,2,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
@@ -125,7 +122,6 @@ function s.op2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-
 function s.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x25,3,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
@@ -142,7 +138,6 @@ function s.op3(e,tp,eg,ep,ev,re,r,rp)
 	if tg==nil then return end
 	Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 end
-
 function s.cost4(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x25,4,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
@@ -161,7 +156,6 @@ function s.op4(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-
 function s.cost5(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x25,5,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())

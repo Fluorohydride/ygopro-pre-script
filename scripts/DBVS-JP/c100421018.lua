@@ -1,4 +1,5 @@
---百夫长战旗重骑兵 艾梅特VI
+--重騎兵エメトVI
+--Script by passingDio0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spcial from hand or grave
@@ -14,7 +15,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
-
 	--spsummon from szone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -28,10 +28,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
-	
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetTurnPlayer()==1-tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2a5) and not c:IsCode(id)
@@ -51,19 +50,19 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:IsControler(1-tp) or tc:IsFacedown() or not tc:IsRelateToEffect(e)  then
-		return 
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:IsControler(1-tp) or tc:IsFacedown() or not tc:IsRelateToEffect(e) then
+		return
 	end
-    if Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then 
-        local e1=Effect.CreateEffect(e:GetHandler())
-        e1:SetCode(EFFECT_CHANGE_TYPE)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-        e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-        e1:SetValue(TYPE_TRAP+TYPE_CONTINUOUS)
-        tc:RegisterEffect(e1)
-        Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-    end
+	if Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetCode(EFFECT_CHANGE_TYPE)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+		e1:SetValue(TYPE_TRAP+TYPE_CONTINUOUS)
+		tc:RegisterEffect(e1)
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -76,7 +75,6 @@ end
 function s.splimit(e,c)
 	return c:IsCode(id)
 end
-
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and e:GetHandler():GetType()==TYPE_TRAP+TYPE_CONTINUOUS
