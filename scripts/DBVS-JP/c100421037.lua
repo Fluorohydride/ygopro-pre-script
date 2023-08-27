@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.BreakEffect()
 		if seq>-1 then
-			Duel.ConfirmCards(tp,dct-seq)
+			Duel.ConfirmDecktop(tp,dct-seq)
 			Duel.DisableShuffleCheck()
 			if hc:IsAbleToHand() then Duel.SendtoHand(hc,nil,REASON_EFFECT)
 			else Duel.SendtoGrave(hc,REASON_RULE) end
