@@ -4,10 +4,8 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)
-	e0:SetDescription(1160)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
-	e0:SetRange(LOCATION_HAND)
 	e0:SetCost(s.reg)
 	c:RegisterEffect(e0)
 	--indestructable
@@ -15,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e1:SetRange(LOCATION_SZONE)
+	e1:SetRange(LOCATION_FZONE)
 	e1:SetValue(aux.indoval)
 	e1:SetCondition(s.con)
 	c:RegisterEffect(e1)
@@ -51,7 +49,8 @@ end
 function s.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2a5) and c:GetOriginalType()&TYPE_MONSTER~=0
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
+function s.con(e)
+	local tp=e:GetHandlerPlayer()
 	return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
