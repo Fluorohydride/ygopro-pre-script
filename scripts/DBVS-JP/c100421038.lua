@@ -19,12 +19,11 @@ end
 function s.hfilter(c)
 	return c:IsLevel(4) and c:IsAbleToHand()
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local p=Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,nil,0x2a3) and tp or 1-tp
-	local c=e:GetOwner()
-	local b1,b2=c:GetFlagEffect(100421031)>0,c:GetFlagEffect(100421032)>0
-	if not (b1 or b2) then b1,b2=true,true end
-	local op=aux.SelectFromOptions(p,{b1,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)})
+function s.activate(e,tp,eg,ep,ev,re,r,rp,op)
+	if op==nil then
+		local p=Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,nil,0x2a3) and tp or 1-tp
+		op=aux.SelectFromOptions(p,{true,aux.Stringid(id,1)},{true,aux.Stringid(id,2)})
+	end
 	if op==1 then
 		if Duel.Recover(tp,500,REASON_EFFECT)<1 then return end
 		local g=Duel.SelectMatchingCard(1-tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)

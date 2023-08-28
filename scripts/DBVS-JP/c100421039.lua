@@ -23,15 +23,14 @@ end
 function s.afilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2a3) and c:IsType(TYPE_LINK)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local chk=Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_MZONE,0,1,nil)
-	local c=e:GetOwner()
-	local b1,b2=c:GetFlagEffect(100421031)>0,c:GetFlagEffect(100421032)>0
-	if not (b1 or b2) then b1,b2=true,true end
-	local op=aux.SelectFromOptions(tp,
-		{b1,aux.Stringid(id,1)},
-		{b2,aux.Stringid(id,2)},
-		{b1 and b2 or chk,aux.Stringid(id,3)})
+function s.activate(e,tp,eg,ep,ev,re,r,rp,op)
+	if op==nil then
+		local chk=Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_MZONE,0,1,nil)
+		op=aux.SelectFromOptions(tp,
+			{true,aux.Stringid(id,1)},
+			{true,aux.Stringid(id,2)},
+			{chk,aux.Stringid(id,3)})
+	end
 	if op&1>0 and Duel.Recover(tp,500,REASON_EFFECT)>0 then
 		local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,aux.ExceptThisCard(e),TYPE_SPELL+TYPE_TRAP)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then

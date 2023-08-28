@@ -38,14 +38,13 @@ function s.initial_effect(c)
 	--copy
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
+	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,id+o)
 	e4:SetCondition(s.cpcon)
-	e4:SetCost(s.cpcost)
 	e4:SetTarget(s.cptg)
 	e4:SetOperation(s.cpop)
 	c:RegisterEffect(e4)
-	--snip 1: from "Raidraptor - Wild Vulture"
 	if not s.global_check then
 		s.global_check=true
 		local ge1=Effect.CreateEffect(c)
@@ -60,16 +59,20 @@ function s.initial_effect(c)
 		ge2:SetLabel(id)
 		Duel.RegisterEffect(ge2,0)
 	end
-	--end snip 1
 end
 function s.cfilter(c)
 	return c:GetOriginalRace()&RACE_FIEND>0 and c:GetOriginalType()&TYPE_MONSTER>0
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_PZONE,0,1,e:GetHandler()) and r==REASON_EFFECT
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_PZONE,0,1,e:GetHandler())
+		and ep==tp
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x170,1)
+	local c=e:GetHandler()
+	c:AddCounter(0x170,1)
+	if c:GetCounter(0x170)==3 then
+		Duel.RaiseEvent(c,EVENT_CUSTOM+100421035,e,0,tp,tp,0)
+	end
 end
 function s.lscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
@@ -117,31 +120,25 @@ function s.pfilter(c)
 	return c:IsSetCard(0x2a3) and (typ==TYPE_SPELL or typ==TYPE_TRAP) and c:IsAbleToRemoveAsCost()
 		and c:CheckActivateEffect(false,true,false)
 end
-function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.pfilter,tp,LOCATION_GRAVE,0,1,nil) end
+function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:IsCostChecked()
+		and Duel.IsExistingMatchingCard(s.pfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local tc=Duel.SelectMatchingCard(tp,s.pfilter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
-	local te=tc:CheckActivateEffect(false,true,true)
-	s[Duel.GetCurrentChain()]=te
+	local te,ceg,cep,cev,cre,cr,crp=tc:CheckActivateEffect(false,true,true)
+	e:SetLabelObject(te)
 	Duel.Remove(tc,POS_FACEUP,REASON_COST)
-	tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
-end
-function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local te=s[Duel.GetCurrentChain()]
-	if chkc then
-		local tg=te:GetTarget()
-		return tg(e,tp,eg,ep,ev,re,r,rp,0,chkc)
-	end
-	if chk==0 then return e:IsCostChecked() end
-	if not te then return end
 	e:SetProperty(te:GetProperty())
 	local tg=te:GetTarget()
-	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
+	if tg then tg(e,tp,ceg,cep,cev,cre,cr,crp,1) end
+	te:SetLabelObject(e:GetLabelObject())
+	e:SetLabelObject(te)
 	Duel.ClearOperationInfo(0)
 end
 function s.cpop(e,tp,eg,ep,ev,re,r,rp)
-	local te=s[Duel.GetCurrentChain()]
+	local te=e:GetLabelObject()
 	if not te then return end
+	e:SetLabelObject(te:GetLabelObject())
 	local op=te:GetOperation()
-	if op then op(e,tp,eg,ep,ev,re,r,rp) end
+	if op then op(e,tp,eg,ep,ev,re,r,rp,1) end
 end

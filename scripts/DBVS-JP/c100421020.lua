@@ -51,7 +51,7 @@ function s.confilter(c)
 end
 function s.con(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0

@@ -80,7 +80,8 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and e:GetHandler():GetType()==TYPE_TRAP+TYPE_CONTINUOUS
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x2a5,TYPE_MONSTER+TYPE_EFFECT,1000,2000,4,RACE_PYRO,ATTRIBUTE_DARK) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x2a5,TYPE_MONSTER+TYPE_EFFECT,1000,2000,4,RACE_PYRO,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
