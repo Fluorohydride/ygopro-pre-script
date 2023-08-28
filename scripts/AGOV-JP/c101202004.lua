@@ -28,16 +28,23 @@ function c101202004.retfilter(c,e)
 	return c:IsSetCard(0x198) and c:IsType(TYPE_MONSTER) and c:IsFaceupEx()
 		and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
+---@param e Effect
+---@param eg Group
+---@param re Effect
 function c101202004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED) and c101202004.retfilter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED) and c101202004.retfilter(chkc,e) end
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c101202004.retfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)
-	if chk==0 then return g:CheckSubGroup(aux.mzctcheck,1,#g,tp) end
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and g:CheckSubGroup(aux.mzctcheck,1,#g,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local tg=g:SelectSubGroup(tp,aux.mzctcheck,false,1,#g,tp)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,#tg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
+---@param e Effect
+---@param eg Group
+---@param re Effect
 function c101202004.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
