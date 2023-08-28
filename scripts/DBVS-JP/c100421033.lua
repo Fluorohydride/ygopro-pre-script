@@ -50,7 +50,8 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
 	local ct=0
-	for i=0,1 do ct=ct+Duel.GetFieldCard(tp,LOCATION_PZONE,i):GetCounter(0x170) end
+	local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
+	for tc in aux.Next(g) do ct=ct+tc:GetCounter(0x170) end
 	if chk==0 then return ct>0 and Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,ct,nil)

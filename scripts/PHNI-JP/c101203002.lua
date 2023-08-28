@@ -80,7 +80,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(1-tp,3000,REASON_EFFECT)
 end
 function s.spfgfilter(c,tp,se)
-	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSetCard(0x2a4) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsCode(78371393) and c:IsType(TYPE_MONSTER)
 		and (se==nil or c:GetReasonEffect()~=se)
 end
 function s.spfgcon(e,tp,eg,ep,ev,re,r,rp)

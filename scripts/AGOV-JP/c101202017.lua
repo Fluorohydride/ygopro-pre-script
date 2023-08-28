@@ -79,9 +79,9 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if ct<2 then return false end
 	local te,p=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
 	if not te then return false end
-	local loc1=te:GetHandler():IsSetCard(0x17e) and not te:GetHandler():IsCode(id)
-	local loc2=te:GetActiveType()==TYPE_TRAP and te:IsHasType(EFFECT_TYPE_ACTIVATE)
-	return (loc1 or loc2) and p==tp and rp==1-tp
+	local b1=te:GetHandler():IsSetCard(0x17e) and not te:GetHandler():IsCode(id)
+	local b2=te:GetActiveType()==TYPE_TRAP
+	return (b1 or b2) and p==tp and rp==1-tp
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

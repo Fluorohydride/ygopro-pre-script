@@ -17,11 +17,11 @@ function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--destroy replace
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetTarget(s.desreptg)
+	e2:SetValue(s.desrepval)
 	e2:SetOperation(s.desrepop)
 	c:RegisterEffect(e2)
 	--copy
@@ -44,7 +44,7 @@ function s.spcost(e,c,tp,st)
 	if st&SUMMON_TYPE_LINK~=SUMMON_TYPE_LINK then return true end
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_PZONE,0,1,nil)
 end
-function s.chk(g,tp)
+function s.desrepchk(g,tp)
 	local tl=0
 	for tc in aux.Next(g) do
 		local ct=0
@@ -55,14 +55,22 @@ function s.chk(g,tp)
 	end
 	return tl>2
 end
+function s.desrepfilter(c,tp)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+		and c:IsControler(tp) and c:IsOnField()
+end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
-	if chk==0 then return c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
-		and g:CheckSubGroup(s.chk,1,99) end
+	if chk==0 then return eg:IsExists(s.desrepfilter,1,nil,tp)
+		and g:CheckSubGroup(s.desrepchk,1,2) end
 	return Duel.SelectEffectYesNo(tp,c,96)
 end
+function s.desrepval(e,c)
+	return s.desrepfilter(c,e:GetHandlerPlayer())
+end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,id)
 	local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
 	local ct=0
 	while ct<3 do

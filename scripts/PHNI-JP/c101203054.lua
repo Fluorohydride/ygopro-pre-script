@@ -45,11 +45,11 @@ function s.dfilter(c,e,tp)
 	return c:IsFaceupEx() and c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.thfilter(c,code)
-	return (c:IsSetCard(0x2a4) or aux.IsSetNameMonsterListed(c,0x2a4)) and c:IsAbleToHand() and not c:IsCode(code)
+	return (c:IsCode(78371393) or aux.IsCodeListed(c,78371393)) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,e,tp)
-		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetCode()) end
+		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
