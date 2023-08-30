@@ -67,7 +67,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetTargetsRelateToChain()
 	local tc=tg:Filter(Card.IsLocation,nil,LOCATION_MZONE):GetFirst()
-	local ec=Duel.SelectMatchingCard(tp,s.eqfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,tc,tp):GetFirst()
+	local ec=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.eqfilter),tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,tc,tp):GetFirst()
 	if tc and ec and ec:CheckUniqueOnField(tp) and not ec:IsForbidden() then
 		if not Duel.Equip(tp,ec,tc) then return end
 		local e1=Effect.CreateEffect(c)

@@ -58,8 +58,8 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	Duel.DiscardHand(tp,Card.IsAbleToGraveAsCost,1,1,REASON_COST)
 end
 function s.filter(c)
 	return c:IsSetCard(0x2a5) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
@@ -92,7 +92,7 @@ function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.scconfilter,1,nil,tp)
 end
 function s.mfilter(c)
-	return c:IsSetCard(0x2a5) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x2a5) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function s.cfilter(c,syn)
 	return syn:IsSynchroSummonable(c)
