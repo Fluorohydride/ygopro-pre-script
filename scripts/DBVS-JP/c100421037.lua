@@ -36,8 +36,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp,op)
 		if seq>-1 then
 			Duel.ConfirmDecktop(tp,dct-seq)
 			Duel.DisableShuffleCheck()
-			if hc:IsAbleToHand() then Duel.SendtoHand(hc,nil,REASON_EFFECT)
-			else Duel.SendtoGrave(hc,REASON_RULE) end
+			if hc:IsAbleToHand() then
+				Duel.SendtoHand(hc,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,hc)
+				Duel.ShuffleHand(tp)
+			else
+				Duel.SendtoGrave(hc,REASON_RULE)
+			end
 		else
 			Duel.ConfirmDecktop(tp,dct)
 		end

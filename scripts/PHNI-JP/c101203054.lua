@@ -65,13 +65,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0x2a4)
+	return c:IsFaceup() and c:IsSetCard(0x2a4)
 end
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.atklimit(e,c)
-	return c:IsSetCard(0x2a4)
+	return c:IsFaceup() and c:IsSetCard(0x2a4)
 end
 function s.reftg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x2a4)

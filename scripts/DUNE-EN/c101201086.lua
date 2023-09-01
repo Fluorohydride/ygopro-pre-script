@@ -41,7 +41,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) end
 end
 function s.dfilter(c)
-	return c:IsFacedown() or c:IsSetCard(0x2a2)
+	return c:IsFacedown() or c:IsSetCard(0x2a2) and c:IsType(TYPE_MONSTER)
 end
 function s.filter(c)
 	return c:IsSetCard(0x2a2) and c:IsAbleToHand()

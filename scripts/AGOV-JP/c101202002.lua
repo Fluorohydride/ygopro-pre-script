@@ -46,15 +46,15 @@ function c101202002.initial_effect(c)
 	e4:SetOperation(c101202002.thop2)
 	c:RegisterEffect(e4)
 end
-function c101202002.cfilter1(c)
+function c101202002.cfilter1(c,tp)
 	return c:IsCode(13331639) and c:IsFaceup()
+		and Duel.IsExistingMatchingCard(c101202002.cfilter2,tp,LOCATION_MZONE,0,1,c)
 end
 function c101202002.cfilter2(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsFaceup()
 end
 function c101202002.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101202002.cfilter1,tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingMatchingCard(c101202002.cfilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101202002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

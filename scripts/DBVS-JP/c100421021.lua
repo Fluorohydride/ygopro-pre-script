@@ -25,8 +25,11 @@ function s.filter1(c)
 	return c:IsSetCard(0x2a5) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil)
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>1 end
+	if chk==0 then
+		local ct=Duel.GetLocationCount(tp,LOCATION_SZONE)
+		if e:IsHasType(EFFECT_TYPE_ACTIVATE) and not e:GetHandler():IsLocation(LOCATION_SZONE) then ct=ct-1 end
+		return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) and ct>0
+	end
 end
 function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -49,19 +52,18 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 		e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e0:SetTargetRange(1,0)
-		e0:SetLabelObject(tc)
-		e0:SetCondition(s.con)
+		e0:SetLabel(tc:GetOriginalCodeRule())
+		e0:SetCondition(s.splimitcon)
 		e0:SetTarget(s.splimit)
 		e0:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e0,tp)
 	end
 end
 function s.filter2(c,e)
-	local tc=e:GetLabelObject()
-	return c:IsOriginalCodeRule(tc:GetOriginalCodeRule()) and c:IsFaceup()
+	return c:IsOriginalCodeRule(e:GetLabel()) and c:IsFaceup()
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_ONFIELD,0,1,nil,e)
+function s.splimitcon(e)
+	return Duel.IsExistingMatchingCard(s.filter2,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil,e)
 end
 function s.splimit(e,c)
 	return not c:IsSetCard(0x2a5) and c:IsLocation(LOCATION_EXTRA)
