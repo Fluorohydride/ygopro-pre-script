@@ -34,12 +34,12 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp,se)
 	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:GetOriginalAttribute()==ATTRIBUTE_FIRE
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and (se==nil or c:GetReasonEffect()~=se)
+		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and (not se or c:GetReasonEffect()~=se))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local se=e:GetLabelObject():GetLabelObject()
-	if c:IsLocation(LOCATION_HAND) then se=nil end
+	local se=e:GetLabelObject()
+	if not se or c:IsLocation(LOCATION_HAND) then se=nil else se=se:GetLabelObject() end
 	return eg:IsExists(s.cfilter,1,c,tp,se)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
