@@ -72,7 +72,7 @@ function s.sfilter(c,e,tp)
 end
 function s.rpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.Remove(c,REASON_EFFECT+REASON_TEMPORARY)==0 or not c:IsLocation(LOCATION_REMOVED) then return end
+	if Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)==0 or not c:IsLocation(LOCATION_REMOVED) then return end
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,2)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
