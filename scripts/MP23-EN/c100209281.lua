@@ -39,6 +39,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.dfilter,tp,LOCATION_SZONE,0,nil,e)
 	if chk==0 then return eg:IsExists(s.filter,1,nil,tp)
 		and #g>0 end
+	local c=e:GetHandler()
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
