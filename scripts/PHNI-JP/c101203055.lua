@@ -174,6 +174,7 @@ function s.op5(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter5,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g:GetFirst(),nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleDeck(tp)
 	end
 end
