@@ -175,6 +175,5 @@ function s.op5(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g:GetFirst(),nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-		Duel.ShuffleDeck(tp)
 	end
 end
