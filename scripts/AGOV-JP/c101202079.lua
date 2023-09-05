@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local f=aux.FALSE
 	local typ=tc:GetType()&TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK
 	if typ==TYPE_FUSION then f=aux.FilterEqualFunction(Card.GetAttribute,tc:GetAttribute())
-	elseif typ==TYPE_SYNCHRO then f=aux.FilterBoolFunction(Card.IsLevelBelow,tc:GetLevel())
+	elseif typ==TYPE_SYNCHRO then f=aux.FilterBoolFunction(Card.IsLevelBelow,tc:GetLevel()-1)
 	elseif typ==TYPE_XYZ then f=aux.FilterBoolFunction(Card.IsLevel,tc:GetRank())
 	elseif typ==TYPE_LINK then f=aux.FilterEqualFunction(Card.GetRace,tc:GetRace()) end
 	local g=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,e,tp,f)
