@@ -39,7 +39,10 @@ function s.rvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tc=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp):GetFirst()
 	if tc:IsLocation(LOCATION_GRAVE) then
+		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_ACTION+CATEGORY_GRAVE_SPSUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tc,1,0,0)
+	else
+		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	end
 end
 function s.rvop(e,tp,eg,ep,ev,re,r,rp)
