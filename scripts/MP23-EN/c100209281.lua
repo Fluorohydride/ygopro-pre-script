@@ -66,7 +66,7 @@ function s.rptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,c,1,0,0)
 end
 function s.sfilter(c,e,tp)
-	if c:IsSetCard(0x2a6) then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if c:IsSetCard(0xa7) then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	elseif c:IsSetCard(0x207a) then return c:IsAbleToHand() end
 	return false
@@ -90,7 +90,7 @@ function s.rpop(e,tp,eg,ep,ev,re,r,rp)
 	if #tg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 		local sc=tg:Select(tp,1,1,nil):GetFirst()
-		local op=aux.SelectFromOptions(tp,{c:IsSetCard(0x2a6),1152},{c:IsSetCard(0x207a),1190})
+		local op=aux.SelectFromOptions(tp,{c:IsSetCard(0xa7),1152},{c:IsSetCard(0x207a),1190})
 		Duel.BreakEffect()
 		if op==2 then
 			Duel.SendtoHand(sc,nil,REASON_EFFECT)
