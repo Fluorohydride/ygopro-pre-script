@@ -32,8 +32,14 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil) end
-    local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+	if hg:GetCount()==0 then
+		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
+	else
+		local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetFieldGroupCount(tp,LOCATION_HAND+LOCATION_ONFIELD,0)>0 and Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD,0)>0 then
