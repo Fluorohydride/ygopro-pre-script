@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spscon)
 	e1:SetTarget(s.spstg)
 	e1:SetOperation(s.spsop)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
