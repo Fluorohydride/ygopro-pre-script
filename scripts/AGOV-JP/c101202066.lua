@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK,0,1,nil)
-		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_DECK,1,nil) end
+		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_DECK,1,nil,1-tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
 	Duel.SetTargetParam(Duel.AnnounceType(tp))
 end
@@ -45,7 +45,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local op=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if sc:IsType(1<<op) then Duel.SendtoHand(sc,nil,REASON_EFFECT)
 	else Duel.MoveSequence(sc,SEQ_DECKTOP) end
-	if oc:IsType(1<<op) then Duel.SendtoHand(oc,nil,REASON_EFFECT)
+	if oc:IsType(1<<op) then Duel.SendtoHand(oc,nil,REASON_EFFECT,1-tp)
 	else Duel.MoveSequence(oc,SEQ_DECKTOP) end
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
