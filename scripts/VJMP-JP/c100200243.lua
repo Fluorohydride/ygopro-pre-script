@@ -36,14 +36,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
-    if #g1==0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
-	g1:Merge(g2)
-	Duel.HintSelection(g1)
-	Duel.Destroy(g1,REASON_EFFECT)
+    if Duel.GetFieldGroupCount(tp,LOCATION_HAND+LOCATION_ONFIELD,0)>0 and Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD,0)>0 then
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+        local g1=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
+        if #g1==0 then return end
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+        local g2=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
+        g1:Merge(g2)
+        Duel.HintSelection(g1)
+        Duel.Destroy(g1,REASON_EFFECT)
+    end
 end
 function s.rfilter(c)
 	return (c:IsRace(RACE_DRAGON) or c:IsAttribute(ATTRIBUTE_FIRE)) and c:IsAbleToRemoveAsCost()
