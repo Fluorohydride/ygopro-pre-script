@@ -16,11 +16,10 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_DESTROYED)
+	e2:SetCode(EVENT_CUSTOM+id)
 	e2:SetRange(LOCATION_GRAVE+LOCATION_HAND)
 	e2:SetCountLimit(1,id)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -37,41 +36,27 @@ function s.initial_effect(c)
 	
 	if not aux.DarkHoleCheck then
 		aux.DarkHoleCheck=true
-		local ge=Effect.CreateEffect(c)
-		ge:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge:SetCode(EVENT_CHAIN_SOLVING)
-		ge:SetCondition(s.chaincon)
-		ge:SetOperation(s.chainop)
-		Duel.RegisterEffect(ge,0)
-	end
-end
-function s.chaincon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) 
-end
-function s.chainop(e,tp,eg,ep,ev,re,r,rp)
-	local rg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	for tc in aux.Next(rg) do
-		local de=Effect.CreateEffect(e:GetHandler())
-		de:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		local de=Effect.CreateEffect(c)
+		de:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		de:SetCode(EVENT_DESTROY)
-		de:SetLabelObject(re)
 		de:SetOperation(s.chainop2)
-		tc:RegisterEffect(de,true)
+		Duel.RegisterEffect(de,0)
 	end
+end
+function s.decheck(c,tg,te)
+	local ce=c:GetReasonEffect()
+	return not tg:IsContains(c) and c:IsReason(REASON_EFFECT) and (ce==te or not ce:IsHasProperty(EFFECT_FLAG_CARD_TARGET))
 end
 function s.chainop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:ResetFlagEffect(id)
-	if c:IsReason(REASON_EFFECT) and c:GetReasonEffect()==e:GetLabelObject() then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-EVENT_DESTROYED+RESET_PHASE+PHASE_END,0,1)
+	local tg,te=Duel.GetChainInfo(Duel.GetCurrentChain(),CHAININFO_TARGET_CARDS,CHAININFO_TRIGGERING_EFFECT)
+	if not tg then
+		tg=Group.CreateGroup()
 	end
-	e:Reset()
-end
-function s.cfilter(c)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT) and (c:GetFlagEffect(id)==0 or not c:GetReasonEffect():IsHasProperty(EFFECT_FLAG_CARD_TARGET))
-end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil)
+	local dg=eg:Filter(s.decheck,nil,tg,te)
+	if dg:GetCount()>0 then
+		Duel.RaiseEvent(dg,EVENT_CUSTOM+id,te,r,rp,ep,ev)
+	end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
