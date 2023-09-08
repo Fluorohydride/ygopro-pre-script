@@ -40,13 +40,17 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 or Duel.GetFieldGroup(tp,0,LOCATION_DECK)==0 then return end
 	local sc=Duel.GetFieldCard(tp,LOCATION_DECK,0)
 	local oc=Duel.GetFieldCard(1-tp,LOCATION_DECK,0)
-	Duel.ConfirmCards(1-tp,sc)
-	Duel.ConfirmCards(tp,oc)
+	-- Duel.ConfirmCards(1-tp,sc)
+	-- Duel.ConfirmCards(tp,oc)
+	Duel.MoveSequence(sc,SEQ_DECKTOP)
+	Duel.ConfirmDecktop(tp,1)
+	Duel.MoveSequence(oc,SEQ_DECKTOP)
+	Duel.ConfirmDecktop(1-tp,1)
 	local op=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	if sc:IsType(1<<op) then Duel.SendtoHand(sc,nil,REASON_EFFECT)
-	else Duel.MoveSequence(sc,SEQ_DECKTOP) end
-	if oc:IsType(1<<op) then Duel.SendtoHand(oc,nil,REASON_EFFECT,1-tp)
-	else Duel.MoveSequence(oc,SEQ_DECKTOP) end
+	if sc:IsType(1<<op) then Duel.SendtoHand(sc,nil,REASON_EFFECT) end
+	-- else Duel.MoveSequence(sc,SEQ_DECKTOP) end
+	if oc:IsType(1<<op) then Duel.SendtoHand(oc,nil,REASON_EFFECT,1-tp) end
+	-- else Duel.MoveSequence(oc,SEQ_DECKTOP) end
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
