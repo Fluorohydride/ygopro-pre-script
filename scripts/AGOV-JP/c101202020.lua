@@ -38,24 +38,20 @@ function s.initial_effect(c)
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DESTROY)
-		ge1:SetOperation(s.check)
+		ge1:SetOperation(s.descheck)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
-function s.check(e,tp,eg,ep,ev,re,r,rp)
+function s.descheck(e,tp,eg,ep,ev,re,r,rp)
 	local res=false
 	for tc in aux.Next(eg) do
 		if tc:IsLocation(LOCATION_MZONE) and r&REASON_EFFECT>0 then
-			if not re then
-				res=true
-				break
-			end
-			if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
+			if re==nil or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
 				res=true
 				break
 			end
 			local tg=Duel.GetChainInfo(Duel.GetCurrentChain(),CHAININFO_TARGET_CARDS)
-			if not tg or not tg:IsContains(tc) then
+			if tg==nil or not tg:IsContains(tc) then
 				res=true
 				break
 			end
