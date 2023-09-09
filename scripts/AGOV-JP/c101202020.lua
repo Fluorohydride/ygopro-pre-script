@@ -1,6 +1,6 @@
 --ブラック・ホール・ドラゴン
 --Dark Hole Dragon
---coded by Lyris
+--coded by Lyris & REIKAI
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--effect indes
@@ -34,12 +34,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 	
-	if not aux.DarkHoleCheck then
-		aux.DarkHoleCheck=true
+	if not s.globalcheck then
+		s.globalcheck=true
 		local de=Effect.CreateEffect(c)
 		de:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		de:SetCode(EVENT_DESTROY)
-		de:SetOperation(s.chainop2)
+		de:SetOperation(s.chainop)
 		Duel.RegisterEffect(de,0)
 	end
 end
@@ -47,7 +47,7 @@ function s.decheck(c,tg,te)
 	local ce=c:GetReasonEffect()
 	return not tg:IsContains(c) and c:IsReason(REASON_EFFECT) and (ce==te or not ce:IsHasProperty(EFFECT_FLAG_CARD_TARGET))
 end
-function s.chainop2(e,tp,eg,ep,ev,re,r,rp)
+function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg,te=Duel.GetChainInfo(Duel.GetCurrentChain(),CHAININFO_TARGET_CARDS,CHAININFO_TRIGGERING_EFFECT)
 	if not tg then
@@ -62,6 +62,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperation(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
