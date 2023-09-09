@@ -1,6 +1,7 @@
 --星逢の神籬
 --The Himorogi where Stars Align
---coded by Lyris
+--coded by Lyri2
+--fixed by Lee
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -36,7 +37,7 @@ function s.mfilter(c,tp)
 	return (c:IsType(TYPE_SPIRIT) or c:IsCode(25415053)) and c:IsLocation(LOCATION_MZONE)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsPreviousControler(tp)
+	return c:IsPreviousPosition(POS_FACEUP) and bit.band(c:GetPreviousAttributeOnField(),ATTRIBUTE_WIND)~=0 and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
