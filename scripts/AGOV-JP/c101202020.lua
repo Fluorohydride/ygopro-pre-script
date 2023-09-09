@@ -1,6 +1,7 @@
 --ブラック・ホール・ドラゴン
 --Dark Hole Dragon
 --coded by Lyris
+--fixed by Lee
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--effect indes
@@ -44,10 +45,11 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsHasEffect(EFFECT_NECRO_VALLEY) end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if c:IsHasEffect(EFFECT_NECRO_VALLEY) then return false end
 	if c:IsRelateToEffect(e) then Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
