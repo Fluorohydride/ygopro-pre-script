@@ -40,8 +40,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 or Duel.GetFieldGroup(tp,0,LOCATION_DECK)==0 then return end
 	local sc=Duel.GetFieldCard(tp,LOCATION_DECK,0)
 	local oc=Duel.GetFieldCard(1-tp,LOCATION_DECK,0)
+	Duel.ConfirmCards(tp,sc)
 	Duel.ConfirmCards(1-tp,sc)
 	Duel.ConfirmCards(tp,oc)
+	Duel.ConfirmCards(1-tp,oc)
 	local op=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if sc:IsType(1<<op) then Duel.SendtoHand(sc,nil,REASON_EFFECT)
 	else Duel.MoveSequence(sc,SEQ_DECKTOP) end

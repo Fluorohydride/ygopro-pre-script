@@ -132,7 +132,7 @@ function c101202002.thfilter2(c,tp)
 end
 function c101202002.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return eg:IsExists(c101202002.thfilter2,1,c,tp) and c:IsFaceup()
+	return eg:IsExists(c101202002.thfilter2,1,c,tp) and not eg:IsContains(c) and c:IsFaceup()
 end
 function c101202002.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
