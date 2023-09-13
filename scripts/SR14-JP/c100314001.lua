@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,tp,se)
-	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:GetOriginalAttribute()==ATTRIBUTE_FIRE
+	return c:IsPreviousControler(tp) and c:GetOriginalAttribute()==ATTRIBUTE_FIRE
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and (se==nil or c:GetReasonEffect()~=se)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

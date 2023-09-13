@@ -45,7 +45,6 @@ s.toss_coin=true
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp) end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,0)
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local heads=0
@@ -58,7 +57,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if ev==0 then return end

@@ -43,10 +43,10 @@ function s.gchk(g)
 	return g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM)
 end
 function s.afilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:GetOriginalType()&TYPE_PENDULUM~=0
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.afilter,c:GetControler(),LOCATION_ONFIELD,0,nil)*100
+	return Duel.GetMatchingGroupCount(s.afilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil)*100
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
