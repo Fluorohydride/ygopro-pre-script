@@ -23,7 +23,7 @@ function s.filter(c,e,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if Duel.CheckReleaseGroup(tp,s.filter,1,nil,tp) and (Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	if Duel.CheckReleaseGroup(tp,s.filter,1,nil,e,tp) and (Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp)
 		or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
