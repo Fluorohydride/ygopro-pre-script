@@ -46,12 +46,42 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	return  tc:IsControler(tp) and tc:IsSetCard(0x2a7) and tc:IsChainAttackable()
+	local count=tc:GetAttackAnnouncedCount()
+	return  tc:IsControler(tp) and tc:IsSetCard(0x2a7) and count<=2 
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if not tc:IsRelateToBattle() then return end
-	Duel.ChainAttack()
+	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_EXTRA_ATTACK)
+	e2:SetValue(1)
+	e2:SetCondition(s.attkcon)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	tc:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e1:SetCountLimit(1)
+	e1:SetCondition(s.clcondition)
+	e1:SetOperation(s.clop)
+	e1:SetLabel(lp)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
+function s.clcondition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():GetFlagEffect(id)==0
+end
+function s.attkcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetFlagEffect(id)>0
+end
+function s.atkfilter(c)
+	return c:GetFlagEffect(id)>0
+end
+function s.clop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil):GetFirst()
+	tc:ResetFlagEffect(id)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_GRAVE) and c:GetOriginalType()&TYPE_SYNCHRO~=0 and c:IsRace(RACE_FISH) and c:IsLevelAbove(8)
