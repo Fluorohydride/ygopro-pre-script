@@ -2,7 +2,7 @@
 --Majespecter Porcupine - Yamaarashi
 local s, id, o = GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute()
+	aux.EnablePendulumAttribute(c)
 	--snip 1: edited from "Majespecter Unicorn - Kirin"
 	--cannot target
 	local e1=Effect.CreateEffect(c)
