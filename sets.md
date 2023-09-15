@@ -10,7 +10,6 @@
 - **September 9, 2023**: Structure Deck R: Onslaught of the Fire Kings (SR14-JP) : `100314XXX`
 - **October 28, 2023**: Phantom Nightmare (PHNI-JP) : `101203XXX`
 - **November 25, 2023**: Terminal World (TW01-JP) : `100211XXX`
-
 # Announced
 
 # Archived
