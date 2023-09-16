@@ -1,4 +1,5 @@
---荷鲁斯之黑炎神
+--ホルスの黒炎神
+--script by Ruby
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--SendtoGrave
