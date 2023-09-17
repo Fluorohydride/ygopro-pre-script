@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetRange(LOCATION_MZONE)
+	e1:SetRange(LOCATION_SZONE)
 	e1:SetOperation(s.chainop)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
@@ -71,7 +71,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	elseif g1:IsType(TYPE_TOKEN) then
 		Duel.SendtoHand(g1,nil,REASON_EFFECT)
-	elseif g1:IsAbleToHand() and (not g1:IsAbleToDeck() or tokencheck or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
+	elseif g1:IsAbleToHand() and (not g1:IsAbleToDeck() or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
 		if Duel.SendtoHand(g1,nil,REASON_EFFECT)~=0 and Duel.ConfirmCards(1-tp,g1)~=0 then
 			res=true
 		end
