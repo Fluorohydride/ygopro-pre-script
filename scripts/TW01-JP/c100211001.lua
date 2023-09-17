@@ -1,4 +1,4 @@
---冰灵山的龙祖 神枪龙
+--氷霊山の竜祖 ランセア
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

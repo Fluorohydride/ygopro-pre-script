@@ -1,3 +1,4 @@
+--öÍΩYΩÁ§À÷¡§Îæß”Ú
 local s,id,o=GetID()
 function s.initial_effect(c)
 	local e0=Effect.CreateEffect(c)
@@ -64,7 +65,13 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	local res=false
-	if g1:IsAbleToHand() and (not g1:IsAbleToDeck() or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
+	if g1:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and g1:IsAbleToDeck() then
+		if Duel.SendtoHand(g1,nil,REASON_EFFECT)~=0 then
+			res=true
+		end
+	elseif g1:IsType(TYPE_TOKEN) then
+		Duel.SendtoHand(g1,nil,REASON_EFFECT)
+	elseif g1:IsAbleToHand() and (not g1:IsAbleToDeck() or tokencheck or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
 		if Duel.SendtoHand(g1,nil,REASON_EFFECT)~=0 and Duel.ConfirmCards(1-tp,g1)~=0 then
 			res=true
 		end
