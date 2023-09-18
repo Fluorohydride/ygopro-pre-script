@@ -1,6 +1,7 @@
---coded by Lyris
+--粛声なる結界
 --Silenforcing Barrier
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)

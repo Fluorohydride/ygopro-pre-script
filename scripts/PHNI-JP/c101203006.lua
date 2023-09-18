@@ -1,5 +1,6 @@
---coded by Lyris
+--白曼波
 --White Sunfish
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -13,7 +14,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--snip 1: from "White Moray"
 	--Tuner
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -38,14 +38,14 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-s.self2tuner=true
+s.treat_itself_tuner=true
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_FISH)
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_ONFIELD,0,1,nil,c:GetCode())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c:IsControler(tp) and s.filter(chkc,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
 	local c=e:GetHandler()
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

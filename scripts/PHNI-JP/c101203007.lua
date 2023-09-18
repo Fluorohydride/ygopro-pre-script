@@ -1,5 +1,6 @@
---coded by Lyris
+--白鰯
 --White Sardine
+--coded by Lyris
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -38,7 +39,7 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-s.self2tuner=true
+s.treat_itself_tuner=true
 function s.filter(c)
 	return c:IsCode(id) and c:IsAbleToGraveAsCost()
 end

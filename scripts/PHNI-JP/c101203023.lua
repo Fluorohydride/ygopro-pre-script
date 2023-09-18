@@ -1,9 +1,9 @@
---coded by Lyris
+--マジェスペクター・ポーキュパイン
 --Majespecter Porcupine - Yamaarashi
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
-	--snip 1: edited from "Majespecter Unicorn - Kirin"
 	--cannot target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -17,7 +17,6 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
-	--end snip 1
 	--spsummon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
