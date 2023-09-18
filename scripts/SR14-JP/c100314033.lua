@@ -110,13 +110,44 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	Duel.RegisterEffect(e2,tp)
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_CHAIN_END)
+	e3:SetOperation(s.limop2)
+	Duel.RegisterEffect(e3,tp)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb3)
+	return c:IsFaceup() and c:IsSetCard(0x81)
+end
+function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetCurrentChain()==0 then
+		Duel.SetChainLimitTillChainEnd(s.efun)
+	elseif Duel.GetCurrentChain()==1 then
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_CHAINING)
+		e1:SetOperation(s.resetop)
+		Duel.RegisterEffect(e1,tp)
+		local e2=e1:Clone()
+		e2:SetCode(EVENT_BREAK_EFFECT)
+		e2:SetReset(RESET_CHAIN)
+		Duel.RegisterEffect(e2,tp)
+	end
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil)
 end
-function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetChainLimitTillChainEnd(s.efun)
+function s.efun(e,ep,tp)
+	return ep==tp
+end
+function s.limop2(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFlagEffect(tp,id)>0 then
+		Duel.SetChainLimitTillChainEnd(s.efun)
+	end
+	Duel.ResetFlagEffect(tp,id)
+end
+function s.resetop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.ResetFlagEffect(tp,id)
+	e:Reset()
 end
