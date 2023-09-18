@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
+	--to grave
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -40,7 +41,7 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetRange(LOCATION_GRAVE)
 	e5:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e5:SetCountLimit(1,id+o+o)
+	e5:SetCountLimit(1,id+o*2)
 	e5:SetCondition(s.thcon1)
 	e5:SetTarget(s.thtg1)
 	e5:SetOperation(s.thop1)
@@ -65,7 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.thfilter(c,e,tp)
+function s.thfilter(c)
 	return c:IsSetCard(0x81) and c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -75,7 +76,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if g~=0 then
+	if #g~=0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
