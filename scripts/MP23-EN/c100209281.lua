@@ -1,6 +1,7 @@
---coded by Lyris
+--聖騎士と聖剣の巨城
 --Camelot, Realm of Noble Knights and Noble Arms
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,6 +1,7 @@
---coded by Lyris
+--SPYRAL－ダブルフェイク
 --SPYRAL Double Agent
-local s, id, o = GetID()
+--coded by Lyris
+local s,id,o=GetID()
 function s.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
