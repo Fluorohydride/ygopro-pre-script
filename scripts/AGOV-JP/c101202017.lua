@@ -44,8 +44,9 @@ function s.spfilter(c,e,tp)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,e:GetHandler(),e,tp)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetMZoneCount(tp,e:GetHandler())>0
 	local b2=Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND,0,1,nil)
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 	if chk==0 then return b1 or b2 end
 end
 function s.tfop(e,tp,eg,ep,ev,re,r,rp)
