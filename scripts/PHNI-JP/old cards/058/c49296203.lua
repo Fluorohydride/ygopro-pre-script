@@ -1,4 +1,4 @@
---机巧法师 九七六三
+--カラクリ法師 九七六参
 function c49296203.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -25,7 +25,7 @@ function c49296203.initial_effect(c)
 	e3:SetOperation(c49296203.posop)
 	c:RegisterEffect(e3)
 end
-c49296203.self_tuner=true
+c49296203.treat_itself_tuner=true
 function c49296203.posfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x11) and c:IsCanChangePosition()
 end
@@ -71,4 +71,3 @@ function c49296203.posop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(c,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	end
 end
-

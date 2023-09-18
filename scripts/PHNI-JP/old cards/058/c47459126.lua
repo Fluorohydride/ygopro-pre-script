@@ -1,4 +1,4 @@
---调整魔术师
+--チューンド・マジシャン
 function c47459126.initial_effect(c)
 	aux.EnableDualAttribute(c)
 	local e1=Effect.CreateEffect(c)
@@ -10,4 +10,4 @@ function c47459126.initial_effect(c)
 	e1:SetValue(TYPE_TUNER)
 	c:RegisterEffect(e1)
 end
-c47459126.self_tuner=true
+c47459126.treat_itself_tuner=true

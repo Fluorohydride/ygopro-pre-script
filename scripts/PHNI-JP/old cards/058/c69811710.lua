@@ -1,4 +1,4 @@
---宵星之骑士 吉尔苏
+--宵星の騎士ギルス
 function c69811710.initial_effect(c)
 	--to grave
 	local e1=Effect.CreateEffect(c)
@@ -26,7 +26,7 @@ function c69811710.initial_effect(c)
 	e3:SetOperation(c69811710.spop)
 	c:RegisterEffect(e3)
 end
-c69811710.self_tuner=true
+c69811710.treat_itself_tuner=true
 function c69811710.tgfilter(c)
 	return c:IsSetCard(0x11b,0xfe) and c:IsAbleToGrave()
 end
@@ -78,4 +78,3 @@ function c69811710.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 end
-

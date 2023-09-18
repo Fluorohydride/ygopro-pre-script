@@ -1,4 +1,4 @@
---焰圣骑士-里纳尔多
+--焔聖騎士－リナルド
 function c56824871.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -22,7 +22,7 @@ function c56824871.initial_effect(c)
 	e2:SetOperation(c56824871.thop)
 	c:RegisterEffect(e2)
 end
-c56824871.self_tuner=true
+c56824871.treat_itself_tuner=true
 function c56824871.sprfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE)
 end
@@ -58,4 +58,3 @@ function c56824871.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

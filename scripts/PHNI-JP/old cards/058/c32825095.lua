@@ -1,4 +1,4 @@
---白鳝
+--白鱓
 function c32825095.initial_effect(c)
 	--Direct attack
 	local e1=Effect.CreateEffect(c)
@@ -16,7 +16,7 @@ function c32825095.initial_effect(c)
 	e2:SetOperation(c32825095.tnop)
 	c:RegisterEffect(e2)
 end
-c32825095.self_tuner=true
+c32825095.treat_itself_tuner=true
 function c32825095.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -39,4 +39,3 @@ function c32825095.tnop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-

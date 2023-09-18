@@ -1,4 +1,4 @@
---电脑堺姬-娘娘
+--電脳堺姫-娘々
 function c8736823.initial_effect(c)
 	--same effect send this card to grave and spsummon another card check
 	local e0=aux.AddThisCardInGraveAlreadyCheck(c)
@@ -31,7 +31,7 @@ function c8736823.initial_effect(c)
 	e3:SetOperation(c8736823.tdop)
 	c:RegisterEffect(e3)
 end
-c8736823.self_tuner=true
+c8736823.treat_itself_tuner=true
 function c8736823.cfilter(c,tp,se)
 	return c:IsFaceup() and c:IsLevel(3) and c:IsControler(tp) and (se==nil or c:GetReasonEffect()~=se)
 end
@@ -87,4 +87,3 @@ function c8736823.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
-

@@ -1,4 +1,4 @@
---电脑堺嫦-兔兔
+--電脳堺嫦－兎々
 function c20799347.initial_effect(c)
 	--summon with no tribute
 	local e1=Effect.CreateEffect(c)
@@ -21,7 +21,7 @@ function c20799347.initial_effect(c)
 	e2:SetOperation(c20799347.spop)
 	c:RegisterEffect(e2)
 end
-c20799347.self_tuner=true
+c20799347.treat_itself_tuner=true
 function c20799347.cfilter(c)
 	return c:IsFacedown() or not c:IsRace(RACE_PSYCHO+RACE_WYRM)
 end

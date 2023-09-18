@@ -1,4 +1,4 @@
---三刃大师
+--トライエッジ・マスター
 function c52445243.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
@@ -21,7 +21,7 @@ function c52445243.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
-c52445243.self_tuner=true
+c52445243.treat_itself_tuner=true
 function c52445243.valcheck(e,c)
 	e:GetLabelObject():SetLabel(0)
 	local g=c:GetMaterial()
@@ -89,4 +89,3 @@ function c52445243.op(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-

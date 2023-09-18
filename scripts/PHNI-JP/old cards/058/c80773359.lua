@@ -1,4 +1,4 @@
---强袭黑羽-神立之鬼丸刀鸟
+--A BF－神立のオニマル
 function c80773359.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
@@ -36,7 +36,7 @@ function c80773359.initial_effect(c)
 	e4:SetOperation(c80773359.lvop)
 	c:RegisterEffect(e4)
 end
-c80773359.self_tuner=true
+c80773359.treat_itself_tuner=true
 function c80773359.valcheck(e,c)
 	local flag=0
 	local g=c:GetMaterial()
@@ -104,4 +104,3 @@ function c80773359.lvop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-

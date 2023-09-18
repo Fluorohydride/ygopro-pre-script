@@ -1,4 +1,4 @@
---蔷薇之公主
+--ローズ・プリンセス
 function c58062306.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -21,7 +21,7 @@ function c58062306.initial_effect(c)
 	e2:SetOperation(c58062306.operation)
 	c:RegisterEffect(e2)
 end
-c58062306.self_tuner=true
+c58062306.treat_itself_tuner=true
 function c58062306.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
@@ -56,4 +56,3 @@ function c58062306.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tg)
 	end
 end
-

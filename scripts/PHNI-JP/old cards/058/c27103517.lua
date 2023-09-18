@@ -1,4 +1,4 @@
---邪神官 契伦·沙巴
+--邪神官チラム・サバク
 function c27103517.initial_effect(c)
 	--summon with no tribute
 	local e1=Effect.CreateEffect(c)
@@ -19,7 +19,7 @@ function c27103517.initial_effect(c)
 	e2:SetOperation(c27103517.spop)
 	c:RegisterEffect(e2)
 end
-c27103517.self_tuner=true
+c27103517.treat_itself_tuner=true
 function c27103517.sumcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -46,4 +46,3 @@ function c27103517.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-
