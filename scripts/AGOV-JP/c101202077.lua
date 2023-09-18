@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetHintTiming(0,TIMING_END_PHASE)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,id)
+	e3:SetCondition(s.effcon)
 	e3:SetCost(s.effcost)
 	e3:SetOperation(s.changeop)
 	e3:SetLabel(2)
@@ -44,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetHintTiming(0,TIMING_END_PHASE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1,id)
+	e4:SetCondition(s.effcon)
 	e4:SetCost(s.effcost)
 	e4:SetTarget(s.tgtg)
 	e4:SetOperation(s.tgop)
@@ -105,14 +107,10 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local res=nil
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	if g:GetCount()>0 then
-		res=Duel.SendtoGrave(g,REASON_EFFECT)
-	end
-	local dg=Duel.GetMatchingGroup(aux.NegateEffectMonsterFilter,tp,0,LOCATION_MZONE,nil)
-	if #dg>0 and res~=0 then
+	local tc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) then
+		local dg=Duel.GetMatchingGroup(aux.NegateEffectMonsterFilter,tp,0,LOCATION_MZONE,nil)
 		local dc=dg:GetFirst()
 		while dc do
 			Duel.NegateRelatedChain(dc,RESET_TURN_SET)

@@ -5,10 +5,11 @@
 - **July 22, 2023**: AGE OF OVERLORD (AGOV-JP) : `101202XXX`
 - **August 4, 2023**: Yu-Gi-Oh! OCG Structures Volume 7 promotional card (YO07-JP) : `100208XXX`
 - **August 26, 2023**: Deck Build Pack: Valiant Smashers (DBVS-JP) : `100421XXX`
-- **September 3, 2023**: Yu-Gi-Oh! Championship Series 2023 prize card (YCSW-EN014): `100210XXX`
+- **September 3, 2023**: Yu-Gi-Oh! Championship Series 2023 prize card (YCSW-EN): `100210XXX`
 - **September 7, 2023**: 25th Anniversary Tin: Dueling Heroes (MP23-EN): `100209XXX`
 - **September 9, 2023**: Structure Deck R: Onslaught of the Fire Kings (SR14-JP) : `100314XXX`
 - **October 28, 2023**: Phantom Nightmare (PHNI-JP) : `101203XXX`
+- **November 25, 2023**: Terminal World (TW01-JP) : `100211XXX`
 # Announced
 
 # Archived

@@ -36,7 +36,7 @@ function s.mfilter(c,tp)
 	return (c:IsType(TYPE_SPIRIT) or c:IsCode(25415053)) and c:IsLocation(LOCATION_MZONE)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsPreviousControler(tp)
+	return c:IsPreviousPosition(POS_FACEUP) and bit.band(c:GetPreviousAttributeOnField(),ATTRIBUTE_WIND)~=0 and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -52,7 +52,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil)
 	local b2=Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return b1 or b2 end
-	local op=aux.SelectFromOptions(tp,{b1,1190},{b2,1159})
+	local op=aux.SelectFromOptions(tp,{b1,1190},{b2,1153})
 	if op==1 then
 		e:SetCategory(CATEGORY_TOHAND)
 		e:SetOperation(s.retrieve)

@@ -65,11 +65,11 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local c=e:GetHandler()
-	local tg=Duel.GetTargetsRelateToChain()
-	local tc=tg:Filter(Card.IsLocation,nil,LOCATION_MZONE):GetFirst()
+	local tc=Duel.GetTargetsRelateToChain():GetFirst()
+	if not tc then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local ec=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.eqfilter),tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,tc,tp):GetFirst()
-	if tc and ec and ec:CheckUniqueOnField(tp) and not ec:IsForbidden() then
-		if not Duel.Equip(tp,ec,tc) then return end
+	if ec and Duel.Equip(tp,ec,tc)then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -78,17 +78,17 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(s.eqlimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		ec:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
+		--
+		local e2=Effect.CreateEffect(ec)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(ec:GetAttack())
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		ec:RegisterEffect(e2)
+		ec:RegisterEffect(e2,true)
 		--substitute
-		local e3=Effect.CreateEffect(c)
+		local e3=Effect.CreateEffect(ec)
 		e3:SetType(EFFECT_TYPE_EQUIP)
 		e3:SetCode(EFFECT_DESTROY_SUBSTITUTE)
-		e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e3:SetValue(s.desrepval)
 		ec:RegisterEffect(e3,true)

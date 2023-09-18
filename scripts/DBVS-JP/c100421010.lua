@@ -51,11 +51,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp)
 	Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 end
-function s.mfilter(c)
-	return c:IsSetCard(0x2a1) and c:IsType(TYPE_MONSTER)
+function s.mfilter(c,tp)
+	return c:IsSetCard(0x2a1) and c:IsType(TYPE_MONSTER) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and eg:IsExists(s.mfilter,1,nil)
+	return rp==1-tp and eg:IsExists(s.mfilter,1,nil,tp)
 end
 function s.sfilter(c,e,tp)
 	return c:IsSetCard(0x2a1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
