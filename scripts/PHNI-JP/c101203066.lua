@@ -1,12 +1,11 @@
---肃声的祈祷
+--粛声なる祈り
+--Script by kiritosoft
 local s,id,o=GetID()
 function s.initial_effect(c)
-	aux.AddCodeList(c,4810828)
-	aux.AddCodeList(c,56350972)
-	aux.AddCodeList(c,101203037)
+	aux.AddCodeList(c,4810828,56350972,101203037)
 	--Activate
 	local e1=aux.AddRitualProcGreater2(c,s.spfilter,nil,nil,s.mfilter,true)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
