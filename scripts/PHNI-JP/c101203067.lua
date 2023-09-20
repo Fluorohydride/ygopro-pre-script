@@ -47,7 +47,7 @@ function s.cfilter2(c)
 end
 function s.condition(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,tp)
+	return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_ONFIELD,0,1,nil,tp)
 end
 function s.alimit(e,c)
 	return c:IsFacedown() or not c:IsType(TYPE_RITUAL)
