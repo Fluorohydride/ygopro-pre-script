@@ -1,4 +1,5 @@
---氷霊山の竜祖 ランセア
+--氷霊山の龍祖 ランセア
+--Script by 蓝蓝
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -75,7 +76,7 @@ function s.sp2op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local eg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil,e,tp)
-	if #eg>0 and Duel.SpecialSummon(eg,0,tp,tp,false,false,POS_FACEUP) and Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,nil) 
+	if #eg>0 and Duel.SpecialSummon(eg,0,tp,tp,false,false,POS_FACEUP) and Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2))then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)

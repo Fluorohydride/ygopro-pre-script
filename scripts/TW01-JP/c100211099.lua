@@ -1,4 +1,5 @@
 --熾動する煉獄
+--Script by lee
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--draw
@@ -34,9 +35,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-	   local h=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	   if e:GetHandler():IsLocation(LOCATION_HAND) then h=h-1 end
-	   return h>0 and (Duel.IsPlayerCanDraw(tp,h) or h==0) and  Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler())
+		local h=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+		if e:GetHandler():IsLocation(LOCATION_HAND) then h=h-1 end
+		return h>0 and (Duel.IsPlayerCanDraw(tp,h) or h==0)
+			and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler())
 	end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
@@ -58,12 +60,12 @@ function s.tgfilter(c,e)
 	return c:IsSetCard(0xbb) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and c:IsCanBeEffectTarget(e)
 end
 function s.fselect(g,e,tp)
-	return aux.dncheck(g) and g:IsExists(Card.IsAbleToGrave,1,nil) 
+	return aux.dncheck(g) and g:IsExists(Card.IsAbleToGrave,1,nil)
 end
-function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_REMOVED,0,nil,e)
+function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return tg:CheckSubGroup(s.fselect,1,11,e,tp)  end
+	local tg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_REMOVED,0,nil,e)
+	if chk==0 then return tg:CheckSubGroup(s.fselect,1,11,e,tp) end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 	local g=tg:SelectSubGroup(tp,s.fselect,false,1,11,e,tp)
@@ -72,7 +74,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if tg:GetCount()>0  then
+	if tg:GetCount()>0 then
 		Duel.SendtoGrave(tg,REASON_EFFECT)
 	end
 end

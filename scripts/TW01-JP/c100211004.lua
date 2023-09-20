@@ -1,31 +1,33 @@
---öÍΩYΩÁ§À÷¡§Îæß”Ú
+--Ê∞∑ÁµêÁïå„Å´Ëá≥„ÇãÊô∂Âüü
+--Script by beyond
 local s,id,o=GetID()
 function s.initial_effect(c)
+	--activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
+	--chain limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetOperation(s.chainop)
 	c:RegisterEffect(e1)
+	--to deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_TODECK)
-	e2:SetType(EFFECT_ACTIVATE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.tdcon)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetRange(LOCATION_SZONE)
-	c:RegisterEffect(e3)
+	--self destroy
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_DESTROY)
@@ -82,7 +84,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if res==true and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.BreakEffect()
-		local g2=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil)
+		local g2=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,1,nil)
 		Duel.SendtoDeck(g2,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end
 end

@@ -1,7 +1,8 @@
 --氷結界の剣士 ゲオルギアス
+--Script by beyond
 local s,id,o=GetID()
 function s.initial_effect(c)
-    local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-    --special summon
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -22,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg1)
 	e2:SetOperation(s.spop1)
 	c:RegisterEffect(e2)
-    local e3=e2:Clone()
-    e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-    c:RegisterEffect(e3)
-    --activate limit
+	local e3=e2:Clone()
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e3)
+	--activate limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

@@ -1,9 +1,11 @@
 --氷結界の鏡魔師
+--Script by beyond
 local s,id,o=GetID()
 function s.initial_effect(c)
+	--token
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-    e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
@@ -23,14 +25,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-function s.rfilter(c)
+function s.rfilter(c,tp)
 	return c:IsType(TYPE_EFFECT) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckReleaseGroup(tp,s.rfilter,1,c,1) end
+	if chk==0 then return Duel.CheckReleaseGroup(tp,s.rfilter,1,c,1,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,s.rfilter,1,1,c)
+	local g=Duel.SelectReleaseGroup(tp,s.rfilter,1,1,c,tp)
 	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -61,24 +63,24 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			count=count-1
 		until count==0
 		Duel.SpecialSummonComplete()
-        local c=e:GetHandler()
-	    if c:IsRelateToEffect(e) then
-            local e1=Effect.CreateEffect(c)
-            e1:SetType(EFFECT_TYPE_SINGLE)
-            e1:SetCode(EFFECT_UPDATE_LEVEL)
-            e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
-            e1:SetValue(lv)
-            c:RegisterEffect(e1)
-        end
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_FIELD)
-        e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-        e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-        e1:SetTargetRange(1,0)
-        e1:SetTarget(s.splimit)
-        e1:SetReset(RESET_PHASE+PHASE_END)
-        Duel.RegisterEffect(e1,tp)
-    end
+		local c=e:GetHandler()
+		if c:IsRelateToEffect(e) then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_LEVEL)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+			e1:SetValue(lv)
+			c:RegisterEffect(e1)
+		end
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(s.splimit)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+	end
 end
 function s.splimit(e,c)
 	return not (c:IsAttribute(ATTRIBUTE_WATER) and c:IsType(TYPE_SYNCHRO)) and c:IsLocation(LOCATION_EXTRA)
