@@ -4,8 +4,7 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,4810828,56350972,101203037)
 	--Activate
-	local e1=aux.AddRitualProcGreater2(c,s.spfilter,nil,nil,s.mfilter,true)
-	c:RegisterEffect(e1)
+	aux.AddRitualProcGreater2(c,s.spfilter,nil,nil,s.mfilter)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

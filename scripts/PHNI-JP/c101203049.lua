@@ -57,8 +57,7 @@ function s.srfilter(c,oc)
 	return c:IsSetCard(0xd0) and c:IsAbleToHand()
 end
 function s.srtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.srfilter,tp,LOCATION_DECK,0,1,nil)
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.srfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.srop(e,tp,eg,ep,ev,re,r,rp)

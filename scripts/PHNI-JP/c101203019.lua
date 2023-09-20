@@ -35,6 +35,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+function s.pfilter(c,tp)
+	return c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0x2a6)
+		and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(s.pfilter,tp,LOCATION_DECK,0,1,nil,tp) end
@@ -45,19 +49,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.pfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	if tc then Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) end
 end
-function s.pfilter(c,tp)
-	return c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0x2a6)
-		and not c:IsForbidden() and c:CheckUniqueOnField(tp)
-end
 function s.rlevel(e,c)
 	local lv=aux.GetCappedLevel(e:GetHandler())
-	if (c:IsRace(RACE_WARRIOR) or c:IsRace(RACE_DRAGON)) and c:IsAttribute(ATTRIBUTE_LIGHT) then
+	if c:IsRace(RACE_WARRIOR+RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_LIGHT) then
 		local clv=c:GetLevel()
 		return (lv<<16)+clv
 	else return lv end
 end
 function s.cfilter(c,tp,se)
-	return (c:IsRace(RACE_WARRIOR) or c:IsRace(RACE_DRAGON)) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_RITUAL)
+	return c:IsRace(RACE_WARRIOR+RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_RITUAL)
 		and (se==nil or c:GetReasonEffect()~=se) and c:IsControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -71,13 +71,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
-		e1:SetValue(LOCATION_GRAVE)
-		c:RegisterEffect(e1,true)
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

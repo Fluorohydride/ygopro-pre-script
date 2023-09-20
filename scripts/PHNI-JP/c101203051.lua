@@ -50,7 +50,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 				Duel.SendtoExtraP(hg,nil,REASON_EFFECT)
 			end
-		end	
+		end
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
