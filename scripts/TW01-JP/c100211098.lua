@@ -1,7 +1,7 @@
 --狱火机 洪流
 function c100211098.initial_effect(c)
   c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,nil,1,4,c100211098.lcheck)
+	aux.AddLinkProcedure(c,nil,2,4,c100211098.lcheck)
 	--disable special summon
   local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100211098,0))
