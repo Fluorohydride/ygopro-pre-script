@@ -26,25 +26,29 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
 end
-function s.tgfilter1(c)
+function s.tgcfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x29c)
 end
-function s.tgfilter2(c)
+function s.tgcfilter2(c)
 	return c:IsFaceup() and c:IsCode(101202058)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.tgfilter1,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.tgcfilter1,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.tgcfilter2,tp,LOCATION_ONFIELD,0,1,nil)
+end
+function s.costfilter(c)
+	return c:IsAbleToGraveAsCost()
+		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,0,LOCATION_ONFIELD+LOCATION_HAND,0,1,c)
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic()
-		and Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
 		Duel.SendtoGrave(g,REASON_EFFECT)
@@ -60,9 +64,9 @@ end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
-		Duel.BreakEffect()
 		local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,c)
 		if sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+			Duel.BreakEffect()
 			Duel.SendtoGrave(sg,REASON_EFFECT)
 		end
 	end

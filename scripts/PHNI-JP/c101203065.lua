@@ -1,4 +1,5 @@
---王墓的石壁
+--王墓の石壁
+--script by Ruby
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -43,7 +44,8 @@ end
 function s.schop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 and Duel.ConfirmCards(1-tp,g)~=0 then
+	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
+		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleHand(tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g2=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
@@ -53,7 +55,6 @@ function s.schop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
---draw
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:GetHandler():IsCode(101203018)
 end
