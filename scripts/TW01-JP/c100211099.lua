@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id+EFFECT_COUNT_CODE_DUEL)
 	e2:SetCondition(s.tgcon)
+	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
@@ -27,7 +28,7 @@ function s.costfilter(c)
 	return (c:IsSetCard(0xbb) and c:IsType(TYPE_MONSTER)) or (c:IsSetCard(0xc5) and c:IsType(TYPE_SPELL+TYPE_TRAP)) and not c:IsPublic()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g)
@@ -37,38 +38,35 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local h=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 		if e:GetHandler():IsLocation(LOCATION_HAND) then h=h-1 end
-		return h>0 and (Duel.IsPlayerCanDraw(tp,h) or h==0)
-			and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler())
+		return h>0 and Duel.IsPlayerCanDraw(tp,h)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local h=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+	local ct=Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
 	Duel.BreakEffect()
-	Duel.Draw(tp,h,REASON_EFFECT)
+	Duel.Draw(tp,ct,REASON_EFFECT)
 end
 function s.cfilter(c)
 	return c:IsFacedown() or not c:IsRace(RACE_FIEND)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetMZoneCount(tp)==0 or not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)) and (Duel.GetTurnCount()~=e:GetHandler():GetTurnID() or e:GetHandler():IsReason(REASON_RETURN))
+	return (Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 or not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil))
+		and (Duel.GetTurnCount()~=e:GetHandler():GetTurnID() or e:GetHandler():IsReason(REASON_RETURN))
 end
 function s.tgfilter(c,e)
 	return c:IsSetCard(0xbb) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and c:IsCanBeEffectTarget(e)
 end
-function s.fselect(g,e,tp)
-	return aux.dncheck(g) and g:IsExists(Card.IsAbleToGrave,1,nil)
-end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local tg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_REMOVED,0,nil,e)
-	if chk==0 then return tg:CheckSubGroup(s.fselect,1,11,e,tp) end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	if chk==0 then return #tg>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
-	local g=tg:SelectSubGroup(tp,s.fselect,false,1,11,e,tp)
+	aux.GCheckAdditional=aux.dncheck
+	local g=tg:SelectSubGroup(tp,aux.TRUE,false,1,11)
+	aux.GCheckAdditional=nil
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,g:GetCount(),0,0)
 end

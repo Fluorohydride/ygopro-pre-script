@@ -37,10 +37,10 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_DESTROYED)
+	e3:SetCountLimit(1,id+o*2)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
-	e3:SetCountLimit(1,id+o*2)
 	c:RegisterEffect(e3)
 end
 function s.lcheck(g,lc)
@@ -67,11 +67,11 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateSummon(eg)
 	Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
 end
-function s.rmfl(c,tp)
+function s.rmfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.rmfl,1,nil,tp)
+	return eg:IsExists(s.rmfilter,1,nil,tp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
@@ -79,10 +79,10 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMatchingGroupCount(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tp)>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,tp)
-	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
+	if #sg>0 then
+		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -90,16 +90,16 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousControler(tp) and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsPreviousLocation(LOCATION_MZONE)
 		and rp==1-tp
 end
-function s.spfilters(c,e,tp)
+function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xbb) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilters,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilters,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 	end
