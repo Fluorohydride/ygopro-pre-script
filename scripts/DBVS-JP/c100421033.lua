@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c)
-	return c:GetOriginalRace()&RACE_FAIRY>0 and c:GetOriginalType()&TYPE_MONSTER>0 and c:GetCounter(0x170)>2
+	return c:GetOriginalRace()&RACE_FAIRY>0 and c:GetOriginalType()&TYPE_MONSTER>0 and c:GetCounter(0x16a)>2
 end
 function s.spcost(e,c,tp,st)
 	if st&SUMMON_TYPE_LINK~=SUMMON_TYPE_LINK then return true end
@@ -51,7 +51,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
 	local ct=0
 	local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
-	for tc in aux.Next(g) do ct=ct+tc:GetCounter(0x170) end
+	for tc in aux.Next(g) do ct=ct+tc:GetCounter(0x16a) end
 	if chk==0 then return ct>0 and Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,ct,nil)
@@ -68,7 +68,7 @@ function s.chk(g,tp)
 	for tc in aux.Next(g) do
 		local ct=0
 		for i=1,3 do
-			if tc:IsCanRemoveCounter(tp,0x170,i,REASON_COST) then ct=i end
+			if tc:IsCanRemoveCounter(tp,0x16a,i,REASON_COST) then ct=i end
 		end
 		tl=tl+ct
 	end
@@ -80,8 +80,8 @@ function s.tacost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=0
 	while ct<3 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local tc=g:FilterSelect(tp,Card.IsCanRemoveCounter,1,1,nil,tp,0x170,1,REASON_COST):GetFirst()
-		tc:RemoveCounter(tp,0x170,1,REASON_COST)
+		local tc=g:FilterSelect(tp,Card.IsCanRemoveCounter,1,1,nil,tp,0x16a,1,REASON_COST):GetFirst()
+		tc:RemoveCounter(tp,0x16a,1,REASON_COST)
 		ct=ct+1
 	end
 end

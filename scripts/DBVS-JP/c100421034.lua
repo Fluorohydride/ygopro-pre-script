@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c)
-	return c:GetOriginalRace()&RACE_FIEND>0 and c:GetOriginalType()&TYPE_MONSTER>0 and c:GetCounter(0x170)>2
+	return c:GetOriginalRace()&RACE_FIEND>0 and c:GetOriginalType()&TYPE_MONSTER>0 and c:GetCounter(0x16a)>2
 end
 function s.spcost(e,c,tp,st)
 	if st&SUMMON_TYPE_LINK~=SUMMON_TYPE_LINK then return true end
@@ -49,7 +49,7 @@ function s.desrepchk(g,tp)
 	for tc in aux.Next(g) do
 		local ct=0
 		for i=1,3 do
-			if tc:IsCanRemoveCounter(tp,0x170,i,REASON_COST) then ct=i end
+			if tc:IsCanRemoveCounter(tp,0x16a,i,REASON_COST) then ct=i end
 		end
 		tl=tl+ct
 	end
@@ -75,8 +75,8 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=0
 	while ct<3 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local tc=g:FilterSelect(tp,Card.IsCanRemoveCounter,1,1,nil,tp,0x170,1,REASON_COST):GetFirst()
-		tc:RemoveCounter(tp,0x170,1,REASON_COST)
+		local tc=g:FilterSelect(tp,Card.IsCanRemoveCounter,1,1,nil,tp,0x16a,1,REASON_COST):GetFirst()
+		tc:RemoveCounter(tp,0x16a,1,REASON_COST)
 		ct=ct+1
 	end
 end
