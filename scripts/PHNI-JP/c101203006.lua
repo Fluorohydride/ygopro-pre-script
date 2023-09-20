@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tnop)
 	c:RegisterEffect(e2)
 end
+s.treat_itself_tuner=true
 function s.tncon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_GRAVE)
 end
@@ -38,7 +39,6 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-s.treat_itself_tuner=true
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_FISH)
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_ONFIELD,0,1,nil,c:GetCode())

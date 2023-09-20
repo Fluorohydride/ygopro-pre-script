@@ -14,7 +14,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--snip 1: from "White Moray"
 	--Tuner
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -24,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tnop)
 	c:RegisterEffect(e2)
 end
+s.treat_itself_tuner=true
 function s.tncon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_GRAVE)
 end
@@ -39,7 +39,6 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-s.treat_itself_tuner=true
 function s.filter(c)
 	return c:IsCode(id) and c:IsAbleToGraveAsCost()
 end
