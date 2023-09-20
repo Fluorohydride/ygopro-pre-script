@@ -42,8 +42,7 @@ function s.initial_effect(c)
 end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and rc:IsSetCard(0x2f) then
+	if re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0x2f) then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end
