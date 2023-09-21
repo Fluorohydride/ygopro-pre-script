@@ -72,5 +72,5 @@ function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToChain() then Duel.SSet(tp,tc) end
+	if tc and tc:IsRelateToChain() then Duel.SSet(tp,tc) end
 end
