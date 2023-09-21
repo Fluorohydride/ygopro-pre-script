@@ -1,6 +1,6 @@
 --ブラック・ホール・ドラゴン
 --Dark Hole Dragon
---coded by Lyris
+--coded by Lyris & Mercury233
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--effect indes
@@ -16,11 +16,10 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_DESTROYED)
+	e2:SetCode(EVENT_CUSTOM+id)
 	e2:SetRange(LOCATION_GRAVE+LOCATION_HAND)
 	e2:SetCountLimit(1,id)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -34,17 +33,37 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
+	if not s.global_check then
+		s.global_check=true
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_DESTROY)
+		ge1:SetOperation(s.descheck)
+		Duel.RegisterEffect(ge1,0)
+	end
 end
-function s.cfilter(c)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT) and not c:GetReasonEffect():IsHasProperty(EFFECT_FLAG_CARD_TARGET)
-end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil)
+function s.descheck(e,tp,eg,ep,ev,re,r,rp)
+	local res=false
+	for tc in aux.Next(eg) do
+		if tc:IsLocation(LOCATION_MZONE) and r&REASON_EFFECT>0 then
+			if re==nil or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
+				res=true
+				break
+			end
+			local tg=Duel.GetChainInfo(Duel.GetCurrentChain(),CHAININFO_TARGET_CARDS)
+			if tg==nil or not tg:IsContains(tc) then
+				res=true
+				break
+			end
+		end
+	end
+	if res then Duel.RaiseEvent(eg,EVENT_CUSTOM+id,re,r,rp,tp,0) end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

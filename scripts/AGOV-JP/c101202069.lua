@@ -16,7 +16,7 @@ function c101202069.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c101202069.rfilter(c,tp)
-	return c:GetBaseAttack()==2500 and c:IsRace(RACE_SPELLCASTER) and c:IsType(TYPE_PENDULUM) and c:IsFaceup()
+	return c:GetBaseAttack()==2500 and c:IsRace(RACE_SPELLCASTER) and c:IsType(TYPE_PENDULUM)
 end
 function c101202069.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c101202069.rfilter,1,nil,tp) end

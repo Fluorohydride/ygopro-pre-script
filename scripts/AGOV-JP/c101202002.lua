@@ -46,15 +46,15 @@ function c101202002.initial_effect(c)
 	e4:SetOperation(c101202002.thop2)
 	c:RegisterEffect(e4)
 end
-function c101202002.cfilter1(c)
+function c101202002.cfilter1(c,tp)
 	return c:IsCode(13331639) and c:IsFaceup()
+		and Duel.IsExistingMatchingCard(c101202002.cfilter2,tp,LOCATION_MZONE,0,1,c)
 end
 function c101202002.cfilter2(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsFaceup()
 end
 function c101202002.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c101202002.cfilter1,tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingMatchingCard(c101202002.cfilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c101202002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -131,7 +131,8 @@ function c101202002.thfilter2(c,tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c101202002.thcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101202002.thfilter2,1,nil,tp) and e:GetHandler():IsFaceup()
+	local c=e:GetHandler()
+	return eg:IsExists(c101202002.thfilter2,1,c,tp) and not eg:IsContains(c) and c:IsFaceup()
 end
 function c101202002.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end

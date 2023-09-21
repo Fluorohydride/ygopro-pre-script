@@ -135,14 +135,13 @@ function c101202005.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function c101202005.spfilter(c,e,tp)
-	return c:IsSetCard(0x29a) and (c:IsLocation(LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE) or c:IsFaceup())
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x29a) and c:IsFaceupEx() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101202005.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)>0 and c:IsLocation(LOCATION_HAND) then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		local g=Duel.GetMatchingGroup(c101202005.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
+		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101202005.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
 		if ft>0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101202005,3)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

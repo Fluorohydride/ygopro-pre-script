@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DESTROYED)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
@@ -37,6 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 		local g1=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)
 		if g1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.BreakEffect()
 			Duel.SendtoGrave(g1,REASON_EFFECT)
 		end
 	end

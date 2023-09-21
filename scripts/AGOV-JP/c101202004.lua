@@ -29,9 +29,10 @@ function c101202004.retfilter(c,e)
 		and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
 function c101202004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED) and c101202004.retfilter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED) and c101202004.retfilter(chkc,e) end
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c101202004.retfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)
-	if chk==0 then return g:CheckSubGroup(aux.mzctcheck,1,#g,tp) end
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and g:CheckSubGroup(aux.mzctcheck,1,#g,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local tg=g:SelectSubGroup(tp,aux.mzctcheck,false,1,#g,tp)
 	Duel.SetTargetCard(tg)

@@ -72,6 +72,7 @@ function c101202047.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,c101202047.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
 	e:SetLabel(g:GetFirst():GetCode())
+	Duel.ConfirmCards(1-tp,g)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end

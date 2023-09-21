@@ -23,10 +23,15 @@ end
 function s.afilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2a3) and c:IsType(TYPE_LINK)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
+function s.activate(e,tp,eg,ep,ev,re,r,rp,op)
 	local c=e:GetHandler()
-	local chk=Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_MZONE,0,1,nil)
-	local op=aux.SelectFromOptions(tp,{true,aux.Stringid(id,1)},{true,aux.Stringid(id,2)},{chk,aux.Stringid(id,3)})
+	if op==nil then
+		local chk=Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_MZONE,0,1,nil)
+		op=aux.SelectFromOptions(tp,
+			{true,aux.Stringid(id,1)},
+			{true,aux.Stringid(id,2)},
+			{chk,aux.Stringid(id,3)})
+	end
 	if op&1>0 and Duel.Recover(tp,500,REASON_EFFECT)>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)

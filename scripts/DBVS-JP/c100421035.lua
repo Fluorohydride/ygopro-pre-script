@@ -13,22 +13,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--control
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_ADD_COUNTER+0x170)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_CONTROL)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetOperation(s.concon)
+	e2:SetCode(EVENT_CUSTOM+id)
+	e2:SetCountLimit(1,id+o)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e2:SetCondition(s.concon)
+	e2:SetTarget(s.contg)
+	e2:SetOperation(s.conop)
 	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_CONTROL)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_CUSTOM+id)
-	e3:SetCountLimit(1,id+o)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e3:SetTarget(s.contg)
-	e3:SetOperation(s.conop)
-	c:RegisterEffect(e3)
 end
 function s.filter(c)
 	return c:IsSetCard(0x2a3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
@@ -42,19 +37,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-function s.cfilter(c)
-	return c:GetCounter(0x170)==3
-end
 function s.concon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_PZONE,0,1,nil) then
-		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,0,tp,0)
-	end
+	return ep==tp
 end
 function s.contg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp)
 		and chkc:IsControlerCanBeChanged() end
-	if chk==0 then return e:GetHandler():IsRelateToEffect(e)
-		and Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectTarget(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)

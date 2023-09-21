@@ -66,11 +66,10 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,ct,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if g:GetCount()>0 then
 		local ct=e:GetLabel()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:SelectSubGroup(tp,aux.dncheck,false,ct,ct)
 		if sg then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)

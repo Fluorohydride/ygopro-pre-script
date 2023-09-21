@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spscon)
 	e1:SetTarget(s.spstg)
 	e1:SetOperation(s.spsop)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
@@ -64,7 +65,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.sfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,e,tp)
 	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)<1
 		or not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

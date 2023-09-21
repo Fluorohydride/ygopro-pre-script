@@ -13,9 +13,9 @@ function c101202013.initial_effect(c)
 	--Leave Field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101202013,1))
-	e2:SetCategory(CATEGORY_TOGRAVE)
+	e2:SetCategory(CATEGORY_GRAVE_ACTION)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101202113)
@@ -54,6 +54,7 @@ function c101202013.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	elseif not g:FilterCount(Card.IsAbleToDeck,nil,e)==g:GetCount() then
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,2,0,0)
 	end
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,2,0,0)
 end
 function c101202013.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)

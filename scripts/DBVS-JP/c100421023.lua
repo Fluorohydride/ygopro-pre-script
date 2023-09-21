@@ -1,6 +1,6 @@
 --騎士魔防陣
 --Centurion Phalanx
---coded by Lyris
+--coded by Lyris & DIO0passing
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -23,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -42,11 +44,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)<1
 		or not tc:IsLocation(LOCATION_REMOVED) then return end
-	--snip 1: edited from "Bending Destiny"
 	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,2)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCountLimit(1)
 	e1:SetLabel(Duel.GetTurnCount())
@@ -62,8 +63,7 @@ function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	--end snip 1
-	Duel.SpecialSummon(tc,0,tp,e:GetOwner(),false,false,POS_FACEUP)
+	Duel.SpecialSummon(tc,0,tp,tc:GetOwner(),false,false,POS_FACEUP)
 end
 function s.sfilter(c,e,tp)
 	return c:IsSetCard(0x2a5) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
