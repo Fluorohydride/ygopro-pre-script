@@ -49,11 +49,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.tchk(c)
-	return c:GetType()&0x6
-end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetOverlayGroup():GetClassCount(s.tchk)>1
+	return c:IsFaceup() and c:IsType(TYPE_XYZ)
+		and c:GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_SPELL)
+		and c:GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_TRAP)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
