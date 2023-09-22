@@ -26,7 +26,8 @@ function s.mfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT)
 end
 function s.plcfilter(c,tp)
-	return c:IsType(TYPE_RITUAL) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsPreviousControler(tp)
+	return c:IsType(TYPE_RITUAL) and c:IsPreviousControler(tp)
+		and c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetPreviousAttributeOnField()&ATTRIBUTE_LIGHT>0
 		and c:IsPreviousPosition(POS_FACEUP) and c:GetReasonPlayer()==1-tp
 		and c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
 end
