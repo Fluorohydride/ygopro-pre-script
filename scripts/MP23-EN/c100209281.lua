@@ -91,7 +91,9 @@ function s.rpop(e,tp,eg,ep,ev,re,r,rp)
 	if #tg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 		local sc=tg:Select(tp,1,1,nil):GetFirst()
-		local op=aux.SelectFromOptions(tp,{sc:IsSetCard(0xa7),1152},{sc:IsSetCard(0x207a),1190})
+		local b1=sc:IsSetCard(0xa7) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		local b2=sc:IsSetCard(0x207a) and sc:IsAbleToHand()
+		local op=aux.SelectFromOptions(tp,{b1,1152},{b2,1190})
 		Duel.BreakEffect()
 		if op==2 then
 			Duel.SendtoHand(sc,nil,REASON_EFFECT)

@@ -48,11 +48,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsControler(tp) and c:IsOnField() and c:IsLocation(LOCATION_FZONE)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_FZONE)
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.desfilter(c,e,tp)
-	return c:IsControler(tp) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAttribute(ATTRIBUTE_FIRE)
+	return c:IsControler(tp) and c:IsFaceupEx() and c:IsAttribute(ATTRIBUTE_FIRE)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -98,6 +98,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if xyzg:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,g,1,5)
+		Duel.XyzSummon(tp,xyz,g,1,6)
 	end
 end

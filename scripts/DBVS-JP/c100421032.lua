@@ -52,7 +52,6 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=ge1:Clone()
 		ge2:SetCode(EVENT_SPSUMMON_SUCCESS)
-		ge2:SetLabel(id)
 		Duel.RegisterEffect(ge2,0)
 	end
 end

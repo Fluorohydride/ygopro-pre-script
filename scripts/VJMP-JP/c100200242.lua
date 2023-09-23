@@ -55,7 +55,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 	sg:KeepAlive()
-	--snip 1: from "Rescue Cat"
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
@@ -82,5 +81,4 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local tg=g:Filter(s.desfilter,nil,e:GetLabel())
 	Duel.Destroy(tg,REASON_EFFECT)
-	--end snip 1
 end

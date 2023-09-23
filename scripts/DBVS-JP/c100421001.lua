@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE+LOCATION_HAND)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetCondition(s.spscon)
+	e2:SetTarget(s.spstg)
 	e2:SetOperation(s.spsop)
 	c:RegisterEffect(e2)
 	--attack all
@@ -48,16 +49,31 @@ function s.spscon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,c)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:CheckSubGroup(aux.dncheck,5,5)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
+	aux.GCheckAdditional=aux.dncheck
+	local res=g:CheckSubGroup(aux.TRUE,5,5)
+	aux.GCheckAdditional=nil
+	return res
 end
-function s.spsop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.spstg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=mg:SelectSubGroup(tp,aux.dncheck,false,5,5)
-	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
+	aux.GCheckAdditional=aux.dncheck
+	local sg=mg:SelectSubGroup(tp,aux.TRUE,true,5,5)
+	aux.GCheckAdditional=nil
+	if sg then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
+	else return false end
 end
-function s.acon(e,tp,eg,ep,ev,re,r,rp)
-	if aux.GetValueType(tp)~="number" then tp=e:GetHandler():GetControler() end
+function s.spsop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
+	g:DeleteGroup()
+end
+function s.acon(e)
+	local tp=e:GetHandlerPlayer()
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
