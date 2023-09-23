@@ -54,7 +54,11 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil)
 	local tc1=g1:GetFirst()
-	if tc1 and Duel.SendtoDeck(tc1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
+	if not tc1 then return end
+	if tc1:IsLocation(LOCATION_HAND) then
+		Duel.ConfirmCards(1-tp,tc1)
+	end
+	if Duel.SendtoDeck(tc1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPERATECARD)
 		local g=Duel.SelectMatchingCard(tp,s.dfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,ft)
