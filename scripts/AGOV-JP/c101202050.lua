@@ -38,7 +38,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceupEx() and c:IsSetCard(0x27) and c:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetCode())
+	return c:IsFaceupEx() and c:IsSetCard(0x27) and c:IsType(TYPE_MONSTER)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function s.filter(c,...)
 	return c:IsSetCard(0x27) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and (#{...}==0 or not c:IsCode(...))
@@ -55,6 +56,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Destroy(g,REASON_EFFECT)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,g:GetFirst():GetCode())
-	Duel.SendtoHand(sg,nil,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,sg)
+	if #sg>0 then
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,sg)
+	end
 end

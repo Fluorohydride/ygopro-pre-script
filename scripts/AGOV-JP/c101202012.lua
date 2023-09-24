@@ -55,16 +55,11 @@ function c101202012.cfilter(c,tp)
 	return c:IsPreviousControler(tp)
 		and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)
 end
-function c101202012.drfilter(c,tp)
-	return c:GetSequence()<5 and c:IsFaceup()
-end
 function c101202012.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101202012.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
-function c101202012.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c101202012.drfilter,tp,LOCATION_MZONE,0,nil)
-	local ct=c101202012.count_unique_code(g)
-	Duel.Draw(tp,ct,REASON_EFFECT)
+function c101202012.drfilter(c,tp)
+	return c:GetSequence()<5 and c:IsFaceup()
 end
 function c101202012.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -75,6 +70,11 @@ function c101202012.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.SetTargetParam(e:GetLabel())
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,e:GetLabel())
+end
+function c101202012.desop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(c101202012.drfilter,tp,LOCATION_MZONE,0,nil)
+	local ct=c101202012.count_unique_code(g)
+	Duel.Draw(tp,ct,REASON_EFFECT)
 end
 function c101202012.count_unique_code(g)
 	local check={}

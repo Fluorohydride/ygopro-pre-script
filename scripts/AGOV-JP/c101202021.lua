@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return not (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
 end
 function s.indtg(e,c)
 	local tc=e:GetHandler()

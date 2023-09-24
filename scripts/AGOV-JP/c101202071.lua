@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCondition(s.xyzcond)
 	e1:SetTarget(s.xyztg)
 	e1:SetOperation(s.xyzop)
@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
-function s.xyzfilter(c)
-	return c:IsXyzSummonable(nil)
-end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 end
 function s.xyzcond(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+end
+function s.xyzfilter(c)
+	return c:IsXyzSummonable(nil)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -65,8 +65,8 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local c=e:GetHandler()
-	local tc=Duel.GetTargetsRelateToChain():GetFirst()
-	if not tc then return end
+	local tc=Duel.GetFirstTarget()
+	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local ec=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.eqfilter),tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,tc,tp):GetFirst()
 	if ec and Duel.Equip(tp,ec,tc)then

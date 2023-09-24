@@ -60,7 +60,7 @@ function c101202005.initial_effect(c)
 	--to hand
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(101202005,2))
-	e6:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
+	e6:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES+CATEGORY_GRAVE_SPSUMMON)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e6:SetRange(LOCATION_MZONE)
@@ -74,7 +74,7 @@ function c101202005.stcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsType,1,nil,TYPE_MONSTER)
 end
 function c101202005.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return e:GetHandler():IsCanAddCounter(0x169,3) end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,3,0,0x169)
 end
 function c101202005.stop(e,tp,eg,ep,ev,re,r,rp)
@@ -96,15 +96,15 @@ function c101202005.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c101202005.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)>0 then
+		c:CompleteProcedure()
 	end
 end
 function c101202005.cfilter(c,tp)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsSummonPlayer(1-tp)
 end
 function c101202005.etcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c101202005.cfilter,1,nil,tp)
+	return eg:IsExists(c101202005.cfilter,1,nil,tp) and Duel.GetCurrentPhase()~=PHASE_END
 end
 function c101202005.etcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,12,nil,POS_FACEDOWN) end
@@ -123,9 +123,9 @@ function c101202005.etop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BP)
-	e1:SetTargetRange(0,1)
+	e1:SetTargetRange(1,0)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	Duel.RegisterEffect(e1,turnp)
 end
 function c101202005.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
@@ -140,6 +140,7 @@ end
 function c101202005.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)>0 and c:IsLocation(LOCATION_HAND) then
+		Duel.ShuffleHand(tp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101202005.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
 		if ft>0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(101202005,3)) then

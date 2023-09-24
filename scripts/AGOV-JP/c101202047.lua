@@ -26,6 +26,7 @@ function c101202047.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,101202047+100)
 	e3:SetCondition(c101202047.pcon)
+	e3:SetTarget(c101202047.ptg)
 	e3:SetOperation(c101202047.pop)
 	c:RegisterEffect(e3)
 	--multi attack
@@ -64,11 +65,12 @@ function c101202047.cfilter(c,tp)
 		and Duel.IsExistingMatchingCard(c101202047.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function c101202047.thfilter(c,code)
-	return c:IsType(TYPE_PENDULUM) and c:GetAttack()==2500 and not c:IsCode(code) and c:IsAbleToHand()
+	return c:IsType(TYPE_PENDULUM) and c:IsAttack(2500) and not c:IsCode(code) and c:IsAbleToHand()
 end
 function c101202047.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:IsCostChecked()
 		and Duel.IsExistingMatchingCard(c101202047.cfilter,tp,LOCATION_HAND,0,1,nil,tp) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,c101202047.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
 	e:SetLabel(g:GetFirst():GetCode())
@@ -85,31 +87,36 @@ function c101202047.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c101202047.pcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,101202047)<=0 then return false end
-	local c=e:GetHandler()
-	local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
-	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	if lpz==nil or rpz==nil then return false end
-	local loc=0
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_HAND end
-	if Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)>0 then loc=loc+LOCATION_EXTRA end
-	if loc==0 then return false end
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_EXTRA_PENDULUM_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetValue(aux.TRUE)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-	local eset={e1}
-	local lscale=lpz:GetLeftScale()
-	local rscale=rpz:GetRightScale()
-	if lscale>rscale then lscale,rscale=rscale,lscale end
-	local g=Duel.GetFieldGroup(tp,loc,0)
-	local res=g:IsExists(aux.PConditionFilter,1,nil,e,tp,lscale,rscale,eset)
-	e1:Reset()
-	return res
+	return Duel.GetFlagEffect(tp,101202047)>0
+end
+function c101202047.ptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		local c=e:GetHandler()
+		local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
+		local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
+		if lpz==nil or rpz==nil then return false end
+		local loc=0
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_HAND end
+		if Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)>0 then loc=loc+LOCATION_EXTRA end
+		if loc==0 then return false end
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_EXTRA_PENDULUM_SUMMON)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
+		e1:SetValue(aux.TRUE)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+		local eset={e1}
+		local lscale=lpz:GetLeftScale()
+		local rscale=rpz:GetRightScale()
+		if lscale>rscale then lscale,rscale=rscale,lscale end
+		local g=Duel.GetFieldGroup(tp,loc,0)
+		local res=g:IsExists(aux.PConditionFilter,1,nil,e,tp,lscale,rscale,eset)
+		e1:Reset()
+		return res
+	end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function c101202047.pop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -166,6 +173,7 @@ end
 function c101202047.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsCode(13331639) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(c101202047.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c101202047.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
@@ -175,7 +183,7 @@ function c101202047.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ATTACK_ALL)
-		e1:SetValue(aux.TRUE)
+		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end

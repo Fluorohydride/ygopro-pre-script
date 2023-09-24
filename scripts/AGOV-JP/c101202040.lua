@@ -32,9 +32,6 @@ function s.initial_effect(c)
 	e3:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e3)
 end
-function s.damcon(e)
-	return e:GetHandler():GetEquipTarget():GetBattleTarget()~=nil
-end
 function s.ovfilter(c)
 	return c:IsFaceup() and (c:IsRank(3) or c:IsRank(4))
 end
@@ -43,7 +40,7 @@ function s.xyzop(e,tp,chk)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.xyzcondition(e)
-	return e:GetHandler():GetOverlayCount() > 0
+	return e:GetHandler():GetOverlayCount()>0
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x4073) and c:IsAbleToHand()
@@ -76,4 +73,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,sg)
 		end
 	end
+end
+function s.damcon(e)
+	return e:GetHandler():GetEquipTarget():GetBattleTarget()~=nil
 end

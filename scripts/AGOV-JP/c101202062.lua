@@ -73,6 +73,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode()):GetFirst()
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)>0 and aux.nzatk(sc) then
+		Duel.BreakEffect()
 		local lp=Duel.GetLP(tp)
 		Duel.SetLP(tp,lp-sc:GetAttack())
 	end

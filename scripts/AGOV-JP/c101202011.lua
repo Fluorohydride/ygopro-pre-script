@@ -16,8 +16,8 @@ function c101202011.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetCost(c101202011.tgcost)
 	e2:SetCountLimit(1,101202111)
+	e2:SetCost(c101202011.tgcost)
 	e2:SetTarget(c101202011.target)
 	e2:SetOperation(c101202011.operation)
 	c:RegisterEffect(e2)
@@ -31,6 +31,7 @@ function c101202011.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,101202211)
 	e3:SetCondition(c101202011.descon)
+	e3:SetTarget(c101202011.destg)
 	e3:SetOperation(c101202011.desop)
 	c:RegisterEffect(e3)
 end
@@ -78,8 +79,13 @@ end
 function c101202011.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101202011.cfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
+function c101202011.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_ONFIELD)
+end
 function c101202011.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
 		Duel.SendtoGrave(g,REASON_EFFECT)

@@ -36,7 +36,8 @@ function c101202037.spfilter(c,e,tp)
 end
 function c101202037.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c101202037.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c101202037.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(c101202037.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c101202037.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
@@ -60,13 +61,13 @@ function c101202037.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function c101202037.lvfilter(c)
-	return c:IsType(TYPE_TUNER) and not c:IsLevel(2) and c:IsFaceup()
+	return c:IsType(TYPE_TUNER) and c:GetLevel()>0 and not c:IsLevel(2) and c:IsFaceup()
 end
 function c101202037.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c101202037.lvfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c101202037.lvfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c101202037.lvfilter,tp,LOCATION_MZONE,0,1,99,nil)
+	Duel.SelectTarget(tp,c101202037.lvfilter,tp,LOCATION_MZONE,0,1,6,nil)
 end
 function c101202037.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e):Filter(Card.IsFaceup,nil)

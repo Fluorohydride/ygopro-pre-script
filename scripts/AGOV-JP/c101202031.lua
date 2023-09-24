@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id+o)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCondition(Duel.IsAbleToEnterBP)
+	e2:SetCondition(aux.bpcon)
 	e2:SetTarget(s.dirtg)
 	e2:SetOperation(s.dirop)
 	c:RegisterEffect(e2)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_DESTROYED)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id+o*2)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
@@ -51,11 +51,14 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
-	Duel.SendtoHand(g,nil,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,g)
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	end
 end
 function s.dfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO)
+		and not c:IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.dirtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.dfilter(chkc) end
@@ -79,16 +82,21 @@ function s.cfilter(c,e,tp)
 		and c:GetBaseAttack()>0 and c:IsCanBeEffectTarget(e) and not c:IsType(TYPE_TOKEN)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return eg:IsContains(chkc) and s.cfilter(chkc,e,tp) end
 	local g=eg:Filter(s.cfilter,nil,e,tp)
 	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tg=g:Select(tp,1,1,nil)
-	Duel.SetTargetCard(tg)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,tg:GetFirst():GetBaseAttack())
+	local tc=g:GetFirst()
+	if #g>1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		tc=g:Select(tp,1,1,nil):GetFirst()
+	end
+	Duel.SetTargetCard(tc)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,tc:GetBaseAttack())
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:GetBaseAttack()>0 then
-		Duel.Damage(1-tp,tc:GetTextAttack(),REASON_EFFECT)
+		Duel.Damage(1-tp,tc:GetBaseAttack(),REASON_EFFECT)
 	end
 end

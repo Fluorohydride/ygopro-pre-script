@@ -13,15 +13,15 @@ function c101202013.initial_effect(c)
 	--Leave Field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(101202013,1))
-	e2:SetCategory(CATEGORY_GRAVE_ACTION)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_TODECK+CATEGORY_GRAVE_ACTION)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,101202113)
 	e2:SetCondition(c101202013.descon)
-	e2:SetOperation(c101202013.desop)
 	e2:SetTarget(c101202013.destg)
+	e2:SetOperation(c101202013.desop)
 	c:RegisterEffect(e2)
 end
 function c101202013.sprfilter(c)
@@ -58,8 +58,9 @@ function c101202013.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c101202013.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if tg:GetCount()==2 and tg:FilterCount(Card.IsAbleToHand,nil,e)==tg:GetCount()
-		and (not tg:FilterCount(Card.IsAbleToDeck,nil,e)==tg:GetCount() or Duel.SelectYesNo(tp,aux.Stringid(101202013,2))) then
+	if tg:GetCount()==2 and tg:FilterCount(Card.IsAbleToHand,nil)==2
+		and (not tg:FilterCount(Card.IsAbleToDeck,nil)==2
+			or Duel.SelectOption(tp,aux.Stringid(101202013,2),aux.Stringid(101202013,3))==0) then
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 	else
 		Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)

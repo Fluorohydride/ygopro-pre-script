@@ -76,7 +76,7 @@ end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetReleaseGroup(tp,true):Filter(s.mfilter,c)
-	if chk==0 then return c:IsReleasableByEffect()
+	if chk==0 then return c:IsReleasableByEffect() and c:GetLevel()>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g) end
 	Duel.SetOperationInfo(0,CATEGORY_RELEASE,g,2,0,0)
 end

@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.dmgcon)
+	e1:SetTarget(s.dmgtg)
 	e1:SetOperation(s.dmgop)
 	c:RegisterEffect(e1)
 	--handes
@@ -34,6 +35,13 @@ end
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and eg:IsExists(s.dmgfilter,1,nil,1-tp)
 end
+function s.dmgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local ct=eg:FilterCount(s.dmgfilter,nil,1-tp)
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(ct*400)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*400)
+end
 function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(s.dmgfilter,nil,1-tp)
 	Duel.Damage(1-tp,ct*400,REASON_EFFECT)
@@ -43,11 +51,11 @@ function s.handescon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.handestg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,0,0,1-tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,1)
 end
 function s.handesop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if g:GetCount()==0 then return end
-	local sg=g:RandomSelect(1-tp,1)
+	local sg=g:RandomSelect(tp,1)
 	Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
 end

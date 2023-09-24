@@ -37,7 +37,7 @@ function c101202004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=g:SelectSubGroup(tp,aux.mzctcheck,false,1,#g,tp)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,#tg,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c101202004.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

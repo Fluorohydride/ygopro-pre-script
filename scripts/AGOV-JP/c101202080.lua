@@ -33,7 +33,7 @@ function s.tfilter(c,tp)
 	return not c:IsType(TYPE_TOKEN) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	if rp~=1-tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g and g:IsExists(s.tfilter,1,nil,tp)
 end

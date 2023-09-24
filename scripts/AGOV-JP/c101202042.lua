@@ -103,5 +103,8 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SendtoHand(g,nil,REASON_EFFECT)
+	if #g>0 then
+		Duel.HintSelection(g)
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	end
 end

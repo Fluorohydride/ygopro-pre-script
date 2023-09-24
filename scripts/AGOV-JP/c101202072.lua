@@ -10,6 +10,7 @@ function c101202072.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCountLimit(1,101202072)
 	e1:SetCondition(c101202072.condition)
 	e1:SetTarget(c101202072.target)
@@ -48,6 +49,9 @@ end
 function c101202072.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+		local op=tc:GetOwner()
+		local race=tc:GetRace()
+		local lv=tc:GetLevel()|tc:GetRank()|tc:GetLink()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -55,7 +59,7 @@ function c101202072.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(c101202072.srcon)
 		e1:SetOperation(c101202072.srop)
 		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetLabelObject(tc)
+		e1:SetLabel(op,race,lv)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
@@ -63,25 +67,17 @@ function c101202072.srfilter(c,race,lv)
 	return c:IsType(TYPE_MONSTER) and not c:IsRace(race) and c:IsLevelBelow(lv-1) and c:IsAbleToHand()
 end
 function c101202072.srcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if not tc then return false end
-	local op=tc:GetOwner()
-	local race=tc:GetRace()
-	local lv=tc:GetLevel()|tc:GetRank()|tc:GetLink()
+	local op,race,lv=e:GetLabel()
 	return Duel.IsExistingMatchingCard(c101202072.srfilter,op,LOCATION_DECK,0,1,nil,race,lv)
 end
 function c101202072.srop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if not tc then return end
 	Duel.Hint(HINT_CARD,0,101202072)
-	local op=tc:GetOwner()
-	local race=tc:GetRace()
-	local lv=tc:GetLevel()|tc:GetRank()|tc:GetLink()
+	local op,race,lv=e:GetLabel()
 	if Duel.SelectYesNo(op,aux.Stringid(101202072,2)) then
 		Duel.Hint(HINT_SELECTMSG,op,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(op,c101202072.srfilter,op,LOCATION_DECK,0,1,1,nil,race,lv)
 		if g:GetCount()>0 then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.SendtoHand(g,nil,REASON_EFFECT,op)
 			Duel.ConfirmCards(1-op,g)
 		end
 	end

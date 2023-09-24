@@ -56,14 +56,15 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Group.CreateGroup()
-	for _,typ in ipairs{TYPE_SPIRIT,0x82} do
+	if not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,0x82) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g1=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,TYPE_SPIRIT)
+	if #g1>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		g:Merge(Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,typ))
-	end
-	if #g==2 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,0x82)
+		g1:Merge(g2)
+		Duel.SendtoHand(g1,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g1)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)

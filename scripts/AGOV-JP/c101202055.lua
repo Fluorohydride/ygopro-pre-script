@@ -9,8 +9,10 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCondition(aux.bpcon)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -56,13 +58,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if chk then Duel.BreakEffect() end
 		local dg=Group.CreateGroup()
 		for sc in aux.Next(g) do
+			local patk=sc:GetAttack()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-tc:GetAttack())
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			sc:RegisterEffect(e1)
-			if sc:IsAttack(0) then dg:AddCard(sc) end
+			if patk~=0 and sc:IsAttack(0) then dg:AddCard(sc) end
 		end
 		if #dg>0 then
 			Duel.BreakEffect()
