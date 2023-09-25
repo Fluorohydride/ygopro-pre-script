@@ -14,12 +14,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 	--Double ATK for each head
-	--code changed into id+2*o to avoid bugs
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_CUSTOM+id+2*o)
+	e2:SetCode(EVENT_CUSTOM+id)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
@@ -30,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_TOSS_COIN)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(s.coincon)
 	e3:SetOperation(s.coinop)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
@@ -47,9 +47,10 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,0)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	local heads=0
-	while Duel.TossCoin(tp,1)==1 do
-		heads=heads+1
+	local res={Duel.TossCoin(tp,-1)}
+	local heads=#res-1
+	if heads>=5 then
+		Duel.Hint(HINT_NUMBER,1-tp,heads)
 	end
 	if heads>=2 then
 		Duel.Draw(tp,heads//2,REASON_EFFECT)
@@ -57,6 +58,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
+	Duel.Hint(HINT_NUMBER,1-tp,ev)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if ev==0 then return end
@@ -80,23 +82,30 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
+function s.coincon(e,tp,eg,ep,ev,re,r,rp)
+	return re:GetCode()~=EVENT_TOSS_COIN_NEGATE
+end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local res={Duel.GetCoinResult()}
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	local heads=0
 	for _,coin in ipairs(res) do
 		if coin==1 then
-			c:RegisterFlagEffect(id+o,RESET_EVENT+RESETS_STANDARD,0,1)
+			heads=heads+1
 		end
 	end
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,heads)
 end
 function s.countcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.countop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local heads_ct=c:GetFlagEffect(id+o)
+	local res={c:GetFlagEffectLabel(id)}
+	local heads=0
+	for _,count in ipairs(res) do
+		heads=heads+count
+	end
 	c:ResetFlagEffect(id)
-	c:ResetFlagEffect(id+o)
-	Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id+2*o,re,r,rp,ep,heads_ct)
+	Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,re,r,rp,ep,heads)
 end
