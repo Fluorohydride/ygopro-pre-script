@@ -54,7 +54,7 @@ function c101202002.cfilter2(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsFaceup()
 end
 function c101202002.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c101202002.cfilter1,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(c101202002.cfilter1,tp,LOCATION_ONFIELD,0,1,nil,tp)
 end
 function c101202002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
