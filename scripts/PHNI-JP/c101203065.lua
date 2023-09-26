@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--change code
-	aux.EnableChangeCode(c,101202058,LOCATION_FZONE)
+	aux.EnableChangeCode(c,16528181,LOCATION_FZONE)
 	--search and send to deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.schfilter(c)
-	return c:IsSetCard(0x29c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x19d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.schtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) end
