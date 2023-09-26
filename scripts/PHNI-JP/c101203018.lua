@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.tgcfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x29c)
+	return c:IsFaceup() and c:IsSetCard(0x19d)
 end
 function s.tgcfilter2(c)
-	return c:IsFaceup() and c:IsCode(101202058)
+	return c:IsFaceup() and c:IsCode(16528181)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.tgcfilter1,tp,LOCATION_MZONE,0,1,nil)
@@ -56,7 +56,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP)
-		and ((c:IsPreviousSetCard(0x29c) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousCodeOnField()~=id) or c:GetPreviousCodeOnField()==101202058)
+		and ((c:IsPreviousSetCard(0x19d) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousCodeOnField()~=id) or c:GetPreviousCodeOnField()==16528181)
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
