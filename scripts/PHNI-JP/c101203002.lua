@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,id)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -21,11 +20,11 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_RECOVER)
-	e2:SetType(EFFECT_TYPE_QUICK_F)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.reccon)
+	e2:SetTarget(s.rectg)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
 	--special summon from grave
@@ -76,6 +75,10 @@ function s.reccon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=c:GetBattleTarget()
 	return bc and bc:IsFaceup() and bc:IsSetCard(0x2a4)
 end
+function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,1-tp,3000)
+end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(1-tp,3000,REASON_EFFECT)
 end
@@ -88,7 +91,7 @@ function s.spfgcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfgfilter,1,nil,tp,se)
 end
 function s.spfgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end

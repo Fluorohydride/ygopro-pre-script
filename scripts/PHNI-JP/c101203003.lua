@@ -22,8 +22,6 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetHintTiming(TIMINGS_CHECK_MONSTER)
 	e2:SetCountLimit(1,id+o)
 	e2:SetCondition(s.chcon)
 	e2:SetCost(s.chcost)
@@ -33,7 +31,7 @@ function s.initial_effect(c)
 	--to hand or spsummon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON+CATEGORY_GRAVE_ACTION+CATEGORY_GRAVE_SPSUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_GRAVE)
@@ -67,28 +65,27 @@ function s.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2a4)
 end
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
-return Duel.GetTurnPlayer()==1-tp
-	and re:IsActiveType(TYPE_MONSTER)
-	and Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetTurnPlayer()==1-tp and re:IsActiveType(TYPE_MONSTER)
+		and Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
+function s.repfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2a4)
+end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
-if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-	and Duel.IsPlayerCanDraw(1-tp,1) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.repfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
 	Duel.ChangeTargetCard(ev,g)
 	Duel.ChangeChainOperation(ev,s.repop)
 end
-function s.repfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2a4)
-end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.SelectMatchingCard(tp,s.repfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectMatchingCard(tp,s.repfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)
@@ -99,13 +96,11 @@ function s.rccfilter(c)
 end
 function s.thoscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
-		and Duel.IsExistingMatchingCard(s.rccfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.rccfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.thostg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false)end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	if chk==0 then return c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 end
 function s.thosop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
