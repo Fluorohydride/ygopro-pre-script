@@ -1,4 +1,4 @@
---マグマッチョ・ドラゴン
+--メメント・ウラモン
 --Scripted by kiritsoft
 local s,id,o=GetID()
 function s.initial_effect(c)
