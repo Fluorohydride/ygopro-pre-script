@@ -39,11 +39,12 @@ end
 function s.nscon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return c:IsLevelAbove(5) and minc<2 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
+	return c:IsLevelAbove(5) and minc<2 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function s.nsop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	c:SetMaterial(g)
 	Duel.Release(g,REASON_MATERIAL+REASON_SUMMON)
 end
@@ -53,7 +54,6 @@ end
 function s.dacon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
---Target 1 "Tistina" monster you control; this turn, it can make a second attack during each Battle Phase, also you can only attack with 1 monster.
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1d4)
 end
@@ -106,5 +106,5 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local fid=eg:GetFirst():GetFieldID()
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	e:GetLabelObject():SetLabel(fid)
---end snip 1
+	--end snip 1
 end
