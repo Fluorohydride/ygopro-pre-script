@@ -1,4 +1,5 @@
---斐钻之虎 玄
+--Gen Le Tigre De Diamant
+-- By 增熵星
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--to hand

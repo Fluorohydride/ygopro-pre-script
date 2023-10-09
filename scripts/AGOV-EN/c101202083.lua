@@ -1,4 +1,5 @@
---勤劳的山螳螂
+--Actif Mantagne
+-- By 增熵星
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon
