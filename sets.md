@@ -4,6 +4,7 @@
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
 - **October 28, 2023**: Phantom Nightmare (PHNI-JP) : `101203XXX`
 - **November 25, 2023**: Terminal World (TW01-JP) : `100211XXX`
+- **December 23, 2023**: QUARTER CENTURY DUELIST BOX SPECIAL PACK (QCDB-JP) : `100212XXX`
 # Announced
 
 # Archived
