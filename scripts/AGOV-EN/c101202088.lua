@@ -55,7 +55,7 @@ function s.dacon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1d4)
+	return c:IsFaceup() and c:IsSetCard(0x1a4)
 end
 function s.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
