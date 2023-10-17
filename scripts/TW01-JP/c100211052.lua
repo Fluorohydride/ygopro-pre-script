@@ -31,7 +31,6 @@ function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local tc=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
-	e:SetLabel((tc:GetType()&TYPE_TUNER)//TYPE_TUNER)
 	e:SetLabelObject(tc)
 	Duel.Remove(tc,POS_FACEUP,REASON_COST)
 end
@@ -41,14 +40,15 @@ end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
+	local tc=e:GetLabelObject()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
-	e1:SetValue(e:GetLabelObject():GetAttribute())
+	e1:SetValue(tc:GetAttribute())
 	c:RegisterEffect(e1)
-	if e:GetLabel()>0 then
+	if tc:IsType(TYPE_TUNER) then
 		Duel.BreakEffect()
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
