@@ -1,4 +1,4 @@
---A·O·G リターンゼロ
+--A·O·G リターンゼロ
 local s,id,o=GetID()
 function s.initial_effect(c)
   --synchro summon
@@ -21,7 +21,6 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-        e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.tdtg)
@@ -89,7 +88,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 	local ct=tg:GetCount()
 	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
-	if ct>0 and dg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if ct>0 and dg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(1102,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg2=dg:Select(tp,1,ct,nil)
