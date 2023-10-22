@@ -101,7 +101,7 @@ function s.smop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e31,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return se:IsHasType(EFFECT_TYPE_ACTIONS) and c:IsLocation(LOCATION_EXTRA) and bit.band(sumtype,SUMMON_TYPE_SYNCHRO)~=SUMMON_TYPE_SYNCHRO
+	return c:IsLocation(LOCATION_EXTRA) and bit.band(sumtype,SUMMON_TYPE_SYNCHRO)~=SUMMON_TYPE_SYNCHRO
 end
 function s.splimit1(e,c,sump,sumtype,sumpos,targetp,se)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS) and c:IsLocation(LOCATION_EXTRA)
