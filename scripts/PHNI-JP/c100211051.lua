@@ -82,6 +82,10 @@ function s.smop(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetTarget(s.splimit)
 	e0:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e0,tp)
+	--splimit2
+	local e1=e0:Clone()
+	e1:SetTarget(s.splimit1)
+	Duel.RegisterEffect(e1,tp)
 	--synchro level
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -98,6 +102,9 @@ function s.smop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS) and c:IsLocation(LOCATION_EXTRA) and bit.band(sumtype,SUMMON_TYPE_SYNCHRO)~=SUMMON_TYPE_SYNCHRO
+end
+function s.splimit1(e,c,sump,sumtype,sumpos,targetp,se)
+	return se:IsHasType(EFFECT_TYPE_ACTIONS) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.smcfilter(c,sc)
 	return c:IsSetCard(0x2) and c:IsTuner(sc)
