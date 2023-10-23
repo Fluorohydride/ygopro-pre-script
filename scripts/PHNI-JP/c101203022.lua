@@ -9,17 +9,17 @@ function c101203022.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCost(s.cost)
-    e1:SetTarget(s.retg)
+	e1:SetTarget(s.retg)
 	e1:SetOperation(s.recop)
 	c:RegisterEffect(e1)
-    --spsummon
+	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,id)
+	e2:SetCountLimit(1,id+o)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -33,7 +33,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.filter(c)
-    return c:IsSetCard(0xc9) and c:GetAttack()>0
+	return c:IsSetCard(0xc9) and c:GetAttack()>0
 end
 function s.retg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
@@ -43,9 +43,9 @@ function s.retg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetFirstTarget()
-    local rec=(math.ceil(g:GetAttack()/2))
-    if g:IsFaceup() and g:IsRelateToEffect(e) then
+	local g=Duel.GetFirstTarget()
+	local rec=(math.ceil(g:GetAttack()/2))
+	if g:IsFaceup() and g:IsRelateToEffect(e) then
 	Duel.Recover(tp,rec,REASON_EFFECT) end
 end
 --spsummon
