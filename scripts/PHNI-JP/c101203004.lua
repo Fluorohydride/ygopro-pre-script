@@ -43,7 +43,7 @@ function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsLevelAbove(0) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.thfilter(c,rc)
-	return c:GetLevel()~=rc:GetLevel() and c:IsSetCard(0xba) and c:IsAbleToHand()
+	return c:GetLevel()~=rc:GetLevel() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xba) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.cfilter(chkc,e,tp) end

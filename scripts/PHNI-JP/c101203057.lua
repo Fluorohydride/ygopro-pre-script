@@ -33,7 +33,7 @@ function s.thfilter(c)
 	return c:IsSetCard(0xba) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xba) and tc:IsControler(tp) and tc:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsSetCard(0xba) and c:IsControler(tp) and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.cfilter,1,nil) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

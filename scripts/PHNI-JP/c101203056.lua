@@ -33,9 +33,9 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.filter1(chkc,e,tp) end
 	local rg=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,e,tp)
-	if chk==0 then return rg:CheckSubGroup(s.fselect,2,2,tp,e) end
+	if chk==0 then return rg:CheckSubGroup(s.fselect,2,99,tp,e) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local sg=rg:SelectSubGroup(tp,s.fselect,false,2,2,tp,e)
+	local sg=rg:SelectSubGroup(tp,s.fselect,false,2,99,tp,e)
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE),1,0,0)
