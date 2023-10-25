@@ -29,7 +29,7 @@ end
 function s.filter(c)
 	return c:IsSetCard(0xba) and c:IsFaceup()
 end
-function s.filter(c)
+function s.filter2(c)
 	return c:IsSetCard(0xba) and c:IsType(TYPE_XYZ) and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
