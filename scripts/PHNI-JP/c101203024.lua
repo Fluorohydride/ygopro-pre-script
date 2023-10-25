@@ -44,12 +44,15 @@ function s.initial_effect(c)
 end
 function s.chainfilter(re,tp,cid)
 	local loc=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)
-	return not ( re:IsActiveType(TYPE_MONSTER) and loc&(LOCATION_HAND|LOCATION_GRAVE)>0)
+	if re:IsActiveType(TYPE_MONSTER) and loc&(LOCATION_HAND|LOCATION_GRAVE)>0 then
+		Duel.RegisterFlagEffect(1-tp,id,0,0,0)
+	end
+	return not (re:IsActiveType(TYPE_MONSTER) and loc&(LOCATION_HAND|LOCATION_GRAVE)>0)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetFlagEffect(tp,id)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function s.aucon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)
