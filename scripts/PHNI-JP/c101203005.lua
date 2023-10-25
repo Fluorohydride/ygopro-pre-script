@@ -92,6 +92,6 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetTargetsRelateToChain()
 	if tg:GetCount()>0 then
-		Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
