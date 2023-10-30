@@ -41,18 +41,26 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
+function s.damval1(c)
+	if c:GetLocation()~=LOCATION_MZONE then return end
+	return math.max(0,c:GetTextAttack()) 
+end
+function s.damval2(c)
+	if c:GetPreviousLocation()~=LOCATION_MZONE then return end
+	return math.max(0,c:GetTextAttack())
+end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
-	local atk=g:Filter(Card.IsType,nil,TYPE_MONSTER):GetSum(Card.GetBaseAttack)
+	local atk=g:GetSum(s.damval1)
 	if atk>0 then Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0) end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	if Duel.Destroy(g,REASON_EFFECT)>0 and e:GetHandler():GetOverlayGroup():Filter(Card.IsType,nil,TYPE_XYZ):GetClassCount(Card.GetCode)>=3 then
-		local dg=Duel.GetOperatedGroup():Filter(Card.IsType,nil,TYPE_MONSTER)
-		local atk=dg:GetSum(Card.GetBaseAttack)
+		local dg=Duel.GetOperatedGroup()
+		local atk=dg:GetSum(s.damval2)
 		if atk>0 then
 			Duel.BreakEffect()
 			Duel.Damage(1-tp,atk,REASON_EFFECT)
