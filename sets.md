@@ -2,14 +2,9 @@
 - V Jump promotional cards (VJMP-JP) : `100200XXX`
 - Weekly Shōnen Jump promotional cards (WJMP-JP) : `100203XXX`
 - Saikyō Jump promotional card (SJMP-JP) : `100204XXX`
-- **July 22, 2023**: AGE OF OVERLORD (AGOV-JP) : `101202XXX`
-- **August 4, 2023**: Yu-Gi-Oh! OCG Structures Volume 7 promotional card (YO07-JP) : `100208XXX`
-- **August 26, 2023**: Deck Build Pack: Valiant Smashers (DBVS-JP) : `100421XXX`
-- **September 3, 2023**: Yu-Gi-Oh! Championship Series 2023 prize card (YCSW-EN): `100210XXX`
-- **September 7, 2023**: 25th Anniversary Tin: Dueling Heroes (MP23-EN): `100209XXX`
-- **September 9, 2023**: Structure Deck R: Onslaught of the Fire Kings (SR14-JP) : `100314XXX`
 - **October 28, 2023**: Phantom Nightmare (PHNI-JP) : `101203XXX`
 - **November 25, 2023**: Terminal World (TW01-JP) : `100211XXX`
+- **December 23, 2023**: QUARTER CENTURY DUELIST BOX SPECIAL PACK (QCDB-JP) : `100212XXX`
 # Announced
 
 # Archived
@@ -120,6 +115,9 @@
 - Maze of Memories (MAZE-EN) : `100206XXX`
 - The Valuable Book EX 3 promotional cards (VX03-JP) : `100205XXX`
 - Animation Chronicle 2023 (AC03-JP) : `100207XXX`
+- Yu-Gi-Oh! OCG Structures Volume 7 promotional card (YO07-JP) : `100208XXX`
+- Yu-Gi-Oh! Championship Series 2023 prize card (YCSW-EN): `100210XXX`
+- 25th Anniversary Tin: Dueling Heroes (MP23-EN): `100209XXX`
 
 ## Structure decks
 - Structure Deck: Yugi Muto (SDMY-JP) : `100301XXX`
@@ -136,6 +134,7 @@
 - Structure Deck R: Dragunity Drive (SR11-JP) : `100311XXX`
 - Structure Deck R: Lost Sanctuary (SR12-JP) : `100312XXX`
 - Structure Deck R: Devil's Gate (SR13-JP) : `100313XXX`
+- Structure Deck R: Onslaught of the Fire Kings (SR14-JP) : `100314XXX`
 -----
 - Starter Deck 2016 (ST16-JP) : `100316XXX`
 - Starter Deck 2017 (ST17-JP) : `100317XXX`
@@ -174,6 +173,7 @@
 - Deck Build Pack: Tactical Masters (DBTM-JP): `100418XXX`
 - Deck Build Pack: Amazing Defenders (DBAD-JP) : `100419XXX`
 - Deck Build Pack: Wild Survivors (DBWS-JP) : `100420XXX`
+- Deck Build Pack: Valiant Smashers (DBVS-JP) : `100421XXX`
 -----
 - Duelist Pack: Pharaoh's Memories (DP17-JP) : `100417XXX`
 - Duelist Pack: Legend Duelist (DP18-JP) : `100418XXX`
@@ -218,3 +218,4 @@
 - Photon Hypernova (PHHY-JP) : `101111XXX`
 - CYBERSTORM ACCESS (CYAC-JP) : `101112XXX`
 - DUELIST NEXUS (DUNE-JP) : `101201XXX`
+- AGE OF OVERLORD (AGOV-JP) : `101202XXX`

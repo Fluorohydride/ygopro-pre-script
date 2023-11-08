@@ -23,14 +23,15 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id+o)
 	e2:SetCondition(s.sscon)
+	e2:SetTarget(s.sstg)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
 end
 function s.tgcfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x29c)
+	return c:IsFaceup() and c:IsSetCard(0x19d)
 end
 function s.tgcfilter2(c)
-	return c:IsFaceup() and c:IsCode(101202058)
+	return c:IsFaceup() and c:IsCode(16528181)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.tgcfilter1,tp,LOCATION_MZONE,0,1,nil)
@@ -38,7 +39,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.costfilter(c)
 	return c:IsAbleToGraveAsCost()
-		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,0,LOCATION_ONFIELD+LOCATION_HAND,0,1,c)
+		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic()
@@ -48,6 +49,7 @@ function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
@@ -56,10 +58,16 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP)
-		and ((c:IsPreviousSetCard(0x29c) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousCodeOnField()~=id) or c:GetPreviousCodeOnField()==101202058)
+		and ((c:IsPreviousSetCard(0x19d) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousCodeOnField()~=id) or c:GetPreviousCodeOnField()==16528181)
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
+end
+function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

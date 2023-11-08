@@ -57,7 +57,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 		and (Duel.GetTurnCount()~=e:GetHandler():GetTurnID() or e:GetHandler():IsReason(REASON_RETURN))
 end
 function s.tgfilter(c,e)
-	return c:IsSetCard(0xbb) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and c:IsCanBeEffectTarget(e)
+	return c:IsSetCard(0xbb) and c:IsType(TYPE_MONSTER) and c:IsCanBeEffectTarget(e) and c:IsFaceup()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -73,6 +73,6 @@ end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if tg:GetCount()>0 then
-		Duel.SendtoGrave(tg,REASON_EFFECT)
+		Duel.SendtoGrave(tg,REASON_EFFECT+REASON_RETURN)
 	end
 end

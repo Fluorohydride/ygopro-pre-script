@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--change code
-	aux.EnableChangeCode(c,101202058,LOCATION_FZONE)
+	aux.EnableChangeCode(c,16528181,LOCATION_FZONE)
 	--search and send to deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -33,13 +33,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.schfilter(c)
-	return c:IsSetCard(0x29c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x19d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.schtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) end
-	local g=Duel.GetMatchingGroup(s.schfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end
 function s.schop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -47,6 +46,7 @@ function s.schop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleHand(tp)
+		Duel.ShuffleDeck(tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g2=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 		if #g2>0 then
