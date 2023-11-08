@@ -35,7 +35,7 @@ function s.bfilter(c)
 	return c:IsSetCard(0xb5) and c:IsFaceup() and c:IsAbleToHand() or c:IsAbleToExtra()
 end
 function s.sfilter(c)
-	return c:IsSetCard(0xb5) and c:IsSummonable(true,nil)
+	return c:IsFaceup() and c:IsSetCard(0xb5) and c:IsSummonable(true,nil)
 end
 function s.bstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.bfilter(chkc) end
