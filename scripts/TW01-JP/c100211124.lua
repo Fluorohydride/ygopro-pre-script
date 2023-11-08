@@ -72,7 +72,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
 end
 function s.rmmfilter(c,e,tp)
-	return c:GetOriginalType()&TYPE_MONSTER>0 and c:IsSetCard(0xb5) and c:IsAbleToRemove()
+	return c:IsSetCard(0xb5) and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
