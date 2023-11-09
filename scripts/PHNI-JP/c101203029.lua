@@ -65,6 +65,13 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e2)
 		end
 	end
+	--cancel target
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_CHANGE_POS)
+	e2:SetCondition(s.recon)
+	e2:SetOperation(s.reop)
+	c:RegisterEffect(e2)	
 end
 function s.rcon(e)
 	return e:GetOwner():IsHasCardTarget(e:GetHandler())
