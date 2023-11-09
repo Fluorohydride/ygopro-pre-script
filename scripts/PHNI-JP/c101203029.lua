@@ -47,7 +47,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or c:IsDefensePos() then return end
+	if not c:IsRelateToEffect(e) or c:IsDefensePos() or not c:IsCanChangePosition() then return end
 	Duel.ChangePosition(c,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,0,0)
 	local tc=Duel.GetFirstTarget()
 	if c:IsFaceup() and c:IsDefensePos() and c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e)
