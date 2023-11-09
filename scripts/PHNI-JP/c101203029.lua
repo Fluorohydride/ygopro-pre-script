@@ -76,7 +76,16 @@ end
 function s.rcon(e)
 	return e:GetOwner():IsHasCardTarget(e:GetHandler()) and e:GetOwner():IsDefensePos()
 end
-
+	--cancel target
+function s.recon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousPosition(POS_DEFENSE) and c:IsFaceup() and c:IsAttackPos()
+end
+function s.reop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=c:GetFirstCardTarget()
+	Card.CancelCardTarget(c,tc)
+end
 	--to hand
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsControler,1,nil,1-tp)
