@@ -74,7 +74,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e2)	
 end
 function s.rcon(e)
-	return e:GetOwner():IsHasCardTarget(e:GetHandler())
+	return e:GetOwner():IsHasCardTarget(e:GetHandler()) and e:GetOwner():IsDefensePos()
 end
 
 	--to hand
