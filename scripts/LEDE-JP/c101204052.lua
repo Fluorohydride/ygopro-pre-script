@@ -63,6 +63,7 @@ function s.baop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_SKIP_BP)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,1)
+		e1:SetReset(RESET_PHASE+PHASE_END,1)
 		Duel.RegisterEffect(e1,Duel.GetTurnPlayer())
 	end
 end
