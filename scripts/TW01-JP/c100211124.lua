@@ -37,6 +37,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
+function s.limval(e,c,tp,re)
+	return re and re:IsActivated() and c:IsReason(REASON_COST)
+end
 function s.bfilter(c)
 	return c:IsSetCard(0xb5) and c:IsFaceup() and c:IsAbleToHand()
 end
