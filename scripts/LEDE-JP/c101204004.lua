@@ -1,4 +1,4 @@
-
+--トリコロール・ガジェット
 local s,id,o=GetID()
 function s.initial_effect(c)
     aux.AddCodeList(c,101204051)
