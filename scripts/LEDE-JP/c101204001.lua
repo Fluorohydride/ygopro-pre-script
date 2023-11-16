@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return aux.IsCodeListed(c,101204051) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return aux.IsCodeListed(c,101204051) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelBelow(7)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
