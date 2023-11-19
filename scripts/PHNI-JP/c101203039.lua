@@ -12,7 +12,7 @@ function c101203039.initial_effect(c)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetCondition(s.indcon)
 	e1:SetTarget(s.indtg)
-	e1:SetValue(1)
+	e1:SetValue(aux.indoval)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
