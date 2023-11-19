@@ -1,4 +1,4 @@
---メメント・ウラモン
+--マグマッチョ・ドラゴン
 --Scripted by kiritsoft
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c,tp)
-	return c:IsSetCard(0x1a1)  and c:IsAbleToHand()
+	return c:IsSetCard(0x1a1)  and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
