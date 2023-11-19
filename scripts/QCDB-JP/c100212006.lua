@@ -104,7 +104,7 @@ function s.lkcon(e,tp,eg,ep,ev,re,r,rp)
 		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end
 function s.lkfilter(c)
-	return c:IsLinkSummonable(nil) and c:IsLink(3)
+	return c:IsLinkSummonable(nil) and c:IsLinkAbove(3) and c:IsRace(RACE_CYBERSE)
 end
 function s.lktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.lkfilter,tp,LOCATION_EXTRA,0,1,nil) end
