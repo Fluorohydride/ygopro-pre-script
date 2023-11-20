@@ -1,5 +1,4 @@
 --灯魚
---Scripted by Crescent0v0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--synchro summon
