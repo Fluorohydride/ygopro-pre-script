@@ -1,4 +1,5 @@
---灯鱼
+--灯魚
+--Scripted by Crescent0v0
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -41,14 +42,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,101203144,0,TYPES_TOKEN_MONSTER,0,0,1,RACE_FISH,ATTRIBUTE_FIRE) then return end
-	for i=1,2 do
-		local token=Duel.CreateToken(tp,101203144)
-		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
-	end
-	Duel.SpecialSummonComplete()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -57,6 +50,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,101203144,0,TYPES_TOKEN_MONSTER,0,0,1,RACE_FISH,ATTRIBUTE_FIRE) then return end
+	for i=1,2 do
+		local token=Duel.CreateToken(tp,101203144+i)
+		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+	end
+	Duel.SpecialSummonComplete()
 end
 function s.splimit(e,c)
 	return not c:IsRace(RACE_FISH) and c:IsLocation(LOCATION_EXTRA)
