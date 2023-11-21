@@ -93,7 +93,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsLevelAbove(8) then return false end
 	local ph=Duel.GetCurrentPhase()
-	if Duel.GetTurnPlayer()==tp then
+	if Duel.GetTurnPlayer()==1-tp then
 		return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 	else
 		return (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
