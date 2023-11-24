@@ -71,8 +71,10 @@ function s.filter(c)
 	return c:IsSetCard(0xba) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_XYZ) and not c:IsForbidden()
 end
 function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,3,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,3,3,REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(id)==0 and c:CheckRemoveOverlayCard(tp,3,REASON_COST) end
+	c:RemoveOverlayCard(tp,3,3,REASON_COST)
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.copytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
