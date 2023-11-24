@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e4:SetCountLimit(1)
 	e4:SetRange(LOCATION_SZONE)
+	e4:SetCondition(s.dmcon)
 	e4:SetCost(s.dmcost)
 	e4:SetTarget(s.dmtg)
 	e4:SetOperation(s.dmop)
@@ -60,6 +61,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,1,2,nil)
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
+end
+function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
+	return tp~=Duel.GetTurnPlayer()
 end
 function s.cfilter(c,tp)
 	return c:IsFacedown() and c:IsAbleToGraveAsCost()
