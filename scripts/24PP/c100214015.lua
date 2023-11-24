@@ -36,17 +36,19 @@ function s.spfilter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local check=Duel.GetLocationCount(tp,LOCATION_MZONE)>=0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,1,nil)
+	if check then e:SetLabel(1) else e:SetLabel(0) end
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,e,tp,check) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,tp) end
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,e,tp,check) end
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,check)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	local id=tc:GetCode()
+	if tc:IsRelateToEffect(e) and tc:IsRace(RACE_FISH) then
 		if Duel.Destroy(tc,REASON_EFFECT)>0 then
-			local sc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,check,tc:GetCode()):GetFirst()
-			local check=Duel.GetLocationCount(tp,LOCATION_MZONE)>=0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,1,nil)
+			local check=Duel.GetLocationCount(tp,LOCATION_MZONE)>=0 and e:GetLabel()==1
+			local sc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,check,id):GetFirst()
 			if check and sc:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not sc:IsAbleToHand() or Duel.SelectOption(tp,1190,1152)==1) then
 				Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 			else
@@ -72,10 +74,9 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if #g>1 then 
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc1=g:Select(tp,1,1,nil)
-		Duel.SpecialSummon(tc1,0,tp,tp,false,false,POS_FACEUP)
-		Duel.SendtoDeck((g-tc1):GetFirst(),nil,SEQ_DECKBOTTOM,REASON_EFFECT)
-	end
+	if not g or g:FilterCount(Card.IsRelateToEffect,nil,e)~=2 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local tc1=g:Select(tp,1,1,nil)
+	Duel.SpecialSummon(tc1,0,tp,tp,false,false,POS_FACEUP)
+	Duel.SendtoDeck((g-tc1):GetFirst(),nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 end
