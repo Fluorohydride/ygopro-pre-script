@@ -68,9 +68,10 @@ function s.dactivate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local ct1=6-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 	local ct2=6-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
-	if ct1*ct2>0 then
-		Duel.ShuffleDeck(tp)
+	if ct1>0 then
 		Duel.Draw(tp,ct1,REASON_EFFECT)
+	end
+	if ct2>0 then
 		Duel.Draw(1-tp,ct2,REASON_EFFECT)
 	end
 end
