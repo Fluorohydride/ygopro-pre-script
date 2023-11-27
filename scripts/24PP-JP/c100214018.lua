@@ -1,4 +1,4 @@
---陀螺
+--未来の柱ーキアノス
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon(self)
@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(37351133) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(37351133) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceupEx()
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
