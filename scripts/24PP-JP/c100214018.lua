@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(37351133) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceupEx()
+	return c:IsCode(37351133) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -84,7 +84,7 @@ function s.splimit(e,c)
 	return not c:IsRace(RACE_MACHINE) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.thfilter(c,e,tp)
-	return c:IsCode(37351133) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+	return c:IsCode(37351133) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))  and c:IsFaceupEx()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
