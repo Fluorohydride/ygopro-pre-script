@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Activate without draw
 	local e2=e1:Clone()
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DRAW)
+  e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DRAW)
 	e2:SetCondition(s.dcon)
-	e2:SetTarget(s.dtarget)
+  e2:SetTarget(s.dtarget)
 	e2:SetOperation(s.dactivate)
 	c:RegisterEffect(e2)
 end
@@ -31,7 +31,7 @@ function s.ndcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.dcon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
-		and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_ONFIELD,0,1,nil) and Duel.IsExistingMatchingCard(s.mfilter,tp,LOCATION_MZONE,0,1,nil)
+	and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_ONFIELD,0,1,nil) and Duel.IsExistingMatchingCard(s.mfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
 	return aux.IsCodeListed(c,101204051) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
@@ -65,6 +65,7 @@ function s.dactivate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
+
 	end
 	local ct1=6-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 	local ct2=6-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
