@@ -45,6 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tg)
 	local sc=sg:GetFirst()
 	if sc and Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)~=0 then
+		sc:CompleteProcedure()
 		for tc in aux.Next(tg) do
 			local mg=tc:GetOverlayGroup()
 			if mg:GetCount()~=0 then
