@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousControler(tp)
-	and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
   local dg=eg:Filter(s.cfilter,nil,tp)
@@ -68,7 +68,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aufilter(c,tp,e)
 	return c:IsFaceup() and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_GRAVE)
-	and c:IsLocation(LOCATION_MZONE) and (not e or c:IsCanBeEffectTarget(e))
+		and c:IsLocation(LOCATION_MZONE) and (not e or c:IsCanBeEffectTarget(e))
 end
 function s.autg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=eg:Filter(s.aufilter,nil,tp,e)
@@ -76,7 +76,7 @@ function s.autg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return #g>0 end
 	local tg=g:Clone()
 	if #g>1 then
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		tg=g:Select(tp,1,1,nil)
 	end
 	Duel.SetTargetCard(tg)
@@ -95,7 +95,7 @@ function s.auop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thfilter(c,tp)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsPreviousControler(tp)
-	and c:IsPreviousLocation(LOCATION_HAND) and c:IsReason(REASON_DISCARD)
+		and c:IsPreviousLocation(LOCATION_HAND) and c:IsReason(REASON_DISCARD)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
   return eg:FilterCount(s.thfilter,nil,tp)>0
