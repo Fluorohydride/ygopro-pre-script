@@ -27,18 +27,21 @@ function s.lmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.lmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
+	local c=e:GetHandler()
 	if tc and tc:IsRelateToEffect(e) then 
 		local e1=Effect.CreateEffect(tc)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetCode(EFFECT_EXTRA_LINK_MATERIAL)
 		e1:SetRange(LOCATION_MZONE)
+		e1:SetLabelObject(c)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.matval)
 		tc:RegisterEffect(e1)
-	end
+	end 
 end
 function s.matval(e,lc,mg,c,tp)
+	local ct=e:GetLabelObject()
 	if not lc:IsLink(5) then return false,nil end
-	return true, mg 
+	return true,not mg or mg:IsContains(ct)
 end
