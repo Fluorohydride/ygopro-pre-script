@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,SUMMON_VALUE_SELF,tp,tp,true,false,POS_FACEUP)
 end
 function s.atkfilter(c)
-	return c:IsCode(101204051) or (aux.IsCodeListed(c,101204051) and c:IsLocation(LOCATION_MZONE)) and c:IsFaceup()
+	return (c:IsCode(101204051) or (aux.IsCodeListed(c,101204051) and c:IsLocation(LOCATION_MZONE))) and c:IsFaceup()
 end
 function s.atkval(e,c)
 	local tp=e:GetHandlerPlayer()
