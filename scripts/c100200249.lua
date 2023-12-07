@@ -29,7 +29,7 @@ function s.lmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
 	if tc and tc:IsRelateToEffect(e) then 
-		local e1=Effect.CreateEffect(tc)
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetCode(EFFECT_EXTRA_LINK_MATERIAL)
@@ -41,8 +41,9 @@ function s.lmop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end 
 end
-function s.mcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsControler(tp)
+function s.mcon(e,c)
+	local tp=e:GetOwner():GetControler()
+	return e:GetHandler():IsControler(1-tp)
 end
 function s.matval(e,lc,mg,c,tp)
 	local ct=e:GetLabelObject()
