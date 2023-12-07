@@ -35,10 +35,14 @@ function s.lmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EXTRA_LINK_MATERIAL)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetLabelObject(c)
+		e1:SetCondition(s.mcon)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.matval)
 		tc:RegisterEffect(e1)
 	end 
+end
+function s.mcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsControler(tp)
 end
 function s.matval(e,lc,mg,c,tp)
 	local ct=e:GetLabelObject()
