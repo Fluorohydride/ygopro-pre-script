@@ -29,6 +29,9 @@ function s.lmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
 	if tc and tc:IsRelateToEffect(e) then 
+		if not tc:IsImmuneToEffect(e) then
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -41,7 +44,7 @@ function s.lmop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end 
 end
-function s.mcon(e,c)
+function s.mcon(e)
 	local tp=e:GetOwner():GetControler()
 	return e:GetHandler():IsControler(1-tp)
 end
