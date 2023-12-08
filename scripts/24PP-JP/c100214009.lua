@@ -12,8 +12,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+function s.filter(c)
+	return c:IsType(TYPE_SYNCHRO) and c:IsFaceup()
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,0,1,nil,TYPE_SYNCHRO)
+	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -23,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Draw(p,d,REASON_EFFECT)>0 and Duel.IsPlayerCanDraw(tp,1) and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_MZONE,0,nil,TYPE_SYNCHRO)>=3 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if Duel.Draw(p,d,REASON_EFFECT)>0 and Duel.IsPlayerCanDraw(p,1) and Duel.GetMatchingGroupCount(s.filter,p,LOCATION_MZONE,LOCATION_MZONE,nil)>=3 and Duel.SelectYesNo(p,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.Draw(p,1,REASON_EFFECT)
 	end
