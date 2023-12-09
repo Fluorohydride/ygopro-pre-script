@@ -1,7 +1,7 @@
 --無窮機竜カルノール
 local s,id,o=GetID()
 function s.initial_effect(c)
-	c:SetSPSummonOnce(27134209)
+	c:SetSPSummonOnce(id)
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
