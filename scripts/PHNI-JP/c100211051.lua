@@ -55,6 +55,8 @@ function s.smfilter(c)
 end
 function s.trigfilter(c,tp)
 	return c:IsSetCard(0x2) and c:IsControler(tp) and c:IsType(TYPE_MONSTER) and not c:IsReason(REASON_DRAW)
+		and not (c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN) and not c:IsPublic())
+		and （not c:IsStatus(STATUS_TO_HAND_WITHOUT_CONFIRM) or (c:IsStatus(STATUS_TO_HAND_WITHOUT_CONFIRM) and c:IsPublic())
 end
 function s.smcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.trigfilter,1,nil,tp)
