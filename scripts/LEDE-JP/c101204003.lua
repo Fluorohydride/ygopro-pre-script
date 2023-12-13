@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_NEGATE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
-  e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetCountLimit(1,id)
 	e3:SetRange(LOCATION_MZONE)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.lucon(e,tp,eg,ep,ev,re,r,rp)
-  e:SetLabel(#eg)
+	e:SetLabel(#eg)
 	return ep~=tp
 end
 function s.luop(e,tp,eg,ep,ev,re,r,rp)
@@ -67,8 +67,8 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-  local c=e:GetHandler()
-  if Duel.NegateActivation(ev) and c:IsRelateToEffect(e) and c:IsFaceup() then
+	local c=e:GetHandler()
+	if Duel.NegateActivation(ev) and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
