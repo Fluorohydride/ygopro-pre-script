@@ -63,22 +63,37 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(sg2,nil,REASON_EFFECT)
 	end
 end
-function s.retfilter(c)
-	return c:GetFlagEffect(id)~=0
+function s.retfilter(c,tp)
+	return c:GetFlagEffect(id)~=0 and (not tp or c:IsControler(tp))
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetLabelObject():IsExists(s.retfilter,1,nil) then
+	if not e:GetLabelObject():IsExists(s.retfilter,1,nil,nil) then
 		e:GetLabelObject():DeleteGroup()
 		e:Reset()
 		return false
 	end
 	return true
 end
-function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject():Filter(s.retfilter,nil)
-	for tc in aux.Next(g) do
-		Duel.ReturnToField(tc)
+function s.returngroup(g,tp)
+	if #g==0 then return end
+	local c
+	while #g>1 and Duel.GetMZoneCount(tp)>0 do
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+		c=g:Select(tp,1,1,nil):GetFirst()
+		Duel.ReturnToField(c)
+		g=g-c
 	end
+	for oc in aux.Next(g) do
+		Duel.ReturnToField(oc)
+	end
+end
+function s.retop(e,tp,eg,ep,ev,re,r,rp)
+	local turnp=Duel.GetTurnPlayer()
+	local g1=e:GetLabelObject():Filter(s.retfilter,nil,turnp)
+	local g2=e:GetLabelObject():Filter(s.retfilter,nil,1-turnp)
+	if #g1+#g2==0 then return end
+	s.returngroup(g1,turnp)
+	s.returngroup(g2,1-turnp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
