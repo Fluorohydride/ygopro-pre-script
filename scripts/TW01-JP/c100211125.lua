@@ -1,4 +1,4 @@
---灵兽的继圣 永续魔法
+--灵兽的继圣
 --Coded by Lee
 local s,id,o=GetID()
 function s.initial_effect(c)
