@@ -1,5 +1,4 @@
---急袭猛禽-崛起叛逆猎鹰
---lua by zengsxing
+--RR-ライジング・リベリオン・ファルコン
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Xyz Summon

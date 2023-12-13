@@ -1,4 +1,4 @@
---急袭猛禽-繁盛秃鹫
+--RR-ブルーム・ヴァルチャー
 --lua by zengsxing
 local s,id,o=GetID()
 function s.initial_effect(c)

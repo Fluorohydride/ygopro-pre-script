@@ -1,4 +1,4 @@
---跃升阶魔法-奇袭猛禽之力
+--RRUM-レイド・ラプターズ・フォース
 --lua by zengsxing
 local s,id,o=GetID()
 function s.initial_effect(c)

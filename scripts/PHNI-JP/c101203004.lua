@@ -1,4 +1,4 @@
---急袭猛禽-漆黑伯劳
+--RR-ノワール・レイニアス
 --lua by zengsxing
 local s,id,o=GetID()
 function s.initial_effect(c)

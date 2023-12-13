@@ -1,4 +1,4 @@
---急袭猛禽-壮丽之光
+--RR－グロリアス・ブライト
 --lua by zengsxing
 local s,id,o=GetID()
 function s.initial_effect(c)
