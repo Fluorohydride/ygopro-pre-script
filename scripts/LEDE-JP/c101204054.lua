@@ -1,7 +1,7 @@
 --未来への沈黙
 local s,id,o=GetID()
 function s.initial_effect(c)
-  aux.AddCodeList(c,101204051)
+	aux.AddCodeList(c,101204051)
 	--Activate without draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Activate without draw
 	local e2=e1:Clone()
-  e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DRAW)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DRAW)
 	e2:SetCondition(s.dcon)
-  e2:SetTarget(s.dtarget)
+	e2:SetTarget(s.dtarget)
 	e2:SetOperation(s.dactivate)
 	c:RegisterEffect(e2)
 end
@@ -41,15 +41,15 @@ function s.ndtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.dtarget(e,tp,eg,ep,ev,re,r,rp,chk)
-  local ct1=5-Duel.GetMatchingGroupCount(nil,tp,LOCATION_HAND,0,e:GetHandler())
-  local ct2=6-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
+	local ct1=5-Duel.GetMatchingGroupCount(nil,tp,LOCATION_HAND,0,e:GetHandler())
+	local ct2=6-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
-	and ct1>0 and Duel.IsPlayerCanDraw(tp,ct1+1)
-	and ct2>0 and Duel.IsPlayerCanDraw(1-tp,ct2)
+		and ct1>0 and Duel.IsPlayerCanDraw(tp,ct1+1)
+		and ct2>0 and Duel.IsPlayerCanDraw(1-tp,ct2)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-  Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct1)
-  Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,ct2)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,ct2)
 end
 function s.ndactivate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
