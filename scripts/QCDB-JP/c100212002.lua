@@ -64,25 +64,26 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()
 	if chk==0 then return tc:IsDestructable() end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
+	if math.max(0,tc:GetTextAttack())>0 then Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0) end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc:IsRelateToBattle() and Duel.Destroy(tc,REASON_EFFECT)>0 then
-		Duel.Damage(1-tp,tc:GetBaseAttack(),REASON_EFFECT)
+	if tc:IsRelateToBattle() and tc:IsLocation(LOCATION_MZONE) and Duel.Destroy(tc,REASON_EFFECT)>0 then
+		Duel.Damage(1-tp,math.max(0,tc:GetTextAttack()),REASON_EFFECT)
 	end
 end
 function s.descon2(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:GetHandler():IsOnField() and re:GetHandler():IsRelateToEffect(re) and re:IsActiveType(TYPE_MONSTER)
 end
 function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return re:GetHandler():IsDestructable() end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
+	local tc=re:GetHandler()
+	if chk==0 then return tc:IsDestructable() end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
+	if math.max(0,tc:GetTextAttack())>0 then Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0) end
 end
 function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=re:GetHandler()
-	if tc:IsRelateToEffect(re) and Duel.Destroy(tc,REASON_EFFECT)>0 then
-		Duel.Damage(1-tp,tc:GetBaseAttack(),REASON_EFFECT)
+	if tc:IsRelateToEffect(re) and tc:IsLocation(LOCATION_MZONE) and Duel.Destroy(tc,REASON_EFFECT)>0 then
+		Duel.Damage(1-tp,math.max(0,tc:GetTextAttack()),REASON_EFFECT)
 	end
 end
