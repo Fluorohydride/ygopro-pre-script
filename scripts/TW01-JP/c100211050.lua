@@ -65,8 +65,8 @@ end
 function s.rmlimit(e,c,tp,r,re)
 	return c:IsAttribute(e:GetLabel()) and re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsCode(id) and r==REASON_COST
 end
-function s.tdfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2) and c:IsAbleToDeck()
+function s.tdfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2) and c:IsAbleToDeck() and c:IsFaceup()
 end
 function s.desfilter(c)
 	return c:GetSequence()<5
@@ -78,15 +78,21 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
 	local sg=g:SelectSubGroup(tp,aux.dabcheck,false,1,6)
 	Duel.SetTargetCard(sg)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),0,0)
+	if not sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),tp,LOCATION_REMOVED)
+	elseif not sg:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),tp,LOCATION_GRAVE)
+	else
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),tp,LOCATION_GRAVE+LOCATION_REMOVED)
+	end
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-  local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+  local tg=Duel.GetTargetsRelateToChain()
 	if not tg then return end
 	Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=tg:GetCount()
+	local ct=g:GetCount()
 	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
 	if ct>0 and dg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
