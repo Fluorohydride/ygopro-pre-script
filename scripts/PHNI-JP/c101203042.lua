@@ -1,12 +1,12 @@
 --エ二グマスター·バックビット
 local s,id,o=GetID()
 function s.initial_effect(c)
-    --synchro summon
+	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
 	c:EnableReviveLimit()
-    --tohand
+	--tohand
 	local e1=Effect.CreateEffect(c)
-    e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.mvtg)
 	e1:SetOperation(s.mvop)
 	c:RegisterEffect(e1)
-    --mobe(to grave)
+	--mobe(to grave)
 	local e2=Effect.CreateEffect(c)
-    e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
