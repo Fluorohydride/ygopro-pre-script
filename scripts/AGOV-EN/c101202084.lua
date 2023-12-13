@@ -1,4 +1,4 @@
---维修区骑士 菲莉
+--Pitknight Filly
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

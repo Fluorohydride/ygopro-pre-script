@@ -1,4 +1,4 @@
---斐钻之虎 玄
+--Gen the Diamond Tiger
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--to hand
