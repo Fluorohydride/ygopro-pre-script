@@ -1,4 +1,4 @@
---羽翼栗子球 LV6
+--ハネクリボーLV6
 local s,id,o=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
