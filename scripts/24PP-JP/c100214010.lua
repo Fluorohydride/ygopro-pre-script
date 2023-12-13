@@ -1,4 +1,4 @@
---聚集的光
+--集いし光
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--Activate
