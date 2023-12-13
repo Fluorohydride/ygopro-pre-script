@@ -99,6 +99,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
-		
+
 	end
 end
