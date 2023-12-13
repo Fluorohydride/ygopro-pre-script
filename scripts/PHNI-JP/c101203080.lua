@@ -1,7 +1,7 @@
 --鉄騎の雷鎚
 local s,id,o=GetID()
 function s.initial_effect(c)
-    --Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -42,7 +42,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler():GetColumnGroup()
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)
-    and Duel.Destroy(eg,REASON_EFFECT)~=0 and rc:GetCount()>0 then
+	and Duel.Destroy(eg,REASON_EFFECT)~=0 and rc:GetCount()>0 then
 		Duel.BreakEffect()
 		Duel.Destroy(rc,REASON_EFFECT)
 	end
