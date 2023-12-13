@@ -1,5 +1,4 @@
---狂暴恶魔
---lua by zengsxing
+--バーサーク・デーモン
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -77,13 +76,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-
-
-
-
-
-
-
-
-
-
