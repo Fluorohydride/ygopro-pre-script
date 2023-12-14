@@ -1,5 +1,4 @@
 --幻魔の召喚神
--- by 增熵星
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,6007213,32491822,69890967)
@@ -37,7 +36,7 @@ end
 function s.spfilter(c,e,tp)
 	local atk=c:GetTextAttack()
 	local def=c:GetTextDefense()
-	return atk>=0 and def>=0 and atk==def and c:IsRace(RACE_FIEND+RACE_PYRO+RACE_THUNDER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return atk>=0 and def>=0 and atk==def and c:IsRace(RACE_FIEND+RACE_PYRO+RACE_THUNDER) and c:IsLevel(10) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
