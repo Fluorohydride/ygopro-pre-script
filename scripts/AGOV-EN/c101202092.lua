@@ -1,4 +1,4 @@
---Dissonance de Tistina
+--Discordance of the Tistina
 --Coded by Lee
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	return c:IsSetCard(0x1a4) 
+	return c:IsSetCard(0x1a4) and c:IsFaceup()
 end
 function s.filter1(c,tp)
 	return c:IsAbleToRemove(tp,POS_FACEDOWN)
@@ -58,7 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.refilter(c)
-	return c:IsSetCard(0x1a4) and c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsSetCard(0x1a4) and c:IsSummonLocation(LOCATION_EXTRA) and c:IsFaceup()
 end
 function s.recon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.refilter,tp,LOCATION_MZONE,0,1,nil)

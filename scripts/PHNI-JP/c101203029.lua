@@ -1,5 +1,4 @@
 --ゴブリン降下部隊
---Scripted by Gong'E
 local s,id,o=GetID()
 function s.initial_effect(c)
 	--disable
@@ -29,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-
+	
 	--disable
 function s.disfilter(c)
 	return c:IsType(TYPE_EFFECT) and not c:IsDisabled()
@@ -74,7 +73,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e2)	
 end
 function s.rcon(e)
-	return e:GetOwner():IsHasCardTarget(e:GetHandler())
+	return e:GetOwner():IsHasCardTarget(e:GetHandler()) and e:GetOwner():IsDefensePos()
 end
 	--cancel target
 function s.recon(e,tp,eg,ep,ev,re,r,rp)
