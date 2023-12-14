@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e1:SetCountLimit(1,id+o)
+	e3:SetCountLimit(1,id+o)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
@@ -40,25 +40,25 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-  Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-  local c=e:GetHandler()
-  local dg=Duel.SelectMatchingCard(tp,s.dfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,c)
-  if dg:GetCount()>0 and Duel.Destroy(dg,REASON_EFFECT)~=0 then
-	  Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local thg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if thg:GetCount()>0 then
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local c=e:GetHandler()
+	local dg=Duel.SelectMatchingCard(tp,s.dfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,c)
+	if dg:GetCount()>0 and Duel.Destroy(dg,REASON_EFFECT)~=0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local thg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+		if thg:GetCount()>0 then
 			local th=Duel.SendtoHand(thg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,thg)
-	  local lv=thg:GetFirst():GetLevel()
-	  if th*lv>0 and c:GetLevel()~=lv and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		Duel.BreakEffect()
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
-		c:RegisterEffect(e1)
-	  end
+			local lv=thg:GetFirst():GetLevel()
+			if th*lv>0 and c:GetLevel()~=lv and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				Duel.BreakEffect()
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_CHANGE_LEVEL)
+				e1:SetValue(lv)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+				c:RegisterEffect(e1)
+			end
 		end
 	end
 end
