@@ -25,6 +25,7 @@ function c101203047.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,101203147)
+	e2:SetCondition(c101203047.xmcon)
 	e2:SetTarget(c101203047.xmtg)
 	e2:SetOperation(c101203047.xmop)
 	c:RegisterEffect(e2)
@@ -60,9 +61,12 @@ end
 function c101203047.xmfilter(c)
 	return c:IsFaceup() and c:IsCanOverlay()
 end
+function c101203047.xmcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE)
+end
 function c101203047.xmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc~=c and c101203047.xmfilter(chkc) end
+	if chkc then return (chkc:IsLocation(LOCATION_MZONE)) and (chkc~=c) and (c101203047.xmfilter(chkc)) end
 	if chk==0 then return Duel.IsExistingTarget(c101203047.xmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	Duel.SelectTarget(tp,c101203047.xmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
