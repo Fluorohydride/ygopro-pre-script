@@ -54,13 +54,13 @@ function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.adtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local atk,dam=e:GetLabel()
+	local dam,atk=e:GetLabel()
 	if chk==0 then return atk>0 and dam>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam*300)
 end
 function s.adop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local atk,dam=e:GetLabel()
+	local dam,atk=e:GetLabel()
 	if not c:IsRelateToChain() or c:IsFacedown() then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
