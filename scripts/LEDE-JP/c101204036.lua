@@ -41,6 +41,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if #sg==0 or Duel.Remove(sg,0,REASON_EFFECT+REASON_TEMPORARY)==0
 		or not sg:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then return end
 	local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_REMOVED)
+	og=og-og:Filter(Card.IsReason,nil,REASON_REDIRECT)
 	for tc in aux.Next(og) do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
