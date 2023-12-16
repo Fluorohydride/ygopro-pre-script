@@ -62,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetHandler():IsType(TYPE_SPELL)
 end
 function s.atkfilter(c)
