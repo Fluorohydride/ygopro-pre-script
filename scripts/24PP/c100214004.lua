@@ -65,6 +65,9 @@ end
 function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetHandler():IsType(TYPE_SPELL)
 end
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetFlagEffect(1)>0
+end
 function s.atkfilter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsFaceup()
 end
