@@ -63,5 +63,5 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(tp,c:GetOverlayCount()*400,REASON_EFFECT)
 		local mg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
 		Duel.Destroy(mg,REASON_EFFECT)
-  end
+	end
 end
