@@ -37,14 +37,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end 
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.tgfilter(c)
 	return c:IsSetCard(0x38) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return e:GetHandler():GetMaterial():FilterCount(Card.IsSetCard,nil,0x38)>1 and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return e:GetHandler():GetMaterial():FilterCount(Card.IsSetCard,nil,0x38)>0 and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_DECK)
 end
 function s.fselect(g)
@@ -63,7 +62,7 @@ function s.efilter(e,c,rp,r,re)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and re and r&REASON_EFFECT>0 and rp==1-tp
 end
 function s.refilter(c)
-	return c:IsSetCard(0x38) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function s.recost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
