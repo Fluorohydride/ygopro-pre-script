@@ -111,7 +111,8 @@ function s.splimit1(e,c,sump,sumtype,sumpos,targetp,se)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.smcfilter(c,sc)
-	return c:IsSetCard(0x2) and c:IsTuner(sc)
+	return c:IsSetCard(0x2) and c:IsType(TYPE_TUNER)
+
 end
 function s.synfilter(c,syncard,tuner,f)
 	return c:IsFaceupEx() and c:IsCanBeSynchroMaterial(syncard,tuner) and (f==nil or f(c,syncard))
