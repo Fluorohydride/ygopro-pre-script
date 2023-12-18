@@ -59,7 +59,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.efilter(e,c,rp,r,re)
 	local tp=e:GetHandlerPlayer()
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and re and r&REASON_EFFECT>0
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x38) and re and r&REASON_EFFECT>0
 end
 function s.refilter(c)
 	return c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
