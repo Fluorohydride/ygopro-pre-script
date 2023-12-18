@@ -120,16 +120,16 @@ function s.spfilter(c,e,tp)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g1=Duel.GetFieldGroup(s.thfilter1,LOCATION_REMOVED,0)
-	local g2=Duel.GetFieldGroup(s.thfilter2,LOCATION_REMOVED,0)
+	local g1=Duel.GetMatchingGroup(s.thfilter1,tp,LOCATION_REMOVED,0,nil)
+	local g2=Duel.GetMatchingGroup(s.thfilter2,tp,LOCATION_REMOVED,0,nil)
 	if #g1>0 and #g2>0 then
 		Duel.SendtoHand(Group.__add(g1,g2):SelectSubGroup(tp,s.fselect2,false,2,2),nil,REASON_EFFECT)
-	end
-	local tg=Duel.GetOperatedGroup()
-	if tg:FilterCount(s.spfilter,nil,e,tp)==2 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
-		for tc in aux.Next(tg) do
-			Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP)
+		local tg=Duel.GetOperatedGroup()		
+		if tg:FilterCount(s.spfilter,nil,e,tp)==2 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+			for tc in aux.Next(tg) do
+				Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP)
+			end
+			Duel.SpecialSummonComplete()
 		end
-		Duel.SpecialSummonComplete()
 	end
 end
