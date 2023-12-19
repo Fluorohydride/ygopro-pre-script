@@ -3,8 +3,6 @@ local s,id,o=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	--aux.AddFusionProcMixRep(c,s.matfilter4,{23995346,s.matfilter},1,3,true)
-	--Auxiliary.FGoalCheckAdditional=s.fcheck
 	aux.AddFusionProcMixRep(c,true,true,{23995346,s.matfilter},1,3,s.matfilter4)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
@@ -46,6 +44,14 @@ function s.initial_effect(c)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
+	if not s.Ultimat_check then
+		s.Ultimat_check=true
+		_FCheckMixRepGoalCheck=Auxiliary.FCheckMixRepGoalCheck
+		function Auxiliary.FCheckMixRepGoalCheck(tp,sg,fc,chkfnf)
+			if fc.exgcheck and not fc.exgcheck(tp,sg,fc) then return false end
+			return _FCheckMixRepGoalCheck(tp,sg,fc,chkfnf)
+		end
+	end
 end
 function s.matfilter(c,fc,sub,mg,sg)
 	return c:IsSetCard(0xdd)
