@@ -24,8 +24,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
+function s.filter(c)
+	return c:IsSetCard(0x38) and c:IsFaceup()
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ct=Duel.GetFieldGroup(tp,LOCATION_MZONE,0):FilterCount(Card.IsSetCard,nil,0x38)
+	local ct=Duel.GetFieldGroup(tp,LOCATION_MZONE,0):FilterCount(s.filter,nil)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and aux.NegateAnyFilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(aux.NegateAnyFilter,tp,0,LOCATION_ONFIELD,1,nil) and ct>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
