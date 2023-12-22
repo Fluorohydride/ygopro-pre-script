@@ -101,7 +101,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 				local sc=(g-dc):GetFirst()
 				Duel.SendtoDeck(dc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 				local sg=Duel.GetOperatedGroup()
-				if sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
+				if sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) or sg:IsExists(Card.IsLocation,1,nil,LOCATION_EXTRA) then
 					Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 				end
 			else
@@ -110,7 +110,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 				local sc=(g-dc):GetFirst()
 				Duel.SendtoDeck(dc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 				local sg=Duel.GetOperatedGroup()
-				if sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
+					if sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) or sg:IsExists(Card.IsLocation,1,nil,LOCATION_EXTRA) then
 					Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 				end
 			end
