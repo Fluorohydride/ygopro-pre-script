@@ -99,14 +99,18 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 				local dc=g:Select(tp,1,1,nil)
 				local sc=(g-dc):GetFirst()
-				if Duel.SendtoDeck(dc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
+				Duel.SendtoDeck(dc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+				local sg=Duel.GetOperatedGroup()
+				if sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
 					Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 				end
 			else
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 				local dc=g:FilterSelect(tp,s.cfilter2,1,1,nil,e,tp)
 				local sc=(g-dc):GetFirst()
-				if Duel.SendtoDeck(dc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
+				Duel.SendtoDeck(dc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+				local sg=Duel.GetOperatedGroup()
+				if sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
 					Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 				end
 			end
