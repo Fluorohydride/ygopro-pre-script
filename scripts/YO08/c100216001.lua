@@ -49,6 +49,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		if thg:GetCount()>0 then
 			local th=Duel.SendtoHand(thg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,thg)
+			if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 			local lv=thg:GetFirst():GetLevel()
 			if th*lv>0 and c:GetLevel()~=lv and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				Duel.BreakEffect()
