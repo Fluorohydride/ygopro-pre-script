@@ -51,8 +51,9 @@ function s.inacon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.effectfilter(e,ct)
-	local te=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)
-	return te:IsActiveType(TYPE_FUSION) and te:GetHandler():IsSetCard(0x9b) and te:GetHandler():IsControler(e:GetOwnerPlayer())
+	local p=e:GetHandler():GetControler()
+	local te,tp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
+	return p==tp and te:GetHandler():IsSetCard(0x9b) and te:IsActiveType(TYPE_FUSION)
 end
 function s.spfilter1(c,e,tp)
 	return not c:IsCode(id) and c:IsSetCard(0x9b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
