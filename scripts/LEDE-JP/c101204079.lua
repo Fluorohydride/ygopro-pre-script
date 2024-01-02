@@ -58,7 +58,12 @@ end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local bc=e:GetHandler():GetBattleTarget()
-	local dam=bc:GetBaseAttack()
+	local dam=0
+	if  bc:IsLocation(LOCATION_ONFIELD) then
+		dam=bc:GetBaseAttack()
+	else
+		dam=bc:GetTextAttack()
+	end
 	if dam<0 then dam=0 end
 	dam=math.min(3000,dam*2)
 	Duel.SetTargetPlayer(1-tp)
