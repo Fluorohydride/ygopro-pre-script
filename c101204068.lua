@@ -26,17 +26,17 @@ function s.mgfilter(c,e,tp,link)
 		and bit.band(c:GetReason(),0x10000008)==0x10000008 and c:GetReasonCard()==link
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
+unction c32441317.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
-	local mg=tc:GetMaterial():Filter(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,tc)
+	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
+	local mg=tc:GetMaterial()
+	local ct=mg:GetCount()
 	local sumtype=tc:GetSummonType()
-	if Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)~=0	and sumtype==SUMMON_TYPE_LINK
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:GetCount()>0
-		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=mg:Select(tp,1,1,nil)
+	if Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)~=0 and sumtype==SUMMON_TYPE_SYNCHRO
+		and tc:IsLocation(LOCATION_EXTRA) and ct>0 and not Duel.IsPlayerAffectedByEffect(tp,59822133) and ct<=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		and mg:FilterCount(aux.NecroValleyFilter(c32441317.mgfilter),nil,e,tp,tc)==ct
+		and Duel.SelectYesNo(tp,aux.Stringid(32441317,0)) then
 		Duel.BreakEffect()
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(mg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
