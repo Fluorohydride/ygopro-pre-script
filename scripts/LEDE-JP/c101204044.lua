@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.postg)
@@ -45,14 +46,15 @@ function s.filter(c,e)
 	return c:IsCanChangePosition() and (not e or c:IsRelateToEffect(e))
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(s.filter,1,e:GetHandler(),nil) and Duel.CheckRemoveOverlayCard(tp,1,1,1,REASON_EFFECT) end
-	Duel.SetTargetCard(eg)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,eg,eg:GetCount(),0,0)
+	if chk==0 then return eg:IsExists(s.filter,1,nil,e) and not eg:IsContains(e:GetHandler()) and Duel.CheckRemoveOverlayCard(tp,1,1,1,REASON_EFFECT) end
+	local tc=eg:FilterSelect(tp,s.filter,1,1,nil,e)
+	Duel.SetTargetCard(tc)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,tc,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(s.filter,e:GetHandler(),e)
-	if Duel.RemoveOverlayCard(tp,1,1,1,1,REASON_EFFECT)~=0 then
-		Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and Duel.RemoveOverlayCard(tp,1,1,1,1,REASON_EFFECT)~=0 then
+		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
