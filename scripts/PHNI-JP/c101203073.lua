@@ -1,10 +1,9 @@
 --エターナル・フェイバリット
 --Script by passingDio0
---Fixed by Lee
 local s,id,o=GetID()
 function s.initial_effect(c)
 	aux.AddCodeList(c,78371393)
-	aux.AddSetNameMonsterList(c,0x2a4)
+	aux.AddSetNameMonsterList(c,0x1a5)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -38,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2a4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x1a5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -110,7 +109,7 @@ end
 function s.fucost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler())
-		and c:IsAbleToGraveAsCost() end
+		and c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 	Duel.SendtoGrave(c,REASON_COST)
 end
@@ -128,7 +127,7 @@ function s.filter3(c,e)
 	return c:IsOnField() and not c:IsImmuneToEffect(e)
 end
 function s.fcheck(tp,sg,fc)
-	return sg:IsExists(Card.IsSetCard,1,nil,0x2a4)
+	return sg:IsExists(Card.IsSetCard,1,nil,0x1a5)
 end
 function s.futg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
