@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(s.atkcon)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 	--destroy
@@ -43,6 +44,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_TRAP)
 	Duel.SpecialSummon(c,SUMMON_VALUE_SELF,tp,tp,true,false,POS_FACEUP)
 end
+function s.atkcon(e,c)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+SUMMON_VALUE_SELF
+end
 function s.atkfilter(c)
 	return (c:IsCode(101204051) or (aux.IsCodeListed(c,101204051) and c:IsLocation(LOCATION_MZONE))) and c:IsFaceup()
 end
@@ -54,7 +58,7 @@ function s.filter(c)
 	return c:IsCode(101204051) and c:IsFaceup()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.GetAttacker():IsControler(1-tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil) and e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+SUMMON_VALUE_SELF
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	 local tg=Duel.GetAttacker()
