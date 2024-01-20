@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				num[i]=i
 				i=i+1
 			end
-			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 			count=Duel.AnnounceNumber(tp,table.unpack(num))
 		end
 		local lv=count
