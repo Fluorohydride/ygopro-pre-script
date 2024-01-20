@@ -8,6 +8,7 @@
 - **December 16, 2023**: Premium Pack 2024 (24PP-JP) : `100214XXX`
 - **December 23, 2023**: QUARTER CENTURY DUELIST BOX SPECIAL PACK (QCDB-JP) : `100212XXX`
 - **January 27, 2024**: LEGACY OF DESTRUCTION (LEDE-JP) : `101204XXX`
+- **March 4, 2024**: Yu-Gi-Oh! OCG Structures Volume 8 promotional card (YO08-JP) : `100215XXX`
 # Announced
 
 # Archived
