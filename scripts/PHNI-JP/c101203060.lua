@@ -48,7 +48,13 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.filter(chkc) and chkc:IsControler(tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.lvfilter,tp,LOCATION_MZONE,0,2,nil,e) end
-	Duel.SelectTarget(tp,s.lvfilter,tp,LOCATION_MZONE,0,2,2,nil,e)
+	local g=Duel.SelectTarget(tp,s.lvfilter,tp,LOCATION_MZONE,0,2,2,nil,e)
+	local tc1=g:GetFirst()
+	local tc2=g:GetNext()
+	local lv1=tc1:GetLevel()
+	local lv2=tc2:GetLevel()
+	local op=aux.SelectFromOptions(tp,{lv1~=lv2,aux.Stringid(id,2)},{true,aux.Stringid(id,3)})
+	e:SetLabel(op)
 end
 function s.tgfilter(c,e)
 	return c:IsFaceup() and c:IsRelateToEffect(e)
@@ -60,8 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc2=g:GetNext()
 	local lv1=tc1:GetLevel()
 	local lv2=tc2:GetLevel()
-	local op=aux.SelectFromOptions(tp,{lv1~=lv2,aux.Stringid(id,2)},{true,aux.Stringid(id,3)})
-	if op==1 then 
+	if e:GetLabel()==1 then 
 	   Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,4))
 	   local g1=g:Select(tp,1,1,nil)
 	   local lv=g1:GetFirst():GetLevel()
