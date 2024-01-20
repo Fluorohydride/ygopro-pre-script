@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
-	e3:SetCode(EVENT_SPSUMMON)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCondition(s.thcon)
 	c:RegisterEffect(e3)
 	--to scale
@@ -75,7 +75,7 @@ end
 function s.txop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetsRelateToChain()
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
-	local tg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,1,1,nil,g)
+	local tg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,g)
 	Duel.SendtoExtraP(tg,nil,REASON_EFFECT)
 end
 function s.sfilter(c)

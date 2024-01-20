@@ -18,18 +18,10 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	--atk up
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e0:SetCode(EVENT_CHAINING)
-	e0:SetRange(LOCATION_MZONE)
-	e0:SetCondition(s.atkcon1)
-	e0:SetOperation(aux.chainreg)
-	c:RegisterEffect(e0)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_CHAIN_SOLVED)
+	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCountLimit(1)
@@ -62,11 +54,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsType(TYPE_SPELL)
-end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(1)>0
+	return re:GetHandler():IsType(TYPE_SPELL)
 end
 function s.atkfilter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsFaceup()

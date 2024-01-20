@@ -7,11 +7,11 @@ function s.initial_effect(c)
 	--cannot release(uncompleted)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_UNRELEASABLE_NONSUM)
+	e1:SetCode(EFFECT_CANNOT_RELEASE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetTargetRange(0xff,0xff)
-	e1:SetValue(s.limval)
+	e1:SetTargetRange(1,1)
+	e1:SetTarget(s.rellimit)
 	c:RegisterEffect(e1)
 	--tohand/extra & summon bonus
 	local e2=Effect.CreateEffect(c)
@@ -37,8 +37,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
-function s.limval(e,c,tp,re)
-	return re and re:IsActivated() and c:IsReason(REASON_COST)
+function s.rellimit(e,c,tp,r)
+	return r&REASON_COST~=0
 end
 function s.bfilter(c)
 	return c:IsSetCard(0xb5) and c:IsFaceup() and c:IsAbleToHand()
@@ -50,11 +50,12 @@ function s.bstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.bfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.bfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-	local tc=Duel.SelectTarget(tp,s.bfilter,tp,LOCATION_REMOVED,0,1,1,nil):GetFirst()
+	local g=Duel.SelectTarget(tp,s.bfilter,tp,LOCATION_REMOVED,0,1,1,nil)
+	local tc=g:GetFirst()
 	if tc:IsAbleToExtra() then
-		Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,g,1,tp,LOCATION_REMOVED)
+		Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,g,1,0,0)
 	else
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,LOCATION_REMOVED)
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 	end
 end
 function s.bsop(e,tp,eg,ep,ev,re,r,rp)

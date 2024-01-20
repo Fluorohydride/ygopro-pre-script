@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.tdtg)
@@ -78,17 +79,11 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
 	local sg=g:SelectSubGroup(tp,aux.dabcheck,false,1,6)
 	Duel.SetTargetCard(sg)
-	if not sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
-		Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),tp,LOCATION_REMOVED)
-	elseif not sg:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then
-		Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),tp,LOCATION_GRAVE)
-	else
-		Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),tp,LOCATION_GRAVE+LOCATION_REMOVED)
-	end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),0,0)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetsRelateToChain()
-	if not tg then return end
+	if #tg==0 then return end
 	Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end

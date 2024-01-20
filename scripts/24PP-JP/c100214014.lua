@@ -28,7 +28,6 @@ function c100214014.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100214014.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not aux.MustMaterialCheck(tc,tp,EFFECT_MUST_BE_XMATERIAL) then return end
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	local g=tc:GetOverlayGroup()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
