@@ -73,7 +73,7 @@ function s.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(s.refilter,tp,LOCATION_GRAVE,0,1,nil) and dc>0
+		return Duel.IsPlayerCanDiscardDeck(tp,1) and Duel.IsExistingMatchingCard(s.refilter,tp,LOCATION_GRAVE,0,1,nil) and dc>0
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local cg=Duel.SelectMatchingCard(tp,s.refilter,tp,LOCATION_GRAVE,0,1,math.min(dc,4),nil)
