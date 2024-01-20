@@ -91,14 +91,13 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g2,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local res1,tg1=Duel.GetOperationInfo(0,CATEGORY_REMOVE)
-	local res2,tg2=Duel.GetOperationInfo(0,CATEGORY_SPECIAL_SUMMON)
-	local c,rc,sc=e:GetHandler(),tg1:GetFirst(),tg2:GetFirst()
-	if rc:IsRelateToEffect(e) and rc:IsType(TYPE_MONSTER) and c:IsOnField()
-		and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)*Duel.Remove(tg1,POS_FACEUP,REASON_EFFECT)>0 then
-		if sc:IsRelateToEffect(e) and sc:IsRace(RACE_FISH) then
-			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
-		end
+	local ex1,tg1=Duel.GetOperationInfo(0,CATEGORY_REMOVE)
+	local ex2,tg2=Duel.GetOperationInfo(0,CATEGORY_SPECIAL_SUMMON)
+	if tg1:GetFirst():IsRelateToEffect(e) and Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)~=0 then
+	    Duel.Remove(tg1,POS_FACEUP,REASON_EFFECT)
+	end
+	if tg2:GetFirst():IsRelateToEffect(e) and tg2:GetFirst():IsRace(RACE_FISH) then
+		Duel.SpecialSummon(tg2,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 --spsummon
