@@ -17,9 +17,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
-	e2:SetCountLimit(1)
-	e2:SetTarget(s.tg)
-	e2:SetOperation(s.op)
+	e2:SetCountLimit(1,id+o)
+	e2:SetTarget(s.contrtg)
+	e2:SetOperation(s.controp)
 	c:RegisterEffect(e2)
 end
 function s.thfilter(c)
@@ -37,16 +37,17 @@ end
 function s.contrfilter(c,tp)
 	return c:GetOwner()==tp and c:IsControlerCanBeChanged()
 end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.contrtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.contrfilter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.contrfilter,tp,0,LOCATION_MZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectTarget(tp,s.contrfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
+function s.controp(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp) and Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and Duel.GetControl(tc,tp) and tc:IsLocation(LOCATION_MZONE) and Duel.GetMatchingGroupCount(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.BreakEffect()
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 		for ac in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
