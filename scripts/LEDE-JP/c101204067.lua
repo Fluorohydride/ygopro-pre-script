@@ -50,7 +50,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if ct==0 then return end
 	local t={}
 	for i=1,ct do t[i]=i end
-	local ac=Duel.AnnounceNumber(tp,table.unpack(t))
+	local ac=Duel.AnnounceNumber(p,table.unpack(t))
 	Duel.ConfirmDecktop(p,ac)
 	local g=Duel.GetDecktopGroup(p,ac)
 	if #g>0 then
