@@ -83,9 +83,9 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if ac>0 then
-		Duel.SortDecktop(tp,tp,ac)
+		Duel.SortDecktop(p,p,ac)
 		for i=1,ac do
-			local mg=Duel.GetDecktopGroup(tp,1)
+			local mg=Duel.GetDecktopGroup(p,1)
 			Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
 		end
 	end
