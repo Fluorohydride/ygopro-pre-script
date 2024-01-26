@@ -34,7 +34,7 @@ end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
 	if chk==0 then
-		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return false end
+		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=0 then return false end
 		local g=Duel.GetDecktopGroup(tp,ct)
 		local result=g:FilterCount(Card.IsAbleToHand,nil)>0
 		return result
@@ -63,24 +63,24 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.RegisterFlagEffect(p,id,RESET_PHASE+PHASE_END,0,1)
 			e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
 		end
-	end
-	Duel.BreakEffect()
-	local hg=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
-	if #hg>0 then
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-		local sg=hg:Select(p,1,1,nil)
-		if sg:GetFirst():GetOwner()==p then
-			Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
-		else
-			Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
-			ct=ct-1
+		Duel.BreakEffect()
+		local hg=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
+		if #hg>0 then
+			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
+			local sg=hg:Select(p,1,1,nil)
+			if sg:GetFirst():GetOwner()==p then
+				Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
+			else
+				Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+				ct=ct-1
+			end
 		end
-	end
-	if ct>0 then
-		Duel.SortDecktop(tp,tp,ct)
-		for i=1,ct do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
+		if ct>0 then
+			Duel.SortDecktop(tp,tp,ct)
+			for i=1,ct do
+				local mg=Duel.GetDecktopGroup(tp,1)
+				Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
+			end
 		end
 	end
 end
