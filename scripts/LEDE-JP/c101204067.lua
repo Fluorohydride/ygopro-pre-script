@@ -81,6 +81,8 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 			ac=ac-1
 		end
+	else
+		ac=ac-1
 	end
 	if ac>0 then
 		Duel.SortDecktop(p,p,ac)
