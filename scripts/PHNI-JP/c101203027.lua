@@ -35,7 +35,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and rg:CheckSubGroup(s.fselect,2,2) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local sg=rg:SelectSubGroup(tp,s.fselect,false,2,2)
+	local sg=rg:SelectSubGroup(tp,s.fselect,false,1,2)
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
